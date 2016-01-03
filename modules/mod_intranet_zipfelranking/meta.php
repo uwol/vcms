@@ -1,0 +1,16 @@
+<?php
+$moduleName = "Intranet Zipfelranking";
+$version = "2.05";
+$styleSheet = "";
+$installScript = "install/install.php";
+$uninstallScript = "";
+$updateScript = "";
+
+$pages[] = new LibPage("intranet_zipfelranking", "scripts/", "zipfelranking.php", new LibAccessRestriction(array("F", "B", "P", "C", "G", "W", "Y"), ""), "Zipfelranking");
+$menuElementsInternet = array();
+$menuElementsIntranet[] = new LibMenuEntry("intranet_zipfelranking", "Zipfelranking", 10600);
+$menuElementsAdministration = array();
+$dependencies = array();
+$includes = array();
+$headerStrings = array();
+?>

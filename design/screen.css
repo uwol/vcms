@@ -1,0 +1,28 @@
+fieldset{
+	padding: 8px;
+}
+
+.semestercover {
+	width: 140px;
+}
+
+.errorBox {
+	border: 1px solid red;
+	background-color: #F6CECE;
+	padding: 1px;
+}
+
+.notificationBox {
+	border: 1px solid green;
+	background-color: #58FA58;
+	padding: 1px;
+}
+
+#content th {
+	background-color: #BDBDBD;
+	font-size: 9pt;
+	font-weight: bold;
+	height: 20px;
+	text-align: center;
+	vertical-align: middle;
+}

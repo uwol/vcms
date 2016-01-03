@@ -1,0 +1,79 @@
+/* Semesterliste */
+#content .semesterliste { text-align: center; }
+
+/* Tag für den Kalender */
+#content .wochentag  {
+	font-size: 8pt;
+	border-width: 1px;
+	text-align: left;
+	border: thin solid #E8CAA2
+}
+
+/* Tag für den Kalender */
+#content .today {
+	font-size: 8pt;
+	border-width: 1px;
+	text-align: left;
+	border: thin solid #961419;
+}
+
+/* Tag für den Kalender */
+#content .wochenname {
+	font-size: 10pt;
+	text-align: center;
+	font-weight: bold;
+	background-color: #E8CAA2;
+}
+
+/* Tag für den Kalender */
+#content .monat	{ background-color: #E8CAA2;}
+
+/* Tag für den Kalender */
+#content .datum {
+	font-weight: bold;
+	font-size: 10pt;
+	padding-left: 5px;
+	padding-bottom: 10px;
+	text-align: right
+}
+
+#content .summary {
+	font-size: 8pt;
+}
+
+/* Galeriethumbnails */
+#content .galerie {
+	clear: both;
+	position: relative;
+	text-align: center;
+	margin-top: 30px;
+}
+
+/* interaktive Box */
+#content .interactiveBox{
+	border-width: 1px;
+	border: thin solid #000000;
+	background-color: #FFFAF0;
+	width: 150px;
+	padding: 5px;
+	margin: 0 0 10px 10px;
+	float: right;
+}
+
+#content .interactiveBox .eventbox{
+	font-size: 8pt;
+	font-weight: normal;
+	text-align: left;
+}
+
+#content .interactiveBox .eventinput {
+	font-size: 8pt;
+	margin: 0 5px 5px 0;
+	float: left;
+}
+
+#content .interactiveBox .eventbutton {
+	font-size: 8pt;
+	float: left;
+	margin-left: 0px;
+}
