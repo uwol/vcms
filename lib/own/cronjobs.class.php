@@ -62,6 +62,11 @@ class LibCronjobs{
 		}
 	}
 
+	// @Deprecated
+	function deleteInstaller(){
+		$this->deleteFiles();
+	}
+
 	function createMissingDirectories(){
 		/*
 		* checks for missing folders
