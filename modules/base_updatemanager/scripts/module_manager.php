@@ -230,7 +230,7 @@ if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == "updateEngine" || $_REQ
 
 	if(is_dir("temp/engine")){
 		if(is_file("temp/engine/index.php") && is_file("temp/engine/inc.php") && is_dir("temp/engine/lib")){
-			$libCronjobs->deleteFiles();
+			$libCronJobs->deleteFiles();
 
 			@unlink("inc.php");
 			@unlink("index.php");
