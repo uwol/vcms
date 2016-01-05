@@ -1,9 +1,10 @@
 /* Semesterliste */
-#content .semesterliste { text-align: center; }
+#content .semesterliste {
+	text-align: center;
+}
 
 /* Tag für den Kalender */
 #content .wochentag  {
-	font-size: 8pt;
 	border-width: 1px;
 	text-align: left;
 	border: thin solid #E8CAA2
@@ -11,7 +12,6 @@
 
 /* Tag für den Kalender */
 #content .today {
-	font-size: 8pt;
 	border-width: 1px;
 	text-align: left;
 	border: thin solid #961419;
@@ -20,13 +20,14 @@
 /* Tag für den Kalender */
 #content .wochenname {
 	font-size: 10pt;
-	text-align: center;
 	font-weight: bold;
 	background-color: #E8CAA2;
 }
 
 /* Tag für den Kalender */
-#content .monat	{ background-color: #E8CAA2;}
+#content .monat	{
+	background-color: #E8CAA2;
+}
 
 /* Tag für den Kalender */
 #content .datum {
@@ -50,7 +51,7 @@
 }
 
 /* interaktive Box */
-#content .interactiveBox{
+#content .interactiveBox {
 	border-width: 1px;
 	border: thin solid #000000;
 	background-color: #FFFAF0;
@@ -60,7 +61,7 @@
 	float: right;
 }
 
-#content .interactiveBox .eventbox{
+#content .interactiveBox .eventbox {
 	font-size: 8pt;
 	font-weight: normal;
 	text-align: left;

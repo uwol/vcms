@@ -114,22 +114,19 @@ class LibMember{
 
 		$retstr = '';
 
-		$height = '.2em';
-		$margin = '.2em';
-
 		if($gruppe == 'T' || $gruppe == 'V' || $gruppe == 'X'){
-			$retstr .= '<span style="display:inline-block; width:100%; height:' . $height . '; margin:' . $margin . ' 0 0 0"></span>';
+			$retstr .= '<span class="memberActivityBar" style="width:100%"></span>';
 		} else {
 			$activityPercent = $this->getMitgliedIntranetActivity($id) * 100;
 			$balkenBreiteActivity = ceil($activityPercent);
 			$balkenBreiteInactivity = 100 - $balkenBreiteActivity;
 
 			if($balkenBreiteActivity > 0){
-				$retstr .= '<span style="background-color:black; display:inline-block; width:' .$balkenBreiteActivity. '%; height:' . $height . '; margin:' . $margin . ' 0 0 0"></span>';
+				$retstr .= '<span class="memberActivityBar memberActivityBarActive" style="width:' .$balkenBreiteActivity. '%"></span>';
 			}
 
 			if($balkenBreiteInactivity > 0){
-				$retstr .= '<span style="background-color:white; display:inline-block; width:' .$balkenBreiteInactivity. '%; height:' . $height . '; margin:' . $margin . ' 0 0 0"></span>';
+				$retstr .= '<span class="memberActivityBar memberActivityBarInactive" style="width:' .$balkenBreiteInactivity. '%"></span>';
 			}
 		}
 
@@ -154,14 +151,14 @@ class LibMember{
 			$marginString = 'margin: 0 0 ' . $margin . ' 0;';
 		}
 
-		$retstr .= '<div style="width:75px;' . $floatString . $marginString . 'line-height:0">';
+		$retstr .= '<div class="memberSignatureBox" style="' . $floatString . $marginString . '">';
 
 		/*
 		* member image
 		*/
 		if(is_numeric($id)){
 			$retstr .= '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$id. '">';
-			$retstr .= '<img src="inc.php?iid=base_intranet_personenbild&amp;id=' . $id . '" style="width:75px;height:100px;margin:0" alt="Mitgliedsbild" />';
+			$retstr .= '<img src="inc.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="memberSignatureImg" alt="Mitgliedsbild" />';
 			$retstr .= "</a>\n";
 		}
 

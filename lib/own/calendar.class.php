@@ -35,11 +35,11 @@ class LibCalendar{
 		$this->eventSet->addEvent($event);
 	}
 
-	function toString($autoCss = false){
+	function toString(){
 		$retstr = '';
 
 		foreach($this->years as $year){
-			$retstr .= $year->toString($this->eventSet, $autoCss);
+			$retstr .= $year->toString($this->eventSet);
 		}
 
 		return $retstr;
@@ -81,20 +81,15 @@ class LibYear{
 		return $this->number;
 	}
 
-	function toString($eventSet, $autoCss){
+	function toString($eventSet){
 		$monthNames = array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
 		$retstr = '';
-		$retstr .= '<table style="table-layout:fixed;borderspacing:2px;border-collapse:separate;width:100%;">'."\n\r";
+		$retstr .= '<table class="calendarYear">'."\n\r";
 
 		foreach($this->months as $month){
 			$retstr .= '<tr><td colspan="7" ';
-
-			if($autoCss){
-				$retstr .= 'style="border: thin solid #000000;text-align:center;"';
-			}
-
-			$retstr .= ' class="monat"><h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2></td></tr>';
-			$retstr .= $month->toString($eventSet, $autoCss);
+			$retstr .= ' class="calendarMonth monat"><h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2></td></tr>';
+			$retstr .= $month->toString($eventSet);
 		}
 
 		$retstr .= '</table>';
@@ -145,23 +140,19 @@ class LibMonth{
 		return 31-((($this->number-(($this->number<8)?1:0))%2)+(($this->number==2)?((!($this->year->getNumber()%((!($this->year->getNumber()%100))?400:4)))?1:2):0));
 	}
 
-	function toString($eventSet, $autoCss, $weekShift=1){
+	function toString($eventSet, $weekShift=1){
 		$dayNames = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
 		$retstr = '';
 		$br = "\n\r";
 		$weekShift = $weekShift % 7;
 
-		//heading with week names
+		//heading with day names
 		$retstr .= '<tr>'.$br;
 
 		for($i=0+$weekShift;$i<count($dayNames)+$weekShift;$i++){
-			$retstr .= '<td class="wochenname" ';
-
-			if($autoCss){
-				$retstr .= 'style="border:thin solid #000000;text-align:center;"';
-			}
-
-			$retstr .= ' >' .$dayNames[$i % 7]. '</td>'.$br;
+			$retstr .= '<td class="calendarDayName wochenname">';
+			$retstr .= $dayNames[$i % 7];
+			$retstr .= '</td>'.$br;
 		}
 
 		$retstr .= '</tr>'.$br;
@@ -176,7 +167,7 @@ class LibMonth{
 			$day = $this->days[$dayCounter];
 
 			if($day->getType() == $colCounter){
-				$retstr .= $day->toString($eventSet, $autoCss);
+				$retstr .= $day->toString($eventSet);
 
 				if($day->getType() == (6 + $weekShift) % 7){
 					$retstr .= '</tr><tr>'.$br;
@@ -242,7 +233,7 @@ class LibDay{
 		return false;
 	}
 
-	function toString($eventSet, $autoCss){
+	function toString($eventSet){
 		$retstr = '';
 
 		if($this->isToday()){
@@ -254,13 +245,7 @@ class LibDay{
 		}
 
 		//header
-		$retstr .= '<td class="' .$class .'" ';
-
-		if($autoCss){
-			$retstr .= 'style="border:thin solid #000000; font-size:8pt;"';
-		}
-
-		$retstr .= ' >';
+		$retstr .= '<td class="calendarDay ' .$class .'">';
 		$retstr .= $aktuell;
 		$retstr .= '<b>' .$this->number. '</b><br /><br />';
 
@@ -466,7 +451,7 @@ class LibEvent{
 			$idSuffix = '_'.$forDate;
 		}
 
-		$retstr .= '<div class="vevent" style="text-align:center;"><a id="t' .$this->id . $idSuffix .'"></a>';
+		$retstr .= '<div class="calendarEvent vevent"><a id="t' .$this->id . $idSuffix .'"></a>';
 		$retstr .= '<abbr class="dtstart" title="' .$dtstart. '"><b>'.$timeString.'</b></abbr><br />';
 
 		//link
@@ -481,7 +466,7 @@ class LibEvent{
 
 		//image
 		if($this->imageUrl != ''){
-			$retstr .= '<img style="width:50px" src="'.$this->imageUrl.'" alt="Foto" /><br />';
+			$retstr .= '<img class="calendarEventImg" src="'.$this->imageUrl.'" alt="Foto" /><br />';
 		}
 
 		if($this->linkUrl != ''){

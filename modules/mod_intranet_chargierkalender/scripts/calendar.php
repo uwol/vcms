@@ -117,7 +117,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$calendar->addEvent($event);
 }
 
-echo $calendar->toString(true);
+echo $calendar->toString();
+
 
 class LibChargierKalenderEvent{
 	//time infos
@@ -232,7 +233,7 @@ class LibChargierKalenderEvent{
 		* print event
 		*/
 		//header
-		$retstr .= '<div class="vevent" style="text-align:center;">';
+		$retstr .= '<div class="calendarEvent vevent">';
 		$retstr .= '<abbr class="dtstart" title="' .$dtstart. '"><b>'.$timeString.'</b></abbr><br />';
 
 		//link

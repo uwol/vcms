@@ -1,21 +1,80 @@
-fieldset{
+fieldset {
 	padding: 8px;
+}
+
+#content .notificationBox {
+	border: 1px solid green;
+	background-color: #58FA58;
+	padding: 1px;
+}
+
+#content .errorBox {
+	border: 1px solid red;
+	background-color: #F6CECE;
+	padding: 1px;
 }
 
 .semestercover {
 	width: 140px;
 }
 
-.errorBox {
-	border: 1px solid red;
-	background-color: #F6CECE;
-	padding: 1px;
+/* member signature */
+
+#content .memberSignatureBox {
+	width: 75px;
+	line-height: 0;
 }
 
-.notificationBox {
-	border: 1px solid green;
-	background-color: #58FA58;
-	padding: 1px;
+#content .memberSignatureImg {
+	width: 75px;
+	height: 100px;
+	margin: 0;
+}
+
+#content .memberActivityBar {
+	display: inline-block;
+	height: .2em;
+	margin: .2em 0 0 0;
+}
+
+#content .memberActivityBarActive {
+	background-color: black;
+}
+
+#content .memberActivityBarInactive {
+	background-color: white;
+}
+
+/* calendar */
+
+#content .calendarYear {
+	table-layout: fixed;
+	border-spacing: 2px;
+	border-collapse: separate;
+	width: 100%;
+}
+
+#content .calendarMonth {
+	background-color: #BDBDBD;
+	text-align: center;
+}
+
+#content .calendarDayName {
+	background-color: #BDBDBD;
+	text-align: center;
+}
+
+#content .calendarDay {
+	border: thin solid #000000; 
+	font-size: 8pt;
+}
+
+#content .calendarEvent {
+	text-align: center;
+}
+
+#content .calendarEvent .calendarEventImg {
+	width: 50px;
 }
 
 #content th {
