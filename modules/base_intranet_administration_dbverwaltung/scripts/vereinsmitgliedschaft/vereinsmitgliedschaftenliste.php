@@ -43,11 +43,12 @@ if($libAuth->isLoggedin()){
 
 	echo '<p><a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaft&amp;aktion=blank">Eine neue Vereinsmitgliedschaft anlegen</a></p>';
 
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr><th style="width:40%">Verein</th><th style="width:50%">Mitglied</th><th style="width:10%">Aktion</th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_verein_mitgliedschaft,base_verein WHERE base_verein_mitgliedschaft.verein = base_verein.id ORDER BY base_verein.titel ASC");
 	$stmt->execute();
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
 		echo "<td>" .$row['titel']." " .$row['name']. "</td>";
@@ -55,6 +56,7 @@ if($libAuth->isLoggedin()){
 		echo '<td><a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaft&amp;verein=' .$row['verein']. '&amp;mitglied=' .$row['mitglied']. '">Ändern</a></td>';
 		echo "</tr>";
 	}
+
 	echo "</table>";
 }
 ?>

@@ -26,11 +26,10 @@ if($libAuth->isLoggedin()){
 			$stmt = $libDb->prepare("INSERT INTO base_region (bezeichnung) VALUES (:bezeichnung)");
 			$stmt->bindValue(':bezeichnung', $libString->protectXss($_POST['bezeichnung']));
 			$stmt->execute();
-		}
-		else
+		} else {
 			$libGlobal->errorTexts[] = "Keine Bezeichnung angegeben.";
-	}
-	elseif(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
+		}
+	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
 		if(isset($_GET['id']) && $_GET['id'] != ""){
 			$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE region1 = :region OR region2 = :region");
 			$stmt->bindValue(':region', $_GET['id'], PDO::PARAM_INT);
@@ -39,18 +38,18 @@ if($libAuth->isLoggedin()){
 			$stmt->fetch();
 
 			//wird diese Region noch in base_person benutzt?
-			if($anzahl > 0)
+			if($anzahl > 0){
 				$libGlobal->errorTexts[] = "Diese Region ist bei Personen angegeben.";
-			else{
+			} else {
 				$stmt = $libDb->prepare("DELETE FROM base_region WHERE id = :id");
 				$stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
 				$stmt->execute();
 
 				$libGlobal->notificationTexts[] = 'Region gelöscht.';
 			}
-		}
-		else
+		} else {
 			$libGlobal->errorTexts[] = "Keine Region angegeben.";
+		}
 	}
 
 	echo '<h1>Region</h1>';
@@ -59,11 +58,12 @@ if($libAuth->isLoggedin()){
 	echo $libString->getNotificationBoxText();
 
 	echo '<p>Die folgenden Regionen dienen der Einteilung der Mitglieder in Zirkel.</p>';
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr><th style="width:50%">Region</th><th style="width:40%">Anzahl Personen</th><th style="width:10%">Aktion</th></tr>';
 
 	$stmt = $libDb->prepare("SELECT bezeichnung,id FROM base_region");
 	$stmt->execute();
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE region1 = :region OR region2 = :region");
 		$stmt2->bindValue(':region', $row['id'], PDO::PARAM_INT);
@@ -77,6 +77,7 @@ if($libAuth->isLoggedin()){
 		echo '<td><a href="index.php?pid=intranet_admin_db_region&amp;aktion=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Löschen</a></td>';
 		echo "</tr>";
 	}
+
 	echo "</table>";
 
 	echo '<h2>Neue Region anlegen</h2>';

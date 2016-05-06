@@ -24,12 +24,14 @@ if($libAuth->isLoggedin()){
 	$libForm = new LibForm();
 
 	$id = '';
-	if(isset($_REQUEST['id']))
+	if(isset($_REQUEST['id'])){
 		$id = $_REQUEST['id'];
+	}
 
 	$aktion = '';
-	if(isset($_REQUEST['aktion']))
+	if(isset($_REQUEST['aktion'])){
 		$aktion = $_REQUEST['aktion'];
+	}
 
 	$varray = array();
 	//Felder in der Tabelle angeben -> Metadaten
@@ -55,8 +57,9 @@ if($libAuth->isLoggedin()){
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
 	elseif($aktion == "insert"){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
+		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
 			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+		}
 
 		$valueArray = $_REQUEST;
 		$valueArray['datum'] = $libTime->assureMysqlDateTime($valueArray['datum']);
@@ -88,8 +91,7 @@ if($libAuth->isLoggedin()){
 		}
 
 		$varray = $libDb->updateRow($felder, $valueArray, "base_veranstaltung", array("id" => $id));
-	}
-	else{
+	} else {
 		$stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE id=:id");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
@@ -116,8 +118,9 @@ if($libAuth->isLoggedin()){
 	* Löschoption
 	*
 	*/
-	if($varray['id'] != '')
+	if($varray['id'] != ''){
 		echo '<p><a href="index.php?pid=intranet_admin_db_veranstaltungsliste&amp;aktion=delete&amp;id='.$varray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
+	}
 
 	/**
 	*
@@ -125,10 +128,12 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 
-	if($aktion == "blank")
+	if($aktion == "blank"){
 		$extraActionParam = "&amp;aktion=insert";
-	else
+	} else {
 		$extraActionParam = "&amp;aktion=update";
+	}
+
 	echo '<form action="index.php?pid=intranet_admin_db_veranstaltung' .$extraActionParam. '" method="post">';
 	echo '<input type="submit" value="Speichern" name="Save"><br />';
 	echo '<input type="hidden" name="formtyp" value="veranstaltungsdaten" />';

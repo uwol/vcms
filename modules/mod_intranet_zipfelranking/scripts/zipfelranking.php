@@ -25,14 +25,14 @@ echo '<h1>Zipfelranking</h1>';
 
 echo '<p>Die Anzahl Zipfel lässt sich im <a href="index.php?pid=intranet_person_daten">Profil</a> eingeben.</p>';
 
-echo '<table style="width:100%">';
+echo '<table>';
 
 $stmt = $libDb->prepare('SELECT * FROM base_person, mod_zipfelranking_anzahl WHERE base_person.id = mod_zipfelranking_anzahl.id AND anzahlzipfel > 0 ORDER BY anzahlzipfel DESC');
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
-	echo '<td style="width:50%">';
+	echo '<td>';
 	echo '<a id="'. $row['id'] .'">';
 	echo $libMitglied->getMitgliedSignature($row['id'], 'left');
 	echo '</a>'."\n";

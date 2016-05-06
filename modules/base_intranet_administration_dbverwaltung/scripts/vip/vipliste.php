@@ -42,11 +42,12 @@ if($libAuth->isLoggedin()){
 
 	echo '<p><a href="index.php?pid=intranet_admin_db_vip&amp;aktion=blank">Einen neuen Vip anlegen</a></p>';
 
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr><th style="width:10%">Id</th><th style="width:10%">Praefix</th><th style="width:30%">Name</th><th style="width:10%">Suffix</th><th style="width:30%">Vorname</th><th style="width:10%">Aktion</th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_vip ORDER BY name");
 	$stmt->execute();
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
 		echo "<td>" .$row['id']. "</td>";
@@ -57,6 +58,7 @@ if($libAuth->isLoggedin()){
 		echo '<td><a href="index.php?pid=intranet_admin_db_vip&amp;id=' .$row['id']. '">Ändern</a></td>';
 		echo "</tr>";
 	}
+
 	echo "</table>";
 }
 ?>

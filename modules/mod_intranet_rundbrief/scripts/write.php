@@ -95,7 +95,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('smtpPassword')){
 <form method="post" action="index.php?pid=intranet_rundbrief_senden" onsubmit="return confirm('Willst Du die Nachricht wirklich verschicken?');">
 
 Nachricht senden an: <br />
-<table style="width:100%">
+<table>
 <tr>
 <td style="width:50%"><input type="checkbox" name="fuchsia" checked="checked" /> <?php echo $anzahlFuechse; ?> Füchse + Fuchsmajor 1 &amp; 2</td>
 <td style="width:50%"><input type="checkbox" name="couleurdamen" /> <?php echo $anzahlCouleurdamen; ?> Couleurdamen</td>

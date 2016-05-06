@@ -22,8 +22,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 if($libAuth->isLoggedin()){
 	$orderby = '';
-	if(isset($_GET['orderby']))
+	if(isset($_GET['orderby'])){
 		$orderby = $_GET['orderby'];
+	}
 
 
 	/**
@@ -32,8 +33,9 @@ if($libAuth->isLoggedin()){
 	if(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
 		if(isset($_GET['id']) && $_GET['id'] != ""){
 			//Ist der Bearbeiter kein Internetwart?
-			if(!in_array("internetwart",$libAuth->getAemter()))
+			if(!in_array("internetwart",$libAuth->getAemter())){
 				die("Fehler: Diese Aktion darf nur von einem Internetwart ausgeführt werden.");
+			}
 
 			//Problemfall Internetwart: Dieser darf nie gelöscht werden, um immer einen Admin im System zu haben
 			$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart");
@@ -44,7 +46,7 @@ if($libAuth->isLoggedin()){
 
 			if($anzahl > 0){
 				$libGlobal->errorTexts[] = "Die Person kann nicht gelöscht werden, weil sie ein Internetwart in mindestens einem Semester ist. Internetwarte können nicht gelöscht werden, weil sie die Administratoren sind und im Extremfall somit kein Administrator im System existiert. Falls diese Person gelöscht werden soll, so muss sie erst manuell von einem Internetwart in allen Semestern aus den Internetwartsposten entfernt werden.";
-			}else{
+			} else {
 				//Verwendung der Person in anderen Tabellen prüfen
 				//diese Einträge vorher löschen oder vom Mitglied befreien
 
@@ -124,46 +126,67 @@ if($libAuth->isLoggedin()){
 	echo "<p>Das Anlegen und Löschen von Personendatensätzen kann nur von einem Internetwart vorgenommen werden.</p>";
 
 	//Ist der Bearbeiter ein Internetwart?
-	if(in_array("internetwart",$libAuth->getAemter()))
+	if(in_array("internetwart",$libAuth->getAemter())){
 		//Link zum Anlegen von Personen anzeigen
 		echo '<p><a href="index.php?pid=intranet_admin_db_person&amp;aktion=blank">Eine neue Person anlegen</a></p>';
+	}
 
  	echo '<p>Anordnen nach: ';
 
-	if($orderid == 1)
+	if($orderid == 1){
 		echo "<b>";
+	}
+
 	echo '<a href="index.php?pid=intranet_admin_db_personenliste&amp;orderby=name">Name</a>';
-	if($orderid == 1)
+
+	if($orderid == 1){
 		echo "</b>";
+	}
+
 	echo ' - ';
 
-	if($orderid == 2)
+	if($orderid == 2){
 		echo "<b>";
+	}
+
 	echo '<a href="index.php?pid=intranet_admin_db_personenliste&amp;orderby=reception">Receptionssemester</a>';
-	if($orderid == 2)
+
+	if($orderid == 2){
 		echo "</b>";
+	}
+
 	echo ' - ';
 
-	if($orderid == 3)
+	if($orderid == 3){
 		echo "<b>";
+	}
+
 	echo '<a href="index.php?pid=intranet_admin_db_personenliste&amp;orderby=gruppe">Gruppe</a>';
-	if($orderid == 3)
+
+	if($orderid == 3){
 		echo "</b>";
+	}
+
 	echo ' - ';
 
-	if($orderid == 4)
+	if($orderid == 4){
 		echo "<b>";
+	}
+
 	echo '<a href="index.php?pid=intranet_admin_db_personenliste&amp;orderby=id">Id</a>';
-	if($orderid == 4)
+
+	if($orderid == 4){
 		echo "</b>";
+	}
 
 	echo '</p>';
 
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr><th style="width:10%">Id</th><th style="width:5%">Präfix</th><th style="width:25%">Name</th><th style="width:5%">Suffix</th><th style="width:20%">Vorname</th><th style="width:5%">Gruppe</th><th style="width:10%">Status</th><th style="width:10%">Reception</th><th style="width:10%">Aktion</th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person ORDER BY ".$order);
 	$stmt->execute();
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
 		echo "<td>" .$row['id']. "</td>";
@@ -177,6 +200,7 @@ if($libAuth->isLoggedin()){
 		echo '<td><a href="index.php?pid=intranet_admin_db_person&amp;id=' .$row['id']. '">Ändern</a></td>';
 		echo "</tr>";
 	}
+
 	echo "</table>";
 }
 ?>

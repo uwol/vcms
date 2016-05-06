@@ -27,11 +27,10 @@ if($libAuth->isLoggedin()){
 			$stmt->bindValue(':bezeichnung', $libString->protectXss($_REQUEST['bezeichnung']));
 			$stmt->bindValue(':beschreibung', $libString->protectXss($_REQUEST['beschreibung']));
 			$stmt->execute();
-		}
-		else
+		} else {
 			$libGlobal->errorTexts[] = "Keine Gruppe angegeben.";
-	}
-	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "delete"){
+		}
+	} elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "delete"){
 		if($_REQUEST['bezeichnung'] != "" && $_REQUEST['bezeichnung'] != "F" && $_REQUEST['bezeichnung'] != "B" && $_REQUEST['bezeichnung'] != "P" && $_REQUEST['bezeichnung'] != "C" && $_REQUEST['bezeichnung'] != "X" && $_REQUEST['bezeichnung'] != "T" && $_REQUEST['bezeichnung'] != "G" && $_REQUEST['bezeichnung'] != "W" && $_REQUEST['bezeichnung'] != "V" && $_REQUEST['bezeichnung'] != "Y"){
 			$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = :gruppe");
 			$stmt->bindValue(':gruppe', $libString->protectXss($_REQUEST['bezeichnung']));
@@ -40,18 +39,18 @@ if($libAuth->isLoggedin()){
 			$stmt->fetch();
 
 			//wird diese Gruppe noch in base_person benutzt?
-			if($anzahl > 0)
+			if($anzahl > 0){
 				$libGlobal->errorTexts[] = "Diese Gruppe wird von Mitgliedern verwendet.";
-			else{
+			} else {
 				$stmt = $libDb->prepare("DELETE FROM base_gruppe WHERE bezeichnung = :bezeichnung");
 				$stmt->bindValue(':bezeichnung', $_REQUEST['bezeichnung']);
 				$stmt->execute();
 
 				$libGlobal->notificationTexts[] = 'Gruppe gelöscht.';
 			}
-		}
-		else
+		} else {
 			$libGlobal->errorTexts[] = "Keine Gruppe angegeben.";
+		}
 	}
 
 	echo '<h1>Gruppen</h1>';
@@ -63,19 +62,24 @@ if($libAuth->isLoggedin()){
 
 	echo '<p>Eine Einteilung der Mitglieder in Vorstandsmitglieder, Warte etc. wird nicht über Gruppen, sondern über die Semestertabelle vorgenommen.</p>';
 
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr><th style="width:10%">Bezeichnung</th><th style="width:80%">Beschreibung</th><th style="width:10%">Aktion</th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_gruppe");
 	$stmt->execute();
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
 		echo '<td>' .$row['bezeichnung']. '</td>';
 		echo '<td>' .$row['beschreibung']. '</td>';
-		if($row['bezeichnung'] != "F" && $row['bezeichnung'] != "B" && $row['bezeichnung'] != "P" && $row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "C" && $row['bezeichnung'] != "G" && $row['bezeichnung'] != "W" && $row['bezeichnung'] != "V" && $row['bezeichnung'] != "Y")
+
+		if($row['bezeichnung'] != "F" && $row['bezeichnung'] != "B" && $row['bezeichnung'] != "P" && $row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "C" && $row['bezeichnung'] != "G" && $row['bezeichnung'] != "W" && $row['bezeichnung'] != "V" && $row['bezeichnung'] != "Y"){
 			echo '<td><a href="index.php?pid=intranet_admin_db_gruppen&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Löschen</a></td>';
+		}
+
 		echo "</tr>";
 	}
+
 	echo "</table>";
 
 	echo '<h2>Neue Gruppe anlegen</h2>';

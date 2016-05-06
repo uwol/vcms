@@ -55,7 +55,7 @@ echo $libString->getNotificationBoxText();
 ?>
 <p>Um eine Reservierung anzulegen, bitte <a href="index.php?pid=intranet_reservierung_buchen">diese Seite</a> öffnen.</p>
 <?php
-echo '<table style="width:100%">';
+echo '<table>';
 echo '<tr><th style="width:20%">Datum</th><th style="width:60%">Beschreibung</th><th style="width:20%">Person</th></tr>';
 
 $stmt = $libDb->prepare("SELECT * FROM mod_reservierung_reservierung WHERE datum >= :datum ORDER BY datum");

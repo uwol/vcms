@@ -24,8 +24,9 @@ if($libAuth->isLoggedin()){
 	$libForm = new LibForm();
 
 	$aktion = '';
-	if(isset($_REQUEST['aktion']))
+	if(isset($_REQUEST['aktion'])){
 		$aktion = $_REQUEST['aktion'];
+	}
 
 	$semesterarray = array();
 
@@ -59,27 +60,40 @@ if($libAuth->isLoggedin()){
 
 		$semesterarray['semester'] = $libTime->getNaechstesSemester();
 
-		foreach($vorstand as $amt)
+		foreach($vorstand as $amt){
 			$semesterarray[$amt] = '';
-		foreach($vorort as $amt)
+		}
+
+		foreach($vorort as $amt){
 			$semesterarray[$amt] = '';
+		}
 
 		//Daten vom letzten Semester rüberkopieren
-		foreach($warte as $amt)
+		foreach($warte as $amt){
 			$semesterarray[$amt] = $letztesSemester[$amt];
-		foreach($ahv as $amt)
+		}
+
+		foreach($ahv as $amt){
 			$semesterarray[$amt] = $letztesSemester[$amt];
-		foreach($hv as $amt)
+		}
+
+		foreach($hv as $amt){
 			$semesterarray[$amt] = $letztesSemester[$amt];
-		foreach($sensiblefelder as $amt)
+		}
+
+		foreach($sensiblefelder as $amt){
 			$semesterarray[$amt] = $letztesSemester[$amt];
+		}
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert: INSERT
 	elseif($aktion == "insert"){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
+		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
 			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
-		if(!$libTime->isValidSemesterString($_REQUEST['semester']))
+		}
+
+		if(!$libTime->isValidSemesterString($_REQUEST['semester'])){
 			die("Das Format des Semesters ".$_REQUEST['semester']." ist nicht korrekt. Erlaubt sind z. B. SS2015 oder WS20152016.");
+		}
 
 		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_semester WHERE semester=:semester");
 		$stmt->bindValue(':semester', $_REQUEST['semester']);
@@ -90,17 +104,19 @@ if($libAuth->isLoggedin()){
 		if($anzahl > 0){
 			$libGlobal->errorTexts[] = "Das Semester ist bereits vorhanden.";
 			$semesterarray = $_REQUEST;
-		}
-		else{
+		} else {
 			$semesterarray = $libDb->insertRow($felder, $_REQUEST, "base_semester", array("semester" => $_REQUEST['semester']));
 		}
 	}
 	//bestehende Mitgliedsdaten werden modifiziert: UPDATE
 	elseif($aktion == "update"){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
+		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
 			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
-		if(!$libTime->isValidSemesterString($_REQUEST['semester']))
+		}
+
+		if(!$libTime->isValidSemesterString($_REQUEST['semester'])){
 			die("Das Format des Semesters ".$_REQUEST['semester']." ist nicht korrekt. Erlaubt sind z. B. SS2015 oder WS20152016.");
+		}
 
 		$stmt = $libDb->prepare("SELECT * FROM base_semester WHERE semester=:semester");
 		$stmt->bindValue(':semester', $_REQUEST['semester']);
@@ -111,8 +127,9 @@ if($libAuth->isLoggedin()){
 		if($semesterarray['internetwart'] != ""){
 			//soll der Internetwart modifiziert werden
 			$internetwartWirdModifiziert = false;
-			if(in_array("internetwart", $felder) && $_REQUEST['internetwart'] != $semesterarray['internetwart'])
+			if(in_array("internetwart", $felder) && $_REQUEST['internetwart'] != $semesterarray['internetwart']){
 				$internetwartWirdModifiziert = true;
+			}
 
 			//soll der bisherige Internetwart modifiziert werden?
 			if($internetwartWirdModifiziert){
@@ -129,8 +146,11 @@ if($libAuth->isLoggedin()){
 							if(count($valideInternetWarte) < 2){
 								//STOPP, DRAMA ahead, dann gibt es keinen validen Intranetwart mehr
 								$dieText = "Fataler Fehler: Der bisherige Intranetwart ist der einzige valide, wenn er gelöscht wird, so gibt es keinen validen Intranetwart mehr! ";
-								if($_REQUEST['internetwart'] != "")
+
+								if($_REQUEST['internetwart'] != ""){
 									$dieText .= "Das ausgewählte Mitglied ist kein valides, es hat entweder keine Logindaten oder ist tot, ausgetreten etc.";
+								}
+
 								die($dieText);
 							}
 						}
@@ -142,7 +162,7 @@ if($libAuth->isLoggedin()){
 		$semesterarray = $libDb->updateRow($felder,$_REQUEST, "base_semester", array("semester" => $_REQUEST['semester']));
 	}
 	//keine Aktion
-	else{
+	else {
 		$stmt = $libDb->prepare("SELECT * FROM base_semester WHERE semester=:semester");
 		$stmt->bindValue(':semester', $_REQUEST['semester'], PDO::PARAM_INT);
 		$stmt->execute();
@@ -156,8 +176,7 @@ if($libAuth->isLoggedin()){
 			$libImage = new LibImage($libTime, $libGenericStorage);
 			$libImage->saveSemesterCoverByFilesArray($semesterarray['semester'], "semestercover");
 		}
-	}
-	elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == "semestercoverdelete"){
+	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == "semestercoverdelete"){
 		if($semesterarray['semester'] != ""){
 			$libImage = new LibImage($libTime, $libGenericStorage);
 			$libImage->deleteSemesterCover($semesterarray['semester']);
@@ -218,17 +237,23 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 	echo '<h2>Semesterdaten</h2>';
-	if($aktion == "blank")
+
+	if($aktion == "blank"){
 		$extraActionParam = "&amp;aktion=insert";
-	else
+	} else {
 		$extraActionParam = "&amp;aktion=update";
+	}
+
 	echo '<form action="index.php?pid=intranet_admin_db_semester' .$extraActionParam. '" method="post">';
 	echo '<input type="submit" value="Speichern" name="Save"><br />';
 	echo '<input type="hidden" name="formtyp" value="semesterdaten" />';
 	echo '<input type="hidden" name="semester" value="' .$semesterarray['semester']. '" />';
 	echo '<input size="10" type="text" name="semester" value="' .$semesterarray['semester']. '" ';
-	if($aktion != "blank")
+
+	if($aktion != "blank"){
 		echo "disabled";
+	}
+
 	echo ' /> Semester<br />';
 
 	//Vorstand
@@ -279,13 +304,15 @@ if($libAuth->isLoggedin()){
 				echo 'Dies ist die einzige Eintragung als Intranetwart für das folgende Mitglied. Wenn dieser Eintrag entfernt wird, so ist das Mitglied kein Intranetwart mehr! Die folgenden Internetwarte haben Intranetzugang und sind nicht tot oder ausgetreten: ';
 				$valideInternetWarte = $libVerein->getValideInternetWarte();
 
-				foreach($valideInternetWarte as $key => $value)
+				foreach($valideInternetWarte as $key => $value){
 					echo $libMitglied->getMitgliedNameString($key, 5). ", ";
+				}
 
 				echo '<br />';
 				echo 'Bitte stelle sicher, dass die anderen Intranetwarte ansprechbar sind und sie ihre Einwahldaten für das Intranet kennen, bevor Du diesen Intranetwart austrägst und evtl. einen anderen einträgst.<br />';
 			}
 		}
+
 		echo $libForm->getMitgliederDropDownBox("internetwart", "Internetwart", $semesterarray['internetwart']);
 	}
 

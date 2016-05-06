@@ -24,12 +24,14 @@ if($libAuth->isLoggedin()){
 	$libForm = new LibForm();
 
 	$id = '';
-	if(isset($_REQUEST['id']))
+	if(isset($_REQUEST['id'])){
 		$id = $_REQUEST['id'];
+	}
 
 	$aktion = '';
-	if(isset($_REQUEST['aktion']))
+	if(isset($_REQUEST['aktion'])){
 		$aktion = $_REQUEST['aktion'];
+	}
 
 	$array = array();
 	//Felder in der Tabelle angeben -> Metadaten
@@ -44,23 +46,28 @@ if($libAuth->isLoggedin()){
 
 	//neue, leerer Datensatz
 	if($aktion == "blank"){
-		foreach($felder as $feld)
+		foreach($felder as $feld){
 			$array[$feld] = '';
+		}
+
 		$array['id'] = '';
 		$array['name'] = "Namen angeben!";
 		$array['datum_adresse1_stand'] = '';
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
 	elseif($aktion == "insert"){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
+		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
 			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+		}
+
 		$array = $libDb->insertRow($felder,$_REQUEST, "base_vip", array("id"=>''));
 		updateAdresseStand("base_vip", "datum_adresse1_stand", $array['id']);
 	}
 	//bestehende Daten werden modifiziert
 	elseif($aktion == "update"){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
+		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
 			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+		}
 
 		$stmt = $libDb->prepare("SELECT * FROM base_vip WHERE id=:id");
 		$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
@@ -68,12 +75,12 @@ if($libAuth->isLoggedin()){
 		$array = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		//Adressänderungen prüfen und vermerken im Stand
-		if($_REQUEST['strasse1'] != $array['strasse1'] || $_REQUEST['ort1'] != $array['ort1'] || $_REQUEST['plz1'] != $array['plz1'])
+		if($_REQUEST['strasse1'] != $array['strasse1'] || $_REQUEST['ort1'] != $array['ort1'] || $_REQUEST['plz1'] != $array['plz1']){
 			updateAdresseStand("base_vip", "datum_adresse1_stand", $array['id']);
+		}
 
 		$array = $libDb->updateRow($felder,$_REQUEST, "base_vip", array("id" => $id));
-	}
-	else{
+	} else {
 		$stmt = $libDb->prepare("SELECT * FROM base_vip WHERE id=:id");
 		$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
 		$stmt->execute();
@@ -81,13 +88,11 @@ if($libAuth->isLoggedin()){
 	}
 
 
-
 	/**
 	*
 	* Einleitender Text
 	*
 	*/
-
 	echo '<h1>Vip</h1>';
 
 	/**
@@ -95,18 +100,21 @@ if($libAuth->isLoggedin()){
 	* Löschoption
 	*
 	*/
-	if($array['id'] != '')
+	if($array['id'] != ''){
 		echo '<p><a href="index.php?pid=intranet_admin_db_vipliste&amp;aktion=delete&amp;id='.$array['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
+	}
 
 	/**
 	*
 	* Ausgabe des Forms starten
 	*
 	*/
-	if($aktion == "blank")
+	if($aktion == "blank"){
 		$extraActionParam = "&amp;aktion=insert";
-	else
+	} else {
 		$extraActionParam = "&amp;aktion=update";
+	}
+
 	echo '<form action="index.php?pid=intranet_admin_db_vip' .$extraActionParam. '" method="post">';
 	echo '<input type="submit" value="Speichern" name="Save"><br />';
 	echo '<input type="hidden" name="formtyp" value="vipdaten" />';

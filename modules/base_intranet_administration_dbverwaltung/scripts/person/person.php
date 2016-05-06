@@ -24,12 +24,14 @@ if($libAuth->isLoggedin()){
 	$libForm = new LibForm();
 
 	$id = '';
-	if(isset($_REQUEST['id']))
+	if(isset($_REQUEST['id'])){
 		$id = $_REQUEST['id'];
+	}
 
 	$aktion = '';
-	if(isset($_REQUEST['aktion']))
+	if(isset($_REQUEST['aktion'])){
 		$aktion = $_REQUEST['aktion'];
+	}
 
 	$mgarray = array();
 	$mgarray['id'] = '';
@@ -51,8 +53,10 @@ if($libAuth->isLoggedin()){
 
 	//neue Person, leerer Datensatz
 	if($aktion == "blank"){
-		foreach($felder as $feld)
+		foreach($felder as $feld){
 			$mgarray[$feld] = '';
+		}
+
 		$mgarray['anrede'] = "Anrede angeben!";
 		$mgarray['vorname'] = "Vornamen angeben!";
 		$mgarray['name'] = "Namen angeben!";
@@ -67,11 +71,14 @@ if($libAuth->isLoggedin()){
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert: INSERT
 	elseif($aktion == "insert"){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
+		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
 			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+		}
+
 		//Ist der Bearbeiter kein Internetwart?
-		if(!in_array("internetwart",$libAuth->getAemter()))
+		if(!in_array("internetwart",$libAuth->getAemter())){
 			die("Fehler: Diese Aktion darf nur von einem Internetwart ausgeführt werden.");
+		}
 
 		$valueArray = $_REQUEST;
 		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
@@ -89,8 +96,9 @@ if($libAuth->isLoggedin()){
 	}
 	//bestehende Mitgliedsdaten werden modifiziert: UPDATE
 	elseif($aktion == "update"){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
+		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
 			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+		}
 
 		//aktuelle Daten holen
 		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE id=:id");
@@ -102,46 +110,60 @@ if($libAuth->isLoggedin()){
 		if($mgarray['id'] != "" && $libMitglied->hasBeenInternetWartAnyTime($mgarray['id'])){
 			//soll die Gruppe modifiziert werden? => Drohende Eintragung als tot oder entlassen
 			$gruppeWirdKritischModifiziert = false;
-			if(in_array("gruppe", $felder) && $_REQUEST['gruppe'] != $mgarray['gruppe'])
+
+			if(in_array("gruppe", $felder) && $_REQUEST['gruppe'] != $mgarray['gruppe']){
 				//ist eine kritische Gruppe angeben?
-				if($_REQUEST['gruppe'] == "X" || $_REQUEST['gruppe'] == "T")
+				if($_REQUEST['gruppe'] == "X" || $_REQUEST['gruppe'] == "T"){
 					$gruppeWirdKritischModifiziert = true;
+				}
+			}
 
 			//soll der Username modifiziert werden? => Drohende Eintragung eines leeren Usernamen
 			$usernameIstLeer = false;
-			if(in_array("username", $felder) && $_REQUEST['username'] == "")
+			if(in_array("username", $felder) && $_REQUEST['username'] == ""){
 				$usernameIstLeer = true;
+			}
 
 			//soll der password_hash modifiziert werden? => Drohende Eintragung eines leeren password_hash
 			$password_hashIstLeer = false;
-			if(in_array("password_hash", $felder) && $_REQUEST['password_hash'] == "")
+			if(in_array("password_hash", $felder) && $_REQUEST['password_hash'] == ""){
 				$password_hashIstLeer = true;
+			}
 
 			//sollen kritische Daten modifiziert werden?
-			if($gruppeWirdKritischModifiziert || $usernameIstLeer || $password_hashIstLeer)
+			if($gruppeWirdKritischModifiziert || $usernameIstLeer || $password_hashIstLeer){
 				//ist das Mitglied ein valider Intranetwart?
 				if($libMitglied->couldBeValidInternetWart($mgarray['id'])){
 					//dann ist das Ändern evtl ein Problem, wenn nämlich damit der letzte valide Internetwart gekillt wird
 					$valideInternetWarte = $libVerein->getValideInternetWarte();
+
 					//ist dies der letzte valide Internetwart?
-					if(count($valideInternetWarte) < 2)
+					if(count($valideInternetWarte) < 2){
 						//STOPP, DRAMA ahead, dann gibt es keinen validen Intranetwart mehr
 						die('Fataler Fehler: Der bisherige Intranetwart ist der einzige valide, mit der Änderung gibt es keinen validen Intranetwart mehr!');
+					}
 				}
+			}
 		}
 
 
 		//Adressänderungen prüfen und vermerken im Stand
-		if($_REQUEST['strasse1'] != $mgarray['strasse1'] || $_REQUEST['ort1'] != $mgarray['ort1'] || $_REQUEST['plz1'] != $mgarray['plz1'] || $_REQUEST['land1'] != $mgarray['land1'] || $_REQUEST['telefon1'] != $mgarray['telefon1'])
+		if($_REQUEST['strasse1'] != $mgarray['strasse1'] || $_REQUEST['ort1'] != $mgarray['ort1'] || $_REQUEST['plz1'] != $mgarray['plz1'] || $_REQUEST['land1'] != $mgarray['land1'] || $_REQUEST['telefon1'] != $mgarray['telefon1']){
 			updateAdresseStand("base_person", "datum_adresse1_stand", $mgarray['id']);
-		if($_REQUEST['strasse2'] != $mgarray['strasse2'] || $_REQUEST['ort2'] != $mgarray['ort2'] || $_REQUEST['plz2'] != $mgarray['plz2'] || $_REQUEST['land2'] != $mgarray['land2'] || $_REQUEST['telefon2'] != $mgarray['telefon2'])
+		}
+
+		if($_REQUEST['strasse2'] != $mgarray['strasse2'] || $_REQUEST['ort2'] != $mgarray['ort2'] || $_REQUEST['plz2'] != $mgarray['plz2'] || $_REQUEST['land2'] != $mgarray['land2'] || $_REQUEST['telefon2'] != $mgarray['telefon2']){
 			updateAdresseStand("base_person", "datum_adresse2_stand", $mgarray['id']);
-		if(isset($_REQUEST['gruppe']) && $_REQUEST['gruppe'] != $mgarray['gruppe'])
+		}
+
+		if(isset($_REQUEST['gruppe']) && $_REQUEST['gruppe'] != $mgarray['gruppe']){
 			updateGruppeStand($mgarray['id']);
+		}
 
 		//wenn ein Ehepartner angegeben wird, muss bei diesem dieses Mitglied auch als Ehepartner eingetragen werden
-		if($_REQUEST['heirat_partner'] != $mgarray['heirat_partner'])
+		if($_REQUEST['heirat_partner'] != $mgarray['heirat_partner']){
 			updateCorrespondingEhepartner($_REQUEST['heirat_partner'], $mgarray['id']);
+		}
 
 		$valueArray = $_REQUEST;
 		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
@@ -149,8 +171,7 @@ if($libAuth->isLoggedin()){
 		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);
 		$valueArray['austritt_datum'] = $libTime->assureMysqlDate($valueArray['austritt_datum']);
 		$mgarray = $libDb->updateRow($felder, $valueArray, "base_person", array('id' => $id));
-	}
-	else{
+	} else {
 		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE id=:id");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
@@ -167,8 +188,7 @@ if($libAuth->isLoggedin()){
 				$libImage->savePersonFotoByFilesArray($mgarray['id'], "bilddatei");
 			}
 		}
-	}
-	elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == "fotodatendelete"){
+	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == "fotodatendelete"){
 		if($mgarray['id'] != ""){
 			$libImage = new LibImage($libTime, $libGenericStorage);
 			$libImage->deletePersonFoto($mgarray['id']);
@@ -220,9 +240,11 @@ if($libAuth->isLoggedin()){
 	*/
 
 	//Ist der Bearbeiter ein Internetwart?
-	if(in_array("internetwart", $libAuth->getAemter()))
-		if($mgarray['id'] != '')
+	if(in_array("internetwart", $libAuth->getAemter())){
+		if($mgarray['id'] != ''){
 			echo '<p><a href="index.php?pid=intranet_admin_db_personenliste&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
+		}
+	}
 
 
 	/**
@@ -231,10 +253,12 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 
-	if($aktion == "blank")
+	if($aktion == "blank"){
 		$extraActionParam = "&amp;aktion=insert";
-	else
+	} else {
 		$extraActionParam = "&amp;aktion=update";
+	}
+
 	echo '<form action="index.php?pid=intranet_admin_db_person' .$extraActionParam. '" method="post">';
 	echo '<input type="submit" value="Speichern" name="Save"><br />';
 	echo '<input type="hidden" name="formtyp" value="personendaten" />';
@@ -315,10 +339,14 @@ if($libAuth->isLoggedin()){
 
 			$valideInternetWarte = $libVerein->getValideInternetWarte();
 			echo 'Die folgenden Internetwarte haben Intranetzugang und sind nicht verstorben oder ausgetreten: ';
-			foreach($valideInternetWarte as $key => $value)
+
+			foreach($valideInternetWarte as $key => $value){
 				echo $libMitglied->getMitgliedNameString($key,5). ", ";
+			}
+
 			echo '<p>Falls dies der Datensatz des einzigen Internetwartes ist, so sollte eine zweite Person mit Intranetzugang zur Sicherheit auch zu einem Internetwart gemacht werden. Andernfalls kann es passieren, dass der Internetwart durch die Modifikation der folgenden Daten aus dem System ausgesperrt wird. In diesem Fall muss mit dem Installationsscript ein neuer Intranetwart angelegt werden. Dies wird in der Installationsanleitung erklärt.</p>';
 		}
+
 		echo $libForm->getGruppeDropDownBox("gruppe","Gruppe",$mgarray['gruppe'],false);
 		echo '<input size="30" type="text" name="datum_gruppe_stand" value="' .$mgarray['datum_gruppe_stand']. '" disabled /> Stand<br />';
 
@@ -329,6 +357,7 @@ if($libAuth->isLoggedin()){
 		echo '<input size="30" type="text" name="username" value="' .$mgarray['username']. '" /> Username<br />';
 		echo '<input size="50" type="text" name="password_hash" value="' .$mgarray['password_hash']. '" /> Password-Hash<br />';
 	}
+
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
 	echo '<input type="submit" value="Speichern" name="Save"><br />';
 	echo "</form>";

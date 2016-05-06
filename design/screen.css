@@ -77,6 +77,10 @@ fieldset {
 	width: 50px;
 }
 
+#content table {
+	width: 100%;
+}
+
 #content th {
 	background-color: #BDBDBD;
 	font-size: 9pt;

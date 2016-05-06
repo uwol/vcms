@@ -63,7 +63,7 @@ elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "update"){
 	$libGlobal->notificationTexts[] = 'Die Chargierveranstaltung wurde gespeichert.';
 }
 // select
-else{
+else {
 	$stmt = $libDb->prepare("SELECT * FROM mod_chargierkalender_veranstaltung WHERE id=:id");
 	$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();

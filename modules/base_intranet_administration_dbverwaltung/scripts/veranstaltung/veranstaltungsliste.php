@@ -26,7 +26,6 @@ if($libAuth->isLoggedin()){
 	*/
 	if(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
 		if(isset($_GET['id']) && $_GET['id'] != ""){
-
 			//Verwendung der Veranstaltung in anderen Tabellen prüfen
 			//diese Einträge vorher löschen
 
@@ -57,6 +56,7 @@ if($libAuth->isLoggedin()){
 	$stmt->execute();
 
 	$daten = array();
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$daten[] = $row['datum'];
 	}
@@ -65,7 +65,7 @@ if($libAuth->isLoggedin()){
 	echo '<br />';
 
 	//Datenausgeben
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr><th style="width:10%">Id</th><th style="width:25%">Datum</th><th style="width:50%">Titel</th><th style="width:5%">Status</th><th style="width:10%">Aktion</th></tr>';
 
 	$zeitraum = $libTime->getZeitraum($libGlobal->semester);
@@ -75,6 +75,7 @@ if($libAuth->isLoggedin()){
 	$stmt->bindValue(':semester_start', $zeitraum[0]);
 	$stmt->bindValue(':semester_ende', $zeitraum[1]);
 	$stmt->execute();
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
 		echo "<td>" .$row['id']. "</td>";
@@ -84,6 +85,7 @@ if($libAuth->isLoggedin()){
 		echo '<td><a href="index.php?pid=intranet_admin_db_veranstaltung&amp;id=' .$row['id']. '">Ändern</a></td>';
 		echo "</tr>";
 	}
+
 	echo "</table>";
 }
 ?>

@@ -44,9 +44,9 @@ if($libAuth->isLoggedin()){
 				//Semestercover löschen
 				$libImage = new LibImage($libTime, $libGenericStorage);
 				$libImage->deleteSemesterCover($_REQUEST['semester']);
-			}
-			else
+			} else {
 				$libGlobal->errorTexts[] = 'Das Semester kann nicht gelöscht werden, da es einen Internetwarteintrag enthält. Um das Semester zu löschen, muss erst von einem Internetwart der Internetwarteintrag aus dem Semester ausgetragen werden.';
+			}
 		}
 	}
 
@@ -57,11 +57,12 @@ if($libAuth->isLoggedin()){
 
 	echo '<p><a href="index.php?pid=intranet_admin_db_semester&amp;aktion=blank">Ein neues Semester anlegen</a></p>';
 
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr><th style="width:25%">Semester</th><th style="width:25%">Senior</th><th style="width:20%">Fuchsmajor</th><th style="width:20%">Internetwart</th><th style="width:10%">Aktion</th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_semester ORDER BY SUBSTRING(semester,3) DESC");
 	$stmt->execute();
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
 		echo "<td>" .$row['semester']. "</td>";
@@ -71,6 +72,7 @@ if($libAuth->isLoggedin()){
 		echo '<td><a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$row['semester']. '">Ändern</a></td>';
 		echo "</tr>";
 	}
+
 	echo "</table>";
 }
 ?>
