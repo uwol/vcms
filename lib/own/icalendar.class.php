@@ -46,9 +46,13 @@ class LibICalendar{
 		/*
 		* encoding must be UTF-8, RFC 5545 chapter 6
 		*/
-
+		
+		if(!isset($_SERVER['HTTP_USER_AGENT'])){
+			header('Content-Type: text/calendar');
+			echo $retstr;
+		}
 		//Google Calendar: Mozilla/5.0 (compatible; Googlebot/2.1;+http://www.google.com/bot.html)
-		if(stristr($_SERVER['HTTP_USER_AGENT'], 'Google')){
+		elseif(stristr($_SERVER['HTTP_USER_AGENT'], 'Google')){
 			header('Content-Type: text/calendar; charset=UTF-8');
 			echo $retstr;
 		}
