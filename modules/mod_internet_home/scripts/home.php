@@ -26,7 +26,7 @@ if($libGenericStorage->loadValueInCurrentModule('fb:admins') == ''){
 ?>
 <h1>Willkommen</h1>
 
-<table style="width:100%">
+<table>
 	<tr>
 		<td>
 			<table>

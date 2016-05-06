@@ -26,7 +26,7 @@ echo '<h1>Logs</h1>';
 echo '<h2>Erfolglose Intranet-Anmeldungen</h2>';
 echo 'Personen mit mindestens fünf erfolglosen Intranet-Anmeldungen in den letzten zwei Monaten.';
 
-echo '<table style="width:100%">';
+echo '<table>';
 echo '<tr><th style="width:25%">Häufigkeit</th><th style="width:25%">Meldung</th><th style="width:50%">Person</th></tr>';
 
 $stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors, mitglied FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < 63 GROUP BY mitglied HAVING numberOfLoginErrors > 4 ORDER BY numberOfLoginErrors DESC');
@@ -45,7 +45,7 @@ echo '</table>';
 
 echo '<h2>Die letzten 500 protokollierten Ereignisse</h2>';
 
-echo '<table style="width:100%">';
+echo '<table>';
 echo '<tr><th style="width:30%">Datum</th><th style="width:25%">Meldung</th><th style="width:27%">Person</th><th style="width:18%">IP-Adresse</th></tr>';
 
 $stmt = $libDb->prepare('SELECT aktion, datum, mitglied, ipadresse FROM sys_log_intranet WHERE aktion IS NOT NULL ORDER BY datum DESC LIMIT 0,500');

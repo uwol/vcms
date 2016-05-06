@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 function printMitglieder($stmt, $writeLetter){
 	global $libDb, $libMitglied;
 
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr>';
 
 	$lastsetletter = "";

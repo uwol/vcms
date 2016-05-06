@@ -151,7 +151,7 @@ foreach($folders as $folder){
 
 if(count($foldersWithoutEvent) > 0){
 	echo '<h2>Galerien ohne Veranstaltung</h2>';
-	echo '<table style="width:100%">';
+	echo '<table>';
 	echo '<tr><th style="width:10%">Bild</th><th style="width:10%">Ordner</th><th style="width:50%">Titel</th><th style="width:20%">Veranstaltungsdatum</th><th style="width:10%">Aktion</th></tr>';
 
 	foreach($foldersWithoutEvent as $folder){

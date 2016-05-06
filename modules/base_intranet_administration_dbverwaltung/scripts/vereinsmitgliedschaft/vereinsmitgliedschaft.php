@@ -62,7 +62,7 @@ if($libAuth->isLoggedin()){
 		}
 
 		$error = false;
-	
+
 		if($_REQUEST['semester_reception'] != "" && !$libTime->isValidSemesterString($_REQUEST['semester_reception'])){
 			$libGlobal->errorTexts[] = "Das Receptionssemester ist falsch formatiert.";
 			$error = true;

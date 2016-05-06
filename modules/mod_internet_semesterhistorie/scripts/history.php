@@ -89,7 +89,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	/**
 	* vorstand
 	*/
-	echo '<table style="width:100%">'."\n";
+	echo '<table>'."\n";
 	echo '<tr>'."\n";
 
 	echo '<td style="width:20%;padding-right:5px;padding-bottom:20px;padding-top:20px">';

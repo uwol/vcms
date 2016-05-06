@@ -24,7 +24,7 @@ echo '<h1>Statusänderungen</h1>';
 echo '<p>Das VCMS speichert den Zeitpunkt von Änderungen an Adressen und Gruppenzugehörigkeiten. Die folgenden Tabellen listen die letzten Änderungen an diesen Daten auf. Dies kann z. B. dazu dienen, ein parallel geführtes Mitgliederverzeichnis aktuell zu halten.</p>';
 
 echo '<h2>Gruppenänderungen</h2>';
-echo '<table style="width:100%">';
+echo '<table>';
 echo '<tr><th style="20%">Person</th><th style="60%">Gruppe</th><th style="20%">Änderungsdatum</th></tr>';
 
 $stmt = $libDb->prepare('SELECT *,base_gruppe.beschreibung AS gruppenbeschreibung FROM base_person,base_gruppe WHERE base_person.gruppe = base_gruppe.bezeichnung AND datum_gruppe_stand IS NOT NULL AND datum_gruppe_stand != "" ORDER BY datum_gruppe_stand DESC LIMIT 0,100');
@@ -42,7 +42,7 @@ echo '</table>';
 
 
 echo '<h2>Änderungen an Adresse 1</h2>';
-echo '<table style="width:100%">';
+echo '<table>';
 echo '<tr><th style="20%">Person</th><th style="60%">Adresse</th><th style="20%">Änderungsdatum</th></tr>';
 
 $stmt = $libDb->prepare('SELECT * FROM base_person WHERE datum_adresse1_stand IS NOT NULL AND datum_adresse1_stand != "" ORDER BY datum_adresse1_stand DESC LIMIT 0,100');
@@ -83,7 +83,7 @@ echo '</table>';
 
 
 echo '<h2>Änderungen an Adresse 2</h2>';
-echo '<table style="width:100%">';
+echo '<table>';
 echo '<tr><th style="20%">Person</th><th style="60%">Adresse</th><th style="20%">Änderungsdatum</th></tr>';
 
 $stmt = $libDb->prepare('SELECT * FROM base_person WHERE datum_adresse2_stand IS NOT NULL AND datum_adresse1_stand != "" ORDER BY datum_adresse2_stand DESC LIMIT 0,100');

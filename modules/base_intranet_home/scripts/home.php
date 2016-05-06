@@ -33,7 +33,7 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 ?>
 
-<table style="width:100%">
+<table>
   <tr>
     <td>
       <table>

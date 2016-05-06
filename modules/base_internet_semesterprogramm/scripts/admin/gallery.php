@@ -195,7 +195,7 @@ if(is_dir("custom/veranstaltungsfotos/".$id)){
 	$pictures = $libGallery->getPictures($id,2);
 
 	echo '<div class="highslide-gallery galerie">';
-	echo '<table style="width:100%"><tr>';
+	echo '<table><tr>';
 	$i = 1;
 
 	foreach($pictures as $key => $picture){
