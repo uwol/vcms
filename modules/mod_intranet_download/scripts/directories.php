@@ -63,7 +63,7 @@ $hashes = $rootFolderObject->getHashMap();
 */
 
 //delete file
-if(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
+if(isset($_GET['aktion']) && $_GET['aktion'] == "delete" && isset($_GET['hash'])){
 	$element = $hashes[$_GET['hash']];
 
 	if(in_array($element->owningAmt, $libAuth->getAemter())){
@@ -74,7 +74,7 @@ if(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
 	}
 }
 //upload file
-elseif(isset($_POST['aktion']) && $_POST['aktion'] == "upload"){
+elseif(isset($_POST['aktion']) && $_POST['aktion'] == "upload" && isset($_POST['hash'])){
 	$folder = $hashes[$_POST['hash']];
 
 	if(in_array($folder->owningAmt, $libAuth->getAemter())){
@@ -93,7 +93,7 @@ elseif(isset($_POST['aktion']) && $_POST['aktion'] == "upload"){
 	}
 }
 // new folder
-elseif(isset($_POST['aktion']) && $_POST['aktion'] == "newfolder"){
+elseif(isset($_POST['aktion']) && $_POST['aktion'] == "newfolder" && isset($_POST['hash'])){
 	$folder = $hashes[$_POST['hash']];
 
 	if(in_array($folder->owningAmt, $libAuth->getAemter())){
@@ -282,6 +282,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			echo '<br />';
 		}
 	}
+
 	echo '</div>';
 }
 
