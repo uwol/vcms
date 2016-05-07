@@ -79,7 +79,7 @@ echo $libString->getNotificationBoxText();
 	        <hr />
           </td>
         </tr>
-        <?php @include($libModuleHandler->getModuleDirectory()."custom/rechtespalte.php");?>
+        <?php include("elements/wifi.php");?>
       </table>
 	</td>
   </tr>

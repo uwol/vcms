@@ -19,16 +19,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('wifiPassword')){
+	$libGenericStorage->saveValueInCurrentModule('wifiPassword', '');
+}
+
+if($libGenericStorage->loadValueInCurrentModule('wifiPassword') != ''){
+	echo '<tr>';
+	echo '<th>WLAN</th>';
+	echo '</tr>';
+	
+	echo '<tr>';
+	echo '<td class="rechteSpalteBox">';
+	echo '<hr />';
+	echo '<p class="aktuell">Das Passwort für das WLAN auf dem Haus lautet: ' .$libGenericStorage->loadValueInCurrentModule('wifiPassword'). '</p>';
+	echo '<hr />';
+	echo '</td>';
+    echo '</tr>';
+}
 ?>
-		<tr>
-			<th>WLAN a.d.h.</th>
-		</tr>
-		<tr>
-			<td class="rechteSpalteBox">
-				<hr />
-				<p class="aktuell">Das Passwort für das WLAN auf dem Haus lautet: </p>
-				<hr />
-				<p class="aktuell">Dieser Eintrag kann in der Datei modules / base_intranet_home / custom / rechtespalte.php geändert werden.</p>
-				<hr />
-			</td>
-        </tr>
