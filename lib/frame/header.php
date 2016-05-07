@@ -28,7 +28,7 @@ if($libGlobal->page->getPid() == 'semesterprogramm_event'){
     <meta name="description" content="<?php echo $libConfig->seiteBeschreibung; ?>" />
     <meta name="keywords" content="<?php echo $libConfig->seiteKeywords; ?>" />
     <link rel="stylesheet" href="styles/screen.css" />
-    <link rel="stylesheet" href="custom/styles/screen.css" />
+    <link rel="stylesheet" href="custom/design/style.css" />
 <?php
 /*
 * module stylesheet
