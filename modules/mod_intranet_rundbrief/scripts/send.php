@@ -249,7 +249,7 @@ function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaenger
 	}
 
 	if(!$mail->Send()){
-		echo '<tr><td colspan="2" style="padding-top:10px">';
+		echo '<tr><td colspan="2">';
 		echo '<strong>Fehler beim Versenden:</strong><br />';
 		echo $mail->ErrorInfo;
 		echo '</td></tr>';
