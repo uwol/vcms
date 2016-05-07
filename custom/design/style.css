@@ -1,239 +1,48 @@
-html, body{
-	height: 100%;
-}
-
 body {
-	background-color: #FAF8F8; /* graue Farbe für den rechten Rand der Seite, entspricht der Farbe des Hintergrundbilds */
-	font-family: Helvetica, Arial, sans-serif; /* Standardschriftart für Texte */
-	padding: 0px;
-	margin: 0px;
-	text-align: left;
-	font-size: 10pt; /* Standardschriftgröße für Texte */
+	background-color: #FAF8F8;
+	font-family: Helvetica, Arial, sans-serif;
 }
 
 #container{
-	background-image: url('background.jpg'); /* Hintergrundbild */
+	background-image: url('background.jpg');
 	background-position: 0% 0%;
-	background-repeat: repeat-y; /* Hintergrundbild vertikal wiederholen */
-	margin-left: auto;
-	margin-right: auto;
-	width: 800px;
-	min-height: 100%;
+	background-repeat: repeat-y;
 }
 
 #logo {
-	float: left;
-	top: 0px;
-	left: 0px; /* Position des Wappens */
-	background-image: url('topleft.png'); /* Wappen */
+	background-image: url('topleft.png');
 	background-repeat: no-repeat;
-	height: 150px; /* Höhe des Wappens, darunter das Menü */
-    width: 165px; /* Breite des Wappens, rechts daneben die Kopfzeile */
 }
 
-#header {
-	float: left;
-	background-image: url('topheader.png'); /* Hintergrundbild für Kopfzeile */
+header {
+	background-image: url('topheader.png');
 	background-repeat: no-repeat;
-	margin-left: 0px; /* horizontale Positionierung der Kopfzeile */
-	width: 560px; /* Breite der Kopfzeile */
-	padding-top: 146px;
-	padding-left: 30px;
-	padding-right: 35px;
-	font-weight: bold;
-	text-align: right;
 }
 
-#header a {
-	color: #961419; /* Farbe eines Links in der Kopfzeile */
-	text-decoration: none; /* keine Unterstreichung bei Links in der Kopfzeile */
-}
-
-#header img {
-	border: 0px; /* kein Rahmen bei Bildern in der Kopfzeile */
-	vertical-align: middle;
-}
-
-#menucontainer {
-	position: relative;
-	top: 20px;
-	left: 0px; /* Positionierung des Menüs */
-	width: 160px; /* Breite des Menüs */
-	float: left;
-	clear: both;
+header a {
+	color: #961419;
 }
 
 #menu {
-	float: left;
-	padding-left: 10px; /* linker Abstand des Menüs */
-	padding-right: 0px;
-	padding-bottom: 10px;
-	font-weight: bold;
-	line-height: 150%; /* Zeilenabstand der Menüschrift */
-	color: #961419; /* Farbe der Menüschrift */
+	color: #961419;
 }
 
-#menu .folderelement {
-	list-style-type: disc; /* Kreise vor Menüordnern */
-}
-
-#menu .entryelement {
-	list-style-type: circle; /* leere Kreise vor Menüeinträgen */
-}
-
-#menu .folderelementselected {
-	list-style-type: disc;
-}
-
-#menu .entryelementselected {
-	list-style-type: circle;
-}
-
-#menu .folderlist {
-	padding:0 0 0 10px;
-	margin: 0 0 0 0;
-}
-
-#menu a { text-decoration: none;} /* keine Unterstreichung bei Links im Menü */
-/* Farben von Links im Menü */
 #menu a:link { color: #961419;}
 #menu a:visited { color: #961419;}
 #menu a:hover { color: #000080;}
 #menu a:active { color: #000080;}
 #menu a:focus { color: #000080;}
 
-#content { /* Inhaltsfläche */
-	float: left;
-	width: 600px;
-	margin-left: 5px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-bottom: 40px;
-	text-align: left;
-}
-
-/*
-* Allgemeine Tags
-*/
-
-#content a { text-decoration: none;} /* Links in der Inhaltsfläche ohne Unterstreichung */
-/* Farben der Links */
 #content a:link { color: #961419;}
 #content a:visited { color: #961419;}
 #content a:hover { color: #000080;}
 #content a:active { color: #000080;}
 #content a:focus { color: #000080;}
 
-#content abbr { /* Abkürzungen */
-	text-decoration: none;
-	font-style: normal;
+#content h1 {
+	color: #961419;
 }
 
-#content acronym { /* Akronyme */
-	text-decoration: none;
-	font-style: normal;
-}
-
-#content ul { /* ungeordnete Listen */
-	list-style-type: disc; /* Kreise vor Listenelementen */
-	text-align: justify;
-}
-
-#content ol { /* geordnete Liste */
-	list-style-type: decimal; /* Zahlen vor Listeneinträgen */
-}
-
-#content hr { /* horizontaler Balken */
-	height: 1px; /* 1 Pixel dicke Linie */
-	margin: 5px; /* rechts und links 5 Pixel Platz */
-}
-
-#content h1 { /* größte Überschrift */
-	font-size: 1.5em; /* Schriftgröße der Überschrift */
-	font-weight: bolder;
-	color: #961419; /* Farbe der Überschrift */
-	margin-left: 10pt;
-	margin-right: 10pt;
-	margin-top: 5pt;
-	margin-bottom: 10pt;
-	text-align: center;
-}
-
-#content h2 { /* zweitgrößte Überschrift */
-	font-size: 1.2em;
-	font-weight: bold;
-	color: #961419; /* Farbe der Überschrift */
-	margin-left: 10pt;
-	margin-right: 10pt;
-	margin-top: 10pt;
-	margin-bottom: 5pt;
-	text-align: center;
-}
-
-#content h3 { /* drittgrößte Überschrift */
-	font-size: 1.0em;
-	font-weight: bold;
-	margin-left: 10pt;
-	margin-right: 10pt;
-	margin-top: 10pt;
-	margin-bottom: 5pt;
-	text-align: center;
-}
-
-#content h4 { /* viertgrößte Überschrift */
-	font-size: 1.0em;
-	font-weight: bold;
-	margin-left: 0pt;
-	margin-right: 0pt;
-	margin-top: 5pt;
-	margin-bottom: 5pt;
-	text-align: left;
-}
-
-#content img { /* Bilder */
-	border: 0px; /* ohne Rahmen */
-	vertical-align: middle;
-	margin: 2px;
-}
-
-#content table { /* Tabellen */
-	border-width: 0px; /* kein Tabellenrahmen */
-	border-style: solid;
-	border-collapse: collapse;
-	margin: 0px;
-	padding: 0px;
-}
-
-#content td {
-	vertical-align: top;
-	border-width: 0px;
-	border-style: solid;
-}
-
-#content input { /* Eingabefelder in Formularen */
-	padding: 1px;
-	margin: 2px 0 2px 0;
-}
-
-#content textarea { /* mehrzeiliges Text-Eingabefeld */
-	padding: 1px;
-	margin: 2px 0 2px 0;
-}
-
-#content .text { /* Fließtext */
-	margin: 0;
-	text-align: justify; /* Blocksatz */
-	padding: 10px;
-}
-
-#footer { /* Fußzeile */
-	clear: both;
-	width: 620px;
-	margin-left: 164px;
-	font-size: 0.8em;
-	text-align: center;
-}
-
-#cover { /* Semesterprogrammbild */
-	padding-left: 7px;
+#content h2 {
+	color: #961419;
 }

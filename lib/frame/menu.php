@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 ?>
-      <nav id="menucontainer">
+      <nav>
 <?php
 //menu
 $libMenuRenderer = new LibMenuRenderer();
@@ -27,7 +27,7 @@ echo $libMenuRenderer->getMenuHtml($libMenu, $libGlobal->pid, $libAuth->getGrupp
 $semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
 
 if($semesterCoverString != ""){
-	echo '        <div id="cover">'."\r\n";
+	echo '        <div id="semestercoverBox">'."\r\n";
 	echo '          '.$semesterCoverString."\r\n";
 	echo '        </div>'."\r\n";
 }

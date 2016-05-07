@@ -1,5 +1,208 @@
+html, body{
+	height: 100%;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	text-align: left;
+	font-size: 10pt;
+}
+
 fieldset {
 	padding: 8px;
+}
+
+#container{
+	margin-left: auto;
+	margin-right: auto;
+	width: 800px;
+	min-height: 100%;
+}
+
+#logo {
+	float: left;
+	top: 0px;
+	left: 0px;
+	height: 150px;
+    width: 165px;
+}
+
+header {
+	float: left;
+	margin-left: 0px;
+	width: 560px;
+	padding-top: 146px;
+	padding-left: 30px;
+	padding-right: 35px;
+	font-weight: bold;
+	text-align: right;
+}
+
+header a {
+	text-decoration: none;
+}
+
+header img {
+	border: 0px;
+	vertical-align: middle;
+}
+
+nav {
+	position: relative;
+	top: 20px;
+	left: 0px;
+	width: 160px;
+	float: left;
+	clear: both;
+}
+
+#menu {
+	float: left;
+	padding-left: 10px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	font-weight: bold;
+	line-height: 150%;
+}
+
+#menu .folderelement {
+	list-style-type: disc;
+}
+
+#menu .entryelement {
+	list-style-type: circle;
+}
+
+#menu .folderelementselected {
+	list-style-type: disc;
+}
+
+#menu .entryelementselected {
+	list-style-type: circle;
+}
+
+#menu .folderlist {
+	padding:0 0 0 10px;
+	margin: 0 0 0 0;
+}
+
+#menu a {
+	text-decoration: none;
+}
+
+#content {
+	float: left;
+	width: 600px;
+	margin-left: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 40px;
+	text-align: left;
+}
+
+#content a {
+	text-decoration: none;
+}
+
+#content abbr {
+	text-decoration: none;
+	font-style: normal;
+}
+
+#content acronym {
+	text-decoration: none;
+	font-style: normal;
+}
+
+#content ul {
+	list-style-type: disc;
+	text-align: justify;
+}
+
+#content ol {
+	list-style-type: decimal;
+}
+
+#content hr {
+	height: 1px;
+	margin: 5px;
+}
+
+#content h1 {
+	font-size: 1.5em;
+	font-weight: bolder;
+	margin-left: 10pt;
+	margin-right: 10pt;
+	margin-top: 5pt;
+	margin-bottom: 10pt;
+	text-align: center;
+}
+
+#content h2 {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-left: 10pt;
+	margin-right: 10pt;
+	margin-top: 10pt;
+	margin-bottom: 5pt;
+	text-align: center;
+}
+
+#content h3 {
+	font-size: 1.0em;
+	font-weight: bold;
+	margin-left: 10pt;
+	margin-right: 10pt;
+	margin-top: 10pt;
+	margin-bottom: 5pt;
+	text-align: center;
+}
+
+#content h4 {
+	font-size: 1.0em;
+	font-weight: bold;
+	margin-left: 0pt;
+	margin-right: 0pt;
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+	text-align: left;
+}
+
+#content img {
+	border: 0px;
+	vertical-align: middle;
+	margin: 2px;
+}
+
+#content table {
+	border-width: 0px;
+	border-style: solid;
+	border-collapse: collapse;
+	margin: 0px;
+	padding: 0px;
+}
+
+#content td {
+	vertical-align: top;
+	border-width: 0px;
+	border-style: solid;
+}
+
+#content input {
+	padding: 1px;
+	margin: 2px 0 2px 0;
+}
+
+#content textarea {
+	padding: 1px;
+	margin: 2px 0 2px 0;
+}
+
+#content .text {
+	margin: 0;
+	text-align: justify;
+	padding: 10px;
 }
 
 #content .notificationBox {
@@ -14,11 +217,13 @@ fieldset {
 	padding: 1px;
 }
 
+#semestercoverBox {
+	padding-left: 7px;
+}
+
 .semestercover {
 	width: 140px;
 }
-
-/* member signature */
 
 #content .memberSignatureBox {
 	width: 75px;
@@ -44,8 +249,6 @@ fieldset {
 #content .memberActivityBarInactive {
 	background-color: white;
 }
-
-/* calendar */
 
 #content .calendarYear {
 	table-layout: fixed;
@@ -88,4 +291,12 @@ fieldset {
 	height: 20px;
 	text-align: center;
 	vertical-align: middle;
+}
+
+footer {
+	clear: both;
+	width: 620px;
+	margin-left: 164px;
+	font-size: 0.8em;
+	text-align: center;
 }

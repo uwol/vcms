@@ -28,7 +28,6 @@ if($libGlobal->page->getPid() == 'semesterprogramm_event'){
     <meta name="description" content="<?php echo $libConfig->seiteBeschreibung; ?>" />
     <meta name="keywords" content="<?php echo $libConfig->seiteKeywords; ?>" />
     <link rel="stylesheet" href="styles/screen.css" />
-    <link rel="stylesheet" href="custom/design/style.css" />
 <?php
 /*
 * module stylesheet
@@ -36,7 +35,9 @@ if($libGlobal->page->getPid() == 'semesterprogramm_event'){
 if($libGlobal->module->getStyleSheet() != ""){
 	echo '    <link rel="stylesheet" href="' .$libModuleHandler->getModuleDirectory().$libGlobal->module->getStyleSheet(). '" />'."\r\n";
 }
-
+?>
+    <link rel="stylesheet" href="custom/design/style.css" />
+<?php
 /*
 * black ribbon
 */
@@ -93,4 +94,4 @@ if($libGlobal->pid == $libConfig->defaultHome){
   <body>
     <div id="container">
       <div id="logo"></div>
-      <header id="header"><?php if($libAuth->isLoggedin()) echo '<a href="index.php?session_destroy=1">abmelden</a>'; ?></header>
+      <header><?php if($libAuth->isLoggedin()) echo '<a href="index.php?session_destroy=1">abmelden</a>'; ?></header>
