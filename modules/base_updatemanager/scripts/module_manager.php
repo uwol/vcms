@@ -235,9 +235,10 @@ if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == "updateEngine" || $_REQ
 			@unlink("inc.php");
 			@unlink("index.php");
 
-			deleteDirectory("lib");
 			deleteDirectory("design");
 			deleteDirectory("js");
+			deleteDirectory("lib");
+			deleteDirectory("styles");
 
 			echo '<p style="color:blue">Installiere die neue Engine.</p>';
 
