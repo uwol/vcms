@@ -44,13 +44,7 @@ if($libGenericStorage->loadValueInCurrentModule('fb:admins') == ''){
 						<?php include("elements/socialmedia.php");?>
 					</td>
 				</tr>
-<?php
-require("elements/randomimage.php");
-
-if(is_file($libModuleHandler->getModuleDirectory()."custom/rechtespalte.php")){
-	include($libModuleHandler->getModuleDirectory()."custom/rechtespalte.php");
-}
-?>
+				<?php include("elements/randomimage.php");?>
 			</table>
       	</td>
 	</tr>
