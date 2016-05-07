@@ -28,7 +28,7 @@ if($libGenericStorage->loadValueInCurrentModule('wifiPassword') != ''){
 	echo '<tr>';
 	echo '<th>WLAN</th>';
 	echo '</tr>';
-	
+
 	echo '<tr>';
 	echo '<td class="rechteSpalteBox">';
 	echo '<hr />';
