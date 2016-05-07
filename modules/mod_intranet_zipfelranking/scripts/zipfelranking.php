@@ -39,7 +39,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<b>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 5) . '</b> - '.$row['anzahlzipfel'] . ' Zipfel<br />';
 
 	for($j=0; $j<$row['anzahlzipfel'] && $j < 50; $j++){
-		echo '<img src="' . $libModuleHandler->getModuleDirectory() . 'custom/img/zipfel.png" style="height:60px" />';
+		echo '<img src="' . $libModuleHandler->getModuleDirectory() . 'custom/img/zipfel.png" class="zipfel" />';
 	}
 
 	echo "</td>";
