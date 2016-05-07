@@ -199,10 +199,6 @@ if($libGenericStorage->loadValueInCurrentModule('showHaftungshinweis') == 1){
 	echo '<p>Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
 }
 
-if(is_file($libModuleHandler->getModuleDirectory()."custom/kontakttext.php")){
-	include($libModuleHandler->getModuleDirectory()."custom/kontakttext.php");
-}
-
 echo '<h2>VCMS</h2>';
 echo 'Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU GPL Lizenz)';
 ?>
