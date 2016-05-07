@@ -88,7 +88,7 @@ class LibYear{
 
 		foreach($this->months as $month){
 			$retstr .= '<tr><td colspan="7" ';
-			$retstr .= ' class="calendarMonth monat"><h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2></td></tr>';
+			$retstr .= ' class="calendarMonth"><h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2></td></tr>';
 			$retstr .= $month->toString($eventSet);
 		}
 
@@ -150,7 +150,7 @@ class LibMonth{
 		$retstr .= '<tr>'.$br;
 
 		for($i=0+$weekShift;$i<count($dayNames)+$weekShift;$i++){
-			$retstr .= '<td class="calendarDayName wochenname">';
+			$retstr .= '<td class="calendarDayName">';
 			$retstr .= $dayNames[$i % 7];
 			$retstr .= '</td>'.$br;
 		}
@@ -240,7 +240,6 @@ class LibDay{
 			$class = 'today';
 			$aktuell = '<a id="aktuell"></a>';
 		} else {
-			$class = 'wochentag';
 			$aktuell = '';
 		}
 

@@ -1,6 +1,5 @@
 body {
 	background-color: #FAF8F8;
-	font-family: Helvetica, Arial, sans-serif;
 }
 
 #container{
@@ -45,4 +44,20 @@ header a {
 
 #content h2 {
 	color: #961419;
+}
+
+#content th {
+	background-color: #E8CAA2;
+}
+
+#content .calendarMonth {
+	background-color: #E8CAA2;
+}
+
+#content .calendarDayName {
+	background-color: #E8CAA2;
+}
+
+#content .today {
+	border: thin solid #961419;
 }
