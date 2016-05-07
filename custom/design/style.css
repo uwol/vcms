@@ -54,6 +54,10 @@ header a {
 	background-color: #E8CAA2;
 }
 
+#content .calendarDay {
+	border: thin solid #E8CAA2;
+}
+
 #content .calendarDayName {
 	background-color: #E8CAA2;
 }
