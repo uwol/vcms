@@ -18,15 +18,12 @@ header h1::before {
 	content: "KStV Markomannia";
 	color: #961419;
 	font-family: serif;
-	font-size: 2.4em;
-	line-height: 90%;
 }
 
 header h2::before {
 	content: "im KV zu Münster";
 	color: #961419;
 	font-family: serif;
-	font-size: 1.45em;
 }
 
 header #signout a {
@@ -37,17 +34,49 @@ header #signout a {
 	color: #961419;
 }
 
-#menu a:link { color: #961419;}
-#menu a:visited { color: #961419;}
-#menu a:hover { color: #000080;}
-#menu a:active { color: #000080;}
-#menu a:focus { color: #000080;}
+#menu a:link {
+	color: #961419;
+}
 
-#content a:link { color: #961419;}
-#content a:visited { color: #961419;}
-#content a:hover { color: #000080;}
-#content a:active { color: #000080;}
-#content a:focus { color: #000080;}
+#menu a:visited {
+	color: #961419;
+}
+
+#menu a:hover {
+	color: #000080;
+}
+
+#menu a:active {
+	color: #000080;
+}
+
+#menu a:focus {
+	color: #000080;
+}
+
+#content {
+	background: rgba(255, 255, 255, 0.6);
+}
+
+#content a:link {
+	color: #961419;
+}
+
+#content a:visited {
+	color: #961419;
+}
+
+#content a:hover {
+	color: #000080;
+}
+
+#content a:active {
+	color: #000080;
+}
+
+#content a:focus {
+	color: #000080;
+}
 
 #content h1 {
 	color: #961419;

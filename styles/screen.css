@@ -40,6 +40,15 @@ header h1, h2 {
 	margin: 0;
 }
 
+header h1::before {
+	font-size: 2.4em;
+	line-height: 90%;
+}
+
+header h2::before {
+	font-size: 1.45em;
+}
+
 header #signout {
 	text-align: right;
 	font-weight: bold;
@@ -100,8 +109,10 @@ nav {
 #content {
 	float: left;
 	margin: 0;
-	padding: 0px 10px 40px 10px;
+	padding: 10px 10px 40px 10px;
 	width: 600px;
+	border-radius: 25px 25px 0 0;
+	border: 1px solid grey;
 }
 
 #content a {
