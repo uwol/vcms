@@ -97,7 +97,7 @@ if($libGlobal->pid == $libConfig->defaultHome){
       <header>
         <h1></h1>
         <h2></h2>
-        <div id="signout">
+        <span id="signout">
           <?php if($libAuth->isLoggedin()) echo '<a href="index.php?session_destroy=1">abmelden</a>'; ?>
-        </div>
+        </span>
       </header>

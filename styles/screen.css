@@ -30,14 +30,18 @@ fieldset {
 }
 
 header {
+	position: relative;
 	float: left;
 	margin: 0;
-	padding: 20px 10px 0 10px;
+	padding: 20px 10px 10px 10px;
 	width: 600px;
+	height: 135px;
 }
 
 header #signout {
-	text-align: right;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
 	font-weight: bold;
 }
 
@@ -106,8 +110,9 @@ nav {
 	margin: 0;
 	padding: 10px 10px 40px 10px;
 	width: 600px;
-	border-radius: 25px 25px 0 0;
+	border-radius: 10px 10px 0 0;
 	border: 1px solid grey;
+	border-width: 1px 1px 0 1px;
 }
 
 #content a {
