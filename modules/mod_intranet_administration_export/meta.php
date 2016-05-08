@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Administration für Export";
-$version = "2.05";
+$version = "2.06";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -25,5 +25,5 @@ $menuElementsIntranet = array();
 $menuElementsAdministration[] = new LibMenuEntry("intranet_admin_export", "Export", 200);
 
 $headerStrings = array();
-$dependencies[] = new LibMinDependency("Dependency zum Login-Modul", "base_internet_login", 1.0);
+$dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);
 ?>

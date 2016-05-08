@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Personen";
-$version = "2.12";
+$version = "2.13";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -13,7 +13,7 @@ $pages[] = new LibPage("intranet_person_daten", "scripts/", "person_data.php", n
 $pages[] = new LibPage("intranet_person_listedamenflor", "scripts/", "damenflor.php", new LibAccessRestriction(array("F", "B", "P", "C", "G", "W"), ""), "Damenflor");
 $pages[] = new LibPage("intranet_person_struktur", "scripts/", "structure.php", new LibAccessRestriction(array("B", "P"), ""), "Altersstrukturen");
 $pages[] = new LibPage("intranet_person_stammbaum", "scripts/", "genealogy.php", new LibAccessRestriction(array("F", "B", "P"), ""), "Stammbaum");
-$dependencies[] = new LibMinDependency("Dependency zum Login-Modul", "base_internet_login", 1.0);
+$dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);
 
 $menuElementsInternet = array();
 $menuFolderMitglieder = new LibMenuFolder("intranet_mitglied_listelebende", "Mitglieder", 3000);

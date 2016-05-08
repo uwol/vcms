@@ -21,7 +21,8 @@ if(!is_object($libGlobal))
 	exit();
 
 
-include $libModuleHandler->getModuleDirectoryByModuleid("base_internet_semesterprogramm").'scripts/lib/gallery.class.php';
+include($libModuleHandler->getModuleDirectoryByModuleid("mod_internet_semesterprogramm").'scripts/lib/gallery.class.php');
+
 $libGallery = new LibGallery($libDb);
 
 $stmt = $libDb->prepare("SELECT id, titel FROM base_veranstaltung WHERE DATEDIFF(NOW(),datum) < 90 ORDER BY RAND()");

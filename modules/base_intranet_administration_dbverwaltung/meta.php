@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Verwaltung";
-$version = "2.10";
+$version = "2.11";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -47,5 +47,5 @@ $menuElementsAdministration[] = $menuFolderDatenbank;
 
 $includes = array();
 $headerStrings = array();
-$dependencies[] = new LibMinDependency("Dependency zum Login-Modul", "base_internet_login", 1.0);
+$dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);
 ?>

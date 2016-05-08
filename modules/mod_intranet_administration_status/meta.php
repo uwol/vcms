@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Admin Statusänderungen";
-$version = "2.06";
+$version = "2.07";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -19,5 +19,5 @@ $menuElementsAdministration[] = new LibMenuEntry("intranet_admin_statusaenderung
 
 $includes = array();
 $headerStrings = array();
-$dependencies[] = new LibMinDependency("Dependency zum Login-Modul","base_internet_login",1.0);
+$dependencies[] = new LibMinDependency("Login-Modul","base_internet_login",1.0);
 ?>
