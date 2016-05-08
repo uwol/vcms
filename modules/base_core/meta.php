@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Basisdaten des Systems";
-$version = "2.13";
+$version = "2.14";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";

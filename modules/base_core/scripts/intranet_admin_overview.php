@@ -89,7 +89,7 @@ if($libGenericStorage->loadValue('base_internet_login', 'useHttps') != '1'){
 /*
 * missing folders
 */
-$dirs = array("custom", "custom/intranet", "custom/design", "custom/intranet/downloads", "custom/intranet/mitgliederfotos", "custom/semestercover", "custom/veranstaltungsfotos", "temp");
+$dirs = array("custom", "custom/intranet", "custom/styles", "custom/intranet/downloads", "custom/intranet/mitgliederfotos", "custom/semestercover", "custom/veranstaltungsfotos", "temp");
 foreach($dirs as $dir){
 	if(!is_dir($dir)){
 		$errors[] = "Ordner ". $dir ." fehlt.";
