@@ -31,10 +31,9 @@ fieldset {
 
 header {
 	float: left;
-	margin-left: 0px;
-	padding: 20px 35px 0 10px;
-	width: 585px;
-	font-weight: bold;
+	margin: 0;
+	padding: 20px 10px 0 10px;
+	width: 600px;
 }
 
 header h1, h2 {
@@ -43,6 +42,7 @@ header h1, h2 {
 
 header #signout {
 	text-align: right;
+	font-weight: bold;
 }
 
 header #signout a {
@@ -58,7 +58,7 @@ nav {
 	position: relative;
 	top: 20px;
 	left: 0px;
-	width: 160px;
+	width: 165px;
 	float: left;
 	clear: both;
 }
@@ -99,12 +99,9 @@ nav {
 
 #content {
 	float: left;
+	margin: 0;
+	padding: 0px 10px 40px 10px;
 	width: 600px;
-	margin-left: 5px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-bottom: 40px;
-	text-align: left;
 }
 
 #content a {
