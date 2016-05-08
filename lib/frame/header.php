@@ -36,7 +36,7 @@ if($libGlobal->module->getStyleSheet() != ""){
 	echo '    <link rel="stylesheet" href="' .$libModuleHandler->getModuleDirectory().$libGlobal->module->getStyleSheet(). '" />'."\r\n";
 }
 ?>
-    <link rel="stylesheet" href="custom/design/style.css" />
+    <link rel="stylesheet" href="custom/styles/screen.css" />
 <?php
 /*
 * black ribbon
