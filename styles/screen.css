@@ -25,7 +25,7 @@ fieldset {
 	float: left;
 	top: 0px;
 	left: 0px;
-	height: 150px;
+	height: 165px;
     width: 165px;
 }
 
@@ -34,6 +34,15 @@ header {
 	margin: 0;
 	padding: 20px 10px 0 10px;
 	width: 600px;
+}
+
+header #signout {
+	text-align: right;
+	font-weight: bold;
+}
+
+header #signout a {
+	text-decoration: none;
 }
 
 header h1, h2 {
@@ -47,20 +56,6 @@ header h1::before {
 
 header h2::before {
 	font-size: 1.45em;
-}
-
-header #signout {
-	text-align: right;
-	font-weight: bold;
-}
-
-header #signout a {
-	text-decoration: none;
-}
-
-header img {
-	border: 0px;
-	vertical-align: middle;
 }
 
 nav {

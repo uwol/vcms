@@ -4,14 +4,14 @@ body {
 
 #container{
 	background-image: url('zirkel.svg');
-	background-position: 0% 0%;
 	background-repeat: repeat-y;
 	background-size: 100% auto;
 }
 
 #logo {
-	background-image: url('topleft.png');
+	background-image: url('panier.svg');
 	background-repeat: no-repeat;
+	background-size: 100% auto;
 }
 
 header h1::before {
