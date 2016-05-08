@@ -3,9 +3,10 @@ body {
 }
 
 #container{
-	background-image: url('background.jpg');
+	background-image: url('zirkel.svg');
 	background-position: 0% 0%;
 	background-repeat: repeat-y;
+	background-size: 100% auto;
 }
 
 #logo {
