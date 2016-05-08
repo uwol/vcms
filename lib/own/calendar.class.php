@@ -236,11 +236,12 @@ class LibDay{
 	function toString($eventSet){
 		$retstr = '';
 
+		$class = '';
+		$aktuell = '';
+
 		if($this->isToday()){
 			$class = 'today';
 			$aktuell = '<a id="aktuell"></a>';
-		} else {
-			$aktuell = '';
 		}
 
 		//header
