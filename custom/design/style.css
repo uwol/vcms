@@ -13,12 +13,21 @@ body {
 	background-repeat: no-repeat;
 }
 
-header {
-	background-image: url('topheader.png');
-	background-repeat: no-repeat;
+header h1::before {
+	content: "KStV Markomannia";
+	color: #961419;
+	font-family: serif;
+	font-size: 2.4em;
 }
 
-header a {
+header h2::before {
+	content: "im KV zu Münster";
+	color: #961419;
+	font-family: serif;
+	font-size: 1.45em;
+}
+
+header #signout a {
 	color: #961419;
 }
 

@@ -32,15 +32,20 @@ fieldset {
 header {
 	float: left;
 	margin-left: 0px;
-	width: 560px;
-	padding-top: 146px;
-	padding-left: 30px;
-	padding-right: 35px;
+	padding: 20px 35px 0 10px;
+	width: 585px;
 	font-weight: bold;
+}
+
+header h1, h2 {
+	margin: 0;
+}
+
+header #signout {
 	text-align: right;
 }
 
-header a {
+header #signout a {
 	text-decoration: none;
 }
 
