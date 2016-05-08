@@ -88,7 +88,7 @@ class LibYear{
 
 		foreach($this->months as $month){
 			$retstr .= '<tr><td colspan="7" ';
-			$retstr .= ' class="calendarMonth"><h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2></td></tr>';
+			$retstr .= ' class="calendarMonthName"><h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2></td></tr>';
 			$retstr .= $month->toString($eventSet);
 		}
 

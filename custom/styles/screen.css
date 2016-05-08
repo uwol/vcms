@@ -34,23 +34,11 @@ header #signout a {
 	color: #961419;
 }
 
-#menu a:link {
+#menu a:link, a:visited {
 	color: #961419;
 }
 
-#menu a:visited {
-	color: #961419;
-}
-
-#menu a:hover {
-	color: #000080;
-}
-
-#menu a:active {
-	color: #000080;
-}
-
-#menu a:focus {
+#menu a:hover, a:active, a:focus {
 	color: #000080;
 }
 
@@ -58,31 +46,15 @@ header #signout a {
 	background: rgba(255, 255, 255, 0.6);
 }
 
-#content a:link {
+#content a:link, a:visited {
 	color: #961419;
 }
 
-#content a:visited {
-	color: #961419;
-}
-
-#content a:hover {
+#content a:hover, a:active, a:focus {
 	color: #000080;
 }
 
-#content a:active {
-	color: #000080;
-}
-
-#content a:focus {
-	color: #000080;
-}
-
-#content h1 {
-	color: #961419;
-}
-
-#content h2 {
+#content h1, h2 {
 	color: #961419;
 }
 
@@ -90,7 +62,7 @@ header #signout a {
 	background-color: #E8CAA2;
 }
 
-#content .calendarMonth {
+#content .calendarMonthName, .calendarDayName {
 	background-color: #E8CAA2;
 }
 
@@ -98,10 +70,10 @@ header #signout a {
 	border: thin solid #E8CAA2;
 }
 
-#content .calendarDayName {
-	background-color: #E8CAA2;
-}
-
 #content .today {
 	border: thin solid #961419;
+}
+
+#content .ankuendigungsBox, .rechtSpalteBox {
+	background-color: #FFFAF0;
 }
