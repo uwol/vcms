@@ -97,7 +97,7 @@ if(isset($_GET['verein'])){
 
 	if($vereinarray['farbe1'] != ''){
 		echo "<br /><b>Farben:</b> ". $vereinarray['farbe1'] ." ". $vereinarray['farbe2'] ." ". $vereinarray['farbe3'];
-		echo '<table style="margin-top:5px;margin-bottom:5px;border-width:1px;border-style:solid;border-color:#000000;height:30px;border-collapse:collapse">';
+		echo '<table style="margin:5px 0 5px 0;border:1px solid black;width:50px;height:30px;border-collapse:collapse">';
 
 	    if($vereinarray['farbe1'] != ""){
 			echo '<tr><td style="width:50px;background-color:' .$libVerein->getFarbe($vereinarray['farbe1']). '"></td></tr>';
