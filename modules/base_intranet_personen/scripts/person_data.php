@@ -102,7 +102,7 @@ if($libAuth->isLoggedin()){
   			//if the mailing module is installed
   			if($libModuleHandler->moduleIsAvailable("mod_intranet_rundbrief")){
   				//synchronize tables
-  				$stmt = $libDb->prepare("INSERT INTO mod_rundbrief_empfaenger (id, empfaenger) SELECT id, 1 FROM base_person WHERE (SELECT COUNT(*) FROM mod_rundbrief_empfaenger WHERE id= base_person.id) = 0");
+  				$stmt = $libDb->prepare("INSERT INTO mod_rundbrief_empfaenger (id, empfaenger) SELECT id, 1 FROM base_person WHERE (SELECT COUNT(*) FROM mod_rundbrief_empfaenger WHERE id = base_person.id) = 0");
 				$stmt->execute();
 
 				if(isset($_POST['empfaenger'])){
@@ -115,6 +115,19 @@ if($libAuth->isLoggedin()){
 				if(isset($_POST['interessiert'])){
 					$stmt = $libDb->prepare("UPDATE mod_rundbrief_empfaenger SET interessiert=:interessiert WHERE id = :id");
 					$stmt->bindValue(':interessiert', $_POST['interessiert'], PDO::PARAM_BOOL);
+					$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
+					$stmt->execute();
+				}
+  			}
+
+  			if($libModuleHandler->moduleIsAvailable("mod_intranet_zipfelranking")){
+  				//synchronize tables
+  				$stmt = $libDb->prepare("INSERT INTO mod_zipfelranking_anzahl (id, anzahlzipfel) SELECT id, 0 FROM base_person WHERE (SELECT COUNT(*) FROM mod_zipfelranking_anzahl WHERE id = base_person.id) = 0");
+				$stmt->execute();
+
+				if(isset($_POST['anzahlzipfel'])){
+					$stmt = $libDb->prepare("UPDATE mod_zipfelranking_anzahl SET anzahlzipfel=:anzahlzipfel WHERE id = :id");
+					$stmt->bindValue(':anzahlzipfel', $_POST['anzahlzipfel'], PDO::PARAM_INT);
 					$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 					$stmt->execute();
 				}
@@ -606,6 +619,16 @@ if($ownprofile){
 			echo '>Nein</option>';
 			echo '</select><br />';
 		}
+	}
+
+	if($libModuleHandler->moduleIsAvailable("mod_intranet_zipfelranking")){
+		$stmt = $libDb->prepare("SELECT anzahlzipfel FROM mod_zipfelranking_anzahl WHERE id=:id");
+		$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
+		$stmt->execute();
+		$stmt->bindColumn('anzahlzipfel', $anzahlzipfel);
+		$stmt->fetch();
+
+		echo '<input type="text" name="anzahlzipfel" size="2" value="'. $anzahlzipfel .'" /> Zipfelanzahl<br />';
 	}
 
 	echo $libForm->getRegionDropDownBox('region1', 'Region 1', $row['region1']);

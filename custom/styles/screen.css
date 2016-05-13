@@ -12,7 +12,7 @@ body {
 	background-image: url('panier.svg');
 	background-repeat: no-repeat;
 	background-size: auto 85%;
-	background-position: center; 
+	background-position: center;
 }
 
 header h1::before {
