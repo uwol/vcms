@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Semesterprogramm";
-$version = "2.25";
+$version = "2.26";
 $styleSheet = "styles/screen.css";
 $installScript = "";
 $uninstallScript = "";
@@ -19,7 +19,7 @@ $dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0
 $includes[] = new LibInclude("semesterprogramm_icalendar", "scripts/", "icalendar.php", "");
 $includes[] = new LibInclude("semesterprogramm_picture", "scripts/", "picture.php", "");
 $includes[] = new LibInclude("semesterprogramm_admin_galerie_upload", "scripts/admin/", "gallery_upload.php", $ar);
-$headerStrings[] = '<script src="styles/highslide/highslide.js" />';
+$headerStrings[] = '<script src="styles/highslide/highslide.js"></script>';
 $headerStrings[] = '<link rel="stylesheet" href="styles/highslide/highslide.css" />';
 $headerStrings[] = '<link rel="stylesheet" href="styles/fileuploader/fileuploader.css" />';
 $headerStrings[] = '<script>
