@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Semesterprogramm";
-$version = "2.26";
+$version = "2.27";
 $styleSheet = "styles/screen.css";
 $installScript = "";
 $uninstallScript = "";
@@ -23,7 +23,7 @@ $headerStrings[] = '<script src="styles/highslide/highslide.js"></script>';
 $headerStrings[] = '<link rel="stylesheet" href="styles/highslide/highslide.css" />';
 $headerStrings[] = '<link rel="stylesheet" href="styles/fileuploader/fileuploader.css" />';
 $headerStrings[] = '<script>
-hs.graphicsDir = \'js/highslide/graphics/\';
+hs.graphicsDir = \'styles/highslide/graphics/\';
 hs.align = \'center\';
 hs.transitions = [\'expand\', \'crossfade\'];
 hs.wrapperClassName = \'dark borderless floating-caption\';
