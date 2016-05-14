@@ -157,7 +157,7 @@ echo '<p>Für das Hochladen von Bildern aktiviere bitte JavaScript in Deinem Bro
 echo '</noscript>';
 echo '</div>';
 
-echo '<script src="js/fileuploader/fileuploader.js" type="text/javascript"></script>';
+echo '<script src="styles/fileuploader/fileuploader.js"></script>';
 echo '<script>
 		function createUploader(){
 			var uploader = new qq.FileUploader({
