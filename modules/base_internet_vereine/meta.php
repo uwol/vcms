@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Base Internet Vereine";
-$version = "2.07";
+$version = "2.08";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";

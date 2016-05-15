@@ -97,22 +97,22 @@ if(isset($_GET['verein'])){
 
 	if($vereinarray['farbe1'] != ''){
 		echo "<br /><b>Farben:</b> ". $vereinarray['farbe1'] ." ". $vereinarray['farbe2'] ." ". $vereinarray['farbe3'];
-		echo '<table style="margin:5px 0 5px 0;border:1px solid black;width:50px;height:30px;border-collapse:collapse">';
+		echo '<table style="margin:5px 0;border:1px solid black;width:50px;border-collapse:collapse">';
 
 	    if($vereinarray['farbe1'] != ""){
-			echo '<tr><td style="width:50px;background-color:' .$libVerein->getFarbe($vereinarray['farbe1']). '"></td></tr>';
+			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe1']). '"></td></tr>';
 		}
 
 		if($vereinarray['farbe2'] != ""){
-			echo '<tr><td style="width:50px;background-color:' .$libVerein->getFarbe($vereinarray['farbe2']). '"></td></tr>';
+			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe2']). '"></td></tr>';
 		}
 
 		if($vereinarray['farbe3'] != ""){
-			echo '<tr><td style="width:50px;background-color:' .$libVerein->getFarbe($vereinarray['farbe3']). '"></td></tr>';
+			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe3']). '"></td></tr>';
 		}
 
 		if($vereinarray['farbe4'] != ""){
-			echo '<tr><td style="width:50px;background-color:' .$libVerein->getFarbe($vereinarray['farbe4']). '"></td></tr>';
+			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe4']). '"></td></tr>';
 		}
 
 		echo "</table>";
