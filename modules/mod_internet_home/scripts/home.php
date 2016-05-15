@@ -20,32 +20,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
-if($libGenericStorage->loadValueInCurrentModule('fb:admins') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
 	$libGenericStorage->saveValueInCurrentModule('fb:admins', 0);
 }
 ?>
 <h1>Willkommen</h1>
 
-<table>
-	<tr>
-		<td>
-			<table>
-			<?php include("elements/announcements.php"); ?>
-			</table>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<th>Aktuelles</th>
-				</tr>
-				<tr>
-					<td class="rechteSpalteBox">
-						<?php include("elements/nextevent.php");?>
-						<?php include("elements/socialmedia.php");?>
-					</td>
-				</tr>
-				<?php include("elements/randomimage.php");?>
-			</table>
-      	</td>
-	</tr>
-</table>
+<div class="row">
+	<section class="col-md-9">
+		<?php include("elements/announcements.php"); ?>
+	</section>
+	<aside class="col-md-3">
+		<?php include("elements/nextevent.php");?>
+		<?php include("elements/socialmedia.php");?>
+		<?php include("elements/randomimage.php");?>
+	</aside>
+</div>

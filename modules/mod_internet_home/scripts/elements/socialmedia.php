@@ -20,12 +20,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
+
 if(!$libGenericStorage->attributeExistsInCurrentModule('fb_likebutton_url')){
 	$libGenericStorage->saveValueInCurrentModule('fb_likebutton_url', '');
 }
-
-
-echo '<p class="aktuell">';
 
 $title = $libConfig->verbindungName;
 $description = $libConfig->seiteBeschreibung;
@@ -97,5 +95,4 @@ echo '<a href="http://' .$libConfig->sitePath. '/inc.php?iid=internet_home_rssfe
 echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/img/buttons/rss.png" alt="R" />';
 echo '</a> ';
 
-echo '</p>';
 echo '<hr />';

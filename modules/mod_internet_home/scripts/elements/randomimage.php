@@ -21,7 +21,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-include($libModuleHandler->getModuleDirectoryByModuleid("mod_internet_semesterprogramm").'scripts/lib/gallery.class.php');
+include($libModuleHandler->getModuleDirectoryByModuleid("mod_internet_semesterprogramm") . 'scripts/lib/gallery.class.php');
 
 $libGallery = new LibGallery($libDb);
 
@@ -45,29 +45,22 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$keys = array_keys($pictures);
 		$pictureid = $keys[$zufallszahl];
 
-		echo '<tr><th>Impression</th></tr>';
-		echo '<tr><td class="rechteSpalteBox">';
-
+		echo '<h2>Impression</h2>';
 		echo '<hr />';
 
-		echo '<p class="aktuell"><strong>Veranstaltung:</strong> ' .wordwrap($row['titel'], 50, '<br />', 1). '</p>';
-		echo '<div class="aktuellimg">';
+		echo '<h3 class="title">Veranstaltung: ' .wordwrap($row['titel'], 50, '<br />', 1). '</h3>';
+		
 		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$row['id'].'&amp;pictureid='.$pictureid .'" alt="" ';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$row['id'].'&amp;pictureid='.$pictureid .'" alt="" class="img-responsive img-thumbnail" ';
 
 		if($libGallery->getPublicityLevel($pictures[$pictureid]) == 1){
-			echo 'style="width:170px; border-width: 3px; border-style: solid; border-color:yellow" ';
-		} else {
-			echo 'style="width:170px; margin:3px" ';
+			echo 'style="border: 1px solid yellow"';
 		}
 
 		echo ' />';
 		echo '</a>';
-		echo '</div>';
 
 		echo '<hr />';
-
-		echo '</td></tr>';
 
 		break;
 	}

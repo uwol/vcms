@@ -21,33 +21,28 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<tr><th>Ankündigung</th></tr>';
-echo '<tr><td class="ankuendigungsBox">';
+echo '<h2>Ankündigung</h2>';
 echo '<hr />';
 
 $stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum = '0000-00-00 00:00:00') ORDER BY startdatum DESC LIMIT 0,3");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<p class="textankuendigung" style="clear:both">';
+	echo '<div class="row">';
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$row['id']. '.jpg';
 
 	if(is_file($posssibleImage)){
-		echo '<img src="'.$posssibleImage.'" style="float:left;margin-right:10px;margin-bottom:6px;';
-		list($width, $height, $type, $attr) = getimagesize($posssibleImage);
-
-		if(($width / 4 * 3) >= $height){
-			echo 'width:200px;';
-		} else {
-			echo 'height:150px;';
-		}
-
-		echo '" alt="" />';
+		echo '<div class="col-xs-4">';
+		echo '<img src="' .$posssibleImage. '" class="img-responsive" alt="" />';
+		echo '</div>';
 	}
-
+	
+	echo '<div class="col-xs-8">';
 	echo $libString->parseBBCode(nl2br(trim($row['text'])));
-	echo '</p>';
-	echo '<div class="textankuendigung" style="clear:both"><hr /></div>';
+	echo '</div>';
+
+	echo '</div>';
+	echo '<hr />';
 }
 
 // link
@@ -57,11 +52,11 @@ $stmt->bindColumn('number', $number);
 $stmt->fetch();
 
 if($number > 3){
-	echo '<p class="textankuendigung" style="clear:both">';
+	echo '<div class="row">';
+	echo '<div class="col-xs-12">';
 	echo '<a href="index.php?pid=home_ankuendigungen">Weitere Ankündigungen ...</a>';
-	echo '</p>';
-	echo '<div class="textankuendigung" style="clear:both"><hr /></div>';
+	echo '</div>';
+	echo '</div>';
+	echo '<hr />';
 }
-
-echo '</td></tr>';
 ?>

@@ -21,33 +21,37 @@ if(!is_object($libGlobal))
 	exit();
 
 
+echo '<h2>Aktuelles</h2>';
 echo '<hr />';
-echo '<p class="aktuell" style="font-weight:bold">Nächste Veranstaltungen:<br /></p>';
-echo '<p class="aktuell">';
+
+echo '<h3 class="title">Nächste Veranstaltungen:</h3>';
 
 $stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,4");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+	echo '<p>';
+
 	$date = substr($row['datum'], 0, 10);
 	$datearray = explode('-', $date);
 
-	echo '<br /><b><a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a></b><br />';
+	echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a><br />';
 
 	$date = $datearray[2].".".$datearray[1].'.';
-	echo $libTime->wochentag($row['datum']).', '.$date.'<br />';
+	echo $libTime->wochentag($row['datum']).', '.$date;
 
 	$time = substr($row['datum'], 11, 5);
 
 	if($time != '00:00'){
-		echo $time.'<br />';
+		echo '<br />' . $time;
 	}
 
 	if($row['ort'] != ''){
-		echo $row['ort'].'<br />';
+		echo '<br />' . $row['ort'];
 	}
+	
+	echo '</p>';
 }
 
-echo '</p>';
 echo '<hr />';
 ?>

@@ -1,7 +1,7 @@
 <?php
 $moduleName = "Homepage";
 $version = "2.23";
-$styleSheet = "styles/screen.css";
+$styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";
 $updateScript = "";

@@ -1,4 +1,4 @@
-html, body{
+html, body {
 	height: 100%;
 }
 
@@ -77,84 +77,42 @@ nav .navbar-intranet li a {
 	padding: 1em;
 }
 
-#content a {
-	text-decoration: none;
-}
-
-#content abbr {
-	text-decoration: none;
-	font-style: normal;
-}
-
-#content acronym {
-	text-decoration: none;
-	font-style: normal;
-}
-
-#content ul {
-	list-style-type: disc;
-	text-align: justify;
-}
-
-#content ol {
-	list-style-type: decimal;
-}
-
-#content hr {
-	height: 1px;
-	margin: 5px;
-}
-
 #content h1 {
 	font-size: 1.5em;
 	font-weight: bolder;
-	margin-left: 10pt;
-	margin-right: 10pt;
-	margin-top: 5pt;
-	margin-bottom: 10pt;
+	margin: 10pt 5pt 10pt 10pt;
 	text-align: center;
 }
 
 #content h2 {
 	font-size: 1.2em;
 	font-weight: bold;
-	margin-left: 10pt;
-	margin-right: 10pt;
-	margin-top: 10pt;
-	margin-bottom: 5pt;
+	margin: 10pt 5pt 10pt 10pt;
 	text-align: center;
 }
 
 #content h3 {
 	font-size: 1.0em;
 	font-weight: bold;
-	margin-left: 10pt;
-	margin-right: 10pt;
-	margin-top: 10pt;
-	margin-bottom: 5pt;
-	text-align: center;
 }
 
 #content h4 {
 	font-size: 1.0em;
 	font-weight: bold;
-	margin-left: 0pt;
-	margin-right: 0pt;
-	margin-top: 5pt;
-	margin-bottom: 5pt;
-	text-align: left;
-}
-
-#content img {
-	border: 0;
-	vertical-align: middle;
-	margin: 2px;
 }
 
 #content table {
+	width: 100%;
 	border-width: 0;
 	margin: 0;
 	padding: 0;
+}
+
+#content th {
+	font-weight: bold;
+	height: 20px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 #content td {
@@ -170,6 +128,10 @@ nav .navbar-intranet li a {
 #content textarea {
 	padding: 1px;
 	margin: 2px 0 2px 0;
+}
+
+#content section, #content aside {
+	background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
 }
 
 #content .text {
@@ -247,17 +209,6 @@ nav .navbar-intranet li a {
 
 #content .calendarEvent .summary {
 	font-size: 8pt;
-}
-
-#content table {
-	width: 100%;
-}
-
-#content th {
-	font-weight: bold;
-	height: 20px;
-	text-align: center;
-	vertical-align: middle;
 }
 
 
