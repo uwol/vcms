@@ -466,7 +466,7 @@ class LibEvent{
 
 		//image
 		if($this->imageUrl != ''){
-			$retstr .= '<img class="calendarEventImg" src="'.$this->imageUrl.'" alt="Foto" /><br />';
+			$retstr .= '<img class="img-responsive calendarEventImg" src="'.$this->imageUrl.'" alt="Foto" />';
 		}
 
 		if($this->linkUrl != ''){

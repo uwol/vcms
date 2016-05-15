@@ -242,8 +242,7 @@ nav .navbar-intranet li a {
 }
 
 #content .calendarEvent .calendarEventImg {
-	max-width: 100%;
-	height: auto;
+	margin: 2px auto;
 }
 
 #content .calendarEvent .summary {

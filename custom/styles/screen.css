@@ -2,7 +2,7 @@ body {
 	background-color: #FAF8F8;
 }
 
-#container{
+#container {
 	background-image: url('zirkel.svg');
 	background-repeat: repeat-y;
 	background-size: 100% auto;
@@ -31,11 +31,11 @@ header #signout a {
 	color: #961419;
 }
 
-#menu a:link, a:visited {
+#menu a:link, #menu a:visited {
 	color: #961419;
 }
 
-#menu a:hover, a:active, a:focus {
+#menu a:hover, #menu a:active, #menu a:focus {
 	color: #000080;
 }
 
@@ -43,15 +43,15 @@ header #signout a {
 	background: rgba(255, 255, 255, 0.6);
 }
 
-#content a:link, a:visited {
+#content a:link, #content a:visited {
 	color: #961419;
 }
 
-#content a:hover, a:active, a:focus {
+#content a:hover, #content a:active, #content a:focus {
 	color: #000080;
 }
 
-#content h1, h2 {
+#content h1, #content h2 {
 	color: #961419;
 }
 
@@ -59,7 +59,7 @@ header #signout a {
 	background-color: #E8CAA2;
 }
 
-#content .calendarMonthName, .calendarDayName {
+#content .calendarMonthName, #content .calendarDayName {
 	background-color: #E8CAA2;
 }
 
@@ -69,8 +69,4 @@ header #signout a {
 
 #content .today {
 	border: thin solid #961419;
-}
-
-#content .ankuendigungsBox, .rechteSpalteBox {
-	background-color: #FFFAF0;
 }
