@@ -36,7 +36,7 @@ class LibMenuRenderer{
 		$retstr = '';
 		$retstr .= '          <nav class="navbar navbar-default">' . "\r\n";
         $retstr .= '            <div class="container-fluid">' . "\r\n";
-        
+
         $retstr .= $this->getNavbarCollapsed();
 
         $retstr .= $this->getNavbarInternet($menuInternet, $aktivesPid);
@@ -47,38 +47,38 @@ class LibMenuRenderer{
 
 		return $retstr;
 	}
-	
+
 	function getNavbarInternet($menuInternet, $aktivesPid){
 		$retstr = '';
-		
+
 		$rootMenuFolderInternet = $menuInternet->getRootMenuFolder();
-		
+
 		if($rootMenuFolderInternet->hasElements()){
-			$retstr .= '              <div id="navbar" class="collapse navbar-collapse navbar-internet">' . "\r\n";
+			$retstr .= '              <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . "\r\n";
 			$retstr .= '                <ul class="nav navbar-nav">' . "\r\n";
 			$retstr .= $this->getMenuLevel($rootMenuFolderInternet, 0, $aktivesPid);
 			$retstr .= '                </ul>' . "\r\n";
 			$retstr .= '              </div>' . "\r\n";
 		}
-	
+
 		return $retstr;
 	}
 
 	function getNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid){
 		$retstr = '';
-		
+
 		$rootMenuFolderIntranet = $menuIntranet->getRootMenuFolder();
 		$rootMenuFolderAdministration = $menuAdministration->getRootMenuFolder();
-		
+
 		if($rootMenuFolderIntranet->hasElements()){
-			$retstr .= '              <div id="navbar" class="collapse navbar-collapse navbar-intranet">' . "\r\n";
+			$retstr .= '              <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . "\r\n";
 			$retstr .= '                <ul class="nav navbar-nav">' . "\r\n";
 			$retstr .= $this->getMenuLevel($rootMenuFolderIntranet, 0, $aktivesPid);
 			$retstr .= $this->getMenuLevel($rootMenuFolderAdministration, 0, $aktivesPid);
 			$retstr .= '                </ul>' . "\r\n";
 			$retstr .= '              </div>' . "\r\n";
 		}
-	
+
 		return $retstr;
 	}
 
@@ -137,19 +137,19 @@ class LibMenuRenderer{
 
 		return $retstr;
 	}
-	
+
 	function getNavbarCollapsed(){
 		$retstr = '';
-		
+
 		$retstr .= '              <div class="navbar-header">' . "\r\n";
-		$retstr .= '                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">' . "\r\n";
-        $retstr .= '                  <span class="sr-only">Navigation</span>' . "\r\n";
-        $retstr .= '                  <span class="icon-bar"></span>' . "\r\n";
-        $retstr .= '                  <span class="icon-bar"></span>' . "\r\n";
-		$retstr .= '                  <span class="icon-bar"></span>' . "\r\n";
+		$retstr .= '                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . "\r\n";
+        $retstr .= $this->defaultIndent . '<span class="sr-only">Navigation</span>' . "\r\n";
+        $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . "\r\n";
+        $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . "\r\n";
+		$retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . "\r\n";
 		$retstr .= '                </button>' . "\r\n";
 		$retstr .= '              </div>' . "\r\n";
-	
+
 		return $retstr;
 	}
 

@@ -459,7 +459,7 @@ class LibModuleHandler{
 
 		return $menu;
 	}
-	
+
 	function getMenuIntranet(){
 		$menu = $this->menuIntranet;
 		$menu->sortElementsByPosition();
@@ -467,7 +467,7 @@ class LibModuleHandler{
 
 		return $menu;
 	}
-	
+
 	function getMenuAdministration(){
 		$menu = $this->menuAdministration;
 		$menu->sortElementsByPosition();
