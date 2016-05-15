@@ -203,10 +203,6 @@ nav .navbar-intranet li a {
 	text-align: center;
 }
 
-#content .calendarEvent .calendarEventImg {
-	margin: 2px auto;
-}
-
 #content .calendarEvent .summary {
 	font-size: 8pt;
 }

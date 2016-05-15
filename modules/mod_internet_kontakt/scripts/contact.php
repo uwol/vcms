@@ -23,35 +23,35 @@ if(!is_object($libGlobal))
 /*
 * action
 */
-if($libGenericStorage->loadValueInCurrentModule('showSenior') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('showSenior')){
 	$libGenericStorage->saveValueInCurrentModule('showSenior', 0);
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showJubelsenior') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('showJubelsenior')){
 	$libGenericStorage->saveValueInCurrentModule('showJubelsenior', 0);
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showConsenior') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('showConsenior')){
 	$libGenericStorage->saveValueInCurrentModule('showConsenior', 0);
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('showFuchsmajor')){
 	$libGenericStorage->saveValueInCurrentModule('showFuchsmajor', 0);
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor2') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('showFuchsmajor2')){
 	$libGenericStorage->saveValueInCurrentModule('showFuchsmajor2', 0);
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showScriptor') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('showScriptor')){
 	$libGenericStorage->saveValueInCurrentModule('showScriptor', 0);
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showQuaestor') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('showQuaestor')){
 	$libGenericStorage->saveValueInCurrentModule('showQuaestor', 0);
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showHaftungshinweis') == ''){
+if(!$libGenericStorage->attributeExistsInCurrentModule('showHaftungshinweis')){
 	$libGenericStorage->saveValueInCurrentModule('showHaftungshinweis', 1);
 }
 
@@ -101,7 +101,9 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<h2>Kontaktadresse</h2>';
-echo '<img src="' . $libModuleHandler->getModuleDirectory() . 'custom/img/haus.jpg" alt="Haus" style="float:right;height:200px;" />';
+
+echo '<div class="row">';
+echo '<section class="col-sm-8">';
 
 echo $libConfig->verbindungName .'<br /><br />';
 
@@ -147,9 +149,18 @@ echo $libConfig->verbindungLand . '<br />';
 echo $libConfig->verbindungTelefon . '<br />';
 echo $libConfig->emailInfo . '<br />';
 
+echo '</section>';
+
+echo '<aside class="col-sm-4">';
+echo '<img src="' . $libModuleHandler->getModuleDirectory() . 'custom/img/haus.jpg" alt="Haus" class="img-responsive center-block" />';
+echo '</aside>';
+
+echo '</div>';
+
 
 echo '<h2>Kontakt aufnehmen</h2>';
-echo '<div style="text-align: center;">';
+echo '<div class="row">';
+echo '<section class="col-md-12">';
 
 if($mailsent){
 	echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
@@ -189,11 +200,16 @@ if($mailsent){
 	echo '</form>';
 }
 
+echo '</section>';
 echo '</div>';
 
 if($libGenericStorage->loadValueInCurrentModule('showHaftungshinweis') == 1){
 	echo '<h2>Haftungshinweis</h2>';
-	echo '<p>Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
+	echo '<div class="row">';
+	echo '<p class="col-md-12">';
+	echo 'Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.';
+	echo '</p>';
+	echo '</div>';
 }
 
 echo '<h2>VCMS</h2>';

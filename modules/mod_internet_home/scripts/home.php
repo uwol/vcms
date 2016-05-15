@@ -31,8 +31,8 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
 		<?php include("elements/announcements.php"); ?>
 	</section>
 	<aside class="col-md-3">
+		<?php include("elements/randomimage.php");?>
 		<?php include("elements/nextevent.php");?>
 		<?php include("elements/socialmedia.php");?>
-		<?php include("elements/randomimage.php");?>
 	</aside>
 </div>
