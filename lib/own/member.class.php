@@ -133,25 +133,25 @@ class LibMember{
 		return $retstr;
 	}
 
-	function getMitgliedSignature($id, $floatType = 'left'){
+	function getMitgliedSignature($id, $pullType = 'left'){
 		$retstr = '';
 
 		$margin = '.5em';
 
-		$floatString = '';
+		$pullString = '';
 		$marginString = '';
 
-		if($floatType == 'left'){
-			$floatString = 'float:left;';
+		if($pullType == 'left'){
+			$pullString = 'pull-left';
 			$marginString = 'margin: 0 ' . $margin . ' ' . $margin . ' 0;';
-		} elseif($floatType == 'right'){
-			$floatString = 'float:right;';
+		} elseif($pullType == 'right'){
+			$pullString = 'pull-right';
 			$marginString = 'margin: 0 0 ' . $margin . ' ' . $margin . ';';
 		} else {
 			$marginString = 'margin: 0 0 ' . $margin . ' 0;';
 		}
 
-		$retstr .= '<div class="memberSignatureBox" style="' . $floatString . $marginString . '">';
+		$retstr .= '<div class="memberSignatureBox ' .$pullString. '" style="' . $marginString . '">';
 
 		/*
 		* member image

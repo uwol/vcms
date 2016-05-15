@@ -25,21 +25,21 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 * actions
 */
 
-if(isset($_REQUEST["veranstaltungenchangeanmeldenstate"]) && $_REQUEST["veranstaltungenchangeanmeldenstate"] != "" && isset($_REQUEST['eventid']) && $_REQUEST['eventid'] != ""){
-	$stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE id=:id");
+if(isset($_REQUEST['veranstaltungenchangeanmeldenstate']) && $_REQUEST['veranstaltungenchangeanmeldenstate'] != '' && isset($_REQUEST['eventid']) && $_REQUEST['eventid'] != ''){
+	$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE id=:id');
 	$stmt->bindValue(':id', $_REQUEST['eventid'], PDO::PARAM_INT);
 	$stmt->execute();
 	$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	//event in future?
-	if(@date("Y-m-d H:i:s") < $row["datum"]){
-		if($_REQUEST["veranstaltungenchangeanmeldenstate"] == "anmelden"){
-			$stmt = $libDb->prepare("INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)");
+	if(@date('Y-m-d H:i:s') < $row['datum']){
+		if($_REQUEST['veranstaltungenchangeanmeldenstate'] == 'anmelden'){
+			$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)');
 			$stmt->bindValue(':veranstaltung', $_REQUEST['eventid'], PDO::PARAM_INT);
 			$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->execute();
 		} else {
-			$stmt = $libDb->prepare("DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung AND person=:person");
+			$stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung AND person=:person');
 			$stmt->bindValue(':veranstaltung', $_REQUEST['eventid'], PDO::PARAM_INT);
 			$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->execute();
@@ -52,27 +52,24 @@ if(isset($_REQUEST["veranstaltungenchangeanmeldenstate"]) && $_REQUEST["veransta
 * output
 */
 
-$stmtCount = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung WHERE datum > NOW()");
+$stmtCount = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung WHERE datum > NOW()');
 $stmtCount->execute();
 $stmtCount->bindColumn('number', $count);
 $stmtCount->fetch();
 
 // if there are entries
 if($count > 0){
-	echo '<tr><th>Veranstaltungen</th></tr>';
-	echo '<tr><td class="ankuendigungsBox">';
+	echo '<h2>Veranstaltungen</h2>';
 	echo '<hr />';
 
-	$stmt = $libDb->prepare("SELECT id, datum, titel FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,3");
+	$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,3');
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<div class="textankuendigung" style="clear:both">';
-		echo '<div style="float:left;height:30px;margin:0 10px 0 0;">';
 		echo '<form action="index.php?pid=intranet_home" method="post">';
 		echo '<input type="hidden" name="eventid" value="' .$row['id']. '" />';
 
-		$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");
+		$stmt2 = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung');
 		$stmt2->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 		$stmt2->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
 		$stmt2->execute();
@@ -86,14 +83,9 @@ if($count > 0){
 		}
 
 		echo '</form>';
-		echo '</div><div>';
 		echo '<b>'.$libTime->formatDateTimeString($row['datum'], 1).'</b> - ';
-		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid='.$row['id'].'">'.$row['titel']."</a>";
-		echo '</div>';
-		echo '</div>';
-		echo '<div style="clear:both"><hr /></div>';
+		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid='.$row['id'].'">'.$row['titel'].'</a>';
+		echo '<hr />';
 	}
-
-	echo '</td></tr>';
 }
 ?>

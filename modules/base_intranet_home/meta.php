@@ -1,7 +1,7 @@
 <?php
 $moduleName = "Intranet Home";
-$version = "2.14";
-$styleSheet = "styles/screen.css";
+$version = "2.15";
+$styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
 $updateScript = "install/update.php";

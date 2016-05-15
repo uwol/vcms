@@ -32,8 +32,7 @@ $stmtCount->fetch();
 
 // if there are entries
 if($count > 0){
-	echo '<tr><th>Reservierungen</th></tr>';
-	echo '<tr><td class="ankuendigungsBox">';
+	echo '<h2>Reservierungen</h2>';
 	echo '<hr />';
 
 	$stmt = $libDb->prepare("SELECT person, datum, beschreibung FROM mod_reservierung_reservierung WHERE DATEDIFF(NOW(), datum) <= 0 ORDER BY datum LIMIT 0,2");
@@ -42,24 +41,20 @@ if($count > 0){
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$date = $libTime->formatDateTimeString($row['datum'], 2);
 
-		echo '<div class="textankuendigung" style="clear:both">';
-		echo $libMitglied->getMitgliedSignature($row['person'],"right");
-		echo "<b>".$date." - " .$libMitglied->getMitgliedNameString($row["person"],0). "</b><br />";
+		echo $libMitglied->getMitgliedSignature($row['person'], 'right');
+		echo '<b>'.$date.' - ' .$libMitglied->getMitgliedNameString($row['person'],0). '</b><br />';
 
-		if(($row["beschreibung"]) != ''){
-			echo '<a href="index.php?pid=intranet_reservierung_liste">'.nl2br(substr($row["beschreibung"], 0, 200));
+		if(($row['beschreibung']) != ''){
+			echo '<a href="index.php?pid=intranet_reservierung_liste">'.nl2br(substr($row['beschreibung'], 0, 200));
 
-			if(strlen($row["beschreibung"]) > 200){
-				echo " ...";
+			if(strlen($row['beschreibung']) > 200){
+				echo ' ...';
 			}
 
-			echo "</a>";
+			echo '</a>';
 		}
 
-		echo '</div>';
-		echo '<div style="clear:both"><hr /></div>';
+		echo '<hr />';
 	}
-
-	echo '</td></tr>';
 }
 ?>

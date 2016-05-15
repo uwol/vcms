@@ -25,16 +25,9 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('wifiPassword')){
 }
 
 if($libGenericStorage->loadValueInCurrentModule('wifiPassword') != ''){
-	echo '<tr>';
-	echo '<th>WLAN</th>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td class="rechteSpalteBox">';
+	echo '<h2>WLAN</h2>';
 	echo '<hr />';
-	echo '<p class="aktuell">Das Passwort für das WLAN auf dem Haus lautet: ' .$libGenericStorage->loadValueInCurrentModule('wifiPassword'). '</p>';
+	echo '<p>Das Passwort für das WLAN auf dem Haus lautet: ' .$libGenericStorage->loadValueInCurrentModule('wifiPassword'). '</p>';
 	echo '<hr />';
-	echo '</td>';
-    echo '</tr>';
 }
 ?>

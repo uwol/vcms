@@ -32,35 +32,29 @@ $stmtCount->fetch();
 
 // if there are entries
 if($count > 0){
-	echo '<tr><th>Neues</th></tr>'."\n";
-	echo '<tr><td class="ankuendigungsBox">'."\n";
-	echo '<hr />'."\n";
+	echo '<h2>Neues</h2>';
+	echo '<hr />';
 
-	$stmt = $libDb->prepare("SELECT mod_news_kategorie.bezeichnung, mod_news_news.eingabedatum, mod_news_news.id, mod_news_news.text, mod_news_news.betroffenesmitglied, mod_news_news.autor FROM mod_news_news LEFT JOIN mod_news_kategorie ON mod_news_news.kategorieid=mod_news_kategorie.id ORDER BY mod_news_news.eingabedatum DESC LIMIT 0,3");
+	$stmt = $libDb->prepare('SELECT mod_news_kategorie.bezeichnung, mod_news_news.eingabedatum, mod_news_news.id, mod_news_news.text, mod_news_news.betroffenesmitglied, mod_news_news.autor FROM mod_news_news LEFT JOIN mod_news_kategorie ON mod_news_news.kategorieid=mod_news_kategorie.id ORDER BY mod_news_news.eingabedatum DESC LIMIT 0,3');
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$date = $libTime->formatDateTimeString($row['eingabedatum'], 2);
 
-		echo '<div class="textankuendigung" style="clear:both">';
-
 		if($row['betroffenesmitglied'] != ''){
-			echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied'], "left");
+			echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied'], 'left');
 		}
 
-		echo $libMitglied->getMitgliedSignature($row['autor'], "right");
-		echo "<b>".$date." - " .$row['bezeichnung']. "</b><br />\n";
+		echo $libMitglied->getMitgliedSignature($row['autor'], 'right');
+		echo '<b>' .$date. ' - ' .$row['bezeichnung']. '</b><br />';
 
-		if(($row["text"]) != ''){
+		if(($row['text']) != ''){
 			echo '<a href="index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterEinesDatums($row['eingabedatum']). '#' .$row['id']. '">';
 			echo $libString->truncate(trim($row['text']), 200);
-			echo "</a>\n";
+			echo '</a>';
 		}
 
-		echo '</div>'."\n";
-		echo '<div style="clear:both"><hr /></div>'."\n";
+		echo '<hr />';
 	}
-
-	echo '</td></tr>'."\n";
 }
 ?>

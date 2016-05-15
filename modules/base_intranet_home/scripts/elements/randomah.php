@@ -25,51 +25,49 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 * output
 */
 
+echo '<h2>Die AHAH</h2>';
 echo '<hr />';
-echo '<div class="aktuell">';
 
 $stmt = $libDb->prepare("SELECT id, anrede, rang, titel, vorname, praefix, name, suffix, ort1, land1, beruf, semester_reception FROM base_person WHERE gruppe='P' ORDER BY RAND() LIMIT 0,1");
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if(is_numeric($row['id'])){
-	echo $libMitglied->getMitgliedSignature($row['id'], "left");
-	echo "<b>" .wordwrap($libMitglied->formatMitgliedNameString($row["anrede"], $row["titel"], $row["rang"], $row["vorname"], $row["praefix"], $row["name"], $row["suffix"], 0), 12, "<br />\n", 1)."\n";
+	echo $libMitglied->getMitgliedSignature($row['id'], 'left');
+	echo '<b>' .wordwrap($libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0), 12, '<br />', 1);
 
 	$chargen = $libMitglied->getChargenString($row['id']);
 
 	if($chargen != ''){
-		echo " ".$chargen;
+		echo ' '.$chargen;
 	}
 
 	$vereine = $libMitglied->getVereineString($row['id']);
 
 	if($vereine != ''){
-		echo " ".$vereine;
+		echo ' '.$vereine;
 	}
 
-	echo "</b>\n";
+	echo '</b>';
 
 	if($row['semester_reception'] != ''){
-		echo "<br />\nRc.: " .substr($row['semester_reception'], 0, 2) ." ".substr($row['semester_reception'], 2, 4);
+		echo '<br />Rc.: ' .substr($row['semester_reception'], 0, 2) .' '.substr($row['semester_reception'], 2, 4);
 	}
 
 	if($row['beruf'] != ''){
-		echo "<br />\n" .$libString->silbentrennung($row['beruf'], 12);
+		echo '<br />' .$libString->silbentrennung($row['beruf'], 12);
 	}
 
 	if($row['ort1'] != ''){
-		echo "<br />\n" .$libString->silbentrennung($row['ort1'], 12);
+		echo '<br />' .$libString->silbentrennung($row['ort1'], 12);
 	}
 
 	if($row['land1'] != ''){
-		echo "<br />\n" .$libString->silbentrennung($row['land1'], 12). "\n";
+		echo '<br />' .$libString->silbentrennung($row['land1'], 12);
 	}
 } else {
 	echo 'In der Datenbank sind keine alten Herren vorhanden.';
 }
 
-echo '</div>';
-echo '<div style="clear:both" />';
 echo '<hr />';
 ?>

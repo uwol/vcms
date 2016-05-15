@@ -52,23 +52,20 @@ if(isset($_REQUEST["chargierkalenderchangeanmeldenstate"]) && $_REQUEST["chargie
 * output
 */
 
-$stmtCount = $libDb->prepare("SELECT COUNT(*) AS number FROM mod_chargierkalender_veranstaltung WHERE datum >= NOW()");
+$stmtCount = $libDb->prepare('SELECT COUNT(*) AS number FROM mod_chargierkalender_veranstaltung WHERE datum >= NOW()');
 $stmtCount->execute();
 $stmtCount->bindColumn('number', $count);
 $stmtCount->fetch();
 
 // if there are entries
 if($count > 0){
-	echo '<tr><th>Chargierkalender</th></tr>';
-	echo '<tr><td class="ankuendigungsBox">';
+	echo '<h2>Chargierkalender</h2>';
 	echo '<hr />';
 
-	$stmt = $libDb->prepare("SELECT * FROM mod_chargierkalender_veranstaltung WHERE datum >= NOW() ORDER BY datum LIMIT 0,2");
+	$stmt = $libDb->prepare('SELECT * FROM mod_chargierkalender_veranstaltung WHERE datum >= NOW() ORDER BY datum LIMIT 0,2');
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<div class="textankuendigung" style="clear:both">';
-		echo '<div style="float:left;height:30px;margin:0 10px 0 0;">';
 		echo '<form action="index.php?pid=intranet_home" method="post">';
 		echo '<input type="hidden" name="chargierveranstaltungid" value="' .$row['id']. '" />';
 
@@ -87,23 +84,16 @@ if($count > 0){
 
 		echo '</form>';
 
-		echo '</div><div >';
-
-		echo "<b>".$libTime->formatDateTimeString($row['datum'], 2)."</b> - ";
+		echo '<b>' .$libTime->formatDateTimeString($row['datum'], 2). '</b> - ';
 		echo '<a href="index.php?pid=intranet_chargierkalender_kalender&amp;semester=' .$libTime->getSemesterEinesDatums($row['datum']). '#t' .$row['id']. '">';
 		echo $libVerein->getVereinNameString($row['verein']);
 
-		if($row['beschreibung'] != ""){
-			echo "<br />".$row['beschreibung'];
+		if($row['beschreibung'] != ''){
+			echo '<br />' .$row['beschreibung'];
 		}
 
-		echo "</a>\n";
-
-		echo '</div>';
-		echo '</div>';
-		echo '<div style="clear:both"><hr /></div>';
+		echo '</a>';
+		echo '<hr />';
 	}
-
-	echo '</td></tr>';
 }
 ?>

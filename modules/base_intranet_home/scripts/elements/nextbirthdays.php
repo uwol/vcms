@@ -25,7 +25,13 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 * output
 */
 
-echo '<dl class="aktuell">';
+echo '<h2>Geburtstage</h2>';
+echo '<hr />';
+
+echo '<p>Als iCalendar-Dateien:<br />';
+echo '&nbsp;&nbsp;<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_geburtstageaktivitas&amp;user='. $libGenericStorage->loadValueInCurrentModule("userNameICalendar"). '&amp;pass='. $libGenericStorage->loadValueInCurrentModule("passwordICalendar"). '">Geburtstage Aktive</a><br />';
+echo '&nbsp;&nbsp;<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_todestage&amp;user=' .$libGenericStorage->loadValueInCurrentModule("userNameICalendar") .'&amp;pass=' .$libGenericStorage->loadValueInCurrentModule("passwordICalendar") .'">Nekrolog</a><br />';
+echo '</p>';
 
 //komplexe Abfrage, um im Dezember Geburtstage aus dem folgenden Jahr zu ermitteln
 //Monate werden dazu normalisiert auf Raum 0 1 2 ... 10 11 relativ zum aktuellen Monat mit: (x_1 + 12 - x) % 12 = y
@@ -37,22 +43,22 @@ $stmt->execute();
 $i = 0;
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$date = substr($row["datum_geburtstag"], 8, 2) .".". substr($row["datum_geburtstag"], 5, 2) .".". substr($row["datum_geburtstag"], 0, 4);
-	echo "<dt><b>".$date;
+	$date = substr($row['datum_geburtstag'], 8, 2) .'.'. substr($row['datum_geburtstag'], 5, 2) .'.'. substr($row['datum_geburtstag'], 0, 4);
+	echo '<dt><b>'.$date;
 
-	if($libTime->checkrundergeburtstag(substr($row["datum_geburtstag"], 0, 4), @date('Y')) != false){
-		echo ", <font color=#FF0000>".$libTime->checkrundergeburtstag(substr($row["datum_geburtstag"], 0, 4), @date('Y'))." Jahre</font>";
+	if($libTime->checkrundergeburtstag(substr($row['datum_geburtstag'], 0, 4), @date('Y')) != false){
+		echo ', <font color=#FF0000>'.$libTime->checkrundergeburtstag(substr($row['datum_geburtstag'], 0, 4), @date('Y')).' Jahre</font>';
 	}
 
-	echo "</b></dt>";
-	echo '<dd><a href="index.php?pid=intranet_person_daten&amp;personid=' .$row["id"]. '">'. $libMitglied->getMitgliedNameString($row["id"], 0) ."</a></dd>";
+	echo '</b></dt>';
+	echo '<dd><a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['id']. '">'. $libMitglied->getMitgliedNameString($row['id'], 0) .'</a></dd>';
 
 	$i++;
 }
 
 if($i==0){
-	echo 'In der Datenbank sind bei den Mitgliedern keine Geburtstage angegeben.';
+	echo '<p>In der Datenbank sind bei den Mitgliedern keine Geburtstage angegeben.</p>';
 }
 
-echo '</dl>';
+echo '<hr />';
 ?>

@@ -20,8 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-if($libGenericStorage->loadValueInCurrentModule("userNameICalendar") == "" ||
-	$libGenericStorage->loadValueInCurrentModule("passwordICalendar") == ""){
+if(!$libGenericStorage->attributeExistsInCurrentModule("userNameICalendar") || !$libGenericStorage->attributeExistsInCurrentModule("passwordICalendar")){
 	$libGenericStorage->saveValueInCurrentModule("userNameICalendar", $libString->randomAlphaNumericString(40));
 	$libGenericStorage->saveValueInCurrentModule("passwordICalendar", $libString->randomAlphaNumericString(40));
 }
@@ -33,10 +32,8 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 ?>
 
-<table>
-  <tr>
-    <td>
-      <table>
+<div class="row">
+	<section class="col-md-9">
         <?php
         if($libModuleHandler->moduleIsAvailable("mod_intranet_news")){
 	    	require_once("elements/news.php");
@@ -52,35 +49,10 @@ echo $libString->getNotificationBoxText();
 			require_once("elements/reservations.php");
 		}
 		?>
-	  </table>
-	</td>
-    <td>
-	  <table>
-		<tr>
-			<th>Die AHAH</th>
-		</tr>
-		<tr>
-    	  <td class="rechteSpalteBox">
-	          <?php include("elements/randomah.php");?>
-          </td>
-        </tr>
-		<tr>
-			<th>Geburtstage</th>
-		</tr>
-		<tr>
-    	  <td class="rechteSpalteBox">
-			<hr />
-			<p class="aktuell">Als iCalendar-Dateien:<br />
-			&nbsp;&nbsp;<a href="webcal://<?php echo $libConfig->sitePath; ?>/inc.php?iid=intranet_kalender_geburtstageaktivitas&amp;user=<?php echo $libGenericStorage->loadValueInCurrentModule("userNameICalendar"); ?>&amp;pass=<?php echo $libGenericStorage->loadValueInCurrentModule("passwordICalendar"); ?>">Geburtstage Aktive</a><br />
-			&nbsp;&nbsp;<a href="webcal://<?php echo $libConfig->sitePath; ?>/inc.php?iid=intranet_kalender_todestage&amp;user=<?php echo $libGenericStorage->loadValueInCurrentModule("userNameICalendar"); ?>&amp;pass=<?php echo $libGenericStorage->loadValueInCurrentModule("passwordICalendar"); ?>">Nekrolog</a><br />
-			</p>
-            <hr />
-	          <?php include("elements/nextbirthdays.php");?>
-	        <hr />
-          </td>
-        </tr>
-        <?php include("elements/wifi.php");?>
-      </table>
-	</td>
-  </tr>
-</table>
+	</section>
+	<aside class="col-md-3">
+		<?php include("elements/randomah.php");?>
+		<?php include("elements/nextbirthdays.php");?>
+		<?php include("elements/wifi.php");?>
+	</aside>
+</div>
