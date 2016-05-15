@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Administration Logs";
-$version = "2.06";
+$version = "2.07";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";

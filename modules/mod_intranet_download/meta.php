@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Downloadbereich";
-$version = "2.13";
+$version = "2.14";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
