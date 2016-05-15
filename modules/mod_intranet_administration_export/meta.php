@@ -22,7 +22,7 @@ $includes[] = new LibInclude("intranet_admin_export_daten_jubilaeen", "scripts/"
 
 $menuElementsInternet = array();
 $menuElementsIntranet = array();
-$menuElementsAdministration[] = new LibMenuEntry("intranet_admin_export", "Export", 200);
+$menuElementsAdministration[] = new LibMenuEntry("intranet_admin_export", "Export", 210);
 
 $headerStrings = array();
 $dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);

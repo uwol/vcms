@@ -275,7 +275,7 @@ echo $libString->getNotificationBoxText();
 
 <p>Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen. Mit base_ markierte Module können nicht deinstalliert werden, weil sie grundlegende Funktionen im VCMS erfüllen.</p>
 <p>Während einer Installation, Deinstallation und Aktualisierung darf der Vorgang nicht abgebrochen werden. Generell sollten regelmäßig von den Verzeichnissen auf dem Webserver per FTP und der Datenbank per Datenbankbackupmodul Backups angefertigt werden, insbesondere vor Updates.</p>
-<table style="border:1px solid #000000; border-collapse:collapse; width:100%">
+<table>
 <?php
 echo '<tr>';
 echo '<th>Modulname</th><th>Status</th>';

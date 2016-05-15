@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Semesterprogramm";
-$version = "2.28";
+$version = "2.29";
 $styleSheet = "styles/screen.css";
 $installScript = "";
 $uninstallScript = "";
@@ -12,8 +12,8 @@ $pages[] = new LibPage("semesterprogramm_calendar", "scripts/", "calendar.php", 
 $pages[] = new LibPage("semesterprogramm_event", "scripts/", "event.php", "", "Veranstaltung");
 $pages[] = new LibPage("semesterprogramm_admin_galerienliste", "scripts/admin/", "gallery_list.php", $ar, "Foto-Verwaltung");
 $pages[] = new LibPage("semesterprogramm_admin_galerie", "scripts/admin/", "gallery.php", $ar, "Galerie");
-$menuElementsInternet[] = new LibMenuEntry("semesterprogramm_calendar", "Veranstaltungen und Fotos", 200);
-$menuElementsIntranet[] = new LibMenuEntry("semesterprogramm_admin_galerienliste", "Foto-Verwaltung", 30000);
+$menuElementsInternet[] = new LibMenuEntry("semesterprogramm_calendar", "Veranstaltungen", 200);
+$menuElementsIntranet[] = new LibMenuEntry("semesterprogramm_admin_galerienliste", "Fotos", 30000);
 $menuElementsAdministration = array();
 $dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);
 $includes[] = new LibInclude("semesterprogramm_icalendar", "scripts/", "icalendar.php", "");

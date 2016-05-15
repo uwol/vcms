@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-echo '<h1>Logs</h1>';
+echo '<h1>Log</h1>';
 
 
 echo '<h2>Erfolglose Intranet-Anmeldungen</h2>';

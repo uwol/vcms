@@ -3,116 +3,78 @@ html, body{
 }
 
 body {
-	padding: 0px;
-	margin: 0px;
-	text-align: left;
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 10pt;
+	padding: 0;
 }
 
 fieldset {
 	padding: 8px;
+	border: 1px solid grey;
 }
 
-#container{
-	margin-left: auto;
-	margin-right: auto;
-	width: 800px;
+#container {
 	min-height: 100%;
 }
 
 #logo {
-	float: left;
-	top: 0px;
-	left: 0px;
-	height: 165px;
-    width: 165px;
+	height: 100px;
 }
 
-header {
-	position: relative;
-	float: left;
-	margin: 0;
-	padding: 20px 10px 10px 10px;
-	width: 600px;
-	height: 135px;
+
+#header h1 {
+	margin-bottom: 0;
+	line-height: 0.8;
+	font-size: 3.5em;
+	font-family: serif;
 }
 
-header #signout {
+#header h2 {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 2.2em;
+	font-family: serif;
+}
+
+#header #signout {
 	position: absolute;
-	bottom: 10px;
-	right: 10px;
+	bottom: 0.5em;
+	right: 2em;
 	font-weight: bold;
 }
 
-header #signout a {
+#header #signout a {
 	text-decoration: none;
 }
 
-header h1, h2 {
-	margin: 0;
+
+nav.navbar {
+	margin-bottom: 0;
 }
 
-header h1::before {
-	font-size: 2.4em;
-	line-height: 90%;
+nav.navbar-default {
+    background-color: transparent;
+    border-color: transparent;
 }
 
-header h2::before {
-	font-size: 1.45em;
+nav .navbar-internet li a {
+	padding: 10px;
 }
 
-nav {
-	position: relative;
-	top: 20px;
-	left: 0px;
-	width: 165px;
-	float: left;
-	clear: both;
+nav .navbar-intranet {
+	font-size: 0.8em;
 }
 
-#menu {
-	float: left;
-	padding-left: 10px;
-	padding-right: 0px;
-	padding-bottom: 10px;
-	font-weight: bold;
-	line-height: 150%;
+nav .navbar-intranet .dropdown-menu {
+	font-size: 1em;
 }
 
-#menu .folderelement {
-	list-style-type: disc;
+nav .navbar-intranet li a {
+	padding: 5px;
 }
 
-#menu .entryelement {
-	list-style-type: circle;
-}
-
-#menu .folderelementselected {
-	list-style-type: disc;
-}
-
-#menu .entryelementselected {
-	list-style-type: circle;
-}
-
-#menu .folderlist {
-	padding:0 0 0 10px;
-	margin: 0 0 0 0;
-}
-
-#menu a {
-	text-decoration: none;
-}
 
 #content {
-	float: left;
-	margin: 0;
-	padding: 10px 10px 40px 10px;
-	width: 600px;
-	border-radius: 10px 10px 0 0;
-	border: 1px solid grey;
-	border-width: 1px 1px 0 1px;
+	border-radius: 4px 4px 0 0;
+	padding: 1em;
 }
 
 #content a {
@@ -184,23 +146,20 @@ nav {
 }
 
 #content img {
-	border: 0px;
+	border: 0;
 	vertical-align: middle;
 	margin: 2px;
 }
 
 #content table {
-	border-width: 0px;
-	border-style: solid;
-	border-collapse: collapse;
-	margin: 0px;
-	padding: 0px;
+	border-width: 0;
+	margin: 0;
+	padding: 0;
 }
 
 #content td {
 	vertical-align: top;
-	border-width: 0px;
-	border-style: solid;
+	border-width: 0;
 }
 
 #content input {
@@ -229,14 +188,6 @@ nav {
 	border: 1px solid red;
 	background-color: #F6CECE;
 	padding: 1px;
-}
-
-#semestercoverBox {
-	padding-left: 7px;
-}
-
-.semestercover {
-	width: 140px;
 }
 
 #content .memberSignatureBox {
@@ -303,17 +254,13 @@ nav {
 }
 
 #content th {
-	font-size: 9pt;
 	font-weight: bold;
 	height: 20px;
 	text-align: center;
 	vertical-align: middle;
 }
 
+
 footer {
-	clear: both;
-	width: 620px;
-	margin-left: 164px;
-	font-size: 0.8em;
 	text-align: center;
 }

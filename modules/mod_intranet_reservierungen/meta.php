@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Reservierungen";
-$version = "2.07";
+$version = "2.09";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";
@@ -12,7 +12,7 @@ $pages[] = new LibPage("intranet_reservierung_liste", "scripts/", "list.php", $a
 $pages[] = new LibPage("intranet_reservierung_buchen", "scripts/", "booking.php", $ar, "Reservierung");
 $dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);
 $menuElementsInternet = array();
-$menuElementsIntranet[] = new LibMenuEntry("intranet_reservierung_liste", "Reservierungen", 3333);
+$menuElementsIntranet[] = new LibMenuEntry("intranet_reservierung_liste", "Reservierung", 4000);
 $menuElementsAdministration = array();
 $includes = array();
 $headerStrings = array();

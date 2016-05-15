@@ -101,7 +101,6 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<h2>Kontaktadresse</h2>';
-echo '<div style="margin: 0 50px 0 50px;height:230px">';
 echo '<img src="' . $libModuleHandler->getModuleDirectory() . 'custom/img/haus.jpg" alt="Haus" style="float:right;height:200px;" />';
 
 echo $libConfig->verbindungName .'<br /><br />';
@@ -147,8 +146,6 @@ echo $libConfig->verbindungPlz ." ".$libConfig->verbindungOrt . '<br />';
 echo $libConfig->verbindungLand . '<br />';
 echo $libConfig->verbindungTelefon . '<br />';
 echo $libConfig->emailInfo . '<br />';
-
-echo '</div>';
 
 
 echo '<h2>Kontakt aufnehmen</h2>';

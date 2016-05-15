@@ -21,19 +21,17 @@ class LibModuleHandler{
 	var $modules = array();
 	var $pidToModulePointer = array();
 	var $iidToModulePointer = array();
+
 	var $menuInternet;
-	var $menuIntranetFolder;
-	var $menuAdministrationFolder;
+	var $menuIntranet;
+	var $menuAdministration;
 
 	function __construct(){
 		global $libConfig;
 
 		$this->menuInternet = new LibMenu();
-		$this->menuIntranetFolder =
-			new LibMenuFolder($libConfig->defaultLoginPid, 'Intranet', 99999);
-		$this->menuIntranetFolder->setAlwaysOpen(true);
-		$this->menuAdministrationFolder =
-			new LibMenuFolder('intranet_verwaltung_overview', 'Verwaltung', 99999);
+		$this->menuIntranet = new LibMenu();
+		$this->menuAdministration = new LibMenu();
 
 		$this->initModules();
 	}
@@ -243,7 +241,7 @@ class LibModuleHandler{
 			}
 
 			$this->menuElementAddAccessRestriction($menuElement, $pagesarray);
-			$this->menuIntranetFolder->addElement($menuElement);
+			$this->menuIntranet->addMenuElement($menuElement);
 		}
 
 		//read administration menu elements
@@ -253,7 +251,7 @@ class LibModuleHandler{
 			}
 
 			$this->menuElementAddAccessRestriction($menuElement, $pagesarray);
-			$this->menuAdministrationFolder->addElement($menuElement);
+			$this->menuAdministration->addMenuElement($menuElement);
 		}
 	}
 
@@ -454,10 +452,24 @@ class LibModuleHandler{
 		return $this->modules;
 	}
 
-	function getMenu(){
+	function getMenuInternet(){
 		$menu = $this->menuInternet;
-		$this->menuIntranetFolder->addElement($this->menuAdministrationFolder);
-		$menu->addMenuIntranetFolder($this->menuIntranetFolder);
+		$menu->sortElementsByPosition();
+		$menu->applyMinAccessRestriction();
+
+		return $menu;
+	}
+	
+	function getMenuIntranet(){
+		$menu = $this->menuIntranet;
+		$menu->sortElementsByPosition();
+		$menu->applyMinAccessRestriction();
+
+		return $menu;
+	}
+	
+	function getMenuAdministration(){
+		$menu = $this->menuAdministration;
 		$menu->sortElementsByPosition();
 		$menu->applyMinAccessRestriction();
 

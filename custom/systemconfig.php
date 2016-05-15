@@ -21,82 +21,83 @@ class LibConfig{
 	/**
 	* MySQL-Datenbank
 	*/
-	var $mysqlServer = "datenbankservername"; //häufig localhost
-	var $mysqlUser = "username";
-	var $mysqlPass = "password";
-	var $mysqlDb = "datenbankname";
-	var $mysqlPort = ""; //optional
+	var $mysqlServer = 'datenbankservername'; //häufig localhost
+	var $mysqlUser = 'username';
+	var $mysqlPass = 'password';
+	var $mysqlDb = 'datenbankname';
+	var $mysqlPort = ''; //optional
 
 	/**
 	* Dateisystem und Domains
 	*/
-	var $sitePath = "www.example.net"; //Domainname
+	var $sitePath = 'www.example.net'; //Domainname
 
 	/**
 	* Verbindungsdaten
 	*/
-	var $verbindungName = "K.St.V. Example"; //Name des Vereins
-	var $verbindungZusatz = "";
-	var $verbindungStrasse = "Musterstr. 20";
-	var $verbindungPlz = "12345";
-	var $verbindungOrt = "Musterstadt";
-	var $verbindungLand = "";
-	var $verbindungTelefon = "0251 123456789";
+	var $verbindungName = 'K.St.V. Example'; //Name des Vereins
+	var $verbindungDachverband = 'KV';
 
-	var $seiteBeschreibung = "Aktuelles/Vergangenes/Staendiges ueber den Katholischen Studentenverein Example im Kartellverband katholischer deutscher Studentenvereine (KV) zu Muenster (Westf.)"; //Wird in Google unter dem Link angezeigt
-	var $seiteKeywords = "Studentenverbindung, Universitaet, Verbindung, Studentenverein, Student"; //beschreibende Sichworte
-	var $emailInfo = "info@example.net";
-	var $emailWebmaster = "webmaster@example.net";
+	var $verbindungZusatz = '';
+	var $verbindungStrasse = 'Musterstr. 20';
+	var $verbindungPlz = '12345';
+	var $verbindungOrt = 'Musterstadt';
+	var $verbindungLand = '';
+	var $verbindungTelefon = '+49 251 123456789';
 
-	var $chargenSenior = "x"; //Chargenkürzel des Seniors
-	var $emailSenior = "senior@example.net";
-	var $chargenJubelSenior = "x";
-	var $emailJubelSenior = "jubelsenior@example.net";
-	var $chargenConsenior = "vx";
-	var $emailConsenior = "consenior@example.net";
-	var $chargenScriptor = "xx";
-	var $emailScriptor = "scriptor@example.net";
-	var $chargenQuaestor = "xxx";
-	var $emailQuaestor = "quaestor@example.net";
-	var $chargenFuchsmajor = "FM";
-	var $emailFuchsmajor = "fuchsmajor@example.net";
-	var $chargenFuchsmajor2 = "FM 2";
-	var $emailFuchsmajor2 = "fuchsmajor2@example.net";
-	var $chargenAHVSenior = "AH-x";
-	var $emailAHVSenior = "";
-	var $chargenAHVConsenior = "AH-vx";
-	var $emailAHVConsenior = "";
-	var $chargenAHVKeilbeauftragter = "K";
-	var $emailAHVKeilbeauftragter = "";
-	var $chargenAHVScriptor = "AH-xx";
-	var $emailAHVScriptor = "";
-	var $chargenAHVQuaestor = "AH-xxx";
-	var $emailAHVQuaestor = "";
-	var $chargenHVVorsitzender = "";
-	var $emailHVVorsitzender = "";
-	var $chargenHVKassierer = "";
-	var $emailHVKassierer = "";
-	var $chargenArchivar = "";
-	var $emailArchivar = "";
-	var $chargenRedaktionswart = "Red.";
-	var $emailRedaktionswart = "";
-	var $chargenVOP = "VOP";
-	var $chargenVVOP = "VVOP";
-	var $chargenVOPxx = "VOPxx";
-	var $chargenVOPxxx = "VOPxxx";
-	var $chargenVOPxxxx = "VOPxxxx";
+	var $seiteBeschreibung = 'Katholischer Studentenverein Example im Kartellverband katholischer deutscher Studentenvereine (KV) zu Muenster (Westf.)';
+	var $seiteKeywords = 'Studentenverbindung, Universitaet, Verbindung, Studentenverein, Student';
+	var $emailInfo = 'info@example.net';
+	var $emailWebmaster = 'webmaster@example.net';
+
+	var $chargenSenior = 'x'; //Chargenkürzel des Seniors
+	var $emailSenior = 'senior@example.net';
+	var $chargenJubelSenior = 'x';
+	var $emailJubelSenior = 'jubelsenior@example.net';
+	var $chargenConsenior = 'vx';
+	var $emailConsenior = 'consenior@example.net';
+	var $chargenScriptor = 'xx';
+	var $emailScriptor = 'scriptor@example.net';
+	var $chargenQuaestor = 'xxx';
+	var $emailQuaestor = 'quaestor@example.net';
+	var $chargenFuchsmajor = 'FM';
+	var $emailFuchsmajor = 'fuchsmajor@example.net';
+	var $chargenFuchsmajor2 = 'FM 2';
+	var $emailFuchsmajor2 = 'fuchsmajor2@example.net';
+	var $chargenAHVSenior = 'AH-x';
+	var $emailAHVSenior = '';
+	var $chargenAHVConsenior = 'AH-vx';
+	var $emailAHVConsenior = '';
+	var $chargenAHVKeilbeauftragter = 'K';
+	var $emailAHVKeilbeauftragter = '';
+	var $chargenAHVScriptor = 'AH-xx';
+	var $emailAHVScriptor = '';
+	var $chargenAHVQuaestor = 'AH-xxx';
+	var $emailAHVQuaestor = '';
+	var $chargenHVVorsitzender = '';
+	var $emailHVVorsitzender = '';
+	var $chargenHVKassierer = '';
+	var $emailHVKassierer = '';
+	var $chargenArchivar = '';
+	var $emailArchivar = '';
+	var $chargenRedaktionswart = 'Red.';
+	var $emailRedaktionswart = '';
+	var $chargenVOP = 'VOP';
+	var $chargenVVOP = 'VVOP';
+	var $chargenVOPxx = 'VOPxx';
+	var $chargenVOPxxx = 'VOPxxx';
+	var $chargenVOPxxxx = 'VOPxxxx';
 
 	/**
 	* Zeitzone, normalerweise unverändert
 	* Valide Werte unter http://www.php.net/manual/de/timezones.php
 	*/
-	var $timezone = "Europe/Berlin";
+	var $timezone = 'Europe/Berlin';
 
 	/**
 	* optionale Anpassungen
 	*/
-	var $defaultHome = "home";
-	var $defaultLoginPid = "login_login";
+	var $defaultHome = 'home';
 
 	/*
 	* Standardmäßig liegt das Wintersemester im System von Oktober bis März und das Sommersemester von April bis Oktober.

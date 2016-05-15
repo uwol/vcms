@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Personen";
-$version = "2.14";
+$version = "2.16";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -16,14 +16,14 @@ $pages[] = new LibPage("intranet_person_stammbaum", "scripts/", "genealogy.php",
 $dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);
 
 $menuElementsInternet = array();
-$menuFolderMitglieder = new LibMenuFolder("intranet_mitglied_listelebende", "Mitglieder", 3000);
-$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_mitglied_listelebende", "Lebende", 3001));
-$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_mitglied_regionalzirkel", "Regionalzirkel", 3002));
-$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_mitglied_listeverstorbene", "Verstorbene", 3003));
-$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_person_struktur", "Struktur", 3004));
+$menuFolderMitglieder = new LibMenuFolder("intranet_mitglied_listelebende", "Personen", 3000);
+$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_person_daten", "Mein Profil", 3001));
+$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_mitglied_listelebende", "Lebende Mitglieder", 3002));
+$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_mitglied_listeverstorbene", "Verstorbene Mitglieder", 3003));
+$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_person_listedamenflor", "Damenflor", 3004));
+$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_mitglied_regionalzirkel", "Regionalzirkel", 3005));
+$menuFolderMitglieder->addElement(new LibMenuEntry("intranet_person_struktur", "Struktur", 3006));
 $menuElementsIntranet[] = $menuFolderMitglieder;
-$menuElementsIntranet[] = new LibMenuEntry("intranet_person_daten", "Mein Profil", 2999);
-$menuElementsIntranet[] = new LibMenuEntry("intranet_person_listedamenflor", "Damenflor", 3004);
 $menuElementsAdministration = array();
 
 $includes = array();

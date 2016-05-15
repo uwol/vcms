@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Homepage";
-$version = "2.21";
+$version = "2.22";
 $styleSheet = "styles/screen.css";
 $installScript = "install/install.php";
 $uninstallScript = "";
@@ -13,7 +13,7 @@ $pages[] = new LibPage("intranet_internethome_nachricht_adminankuendigung", "scr
 
 $menuElementsIntranet = array();
 $menuElementsInternet[] = new LibMenuEntry("home", "Home", 100);
-$menuElementsAdministration[] = new LibMenuEntry("intranet_internethome_nachricht_adminliste", "Startseite", 250);
+$menuElementsAdministration[] = new LibMenuEntry("intranet_internethome_nachricht_adminliste", "Startseite", 200);
 $dependencies = array();
 $includes[] = new LibInclude("internet_home_rssfeed", "scripts/", "rssfeed.php", "");
 $headerStrings[] = '<link rel="alternate" type="application/rss+xml" title="Internet-Neuigkeiten als RSS-Feed" href="http://'.$libConfig->sitePath.'/inc.php?iid=internet_home_rssfeed" />';

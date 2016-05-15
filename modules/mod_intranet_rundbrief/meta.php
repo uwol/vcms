@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Rundbrief";
-$version = "2.11";
+$version = "2.12";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";
@@ -13,7 +13,7 @@ $pages[] = new LibPage("intranet_rundbrief_senden", "scripts/", "send.php", $ar,
 $dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);
 $dependencies[] = new LibMinDependency("Mitglied-Modul", "base_intranet_personen", 1.0);
 $menuElementsInternet = array();
-$menuElementsIntranet[] = new LibMenuEntry("intranet_rundbrief_schreiben", "Rundbrief", 4000);
+$menuElementsIntranet[] = new LibMenuEntry("intranet_rundbrief_schreiben", "Rundbrief", 3333);
 $menuElementsAdministration = array();
 $includes = array();
 $headerStrings = array();

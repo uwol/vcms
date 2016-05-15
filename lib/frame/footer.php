@@ -16,10 +16,15 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
-?>
 
-      </main>
-      <footer></footer>
-    </div>
-  </body>
-</html>
+echo "\r\n";
+echo '          </main>' . "\r\n";
+echo '        </div>' . "\r\n";
+echo '      </div>' . "\r\n";
+echo '      <div class="row">' . "\r\n";
+echo '        <footer class="col-md-12"></footer>' . "\r\n";
+echo '      </div>' . "\r\n";
+echo '    </div>' . "\r\n";
+echo '  </body>' . "\r\n";
+echo '</html>' . "\r\n";
+?>

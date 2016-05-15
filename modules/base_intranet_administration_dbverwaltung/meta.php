@@ -10,7 +10,7 @@ $vorstand = array("senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajo
 $internetwart = array("internetwart");
 
 //Datenbank
-$pages[] = new LibPage("intranet_admin_db_index", "scripts/", "index.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Basisdatenbank");
+$pages[] = new LibPage("intranet_admin_db_index", "scripts/", "index.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Datenbank");
 
 $pages[] = new LibPage("intranet_admin_db_personenliste", "scripts/person/", "personenliste.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Personen");
 $pages[] = new LibPage("intranet_admin_db_person", "scripts/person/", "person.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Person");
@@ -30,7 +30,7 @@ $pages[] = new LibPage("intranet_admin_db_status", "scripts/", "status.php", new
 $pages[] = new LibPage("intranet_admin_db_region", "scripts/", "regionen.php", new LibAccessRestriction("", $internetwart), "Regionen");
 
 
-$menuFolderDatenbank = new LibMenuFolder("intranet_admin_db_index", "Basisdatenbank", 50);
+$menuFolderDatenbank = new LibMenuFolder("intranet_admin_db_index", "Datenbank", 50);
 $menuFolderDatenbank->addElement(new LibMenuEntry("intranet_admin_db_personenliste", "Personen", 200));
 $menuFolderDatenbank->addElement(new LibMenuEntry("intranet_admin_db_semesterliste", "Semester", 300));
 $menuFolderDatenbank->addElement(new LibMenuEntry("intranet_admin_db_veranstaltungsliste", "Veranstaltungen", 400));

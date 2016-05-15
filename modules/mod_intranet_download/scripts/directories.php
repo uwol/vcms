@@ -108,7 +108,7 @@ elseif(isset($_POST['aktion']) && $_POST['aktion'] == "newfolder" && isset($_POS
 /*
 * output
 */
-echo '<h1>Downloads</h1>';
+echo '<h1>Dateien</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();

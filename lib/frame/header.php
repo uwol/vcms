@@ -30,6 +30,7 @@ echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . 
 /*
 * stylesheets
 */
+echo '    <link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css">' . "\r\n";
 echo '    <link rel="stylesheet" href="styles/screen.css" />' . "\r\n";
 
 if($libGlobal->module->getStyleSheet() != ""){
@@ -59,6 +60,7 @@ if(is_array($libGlobal->module->getHeaderStrings())){
 * jquery
 */
 echo '    <script src="styles/jquery-2.2.3.min.js"></script>' . "\r\n";
+echo '    <script src="styles/bootstrap/bootstrap.min.js"></script>' . "\r\n";
 
 /*
 * robots
@@ -90,14 +92,42 @@ if($libGlobal->pid == $libConfig->defaultHome){
 }
 
 echo '  </head>' . "\r\n";
-?>
-  <body>
-    <div id="container">
-      <div id="logo"></div>
-      <header>
-        <h1></h1>
-        <h2></h2>
-        <span id="signout">
-          <?php if($libAuth->isLoggedin()) echo '<a href="index.php?session_destroy=1">abmelden</a>'; ?>
-        </span>
-      </header>
+echo '  <body>' . "\r\n";
+echo '    <div id="container" class="container">' . "\r\n";
+echo '      <div class="row">' . "\r\n";
+echo '        <div id="logo" class="col-md-2 hidden-xs"></div>' . "\r\n";
+echo '        <header id="header" class="col-md-10">' . "\r\n";
+echo '          <h1>' .$libConfig->verbindungName. '</h1>' . "\r\n";
+echo '          <h2>';
+
+if(isset($libConfig->verbindungDachverband) && $libConfig->verbindungDachverband != ''){
+	echo 'im ' .$libConfig->verbindungDachverband . ' ';
+}
+
+if($libConfig->verbindungOrt != ''){
+	echo 'zu ' .$libConfig->verbindungOrt;
+}
+
+echo '</h2>' . "\r\n";
+
+// sign out button
+echo '          <span id="signout">';
+
+if($libAuth->isLoggedin()){
+	echo '            <a href="index.php?session_destroy=1">abmelden</a>';
+}
+
+echo '</span>' . "\r\n";
+
+echo '        </header>' . "\r\n";
+echo '      </div>' . "\r\n";
+echo '      <div class="row">' . "\r\n";
+echo '        <div class="col-md-12">' . "\r\n";
+
+echo (new LibMenuRenderer())->getMenuHtml($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
+
+echo '        </div>' . "\r\n";
+echo '      </div>' . "\r\n";
+echo '      <div class="row">' . "\r\n";
+echo '        <div class="col-md-12">' . "\r\n";
+echo '          <main id="content">' . "\r\n";

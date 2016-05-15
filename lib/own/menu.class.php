@@ -18,55 +18,42 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
 class LibMenu{
-	var $upperMenuFolder;
-	var $menuIntranetFolderId;
+	var $rootMenuFolder;
 
 	function __construct(){
-		$this->upperMenuFolder = new LibMenuFolder('', '', 0);
-		$this->upperMenuFolder->setAlwaysOpen(true);
+		$this->rootMenuFolder = new LibMenuFolder('', '', 0);
 	}
 
 	function addMenuElement($menuElement){
-		$this->upperMenuFolder->addElement($menuElement);
-	}
-
-	function addMenuIntranetFolder($menuIntranetFolder){
-		$this->upperMenuFolder->addElement($menuIntranetFolder);
-		$this->menuIntranetFolderId = $menuIntranetFolder->getId();
+		$this->rootMenuFolder->addElement($menuElement);
 	}
 
 	function applyMinAccessRestriction(){
-		$this->upperMenuFolder->applyMinAccessRestriction();
+		$this->rootMenuFolder->applyMinAccessRestriction();
 		//public main folder
-		$this->upperMenuFolder->setAccessRestriction('');
-		//private intranet folder
-		$this->upperMenuFolder->setAccessRestrictionOfMenuElement($this->menuIntranetFolderId, '');
+		$this->rootMenuFolder->setAccessRestriction('');
 	}
 
 	function &copy(){
 		$menu = new LibMenu();
-		$menu->setUpperMenuFolder($this->upperMenuFolder->copy());
+		$menu->setRootMenuFolder($this->rootMenuFolder->copy());
 		return $menu;
 	}
 
 	function reduceByAccessRestriction($gruppe, $aemter){
-		$this->upperMenuFolder->reduceByAccessRestriction($gruppe, $aemter);
+		$this->rootMenuFolder->reduceByAccessRestriction($gruppe, $aemter);
 	}
 
 	function sortElementsByPosition(){
-		$this->upperMenuFolder->sortElementsByPosition();
+		$this->rootMenuFolder->sortElementsByPosition();
 	}
 
-	function configure($menuConfig){
-		$this->upperMenuFolder->configure($menuConfig);
+	function getRootMenuFolder(){
+		return $this->rootMenuFolder;
 	}
 
-	function getUpperMenuFolder(){
-		return $this->upperMenuFolder;
-	}
-
-	function setUpperMenuFolder($upperMenuFolder){
-		$this->upperMenuFolder = $upperMenuFolder;
+	function setRootMenuFolder($rootMenuFolder){
+		$this->rootMenuFolder = $rootMenuFolder;
 	}
 }
 
@@ -156,8 +143,6 @@ class LibMenuEntryExternalLink extends LibMenuElement{
 
 
 class LibMenuFolder extends LibMenuElement{
-	var $open = false;
-	var $alwaysOpen = false;
 	var $elements = array();
 
 	function __construct($pid, $name, $position){
@@ -175,34 +160,6 @@ class LibMenuFolder extends LibMenuElement{
 
 	function &getElements(){
 		return $this->elements;
-	}
-
-	function open(){
-		$this->open = true;
-	}
-
-	function setAlwaysOpen($boolean){
-		$this->alwaysOpen = $boolean;
-	}
-
-	function close(){
-		$this->open = false;
-	}
-
-	function invertOpen(){
-		if($this->open){
-			$this->open = false;
-		} else {
-			$this->open = true;
-		}
-	}
-
-	function isOpen(){
-		return $this->open;
-	}
-
-	function isAlwaysOpen(){
-		return $this->alwaysOpen;
 	}
 
 	function hasElements(){
@@ -323,33 +280,13 @@ class LibMenuFolder extends LibMenuElement{
 		}
 	}
 
-	function configure($menuConfig){
-		//no foreach, as otherwise php4 does copy-by-value
-		for($i=0; $i<count($this->elements); $i++){
-			if(isset($this->elements[$i])){
-				$element = $this->elements[$i];
-
-				//a menu folder?
-				if($element->getType() == 2){
-					$element->configure($menuConfig);
-
-					if(isset($menuConfig[$element->getId()]) && $menuConfig[$element->getId()] == 1){
-						$element->open();
-					} else { //close all folders
-						$element->close();
-					}
-				}
-			}
-		}
-	}
-
 	function setAccessRestrictionOfMenuElement($mid, $accessRestriction){
 		//no foreach, as otherwise php4 does copy-by-value
 		for($i=0; $i<count($this->elements); $i++){
 			$element = $this->elements[$i];
 
 			if($element->getId() == $mid){
-				$element->setAccessRestriction('');
+				$element->setAccessRestriction($accessRestriction);
 			}
 		}
 	}
@@ -359,8 +296,6 @@ class LibMenuFolder extends LibMenuElement{
 		$menuFolder->id = $this->id;
 		$menuFolder->type = $this->type;
 		$menuFolder->accessRestriction = $this->accessRestriction;
-		$menuFolder->open = $this->open;
-		$menuFolder->alwaysOpen = $this->alwaysOpen;
 
 		//no foreach, as otherwise php4 does copy-by-value
 		for($i=0; $i<count($this->elements); $i++){

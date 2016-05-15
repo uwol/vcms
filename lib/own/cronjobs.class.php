@@ -84,8 +84,8 @@ class LibCronjobs{
 			@mkdir('temp');
 		}
 
-		if(!is_dir('custom/design/')){
-			@mkdir('custom/design');
+		if(!is_dir('custom/styles/')){
+			@mkdir('custom/styles');
 		}
 
 		if(!is_dir('custom/intranet/')){

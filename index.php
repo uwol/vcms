@@ -27,24 +27,9 @@ require_once('lib/masterinclude.php');
 
 $libCronJobs = new LibCronJobs($libDb);
 
-//initialize menu
-if(!isset($_SESSION['menuConfig'])){
-	$_SESSION['menuConfig'] = array();
-}
-
-//open or close menu entries
-if(isset($_REQUEST['mid'])){
-	if(!isset($_SESSION['menuConfig'][$_REQUEST['mid']])){
-		//mark menu folder as open
-		$_SESSION['menuConfig'][$_REQUEST['mid']] = 1;
-	} else {
-		//mark menu folder as closed
-		unset($_SESSION['menuConfig'][$_REQUEST['mid']]);
-	}
-}
-
-$libMenu = $libModuleHandler->getMenu();
-$libMenu->configure($_SESSION['menuConfig']);
+$libMenuInternet = $libModuleHandler->getMenuInternet();
+$libMenuIntranet = $libModuleHandler->getMenuIntranet();
+$libMenuAdministration = $libModuleHandler->getMenuAdministration();
 
 //initialize page id
 if(!isset($_GET['pid']) || $_GET['pid'] == ''){
@@ -66,9 +51,6 @@ $libGlobal->module = $libModuleHandler->getModuleByPageid($libGlobal->pid);
 
 //load page header
 require_once('lib/frame/header.php');
-
-//load menu
-require_once('lib/frame/menu.php');
 
 //security check
 if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->page, $libAuth)){

@@ -15,7 +15,7 @@ $pages[] = new LibPage("intranet_admin_statusaenderungen", "scripts/", "status_c
 
 $menuElementsInternet = array();
 $menuElementsIntranet = array();
-$menuElementsAdministration[] = new LibMenuEntry("intranet_admin_statusaenderungen", "Status", 200);
+$menuElementsAdministration[] = new LibMenuEntry("intranet_admin_statusaenderungen", "Status", 220);
 
 $includes = array();
 $headerStrings = array();
