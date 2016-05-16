@@ -56,7 +56,7 @@ echo '</script>';
 
 echo '<span id="fblikebuttoncontainer">';
 echo '<a id="fblikebuttonlink" onclick="insertFbLikeButton();" style="cursor:pointer;text-decoration:none">';
-echo '<img src="styles/icons/social/facebook.svg" alt="Facebook" class="icon" />';
+echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
 echo '</a>';
 echo '</span> ';
 
@@ -80,14 +80,14 @@ echo '</script>';
 
 echo '<span id="googleplusbuttoncontainer">';
 echo '<a id="googleplusbuttonlink" onclick="insertGooglePlusButton();" style="cursor:pointer;text-decoration:none">';
-echo '<img src="styles/icons/social/google-plus.svg" alt="Google Plus" class="icon" />';
+echo '<img src="styles/icons/social/google-plus.svg" alt="G+" class="icon" />';
 echo '</a>';
 echo '</span> ';
 
 //twitter
 $url = 'http://'.$libConfig->sitePath;
 echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
-echo '<img src="styles/icons/social/twitter.svg" alt="Twitter" class="icon" />';
+echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
 echo '</a> ';
 
 //rss

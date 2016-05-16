@@ -79,17 +79,17 @@ echo '<div class="interactiveBox">';
 echo '<p class="eventbox">';
 
 $semester = $libTime->getSemesterEinesDatums($row['datum']);
-$url = 'http://'.$libConfig->sitePath.'/index.php?pid=semesterprogramm_event&amp;eventid='.$id.'&amp;semester='.$semester;
-$title = $libConfig->verbindungName . ' - ' . $row['titel'] . ' am ' . $libTime->formatDateTimeString($row['datum'], 2);
+$url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$id. '&amp;semester=' .$semester;
+$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateTimeString($row['datum'], 2);
 
 //facebook
 echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/img/buttons/facebook.png" alt="FB" />';
+echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
 echo '</a> ';
 
 //twitter
 echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/img/buttons/twitter.png" alt="T" />';
+echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
 echo '</a> ';
 echo '</p>';
 
@@ -109,9 +109,9 @@ if($libAuth->isLoggedin()){
     echo '<p class="eventbox">';
 
 	if($anzahl > 0){
-		echo '<img src="'. $libModuleHandler->getModuleDirectory().'img/angemeldet.png" alt="angemeldet" /> angemeldet';
+		echo '<img src="'. $libModuleHandler->getModuleDirectory(). 'img/angemeldet.png" alt="angemeldet" /> angemeldet';
 	} else {
-		echo '<img src="'. $libModuleHandler->getModuleDirectory().'img/nichtangemeldet.png" alt="nicht angemeldet" /> nicht angemeldet';
+		echo '<img src="'. $libModuleHandler->getModuleDirectory(). 'img/nichtangemeldet.png" alt="nicht angemeldet" /> nicht angemeldet';
 	}
 
 	echo '</p>';
