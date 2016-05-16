@@ -205,9 +205,9 @@ if($libAuth->isLoggedin()){
     echo '<p>';
 
 	if($anzahl > 0){
-		echo '<img src="' .$libModuleHandler->getModuleDirectory(). 'img/angemeldet.png" alt="angemeldet" /> angemeldet';
+		echo '<img src="styles/icons/calendar/angemeldet.svg" alt="angemeldet" class="icon_small" /> angemeldet';
 	} else {
-		echo '<img src="' .$libModuleHandler->getModuleDirectory(). 'img/nichtangemeldet.png" alt="nicht angemeldet" /> nicht angemeldet';
+		echo '<img src="styles/icons/calendar/abgemeldet.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
 	}
 
 	echo '</p>';

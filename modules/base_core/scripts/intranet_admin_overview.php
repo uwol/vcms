@@ -166,11 +166,11 @@ if(count($errors) > 0 || count($unsecuredFolders) > 0 || count($notReadableFiles
 	echo '<div style="color:red">';
 
 	foreach($errors as $error){
-		echo '<img src="'. $libModuleHandler->getModuleDirectory().'img/error.png" alt="" />' .$error. '<br />';
+		echo '<img src="styles/icons/basic/error.svg" alt="Error" class="icon_small" />' .$error. '<br />';
 	}
 
 	if(count($unsecuredFolders) > 0){
-		echo '<img src="'. $libModuleHandler->getModuleDirectory().'img/error.png" alt="" />Die folgenden Ordner sind nicht durch eine htaccess-Datei geschützt:<br />';
+		echo '<img src="styles/icons/basic/error.svg" alt="Error" class="icon_small" />Die folgenden Ordner sind nicht durch eine htaccess-Datei geschützt:<br />';
 		echo '<table style="margin-left: auto; margin-right: auto; margin-bottom: 5px">';
 
 		foreach($unsecuredFolders as $folder){
@@ -182,7 +182,7 @@ if(count($errors) > 0 || count($unsecuredFolders) > 0 || count($notReadableFiles
 	}
 
 	if(is_array($notReadableFiles) && count($notReadableFiles) > 0){
-		echo '<img src="'. $libModuleHandler->getModuleDirectory().'img/error.png" alt="" />PHP besitzt für die folgenden Dateien bzw. Ordner keine Leserechte:<br />';
+		echo '<img src="styles/icons/basic/error.svg" alt="Error" class="icon_small" />PHP besitzt für die folgenden Dateien bzw. Ordner keine Leserechte:<br />';
 		echo '<table style="margin-left: auto; margin-right: auto; margin-bottom: 5px">';
 
 		foreach($notReadableFiles as $file){
@@ -207,11 +207,11 @@ if(count($oks) > 0 || count($securedFolders) > 0){
 	echo '<h2>Bestandene Tests</h2>';
 
 	foreach($oks as $ok){
-		echo '<img src="'. $libModuleHandler->getModuleDirectory().'img/ok.png" alt="" />' .$ok. '<br />';
+		echo '<img src="styles/icons/basic/ok.svg" alt="OK" class="icon_small" />' .$ok. '<br />';
 	}
 
 	if(count($securedFolders) > 0){
-		echo '<img src="'. $libModuleHandler->getModuleDirectory().'img/ok.png" alt="" />Die folgenden Ordner sind durch eine htaccess-Datei geschützt:<br />';
+		echo '<img src="styles/icons/basic/ok.svg" alt="OK" class="icon_small" />Die folgenden Ordner sind durch eine htaccess-Datei geschützt:<br />';
 		echo '<table style="margin-left: auto; margin-right: auto; margin-bottom: 5px">';
 
 		foreach($securedFolders as $folder){

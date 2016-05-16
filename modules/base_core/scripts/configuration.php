@@ -77,7 +77,7 @@ foreach($storage as $moduleid => $arrays){
 		foreach($positionen as $position => $value){
 			echo '<td><input type="text" size="2" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" /></td>'."\r\n";
 			echo '<td><input type="text" size="40" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" /></td>'."\r\n";
-			echo '<td><a href="index.php?pid=configuration&amp;action=delete&amp;moduleid=' .$moduleid. '&amp;array_name=' .$array_name. '&amp;position=' .$position. '"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/bin_closed.png" alt="bin" /></a></td>'."\r\n";
+			echo '<td><a href="index.php?pid=configuration&amp;action=delete&amp;moduleid=' .$moduleid. '&amp;array_name=' .$array_name. '&amp;position=' .$position. '"><img src="styles/icons/basic/garbage.svg" alt="garbage" class="icon_small" /></a></td>'."\r\n";
 			echo '</tr><tr><td></td>'."\r\n";
 		}
 

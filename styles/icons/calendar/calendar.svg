@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;" xml:space="preserve">
+	<g>
+		<polygon style="fill:#F05565;" points="46,4 46,8 39,8 39,4 15,4 15,8 8,8 8,4 0,4 0,15 54,15 54,4 	"/>
+		<polygon style="fill:#EFEBDE;" points="8,15 0,15 0,58 54,58 54,15 46,15 39,15 15,15 	"/>
+		<path style="fill:#D5D0BB;" d="M37,22h-2h-7h-2h-7h-2H8v9v2v7v2v9h9h2h7h2h7h2h9v-9v-2v-7v-2v-9H37z M28,24h7v7h-7V24z M35,40h-7
+			v-7h7V40z M19,33h7v7h-7V33z M19,24h7v7h-7V24z M10,24h7v7h-7V24z M10,33h7v7h-7V33z M17,49h-7v-7h7V49z M26,49h-7v-7h7V49z M35,49
+			h-7v-7h7V49z M44,49h-7v-7h7V49z M44,40h-7v-7h7V40z M37,31v-7h7v7H37z"/>
+		<rect x="8" y="0" style="fill:#36495E;" width="7" height="8"/>
+		<rect x="39" y="0" style="fill:#36495E;" width="7" height="8"/>
+		<rect x="19" y="33" style="fill:#7F6E5D;" width="7" height="7"/>
+	</g>
+</svg>

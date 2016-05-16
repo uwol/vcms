@@ -150,6 +150,12 @@ nav .navbar-intranet li a {
 
 #content .icon {
 	width: 24px;
+	margin: 0 2px;
+}
+
+#content .icon_small {
+	width: 14px;
+	margin: 0 2px;
 }
 
 #content .notificationBox {

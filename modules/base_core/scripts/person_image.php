@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin() && isset($_GET['id']) && is_numeric($_GET['id']) &&
 		preg_match("/^[0-9]+$/", $_GET['id'])){
 

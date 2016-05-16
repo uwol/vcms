@@ -490,7 +490,7 @@ class LibEvent{
 
 		//attended
 		if($this->attended && $this->attendedImageUrl != ''){
-			$retstr .= '<img src="'.$this->attendedImageUrl.'" alt="angemeldet" /> ';
+			$retstr .= '<img src="'.$this->attendedImageUrl.'" alt="angemeldet" class="icon_small" /> ';
 		}
 
 		//footer

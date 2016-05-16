@@ -165,7 +165,7 @@ echo '<script>
 				action: \'inc.php?iid=semesterprogramm_admin_galerie_upload\',
 				allowedExtensions: [\'jpg\', \'jpeg\'],
 				params: {
-					veranstaltungId: '.$id.'
+					veranstaltungId: ' .$id. '
 				}
 			});
 		}
@@ -175,16 +175,16 @@ echo '<script>
 echo '<p>Nach dem Hochladen von Bildern sind diese durch eine <a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
 
 
-if(is_dir("custom/veranstaltungsfotos/".$id)){
+if(is_dir("custom/veranstaltungsfotos/" .$id)){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		echo '<hr />';
 
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerienliste&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/loeschen.png"/> Komplette Galerie löschen.</a>';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerienliste&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" /> Komplette Galerie löschen.</a>';
 
 		echo '<p>';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlichalle&amp;id='.$id.'" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/oeffentlich.png"/> Sämtliche Bilder veröffentlichen.</a><br />';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranetalle&amp;id='.$id.'" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/intranet.png"/> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken.</a><br />';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=poolalle&amp;id='.$id.'" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/pool.png"/> Sämtliche Bilder in Ablage zurücklegen.</a>';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlichalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><img src="styles/icons/image/public.svg" class="icon_small" /> Sämtliche Bilder veröffentlichen.</a><br />';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranetalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><img src="styles/icons/image/internal.svg" class="icon_small" /> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken.</a><br />';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=poolalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><img src="styles/icons/image/private.svg" class="icon_small" /> Sämtliche Bilder in Ablage zurücklegen.</a>';
 		echo '</p>';
 
 		echo '<p>Nach dem Rotieren eines Fotos wird dieses evtl. erst nach einer Aktualisierung der Seite rotiert darstellt.</p>';
@@ -202,15 +202,16 @@ if(is_dir("custom/veranstaltungsfotos/".$id)){
 		echo '<td style="width:25%;text-align:center;padding:10px 10px 25px 10px">';
 
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoLinks&amp;id='.$id.'&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/linksdrehen.png"/></a>';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoRechts&amp;id='.$id.'&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/rechtsdrehen.png"/></a>';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=deleteFoto&amp;id='.$id.'&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/loeschen.png"/></a><br />';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id='.$id.'&amp;bildnr=' .$key. '"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/oeffentlich.png"/></a>';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id='.$id.'&amp;bildnr=' .$key. '"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/intranet.png"/></a>';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=pool&amp;id='.$id.'&amp;bildnr=' .$key. '"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/pool.png"/></a><br />';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/public.svg" class="icon_small" /></a>';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/internal.svg" class="icon_small" /></a>';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/private.svg" class="icon_small" /></a><br />';
+
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-left.svg" class="icon_small" /></a>';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-right.svg" class="icon_small" /></a>';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" /></a><br />';
 		}
 
-		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid='.$id.'&amp;pictureid='.$key.'" class="highslide" onclick="return hs.expand(this)">';
+		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '" class="highslide" onclick="return hs.expand(this)">';
 		echo '<img style="border-width: 3px; border-style: solid; border-color: ';
 
 		$visibility = $libGallery->getPublicityLevel($picture);
@@ -223,7 +224,7 @@ if(is_dir("custom/veranstaltungsfotos/".$id)){
 			echo 'red';
 		}
 
-		echo ';" src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$id.'&amp;pictureid='.$key .'&amp;thumb=1">';
+		echo ';" src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1">';
 		echo '</a>';
 		echo '</td>';
 
