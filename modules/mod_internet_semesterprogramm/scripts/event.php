@@ -70,13 +70,108 @@ if($libAuth->isLoggedIn()){
 */
 
 
-echo "<h1>".$row["titel"]."</h1>";
+echo '<h1>' .$row['titel']. '</h1>';
 
+echo '<div class="row">';
+echo '<div class="col-md-9">';
+
+/*
+* date and time
+*/
+$time = substr($row['datum'], 11, 5);
+
+// no time
+if($time == '00:00'){
+	$time = '';
+} elseif(substr($time, 3, 2) == 00){
+	$time = substr($time, 0, 2). 'h s.t.';
+} elseif(substr($time, 3, 2) == 15){
+	$time = substr($time, 0, 2). 'h c.t.';
+}
+
+$datum = $libTime->formatDateTimeString($row['datum'], 2);
+
+/*
+* status
+*/
+if ($row['status'] == 'o'){
+	$status = 'offiziell';
+} elseif ($row['status'] == 'ho'){
+	$status = 'hochoffiziell';
+} elseif($row['status'] == ''){
+	$status = 'inoffiziell';
+} else {
+	$status = $row['status'];
+}
+
+/*
+* general infos
+*/
+echo '<p>';
+echo '<b>Am ' .$datum. '</b>';
+
+if($time != ''){
+	echo '<br /><b> um ' .$time. '</b>';
+}
+
+if (($row['ort']) != ''){
+	echo '<br /><b>Ort: '.$row['ort'] .'</b>';
+}
+
+echo '</p>';
+
+echo '<p><b>Status:</b> ' .$status. '</p>';
+
+if(($row['beschreibung']) != ''){
+	echo '<p><b>Beschreibung:</b><br />' .nl2br($row['beschreibung']). '</p>';
+}
+
+if(($row['spruch']) != ''){
+	echo '<p><b>Spruch:</b><br />' .nl2br($row['spruch']). '</p>';
+}
+
+/*
+* show registrations
+*/
+echo '<p><b>Anmeldungen:</b><br />';
+
+if($libAuth->isLoggedin()){
+	$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
+	$stmt->bindValue(':veranstaltung', $id, PDO::PARAM_INT);
+	$stmt->execute();
+
+	$anmeldungWritten = false;
+
+	while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
+		if($anmeldungWritten){
+			echo ', ';
+		}
+
+		echo '<a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libMitglied->getMitgliedNameString($eventrow['person'], 0) .'</a>';
+		$anmeldungWritten = true;
+	}
+} else {
+	echo 'Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.';
+}
+
+echo '</p>';
+
+/*
+* gallery
+*/
+if(!$libAuth->isLoggedin()){
+	// are there images?
+	if(count($libGallery->getPictures($row['id'], 1)) > count($libGallery->getPictures($row['id'], 0))){
+		echo '<p>Teile der Galerie sind ebenfalls erst nach einer Anmeldung im Intranet sichtbar.</p>';
+	}
+}
+
+echo '</div>';
 
 //-------------------------------------- interactive box start ------------------------------------------
-echo '<div class="interactiveBox">';
 
-echo '<p class="eventbox">';
+echo '<div class="col-md-3">';
+echo '<p>';
 
 $semester = $libTime->getSemesterEinesDatums($row['datum']);
 $url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$id. '&amp;semester=' .$semester;
@@ -91,6 +186,7 @@ echo '</a> ';
 echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
 echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
 echo '</a> ';
+
 echo '</p>';
 
 echo '<hr />';
@@ -106,18 +202,18 @@ if($libAuth->isLoggedin()){
 	$stmt->bindColumn('number', $anzahl);
 	$stmt->fetch();
 
-    echo '<p class="eventbox">';
+    echo '<p>';
 
 	if($anzahl > 0){
-		echo '<img src="'. $libModuleHandler->getModuleDirectory(). 'img/angemeldet.png" alt="angemeldet" /> angemeldet';
+		echo '<img src="' .$libModuleHandler->getModuleDirectory(). 'img/angemeldet.png" alt="angemeldet" /> angemeldet';
 	} else {
-		echo '<img src="'. $libModuleHandler->getModuleDirectory(). 'img/nichtangemeldet.png" alt="nicht angemeldet" /> nicht angemeldet';
+		echo '<img src="' .$libModuleHandler->getModuleDirectory(). 'img/nichtangemeldet.png" alt="nicht angemeldet" /> nicht angemeldet';
 	}
 
 	echo '</p>';
 
 	//event in future?
-	if(@date("Y-m-d H:i:s") < $row["datum"]){
+	if(@date('Y-m-d H:i:s') < $row['datum']){
 		echo '<form action="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '" method="post" style="margin-top:5px;" >';
 
 		if($anzahl > 0){
@@ -129,103 +225,18 @@ if($libAuth->isLoggedin()){
 		echo '</form>';
 	}
 } else {
-	echo '<p class="eventbox">Für den Anmeldestatus bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.</p>';
+	echo '<p>Für den Anmeldestatus bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.</p>';
 }
 
-echo "</div>";
+echo '</div>';
 
 //-------------------------------------- interactive box end ------------------------------------------
 
-/*
-* date and time
-*/
-$time = substr($row["datum"], 11, 5);
 
-// no time
-if($time == "00:00"){
-	$time = "";
-} elseif(substr($time, 3, 2) == 00){
-	$time = substr($time, 0, 2)."h s.t.";
-} elseif(substr($time, 3, 2) == 15){
-	$time = substr($time, 0, 2)."h c.t.";
-}
+echo '</div>';
+echo '<div class="row">';
+echo '<div class="col-md-12">';
 
-$datum = $libTime->formatDateTimeString($row['datum'], 2);
-
-/*
-* status
-*/
-if ($row["status"] == 'o'){
-	$status = "offiziell";
-} elseif ($row["status"] == 'ho'){
-	$status = "hochoffiziell";
-} elseif($row["status"] == ''){
-	$status = "inoffiziell";
-} else {
-	$status = $row["status"];
-}
-
-/*
-* general infos
-*/
-echo '<div>';
-echo "<b>Am ". $datum ."</b>";
-
-if($time != ""){
-	echo "<br /><b> um ". $time ."</b>";
-}
-
-if (($row["ort"]) != ''){
-	echo "<br /><b>Ort: ".$row["ort"] ."</b>";
-}
-
-echo "<br /><br /><b>Status:</b> " .$status;
-
-if(($row["beschreibung"]) != ''){
-	echo "<br /><br /><b>Beschreibung:</b><br />" .nl2br($row["beschreibung"]);
-}
-
-if(($row["spruch"]) != ''){
-	echo "<br /><br /><b>Spruch:</b><br />".nl2br($row["spruch"]);
-}
-
-/*
-* show registrations
-*/
-echo "<br /><br /><br /><b>Anmeldungen:</b><br />";
-
-if($libAuth->isLoggedin()){
-	$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme,base_person WHERE base_veranstaltung_teilnahme.veranstaltung=:veranstaltung AND base_veranstaltung_teilnahme.person=base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name,base_person.vorname");
-	$stmt->bindValue(':veranstaltung', $id, PDO::PARAM_INT);
-	$stmt->execute();
-
-	$anmeldungWritten = false;
-
-	while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
-		if($anmeldungWritten){
-			echo ", ";
-		}
-
-		echo '<a href="index.php?pid=intranet_person_daten&personid=' .$eventrow["person"]. '">' .$libMitglied->getMitgliedNameString($eventrow["person"], 0) .'</a>';
-		$anmeldungWritten = true;
-	}
-} else {
-	echo 'Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.';
-}
-
-echo "</div>";
-
-
-
-/*
-* gallery
-*/
-if(!$libAuth->isLoggedin()){
-	// are there images?
-	if(count($libGallery->getPictures($row['id'], 1)) > count($libGallery->getPictures($row['id'], 0))){
-		echo '<p>Teile der Galerie sind ebenfalls erst nach einer Anmeldung im Intranet sichtbar.</p>';
-	}
-}
 
 $level = 0;
 if($libAuth->isLoggedin()){
@@ -234,12 +245,12 @@ if($libAuth->isLoggedin()){
 
 // images for the access level?
 if($libGallery->hasPictures($row['id'], $level)){
-	echo '<div class="highslide-gallery galerie">';
+	echo '<div class="highslide-gallery">';
 
 	$pictures = $libGallery->getPictures($row['id'], $level);
 
 	$anzahlBilderProZeile = 4;
-	echo '<table style="text-align:center;width:80%;margin-left:auto;margin-right:auto">'."\n";
+	echo '<table style="text-align:center;width:80%;margin-left:auto;margin-right:auto">';
 	echo '<tr>';
 
 	$i = 0;
@@ -263,8 +274,11 @@ if($libGallery->hasPictures($row['id'], $level)){
 	}
 
 	echo '</tr>';
-	echo "</table>";
+	echo '</table>';
 
-	echo '</div>' ."\n";
+	echo '</div>';
 }
+
+echo '</div>';
+echo '</div>';
 ?>
