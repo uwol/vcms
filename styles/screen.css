@@ -225,6 +225,10 @@ nav .navbar-intranet li a {
 	font-size: 8pt;
 }
 
+#content dd {
+	margin-left: 2em;
+}
+
 
 footer {
 	text-align: center;

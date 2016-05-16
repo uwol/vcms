@@ -42,6 +42,8 @@ $stmt->execute();
 
 $i = 0;
 
+echo '<dl>';
+
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$date = substr($row['datum_geburtstag'], 8, 2) .'.'. substr($row['datum_geburtstag'], 5, 2) .'.'. substr($row['datum_geburtstag'], 0, 4);
 	echo '<dt><b>'.$date;
@@ -55,6 +57,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	$i++;
 }
+
+echo '</dl>';
 
 if($i==0){
 	echo '<p>In der Datenbank sind bei den Mitgliedern keine Geburtstage angegeben.</p>';

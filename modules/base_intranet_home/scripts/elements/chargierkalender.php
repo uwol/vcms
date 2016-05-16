@@ -89,7 +89,7 @@ if($count > 0){
 		echo $libVerein->getVereinNameString($row['verein']);
 
 		if($row['beschreibung'] != ''){
-			echo '<br />' .$row['beschreibung'];
+			echo $row['beschreibung'];
 		}
 
 		echo '</a>';

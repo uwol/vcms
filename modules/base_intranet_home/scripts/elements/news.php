@@ -50,7 +50,7 @@ if($count > 0){
 
 		if(($row['text']) != ''){
 			echo '<a href="index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterEinesDatums($row['eingabedatum']). '#' .$row['id']. '">';
-			echo $libString->truncate(trim($row['text']), 200);
+			echo $libString->truncate(trim($row['text']), 300);
 			echo '</a>';
 		}
 
