@@ -73,7 +73,9 @@ nav .navbar-intranet li a {
 
 
 #content {
+	border: 1px solid grey;
 	border-radius: 4px 4px 0 0;
+	background: rgba(255, 255, 255, 0.7);
 	padding: 1em;
 }
 
@@ -99,6 +101,10 @@ nav .navbar-intranet li a {
 #content h4 {
 	font-size: 1.0em;
 	font-weight: bold;
+}
+
+#content hr {
+	clear: both;
 }
 
 #content table {
@@ -128,10 +134,6 @@ nav .navbar-intranet li a {
 #content textarea {
 	padding: 1px;
 	margin: 2px 0 2px 0;
-}
-
-#content section, #content aside {
-	background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
 }
 
 #content .text {

@@ -39,9 +39,6 @@ header #signout a {
 	color: #000080;
 }
 
-#content {
-	background: rgba(255, 255, 255, 0.6);
-}
 
 #content a:link, #content a:visited {
 	color: #961419;
