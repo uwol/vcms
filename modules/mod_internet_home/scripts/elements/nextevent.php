@@ -49,7 +49,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($row['ort'] != ''){
 		echo '<br />' . $row['ort'];
 	}
-	
+
 	echo '</p>';
 }
 

@@ -103,8 +103,14 @@ nav .navbar-intranet li a {
 	font-weight: bold;
 }
 
+#content a {
+	text-decoration: none;
+}
+
 #content hr {
 	clear: both;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #content table {
@@ -140,6 +146,10 @@ nav .navbar-intranet li a {
 	margin: 0;
 	text-align: justify;
 	padding: 10px;
+}
+
+#content .icon {
+	width: 24px;
 }
 
 #content .notificationBox {

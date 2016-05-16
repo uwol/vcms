@@ -56,7 +56,7 @@ echo '</script>';
 
 echo '<span id="fblikebuttoncontainer">';
 echo '<a id="fblikebuttonlink" onclick="insertFbLikeButton();" style="cursor:pointer;text-decoration:none">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/img/buttons/facebook.png" alt="Fb" />';
+echo '<img src="styles/icons/social/facebook.svg" alt="Facebook" class="icon" />';
 echo '</a>';
 echo '</span> ';
 
@@ -80,19 +80,19 @@ echo '</script>';
 
 echo '<span id="googleplusbuttoncontainer">';
 echo '<a id="googleplusbuttonlink" onclick="insertGooglePlusButton();" style="cursor:pointer;text-decoration:none">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/img/buttons/googleplus.png" alt="G+" style="height:16px" />';
+echo '<img src="styles/icons/social/google-plus.svg" alt="Google Plus" class="icon" />';
 echo '</a>';
 echo '</span> ';
 
 //twitter
 $url = 'http://'.$libConfig->sitePath;
 echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/img/buttons/twitter.png" alt="T" />';
+echo '<img src="styles/icons/social/twitter.svg" alt="Twitter" class="icon" />';
 echo '</a> ';
 
 //rss
 echo '<a href="http://' .$libConfig->sitePath. '/inc.php?iid=internet_home_rssfeed">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/img/buttons/rss.png" alt="R" />';
+echo '<img src="styles/icons/social/rss.svg" alt="RSS" class="icon" />';
 echo '</a> ';
 
 echo '<hr />';

@@ -48,10 +48,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<h2>Impression</h2>';
 		echo '<hr />';
 
-		echo '<h3 class="title">Veranstaltung: ' .wordwrap($row['titel'], 50, '<br />', 1). '</h3>';
-		
+		echo '<h3 class="title">Veranstaltung:</h3> ' .wordwrap($row['titel'], 50, '<br />', 1);
+
 		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$row['id'].'&amp;pictureid='.$pictureid .'" alt="" class="img-responsive img-thumbnail" ';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive img-thumbnail" ';
 
 		if($libGallery->getPublicityLevel($pictures[$pictureid]) == 1){
 			echo 'style="border: 1px solid yellow"';
