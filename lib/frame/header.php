@@ -97,8 +97,8 @@ echo '    <div id="container" class="container">' . "\r\n";
 echo '      <div class="row">' . "\r\n";
 echo '        <div id="logo" class="col-md-2 hidden-xs"></div>' . "\r\n";
 echo '        <header id="header" class="col-md-10">' . "\r\n";
-echo '          <h1>' .$libConfig->verbindungName. '</h1>' . "\r\n";
-echo '          <h2>';
+echo '          <h1><a href="index.php">' .$libConfig->verbindungName. '</a></h1>' . "\r\n";
+echo '          <h2><a href="index.php">';
 
 if(isset($libConfig->verbindungDachverband) && $libConfig->verbindungDachverband != ''){
 	echo 'im ' .$libConfig->verbindungDachverband . ' ';
@@ -108,7 +108,7 @@ if($libConfig->verbindungOrt != ''){
 	echo 'zu ' .$libConfig->verbindungOrt;
 }
 
-echo '</h2>' . "\r\n";
+echo '</a></h2>' . "\r\n";
 
 // sign out button
 echo '          <span id="signout">';

@@ -19,6 +19,10 @@ fieldset {
 	height: 100px;
 }
 
+#header h1 a, #header h2 a {
+	text-decoration: none;
+	color: inherit;
+}
 
 #header h1 {
 	margin-bottom: 0;
