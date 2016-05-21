@@ -18,6 +18,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
 class LibImage{
+	var $galleryThumbWidth = 200;
+	var $galleryThumbHeight = 150;
+
+	var $galleryImageWidth = 800;
+	var $galleryImageHeight = 600;
+
+	var $personFotoWidth = 75;
+	var $personFotoHeight = 100;
+
+	var $startseiteFotoWidth = 400;
+	var $startseiteFotoHeight = 300;
+
+	var $semesterCoverWidth = 500;
+	var $semesterCoverHeight = 500;
+	
 	var $GDlib_colorBits = 5;
 	var $libTime;
 	var $libGenericStorage;
@@ -338,7 +353,7 @@ class LibImage{
 		//delete old image
 		$this->deleteSemesterCover($semesterString);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'custom/semestercover', $semesterCoverFilename, 500, 500);
+		$this->saveImageByFilesArray($tmpFileVarName, 'custom/semestercover', $semesterCoverFilename, $this->semesterCoverWidth, $this->semesterCoverHeight);
 	}
 
 	function deleteSemesterCover($semesterString){
@@ -362,7 +377,7 @@ class LibImage{
 		//delete old image
 		$this->deletePersonFoto($personId);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'custom/intranet/mitgliederfotos', $personFotoFilename, 75, 100);
+		$this->saveImageByFilesArray($tmpFileVarName, 'custom/intranet/mitgliederfotos', $personFotoFilename, $this->personFotoWidth, $this->personFotoHeight);
 	}
 
 	function deletePersonFoto($personId){
@@ -386,7 +401,7 @@ class LibImage{
 		//delete old image
 		$this->deleteStartseitenBild($nachrichtId);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'modules/mod_internet_home/custom/bilder', $nachrichtFotoFilename, 400, 300);
+		$this->saveImageByFilesArray($tmpFileVarName, 'modules/mod_internet_home/custom/bilder', $nachrichtFotoFilename, $this->startseiteFotoWidth, $this->startseiteFotoHeight);
 	}
 
 	function deleteStartseitenBild($nachrichtId){
@@ -411,8 +426,8 @@ class LibImage{
 		$fotoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $_FILES[$tmpFileVarName]['name']);
 		$fotoThumbFileName = preg_replace('/[^A-Za-z0-9\._]/', '', 'thumb_'.$_FILES[$tmpFileVarName]['name']);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName, 700, 525, true);
-		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs', $fotoThumbFileName, 100, 75);
+		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
+		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs', $fotoThumbFileName, $this->galleryThumbWidth, $this->galleryThumbHeight);
 	}
 
 	function saveVeranstaltungsFotoByAjax($veranstaltungId, $targetFilename, $tmpFilename){
@@ -426,8 +441,8 @@ class LibImage{
 		$fotoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $targetFilename);
 		$fotoThumbFileName = preg_replace('/[^A-Za-z0-9\._]/', '', 'thumb_'.$targetFilename);
 
-		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName, 700, 525, true);
-		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs', $fotoThumbFileName, 100, 75, true);
+		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
+		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs', $fotoThumbFileName, $this->galleryThumbWidth, $this->galleryThumbHeight, true);
 	}
 
 

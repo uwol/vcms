@@ -19,11 +19,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 if(!is_object($libGlobal))
 	exit();
-?>
-<h1>Semesterprogramm <?php echo $libTime->getSemesterString($libGlobal->semester); ?></h1>
 
-<?php
+
 require("lib/gallery.class.php");
+
+echo '<h1>Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
+
+
 $libGallery = new LibGallery();
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
@@ -36,11 +38,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
-?>
 
-<p>Das aktuelle Semesterprogramm kann als <a href="webcal://<?php echo $libConfig->sitePath; ?>/inc.php?iid=semesterprogramm_icalendar"><img src="styles/icons/calendar/calendar.svg" alt="ical" class="icon_small" /> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>
-<div class="vcalendar">
-<?php
+echo '<p>Das aktuelle Semesterprogramm kann als <a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=semesterprogramm_icalendar"><img src="styles/icons/calendar/calendar.svg" alt="ical" class="icon_small" /> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>';
+echo '<div class="vcalendar">';
+
 //access level for galleries
 if($libAuth->isLoggedin()){
 	$level = 1;
@@ -79,7 +80,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$description = "";
 
 	if($libGallery->hasPictures($row['id'], $level)){
-		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid='.$row['id'].'&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'],$level). '&amp;thumb=1');
+		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], $level). '&amp;thumb=1');
 	}
 
 	$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");
