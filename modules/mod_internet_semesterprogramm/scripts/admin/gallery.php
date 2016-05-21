@@ -210,26 +210,25 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-left.svg" class="icon_small" /></a>';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-right.svg" class="icon_small" /></a>';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" /></a><br />';
-			
+
 			echo '</div>';
 		}
 
-		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '" class="highslide" onclick="return hs.expand(this)">';
-		echo '<img style="border: 1px solid ';
-
 		$visibility = $libGallery->getPublicityLevel($picture);
+		$visibilityClass = '';
 
 		if($visibility == 0){
-			echo 'green';
+			$visibilityClass = 'public';
 		} elseif($visibility == 1){
-			echo 'yellow';
+			$visibilityClass = 'internal';
 		} else {
-			echo 'red';
+			$visibilityClass = 'private';
 		}
 
-		echo ';" src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive center-block">';
+		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '" class="highslide" onclick="return hs.expand(this)">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive center-block ' .$visibilityClass. '">';
 		echo '</a>';
-		
+
 		echo '</div>';
 	}
 

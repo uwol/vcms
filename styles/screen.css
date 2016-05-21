@@ -228,6 +228,18 @@ nav .navbar-intranet li a {
 	text-align: center;
 }
 
+#content .gallery .public {
+	border: 2px solid green;
+}
+
+#content .gallery .internal {
+	border: 2px solid yellow;
+}
+
+#content .gallery .private {
+	border: 2px solid red;
+}
+
 #content dd {
 	margin-left: 2em;
 }

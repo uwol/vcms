@@ -249,15 +249,16 @@ if($libGallery->hasPictures($row['id'], $level)){
 
 	foreach($pictures as $key => $value){
 		echo '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
-	
+
 		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'" class="highslide" onclick="return hs.expand(this)">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive center-block" ';
+
+		$visibilityClass = '';
 
 		if($libGallery->getPublicityLevel($value) == 1){
-			echo 'style="border: 1px solid yellow" ';
+			$visibilityClass = "internal";
 		}
 
-		echo '/>';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive center-block ' .$visibilityClass. '" />';
 		echo '</a>';
 		echo '</div>';
 	}

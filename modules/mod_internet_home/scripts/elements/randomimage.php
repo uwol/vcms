@@ -25,7 +25,7 @@ include($libModuleHandler->getModuleDirectoryByModuleid("mod_internet_semesterpr
 
 $libGallery = new LibGallery($libDb);
 
-$stmt = $libDb->prepare("SELECT id, titel FROM base_veranstaltung WHERE DATEDIFF(NOW(),datum) < 90 ORDER BY RAND()");
+$stmt = $libDb->prepare("SELECT id, titel FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 90 ORDER BY RAND()");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -50,15 +50,18 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		echo '<h3 class="title">Veranstaltung:</h3> ' .wordwrap($row['titel'], 50, '<br />', 1);
 
+		echo '<div class="gallery">';
 		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive img-thumbnail" ';
+
+		$visibilityClass = '';
 
 		if($libGallery->getPublicityLevel($pictures[$pictureid]) == 1){
-			echo 'style="border: 1px solid yellow"';
+			$visibilityClass = "internal";
 		}
 
-		echo ' />';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive img-thumbnail ' .$visibilityClass. '" />';
 		echo '</a>';
+		echo '</div>';
 
 		echo '<hr />';
 
