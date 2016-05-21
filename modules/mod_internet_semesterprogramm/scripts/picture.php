@@ -38,12 +38,10 @@ if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 
 		if(isset($pictures[$_GET['pictureid']]) && $pictures[$_GET['pictureid']] != ''){
 
-			// if a thumb nail is requested
+			// if a thumbnail is requested
 			if(isset($_GET["thumb"]) && $_GET["thumb"] == 1){
-				// build absolute path
 				$path = "custom/veranstaltungsfotos/". $_GET['eventid'] ."/thumbs/thumb_". $pictures[$_GET['pictureid']];
 			} else {
-				// build absolute path
 				$path = "custom/veranstaltungsfotos/". $_GET['eventid'] ."/". $pictures[$_GET['pictureid']];
 			}
 
