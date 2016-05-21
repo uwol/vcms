@@ -221,6 +221,7 @@ nav .navbar-intranet li a {
 
 #content .calendarEvent {
 	text-align: center;
+	padding: 5px;
 }
 
 #content .calendarEvent .summary {
@@ -232,7 +233,7 @@ nav .navbar-intranet li a {
 }
 
 #content .gallery .thumb {
-	height: 150px;
+	max-height: 150px;
 	margin-bottom: 30px;
 }
 
