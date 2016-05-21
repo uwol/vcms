@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if(!isset($_REQUEST['id']) || !is_numeric($_REQUEST['id']) || !preg_match("/^[0-9]+$/", $_REQUEST['id']))
 	die('Fehler: Veranstaltungsid ist keine Zahl');
 
@@ -194,14 +195,14 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 
 	$pictures = $libGallery->getPictures($id,2);
 
-	echo '<div class="highslide-gallery galerie">';
-	echo '<table><tr>';
-	$i = 1;
+	echo '<div class="row gallery highslide-gallery">';
 
 	foreach($pictures as $key => $picture){
-		echo '<td style="width:25%;text-align:center;padding:10px 10px 25px 10px">';
+		echo '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
 
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
+			echo '<div class="center-block">';
+
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/public.svg" class="icon_small" /></a>';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/internal.svg" class="icon_small" /></a>';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/private.svg" class="icon_small" /></a><br />';
@@ -209,10 +210,12 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-left.svg" class="icon_small" /></a>';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-right.svg" class="icon_small" /></a>';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" /></a><br />';
+			
+			echo '</div>';
 		}
 
 		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '" class="highslide" onclick="return hs.expand(this)">';
-		echo '<img style="border-width: 3px; border-style: solid; border-color: ';
+		echo '<img style="border: 1px solid ';
 
 		$visibility = $libGallery->getPublicityLevel($picture);
 
@@ -224,18 +227,12 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 			echo 'red';
 		}
 
-		echo ';" src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1">';
+		echo ';" src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive center-block">';
 		echo '</a>';
-		echo '</td>';
-
-		if($i % 4 == 0){
-			echo '</tr><tr>';
-		}
-
-		$i++;
+		
+		echo '</div>';
 	}
 
-	echo '</tr></table>';
 	echo '</div>';
 }
 ?>

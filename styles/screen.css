@@ -223,6 +223,11 @@ nav .navbar-intranet li a {
 	font-size: 8pt;
 }
 
+#content .gallery .thumb {
+	margin-bottom: 30px;
+	text-align: center;
+}
+
 #content dd {
 	margin-left: 2em;
 }

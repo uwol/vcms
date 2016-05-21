@@ -24,7 +24,7 @@ class LibGlobal{
 	var $page;
 	var $iid;
 	var $libInclude;
-	var $version = '4.18';
+	var $version = '4.19';
 	var $errorTexts = array();
 	var $notificationTexts = array();
 	var $vcmsHostname;

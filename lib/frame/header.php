@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns#">
+<html lang="de" prefix="og: http://ogp.me/ns#">
 <?php
 $pageTitle = $libConfig->verbindungName . ' - ' . $libGlobal->page->getTitle();
 
@@ -22,7 +22,7 @@ if($libGlobal->page->getPid() == 'semesterprogramm_event'){
 echo '  <head>' . "\r\n";
 echo '    <meta charset="utf-8" />' . "\r\n";
 echo '    <meta http-equiv="X-UA-Compatible" content="IE=edge" />' . "\r\n";
-echo '    <meta name="viewport" content="width=device-width, initial-scale=1" />' . "\r\n";
+echo '    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' . "\r\n";
 echo '    <title>' .$pageTitle. '</title>' . "\r\n";
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . "\r\n";
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . "\r\n";

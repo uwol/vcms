@@ -73,7 +73,7 @@ if($libAuth->isLoggedIn()){
 echo '<h1>' .$row['titel']. '</h1>';
 
 echo '<div class="row">';
-echo '<div class="col-md-9">';
+echo '<div class="col-sm-9">';
 
 /*
 * date and time
@@ -170,7 +170,7 @@ echo '</div>';
 
 //-------------------------------------- interactive box start ------------------------------------------
 
-echo '<div class="col-md-3">';
+echo '<div class="col-sm-3">';
 echo '<p>';
 
 $semester = $libTime->getSemesterEinesDatums($row['datum']);
@@ -234,8 +234,6 @@ echo '</div>';
 
 
 echo '</div>';
-echo '<div class="row">';
-echo '<div class="col-md-12">';
 
 
 $level = 0;
@@ -245,40 +243,25 @@ if($libAuth->isLoggedin()){
 
 // images for the access level?
 if($libGallery->hasPictures($row['id'], $level)){
-	echo '<div class="highslide-gallery">';
+	echo '<div class="row gallery highslide-gallery">';
 
 	$pictures = $libGallery->getPictures($row['id'], $level);
 
-	$anzahlBilderProZeile = 4;
-	echo '<table style="text-align:center;width:80%;margin-left:auto;margin-right:auto">';
-	echo '<tr>';
-
-	$i = 0;
 	foreach($pictures as $key => $value){
-		$i++;
-		echo '<td style="vertical-align:middle;width:25%"><a href="inc.php?iid=semesterprogramm_picture&amp;eventid='.$row['id'].'&amp;pictureid='.$key.'" class="highslide" onclick="return hs.expand(this)">';
-		echo '<img ';
+		echo '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
+	
+		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'" class="highslide" onclick="return hs.expand(this)">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive center-block" ';
 
 		if($libGallery->getPublicityLevel($value) == 1){
-			echo 'style="border-width: 3px; border-style: solid; border-color:yellow" ';
-		} else {
-			echo 'style="margin:3px" ';
+			echo 'style="border: 1px solid yellow" ';
 		}
 
-		echo 'src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$row['id'].'&amp;pictureid='.$key.'&amp;thumb=1" alt="" />';
-		echo '</a></td>';
-
-		if($i % $anzahlBilderProZeile == 0){
-			echo '</tr><tr>';
-		}
+		echo '/>';
+		echo '</a>';
+		echo '</div>';
 	}
-
-	echo '</tr>';
-	echo '</table>';
 
 	echo '</div>';
 }
-
-echo '</div>';
-echo '</div>';
 ?>
