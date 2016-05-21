@@ -228,6 +228,10 @@ nav .navbar-intranet li a {
 	text-align: center;
 }
 
+#content .gallery .thumb img {
+	height: 150px;
+}
+
 #content .gallery .public {
 	border: 2px solid green;
 }
