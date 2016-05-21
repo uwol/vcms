@@ -27,18 +27,6 @@ header #signout a {
 	color: #961419;
 }
 
-#menu {
-	color: #961419;
-}
-
-#menu a:link, #menu a:visited {
-	color: #961419;
-}
-
-#menu a:hover, #menu a:active, #menu a:focus {
-	color: #000080;
-}
-
 
 #content a:link, #content a:visited {
 	color: #961419;

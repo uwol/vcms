@@ -248,7 +248,7 @@ if($libGallery->hasPictures($row['id'], $level)){
 	$pictures = $libGallery->getPictures($row['id'], $level);
 
 	foreach($pictures as $key => $value){
-		echo '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
+		echo '<div class="col-lg-3 col-md-4 col-xs-6">';
 
 		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'" class="highslide" onclick="return hs.expand(this)">';
 
@@ -258,7 +258,7 @@ if($libGallery->hasPictures($row['id'], $level)){
 			$visibilityClass = "internal";
 		}
 
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive center-block ' .$visibilityClass. '" />';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive center-block thumb ' .$visibilityClass. '" />';
 		echo '</a>';
 		echo '</div>';
 	}

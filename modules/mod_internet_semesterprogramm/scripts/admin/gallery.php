@@ -198,7 +198,7 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 	echo '<div class="row gallery highslide-gallery">';
 
 	foreach($pictures as $key => $picture){
-		echo '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
+		echo '<div class="col-lg-3 col-md-4 col-xs-6">';
 
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			echo '<div class="center-block">';
@@ -226,7 +226,7 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 		}
 
 		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '" class="highslide" onclick="return hs.expand(this)">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive center-block ' .$visibilityClass. '">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive center-block thumb ' .$visibilityClass. '">';
 		echo '</a>';
 
 		echo '</div>';
