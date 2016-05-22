@@ -228,13 +228,18 @@ nav .navbar-intranet li a {
 	font-size: 8pt;
 }
 
+
 #content .gallery {
 	text-align: center;
 }
 
-#content .gallery .thumb {
-	max-height: 150px;
+#content .gallery .thumbBox {
 	margin-bottom: 30px;
+}
+
+#content .thumb {
+	max-height: 150px;
+	margin-bottom: 0;
 }
 
 #content .gallery .public {
@@ -252,6 +257,7 @@ nav .navbar-intranet li a {
 #content .carousel-control.left, #content .carousel-control.right {
 	background-image:none;
 }
+
 
 #content dd {
 	margin-left: 2em;

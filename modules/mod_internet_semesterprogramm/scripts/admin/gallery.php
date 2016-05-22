@@ -199,6 +199,7 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 
 	foreach($pictures as $key => $picture){
 		echo '<div class="col-lg-3 col-md-4 col-xs-6">';
+		echo '<div class="thumbBox">';
 
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			echo '<div class="center-block">';
@@ -230,28 +231,9 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 		echo '</a>';
 
 		echo '</div>';
+		echo '</div>';
 	}
 
 	echo '</div>';
-
-	/*
-	* gallery modal window
-	*/
-	echo '<div class="modal" id="myModal" role="dialog">' . "\r\n";
-	echo '  <div class="modal-dialog">' . "\r\n";
-	echo '    <div class="modal-content">' . "\r\n";
-	echo '      <div class="modal-body">' . "\r\n";
-	echo '        <div id="modalCarousel" class="carousel">' . "\r\n";
-	echo '          <div class="carousel-inner"></div>' . "\r\n";
-	echo '          <a class="carousel-control left" href="#modalCarousel" data-slide="prev"></a>' . "\r\n";
-	echo '          <a class="carousel-control right" href="#modalCarousel" data-slide="next"></a>' . "\r\n";
-	echo '        </div>' . "\r\n";
-	echo '      </div>' . "\r\n";
-	echo '      <div class="modal-footer">' . "\r\n";
-	echo '        <button class="btn btn-default" data-dismiss="modal">Schließen</button>' . "\r\n";
-	echo '      </div>' . "\r\n";
-	echo '    </div>' . "\r\n";
-	echo '  </div>' . "\r\n";
-	echo '</div>' . "\r\n";
 }
 ?>

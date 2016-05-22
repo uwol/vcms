@@ -1,30 +1,41 @@
 $(document).ready(function() {
-	$('.gallery .thumbnail').on('load', function() {}).each(function(i) {
-		var a = $(this).parent();
-		var imgHref = $(a).attr('href');
-		var img = $('<img />');
-		img.attr('src', imgHref);
-		img.addClass('center-block');
-		img.addClass('img-responsive');
-
-		var itemDiv = $('<div class="item"></div>');
-		img.appendTo(itemDiv);
-		itemDiv.appendTo('.carousel-inner');
-
-		if (i==0){
-			itemDiv.addClass('active');
-		}
+	$.get("styles/gallery/modal.html", function(data) {
+		$('#content').append(data);
+		$('#modalCarousel').carousel({interval:false});
 	});
-
-	$('#modalCarousel').carousel({interval:false});
 
 	$('.gallery .thumbnail').click(function(e){
 		e.preventDefault();
+		
+		var clickedThumbnail = this;
 
-		var idx = $(this).parents('div').index();
-		var id = parseInt(idx);
+		$('.carousel-inner').empty();
+		$('.gallery .thumbnail').each(function() {
+			var currentThumbnail = this;
+			var itemDiv = createCarouselItem(currentThumbnail);
 
-		$('#myModal').modal('show');
-		$('#modalCarousel').carousel(id);
+			if(currentThumbnail == clickedThumbnail){
+				itemDiv.addClass('active');
+			}
+		});
+
+		$('#galleryModal').modal('show');
+		$('#modalCarousel').carousel();
 	});
 });
+
+function createCarouselItem(thumbnail){
+	var a = $(thumbnail).parent();
+	var thumbnailHref = $(a).attr('href');
+
+	var itemDiv = $('<div class="item"></div>');
+	itemDiv.appendTo('.carousel-inner');
+
+	var img = $('<img />');
+	img.attr('src', thumbnailHref);
+	img.addClass('center-block');
+	img.addClass('img-responsive');
+	img.appendTo(itemDiv);
+	
+	return itemDiv;
+}
