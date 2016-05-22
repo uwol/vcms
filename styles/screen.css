@@ -173,13 +173,13 @@ nav .navbar-intranet li a {
 }
 
 #content .memberSignatureBox {
-	width: 75px;
+	width: 100px;
 	line-height: 0;
 }
 
 #content .memberSignatureImg {
-	width: 75px;
-	height: 100px;
+	width: 100px;
+	height: 133px;
 	margin: 0;
 }
 

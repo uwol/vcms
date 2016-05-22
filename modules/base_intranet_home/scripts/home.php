@@ -33,7 +33,7 @@ echo $libString->getNotificationBoxText();
 ?>
 
 <div class="row">
-	<section class="col-md-9">
+	<section class="col-md-8">
         <?php
         if($libModuleHandler->moduleIsAvailable("mod_intranet_news")){
 	    	require_once("elements/news.php");
@@ -50,7 +50,7 @@ echo $libString->getNotificationBoxText();
 		}
 		?>
 	</section>
-	<aside class="col-md-3">
+	<aside class="col-md-4">
 		<?php include("elements/randomah.php");?>
 		<?php include("elements/nextbirthdays.php");?>
 		<?php include("elements/wifi.php");?>

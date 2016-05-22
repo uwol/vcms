@@ -27,10 +27,10 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
 <h1>Willkommen</h1>
 
 <div class="row">
-	<section class="col-md-9">
+	<section class="col-md-8">
 		<?php include("elements/announcements.php"); ?>
 	</section>
-	<aside class="col-md-3">
+	<aside class="col-md-4">
 		<?php include("elements/randomimage.php");?>
 		<?php include("elements/nextevent.php");?>
 		<?php include("elements/socialmedia.php");?>
