@@ -50,7 +50,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		echo '<h3 class="title">Veranstaltung:</h3> ' .wordwrap($row['titel'], 50, '<br />', 1);
 
-		echo '<div class="gallery">';
 		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
 
 		$visibilityClass = '';
@@ -61,7 +60,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '&thumb=1" alt="" class="img-responsive thumbnail center-block thumb ' .$visibilityClass. '" />';
 		echo '</a>';
-		echo '</div>';
 
 		echo '<hr />';
 

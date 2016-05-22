@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('.row .thumbnail').on('load', function() {}).each(function(i) {
+	$('.gallery .thumbnail').on('load', function() {}).each(function(i) {
 		var a = $(this).parent();
 		var imgHref = $(a).attr('href');
 		var img = $('<img />');
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 	$('#modalCarousel').carousel({interval:false});
 
-	$('.row .thumbnail').click(function(e){
+	$('.gallery .thumbnail').click(function(e){
 		e.preventDefault();
 
 		var idx = $(this).parents('div').index();

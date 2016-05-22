@@ -233,5 +233,25 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 	}
 
 	echo '</div>';
+
+	/*
+	* gallery modal window
+	*/
+	echo '<div class="modal" id="myModal" role="dialog">' . "\r\n";
+	echo '  <div class="modal-dialog">' . "\r\n";
+	echo '    <div class="modal-content">' . "\r\n";
+	echo '      <div class="modal-body">' . "\r\n";
+	echo '        <div id="modalCarousel" class="carousel">' . "\r\n";
+	echo '          <div class="carousel-inner"></div>' . "\r\n";
+	echo '          <a class="carousel-control left" href="#modalCarousel" data-slide="prev"></a>' . "\r\n";
+	echo '          <a class="carousel-control right" href="#modalCarousel" data-slide="next"></a>' . "\r\n";
+	echo '        </div>' . "\r\n";
+	echo '      </div>' . "\r\n";
+	echo '      <div class="modal-footer">' . "\r\n";
+	echo '        <button class="btn btn-default" data-dismiss="modal">Schließen</button>' . "\r\n";
+	echo '      </div>' . "\r\n";
+	echo '    </div>' . "\r\n";
+	echo '  </div>' . "\r\n";
+	echo '</div>' . "\r\n";
 }
 ?>
