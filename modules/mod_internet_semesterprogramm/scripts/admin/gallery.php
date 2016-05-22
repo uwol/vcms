@@ -195,7 +195,7 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 
 	$pictures = $libGallery->getPictures($id,2);
 
-	echo '<div class="row gallery highslide-gallery">';
+	echo '<div class="row gallery">';
 
 	foreach($pictures as $key => $picture){
 		echo '<div class="col-lg-3 col-md-4 col-xs-6">';
@@ -225,8 +225,8 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 			$visibilityClass = 'private';
 		}
 
-		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '" class="highslide" onclick="return hs.expand(this)">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive center-block thumb ' .$visibilityClass. '">';
+		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive thumbnail center-block thumb ' .$visibilityClass. '">';
 		echo '</a>';
 
 		echo '</div>';

@@ -241,16 +241,15 @@ if($libAuth->isLoggedin()){
 	$level = 1;
 }
 
-// images for the access level?
 if($libGallery->hasPictures($row['id'], $level)){
-	echo '<div class="row gallery highslide-gallery">';
+	echo '<div class="row gallery">';
 
 	$pictures = $libGallery->getPictures($row['id'], $level);
 
 	foreach($pictures as $key => $value){
 		echo '<div class="col-lg-3 col-md-4 col-xs-6">';
 
-		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'" class="highslide" onclick="return hs.expand(this)">';
+		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
 
 		$visibilityClass = '';
 
@@ -258,11 +257,28 @@ if($libGallery->hasPictures($row['id'], $level)){
 			$visibilityClass = "internal";
 		}
 
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive center-block thumb ' .$visibilityClass. '" />';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="thumbnail img-responsive center-block thumb ' .$visibilityClass. '" />';
 		echo '</a>';
 		echo '</div>';
 	}
 
 	echo '</div>';
 }
+
+echo '<div class="modal" id="myModal" role="dialog">' . "\r\n";
+echo '  <div class="modal-dialog">' . "\r\n";
+echo '    <div class="modal-content">' . "\r\n";
+echo '      <div class="modal-body">' . "\r\n";
+echo '        <div id="modalCarousel" class="carousel">' . "\r\n";
+echo '          <div class="carousel-inner"></div>' . "\r\n";
+echo '          <a class="carousel-control left" href="#modalCarousel" data-slide="prev"></a>' . "\r\n";
+echo '          <a class="carousel-control right" href="#modalCarousel" data-slide="next"></a>' . "\r\n";
+echo '        </div>' . "\r\n";
+echo '      </div>' . "\r\n";
+echo '      <div class="modal-footer">' . "\r\n";
+echo '        <button class="btn btn-default" data-dismiss="modal">Schließen</button>' . "\r\n";
+echo '      </div>' . "\r\n";
+echo '    </div>' . "\r\n";
+echo '  </div>' . "\r\n";
+echo '</div>' . "\r\n";
 ?>

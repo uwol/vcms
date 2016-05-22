@@ -249,6 +249,10 @@ nav .navbar-intranet li a {
 	border: 2px solid red;
 }
 
+#content .carousel-control.left, #content .carousel-control.right {
+	background-image:none;
+}
+
 #content dd {
 	margin-left: 2em;
 }

@@ -59,7 +59,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			$visibilityClass = "internal";
 		}
 
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '&thumb=1" alt="" class="img-responsive center-block thumb ' .$visibilityClass. '" />';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '&thumb=1" alt="" class="img-responsive thumbnail center-block thumb ' .$visibilityClass. '" />';
 		echo '</a>';
 		echo '</div>';
 

@@ -61,6 +61,7 @@ if(is_array($libGlobal->module->getHeaderStrings())){
 */
 echo '    <script src="styles/jquery-2.2.3.min.js"></script>' . "\r\n";
 echo '    <script src="styles/bootstrap/bootstrap.min.js"></script>' . "\r\n";
+echo '    <script src="styles/gallery/modal.js"></script>' . "\r\n";
 
 /*
 * robots
