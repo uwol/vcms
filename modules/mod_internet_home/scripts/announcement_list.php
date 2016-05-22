@@ -22,14 +22,10 @@ if(!is_object($libGlobal))
 
 
 /*
-* output
-*/
-
-/*
 * determine semester
 */
 if(!isset($_REQUEST['semester']) || !$libTime->isValidSemesterString($_REQUEST['semester'])){
-	$stmt = $libDb->prepare("SELECT DATE_FORMAT(startdatum,'%Y-%m-01') AS datum FROM mod_internethome_nachricht ORDER BY startdatum DESC LIMIT 0,1");
+	$stmt = $libDb->prepare("SELECT DATE_FORMAT(startdatum, '%Y-%m-01') AS datum FROM mod_internethome_nachricht ORDER BY startdatum DESC LIMIT 0,1");
 	$stmt->execute();
 	$stmt->bindColumn('datum', $datum);
 	$stmt->fetch();
@@ -40,6 +36,11 @@ if(!isset($_REQUEST['semester']) || !$libTime->isValidSemesterString($_REQUEST['
 		$libGlobal->semester = $semester;
 	}
 }
+
+
+/*
+* output
+*/
 
 echo '<h1>Ankündigungen ' . $libTime->getSemesterString($libGlobal->semester) . '</h1>';
 
@@ -75,40 +76,36 @@ $lastsetmonth = '';
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($lastsetmonth != substr($row['startdatum'], 0, 7)){
-		echo '<div style="clear:both">';
-
 		if(substr($row['startdatum'], 5, 2) == '00'){ //-> 0000-00-00
 			echo '<h2>- Jahr 0000 -</h2>';
 		} else {
-			echo '<h2>- '.$libTime->getMonthName(substr($row['startdatum'], 5, 2)).' '.substr($row['startdatum'], 0, 4).' -</h2>';
+			echo '<h2>- ' .$libTime->getMonthName(substr($row['startdatum'], 5, 2)). ' ' .substr($row['startdatum'], 0, 4). ' -</h2>';
 		}
 
-		echo '</div>';
+		echo '<hr />';
 
 		$lastsetmonth = substr($row["startdatum"], 0, 7);
 	}
 
-	echo '<div id="' .$row['id']. '" class="text" style="clear:both; margin-bottom:40px; overflow:hidden">';
+	echo '<div class="row" id="' .$row['id']. '">';
+	echo '<aside class="col-xs-3">';
 
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$row['id']. '.jpg';
 
 	if(is_file($posssibleImage)){
-		echo '<img src="'.$posssibleImage.'" style="float:left; margin-right:10px; margin-bottom:6px;';
-		list($width, $height, $type, $attr) = getimagesize($posssibleImage);
-
-		if(($width / 4 * 3) >= $height){
-			echo 'width:200px;';
-		} else {
-			echo 'height:150px;';
-		}
-
-		echo '" alt="" />';
+		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="" />';
 	}
 
-	if (($row['text']) != ''){
+	echo '</aside>';
+	echo '<div class="col-xs-9">';
+
+	if ($row['text'] != ''){
 		echo $libString->parseBBCode(nl2br(trim($row['text'])));
 	}
 
 	echo '</div>';
+	echo '</div>';
+	
+	echo '<hr />';
 }
 ?>
