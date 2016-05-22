@@ -466,7 +466,7 @@ class LibEvent{
 
 		//image
 		if($this->imageUrl != ''){
-			$retstr .= '<img class="img-responsive center-block" src="'.$this->imageUrl.'" alt="Foto" />';
+			$retstr .= '<img class="img-responsive thumbnail center-block thumb" src="'.$this->imageUrl.'" alt="Foto" />';
 		}
 
 		if($this->linkUrl != ''){
