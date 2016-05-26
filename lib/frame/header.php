@@ -125,7 +125,8 @@ echo '      </div>' . "\r\n";
 echo '      <div class="row">' . "\r\n";
 echo '        <div class="col-md-12">' . "\r\n";
 
-echo (new LibMenuRenderer())->getMenuHtml($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
+$libMenuRenderer = new LibMenuRenderer();
+echo $libMenuRenderer->getMenuHtml($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
 
 echo '        </div>' . "\r\n";
 echo '      </div>' . "\r\n";
