@@ -150,6 +150,10 @@ nav .navbar-intranet li a {
 	margin: 2px 0 2px 0;
 }
 
+#content dd {
+	margin-left: 2em;
+}
+
 #content .icon {
 	width: 24px;
 	margin: 0 2px;
@@ -171,6 +175,8 @@ nav .navbar-intranet li a {
 	background-color: #F6CECE;
 	padding: 1px;
 }
+
+/* member signature */
 
 #content .memberSignatureBox {
 	width: 100px;
@@ -196,6 +202,8 @@ nav .navbar-intranet li a {
 #content .memberActivityBarInactive {
 	background-color: white;
 }
+
+/* calendar */
 
 #content .calendarYear {
 	table-layout: fixed;
@@ -228,6 +236,7 @@ nav .navbar-intranet li a {
 	font-size: 8pt;
 }
 
+/* gallery */
 
 #content .gallery {
 	text-align: center;
@@ -235,11 +244,6 @@ nav .navbar-intranet li a {
 
 #content .gallery .thumbBox {
 	margin-bottom: 30px;
-}
-
-#content .thumb {
-	max-height: 150px;
-	margin-bottom: 0;
 }
 
 #content .gallery .public {
@@ -258,9 +262,11 @@ nav .navbar-intranet li a {
 	background-image:none;
 }
 
+/* thumbnail */
 
-#content dd {
-	margin-left: 2em;
+#content .thumbnail {
+	max-height: 150px;
+	margin-bottom: 0;
 }
 
 

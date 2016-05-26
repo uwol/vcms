@@ -258,7 +258,7 @@ if($libGallery->hasPictures($row['id'], $level)){
 			$visibilityClass = "internal";
 		}
 
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="thumbnail img-responsive center-block thumb ' .$visibilityClass. '" />';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive thumbnail center-block ' .$visibilityClass. '" />';
 		echo '</a>';
 		echo '</div>';
 		echo '</div>';

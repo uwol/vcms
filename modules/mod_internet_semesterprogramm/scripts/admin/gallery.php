@@ -227,7 +227,7 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 		}
 
 		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive thumbnail center-block thumb ' .$visibilityClass. '">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive thumbnail center-block ' .$visibilityClass. '">';
 		echo '</a>';
 
 		echo '</div>';
