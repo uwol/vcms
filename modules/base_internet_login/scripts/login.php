@@ -44,37 +44,59 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('smtpUsername')){
 if(!$libGenericStorage->attributeExistsInCurrentModule('smtpPassword')){
 	$libGenericStorage->saveValueInCurrentModule('smtpPassword', '');
 }
-?>
-<h1>Intranet-Login</h1>
-<?php
+
+
+echo '<h1>Intranet-Login</h1>';
+
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
-?>
 
-<p>Bitte zum Anmelden den Benutzernamen und das Passwort eingeben.</p>
+echo '<p>Bitte zum Anmelden den Benutzernamen und das Passwort eingeben.</p>';
 
-<form method="post" action="<?php
+
+$urlPrefix = '';
+
 if($libConfig->sitePath != ""){
 	if($libGenericStorage->loadValueInCurrentModule('useHttps') == '1'){
 		$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
 
-		if($sslProxyUrl != '')
-			echo 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
-		else
-			echo 'https://' . $libConfig->sitePath . '/';
+		if($sslProxyUrl != ''){
+			$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
+		} else {
+			$urlPrefix = 'https://' . $libConfig->sitePath . '/';
+		}
 	}
-}?>index.php?pid=intranet_home">
-	<fieldset>
-		<input type="text" name="intranet_login_username" style="width:13em" /> Benutzername<br />
-		<input type="password" name="intranet_login_password" style="width:13em" /> Passwort<br />
-		<div style="text-align:center"><input type="submit" value="Login" /></div>
-	</fieldset>
-</form>
+}
 
-<h2>Registrierung</h2>
 
-<p>Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=login_registrierung">Registrierungsseite</a> angefordert werden kann.</p>
+echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="form-horizontal">';
+echo '<fieldset>';
 
-<h2>Passwort vergessen?</h2>
+echo '<div class="form-group">';
+echo '<label for="intranet_login_username" class="col-sm-2 control-label">Benutzername</label>';
+echo '<div class="col-sm-10"><input type="text" id="intranet_login_username" name="intranet_login_username" class="form-control" /></div>';
+echo '</div>';
 
-<p>Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=login_resetpassword">ein neues Passwort</a> per Email zuschicken lassen.</p>
+echo '<div class="form-group">';
+echo '<label for="intranet_login_password" class="col-sm-2 control-label">Passwort</label>';
+echo '<div class="col-sm-10"><input type="password" name="intranet_login_password" class="form-control" /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<div class="col-sm-offset-2 col-sm-10">';
+echo '<button type="submit" class="btn btn-default">Anmelden</button>';
+echo '</div>';
+echo '</div>';
+
+echo '</fieldset>';
+echo '</form>';
+
+
+echo '<h2>Registrierung</h2>';
+
+echo '<p>Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=login_registrierung">Registrierungsseite</a> angefordert werden kann.</p>';
+
+
+echo '<h2>Passwort vergessen?</h2>';
+
+echo '<p>Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=login_resetpassword">ein neues Passwort</a> per Email zuschicken lassen.</p>';

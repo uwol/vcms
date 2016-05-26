@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
+
 require_once("lib/thirdparty/class.phpmailer.php");
 
 if(isset($_POST['email']) && $_POST['email'] != "" &&
@@ -81,17 +82,32 @@ und kann im Intranet auf der Seite \"Mein Profil\" geändert werden.";
 		$libGlobal->notificationTexts[] =  "Falls das Geburtsdatum korrekt und die E-Mailadresse in Deinem Nutzerkonto eingetragen ist, wurde eine E-Mail mit einem neuen Passwort an die E-Mailadresse verschickt.";
 	}
 }
-?>
-<h1>Neues Passwort setzen</h1>
-<?php
+
+echo '<h1>Neues Passwort setzen</h1>';
+
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
-?>
-<p>Auf dieser Seite kann ein neues Passwort vergeben werden, falls das alte vergessen wurde. Bitte gib Dein Geburtsdatum und die E-Mailadresse an, die in Deinem Intranetkonto angegeben ist. An diese E-Mailadresse wird das neue Passwort verschickt.</p>
-<form method="post" action="index.php?pid=login_resetpassword">
-	<fieldset>
-		<input type="text" name="email" size="25" value=""/> E-Mailadresse<br />
-		<input type="text" name="geburtsdatum" size="25" value=""/> Geburtsdatum<br />
-		<input type="submit" value="Neues Passwort senden" />
-	</fieldset>
-</form>
+
+echo '<p>Auf dieser Seite kann ein neues Passwort vergeben werden, falls das alte vergessen wurde. Bitte gib Dein Geburtsdatum und die E-Mailadresse an, die in Deinem Intranetkonto angegeben ist. An diese E-Mailadresse wird das neue Passwort verschickt.</p>';
+
+echo '<form action="index.php?pid=login_resetpassword" method="post" class="form-horizontal">';
+echo '<fieldset>';
+
+echo '<div class="form-group">';
+echo '<label for="email" class="col-sm-2 control-label">E-Mail-Adresse</label>';
+echo '<div class="col-sm-10"><input type="email" id="email" name="email" class="form-control" /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="geburtsdatum" class="col-sm-2 control-label">Geburtsdatum</label>';
+echo '<div class="col-sm-10"><input type="geburtsdatum" name="geburtsdatum" class="form-control" /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<div class="col-sm-offset-2 col-sm-10">';
+echo '<button type="submit" class="btn btn-default">Neues Passwort senden</button>';
+echo '</div>';
+echo '</div>';
+
+echo '</fieldset>';
+echo '</form>';

@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
+
 /*
 * actions
 */
@@ -162,31 +163,66 @@ MBuH, ";
 	if(isset($_POST['registrierung_loginname'])){
 		$registrierung_loginname = $_POST['registrierung_loginname'];
 	}
-
-	echo '<form method="post" action="';
+	
+	
+	$urlPrefix = '';
 
 	if($libConfig->sitePath != ""){
 		if($libGenericStorage->loadValueInCurrentModule('useHttps') == '1'){
 			$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
 
 			if($sslProxyUrl != ''){
-				echo 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
+				$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
 			} else {
-				echo 'https://' . $libConfig->sitePath . '/';
+				$urlPrefix = 'https://' . $libConfig->sitePath . '/';
 			}
 		}
 	}
 
-	echo 'index.php?pid=login_registrierung">';
+	echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=login_registrierung" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="text" name="registrierung_name" size="25" value="'. $libString->protectXSS($registrierung_name) .'" /> Vorname und Name<br />';
-	echo '<input type="text" name="registrierung_telnr" size="25" value="'. $libString->protectXSS($registrierung_telnr) .'" /> Telefonnummer<br />';
-	echo '<input type="text" name="registrierung_emailadresse" size="25" value="'. $libString->protectXSS($registrierung_emailadresse) .'" /> E-Mailadresse<br />';
-	echo '<input type="text" name="registrierung_geburtsdatum" size="10" value="'. $libString->protectXSS($registrierung_geburtsdatum) .'" /> Geburtsdatum<br />';
-	echo '<input type="text" name="registrierung_loginname" size="25" value="'. $libString->protectXSS($registrierung_loginname) .'" /> Benutzername<br />';
-	echo '<input type="password" name="registrierung_pwd1" size="25" /> Passwort<br />';
-	echo '<input type="password" name="registrierung_pwd2" size="25" /> Passwortwiederholung<br />';
-	echo '<input type="submit" value="Abschicken" />';
+
+	echo '<div class="form-group">';
+	echo '<label for="registrierung_name" class="col-sm-2 control-label">Vorname und Nachname</label>';
+	echo '<div class="col-sm-10"><input type="text" id="registrierung_name" name="registrierung_name" value="' .$libString->protectXSS($registrierung_name). '" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="registrierung_telnr" class="col-sm-2 control-label">Telefonnummer</label>';
+	echo '<div class="col-sm-10"><input type="tel" id="registrierung_telnr" name="registrierung_telnr" value="' .$libString->protectXSS($registrierung_telnr). '" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="registrierung_emailadresse" class="col-sm-2 control-label">E-Mail-Adresse</label>';
+	echo '<div class="col-sm-10"><input type="text" id="registrierung_emailadresse" name="registrierung_emailadresse" value="' .$libString->protectXSS($registrierung_emailadresse). '" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="registrierung_geburtsdatum" class="col-sm-2 control-label">Geburtsdatum</label>';
+	echo '<div class="col-sm-10"><input type="date" id="registrierung_geburtsdatum" name="registrierung_geburtsdatum" value="' .$libString->protectXSS($registrierung_geburtsdatum). '" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="registrierung_loginname" class="col-sm-2 control-label">Benutzername</label>';
+	echo '<div class="col-sm-10"><input type="text" id="registrierung_loginname" name="registrierung_loginname" value="' .$libString->protectXSS($registrierung_loginname). '" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="registrierung_pwd1" class="col-sm-2 control-label">Passwort</label>';
+	echo '<div class="col-sm-10"><input type="password" id="registrierung_pwd1" name="registrierung_pwd1" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="registrierung_pwd2" class="col-sm-2 control-label">Passwort-Wiederholung</label>';
+	echo '<div class="col-sm-10"><input type="password" id="registrierung_pwd2" name="registrierung_pwd2" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<div class="col-sm-offset-2 col-sm-10">';
+	echo '<button type="submit" class="btn btn-default">Abschicken</button>';
+	echo '</div>';
+	echo '</div>';
+
 	echo '</fieldset>';
 	echo '</form>';
 }
