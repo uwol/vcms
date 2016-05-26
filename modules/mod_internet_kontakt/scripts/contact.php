@@ -159,43 +159,68 @@ echo '</div>';
 
 
 echo '<h2>Kontakt aufnehmen</h2>';
+
 echo '<div class="row">';
 echo '<section class="col-md-12">';
+
 
 if($mailsent){
 	echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
 } else {
-	$name = "Name";
+	$name = '';
 
 	if(isset($_POST['name']) && $_POST['name'] != ""){
 		$name = $_POST['name'];
 	}
 
-	$email = "E-Mailadresse";
+	$email = '';
 
 	if(isset($_POST['emailaddress']) && $_POST['emailaddress'] != ""){
 		$email = $_POST['emailaddress'];
 	}
 
-	$telefon = "Telefonnummer";
+	$telefon = '';
 
 	if(isset($_POST['telefon']) && $_POST['telefon'] != ""){
 		$telefon = $_POST['telefon'];
 	}
 
-	$nachricht = "";
+	$nachricht = '';
 
 	if(isset($_POST['nachricht']) && $_POST['nachricht'] != ""){
 		$nachricht = $_POST['nachricht'];
 	}
 
-	echo '<form method="post" action="index.php?pid=kontakt_kontakt">';
+
+	echo '<form action="index.php?pid=kontakt_kontakt" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="text" name="name" size="44" value="' .$libString->protectXSS($name). '" /><br />';
-	echo '<input type="text" name="emailaddress" size="44" value="' .$libString->protectXSS($email). '" /><br />';
-	echo '<input type="text" name="telefon" size="44" value="' .$libString->protectXSS($telefon). '" /><br />';
-	echo '<textarea name="nachricht" cols="44" rows="7">' .$libString->protectXSS($nachricht). '</textarea><br />';
-	echo '<input type="submit" value="Abschicken" />';
+
+	echo '<div class="form-group">';
+	echo '<label for="name" class="col-sm-2 control-label">Name</label>';
+	echo '<div class="col-sm-10"><input type="text" id="name" name="name" placeholder="Name" value="' .$libString->protectXSS($name). '" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="emailaddress" class="col-sm-2 control-label">E-Mail-Adresse</label>';
+	echo '<div class="col-sm-10"><input type="email" id="email" name="emailaddress" placeholder="E-Mail-Adresse" value="' .$libString->protectXSS($email). '" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="telefon" class="col-sm-2 control-label">Telefonnummer</label>';
+	echo '<div class="col-sm-10"><input type="tel" id="telefon" name="telefon" placeholder="Telefonnummer" value="' .$libString->protectXSS($telefon). '" class="form-control" /></div>';
+	echo '</div>';
+	
+	echo '<div class="form-group">';
+	echo '<label for="nachricht" class="col-sm-2 control-label">Nachricht</label>';
+	echo '<div class="col-sm-10"><textarea name="nachricht" rows="7" class="form-control">' .$libString->protectXSS($nachricht). '</textarea></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<div class="col-sm-offset-2 col-sm-10">';
+	echo '<button type="submit" class="btn btn-default">Abschicken</button>';
+	echo '</div>';
+	echo '</div>';
+
 	echo '</fieldset>';
 	echo '</form>';
 }
