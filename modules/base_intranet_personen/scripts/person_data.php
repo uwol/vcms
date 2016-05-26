@@ -451,7 +451,7 @@ if($ownprofile){
 	$vereine = array();
 
 	while($rowvereine = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$vereine[] = '<a href="index.php?pid=dachverband_vereindetail&amp;verein=' .$rowvereine['id']. '">'. $rowvereine['titel'] ." ". $rowvereine['name'] ." im " .$rowvereine['dachverband']. " zu " .$rowvereine['ort1']. "</a>";
+		$vereine[] = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowvereine['id']. '">'. $rowvereine['titel'] ." ". $rowvereine['name'] ." im " .$rowvereine['dachverband']. " zu " .$rowvereine['ort1']. "</a>";
 	}
 
 	if(count($vereine) > 0){

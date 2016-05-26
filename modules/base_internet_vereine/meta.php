@@ -1,12 +1,12 @@
 <?php
 $moduleName = "Base Internet Vereine";
-$version = "2.08";
+$version = "2.09";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
 $updateScript = "";
 
-$pages[] = new LibPage("dachverband_vereindetail", "scripts/", "association.php", new LibAccessRestriction(array("F","B","P","C","G","W","Y"), ""), "Verein");
+$pages[] = new LibPage("vereindetail", "scripts/", "association.php", "", "Verein");
 $dependencies = array();
 
 $menuElementsInternet = array();

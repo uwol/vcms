@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
+if(!is_object($libGlobal))
 	exit();
 
 
@@ -25,249 +25,244 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 * output
 */
 if(isset($_GET['verein'])){
-	$stmt = $libDb->prepare("SELECT * FROM base_verein WHERE id=:id");
+	$stmt = $libDb->prepare('SELECT * FROM base_verein WHERE id=:id');
 	$stmt->bindValue(':id', $_GET['verein'], PDO::PARAM_INT);
 	$stmt->execute();
 	$vereinarray = $stmt->fetch(PDO::FETCH_ASSOC);
 
+	echo '<h1>' .$libVerein->getVereinNameString($vereinarray['id']). '</h1>';
 
-	echo "<h1>". $libVerein->getVereinNameString($vereinarray['id']) ."</h1>\n";
+	echo '<div class="row">';
 
 	/*
 	* images
 	*/
-	$imgString = '';
+	echo '<div class="col-sm-3">';
 
-	if(is_file('custom/kvvereine/zirkel/' .$vereinarray['id']. '.gif')){
-		$imgString .= '<img src="custom/kvvereine/zirkel/' .$vereinarray['id']. '.gif" style="border-width:1px;border-style:solid;border-color:#000000;margin-bottom:10px;width:150px" alt="Zirkel" /><br />';
+	$filePathZirkelSvg = 'custom/kvvereine/zirkel/' .$vereinarray['id']. '.svg';
+	$filePathZirkelGif = 'custom/kvvereine/zirkel/' .$vereinarray['id']. '.gif';
+
+	if(is_file($filePathZirkelSvg)){
+		echo '<div><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></div>';
+	} else if(is_file($filePathZirkelGif)){
+		echo '<div><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></div>';
+	}
+	
+	$filePathWappenJpg = 'custom/kvvereine/wappen/' .$vereinarray['id']. '.jpg';
+
+	if(is_file($filePathWappenJpg)){
+		echo '<div><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></div>';
 	}
 
-	if(is_file('custom/kvvereine/wappen/' .$vereinarray['id']. '.jpg')){
-		$imgString .= '<img src="custom/kvvereine/wappen/' .$vereinarray['id']. '.jpg" style="margin-bottom:10px;width:150px" alt="Wappen" /><br />';
-	}
+	$filePathHausJpg = 'custom/kvvereine/haus/' .$vereinarray['id']. '.jpg';
 
-	if(is_file('custom/kvvereine/haus/' .$vereinarray['id']. '.jpg')){
-		$imgString .= '<img src="custom/kvvereine/haus/' .$vereinarray['id']. '.jpg" style="margin-bottom:10px;width:150px;" alt="Haus" />';
+	if(is_file($filePathHausJpg)){
+		echo '<div><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></div>';
 	}
+	
+	echo '</div>';
 
-	if($imgString != ""){
-		echo '<div style="float:left;margin-left:10px">' . $imgString . '</div>';
-	}
-
-	/*
-	* association description
-	*/
-	if($imgString != ""){
-		echo '<div style="margin:0 0 30px 175px" class="text">';
-	} else {
-		echo '<div style="margin:0 0 30px 0" class="text">';
-	}
+	echo '<div class="col-sm-9">';
 
 	/*
 	* association address
 	*/
+	echo '<p>';	
+
 	if($vereinarray['zusatz1'] != ''){
-		echo $vereinarray['zusatz1'] ."<br />\n";
+		echo $vereinarray['zusatz1']. '<br />';
 	}
 
 	if($vereinarray['strasse1'] != ''){
-		echo $vereinarray['strasse1'];
+		echo $vereinarray['strasse1']. '<br />';
 	}
 
 	if($vereinarray['ort1'] != ''){
-		echo "<br />\n" .$vereinarray['plz1']. " " .$vereinarray['ort1'];
+		echo $vereinarray['plz1']. ' ' .$vereinarray['ort1']. '<br />';
 	}
 
 	if($vereinarray['land1'] != ''){
-		echo "<br />\n" .$vereinarray['land1'];
+		echo $vereinarray['land1']. '<br />';
 	}
 
 	if($vereinarray['telefon1'] != ''){
-		echo "<br />\nTel.: " .$vereinarray['telefon1'];
+		echo 'Tel.: ' .$vereinarray['telefon1']. '<br />';
 	}
 
 	if($vereinarray['webseite'] != ''){
-		echo "<br />\n".'<a href="http://' .$vereinarray['webseite']. '" target="_blank">' .$vereinarray['webseite']. '</a>';
+		echo '<a href="http://' .$vereinarray['webseite']. '">' .$vereinarray['webseite']. '</a><br />';
 	}
+
+	echo '</p>';
 
 	/*
 	* association data
 	*/
-	echo "<br />\n";
-
 	if($vereinarray['farbe1'] != ''){
-		echo "<br /><b>Farben:</b> ". $vereinarray['farbe1'] ." ". $vereinarray['farbe2'] ." ". $vereinarray['farbe3'];
-		echo '<table style="margin:5px 0;border:1px solid black;width:50px;border-collapse:collapse">';
+		echo '<p>';
+		echo '<b>Farben:</b> ' .$vereinarray['farbe1']. ' ' .$vereinarray['farbe2']. ' ' .$vereinarray['farbe3'];
+		echo '</p>';
 
-	    if($vereinarray['farbe1'] != ""){
+		echo '<div>';
+		echo '<table style="border:1px solid black;width:50px;border-collapse:collapse">';
+
+	    if($vereinarray['farbe1'] != ''){
 			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe1']). '"></td></tr>';
 		}
 
-		if($vereinarray['farbe2'] != ""){
+		if($vereinarray['farbe2'] != ''){
 			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe2']). '"></td></tr>';
 		}
 
-		if($vereinarray['farbe3'] != ""){
+		if($vereinarray['farbe3'] != ''){
 			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe3']). '"></td></tr>';
 		}
 
-		if($vereinarray['farbe4'] != ""){
+		if($vereinarray['farbe4'] != ''){
 			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe4']). '"></td></tr>';
 		}
 
-		echo "</table>";
+		echo '</table>';
+		echo '</div>';
 	}
 
+	echo '<p>';
 	if($vereinarray['datum_gruendung'] != ''){
-		echo "<br />\n<b>Gründungsdatum:</b> ";
+		echo '<b>Gründungsdatum:</b> ';
 		echo $libVerein->getGruendungString($vereinarray['datum_gruendung']);
+		echo '<br />';
 	}
 
 	if($vereinarray['dachverband'] != ''){
-		echo "<br />\n<b>Dachverband:</b> " .$vereinarray['dachverband'];
+		echo '<b>Dachverband:</b> ' .$vereinarray['dachverband']. '<br />';
 	}
 
 	if($vereinarray['dachverbandnr'] != ''){
-		echo "<br />\n<b>KV-Nr.</b>: " .$vereinarray['dachverbandnr'];
+		echo '<b>KV-Nr.</b>: ' .$vereinarray['dachverbandnr']. '<br />';
 	}
 
 	$aktivstring = '';
-
 	if($vereinarray['aktivitas'] == 1){
-		$aktivstring = " !";
+		$aktivstring = ' !';
 	}
 
 	if($vereinarray['kuerzel'] != ''){
-		echo "<br />\n<b>Kürzel</b>: " .$vereinarray['kuerzel'].$aktivstring;
+		echo '<b>Kürzel</b>: ' .$vereinarray['kuerzel'] . $aktivstring. '<br />';
 	}
 
 	if($vereinarray['aktivitas'] == 1){
-		echo "<br />\n<b>Aktivitas</b>: Ja";
+		echo '<b>Aktivitas</b>: Ja<br />';
 	} else {
-		echo "<br />\n<b>Aktivitas</b>: Nein";
+		echo '<b>Aktivitas</b>: Nein<br />';
 	}
 
 	if($vereinarray['ahahschaft'] == 1){
-		echo "<br />\n<b>Altherrenschaft</b>: Ja";
+		echo '<b>Altherrenschaft</b>: Ja<br />';
 	} else {
-		echo "<br />\n<b>Altherrenschaft</b>: Nein";
+		echo '<b>Altherrenschaft</b>: Nein<br />';
 	}
 
 	if($vereinarray['mutterverein'] != ''){
-		echo "<br />\n<b>Mutter:</b> ";
+		echo '<b>Mutter:</b> ';
 		echo '<a href="index.php?pid=dachverband_vereindetail&amp;verein=' .$vereinarray['mutterverein']. '">';
-		echo $libVerein->getVereinNameString($vereinarray['mutterverein']) ."</a>";
+		echo $libVerein->getVereinNameString($vereinarray['mutterverein']). '</a>';
+		echo '<br />';
 	}
 
 	if($vereinarray['fusioniertin'] != ''){
-		echo "<br />\n<b>Fusioniert in:</b> ";
+		echo '<b>Fusioniert in:</b> ';
 		echo '<a href="index.php?pid=dachverband_vereindetail&amp;verein=' .$vereinarray['fusioniertin']. '">';
-		echo $libVerein->getVereinNameString($vereinarray['fusioniertin']) ."</a>";
+		echo $libVerein->getVereinNameString($vereinarray['fusioniertin']). '</a>';
+		echo '<br />';
 	}
 
 	$toechterstr = $libVerein->getToechterString($vereinarray['id'], 'dachverband_vereindetail');
 
 	if($toechterstr != ''){
-		echo "<br />\n<b>Töchter:</b> " .$toechterstr;
+		echo '<b>Töchter:</b> ' .$toechterstr. '<br />';
 	}
 
 	$fusionersstr = $libVerein->getFusionertString($vereinarray['id'], 'dachverband_vereindetail');
 
 	if($fusionersstr != ''){
-		echo "<br />\n<b>Fusioniert aus:</b> " .$fusionersstr;
+		echo '<b>Fusioniert aus:</b> ' .$fusionersstr. '<br />';
 	}
 
 	if($vereinarray['wahlspruch'] != ''){
-		echo "<br /><br />\n<b>Wahlspruch:</b> " .$vereinarray['wahlspruch'];
+		echo '<b>Wahlspruch:</b> ' .$vereinarray['wahlspruch']. '<br />';
 	}
+	
+	echo '</p>';
 
 	if($vereinarray['farbenstrophe'] != ''){
-		echo "<br /><br />\n<b>Farbenstrophe:</b><br />";
+		echo '<p>';
+		echo '<b>Farbenstrophe:</b><br />';
 		echo nl2br($vereinarray['farbenstrophe']);
+		echo '</p>';
 	}
 
 	if($vereinarray['farbenstrophe_inoffiziell'] != ''){
-		echo "<br /><br />\n<b>inoffizielle Farbenstrophe:</b><br />";
+		echo '<p>';
+		echo '<b>inoffizielle Farbenstrophe:</b><br />';
 		echo nl2br($vereinarray['farbenstrophe_inoffiziell']);
+		echo '</p>';
 	}
 
 	if($vereinarray['fuchsenstrophe'] != ''){
-		echo "<br /><br />\n<b>Fuchsenstrophe:</b><br />";
+		echo '<p>';
+		echo '<b>Fuchsenstrophe:</b><br />';
 		echo nl2br($vereinarray['fuchsenstrophe']);
+		echo '</p>';
 	}
 
 	if($vereinarray['bundeslied'] != ''){
-		echo "<br /><br />\n<b>Bundeslied:</b><br />";
+		echo '<p>';
+		echo '<b>Bundeslied:</b><br />';
 		echo nl2br($vereinarray['bundeslied']);
+		echo '</p>';
 	}
 
 	if($vereinarray['beschreibung'] != ''){
-		echo "<br /><br />\n<b>weitere Informationen:</b><br />";
+		echo '<p>';
+		echo '<b>weitere Informationen:</b><br />';
 		echo nl2br($vereinarray['beschreibung']);
+		echo '</p>';
 	}
 
-	echo "</div>\n";
-
+	echo '</div>';
+	echo '</div>';
 
 	/*
 	* members
 	*/
-	$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_verein_mitgliedschaft,base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id");
+	$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id');
 	$stmt->bindValue(':verein', $vereinarray['id'], PDO::PARAM_INT);
 	$stmt->execute();
 	$stmt->bindColumn('number', $anzahl);
 	$stmt->fetch();
 
-
 	if($libAuth->isLoggedin() && $anzahl > 0){
-		echo '<div style="text-align:center"><img src="img/hr.gif" alt="" style="width:100%;height:1px;margin:5px;" /></div>'."\n";
-		echo '<table style="margin-left:auto;margin-right:auto">'."\n";
+		echo '<h2>Mitglieder</h2>';
+		echo '<div class="row">';
 
-		$column = 0;
-		$counter = 0;
-
-  		$stmt = $libDb->prepare("SELECT base_verein_mitgliedschaft.mitglied,base_verein_mitgliedschaft.ehrenmitglied,base_person.gruppe FROM base_verein_mitgliedschaft,base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id ORDER BY base_verein_mitgliedschaft.ehrenmitglied DESC, base_person.name ASC");
+  		$stmt = $libDb->prepare('SELECT base_verein_mitgliedschaft.mitglied, base_verein_mitgliedschaft.ehrenmitglied, base_person.gruppe FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id ORDER BY base_verein_mitgliedschaft.ehrenmitglied DESC, base_person.name ASC');
   		$stmt->bindValue(':verein', $vereinarray['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$counter++;
+			echo '<div class="col-sm-3">';
 
-			if($column == 0){
-				echo "<tr>\n";
-			}
-
-			echo '<td style="width:80px;">'."\n";
-			echo $libMitglied->getMitgliedSignature($row['mitglied'],"");
-
-			if($row['gruppe'] == "T"){
-				echo '<span style="color:#990000">';
-			}
+			echo $libMitglied->getMitgliedSignature($row['mitglied'], '');
 
 			if($row['ehrenmitglied'] == 1){
-				echo "<b>Ehrenmitgl.</b> ";
+				echo 'Ehrenmitgl. ';
 			}
 
-			echo $libMitglied->getMitgliedNameString($row['mitglied'],0);
-
-			if($row['gruppe'] == "T"){
-				echo "</span>";
-			}
-
-			echo "</td>\n";
-
-			if($column == 4 || $anzahl == $counter){
-				echo "</tr>\n";
-			}
-
-			$column++;
-
-			if($column == 5){
-				$column = 0;
-			}
+			echo $libMitglied->getMitgliedNameString($row['mitglied'], 0);		
+			echo '</div>';
 		}
 
-		echo "</table>\n";
+		echo '</div>';
 	}
 }
 ?>

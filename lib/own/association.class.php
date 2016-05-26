@@ -96,7 +96,7 @@ class LibAssociation{
 		return $row['titel'] .' '. $row['name'];
 	}
 
-	function getToechterString($vereinid, $pid){
+	function getToechterString($vereinid){
 		$retstr = '';
 		$stmt = $this->libDb->prepare("SELECT tochter.id, tochter.titel, tochter.name FROM base_verein AS mutter, base_verein AS tochter WHERE mutter.id = tochter.mutterverein AND mutter.id = :id");
 		$stmt->bindValue(':id', $vereinid, PDO::PARAM_INT);
@@ -107,7 +107,7 @@ class LibAssociation{
 				$retstr .= ', ';
 			}
 
-			$retstr .= '<a href="index.php?pid=' .$pid. '&amp;verein=' .$row['id'] .'">' .$row['titel'] .' '. $row['name'] .'</a>';
+			$retstr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$row['id'] .'">' .$row['titel'] .' '. $row['name'] .'</a>';
 		}
 
 		return $retstr;

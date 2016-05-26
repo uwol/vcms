@@ -520,7 +520,7 @@ class LibMember{
 				$ehrenstring = 'E.d. ';
 			}
 
-			$vereinestr .= '<a href="index.php?pid=dachverband_vereindetail&amp;verein=' .$row['id'] .'">' .$ehrenstring.$row['kuerzel'] .'</a>';
+			$vereinestr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$row['id'] .'">' .$ehrenstring.$row['kuerzel'] .'</a>';
 			unset($ehrenstring);
 		}
 
