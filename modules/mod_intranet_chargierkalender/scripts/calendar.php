@@ -73,7 +73,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$event->setId($row['id']);
 
 	if(is_numeric($row['verein'])){
-		$event->setLinkUrl('index.php?pid=dachverband_vereindetail&amp;verein='.$row['verein']);
+		$event->setLinkUrl('index.php?pid=vereindetail&amp;verein='.$row['verein']);
 		$event->setSummary($libVerein->getVereinNameString($row['verein']));
 	}
 

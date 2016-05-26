@@ -164,25 +164,25 @@ if(isset($_GET['verein'])){
 
 	if($vereinarray['mutterverein'] != ''){
 		echo '<b>Mutter:</b> ';
-		echo '<a href="index.php?pid=dachverband_vereindetail&amp;verein=' .$vereinarray['mutterverein']. '">';
+		echo '<a href="index.php?pid=vereindetail&amp;verein=' .$vereinarray['mutterverein']. '">';
 		echo $libVerein->getVereinNameString($vereinarray['mutterverein']). '</a>';
 		echo '<br />';
 	}
 
 	if($vereinarray['fusioniertin'] != ''){
 		echo '<b>Fusioniert in:</b> ';
-		echo '<a href="index.php?pid=dachverband_vereindetail&amp;verein=' .$vereinarray['fusioniertin']. '">';
+		echo '<a href="index.php?pid=vereindetail&amp;verein=' .$vereinarray['fusioniertin']. '">';
 		echo $libVerein->getVereinNameString($vereinarray['fusioniertin']). '</a>';
 		echo '<br />';
 	}
 
-	$toechterstr = $libVerein->getToechterString($vereinarray['id'], 'dachverband_vereindetail');
+	$toechterstr = $libVerein->getToechterString($vereinarray['id']);
 
 	if($toechterstr != ''){
 		echo '<b>Töchter:</b> ' .$toechterstr. '<br />';
 	}
 
-	$fusionersstr = $libVerein->getFusionertString($vereinarray['id'], 'dachverband_vereindetail');
+	$fusionersstr = $libVerein->getFusionertString($vereinarray['id']);
 
 	if($fusionersstr != ''){
 		echo '<b>Fusioniert aus:</b> ' .$fusionersstr. '<br />';
