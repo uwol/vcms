@@ -113,7 +113,7 @@ class LibAssociation{
 		return $retstr;
 	}
 
-	function getFusionertString($vereinid, $pid){
+	function getFusionertString($vereinid){
 		$retstr = '';
 		$stmt = $this->libDb->prepare("SELECT fusionierend.id, fusionierend.titel, fusionierend.name FROM base_verein AS fusionierend, base_verein AS fusioniert WHERE fusioniert.id = fusionierend.fusioniertin AND fusioniert.id = :id");
 		$stmt->bindValue(':id', $vereinid, PDO::PARAM_INT);
@@ -124,7 +124,7 @@ class LibAssociation{
 				$retstr .= ', ';
 			}
 
-			$retstr .= '<a href="index.php?pid=' .$pid. '&amp;verein=' .$row['id'] .'">' .$row['titel'] .' '. $row['name'] .'</a>';
+			$retstr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$row['id'] .'">' .$row['titel'] .' '. $row['name'] .'</a>';
 		}
 
 		return $retstr;
