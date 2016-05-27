@@ -24,35 +24,37 @@ if(!$libGenericStorage->attributeExistsInCurrentModule("userNameICalendar") || !
 	$libGenericStorage->saveValueInCurrentModule("userNameICalendar", $libString->randomAlphaNumericString(40));
 	$libGenericStorage->saveValueInCurrentModule("passwordICalendar", $libString->randomAlphaNumericString(40));
 }
-?>
-<h1>Intranet</h1>
 
-<?php
+echo '<h1>Intranet</h1>';
+
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
-?>
 
-<div class="row">
-	<section class="col-md-8">
-        <?php
-        if($libModuleHandler->moduleIsAvailable("mod_intranet_news")){
-	    	require_once("elements/news.php");
-	    }
+echo '<div class="row">';
+echo '<section class="col-md-8">';
 
-        require_once("elements/registrations.php");
+require_once("elements/system.php");
 
-		if($libModuleHandler->moduleIsAvailable("mod_intranet_chargierkalender")){
-			require_once("elements/chargierkalender.php");
-		}
+if($libModuleHandler->moduleIsAvailable("mod_intranet_news")){
+	require_once("elements/news.php");
+}
 
-		if($libModuleHandler->moduleIsAvailable("mod_intranet_reservierungen")){
-			require_once("elements/reservations.php");
-		}
-		?>
-	</section>
-	<aside class="col-md-4">
-		<?php include("elements/randomah.php");?>
-		<?php include("elements/nextbirthdays.php");?>
-		<?php include("elements/wifi.php");?>
-	</aside>
-</div>
+require_once("elements/registrations.php");
+
+if($libModuleHandler->moduleIsAvailable("mod_intranet_chargierkalender")){
+	require_once("elements/chargierkalender.php");
+}
+
+if($libModuleHandler->moduleIsAvailable("mod_intranet_reservierungen")){
+	require_once("elements/reservations.php");
+}
+
+echo '</section>';
+echo '<aside class="col-md-4">';
+
+require_once("elements/randomah.php");
+require_once("elements/nextbirthdays.php");
+require_once("elements/wifi.php");
+
+echo '</aside>';
+echo '</div>';
