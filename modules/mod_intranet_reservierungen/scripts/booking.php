@@ -24,7 +24,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 echo '<h1>Reservierung durchführen</h1>';
 echo '<p>Bitte die Daten der Reservierung eingeben.</p>';
 
-echo '<form action="index.php?pid=intranet_reservierung_liste" method="post">';
+echo '<form action="index.php?pid=intranet_reservierung_liste" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
 echo '<div class="form-group">';
