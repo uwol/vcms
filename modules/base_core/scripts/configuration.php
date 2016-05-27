@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if(isset($_POST['formkomplettdargestellt']) && $_POST['formkomplettdargestellt'] && isset($_POST['action']) && $_POST['action'] == "save"){
 	foreach($_POST as $key => $value){
 		if($key != 'formkomplettdargestellt'){
@@ -28,11 +29,13 @@ if(isset($_POST['formkomplettdargestellt']) && $_POST['formkomplettdargestellt']
 			$moduleid = $array[0];
 
 			$array_name = '';
+
 			if(isset($array[1])){
 				$array_name = $array[1];
 			}
 
 			$position = '';
+
 			if(isset($array[2])){
 				$position = $array[2];
 			}
@@ -63,31 +66,48 @@ echo '<p>Auf dieser Seite können die Module des Systems konfiguriert werden.</p
 
 $storage = $libGenericStorage->listAllArrayValues();
 
-echo '<form action="index.php?pid=configuration" method="POST">'."\r\n";
-echo '<table>'."\r\n";
+echo '<form action="index.php?pid=configuration" method="post" class="form-horizontal">';
+echo '<fieldset>';
 
 //modules
 foreach($storage as $moduleid => $arrays){
-	echo '<tr><td colspan="4"><h2>' .$moduleid. '</h2></td></tr>'."\r\n";
+	echo '<h2>' .$moduleid. '</h2>';
+
 	//arrays
 	foreach($arrays as $array_name => $positionen){
-		echo '<tr><td style="vertical-align: top">' .$array_name. '</td>'."\r\n";
-
 		//positions and values at that positions
 		foreach($positionen as $position => $value){
-			echo '<td><input type="text" size="2" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" /></td>'."\r\n";
-			echo '<td><input type="text" size="40" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" /></td>'."\r\n";
-			echo '<td><a href="index.php?pid=configuration&amp;action=delete&amp;moduleid=' .$moduleid. '&amp;array_name=' .$array_name. '&amp;position=' .$position. '"><img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" /></a></td>'."\r\n";
-			echo '</tr><tr><td></td>'."\r\n";
-		}
+			echo '<div class="form-group">';
+			echo '<label class="col-sm-3 control-label">' .$array_name. '</label>';
 
-		echo '</tr>'."\r\n";
+			echo '<div class="col-sm-1">';
+			echo '<input type="text" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" class="form-control input-sm" />';
+			echo '</div>';
+
+			echo '<div class="col-sm-7">';
+			echo '<input type="text" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" class="form-control input-sm" />';
+			echo '</div>';
+
+			echo '<div class="col-sm-1">';
+			echo '<div class="form-control-static">';
+			echo '<a href="index.php?pid=configuration&amp;action=delete&amp;moduleid=' .$moduleid. '&amp;array_name=' .$array_name. '&amp;position=' .$position. '"><img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" /></a>';
+			echo '</div>';
+			echo '</div>';
+
+			echo '</div>';
+		}
 	}
 }
 
-echo '</table>'."\r\n";
-echo '<input type="hidden" name="action" value="save" />'."\r\n";
-echo '<input type="hidden" name="formkomplettdargestellt" value="1" />'."\r\n";
-echo '<input type="submit" value="Speichern" />'."\r\n";
+echo '<input type="hidden" name="action" value="save" />';
+echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
+
+echo '<div class="form-group">';
+echo '<div class="col-sm-offset-3 col-sm-10">';
+echo '<button type="submit" class="btn btn-default">Speichern</button>';
+echo '</div>';
+echo '</div>';
+
+echo '</fieldset>';
 echo '</form>';
 ?>
