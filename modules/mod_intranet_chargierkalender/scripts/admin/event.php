@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 /*
 * actions
 */
@@ -98,15 +99,42 @@ if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "blank"){
 	$extraActionParam = "&amp;aktion=update";
 }
 
-echo '<form action="index.php?pid=intranet_chargierkalender_adminveranstaltung' .$extraActionParam. '" method="post">';
-echo '<input type="submit" value="Speichern" name="Save"><br />';
+echo '<form action="index.php?pid=intranet_chargierkalender_adminveranstaltung' .$extraActionParam. '" method="post" class="form-horizontal">';
+echo '<fieldset>';
+
 echo '<input type="hidden" name="formtyp" value="veranstaltungsdaten" />';
 echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
-echo '<input size="20" type="text" name="id" value="' .$array['id']. '" disabled /> Id<br />';
-echo '<input size="20" type="text" name="datum" value="' .$array['datum']. '" /> Datum<br />';
-echo $libForm->getVereineDropDownBox("verein","Verein",$array['verein'],true,false);
-echo 'Beschreibung<br /><textarea name="beschreibung" cols="70" rows="10">' . $array['beschreibung'] .'</textarea><br />';
+
+echo '<div class="form-group">';
+echo '<label for="id" class="col-sm-2 control-label">Id</label>';
+echo '<div class="col-sm-10"><input type="text" id="id" name="id" value="' .$array['id']. '" class="form-control" disabled /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="datum" class="col-sm-2 control-label">Datum</label>';
+echo '<div class="col-sm-10"><input type="date" id="datum" name="datum" value="' .$array['datum']. '" class="form-control" /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="verein" class="col-sm-2 control-label">Verein</label>';
+echo '<div class="col-sm-10">';
+echo $libForm->getVereineDropDownBox("verein", "Verein", $array['verein'], true, false);
+echo '</div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="beschreibung" class="col-sm-2 control-label">Beschreibung</label>';
+echo '<div class="col-sm-10"><textarea id="beschreibung" name="beschreibung" rows="7" class="form-control">' .$array['beschreibung']. '</textarea></div>';
+echo '</div>';
+
 echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
-echo '<input type="submit" value="Speichern" name="Save"><br />';
+
+echo '<div class="form-group">';
+echo '<div class="col-sm-offset-2 col-sm-10">';
+echo '<button type="submit" class="btn btn-default">Speichern</button>';
+echo '</div>';
+echo '</div>';
+
+echo '</fieldset>';
 echo "</form>";
 ?>

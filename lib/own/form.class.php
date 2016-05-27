@@ -19,16 +19,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 class LibForm{
 	function getMitgliederDropDownBox($name, $bezeichnung, $activeElementId='', $allowNull = true, $disabled = false){
-		global $libDb,$libMitglied;
+		global $libDb, $libMitglied;
 
 		$retstr = '';
-		$retstr .= '<select name="'.$name.'"';
+		$retstr .= '<select name="' .$name. '"';
 
 		if($disabled){
 			$retstr .= ' disabled ';
 		}
 
-		$retstr .= '>';
+		$retstr .= ' class="form-control">';
 
 		if($allowNull){
 			$retstr .= '<option value="">------------</option>'."\n";
@@ -47,7 +47,7 @@ class LibForm{
 			$retstr .= '>' .$libMitglied->formatMitgliedNameString($row['anrede'],$row['titel'],$row['rang'],$row['vorname'],$row['praefix'],$row['name'],$row['suffix'],7).' ['.$row['gruppe'].']</option>'."\n";
 		}
 
-		$retstr .= '</select> '.$bezeichnung.'<br />';
+		$retstr .= '</select>';
 		return $retstr;
 	}
 
@@ -55,13 +55,13 @@ class LibForm{
 		global $libDb;
 
 		$retstr = '';
-		$retstr .= '<select name="'.$name.'"';
+		$retstr .= '<select name="' .$name. '"';
 
 		if($disabled){
 			$retstr .= ' disabled ';
 		}
 
-		$retstr .= '>';
+		$retstr .= ' class="form-control">';
 
 		if($allowNull){
 			$retstr .= '<option value="">------------</option>'."\n";
@@ -80,21 +80,21 @@ class LibForm{
 			$retstr .= '>' .$row['titel'].' '.$row['name'].'</option>'."\n";
 		}
 
-		$retstr .= '</select> '.$bezeichnung.'<br />';
+		$retstr .= '</select>';
 		return $retstr;
 	}
 
-	function getSemesterDropDownBox($name,$bezeichnung, $selectedSemester='', $allowNull = true, $disabled = false){
+	function getSemesterDropDownBox($name, $bezeichnung, $selectedSemester='', $allowNull = true, $disabled = false){
 		global $libDb;
 
 		$retstr = '';
-		$retstr .= '<select name="'.$name.'"';
+		$retstr .= '<select name="' .$name. '"';
 
 		if($disabled){
 			$retstr .= ' disabled ';
 		}
 
-		$retstr .= '>';
+		$retstr .= ' class="form-control">';
 
 		if($allowNull){
 			$retstr .= '<option value="">------------</option>'."\n";
@@ -113,7 +113,7 @@ class LibForm{
 			$retstr .= '>'.$row['semester'].'</option>'."\n";
 		}
 
-		$retstr .= '</select> '.$bezeichnung.'<br />';
+		$retstr .= '</select>';
 		return $retstr;
 	}
 
@@ -127,7 +127,7 @@ class LibForm{
 			$retstr .= ' disabled';
 		}
 
-		$retstr .= '>';
+		$retstr .= ' class="form-control">';
 
 		if($allowNull){
 			$retstr .= '<option value="">------------</option>'."\n";
@@ -146,7 +146,7 @@ class LibForm{
 			$retstr .= '>'.$row['bezeichnung'].' - ' .$row['beschreibung'].'</option>'."\n";
 		}
 
-		$retstr .= '</select> '.$bezeichnung.'<br />';
+		$retstr .= '</select>';
 		return $retstr;
 	}
 
@@ -160,7 +160,7 @@ class LibForm{
 			$retstr .= ' disabled';
 		}
 
-		$retstr .= '>';
+		$retstr .= ' class="form-control">';
 
 		if($allowNull){
 			$retstr .= '<option value="">------------</option>'."\n";
@@ -179,7 +179,7 @@ class LibForm{
 			$retstr .= '>'.$row['bezeichnung'].' - ' .$row['beschreibung'].'</option>'."\n";
 		}
 
-		$retstr .= '</select> '.$bezeichnung.'<br />';
+		$retstr .= '</select>';
 		return $retstr;
 	}
 
@@ -193,7 +193,7 @@ class LibForm{
 			$retstr .= ' disabled';
 		}
 
-		$retstr .= '>';
+		$retstr .= ' class="form-control">';
 
 		if($allowNull){
 			$retstr .= '<option value="">------------</option>'."\n";
@@ -219,7 +219,7 @@ class LibForm{
 			$retstr .= '>'.$row['bezeichnung'].' [' .$anzahl. ' Personen]</option>'."\n";
 		}
 
-		$retstr .= '</select> '.$bezeichnung.'<br />';
+		$retstr .= '</select>';
 		return $retstr;
 	}
 
@@ -233,7 +233,7 @@ class LibForm{
 			$retstr .= ' disabled';
 		}
 
-		$retstr .= '>';
+		$retstr .= ' class="form-control">';
 
 		if($allowNull){
 			$retstr .= '<option value="">------------</option>'."\n";
@@ -252,13 +252,13 @@ class LibForm{
 			$retstr .= '>'.substr($row['titel'],0,25).' [' .$row['datum']. ']</option>'."\n";
 		}
 
-		$retstr .= '</select> '.$bezeichnung.'<br />';
+		$retstr .= '</select>';
 		return $retstr;
 	}
 
 	function getBoolSelectBox($name, $bezeichnung, $selectedValue = 0){
 		$retstr = '';
-		$retstr .= '<select name="'.$name.'">';
+		$retstr .= '<select name="' .$name. '" class="form-control">';
 		$retstr .= '<option value="1"';
 
 		if($selectedValue == 1){
@@ -273,7 +273,7 @@ class LibForm{
 		}
 
 		$retstr .= '>Nein</option>';
-		$retstr .= '</select> '.$bezeichnung.'<br />';
+		$retstr .= '</select>';
 		return $retstr;
 	}
 }
