@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Kontakt";
-$version = "2.11";
+$version = "2.12";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";

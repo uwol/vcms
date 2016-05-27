@@ -202,7 +202,7 @@ if($mailsent){
 
 	echo '<div class="form-group">';
 	echo '<label for="emailaddress" class="col-sm-2 control-label">E-Mail-Adresse</label>';
-	echo '<div class="col-sm-10"><input type="email" id="email" name="emailaddress" placeholder="E-Mail-Adresse" value="' .$libString->protectXSS($email). '" class="form-control" /></div>';
+	echo '<div class="col-sm-10"><input type="email" id="emailaddress" name="emailaddress" placeholder="E-Mail-Adresse" value="' .$libString->protectXSS($email). '" class="form-control" /></div>';
 	echo '</div>';
 
 	echo '<div class="form-group">';
