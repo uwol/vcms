@@ -46,7 +46,7 @@ if($libAuth->getId() == $personid){
 /*
 * select data from db
 */
-$stmt = $libDb->prepare("SELECT * FROM base_person WHERE id=:id");
+$stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 $stmt->bindValue(':id', $personid, PDO::PARAM_INT);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -56,7 +56,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 */
 if($libAuth->isLoggedin()){
 	//member data?
-	if(isset($_POST['formtyp']) && $_POST['formtyp'] == "personendaten"){
+	if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'personendaten'){
 		//own profile?
 		if($ownprofile){
 			$leibMitglied = '';
@@ -65,11 +65,11 @@ if($libAuth->isLoggedin()){
 			}
 
 			if($leibMitglied == $personid) {
-				$libGlobal->errorTexts[] = "Das Mitglied darf nicht von sich selbst der Leibbursch sein.";
+				$libGlobal->errorTexts[] = 'Das Mitglied darf nicht von sich selbst der Leibbursch sein.';
 			} else {
-				$stmt = $libDb->prepare("UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
+				$stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
 					telefon1=:telefon1, zusatz2=:zusatz2, strasse2=:strasse2, ort2=:ort2, plz2=:plz2, land2=:land2,telefon2=:telefon2, mobiltelefon=:mobiltelefon,
-					email=:email, skype=:skype, jabber=:jabber, webseite=:webseite, spitzname=:spitzname, beruf=:beruf, leibmitglied=:leibmitglied, region1=:region1 ,region2=:region2 WHERE id=:id");
+					email=:email, skype=:skype, jabber=:jabber, webseite=:webseite, spitzname=:spitzname, beruf=:beruf, leibmitglied=:leibmitglied, region1=:region1 ,region2=:region2 WHERE id=:id');
 				$stmt->bindValue(':anrede', $libString->protectXss(trim($_POST['anrede'])));
 				$stmt->bindValue(':titel', $libString->protectXss(trim($_POST['titel'])));
 				$stmt->bindValue(':rang', $libString->protectXss(trim($_POST['rang'])));
@@ -100,33 +100,33 @@ if($libAuth->isLoggedin()){
 			}
 
   			//if the mailing module is installed
-  			if($libModuleHandler->moduleIsAvailable("mod_intranet_rundbrief")){
+  			if($libModuleHandler->moduleIsAvailable('mod_intranet_rundbrief')){
   				//synchronize tables
-  				$stmt = $libDb->prepare("INSERT INTO mod_rundbrief_empfaenger (id, empfaenger) SELECT id, 1 FROM base_person WHERE (SELECT COUNT(*) FROM mod_rundbrief_empfaenger WHERE id = base_person.id) = 0");
+  				$stmt = $libDb->prepare('INSERT INTO mod_rundbrief_empfaenger (id, empfaenger) SELECT id, 1 FROM base_person WHERE (SELECT COUNT(*) FROM mod_rundbrief_empfaenger WHERE id = base_person.id) = 0');
 				$stmt->execute();
 
 				if(isset($_POST['empfaenger'])){
-					$stmt = $libDb->prepare("UPDATE mod_rundbrief_empfaenger SET empfaenger=:empfaenger WHERE id = :id");
+					$stmt = $libDb->prepare('UPDATE mod_rundbrief_empfaenger SET empfaenger=:empfaenger WHERE id = :id');
 					$stmt->bindValue(':empfaenger', $_POST['empfaenger'], PDO::PARAM_BOOL);
 					$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 					$stmt->execute();
 				}
 
 				if(isset($_POST['interessiert'])){
-					$stmt = $libDb->prepare("UPDATE mod_rundbrief_empfaenger SET interessiert=:interessiert WHERE id = :id");
+					$stmt = $libDb->prepare('UPDATE mod_rundbrief_empfaenger SET interessiert=:interessiert WHERE id = :id');
 					$stmt->bindValue(':interessiert', $_POST['interessiert'], PDO::PARAM_BOOL);
 					$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 					$stmt->execute();
 				}
   			}
 
-  			if($libModuleHandler->moduleIsAvailable("mod_intranet_zipfelranking")){
+  			if($libModuleHandler->moduleIsAvailable('mod_intranet_zipfelranking')){
   				//synchronize tables
-  				$stmt = $libDb->prepare("INSERT INTO mod_zipfelranking_anzahl (id, anzahlzipfel) SELECT id, 0 FROM base_person WHERE (SELECT COUNT(*) FROM mod_zipfelranking_anzahl WHERE id = base_person.id) = 0");
+  				$stmt = $libDb->prepare('INSERT INTO mod_zipfelranking_anzahl (id, anzahlzipfel) SELECT id, 0 FROM base_person WHERE (SELECT COUNT(*) FROM mod_zipfelranking_anzahl WHERE id = base_person.id) = 0');
 				$stmt->execute();
 
 				if(isset($_POST['anzahlzipfel'])){
-					$stmt = $libDb->prepare("UPDATE mod_zipfelranking_anzahl SET anzahlzipfel=:anzahlzipfel WHERE id = :id");
+					$stmt = $libDb->prepare('UPDATE mod_zipfelranking_anzahl SET anzahlzipfel=:anzahlzipfel WHERE id = :id');
 					$stmt->bindValue(':anzahlzipfel', $_POST['anzahlzipfel'], PDO::PARAM_INT);
 					$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 					$stmt->execute();
@@ -134,54 +134,54 @@ if($libAuth->isLoggedin()){
   			}
 
 			if($_POST['strasse1'] != $row['strasse1'] || $_POST['ort1'] != $row['ort1'] || $_POST['plz1'] != $row['plz1'] || $_POST['land1'] != $row['land1'] || $_POST['telefon1'] != $row['telefon1']){
-				$stmt = $libDb->prepare("UPDATE base_person SET datum_adresse1_stand=NOW() WHERE id = :id");
+				$stmt = $libDb->prepare('UPDATE base_person SET datum_adresse1_stand=NOW() WHERE id = :id');
 				$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 				$stmt->execute();
 			}
 
 			if($_POST['strasse2'] != $row['strasse2'] || $_POST['ort2'] != $row['ort2'] || $_POST['plz2'] != $row['plz2'] || $_POST['land2'] != $row['land2'] || $_POST['telefon2'] != $row['telefon2']){
-				$stmt = $libDb->prepare("UPDATE base_person SET datum_adresse2_stand=NOW() WHERE id = :id");
+				$stmt = $libDb->prepare('UPDATE base_person SET datum_adresse2_stand=NOW() WHERE id = :id');
 				$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 				$stmt->execute();
   			}
 		}
 
 		//if the curriculum vitae has been modified
-		if(isset($_POST['vita']) && $_POST['vita'] != "" && $_POST['vita'] != $row['vita']){
+		if(isset($_POST['vita']) && $_POST['vita'] != '' && $_POST['vita'] != $row['vita']){
 			$altevita = $row['vita'];
 
-			$stmt = $libDb->prepare("UPDATE base_person SET vita=:vita WHERE id=:id");
+			$stmt = $libDb->prepare('UPDATE base_person SET vita=:vita WHERE id=:id');
 			$stmt->bindValue(':vita', $libString->protectXss(trim($_POST['vita'])));
 			$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
 			$stmt->execute();
 
-			$stmt = $libDb->prepare("UPDATE base_person SET vita_letzterautor=:vita_letzterautor WHERE id=:id");
+			$stmt = $libDb->prepare('UPDATE base_person SET vita_letzterautor=:vita_letzterautor WHERE id=:id');
 			$stmt->bindValue(':vita_letzterautor', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
 			$stmt->execute();
 
 			$libGlobal->notificationTexts[] = 'Die Vita wurde gespeichert.';
 		}
-	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == "fotodatenupload"){
+	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'fotodatenupload'){
 		if($ownprofile){
-			if($_FILES['bilddatei']['tmp_name'] != ""){
+			if($_FILES['bilddatei']['tmp_name'] != ''){
 				$libImage = new LibImage($libTime, $libGenericStorage);
-				$libImage->savePersonFotoByFilesArray($libAuth->getId(), "bilddatei");
+				$libImage->savePersonFotoByFilesArray($libAuth->getId(), 'bilddatei');
 			}
 		}
-	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == "fotodatendelete"){
+	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'fotodatendelete'){
 		if($ownprofile){
 			$libImage = new LibImage($libTime, $libGenericStorage);
 			$libImage->deletePersonFoto($libAuth->getId());
 		}
-	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == "personpasswort"){
+	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'personpasswort'){
 		if($ownprofile){
 			if(!$libAuth->checkPasswordForPerson($libAuth->getId(), $_POST['oldpwd'])){
-				$libGlobal->errorTexts[] = "Fehler: Das alte Passwort ist nicht korrekt.";
-			} elseif(trim($_POST['newpwd1']) == ""){
-				$libGlobal->errorTexts[] = "Fehler: Es wurde kein neues Passwort angegeben.";
+				$libGlobal->errorTexts[] = 'Fehler: Das alte Passwort ist nicht korrekt.';
+			} elseif(trim($_POST['newpwd1']) == ''){
+				$libGlobal->errorTexts[] = 'Fehler: Es wurde kein neues Passwort angegeben.';
 			} elseif($_POST['newpwd2'] != $_POST['newpwd1']){
-				$libGlobal->errorTexts[] = "Fehler: Das neue Passwort und die Passwortwiederholung stimmen nicht überein.";
+				$libGlobal->errorTexts[] = 'Fehler: Das neue Passwort und die Passwortwiederholung stimmen nicht überein.';
 			} else {
 				$libAuth->savePassword($libAuth->getId(), $_POST['newpwd1']);
 			}
@@ -195,7 +195,7 @@ if($libAuth->isLoggedin()){
 * output
 */
 
-$stmt = $libDb->prepare("SELECT * FROM base_person WHERE id=:id");
+$stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 $stmt->bindValue(':id', $personid, PDO::PARAM_INT);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -204,8 +204,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 * header
 */
 echo '<h1>';
-echo $libMitglied->formatMitgliedNameString($row["anrede"], $row["titel"], $row["rang"], $row["vorname"], $row["praefix"], $row["name"], $row["suffix"], 0);
-echo " ". $libMitglied->getChargenString($personid);
+echo $libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
+echo ' '. $libMitglied->getChargenString($personid);
 echo '</h1>';
 
 echo $libString->getErrorBoxText();
@@ -213,7 +213,7 @@ echo $libString->getNotificationBoxText();
 
 if($ownprofile){
 	echo '<div style="float:right;text-align:right">';
-	echo $libMitglied->getMitgliedSignature($personid, "right");
+	echo $libMitglied->getMitgliedSignature($personid, 'right');
 	echo '</div>';
 
 	echo '<div style="float:right;text-align:right">';
@@ -232,7 +232,7 @@ if($ownprofile){
 	echo '</form>';
 	echo '</div>';
 } else {
-	echo $libMitglied->getMitgliedSignature($personid, "right");
+	echo $libMitglied->getMitgliedSignature($personid, 'right');
 }
 
 
@@ -241,55 +241,55 @@ if($ownprofile){
 	<b>Zur Person</b><br />
 	<div class="fn n">
 		<?php
-		if($row["anrede"] != ""){
-			echo $row["anrede"] .' ';
+		if($row['anrede'] != ''){
+			echo $row['anrede'] .' ';
 		}
 
-		if($row["titel"] != ""){
-			echo '<span class="title">'. $row["titel"] .'</span>';
+		if($row['titel'] != ''){
+			echo '<span class="title">'. $row['titel'] .'</span>';
 		}
 		?>
-		<span class="given-name"><?php echo $row["vorname"]; ?></span>
+		<span class="given-name"><?php echo $row['vorname']; ?></span>
 		<span class="family-name">
 		<?php
-			if($row["praefix"] != ""){
-				echo $row["praefix"]." ";
+			if($row['praefix'] != ''){
+				echo $row['praefix'].' ';
 			}
 
-			echo $row["name"];
+			echo $row['name'];
 
-			if($row["suffix"] != ""){
-				echo " ".$row["suffix"];
+			if($row['suffix'] != ''){
+				echo ' '.$row['suffix'];
 			}
 		?>
 		</span>
 	</div>
 	<?php
-	if($row["rang"] != ""){
-		echo '<div>Rang: '. $row["rang"] .'</div>';
+	if($row['rang'] != ''){
+		echo '<div>Rang: '. $row['rang'] .'</div>';
 	}
 
-	if($row["datum_geburtstag"] != ""){
-		echo '<div>Geburtstag: <span class="bday">'. substr($row['datum_geburtstag'], 8, 2) .".". substr($row['datum_geburtstag'], 5, 2) .".". substr($row['datum_geburtstag'], 0, 4) .'</span></div>';
+	if($row['datum_geburtstag'] != ''){
+		echo '<div>Geburtstag: <span class="bday">'. substr($row['datum_geburtstag'], 8, 2) .'.'. substr($row['datum_geburtstag'], 5, 2) .'.'. substr($row['datum_geburtstag'], 0, 4) .'</span></div>';
 	}
 
-	if ($row["tod_datum"] != ""){
-		echo "<div>Todesdatum <span>" .substr($row['tod_datum'], 8, 2) .".". substr($row['tod_datum'], 5, 2) .".". substr($row['tod_datum'], 0, 4)."</span></div>";
+	if ($row['tod_datum'] != ''){
+		echo "<div>Todesdatum <span>" .substr($row['tod_datum'], 8, 2) .'.'. substr($row['tod_datum'], 5, 2) .'.'. substr($row['tod_datum'], 0, 4)."</span></div>";
 	}
 
-	if($row["spitzname"] != ""){
-		echo '<div>Spitzname: '. $row["spitzname"] .'</div>';
+	if($row['spitzname'] != ''){
+		echo '<div>Spitzname: '. $row['spitzname'] .'</div>';
 	}
 
-	if($row["beruf"] != ""){
-		echo '<div>Beruf: '. $row["beruf"] .'</div>';
+	if($row['beruf'] != ''){
+		echo '<div>Beruf: '. $row['beruf'] .'</div>';
 	}
 
-	if($row["gruppe"] != ""){
+	if($row['gruppe'] != ''){
 		echo '<div>Gruppe: <span>';
 
-		$stmt = $libDb->prepare("SELECT beschreibung FROM base_gruppe WHERE bezeichnung=:bezeichnung");
-		$stmt->bindValue(':bezeichnung', $row["gruppe"]);
+		$stmt = $libDb->prepare('SELECT beschreibung FROM base_gruppe WHERE bezeichnung=:bezeichnung');
+		$stmt->bindValue(':bezeichnung', $row['gruppe']);
 		$stmt->execute();
 		$stmt->bindColumn('beschreibung', $beschreibung);
 		$stmt->fetch();
@@ -298,43 +298,43 @@ if($ownprofile){
 	  	echo '</span></div>';
 	}
 
-	if($row["status"] != ""){
-		echo '<div>Status: '. $row["status"] .'</div>';
+	if($row['status'] != ''){
+		echo '<div>Status: '. $row['status'] .'</div>';
 	}
 
 	/*
 	* primary address
 	*/
-	if($row["zusatz1"] != "" || $row["strasse1"] != "" || $row["ort1"] != "" || $row["plz1"] != "" || $row["land1"] != "" || $row["telefon1"] != ""){
+	if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != ''){
 		echo '<br /><b>Primäradresse</b>';
 		echo '<div class="adr">';
 
-		if($row["zusatz1"] != ""){
-			echo '<div>Zusatz: <span class="extended-address">'. $row["zusatz1"] .'</span></div>';
+		if($row['zusatz1'] != ''){
+			echo '<div>Zusatz: <span class="extended-address">'. $row['zusatz1'] .'</span></div>';
 		}
 
-		if($row["strasse1"] != ""){
-			echo '<div>Straße: <span class="street-address">'. $row["strasse1"] .'</span></div>';
+		if($row['strasse1'] != ''){
+			echo '<div>Straße: <span class="street-address">'. $row['strasse1'] .'</span></div>';
 		}
 
-		if($row["ort1"] != ""){
-			echo '<div>Ort: <span class="locality">'. $row["ort1"] .'</span></div>';
+		if($row['ort1'] != ''){
+			echo '<div>Ort: <span class="locality">'. $row['ort1'] .'</span></div>';
 		}
 
-		if($row["plz1"] != ""){
-			echo '<div>PLZ: <span class="postal-code">'. $row["plz1"] .'</span></div>';
+		if($row['plz1'] != ''){
+			echo '<div>PLZ: <span class="postal-code">'. $row['plz1'] .'</span></div>';
 		}
 
-		if($row["land1"] != ""){
-			echo '<div>Land: <span class="nation">'. $row["land1"] .'</span></div>';
+		if($row['land1'] != ''){
+			echo '<div>Land: <span class="nation">'. $row['land1'] .'</span></div>';
 		}
 
-		if($row["telefon1"] != ""){
-			echo '<div>Telefon: <span class="tel">'. $row["telefon1"] .'</span></div>';
+		if($row['telefon1'] != ''){
+			echo '<div>Telefon: <span class="tel">'. $row['telefon1'] .'</span></div>';
 		}
 
-		if($row["datum_adresse1_stand"] != ""){
-			echo '<div>letzte Änderung: '. $libTime->convertMysqlDateToDatum($row["datum_adresse1_stand"],1) .'</div>';
+		if($row['datum_adresse1_stand'] != ''){
+			echo '<div>letzte Änderung: '. $libTime->convertMysqlDateToDatum($row['datum_adresse1_stand'],1) .'</div>';
 		}
 
 		echo '</div>';
@@ -343,36 +343,36 @@ if($ownprofile){
 	/*
 	* secondary address
 	*/
-	if($row["zusatz2"] != "" || $row["strasse2"] != "" || $row["ort2"] != "" || $row["plz2"] != "" || $row["land2"] != "" || $row["telefon2"] != ""){
+	if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != ''){
 		echo '<br /><b>Sekundäradresse</b>';
 		echo '<div class="adr">';
 
-		if($row["zusatz2"] != ""){
-			echo '<div>Zusatz: <span class="extended-address">'. $row["zusatz2"] .'</span></div>';
+		if($row['zusatz2'] != ''){
+			echo '<div>Zusatz: <span class="extended-address">'. $row['zusatz2'] .'</span></div>';
 		}
 
-		if($row["strasse2"] != ""){
-			echo '<div>Straße: <span class="street-address">'. $row["strasse2"] .'</span></div>';
+		if($row['strasse2'] != ''){
+			echo '<div>Straße: <span class="street-address">'. $row['strasse2'] .'</span></div>';
 		}
 
-		if($row["ort2"] != ""){
-			echo '<div>Ort: <span class="locality">'. $row["ort2"] .'</span></div>';
+		if($row['ort2'] != ''){
+			echo '<div>Ort: <span class="locality">'. $row['ort2'] .'</span></div>';
 		}
 
-		if($row["plz2"] != ""){
-			echo '<div>PLZ: <span class="postal-code">'. $row["plz2"] .'</span></div>';
+		if($row['plz2'] != ''){
+			echo '<div>PLZ: <span class="postal-code">'. $row['plz2'] .'</span></div>';
 		}
 
-		if($row["land2"] != ""){
-			echo '<div>Land: <span class="nation">'. $row["land2"] .'</span></div>';
+		if($row['land2'] != ''){
+			echo '<div>Land: <span class="nation">'. $row['land2'] .'</span></div>';
 		}
 
-		if($row["telefon2"] != ""){
-			echo '<div>Telefon: <span class="tel">'. $row["telefon2"] .'</span></div>';
+		if($row['telefon2'] != ''){
+			echo '<div>Telefon: <span class="tel">'. $row['telefon2'] .'</span></div>';
 		}
 
-		if($row["datum_adresse2_stand"] != ""){
-			echo '<div>letzte Änderung: '. $libTime->convertMysqlDateToDatum($row["datum_adresse2_stand"],1) .'</div>';
+		if($row['datum_adresse2_stand'] != ''){
+			echo '<div>letzte Änderung: '. $libTime->convertMysqlDateToDatum($row['datum_adresse2_stand'],1) .'</div>';
 		}
 
 		echo '</div>';
@@ -383,16 +383,16 @@ if($ownprofile){
 	*/
 	echo '<br /><b>Kommunikation</b>';
 
-	if($row["email"] != ""){
-		echo '<div>E-Mail: <a class="email" href="mailto:'. $row["email"] .'">'. $row["email"] .'</a></div>';
+	if($row['email'] != ''){
+		echo '<div>E-Mail: <a class="email" href="mailto:'. $row['email'] .'">'. $row['email'] .'</a></div>';
 	}
 
-	if($row["mobiltelefon"] != ""){
-		echo '<div>Mobiltelefon: <span class="tel">'. $row["mobiltelefon"] .'</span></div>';
+	if($row['mobiltelefon'] != ''){
+		echo '<div>Mobiltelefon: <span class="tel">'. $row['mobiltelefon'] .'</span></div>';
 	}
 
-	if($row["webseite"] != ""){
-		$webseite = $row["webseite"];
+	if($row['webseite'] != ''){
+		$webseite = $row['webseite'];
 
 		if(substr($webseite, 0, 7) != 'http://' && substr($webseite, 0, 8) != 'https://'){
 			$webseite = 'http://' . $webseite;
@@ -401,12 +401,12 @@ if($ownprofile){
 		echo '<div>Webseite: <a class="url" href="' .$webseite. '">'. $webseite .'</a></div>';
 	}
 
-	if($row["jabber"] != ""){
-		echo '<div>XMPP: <a class="url" href="xmpp:'. $row["jabber"] .'">'. $row["jabber"] .'</a></div>';
+	if($row['jabber'] != ''){
+		echo '<div>XMPP: <a class="url" href="xmpp:'. $row['jabber'] .'">'. $row['jabber'] .'</a></div>';
 	}
 
-	if($row["skype"] != ""){
-		echo '<div>Skype: <a class="url" href="skype:'. $row["skype"] .'">'. $row["skype"] .'</a></div>';
+	if($row['skype'] != ''){
+		echo '<div>Skype: <a class="url" href="skype:'. $row['skype'] .'">'. $row['skype'] .'</a></div>';
 	}
 
 
@@ -416,42 +416,42 @@ if($ownprofile){
 	echo '<br /><b>Weiteres</b>';
 
 	if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'K' && $row['gruppe'] != 'Y'){
-		if($row["semester_reception"] != ""){
-			echo '<div>Reception: '. $libTime->getSemesterString($row["semester_reception"]) .'</div>';
+		if($row['semester_reception'] != ''){
+			echo '<div>Reception: '. $libTime->getSemesterString($row['semester_reception']) .'</div>';
 		}
 
-		if($row["semester_promotion"] != ""){
-			echo '<div>Promotion: '. $libTime->getSemesterString($row["semester_promotion"]) .'</div>';
+		if($row['semester_promotion'] != ''){
+			echo '<div>Promotion: '. $libTime->getSemesterString($row['semester_promotion']) .'</div>';
 		}
 
-		if($row["semester_philistrierung"] != ""){
-			echo '<div>Philistrierung: '. $libTime->getSemesterString($row["semester_philistrierung"]) .'</div>';
+		if($row['semester_philistrierung'] != ''){
+			echo '<div>Philistrierung: '. $libTime->getSemesterString($row['semester_philistrierung']) .'</div>';
 		}
 
-		if($row["semester_aufnahme"] != ""){
-			echo '<div>Aufnahme: '. $libTime->getSemesterString($row["semester_aufnahme"]) .'</div>';
+		if($row['semester_aufnahme'] != ''){
+			echo '<div>Aufnahme: '. $libTime->getSemesterString($row['semester_aufnahme']) .'</div>';
 		}
 
-		if($row["semester_fusion"] != ""){
-			echo '<div>Fusion: '. $libTime->getSemesterString($row["semester_fusion"]) .'</div>';
+		if($row['semester_fusion'] != ''){
+			echo '<div>Fusion: '. $libTime->getSemesterString($row['semester_fusion']) .'</div>';
 		}
 	}
 
-	if($row['heirat_partner'] != "" && $row['heirat_partner'] != 0){
+	if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
 		echo '<div>Ehepartner: <a href="index.php?pid=intranet_person_daten&amp;personid='.$row['heirat_partner'].'" />'. $libMitglied->getMitgliedNameString($row['heirat_partner'], 5) .'</a></div>';
 	}
 
 	/*
 	* assocations
 	*/
-	$stmt = $libDb->prepare("SELECT base_verein.id, base_verein.titel, base_verein.name, base_verein.dachverband, base_verein.ort1 FROM base_verein_mitgliedschaft, base_verein WHERE base_verein_mitgliedschaft.mitglied = :mitglied AND base_verein_mitgliedschaft.verein = base_verein.id");
+	$stmt = $libDb->prepare('SELECT base_verein.id, base_verein.titel, base_verein.name, base_verein.dachverband, base_verein.ort1 FROM base_verein_mitgliedschaft, base_verein WHERE base_verein_mitgliedschaft.mitglied = :mitglied AND base_verein_mitgliedschaft.verein = base_verein.id');
 	$stmt->bindValue(':mitglied', $personid, PDO::PARAM_INT);
 	$stmt->execute();
 
 	$vereine = array();
 
 	while($rowvereine = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$vereine[] = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowvereine['id']. '">'. $rowvereine['titel'] ." ". $rowvereine['name'] ." im " .$rowvereine['dachverband']. " zu " .$rowvereine['ort1']. "</a>";
+		$vereine[] = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowvereine['id']. '">'. $rowvereine['titel'] .' '. $rowvereine['name'] .' im ' .$rowvereine['dachverband']. ' zu ' .$rowvereine['ort1']. '</a>';
 	}
 
 	if(count($vereine) > 0){
@@ -460,16 +460,16 @@ if($ownprofile){
 
 	echo '<br /><br /><b>Vita</b>';
 
-	if(!$ownprofile && $row['gruppe'] != "X"){
+	if(!$ownprofile && $row['gruppe'] != 'X'){
 		echo ' - <a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
 	}
 
-	if($row['vita_letzterautor'] != ""){
+	if($row['vita_letzterautor'] != ''){
 		echo '<span style="float:right">Letzter Autor: '. $libMitglied->getMitgliedNameString($row['vita_letzterautor'], 5).'</span>';
 	}
 
-	if($row["vita"] != ""){
-		echo '<br /><div style="border:1px solid #000000;padding:3px;margin-top:2px">'. nl2br($row["vita"]) .'</div>';
+	if($row['vita'] != ''){
+		echo '<br /><div style="border:1px solid #000000;padding:3px;margin-top:2px">'. nl2br($row['vita']) .'</div>';
 	}
 
 	echo '<br />';
@@ -479,49 +479,72 @@ if($ownprofile){
 
 <?php
 /*
-* form for normal data
-*/
-if($ownprofile){
-	echo "<h2>Daten ändern</h2>";
-}
-
-/*
 * passwort change form
 */
 if($ownprofile){
-	echo '<h3>Passwort ändern</h3>';
+	echo '<h2>Passwort ändern</h2>';
 
-	echo '<form method="post" action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'">';
+	echo '<form action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'" method="post" class="form-horizontal">';
+	echo '<fieldset>';
+
 	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
-	echo '<input type="password" name="oldpwd" size="30" /> Altes Passwort<br />';
-	echo '<input type="password" name="newpwd1" size="30" /> Neues Passwort<br />';
-	echo '<input type="password" name="newpwd2" size="30" /> Neues Passwort wiederholen<br />';
-	echo '<input type="submit" value="Neues Passwort speichern" />';
-	echo '</form>';
 
+	echo '<div class="form-group">';
+	echo '<label for="oldpwd" class="col-sm-2 control-label">Altes Passwort</label>';
+	echo '<div class="col-sm-10"><input type="password" id="oldpwd" name="oldpwd" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="newpwd1" class="col-sm-2 control-label">Neues Passwort</label>';
+	echo '<div class="col-sm-10">';
+	echo '<input type="password" id="newpwd1" name="newpwd1" class="form-control" />';
 	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
+	echo '</div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label for="newpwd2" class="col-sm-2 control-label">Neues Passwort (Wiederholung)</label>';
+	echo '<div class="col-sm-10"><input type="password" id="newpwd2" name="newpwd2" class="form-control" /></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<div class="col-sm-offset-2 col-sm-10">';
+	echo '<button type="submit" class="btn btn-default">Neues Passwort speichern</button>';
+	echo '</div>';
+	echo '</div>';
+
+	echo '</fieldset>';
+	echo '</form>';
 }
 
 if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
-	echo '<form method="post" action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'">';
+	echo '<h2>Daten ändern</h2>';
+
+	echo '<form action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'" method="post" class="form-horizontal">';
+	echo '<fieldset>';
+
 	echo '<input type="hidden" name="formtyp" value="personendaten" />';
 }
 
 if($ownprofile){
-	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE id=:id");
+	$stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 	$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt->execute();
 	$row2 = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	echo '<h3>Zur Person</h3>';
-	echo '<input type="text" name="anrede" size="30" value="'. $row2['anrede'] .'" /> Anrede<br />';
-	echo '<input type="text" name="titel" size="30" value="'. $row2['titel'] .'" /> Titel (Dr. etc.)<br />';
-	echo '<input type="text" name="rang" size="30" value="'. $row2['rang'] .'" /> Rang (Landesrat A.D. etc.)<br />';
-	echo '<input type="text" name="spitzname" size="30" value="'. $row2['spitzname'] .'" /> Spitzname<br />';
-	echo '<input type="text" name="beruf" size="30" value="'. $row2['beruf'] .'" /> Beruf<br />';
+
+	printTextInput('anrede', 'Anrede', $row2['anrede']);
+	printTextInput('titel', 'Titel', $row2['titel']);
+	printTextInput('rang', 'Rang', $row2['rang']);
+	printTextInput('spitzname', 'Spitzname', $row2['spitzname']);
+	printTextInput('beruf', 'Beruf', $row2['beruf']);
 
 	if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'Y'){
-		echo '<select name="leibmitglied">';
+		echo '<div class="form-group">';
+		echo '<label for="leibmitglied" class="col-sm-2 control-label">Leibbursch</label>';
+
+		echo '<div class="col-sm-10"><select id="leibmitglied" name="leibmitglied" class="form-control">';
 		echo '<option value="NULL">------------</option>'."\n";
 
 		$stmt = $libDb->prepare("SELECT id, anrede, name, vorname, titel, rang, praefix, suffix FROM base_person ORDER BY name,vorname");
@@ -539,31 +562,35 @@ if($ownprofile){
 			}
 		}
 
-		echo '</select> Leibbursch<br />';
+		echo '</select></div>';
+		echo '</div>';
 	}
 
 	echo '<h3>Primäradresse</h3>';
-	echo '<input type="text" name="zusatz1" size="30" value="'. $row2['zusatz1'] .'" /> Zusatz<br />';
-	echo '<input type="text" name="strasse1" size="30" value="'. $row2['strasse1'] .'" /> Straße<br />';
-	echo '<input type="text" name="ort1" size="30" value="'. $row2['ort1'] .'" /> Ort<br />';
-	echo '<input type="text" name="plz1" size="30" value="'. $row2['plz1'] .'" /> PLZ<br />';
-	echo '<input type="text" name="land1" size="30" value="'. $row2['land1'] .'" /> Land<br />';
-	echo '<input type="text" name="telefon1" size="30" value="'. $row2['telefon1'] .'" /> Telefon<br />';
+
+	printTextInput('zusatz1', 'Zusatz', $row2['zusatz1']);
+	printTextInput('strasse1', 'Straße', $row2['strasse1']);
+	printTextInput('ort1', 'Ort', $row2['ort1']);
+	printTextInput('plz1', 'PLZ', $row2['plz1']);
+	printTextInput('land1', 'Land', $row2['land1']);
+	printTextInput('telefon1', 'Telefon', $row2['telefon1']);
 
 	echo '<h3>Sekundäradresse</h3>';
-	echo '<input type="text" name="zusatz2" size="30" value="'. $row2['zusatz2'] .'" /> Zusatz<br />';
-	echo '<input type="text" name="strasse2" size="30" value="'. $row2['strasse2'] .'" /> Straße<br />';
-	echo '<input type="text" name="ort2" size="30" value="'. $row2['ort2'] .'" /> Ort<br />';
-	echo '<input type="text" name="plz2" size="30" value="'. $row2['plz2'] .'" /> PLZ<br />';
-	echo '<input type="text" name="land2" size="30" value="'. $row2['land2'] .'" /> Land<br />';
-	echo '<input type="text" name="telefon2" size="30" value="'. $row2['telefon2'] .'" /> Telefon<br />';
+
+	printTextInput('zusatz2', 'Zusatz', $row2['zusatz2']);
+	printTextInput('strasse2', 'Straße', $row2['strasse2']);
+	printTextInput('ort2', 'Ort', $row2['ort2']);
+	printTextInput('plz2', 'PLZ', $row2['plz2']);
+	printTextInput('land2', 'Land', $row2['land2']);
+	printTextInput('telefon2', 'Telefon', $row2['telefon2']);
 
 	echo '<h3>Kommunikation</h3>';
-	echo '<input type="text" name="mobiltelefon" size="30" value="'. $row2['mobiltelefon'] .'" /> Mobiltelefon<br />';
-	echo '<input type="text" name="email" size="30" value="'. $row2['email'] .'" /> E-Mail<br />';
-	echo '<input type="text" name="jabber" size="30" value="'. $row2['jabber'] .'" /> XMPP<br />';
-	echo '<input type="text" name="skype" size="30" value="'. $row2['skype'] .'" /> Skype<br />';
-	echo '<input type="text" name="webseite" size="30" value="'. $row2['webseite'] .'" /> Webseite<br />';
+
+	printTextInput('mobiltelefon', 'Mobiltelefon', $row2['mobiltelefon']);
+	printTextInput('email', 'E-Mail', $row2['email']);
+	printTextInput('jabber', 'XMPP', $row2['jabber']);
+	printTextInput('skype', 'Skype', $row2['skype']);
+	printTextInput('webseite', 'Webseite', $row2['webseite']);
 
 	echo '<h3>Weiteres</h3>';
 
@@ -574,8 +601,9 @@ if($ownprofile){
 		$stmt->bindColumn('empfaenger', $empfaenger);
 		$stmt->fetch();
 
-		echo 'E-Mail-Rundbriefe erhalten: ';
-		echo '<select name="empfaenger">';
+		echo '<div class="form-group">';
+		echo '<label for="empfaenger" class="col-sm-2 control-label">Rundbriefe erhalten</label>';
+		echo '<div class="col-sm-10"><select id="empfaenger" name="empfaenger" class="form-control">';
 		echo '<option value="1"';
 
 		if($empfaenger == 1){
@@ -590,19 +618,20 @@ if($ownprofile){
 		}
 
 		echo '>Nein</option>';
-		echo '</select><br />';
+		echo '</select></div>';
+		echo '</div>';
 
 
 		if($row['gruppe'] == 'P' || $row['gruppe'] == 'G' || $row['gruppe'] == 'W'){
-			echo 'Falls ja, auch E-Mail-Rundbriefe aus dem Aktivenleben erhalten: ';
-
 			$stmt = $libDb->prepare("SELECT interessiert FROM mod_rundbrief_empfaenger WHERE id=:id");
 			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->execute();
 			$stmt->bindColumn('interessiert', $interessiert);
 			$stmt->fetch();
 
-			echo '<select name="interessiert">';
+			echo '<div class="form-group">';
+			echo '<label for="interessiert" class="col-sm-2 control-label">Rundbriefe aus Aktivenleben erhalten</label>';
+			echo '<div class="col-sm-10"><select id="interessiert" name="interessiert" class="form-control">';
 			echo '<option value="1"';
 
 			if($interessiert == 1){
@@ -617,7 +646,8 @@ if($ownprofile){
 			}
 
 			echo '>Nein</option>';
-			echo '</select><br />';
+			echo '</select></div>';
+			echo '</div>';
 		}
 	}
 
@@ -628,11 +658,22 @@ if($ownprofile){
 		$stmt->bindColumn('anzahlzipfel', $anzahlzipfel);
 		$stmt->fetch();
 
-		echo '<input type="text" name="anzahlzipfel" size="2" value="'. $anzahlzipfel .'" /> Zipfelanzahl<br />';
+		printTextInput('anzahlzipfel', 'Zipfelanzahl', $anzahlzipfel);
 	}
 
+	echo '<div class="form-group">';
+	echo '<label class="col-sm-2 control-label">Region 1</label>';
+	echo '<div class="col-sm-10">';
 	echo $libForm->getRegionDropDownBox('region1', 'Region 1', $row['region1']);
+	echo '</div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<label class="col-sm-2 control-label">Region 2</label>';
+	echo '<div class="col-sm-10">';
 	echo $libForm->getRegionDropDownBox('region2', 'Region 2', $row['region2']);
+	echo '</div>';
+	echo '</div>';
 }
 
 if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
@@ -642,8 +683,18 @@ if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
 	$stmt->bindColumn('vita', $vita);
 	$stmt->fetch();
 
-	echo '<textarea name="vita" cols="70" rows="10">' . $vita .'</textarea><br />';
-	echo '<input type="submit" value="Speichern" name="Save" /><br />';
+	echo '<div class="form-group">';
+	echo '<label for="text" class="col-sm-2 control-label">Vita</label>';
+	echo '<div class="col-sm-10"><textarea id="vita" name="vita" rows="10" class="form-control">' .$vita. '</textarea></div>';
+	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<div class="col-sm-offset-2 col-sm-10">';
+	echo '<button type="submit" class="btn btn-default">Speichern</button>';
+	echo '</div>';
+	echo '</div>';
+
+	echo '</fieldset>';
 	echo '</form>';
 }
 
@@ -797,5 +848,12 @@ SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname,
 	echo printMitglieder($stmt, 0);
 
 	echo '<p style="clear:both">';
+}
+
+function printTextInput($name, $label, $value){
+	echo '<div class="form-group">';
+	echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+	echo '<div class="col-sm-10"><input type="text" id="' .$name. '" name="' .$name. '" value="' .$value. '" class="form-control" /></div>';
+	echo '</div>';
 }
 ?>
