@@ -172,7 +172,7 @@ echo '<hr />';
 
 
 echo '<div class="form-group">';
-echo '<label for="subject" class="col-sm-2 control-label">Name</label>';
+echo '<label for="subject" class="col-sm-2 control-label">Betreff</label>';
 echo '<div class="col-sm-10"><input type="text" id="subject" name="subject" placeholder="Betreff" class="form-control" /></div>';
 echo '</div>';
 

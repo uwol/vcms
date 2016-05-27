@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Rundbrief";
-$version = "2.14";
+$version = "2.15";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";
