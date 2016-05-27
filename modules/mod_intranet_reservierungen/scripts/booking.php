@@ -20,16 +20,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-?>
-<h1>Reservierung durchführen</h1>
-<p>Bitte die Daten der Reservierung eingeben.</p>
 
-<form method="post" action="index.php?pid=intranet_reservierung_liste" class="text">
-<p><input type="text" name="datum" value="<?php echo @date("Y-m-d"); ?>" size="12" /> Datum</p>
+echo '<h1>Reservierung durchführen</h1>';
+echo '<p>Bitte die Daten der Reservierung eingeben.</p>';
 
-<p>Beschreibung<br />
-<textarea name="beschreibung" cols="50" rows="10">Bitte Räumlichkeit, Tageszeit und Art der Nutzung angeben. Bei einem Filmabend die Filmtitel nennen.</textarea>
-</p>
+echo '<form action="index.php?pid=intranet_reservierung_liste" method="post">';
+echo '<fieldset>';
 
-<p><input type="submit" value="Reservierung vornehmen" /></p>
-</form>
+echo '<div class="form-group">';
+echo '<label for="datum" class="col-sm-2 control-label">Datum</label>';
+echo '<div class="col-sm-10"><input type="date" id="datum" name="datum" class="form-control" value="' .date("Y-m-d"). '" /></div>';
+echo '</div>';
+
+
+echo '<div class="form-group">';
+echo '<label for="beschreibung" class="col-sm-2 control-label">Beschreibung</label>';
+echo '<div class="col-sm-10"><textarea id="beschreibung" name="beschreibung" rows="7" class="form-control" placeholder="Bitte Räumlichkeit, Tageszeit und Art der Nutzung angeben. Bei einem Filmabend Filmtitel nennen."></textarea></div>';
+echo '</div>';
+
+
+echo '<div class="form-group">';
+echo '<div class="col-sm-offset-2 col-sm-10">';
+echo '<button type="submit" class="btn btn-default">Reservierung vornehmen</button>';
+echo '</div>';
+echo '</div>';
+
+echo '</fieldset>';
+echo '</form>';

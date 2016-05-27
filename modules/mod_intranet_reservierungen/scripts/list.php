@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 /*
 * action
 */
@@ -44,36 +45,36 @@ if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET["id"]) &
 	$libGlobal->notificationTexts[] = "Die Reservierung wurde gelöscht.";
 }
 
+
 /*
 * output
 */
-?>
-<h1>Reservierungen</h1>
-<?php
+echo '<h1>Reservierungen</h1>';
+
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
-?>
-<p>Um eine Reservierung anzulegen, bitte <a href="index.php?pid=intranet_reservierung_buchen">diese Seite</a> öffnen.</p>
-<?php
+
+echo '<p>Um eine Reservierung anzulegen, bitte <a href="index.php?pid=intranet_reservierung_buchen">diese Seite</a> öffnen.</p>';
+
 echo '<table>';
 echo '<tr><th style="width:20%">Datum</th><th style="width:60%">Beschreibung</th><th style="width:20%">Person</th></tr>';
 
 $stmt = $libDb->prepare("SELECT * FROM mod_reservierung_reservierung WHERE datum >= :datum ORDER BY datum");
-$stmt->bindValue(':datum', date("Y-m-d"));
+$stmt->bindValue(':datum', date('Y-m-d'));
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
-	echo '<td>' .$libTime->wochentag($row['datum']).', '.$libTime->formatDateTimeString($row['datum'], 2). "</td>";
+	echo '<td>' .$libTime->wochentag($row['datum']).', '.$libTime->formatDateTimeString($row['datum'], 2). '</td>';
 	echo '<td>' .$row['beschreibung'];
 
 	if($libAuth->getId() == $row['person']){
 		echo ' - <a href="index.php?pid=intranet_reservierung_liste&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">Reservierung löschen</a>';
 	}
 
-	echo "</td>";
-	echo '<td>' .$libMitglied->getMitgliedSignature($row['person'], "right"). "</td>";
-	echo "</tr>";
+	echo '</td>';
+	echo '<td>' .$libMitglied->getMitgliedSignature($row['person'], 'right'). "</td>";
+	echo '</tr>';
 }
 
-echo "</table>";
+echo '</table>';
