@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-$libForm = new LibForm();
+
 $aktion = '';
 
 if(isset($_REQUEST['aktion'])){
@@ -38,14 +38,14 @@ $felder = array('startdatum', 'verfallsdatum', 'text');
 
 //new event
 if($aktion == 'blank'){
-	$array['startdatum'] = @date("Y-m-d H:i:s");
+	$array['startdatum'] = date('Y-m-d H:i:s');
 	$array['verfallsdatum'] = '0000-00-00 00:00:00';
 	$array['text'] = '';
 }
 //blank data to be saved
 elseif($aktion == 'insert'){
 	if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-		die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+		die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 	}
 
 	$valueArray = $_REQUEST;
@@ -56,13 +56,13 @@ elseif($aktion == 'insert'){
 	}
 
 	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum']);
-	$array = $libDb->insertRow($felder, $valueArray, 'mod_internethome_nachricht', array("id"=>''));
+	$array = $libDb->insertRow($felder, $valueArray, 'mod_internethome_nachricht', array('id'=>''));
 	$libGlobal->notificationTexts[] = 'Die Ankündigung ist gespeichert worden.';
 }
 //modification
 elseif($aktion == 'update'){
 	if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-		die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+		die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 	}
 
 	$valueArray = $_REQUEST;
@@ -73,24 +73,24 @@ elseif($aktion == 'update'){
 	}
 
 	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum']);
-	$array = $libDb->updateRow($felder, $valueArray, "mod_internethome_nachricht", array("id" => $_REQUEST['id']));
+	$array = $libDb->updateRow($felder, $valueArray, 'mod_internethome_nachricht', array('id' => $_REQUEST['id']));
 	$libGlobal->notificationTexts[] = 'Die Ankündigung ist gespeichert worden.';
 }
 // select
 else{
-	$stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE id=:id");
+	$stmt = $libDb->prepare('SELECT * FROM mod_internethome_nachricht WHERE id=:id');
 	$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
 	$stmt->execute();
 	$array = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 //images
-if(isset($_POST['formtyp']) && $_POST['formtyp'] == "bildupload"){
-	if($_FILES['bilddatei']['tmp_name'] != ""){
+if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'bildupload'){
+	if($_FILES['bilddatei']['tmp_name'] != ''){
 		$libImage = new LibImage($libTime, $libGenericStorage);
-		$libImage->saveStartseitenBildByFilesArray($_REQUEST['id'], "bilddatei");
+		$libImage->saveStartseitenBildByFilesArray($_REQUEST['id'], 'bilddatei');
 	}
-} elseif(isset($_GET['aktion']) && $_GET['aktion'] == "bilddelete"){
+} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'bilddelete'){
 	$libImage = new LibImage($libTime, $libGenericStorage);
 	$libImage->deleteStartseitenBild($_REQUEST['id']);
 }
@@ -114,39 +114,65 @@ echo '<p>Anstatt von HTML können die folgenden <a href="http://de.wikipedia.org
 * deletion
 */
 if($array['id'] != ''){
-	echo '<p><a href="index.php?pid=intranet_internethome_nachricht_adminliste&amp;aktion=delete&amp;id='.$array['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
+	echo '<p><a href="index.php?pid=intranet_internethome_nachricht_adminliste&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
 }
 
 /*
 * form
 */
 if($aktion == 'blank'){
-	$extraActionParam = "&amp;aktion=insert";
+	$extraActionParam = '&amp;aktion=insert';
 } else {
-	$extraActionParam = "&amp;aktion=update";
+	$extraActionParam = '&amp;aktion=update';
 }
 
-echo '<form action="index.php?pid=intranet_internethome_nachricht_adminankuendigung' .$extraActionParam. '" method="post">';
-echo '<input type="submit" value="Speichern" name="Save"><br />';
+echo '<form action="index.php?pid=intranet_internethome_nachricht_adminankuendigung' .$extraActionParam. '" method="post" class="form-horizontal">';
+echo '<fieldset>';
+
 echo '<input type="hidden" name="formtyp" value="newsdaten" />';
 echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
-echo '<input size="20" type="text" name="id" value="' .$array['id']. '" disabled /> Id<br />';
-echo '<input size="20" type="text" name="startdatum" value="' .$array['startdatum']. '" /> Startdatum<br />';
-echo '<input size="20" type="text" name="verfallsdatum" value="' .$array['verfallsdatum']. '" /> Verfallsdatum<br />';
-echo 'Beschreibung<br /><textarea name="text" cols="70" rows="6">' . $array['text'] .'</textarea><br />';
-echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
-echo '<input type="submit" value="Speichern" name="Save"><br />';
-echo "</form><br />";
 
-if((isset($_REQUEST['id']) && $_REQUEST['id'] != "") || $array['id'] != ""){
-	if(isset($_REQUEST['id']) && $_REQUEST['id'] != ""){
+echo '<div class="form-group">';
+echo '<label for="id" class="col-sm-2 control-label">Id</label>';
+echo '<div class="col-sm-10"><input type="text" id="id" name="id" value="' .$array['id']. '" disabled class="form-control" /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="startdatum" class="col-sm-2 control-label">Startdatum</label>';
+echo '<div class="col-sm-10"><input type="date" id="startdatum" name="startdatum" value="' .$array['startdatum']. '" class="form-control" /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="verfallsdatum" class="col-sm-2 control-label">Verfallsdatum</label>';
+echo '<div class="col-sm-10"><input type="date" id="verfallsdatum" name="verfallsdatum" value="' .$array['verfallsdatum']. '" class="form-control" /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="text" class="col-sm-2 control-label">Beschreibung</label>';
+echo '<div class="col-sm-10"><textarea id="text" name="text" rows="6" class="form-control">' .$array['text']. '</textarea></div>';
+echo '</div>';
+
+echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
+
+echo '<div class="form-group">';
+echo '<div class="col-sm-offset-2 col-sm-10">';
+echo '<button type="submit" class="btn btn-default">Speichern</button>';
+echo '</div>';
+echo '</div>';
+
+echo '</fieldset>';
+echo '</form>';
+
+
+if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
+	if(isset($_REQUEST['id']) && $_REQUEST['id'] != ''){
 		$array['id'] = $_REQUEST['id'];
 	}
 
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$array['id']. '.jpg';
 
 	if(is_file($posssibleImage)){
-		echo '<img src="'.$posssibleImage.'" style="margin:5px;';
+		echo '<img src="' .$posssibleImage. '" style="margin:5px;';
 		list($width, $height, $type, $attr) = getimagesize($posssibleImage);
 
 		if(($width / 4 * 3) >= $height){
@@ -165,7 +191,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != "") || $array['id'] != ""){
 	echo '</form>';
 
 	if(is_file($posssibleImage)){
-		echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;aktion=bilddelete&amp;id='. $array['id'] .'" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')">Bild löschen</a>';
+		echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;aktion=bilddelete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')">Bild löschen</a>';
 	}
 }
 ?>
