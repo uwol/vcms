@@ -28,13 +28,21 @@ $libGallery = new LibGallery($libDb);
 $stmt = $libDb->prepare("SELECT id, titel FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 90 ORDER BY RAND()");
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	if($libAuth->isLoggedin()){
-		$level = 1;
-	} else {
-		$level = 0;
-	}
 
+if($libAuth->isLoggedin()){
+	$level = 1;
+} else {
+	$level = 0;
+}
+
+
+echo '<h2>Impressionen</h2>';
+echo '<hr />';
+echo '<div class="row">';
+
+$i = 0;
+
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	// is there a gallery?
 	if($libGallery->hasPictures($row['id'], $level)){
 		$pictures = $libGallery->getPictures($row['id'], $level);
@@ -45,10 +53,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$keys = array_keys($pictures);
 		$pictureid = $keys[$zufallszahl];
 
-		echo '<h2>Impression</h2>';
-		echo '<hr />';
-
-		echo '<h3 class="title">Veranstaltung:</h3> ' .wordwrap($row['titel'], 50, '<br />', 1);
+		echo '<section class="col-md-3">';
+		echo '<h3>' .wordwrap($row['titel'], 50, '-', 1). '</h3> ';
 
 		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
 
@@ -58,12 +64,19 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			$visibilityClass = "internal";
 		}
 
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '&thumb=1" alt="" class="img-responsive thumbnail center-block ' .$visibilityClass. '" />';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '&thumb=1" alt="" class="img-responsive center-block thumbnail ' .$visibilityClass. '" />';
 		echo '</a>';
 
 		echo '<hr />';
+		echo '</section>';
 
-		break;
+		$i++;
+
+		if($i >= 4){
+			break;
+		}
 	}
 }
+
+echo '</div>';
 ?>

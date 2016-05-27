@@ -21,7 +21,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<h2>Ankündigung</h2>';
+echo '<h2>Ankündigungen</h2>';
 echo '<hr />';
 
 $stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum = '0000-00-00 00:00:00') ORDER BY startdatum DESC LIMIT 0,3");

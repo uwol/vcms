@@ -23,16 +23,21 @@ if(!is_object($libGlobal))
 if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
 	$libGenericStorage->saveValueInCurrentModule('fb:admins', 0);
 }
-?>
-<h1>Willkommen</h1>
 
-<div class="row">
-	<section class="col-md-8">
-		<?php include("elements/announcements.php"); ?>
-	</section>
-	<aside class="col-md-4">
-		<?php include("elements/randomimage.php");?>
-		<?php include("elements/nextevent.php");?>
-		<?php include("elements/socialmedia.php");?>
-	</aside>
-</div>
+echo '<h1>Willkommen</h1>';
+
+echo '<div class="row">';
+echo '<section class="col-md-8">';
+
+include("elements/announcements.php");
+
+echo '</section>';
+echo '<aside class="col-md-4">';
+
+include("elements/nextevent.php");
+include("elements/socialmedia.php");
+
+echo '</aside>';
+echo '</div>';
+
+include("elements/randomimage.php");

@@ -21,10 +21,8 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<h2>Aktuelles</h2>';
+echo '<h2>Nächste Veranstaltungen</h2>';
 echo '<hr />';
-
-echo '<h3 class="title">Nächste Veranstaltungen:</h3>';
 
 $stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,4");
 $stmt->execute();
