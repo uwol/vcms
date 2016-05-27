@@ -142,16 +142,6 @@ nav .navbar-intranet li a {
 	border-width: 0;
 }
 
-#content input {
-	padding: 1px;
-	margin: 2px 0 2px 0;
-}
-
-#content textarea {
-	padding: 1px;
-	margin: 2px 0 2px 0;
-}
-
 #content dd {
 	margin-left: 2em;
 }

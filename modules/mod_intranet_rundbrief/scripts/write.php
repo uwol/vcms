@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 $libForm = new LibForm();
 
 // synchronize tables
@@ -88,41 +89,74 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('smtpPassword')){
 	$libGenericStorage->saveValueInCurrentModule('smtpPassword', '');
 }
 
-?>
-<h1>Rundbrief an Mitglieder verschicken</h1>
-<p>Auf dieser Seite kann per Email ein Rundbrief an diejenigen Mitglieder verschickt werden, die sich nicht aus dem Verteiler ausgetragen haben.</p>
 
-<form method="post" action="index.php?pid=intranet_rundbrief_senden" onsubmit="return confirm('Willst Du die Nachricht wirklich verschicken?');">
+echo '<h1>Rundbrief an Mitglieder verschicken</h1>';
+echo '<p>Auf dieser Seite kann per E-Mail ein Rundbrief an diejenigen Mitglieder verschickt werden, die sich nicht aus dem Verteiler ausgetragen haben.</p>';
 
-Nachricht senden an: <br />
-<table>
-<tr>
-<td style="width:50%"><input type="checkbox" name="fuchsia" checked="checked" /> <?php echo $anzahlFuechse; ?> Füchse + Fuchsmajor 1 &amp; 2</td>
-<td style="width:50%"><input type="checkbox" name="couleurdamen" /> <?php echo $anzahlCouleurdamen; ?> Couleurdamen</td>
-</tr>
-<tr>
-<td><input type="checkbox" name="burschen" checked="checked" /> <?php echo $anzahlBurschen; ?> Burschen</td>
-<td><input type="checkbox" name="gattinnen_interessiert" /> <?php echo $anzahlBesondersInteressierteGattinnen; ?> besonders interessierte Gattinnen</td>
-</tr>
-<tr>
-<td><input type="checkbox" name="ahah_interessiert" <?php
-if($libGenericStorage->loadValueInCurrentModule('preselectInteressierteAHAH') == 1)
-	echo 'checked="checked"';
-?> /> <?php echo $anzahlBesondersInteressierteAhah; ?> besonders interessierte alte Herren</td>
-<td><input type="checkbox" name="gattinnen" /> <?php echo $anzahlGattinnen; ?> Gattinnen</td>
-</tr>
-<tr>
-<td><input type="checkbox" name="ahah" /> <?php echo $anzahlAhah; ?> alte Herren</td>
-</tr>
-</table>
-<br />
-Auf Region beschränken:<br />
-<?php echo $libForm->getRegionDropDownBox("region", "Region", ""); ?>
-<br /><br />
-Absendername: <?php
+echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');" class="form-horizontal">';
+echo '<fieldset>';
+
+
+
+echo '<div class="form-group">';
+echo '<label class="col-sm-2 control-label">Adressaten</label>';
+echo '<div class="col-sm-4">';
+
+echo '<div class="checkbox"><label><input type="checkbox" name="fuchsia" checked="checked">';
+echo $anzahlFuechse. ' Füchse + Fuchsmajor 1 &amp; 2';
+echo '</label></div>';
+
+echo '<div class="checkbox"><label><input type="checkbox" name="burschen" checked="checked">';
+echo $anzahlBurschen. ' Burschen';
+echo '</label></div>';
+
+$ahahInteressiertChecked = '';
+
+if($libGenericStorage->loadValueInCurrentModule('preselectInteressierteAHAH') == 1){
+	$ahahInteressiertChecked = 'checked="checked"';
+}
+
+echo '<div class="checkbox"><label><input type="checkbox" name="ahah_interessiert" ' .$ahahInteressiertChecked. '>';
+echo $anzahlBesondersInteressierteAhah. ' besonders interessierte alte Herren';
+echo '</label></div>';
+
+echo '<div class="checkbox"><label><input type="checkbox" name="ahah">';
+echo $anzahlAhah. ' alte Herren';
+echo '</label></div>';
+
+echo '</div>';
+echo '<div class="col-sm-4">';
+
+echo '<div class="checkbox"><label><input type="checkbox" name="couleurdamen">';
+echo $anzahlCouleurdamen. ' Couleurdamen';
+echo '</label></div>';
+
+echo '<div class="checkbox"><label><input type="checkbox" name="gattinnen_interessiert">';
+echo $anzahlBesondersInteressierteGattinnen. ' besonders interessierte Gattinnen';
+echo '</label></div>';
+
+echo '<div class="checkbox"><label><input type="checkbox" name="gattinnen">';
+echo $anzahlGattinnen. ' Gattinnen';
+echo '</label></div>';
+
+echo '</div></div>';
+
+
+echo '<div class="form-group">';
+echo '<label class="col-sm-2 control-label">Region</label>';
+echo '<div class="col-sm-10">';
+echo $libForm->getRegionDropDownBox("region", "Region", "");
+echo '</div>';
+echo '</div>';
+
+
+echo '<hr />';
+
+
+echo '<div class="form-group">';
+echo '<label class="col-sm-2 control-label">Absender</label>';
+echo '<div class="col-sm-8"><p class="form-control-static">';
 echo $libMitglied->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4);
-?><br />
-Antwortadresse: <?php
 
 $stmt = $libDb->prepare("SELECT email FROM base_person WHERE id=:id");
 $stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
@@ -130,10 +164,28 @@ $stmt->execute();
 $stmt->bindColumn('email', $email);
 $stmt->fetch();
 
-echo $email;
-?><br /><br />
-Betreff: <input type="text" name="subject" value="Bitte Betreff eingeben" size="50" /><br />
-Nachrichtentext: <span id="wordcountdisplay"></span><br />
-<textarea name="nachricht" cols="68" rows="20"></textarea><br />
-<input type="submit" value="Nachricht verschicken" />
-</form>
+echo ' &lt;' .$email. '&gt;';
+echo '</p></div></div>';
+
+
+echo '<hr />';
+
+
+echo '<div class="form-group">';
+echo '<label for="subject" class="col-sm-2 control-label">Name</label>';
+echo '<div class="col-sm-10"><input type="text" id="subject" name="subject" placeholder="Betreff" class="form-control" /></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="nachricht" class="col-sm-2 control-label">Nachricht</label>';
+echo '<div class="col-sm-10"><textarea id="nachricht" name="nachricht" rows="7" class="form-control"></textarea></div>';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<div class="col-sm-offset-2 col-sm-10">';
+echo '<button type="submit" class="btn btn-default">Nachricht verschicken</button>';
+echo '</div>';
+echo '</div>';
+
+echo '</fieldset>';
+echo '</form>';
