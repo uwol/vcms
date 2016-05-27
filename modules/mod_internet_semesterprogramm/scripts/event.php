@@ -242,6 +242,8 @@ if($libAuth->isLoggedin()){
 }
 
 if($libGallery->hasPictures($row['id'], $level)){
+	echo '<hr />';
+
 	echo '<div class="row gallery">';
 
 	$pictures = $libGallery->getPictures($row['id'], $level);

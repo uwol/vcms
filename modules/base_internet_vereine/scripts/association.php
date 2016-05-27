@@ -47,7 +47,7 @@ if(isset($_GET['verein'])){
 	} else if(is_file($filePathZirkelGif)){
 		echo '<div><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></div>';
 	}
-	
+
 	$filePathWappenJpg = 'custom/kvvereine/wappen/' .$vereinarray['id']. '.jpg';
 
 	if(is_file($filePathWappenJpg)){
@@ -59,7 +59,7 @@ if(isset($_GET['verein'])){
 	if(is_file($filePathHausJpg)){
 		echo '<div><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></div>';
 	}
-	
+
 	echo '</div>';
 
 	echo '<div class="col-sm-9">';
@@ -67,7 +67,7 @@ if(isset($_GET['verein'])){
 	/*
 	* association address
 	*/
-	echo '<p>';	
+	echo '<p>';
 
 	if($vereinarray['zusatz1'] != ''){
 		echo $vereinarray['zusatz1']. '<br />';
@@ -191,7 +191,7 @@ if(isset($_GET['verein'])){
 	if($vereinarray['wahlspruch'] != ''){
 		echo '<b>Wahlspruch:</b> ' .$vereinarray['wahlspruch']. '<br />';
 	}
-	
+
 	echo '</p>';
 
 	if($vereinarray['farbenstrophe'] != ''){
@@ -258,7 +258,7 @@ if(isset($_GET['verein'])){
 				echo 'Ehrenmitgl. ';
 			}
 
-			echo $libMitglied->getMitgliedNameString($row['mitglied'], 0);		
+			echo $libMitglied->getMitgliedNameString($row['mitglied'], 0);
 			echo '</div>';
 		}
 

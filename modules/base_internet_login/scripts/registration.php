@@ -163,8 +163,8 @@ MBuH, ";
 	if(isset($_POST['registrierung_loginname'])){
 		$registrierung_loginname = $_POST['registrierung_loginname'];
 	}
-	
-	
+
+
 	$urlPrefix = '';
 
 	if($libConfig->sitePath != ""){

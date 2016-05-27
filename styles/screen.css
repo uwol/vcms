@@ -59,7 +59,7 @@ nav.navbar-default {
     border-color: transparent;
 }
 
-nav.navbar-default .navbar-nav li a, 
+nav.navbar-default .navbar-nav li a,
 nav.navbar-default .navbar-nav li.active a,
 nav.navbar-default .navbar-nav .open .dropdown-menu li a {
 	color: #333;

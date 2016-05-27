@@ -32,7 +32,7 @@ class LibImage{
 
 	var $semesterCoverWidth = 500;
 	var $semesterCoverHeight = 500;
-	
+
 	var $GDlib_colorBits = 5;
 	var $libTime;
 	var $libGenericStorage;

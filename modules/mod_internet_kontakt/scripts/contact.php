@@ -209,7 +209,7 @@ if($mailsent){
 	echo '<label for="telefon" class="col-sm-2 control-label">Telefonnummer</label>';
 	echo '<div class="col-sm-10"><input type="tel" id="telefon" name="telefon" placeholder="Telefonnummer" value="' .$libString->protectXSS($telefon). '" class="form-control" /></div>';
 	echo '</div>';
-	
+
 	echo '<div class="form-group">';
 	echo '<label for="nachricht" class="col-sm-2 control-label">Nachricht</label>';
 	echo '<div class="col-sm-10"><textarea name="nachricht" rows="7" class="form-control">' .$libString->protectXSS($nachricht). '</textarea></div>';
