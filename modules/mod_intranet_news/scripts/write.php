@@ -26,12 +26,18 @@ echo '<h1>Neuer Nachrichtenbeitrag</h1>';
 /*
 * input form
 */
-echo '<form method="post" action="index.php?pid=intranet_news_news">';
-echo '<textarea name="text" cols="65" rows="20"></textarea>';
+echo '<form action="index.php?pid=intranet_news_news" method="post" class="form-horizontal">';
+echo '<fieldset>';
 
-echo '<p>';
-echo '<select name="kategorie">';
+echo '<div class="form-group">';
+echo '<label for="text" class="col-sm-2 control-label">Nachricht</label>';
+echo '<div class="col-sm-10"><textarea id="text" name="text" rows="10" class="form-control"></textarea></div>';
+echo '</div>';
 
+
+echo '<div class="form-group">';
+echo '<label for="kategorie" class="col-sm-2 control-label">Kategorie</label>';
+echo '<div class="col-sm-10"><select id="kategorie" name="kategorie" class="form-control">';
 
 $stmt = $libDb->prepare('SELECT * FROM mod_news_kategorie ORDER BY bezeichnung');
 $stmt->execute();
@@ -40,11 +46,13 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<option value="' .$row['id']. '">' .$row['bezeichnung']. '</option>';
 }
 
-echo '</select> Kategorie';
-echo '</p>';
+echo '</select></div>';
+echo '</div>';
 
-echo '<p>';
-echo '<select name="betroffenesmitglied">';
+
+echo '<div class="form-group">';
+echo '<label for="betroffenesmitglied" class="col-sm-2 control-label">Betroffenes Mitglied</label>';
+echo '<div class="col-sm-10"><select id="betroffenesmitglied" name="betroffenesmitglied" class="form-control">';
 echo '<option value="">---------------------------</option>';
 
 $stmt = $libDb->prepare('SELECT * FROM base_person ORDER BY name, vorname');
@@ -54,11 +62,18 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<option value="' .$row['id']. '">' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 1). '</option>';
 }
 
-echo '</select> Betroffenes Mitglied';
-echo '</p>';
+echo '</select></div>';
+echo '</div>';
 
-echo '<p>Bei z. B. einem Todesfall, einem Austritt oder einer Hochzeit kann das betroffene Mitglied angeben werden.</p>';
 
-echo '<input type="submit" value="Beitrag abschicken">';
+echo '<p class="col-sm-offset-2 col-sm-10">Bei einer Nachricht mit Bezug zu einem Mitglied wie z. B. einer Hochzeit oder einem Todesfall kann das betroffene Mitglied angeben werden.</p>';
+
+echo '<div class="form-group">';
+echo '<div class="col-sm-offset-2 col-sm-10">';
+echo '<button type="submit" class="btn btn-default">Beitrag abschicken</button>';
+echo '</div>';
+echo '</div>';
+
+echo '</fieldset>';
 echo '</form>';
 ?>
