@@ -700,7 +700,7 @@ $stmt->fetch();
 
 
 if($anzahl > 0){
-	echo '<h3>Conchargen</h3>';
+	echo '<h2>Conchargen</h2>';
 
 	$stmt = $libDb->prepare("
 SELECT senior.id, senior.anrede, senior.titel, senior.rang, senior.vorname, senior.praefix, senior.name, senior.suffix, senior.status, senior.beruf, senior.ort1, senior.tod_datum, senior.datum_geburtstag, senior.gruppe, senior.leibmitglied FROM base_person AS senior, base_semester WHERE senior.id = base_semester.senior AND base_semester.senior != :id AND (base_semester.senior = :id OR base_semester.consenior = :id OR base_semester.fuchsmajor = :id OR base_semester.fuchsmajor2 = :id OR base_semester.scriptor = :id OR base_semester.quaestor = :id OR base_semester.jubelsenior = :id)
