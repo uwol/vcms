@@ -141,25 +141,29 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = "&amp;aktion=update";
 	}
 
-	echo '<form action="index.php?pid=intranet_admin_db_vereinsmitgliedschaft' .$extraActionParam. '" method="post">';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
+	echo '<form action="index.php?pid=intranet_admin_db_vereinsmitgliedschaft' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<fielset>';
 	echo '<input type="hidden" name="verein" value="' .$vmarray['verein']. '" />';
 	echo '<input type="hidden" name="mitglied" value="' .$vmarray['mitglied']. '" />';
 
-	if($aktion == "blank"){
-		echo $libForm->getMitgliederDropDownBox("mitglied","Mitglied",$vmarray['mitglied'],false,false);
-		echo $libForm->getVereineDropDownBox("verein","Verein",$vmarray['verein'],false,false);
+	if($aktion == 'blank'){
+		$libForm->printMitgliederDropDownBox("mitglied", "Mitglied", $vmarray['mitglied'], false, false);
+		$libForm->printVereineDropDownBox("verein", "Verein", $vmarray['verein'], false, false);
 	} else {
-		echo $libForm->getMitgliederDropDownBox("mitglied","Mitglied",$vmarray['mitglied'],false,true);
-		echo $libForm->getVereineDropDownBox("verein","Verein",$vmarray['verein'],false,true);
+		$libForm->printMitgliederDropDownBox("mitglied", "Mitglied", $vmarray['mitglied'], false, true);
+		$libForm->printVereineDropDownBox("verein", "Verein", $vmarray['verein'], false, true);
 	}
 
-	echo $libForm->getBoolSelectBox("ehrenmitglied","Ehrenmitglied",$vmarray['ehrenmitglied']);
+	$libForm->printBoolSelectBox("ehrenmitglied", "Ehrenmitglied", $vmarray['ehrenmitglied']);
 
-	echo '<input size="10" type="text" name="semester_reception" value="' .$vmarray['semester_reception']. '" /> Semester Reception<br />';
-	echo '<input size="10" type="text" name="semester_philistrierung" value="' .$vmarray['semester_philistrierung']. '" /> Semester Philistrierung<br />';
+	$libForm->printTextInput('semester_reception', 'Semester Reception', $vmarray['semester_reception']);
+	$libForm->printTextInput('semester_philistrierung', 'Semester Philistrierung', $vmarray['semester_philistrierung']);
+
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
-	echo "</form>";
+
+	$libForm->printSubmitButton('Speichern');
+
+	echo '</fieldset>';
+	echo '</form>';
 }
 ?>

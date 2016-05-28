@@ -80,11 +80,16 @@ if($libAuth->isLoggedin()){
 	echo "</table>";
 
 	echo '<h2>Neuen Status anlegen</h2>';
-	echo '<form action="index.php?pid=intranet_admin_db_status" method="post">';
+
+	echo '<form action="index.php?pid=intranet_admin_db_status" method="post" class="form-horizontal">';
+	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
-	echo '<input type="text" name="bezeichnung" size="20" /> Bezeichnung (maximal 20 Buchstabe)<br />';
-	echo '<input type="text" name="beschreibung" size="30" /> Beschreibung<br />';
-	echo '<input type="submit" value="Anlegen" />';
+
+	$libForm->printTextInput('bezeichnung', 'Bezeichnung (maximal 20 Buchstaben)', '');
+	$libForm->printTextInput('beschreibung', 'Beschreibung', '');
+	$libForm->printSubmitButton('Anlegen');
+
+	echo '</fieldset>';
 	echo '</form>';
 }
 ?>

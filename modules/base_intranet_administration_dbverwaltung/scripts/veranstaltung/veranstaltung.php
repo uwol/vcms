@@ -21,7 +21,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 if($libAuth->isLoggedin()){
-	$libForm = new LibForm();
 
 	$id = '';
 	if(isset($_REQUEST['id'])){
@@ -35,7 +34,7 @@ if($libAuth->isLoggedin()){
 
 	$varray = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array("titel","datum","datum_ende","spruch","beschreibung","status","ort");
+	$felder = array("titel", "datum", "datum_ende", "spruch", "beschreibung", "status", "ort");
 
 	/**
 	*
@@ -134,20 +133,25 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = "&amp;aktion=update";
 	}
 
-	echo '<form action="index.php?pid=intranet_admin_db_veranstaltung' .$extraActionParam. '" method="post">';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
+	echo '<form action="index.php?pid=intranet_admin_db_veranstaltung' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="veranstaltungsdaten" />';
 	echo '<input type="hidden" name="id" value="' .$varray['id']. '" />';
-	echo '<input size="20" type="text" name="id" value="' .$varray['id']. '" disabled /> Id<br />';
-	echo '<input size="20" type="text" name="datum" value="' .$varray['datum']. '" /> Startdatum (falls ganztägig: Uhrzeit 00:00:00)<br />';
-	echo '<input size="20" type="text" name="datum_ende" value="' .$varray['datum_ende']. '" /> Enddatum (optional; falls ganztägig: Uhrzeit 00:00:00)<br />';
-	echo '<input size="60" type="text" name="titel" value="' .$varray['titel']. '" /> Titel<br />';
-	echo '<input size="60" type="text" name="spruch" value="' .$varray['spruch']. '" /> Spruch<br />';
-	echo 'Beschreibung<br /><textarea name="beschreibung" cols="70" rows="10">' . $varray['beschreibung'] .'</textarea><br />';
-	echo '<input size="2" type="text" name="status" value="' .$varray['status']. '" /> Status (Maximal 2 Buchstaben, z. B. ho oder o)<br />';
-	echo '<input size="30" type="text" name="ort" value="' .$varray['ort']. '" /> Ort<br />';
+
+	$libForm->printTextInput('id', 'Id', $varray['id'], 'text', true);
+	$libForm->printTextInput('datum', 'Startdatum (falls ganztägig: Uhrzeit 00:00:00)', $varray['datum'], 'datetime');
+	$libForm->printTextInput('datum_ende', 'Enddatum (optional; falls ganztägig: Uhrzeit 00:00:00)', $varray['datum_ende'], 'datetime');
+	$libForm->printTextInput('titel', 'Titel', $varray['titel']);
+	$libForm->printTextInput('spruch', 'Spruch', $varray['spruch']);
+	$libForm->printTextarea('beschreibung', 'Beschreibung', $varray['beschreibung']);
+	$libForm->printTextInput('status', 'Status (Maximal 2 Buchstaben, z. B. ho oder o)', $varray['status']);
+	$libForm->printTextInput('ort', 'Ort', $varray['ort']);
+
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
-	echo "</form>";
+
+	$libForm->printSubmitButton('Speichern');
+
+	echo '</fieldset>';
+	echo '</form>';
 }
 ?>

@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
 	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "create"){
 		if(isset($_REQUEST['bezeichnung']) && $_REQUEST['bezeichnung'] != ""){
@@ -83,11 +84,16 @@ if($libAuth->isLoggedin()){
 	echo "</table>";
 
 	echo '<h2>Neue Gruppe anlegen</h2>';
-	echo '<form action="index.php?pid=intranet_admin_db_gruppen" method="post">';
+
+	echo '<form action="index.php?pid=intranet_admin_db_gruppen" method="post" class="form-horizontal">';
+	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
-	echo '<input type="text" name="bezeichnung" size="1" /> Bezeichnung (nur 1 Buchstabe)<br />';
-	echo '<input type="text" name="beschreibung" size="30" /> Beschreibung<br />';
-	echo '<input type="submit" value="Anlegen" />';
+
+	$libForm->printTextInput('bezeichnung', 'Bezeichnung (nur 1 Buchstabe)', '');
+	$libForm->printTextInput('beschreibung', 'Beschreibung', '');
+	$libForm->printSubmitButton('Anlegen');
+
+	echo '</fieldset>';
 	echo '</form>';
 }
 ?>

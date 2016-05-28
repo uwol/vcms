@@ -20,8 +20,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
-	$libForm = new LibForm();
 
 	$id = '';
 	if(isset($_REQUEST['id'])){
@@ -259,76 +259,79 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = "&amp;aktion=update";
 	}
 
-	echo '<form action="index.php?pid=intranet_admin_db_person' .$extraActionParam. '" method="post">';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
+	echo '<form action="index.php?pid=intranet_admin_db_person' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="personendaten" />';
 	echo '<input type="hidden" name="id" value="' .$mgarray['id']. '" />';
-	echo '<input size="30" type="text" name="id" value="' .$mgarray['id']. '" disabled /> Id<br />';
-	echo '<input size="30" type="text" name="anrede" value="' .$mgarray['anrede']. '" /> Anrede<br />';
-	echo '<input size="30" type="text" name="titel" value="' .$mgarray['titel']. '" /> Titel<br />';
-	echo '<input size="30" type="text" name="rang" value="' .$mgarray['rang']. '" /> Rang<br />';
-	echo '<input size="30" type="text" name="vorname" value="' .$mgarray['vorname']. '" /> Vorname<br />';
-	echo '<input size="30" type="text" name="praefix" value="' .$mgarray['praefix']. '" /> Präfix<br />';
-	echo '<input size="30" type="text" name="name" value="' .$mgarray['name']. '" /> Name<br />';
-	echo '<input size="30" type="text" name="suffix" value="' .$mgarray['suffix']. '" /> Suffix<br />';
 
-	echo '<input size="30" type="text" name="zusatz1" value="' .$mgarray['zusatz1']. '" /> Zusatz1<br />';
-	echo '<input size="30" type="text" name="strasse1" value="' .$mgarray['strasse1']. '" /> Strasse1<br />';
-	echo '<input size="30" type="text" name="ort1" value="' .$mgarray['ort1']. '" /> Ort1<br />';
-	echo '<input size="30" type="text" name="plz1" value="' .$mgarray['plz1']. '" /> Plz1<br />';
-	echo '<input size="30" type="text" name="land1" value="' .$mgarray['land1']. '" /> Land1<br />';
-	echo '<input size="30" type="text" name="telefon1" value="' .$mgarray['telefon1']. '" /> Telefon1<br />';
-	echo '<input size="30" type="text" name="datum_adresse1_stand" value="' .$mgarray['datum_adresse1_stand']. '" disabled /> Stand1<br />';
+	$libForm->printTextInput('id', 'Id', $mgarray['id'], 'text', true);
+	$libForm->printTextInput('anrede', 'Anrede', $mgarray['anrede']);
+	$libForm->printTextInput('titel', 'Titel', $mgarray['titel']);
+	$libForm->printTextInput('rang', 'Rang', $mgarray['rang']);
+	$libForm->printTextInput('vorname', 'Vorname', $mgarray['vorname']);
+	$libForm->printTextInput('praefix', 'Präfix', $mgarray['praefix']);
+	$libForm->printTextInput('name', 'Name', $mgarray['name']);
+	$libForm->printTextInput('suffix', 'Suffix', $mgarray['suffix']);
 
-	echo '<input size="30" type="text" name="zusatz2" value="' .$mgarray['zusatz2']. '" /> Zusatz2<br />';
-	echo '<input size="30" type="text" name="strasse2" value="' .$mgarray['strasse2']. '" /> Strasse2<br />';
-	echo '<input size="30" type="text" name="ort2" value="' .$mgarray['ort2']. '" /> Ort2<br />';
-	echo '<input size="30" type="text" name="plz2" value="' .$mgarray['plz2']. '" /> Plz2<br />';
-	echo '<input size="30" type="text" name="land2" value="' .$mgarray['land2']. '" /> Land2<br />';
-	echo '<input size="30" type="text" name="telefon2" value="' .$mgarray['telefon2']. '" /> Telefon2<br />';
-	echo '<input size="30" type="text" name="datum_adresse2_stand" value="' .$mgarray['datum_adresse2_stand']. '" disabled /> Stand2<br />';
+	$libForm->printTextInput('zusatz1', 'Zusatz 1', $mgarray['zusatz1']);
+	$libForm->printTextInput('strasse1', 'Strasse 1', $mgarray['strasse1']);
+	$libForm->printTextInput('ort1', 'Ort 1', $mgarray['ort1']);
+	$libForm->printTextInput('plz1', 'Plz 1', $mgarray['plz1']);
+	$libForm->printTextInput('land1', 'Land 1', $mgarray['land1']);
+	$libForm->printTextInput('telefon1', 'Telefon 1', $mgarray['telefon1'], 'tel');
+	$libForm->printTextInput('datum_adresse1_stand', 'Stand 1', $mgarray['datum_adresse1_stand'], 'date', true);
 
-	echo $libForm->getRegionDropDownBox("region1","Region1",$mgarray['region1']);
-	echo $libForm->getRegionDropDownBox("region2","Region2",$mgarray['region2']);
+	$libForm->printTextInput('zusatz2', 'Zusatz 2', $mgarray['zusatz2']);
+	$libForm->printTextInput('strasse2', 'Strasse 2', $mgarray['strasse2']);
+	$libForm->printTextInput('ort2', 'Ort 2', $mgarray['ort2']);
+	$libForm->printTextInput('plz2', 'Plz 2', $mgarray['plz2']);
+	$libForm->printTextInput('land2', 'Land 2', $mgarray['land2']);
+	$libForm->printTextInput('telefon2', 'Telefon 2', $mgarray['telefon2'], 'tel');
+	$libForm->printTextInput('datum_adresse2_stand', 'Stand 2', $mgarray['datum_adresse2_stand'], 'date', true);
 
-	echo '<input size="30" type="text" name="mobiltelefon" value="' .$mgarray['mobiltelefon']. '" /> Mobiltelefon<br />';
-	echo '<input size="30" type="text" name="email" value="' .$mgarray['email']. '" /> Email<br />';
-	echo '<input size="30" type="text" name="skype" value="' .$mgarray['skype']. '" /> Skype<br />';
-	echo '<input size="30" type="text" name="jabber" value="' .$mgarray['jabber']. '" /> XMPP<br />';
-	echo '<input size="30" type="text" name="webseite" value="' .$mgarray['webseite']. '" /> Webseite<br />';
-	echo '<input size="30" type="text" name="datum_geburtstag" value="' .$mgarray['datum_geburtstag']. '" /> Geburtsdatum<br />';
-	echo '<input size="30" type="text" name="beruf" value="' .$mgarray['beruf']. '" /> Beruf<br />';
-	echo '<input size="30" type="text" name="heirat_datum" value="' .$mgarray['heirat_datum']. '" /> Heiratsdatum<br />';
+	$libForm->printRegionDropDownBox('region1', 'Region 1', $mgarray['region1']);
+	$libForm->printRegionDropDownBox('region2', 'Region 2', $mgarray['region2']);
 
-	echo $libForm->getMitgliederDropDownBox("heirat_partner","Ehepartner",$mgarray['heirat_partner']);
+	$libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $mgarray['mobiltelefon'], 'tel');
+	$libForm->printTextInput('email', 'E-Mail', $mgarray['email'], 'email');
+	$libForm->printTextInput('skype', 'Skype', $mgarray['skype']);
+	$libForm->printTextInput('jabber', 'XMPP', $mgarray['jabber']);
+	$libForm->printTextInput('webseite', 'Webseite', $mgarray['webseite']);
+	$libForm->printTextInput('datum_geburtstag', 'Geburtsdatum', $mgarray['datum_geburtstag'], 'date');
+	$libForm->printTextInput('beruf', 'Beruf', $mgarray['beruf']);
+	$libForm->printTextInput('heirat_datum', 'Heiratsdatum', $mgarray['heirat_datum'], 'date');
 
-	echo '<input size="30" type="text" name="tod_datum" value="' .$mgarray['tod_datum']. '" /> Todesdatum<br />';
-	echo '<input size="30" type="text" name="tod_ort" value="' .$mgarray['tod_ort']. '" /> Todesort<br />';
+	$libForm->printMitgliederDropDownBox('heirat_partner', 'Ehepartner', $mgarray['heirat_partner']);
 
-	echo $libForm->getStatusDropDownBox("status","Status",$mgarray['status']);
+	$libForm->printTextInput('tod_datum', 'Todesdatum', $mgarray['tod_datum'], 'date');
+	$libForm->printTextInput('tod_ort', 'Todesort', $mgarray['tod_ort'], 'date');
 
-	echo '<br />Die folgenden Semester stammen aus der Semestertabelle und müssen dort angelegt worden sein, um hier ausgewählt werden zu können:<br />';
-	echo $libForm->getSemesterDropDownBox("semester_reception", "Semester Reception", $mgarray['semester_reception']);
-	echo $libForm->getSemesterDropDownBox("semester_promotion", "Semester Promotion", $mgarray['semester_promotion']);
-	echo $libForm->getSemesterDropDownBox("semester_philistrierung", "Semester Philistrierung", $mgarray['semester_philistrierung']);
-	echo $libForm->getSemesterDropDownBox("semester_aufnahme", "Semester Aufnahme", $mgarray['semester_aufnahme']);
-	echo $libForm->getSemesterDropDownBox("semester_fusion", "Semester Fusion", $mgarray['semester_fusion']);
+	$libForm->printStatusDropDownBox('status', 'Status', $mgarray['status']);
 
-	echo '<input size="30" type="text" name="austritt_datum" value="' .$mgarray['austritt_datum']. '" /> Austrittsdatum<br />';
-	echo '<input size="30" type="text" name="spitzname" value="' .$mgarray['spitzname']. '" /> Spitzname<br />';
+	echo '<p>Die folgenden Semester stammen aus der Semestertabelle und müssen dort angelegt worden sein, um hier ausgewählt werden zu können:</p>';
 
-	echo $libForm->getMitgliederDropDownBox("leibmitglied","Leibmitglied",$mgarray['leibmitglied']);
+	$libForm->printSemesterDropDownBox('semester_reception', 'Semester Reception', $mgarray['semester_reception']);
+	$libForm->printSemesterDropDownBox('semester_promotion', 'Semester Promotion', $mgarray['semester_promotion']);
+	$libForm->printSemesterDropDownBox('semester_philistrierung', 'Semester Philistrierung', $mgarray['semester_philistrierung']);
+	$libForm->printSemesterDropDownBox('semester_aufnahme', 'Semester Aufnahme', $mgarray['semester_aufnahme']);
+	$libForm->printSemesterDropDownBox('semester_fusion', 'Semester Fusion', $mgarray['semester_fusion']);
+
+	$libForm->printTextInput('austritt_datum', 'Austrittsdatum', $mgarray['austritt_datum'], 'date');
+	$libForm->printTextInput('spitzname', 'Spitzname', $mgarray['spitzname']);
+
+	$libForm->printMitgliederDropDownBox('leibmitglied', 'Leibmitglied', $mgarray['leibmitglied']);
 
 	//Anschreiben zusenden
-	echo $libForm->getBoolSelectBox("anschreiben_zusenden","Anschreiben zusenden",$mgarray['anschreiben_zusenden']);
+	$libForm->printBoolSelectBox('anschreiben_zusenden', 'Anschreiben zusenden', $mgarray['anschreiben_zusenden']);
 
 	//Spendenquittung zusenden
-	echo $libForm->getBoolSelectBox("spendenquittung_zusenden","Spendenquittung zusenden",$mgarray['spendenquittung_zusenden']);
+	$libForm->printBoolSelectBox('spendenquittung_zusenden', 'Spendenquittung zusenden', $mgarray['spendenquittung_zusenden']);
 
-	echo '<input size="30"  type="text" name="bemerkung" value="' .$mgarray['bemerkung']. '" /> Bemerkung<br />';
-	echo 'Vita<br /><textarea name="vita" cols="70" rows="10">' . $mgarray['vita'] .'</textarea><br />';
+	$libForm->printTextInput('bemerkung', 'Bemerkung', $mgarray['bemerkung']);
+	$libForm->printTextarea('vita', 'Vita', $mgarray['vita']);
 
-	echo $libForm->getMitgliederDropDownBox("vita_letzterautor","Vita letzter Autor",$mgarray['vita_letzterautor']);
+	$libForm->printMitgliederDropDownBox('vita_letzterautor', 'Vita letzter Autor', $mgarray['vita_letzterautor']);
+
 
 	//nur Internetwart darf an sensible Daten
 	if(in_array("internetwart",$libAuth->getAemter())){
@@ -347,20 +350,23 @@ if($libAuth->isLoggedin()){
 			echo '<p>Falls dies der Datensatz des einzigen Internetwartes ist, so sollte eine zweite Person mit Intranetzugang zur Sicherheit auch zu einem Internetwart gemacht werden. Andernfalls kann es passieren, dass der Internetwart durch die Modifikation der folgenden Daten aus dem System ausgesperrt wird. In diesem Fall muss mit dem Installationsscript ein neuer Intranetwart angelegt werden. Dies wird in der Installationsanleitung erklärt.</p>';
 		}
 
-		echo $libForm->getGruppeDropDownBox("gruppe","Gruppe",$mgarray['gruppe'],false);
-		echo '<input size="30" type="text" name="datum_gruppe_stand" value="' .$mgarray['datum_gruppe_stand']. '" disabled /> Stand<br />';
+		$libForm->printGruppeDropDownBox('gruppe', 'Gruppe', $mgarray['gruppe'], false);
+		$libForm->printTextInput('datum_gruppe_stand', 'Stand', $mgarray['datum_gruppe_stand'], 'date', true);
 
 		//Credentials
 		echo '<p><b>Achtung</b></p>';
 		echo '<p>Durch Eingabe von Benutzername und Passwort wird Zugang zum Intranet gewährt. Dies geschieht meistens aufgrund einer Registrierungsanfrage. Es ist vor einer Freischaltung <b>unbedingt</b> die Person zu kontaktieren, die sich registriert hat. Falls dies telefonisch erfolgt, sollte die TelefonNr. dem Verein bekannt sein, und nicht auf die TelefonNr. aus der Registrierungsmail vertraut werden. Ein einziger falsch vergebener Intranetaccount genügt, um das Intranet zu kompromittieren!</p>';
 
-		echo '<input size="30" type="text" name="username" value="' .$mgarray['username']. '" /> Username<br />';
-		echo '<input size="50" type="text" name="password_hash" value="' .$mgarray['password_hash']. '" /> Password-Hash<br />';
+		$libForm->printTextInput('username', 'Benutzername', $mgarray['username']);
+		$libForm->printTextInput('password_hash', 'Password-Hash', $mgarray['password_hash']);
 	}
 
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
-	echo "</form>";
+
+	$libForm->printSubmitButton('Speichern');
+
+	echo '</fieldset>';
+	echo '</form>';
 }
 
 function updateGruppeStand($id){

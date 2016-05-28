@@ -115,31 +115,36 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = "&amp;aktion=update";
 	}
 
-	echo '<form action="index.php?pid=intranet_admin_db_vip' .$extraActionParam. '" method="post">';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
+	echo '<form action="index.php?pid=intranet_admin_db_vip' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="vipdaten" />';
 	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
-	echo '<input size="20" type="text" name="id" value="' .$array['id']. '" disabled /> Id<br />';
-	echo '<input size="30" type="text" name="praefix" value="' .$array['praefix']. '" /> Präfix<br />';
-	echo '<input size="30" type="text" name="name" value="' .$array['name']. '" /> Name<br />';
-	echo '<input size="30" type="text" name="suffix" value="' .$array['suffix']. '" /> Suffix<br />';
-	echo '<input size="30" type="text" name="vorname" value="' .$array['vorname']. '" /> Vorname<br />';
-	echo '<input size="30" type="text" name="anrede" value="' .$array['anrede']. '" /> Anrede<br />';
-	echo '<input size="30" type="text" name="titel" value="' .$array['titel']. '" /> Titel<br />';
-	echo '<input size="30" type="text" name="rang" value="' .$array['rang']. '" /> Rang<br />';
-	echo '<input size="30" type="text" name="zusatz1" value="' .$array['zusatz1']. '" /> Zusatz1<br />';
-	echo '<input size="30" type="text" name="strasse1" value="' .$array['strasse1']. '" /> Strasse1<br />';
-	echo '<input size="30" type="text" name="plz1" value="' .$array['plz1']. '" /> Plz1<br />';
-	echo '<input size="30" type="text" name="ort1" value="' .$array['ort1']. '" /> Ort1<br />';
-	echo '<input size="30" type="text" name="land1" value="' .$array['land1']. '" /> Land1<br />';
-	echo '<input size="30" type="text" name="datum_adresse1_stand" value="' .$array['datum_adresse1_stand']. '" disabled /> Stand1<br />';
-	echo '<input size="30" type="text" name="telefon1" value="' .$array['telefon1']. '" /> Telefon1<br />';
-	echo '<input size="30" type="text" name="status" value="' .$array['status']. '" /> Status<br />';
-	echo '<input size="30" type="text" name="grund" value="' .$array['grund']. '" /> Grund<br />';
-	echo '<input size="30" type="text" name="bemerkung" value="' .$array['bemerkung']. '" /> Bemerkung<br />';
+
+	$libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
+	$libForm->printTextInput('praefix', 'Präfix', $array['praefix']);
+	$libForm->printTextInput('name', 'Name', $array['name']);
+	$libForm->printTextInput('suffix', 'Suffix', $array['suffix']);
+	$libForm->printTextInput('vorname', 'Vorname', $array['vorname']);
+	$libForm->printTextInput('anrede', 'Anrede', $array['anrede']);
+	$libForm->printTextInput('titel', 'Titel', $array['titel']);
+	$libForm->printTextInput('rang', 'Rang', $array['rang']);
+	$libForm->printTextInput('zusatz1', 'Zusatz 1', $array['zusatz1']);
+	$libForm->printTextInput('strasse1', 'Strasse 1', $array['strasse1']);
+	$libForm->printTextInput('plz1', 'Plz 1', $array['plz1']);
+	$libForm->printTextInput('ort1', 'Ort 1', $array['ort1']);
+	$libForm->printTextInput('land1', 'Land 1', $array['land1']);
+	$libForm->printTextInput('datum_adresse1_stand', 'Stand 1', $array['datum_adresse1_stand'], 'date', true);
+	$libForm->printTextInput('telefon1', 'Telefon 1', $array['telefon1'], 'tel');
+	$libForm->printTextInput('status', 'Status', $array['status']);
+	$libForm->printTextInput('grund', 'Grund', $array['grund']);
+	$libForm->printTextInput('bemerkung', 'Bemerkung', $array['bemerkung']);
+
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
-	echo "</form>";
+
+	$libForm->printSubmitButton('Speichern');
+
+	echo '</fieldset>';
+	echo '</form>';
 }
 
 function updateAdresseStand($table, $field, $id){

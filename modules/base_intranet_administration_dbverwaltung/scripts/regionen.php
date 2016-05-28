@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
 	if(isset($_POST['aktion']) && $_POST['aktion'] == "create"){
 		if($_POST['bezeichnung'] != ""){
@@ -81,10 +82,15 @@ if($libAuth->isLoggedin()){
 	echo "</table>";
 
 	echo '<h2>Neue Region anlegen</h2>';
-	echo '<form action="index.php?pid=intranet_admin_db_region" method="post">';
+
+	echo '<form action="index.php?pid=intranet_admin_db_region" method="post" class="form-horizontal">';
+	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
-	echo '<input type="text" name="bezeichnung" size="30" /> Bezeichnung<br />';
-	echo '<input type="submit" value="Anlegen" />';
+
+	$libForm->printTextInput('bezeichnung', 'Bezeichnung', '');
+	$libForm->printSubmitButton('Anlegen');
+
+	echo '</fieldset>';
 	echo '</form>';
 }
 ?>

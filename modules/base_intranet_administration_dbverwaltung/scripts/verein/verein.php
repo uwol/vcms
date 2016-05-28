@@ -126,50 +126,55 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = "&amp;aktion=update";
 	}
 
-	echo '<form action="index.php?pid=intranet_admin_db_verein' .$extraActionParam. '" method="post">';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
+	echo '<form action="index.php?pid=intranet_admin_db_verein' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="vereinsdaten" />';
 	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
-	echo '<input size="20" type="text" name="id" value="' .$array['id']. '" disabled /> Id<br />';
-	echo '<input size="20" type="text" name="name" value="' .$array['name']. '" /> Name<br />';
-	echo '<input size="60" type="text" name="kuerzel" value="' .$array['kuerzel']. '" /> Kürzel<br />';
 
-	echo $libForm->getBoolSelectBox("aktivitas","Aktivitas",$array['aktivitas']);
-	echo $libForm->getBoolSelectBox("ahahschaft","Altherrenschaft",$array['ahahschaft']);
+	$libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
+	$libForm->printTextInput('name', 'Name', $array['name']);
+	$libForm->printTextInput('kuerzel', 'Kürzel', $array['kuerzel']);
 
-	echo '<input size="60" type="text" name="titel" value="' .$array['titel']. '" /> Titel<br />';
+	$libForm->printBoolSelectBox("aktivitas", "Aktivitas", $array['aktivitas']);
+	$libForm->printBoolSelectBox("ahahschaft", "Altherrenschaft", $array['ahahschaft']);
 
-	echo '<input size="60" type="text" name="rang" value="' .$array['rang']. '" /> Rang<br />';
-	echo '<input size="30" type="text" name="dachverband" value="' .$array['dachverband']. '" /> Dachverband<br />';
-	echo '<input size="11" type="text" name="dachverbandnr" value="' .$array['dachverbandnr']. '" /> Dachverbandnummer<br />';
-	echo '<input size="30" type="text" name="zusatz1" value="' .$array['zusatz1']. '" /> Zusatz<br />';
-	echo '<input size="30" type="text" name="strasse1" value="' .$array['strasse1']. '" /> Strasse<br />';
-	echo '<input size="30" type="text" name="ort1" value="' .$array['ort1']. '" /> Ort<br />';
-	echo '<input size="30" type="text" name="plz1" value="' .$array['plz1']. '" /> Plz<br />';
-	echo '<input size="30" type="text" name="land1" value="' .$array['land1']. '" /> Land<br />';
-	echo '<input size="30" type="text" name="datum_adresse1_stand" value="' .$array['datum_adresse1_stand']. '" disabled /> Stand<br />';
-	echo '<input size="30" type="text" name="telefon1" value="' .$array['telefon1']. '" /> Telefon1<br />';
+	$libForm->printTextInput('titel', 'Titel', $array['titel']);
+	$libForm->printTextInput('rang', 'Rang', $array['rang']);
+	$libForm->printTextInput('dachverband', 'Dachverband', $array['dachverband']);
+	$libForm->printTextInput('dachverbandnr', 'Dachverbandnummer', $array['dachverbandnr']);
+	$libForm->printTextInput('zusatz1', 'Zusatz', $array['zusatz1']);
+	$libForm->printTextInput('strasse1', 'Strasse', $array['strasse1']);
+	$libForm->printTextInput('ort1', 'Ort', $array['ort1']);
+	$libForm->printTextInput('plz1', 'Plz', $array['plz1']);
+	$libForm->printTextInput('land1', 'Land', $array['land1']);
+	$libForm->printTextInput('datum_adresse1_stand', 'Stand', $array['datum_adresse1_stand'], 'date', true);
+	$libForm->printTextInput('telefon1', 'Telefon 1', $array['telefon1']);
 
-	echo $libForm->getBoolSelectBox("anschreiben_zusenden","Anschreiben zusenden",$array['anschreiben_zusenden']);
-	echo $libForm->getVereineDropDownBox("mutterverein", "Mutterverein", $array['mutterverein']);
-	echo $libForm->getVereineDropDownBox("fusioniertin", "Fusioniert in", $array['fusioniertin']);
+	$libForm->printBoolSelectBox("anschreiben_zusenden","Anschreiben zusenden",$array['anschreiben_zusenden']);
+	$libForm->printVereineDropDownBox("mutterverein", "Mutterverein", $array['mutterverein']);
+	$libForm->printVereineDropDownBox("fusioniertin", "Fusioniert in", $array['fusioniertin']);
 
-	echo '<input size="30" type="text" name="datum_gruendung" value="' .$array['datum_gruendung']. '" /> Gründungsdatum<br />';
-	echo '<input size="30" type="text" name="webseite" value="' .$array['webseite']. '" /> Webseite<br />';
-	echo '<input size="30" type="text" name="wahlspruch" value="' .$array['wahlspruch']. '" /> Wahlspruch<br />';
-	echo 'Farbenstrophe<br /><textarea name="farbenstrophe" cols="70" rows="7">' . $array['farbenstrophe'] .'</textarea><br />';
-	echo 'inoffizielle Farbenstrophe<br /><textarea name="farbenstrophe_inoffiziell" cols="70" rows="7">' . $array['farbenstrophe_inoffiziell'] .'</textarea><br />';
-	echo 'Fuchsenstrophe<br /><textarea name="fuchsenstrophe" cols="70" rows="7">' . $array['fuchsenstrophe'] .'</textarea><br />';
-	echo 'Bundeslied<br /><textarea name="bundeslied" cols="70" rows="7">' . $array['bundeslied'] .'</textarea><br />';
+	$libForm->printTextInput('datum_gruendung', 'Gründungsdatum', $array['datum_gruendung'], 'date');
+	$libForm->printTextInput('webseite', 'Webseite', $array['webseite']);
+	$libForm->printTextInput('wahlspruch', 'Wahlspruch', $array['wahlspruch']);
+	$libForm->printTextarea('farbenstrophe', 'Farbenstrophe', $array['farbenstrophe']);
+	$libForm->printTextarea('farbenstrophe_inoffiziell', 'inoffizielle Farbenstrophe', $array['farbenstrophe_inoffiziell']);
+	$libForm->printTextarea('fuchsenstrophe', 'Fuchsenstrophe', $array['fuchsenstrophe']);
+	$libForm->printTextarea('bundeslied', 'Bundeslied', $array['bundeslied']);
 
-	echo '<input size="30" type="text" name="farbe1" value="' .$array['farbe1']. '" /> Farbe 1<br />';
-	echo '<input size="30" type="text" name="farbe2" value="' .$array['farbe2']. '" /> Farbe 2<br />';
-	echo '<input size="30" type="text" name="farbe3" value="' .$array['farbe3']. '" /> Farbe 3<br />';
-	echo '<input size="30" type="text" name="farbe4" value="' .$array['farbe4']. '" /> Farbe 4<br />';
-	echo 'Beschreibung<br /><textarea name="beschreibung" cols="70" rows="7">' . $array['beschreibung'] .'</textarea><br />';
+	$libForm->printTextInput('farbe1', 'Farbe 1', $array['farbe1']);
+	$libForm->printTextInput('farbe2', 'Farbe 2', $array['farbe2']);
+	$libForm->printTextInput('farbe3', 'Farbe 3', $array['farbe3']);
+	$libForm->printTextInput('farbe4', 'Farbe 4', $array['farbe4']);
+
+	$libForm->printTextarea('beschreibung', 'Beschreibung', $array['beschreibung']);
+
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
-	echo '<input type="submit" value="Speichern" name="Save"><br />';
-	echo "</form>";
+
+	$libForm->printSubmitButton('Speichern');
+
+	echo '</fielset>';
+	echo '</form>';
 }
 
 function updateAdresseStand($table, $field, $id){
