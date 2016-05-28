@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Verwaltung";
-$version = "2.13";
+$version = "2.14";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -28,7 +28,7 @@ $pages[] = new LibPage("intranet_admin_db_status", "scripts/", "status.php", new
 $pages[] = new LibPage("intranet_admin_db_region", "scripts/", "regionen.php", new LibAccessRestriction("", $internetwart), "Regionen");
 
 
-$menuFolderDatenbank = new LibMenuFolder("", "Datenbank", 50);
+$menuFolderDatenbank = new LibMenuFolder("", "Daten", 50);
 $menuFolderDatenbank->addElement(new LibMenuEntry("intranet_admin_db_personenliste", "Personen", 200));
 $menuFolderDatenbank->addElement(new LibMenuEntry("intranet_admin_db_semesterliste", "Semester", 300));
 $menuFolderDatenbank->addElement(new LibMenuEntry("intranet_admin_db_veranstaltungsliste", "Veranstaltungen", 400));
