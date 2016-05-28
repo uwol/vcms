@@ -24,12 +24,13 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 if(!isset($_REQUEST['id']) || !is_numeric($_REQUEST['id']) || !preg_match("/^[0-9]+$/", $_REQUEST['id']))
 	die('Fehler: Veranstaltungsid ist keine Zahl');
 
+
 $id = '';
 if(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])){
 	$id = $_REQUEST['id'];
 }
 
-require_once($libModuleHandler->getModuleDirectory() . "/scripts/lib/gallery.class.php");
+require_once($libModuleHandler->getModuleDirectory(). '/scripts/lib/gallery.class.php');
 
 $libImage = new LibImage($libTime, $libGenericStorage);
 $libGallery = new LibGallery();
@@ -37,7 +38,7 @@ $libGallery = new LibGallery();
 
 if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 	//delete image
-	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "deleteFoto"){
+	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'deleteFoto'){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 
@@ -47,10 +48,10 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		}
 	}
 	//rotate image
-	elseif(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == "rotateFotoRechts" || $_REQUEST['aktion'] == "rotateFotoLinks")){
+	elseif(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == 'rotateFotoRechts' || $_REQUEST['aktion'] == 'rotateFotoLinks')){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
 			//rotation direction
-			if($_REQUEST['aktion'] == "rotateFotoLinks"){
+			if($_REQUEST['aktion'] == 'rotateFotoLinks'){
 				$degree = 270;
 			} else {
 				$degree = 90;
@@ -60,83 +61,83 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 
 			if(isset($pictures[$_REQUEST['bildnr']])){
 				//rotate
-				$libImage->rotateImage("custom/veranstaltungsfotos/".$id."/".$pictures[$_REQUEST['bildnr']], $degree);
-				$libImage->rotateImage("custom/veranstaltungsfotos/".$id."/thumbs/thumb_".$pictures[$_REQUEST['bildnr']], $degree);
+				$libImage->rotateImage('custom/veranstaltungsfotos/'.$id.'/'.$pictures[$_REQUEST['bildnr']], $degree);
+				$libImage->rotateImage('custom/veranstaltungsfotos/'.$id.'/thumbs/thumb_'.$pictures[$_REQUEST['bildnr']], $degree);
 			}
 		}
 	}
 	//publish image in internet
-	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "oeffentlich"){
+	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'oeffentlich'){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 			$filename = $pictures[$_REQUEST['bildnr']];
-			$thumbfilename = "thumb_".$pictures[$_REQUEST['bildnr']];
+			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
-			rename("custom/veranstaltungsfotos/".$id."/".$filename, "custom/veranstaltungsfotos/".$id."/".$libGallery->changeVisibility($filename, "E"));
-			rename("custom/veranstaltungsfotos/".$id."/thumbs/".$thumbfilename, "custom/veranstaltungsfotos/".$id."/thumbs/".$libGallery->changeVisibility($thumbfilename, "E"));
+			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'E'));
+			rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'E'));
 		}
 	}
 	//publish image in intranet
-	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "intranet"){
+	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'intranet'){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 			$filename = $pictures[$_REQUEST['bildnr']];
-			$thumbfilename = "thumb_".$pictures[$_REQUEST['bildnr']];
+			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
-			rename("custom/veranstaltungsfotos/".$id."/".$filename, "custom/veranstaltungsfotos/".$id."/".$libGallery->changeVisibility($filename, "I"));
-			rename("custom/veranstaltungsfotos/".$id."/thumbs/".$thumbfilename, "custom/veranstaltungsfotos/".$id."/thumbs/".$libGallery->changeVisibility($thumbfilename, "I"));
+			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'I'));
+			rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'I'));
 		}
 	}
 	//put image back in pool
-	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "pool"){
+	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'pool'){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 			$filename = $pictures[$_REQUEST['bildnr']];
-			$thumbfilename = "thumb_".$pictures[$_REQUEST['bildnr']];
+			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
-			rename("custom/veranstaltungsfotos/".$id."/".$filename, "custom/veranstaltungsfotos/".$id."/".$libGallery->changeVisibility($filename, "P"));
-			rename("custom/veranstaltungsfotos/".$id."/thumbs/".$thumbfilename, "custom/veranstaltungsfotos/".$id."/thumbs/".$libGallery->changeVisibility($thumbfilename, "P"));
+			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'P'));
+			rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'P'));
 		}
 	}
 	//publish all images in internet
-	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "oeffentlichalle"){
+	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'oeffentlichalle'){
 		if(is_numeric($id)){
 			$pictures = $libGallery->getPictures($id, 2);
 
 			foreach($pictures as $key => $value){
 				$filename = $pictures[$key];
-				$thumbfilename = "thumb_".$pictures[$key];
+				$thumbfilename = 'thumb_'.$pictures[$key];
 
-				rename("custom/veranstaltungsfotos/".$id."/".$filename, "custom/veranstaltungsfotos/".$id."/".$libGallery->changeVisibility($filename, "E"));
-				rename("custom/veranstaltungsfotos/".$id."/thumbs/".$thumbfilename, "custom/veranstaltungsfotos/".$id."/thumbs/".$libGallery->changeVisibility($thumbfilename, "E"));
+				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'E'));
+				rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'E'));
 			}
 		}
 	}
 	// publish all images in intranet
-	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "intranetalle"){
+	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'intranetalle'){
 		if(is_numeric($id)){
 			$pictures = $libGallery->getPictures($id, 2);
 
 			foreach($pictures as $key => $value){
 				$filename = $pictures[$key];
-				$thumbfilename = "thumb_".$pictures[$key];
+				$thumbfilename = 'thumb_'.$pictures[$key];
 
-				rename("custom/veranstaltungsfotos/".$id."/".$filename, "custom/veranstaltungsfotos/".$id."/".$libGallery->changeVisibility($filename, "I"));
-				rename("custom/veranstaltungsfotos/".$id."/thumbs/".$thumbfilename, "custom/veranstaltungsfotos/".$id."/thumbs/".$libGallery->changeVisibility($thumbfilename, "I"));
+				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'I'));
+				rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'I'));
 			}
 		}
 	}
 	//put all images back in pool
-	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "poolalle"){
+	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'poolalle'){
 		if(is_numeric($id)){
 			$pictures = $libGallery->getPictures($id, 2);
 
 			foreach($pictures as $key => $value){
 				$filename = $pictures[$key];
-				$thumbfilename = "thumb_".$pictures[$key];
+				$thumbfilename = 'thumb_'.$pictures[$key];
 
-				rename("custom/veranstaltungsfotos/".$id."/".$filename, "custom/veranstaltungsfotos/".$id."/".$libGallery->changeVisibility($filename, "P"));
-				rename("custom/veranstaltungsfotos/".$id."/thumbs/".$thumbfilename, "custom/veranstaltungsfotos/".$id."/thumbs/".$libGallery->changeVisibility($thumbfilename, "P"));
+				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'P'));
+				rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'P'));
 			}
 		}
 	}

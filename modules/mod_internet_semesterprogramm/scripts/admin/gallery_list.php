@@ -20,13 +20,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-require_once($libModuleHandler->getModuleDirectory() . "/scripts/lib/gallery.class.php");
+require_once($libModuleHandler->getModuleDirectory() . '/scripts/lib/gallery.class.php');
 
 $libGallery = new LibGallery();
 $libImage = new LibImage($libTime, $libGenericStorage);
 
 //deletion
-if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "delete"){
+if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'delete'){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		if(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])){
 			$pictures = $libGallery->getPictures($_REQUEST['id'], 2);
@@ -49,9 +49,14 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<h2>Galerie anlegen</h2>';
-echo '<form method="post" action="index.php?pid=semesterprogramm_admin_galerie">';
-echo $libForm->getVeranstaltungDropDownBox("id", "Veranstaltung", "", false);
-echo '<input type="submit" value="Galerie anlegen &frasl; bearbeiten" />';
+
+echo '<form action="index.php?pid=semesterprogramm_admin_galerie" method="post" class="form-horizontal">';
+echo '<fieldset>';
+
+$libForm->printVeranstaltungDropDownBox('id', 'Veranstaltung', '', false);
+$libForm->printSubmitButton('Galerie anlegen &frasl; bearbeiten');
+
+echo '</fieldset>';
 echo '</form>';
 
 
@@ -62,7 +67,7 @@ $folders = array();
 
 if($fd){
 	while(($part = readdir($fd)) == true){
-		if($part != "." && $part != ".."){
+		if($part != '.' && $part != '..'){
 			if(is_dir('custom/veranstaltungsfotos/'.$part)){
 				$folders[] = $part;
 			}
@@ -96,7 +101,7 @@ echo '<tr><th style="width:13%">Bild</th><th style="width:57%">Titel</th><th sty
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
-$stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE datum = :datum_equal OR (DATEDIFF(datum, :semester_start) >= 0 AND DATEDIFF(datum, :semester_ende) < 0) ORDER BY datum DESC");
+$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum = :datum_equal OR (DATEDIFF(datum, :semester_start) >= 0 AND DATEDIFF(datum, :semester_ende) < 0) ORDER BY datum DESC');
 $stmt->bindValue(':datum_equal', $zeitraum[0]);
 $stmt->bindValue(':semester_start', $zeitraum[0]);
 $stmt->bindValue(':semester_ende', $zeitraum[1]);
@@ -128,11 +133,11 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 }
 
-echo "</table>";
+echo '</table>';
 
 
 //galleries without events
-$stmt = $libDb->prepare("SELECT id FROM base_veranstaltung");
+$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung');
 $stmt->execute();
 
 $ids = array();
@@ -178,6 +183,6 @@ if(count($foldersWithoutEvent) > 0){
 		echo '</tr>';
 	}
 
-	echo "</table>";
+	echo '</table>';
 }
 ?>

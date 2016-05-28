@@ -617,13 +617,15 @@ class LibTime{
 		$retstr = '';
 
 		if(count($semesters) > 1 || ((count($semesters) == 1) && ($semesters[1] != $globalsemester))){
-			$retstr .= '<form action="index.php">'."\n";
-			$retstr .= '  <fieldset>';
-			$retstr .= '    <select name="semester" size="1" onchange=\'this.form.submit()\'>'."\n";
+			$retstr .= '<form action="index.php" class="form-inline">';
+			$retstr .= '<fieldset>';
+			$retstr .= '<div class="form-group">';
+			$retstr .= '<label for="semester" class="sr-only">Semester</label>';
+			$retstr .= '<select name="semester" class="form-control" onchange=\'this.form.submit()\'>';
 
 			foreach($semesters as $semester){
 				if($semester != '' && $this->isValidSemesterString($semester)){
-					$retstr .= '      <option value="' .$semester. '"';
+					$retstr .= '<option value="' .$semester. '"';
 
 					if($semester == $globalsemester){
 						$retstr .= ' selected="selected"';
@@ -631,15 +633,16 @@ class LibTime{
 
 					$retstr .= '>';
 					$retstr .=  $this->getSemesterString($semester, false);
-					$retstr .= '</option>'."\n";
+					$retstr .= '</option>';
 				}
 			}
 
-			$retstr .= '    </select>'."\n";
-			$retstr .= '    <input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>'."\n";
-			$retstr .= '    <input type="submit" value="Semester wählen"/>'."\n";
-			$retstr .= '  </fieldset>'."\n";
-			$retstr .= '</form>'."\n";
+			$retstr .= '</select> ';
+			$retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';
+			$retstr .= '<button type="submit" class="btn btn-default">Semester wählen</button>';
+			$retstr .= '</div>';
+			$retstr .= '</fieldset>';
+			$retstr .= '</form>';
 		}
 
 		return $retstr;
