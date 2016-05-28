@@ -18,188 +18,223 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
 class LibForm{
-	function getMitgliederDropDownBox($name, $bezeichnung, $activeElementId='', $allowNull = true, $disabled = false){
+
+	function printTextInput($name, $label, $value, $type = 'text', $disabled = false){
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
+
+		if($disabled){
+			echo ' disabled';
+		}
+
+		echo ' class="form-control" /></div>';
+		echo '</div>';
+	}
+
+	function printTextarea($name, $label, $value){
+		echo '<div class="form-group">';
+		echo '<label for="text" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><textarea id="' .$name. '" name="' .$name. '" rows="10" class="form-control">' .$value. '</textarea></div>';
+		echo '</div>';
+	}
+
+	function printSubmitButton($label){
+		echo '<div class="form-group">';
+		echo '<div class="col-sm-offset-2 col-sm-10">';
+		echo '<button type="submit" class="btn btn-default">' .$label. '</button>';
+		echo '</div>';
+		echo '</div>';
+	}
+
+	function printMitgliederDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
 		global $libDb, $libMitglied;
 
-		$retstr = '';
-		$retstr .= '<select name="' .$name. '"';
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
-			$retstr .= ' disabled ';
+			echo ' disabled';
 		}
 
-		$retstr .= ' class="form-control">';
+		echo ' class="form-control">';
 
 		if($allowNull){
-			$retstr .= '<option value="">------------</option>'."\n";
+			echo '<option value="">------------</option>';
 		}
 
-		$stmt = $libDb->prepare("SELECT id,anrede,name,vorname,titel,rang,praefix,suffix,gruppe FROM base_person ORDER BY name,vorname");
+		$stmt = $libDb->prepare("SELECT id, anrede, name, vorname, titel, rang, praefix, suffix, gruppe FROM base_person ORDER BY name, vorname");
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$retstr .= '<option value="' .$row['id']. '"';
+			echo '<option value="' .$row['id']. '"';
 
 			if($activeElementId == $row['id']){
-				$retstr .= ' selected="selected"';
+				echo ' selected="selected"';
 			}
 
-			$retstr .= '>' .$libMitglied->formatMitgliedNameString($row['anrede'],$row['titel'],$row['rang'],$row['vorname'],$row['praefix'],$row['name'],$row['suffix'],7).' ['.$row['gruppe'].']</option>'."\n";
+			echo '>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 7). ' [' .$row['gruppe']. ']</option>';
 		}
 
-		$retstr .= '</select>';
-		return $retstr;
+		echo '</select></div>';
+		echo '</div>';
 	}
 
-	function getVereineDropDownBox($name, $bezeichnung, $activeElementId='', $allowNull = true, $disabled = false){
+	function printVereineDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		$retstr = '';
-		$retstr .= '<select name="' .$name. '"';
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
-			$retstr .= ' disabled ';
+			echo ' disabled';
 		}
 
-		$retstr .= ' class="form-control">';
+		echo ' class="form-control">';
 
 		if($allowNull){
-			$retstr .= '<option value="">------------</option>'."\n";
+			echo '<option value="">------------</option>';
 		}
 
-		$stmt = $libDb->prepare("SELECT id,titel,name FROM base_verein ORDER BY name");
+		$stmt = $libDb->prepare("SELECT id, titel, name FROM base_verein ORDER BY name");
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$retstr .= '<option value="' .$row['id']. '"';
+			echo '<option value="' .$row['id']. '"';
 
 			if($activeElementId == $row['id']){
-				$retstr .= ' selected="selected"';
+				echo ' selected="selected"';
 			}
 
-			$retstr .= '>' .$row['titel'].' '.$row['name'].'</option>'."\n";
+			echo '>' .$row['titel']. ' ' .$row['name']. '</option>';
 		}
 
-		$retstr .= '</select>';
-		return $retstr;
+		echo '</select></div>';
+		echo '</div>';
 	}
 
-	function getSemesterDropDownBox($name, $bezeichnung, $selectedSemester='', $allowNull = true, $disabled = false){
+	function printSemesterDropDownBox($name, $label, $selectedSemester = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		$retstr = '';
-		$retstr .= '<select name="' .$name. '"';
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
-			$retstr .= ' disabled ';
+			echo ' disabled';
 		}
 
-		$retstr .= ' class="form-control">';
+		echo ' class="form-control">';
 
 		if($allowNull){
-			$retstr .= '<option value="">------------</option>'."\n";
+			echo '<option value="">------------</option>';
 		}
 
-		$stmt = $libDb->prepare("SELECT semester FROM base_semester ORDER BY SUBSTRING(semester,3) DESC");
+		$stmt = $libDb->prepare("SELECT semester FROM base_semester ORDER BY SUBSTRING(semester, 3) DESC");
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$retstr .= '<option value="' .$row['semester']. '"';
+			echo '<option value="' .$row['semester']. '"';
 
 			if($selectedSemester == $row['semester']){
-				$retstr .= ' selected="selected"';
+				echo ' selected="selected"';
 			}
 
-			$retstr .= '>'.$row['semester'].'</option>'."\n";
+			echo '>' .$row['semester']. '</option>';
 		}
 
-		$retstr .= '</select>';
-		return $retstr;
+		echo '</select></div>';
+		echo '</div>';
 	}
 
-	function getStatusDropDownBox($name, $bezeichnung, $selectedStatus='', $allowNull = true, $disabled = false){
+	function printStatusDropDownBox($name, $label, $selectedStatus = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		$retstr = '';
-		$retstr .= '<select name="'.$name.'"';
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
-			$retstr .= ' disabled';
+			echo ' disabled';
 		}
 
-		$retstr .= ' class="form-control">';
+		echo ' class="form-control">';
 
 		if($allowNull){
-			$retstr .= '<option value="">------------</option>'."\n";
+			echo '<option value="">------------</option>';
 		}
 
-		$stmt = $libDb->prepare("SELECT bezeichnung,beschreibung FROM base_status ORDER BY bezeichnung");
+		$stmt = $libDb->prepare("SELECT bezeichnung, beschreibung FROM base_status ORDER BY bezeichnung");
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$retstr .= '<option value="' .$row['bezeichnung']. '"';
+			echo '<option value="' .$row['bezeichnung']. '"';
 
 			if($selectedStatus == $row['bezeichnung']){
-				$retstr .= ' selected="selected"';
+				echo ' selected="selected"';
 			}
 
-			$retstr .= '>'.$row['bezeichnung'].' - ' .$row['beschreibung'].'</option>'."\n";
+			echo '>' .$row['bezeichnung']. ' - ' .$row['beschreibung']. '</option>'."\n";
 		}
 
-		$retstr .= '</select>';
-		return $retstr;
+		echo '</select></div>';
+		echo '</div>';
 	}
 
-	function getGruppeDropDownBox($name, $bezeichnung, $selectedGruppe='', $allowNull = true, $disabled = false){
+	function printGruppeDropDownBox($name, $label, $selectedGruppe = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		$retstr = '';
-		$retstr .= '<select name="'.$name.'"';
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
-			$retstr .= ' disabled';
+			echo ' disabled';
 		}
 
-		$retstr .= ' class="form-control">';
+		echo ' class="form-control">';
 
 		if($allowNull){
-			$retstr .= '<option value="">------------</option>'."\n";
+			echo '<option value="">------------</option>';
 		}
 
-		$stmt = $libDb->prepare("SELECT bezeichnung,beschreibung FROM base_gruppe ORDER BY bezeichnung");
+		$stmt = $libDb->prepare("SELECT bezeichnung, beschreibung FROM base_gruppe ORDER BY bezeichnung");
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$retstr .= '<option value="' .$row['bezeichnung']. '"';
+			echo '<option value="' .$row['bezeichnung']. '"';
 
 			if($selectedGruppe == $row['bezeichnung']){
-				$retstr .= ' selected="selected"';
+				echo ' selected="selected"';
 			}
 
-			$retstr .= '>'.$row['bezeichnung'].' - ' .$row['beschreibung'].'</option>'."\n";
+			echo '>' .$row['bezeichnung']. ' - ' .$row['beschreibung']. '</option>';
 		}
 
-		$retstr .= '</select>';
-		return $retstr;
+		echo '</select></div>';
+		echo '</div>';
 	}
 
-	function getRegionDropDownBox($name, $bezeichnung, $selectedRegion='', $allowNull = true, $disabled = false){
+	function printRegionDropDownBox($name, $label, $selectedRegion = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		$retstr = '';
-		$retstr .= '<select name="'.$name.'"';
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
-			$retstr .= ' disabled';
+			echo ' disabled';
 		}
 
-		$retstr .= ' class="form-control">';
+		echo ' class="form-control">';
 
 		if($allowNull){
-			$retstr .= '<option value="">------------</option>'."\n";
+			echo '<option value="">------------</option>';
 		}
 
-		$stmt = $libDb->prepare("SELECT id,bezeichnung FROM base_region ORDER BY bezeichnung");
+		$stmt = $libDb->prepare("SELECT id, bezeichnung FROM base_region ORDER BY bezeichnung");
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -210,71 +245,73 @@ class LibForm{
 			$stmt2->bindColumn('number', $anzahl);
 			$stmt2->fetch();
 
-			$retstr .= '<option value="' .$row['id']. '"';
+			echo '<option value="' .$row['id']. '"';
 
 			if($selectedRegion == $row['id']){
-				$retstr .= ' selected="selected"';
+				echo ' selected="selected"';
 			}
 
-			$retstr .= '>'.$row['bezeichnung'].' [' .$anzahl. ' Personen]</option>'."\n";
+			echo '>' .$row['bezeichnung']. ' [' .$anzahl. ' Personen]</option>';
 		}
 
-		$retstr .= '</select>';
-		return $retstr;
+		echo '</select></div>';
+		echo '</div>';
 	}
 
-	function getVeranstaltungDropDownBox($name, $bezeichnung, $selectedRegion='', $allowNull = true, $disabled = false){
+	function printVeranstaltungDropDownBox($name, $label, $selectedVeranstaltung = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		$retstr = '';
-		$retstr .= '<select name="'.$name.'"';
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
-			$retstr .= ' disabled';
+			echo ' disabled';
 		}
 
-		$retstr .= ' class="form-control">';
+		echo ' class="form-control">';
 
 		if($allowNull){
-			$retstr .= '<option value="">------------</option>'."\n";
+			echo '<option value="">------------</option>';
 		}
 
-		$stmt = $libDb->prepare("SELECT id,titel,datum FROM base_veranstaltung ORDER BY datum DESC");
+		$stmt = $libDb->prepare("SELECT id, titel, datum FROM base_veranstaltung ORDER BY datum DESC");
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$retstr .= '<option value="' .$row['id']. '"';
+			echo '<option value="' .$row['id']. '"';
 
-			if($selectedRegion == $row['id']){
-				$retstr .= ' selected="selected"';
+			if($selectedVeranstaltung == $row['id']){
+				echo ' selected="selected"';
 			}
 
-			$retstr .= '>'.substr($row['titel'],0,25).' [' .$row['datum']. ']</option>'."\n";
+			echo '>' .substr($row['titel'], 0, 25). ' [' .$row['datum']. ']</option>';
 		}
 
-		$retstr .= '</select>';
-		return $retstr;
+		echo '</select></div>';
+		echo '</div>';
 	}
 
-	function getBoolSelectBox($name, $bezeichnung, $selectedValue = 0){
-		$retstr = '';
-		$retstr .= '<select name="' .$name. '" class="form-control">';
-		$retstr .= '<option value="1"';
+	function printBoolSelectBox($name, $label, $selectedValue = 0){
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10"><select name="' .$name. '" class="form-control">';
+		echo '<option value="1"';
 
 		if($selectedValue == 1){
-			$retstr .= ' selected="selected"';
+			echo ' selected="selected"';
 		}
 
-		$retstr .= '>Ja</option>';
-		$retstr .= '<option value="0"';
+		echo '>Ja</option>';
+		echo '<option value="0"';
 
 		if($selectedValue == 0){
-			$retstr .= ' selected="selected"';
+			echo ' selected="selected"';
 		}
 
-		$retstr .= '>Nein</option>';
-		$retstr .= '</select>';
-		return $retstr;
+		echo '>Nein</option>';
+		echo '</select></div>';
+		echo '</div>';
 	}
 }
 ?>

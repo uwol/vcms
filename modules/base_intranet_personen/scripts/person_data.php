@@ -21,8 +21,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-$libForm = new LibForm();
-
 /*
 * determine person id
 */
@@ -235,256 +233,255 @@ if($ownprofile){
 	echo $libMitglied->getMitgliedSignature($personid, 'right');
 }
 
+echo '<div class="vcard">';
+echo '<b>Zur Person</b><br />';
+echo '<div class="fn n">';
 
-?>
-<div class="vcard">
-	<b>Zur Person</b><br />
-	<div class="fn n">
-		<?php
-		if($row['anrede'] != ''){
-			echo $row['anrede'] .' ';
-		}
+if($row['anrede'] != ''){
+	echo $row['anrede'] .' ';
+}
 
-		if($row['titel'] != ''){
-			echo '<span class="title">'. $row['titel'] .'</span>';
-		}
-		?>
-		<span class="given-name"><?php echo $row['vorname']; ?></span>
-		<span class="family-name">
-		<?php
-			if($row['praefix'] != ''){
-				echo $row['praefix'].' ';
-			}
+if($row['titel'] != ''){
+	echo '<span class="title">'. $row['titel'] .'</span>';
+}
 
-			echo $row['name'];
+echo '<span class="given-name">'. $row['vorname'] .'</span>';
+echo '<span class="family-name">';
 
-			if($row['suffix'] != ''){
-				echo ' '.$row['suffix'];
-			}
-		?>
-		</span>
-	</div>
-	<?php
-	if($row['rang'] != ''){
-		echo '<div>Rang: '. $row['rang'] .'</div>';
-	}
+if($row['praefix'] != ''){
+	echo $row['praefix']. ' ';
+}
 
-	if($row['datum_geburtstag'] != ''){
-		echo '<div>Geburtstag: <span class="bday">'. substr($row['datum_geburtstag'], 8, 2) .'.'. substr($row['datum_geburtstag'], 5, 2) .'.'. substr($row['datum_geburtstag'], 0, 4) .'</span></div>';
-	}
+echo $row['name'];
 
-	if ($row['tod_datum'] != ''){
-		echo "<div>Todesdatum <span>" .substr($row['tod_datum'], 8, 2) .'.'. substr($row['tod_datum'], 5, 2) .'.'. substr($row['tod_datum'], 0, 4)."</span></div>";
-	}
+if($row['suffix'] != ''){
+	echo ' ' .$row['suffix'];
+}
 
-	if($row['spitzname'] != ''){
-		echo '<div>Spitzname: '. $row['spitzname'] .'</div>';
-	}
+echo '</span>';
+echo '</div>';
 
-	if($row['beruf'] != ''){
-		echo '<div>Beruf: '. $row['beruf'] .'</div>';
-	}
+if($row['rang'] != ''){
+	echo '<div>Rang: ' .$row['rang']. '</div>';
+}
 
-	if($row['gruppe'] != ''){
-		echo '<div>Gruppe: <span>';
+if($row['datum_geburtstag'] != ''){
+	echo '<div>Geburtstag: <span class="bday">' .substr($row['datum_geburtstag'], 8, 2). '.' .substr($row['datum_geburtstag'], 5, 2) .'.'. substr($row['datum_geburtstag'], 0, 4). '</span></div>';
+}
 
-		$stmt = $libDb->prepare('SELECT beschreibung FROM base_gruppe WHERE bezeichnung=:bezeichnung');
-		$stmt->bindValue(':bezeichnung', $row['gruppe']);
-		$stmt->execute();
-		$stmt->bindColumn('beschreibung', $beschreibung);
-		$stmt->fetch();
+if ($row['tod_datum'] != ''){
+	echo '<div>Todesdatum <span>' .substr($row['tod_datum'], 8, 2). '.' .substr($row['tod_datum'], 5, 2). '.' .substr($row['tod_datum'], 0, 4). '</span></div>';
+}
 
-		echo $beschreibung;
-	  	echo '</span></div>';
-	}
+if($row['spitzname'] != ''){
+	echo '<div>Spitzname: ' .$row['spitzname']. '</div>';
+}
 
-	if($row['status'] != ''){
-		echo '<div>Status: '. $row['status'] .'</div>';
-	}
+if($row['beruf'] != ''){
+	echo '<div>Beruf: ' .$row['beruf']. '</div>';
+}
 
-	/*
-	* primary address
-	*/
-	if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != ''){
-		echo '<br /><b>Primäradresse</b>';
-		echo '<div class="adr">';
+if($row['gruppe'] != ''){
+	echo '<div>Gruppe: <span>';
 
-		if($row['zusatz1'] != ''){
-			echo '<div>Zusatz: <span class="extended-address">'. $row['zusatz1'] .'</span></div>';
-		}
-
-		if($row['strasse1'] != ''){
-			echo '<div>Straße: <span class="street-address">'. $row['strasse1'] .'</span></div>';
-		}
-
-		if($row['ort1'] != ''){
-			echo '<div>Ort: <span class="locality">'. $row['ort1'] .'</span></div>';
-		}
-
-		if($row['plz1'] != ''){
-			echo '<div>PLZ: <span class="postal-code">'. $row['plz1'] .'</span></div>';
-		}
-
-		if($row['land1'] != ''){
-			echo '<div>Land: <span class="nation">'. $row['land1'] .'</span></div>';
-		}
-
-		if($row['telefon1'] != ''){
-			echo '<div>Telefon: <span class="tel">'. $row['telefon1'] .'</span></div>';
-		}
-
-		if($row['datum_adresse1_stand'] != ''){
-			echo '<div>letzte Änderung: '. $libTime->convertMysqlDateToDatum($row['datum_adresse1_stand'],1) .'</div>';
-		}
-
-		echo '</div>';
-	}
-
-	/*
-	* secondary address
-	*/
-	if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != ''){
-		echo '<br /><b>Sekundäradresse</b>';
-		echo '<div class="adr">';
-
-		if($row['zusatz2'] != ''){
-			echo '<div>Zusatz: <span class="extended-address">'. $row['zusatz2'] .'</span></div>';
-		}
-
-		if($row['strasse2'] != ''){
-			echo '<div>Straße: <span class="street-address">'. $row['strasse2'] .'</span></div>';
-		}
-
-		if($row['ort2'] != ''){
-			echo '<div>Ort: <span class="locality">'. $row['ort2'] .'</span></div>';
-		}
-
-		if($row['plz2'] != ''){
-			echo '<div>PLZ: <span class="postal-code">'. $row['plz2'] .'</span></div>';
-		}
-
-		if($row['land2'] != ''){
-			echo '<div>Land: <span class="nation">'. $row['land2'] .'</span></div>';
-		}
-
-		if($row['telefon2'] != ''){
-			echo '<div>Telefon: <span class="tel">'. $row['telefon2'] .'</span></div>';
-		}
-
-		if($row['datum_adresse2_stand'] != ''){
-			echo '<div>letzte Änderung: '. $libTime->convertMysqlDateToDatum($row['datum_adresse2_stand'],1) .'</div>';
-		}
-
-		echo '</div>';
-	}
-
-	/*
-	* communication
-	*/
-	echo '<br /><b>Kommunikation</b>';
-
-	if($row['email'] != ''){
-		echo '<div>E-Mail: <a class="email" href="mailto:'. $row['email'] .'">'. $row['email'] .'</a></div>';
-	}
-
-	if($row['mobiltelefon'] != ''){
-		echo '<div>Mobiltelefon: <span class="tel">'. $row['mobiltelefon'] .'</span></div>';
-	}
-
-	if($row['webseite'] != ''){
-		$webseite = $row['webseite'];
-
-		if(substr($webseite, 0, 7) != 'http://' && substr($webseite, 0, 8) != 'https://'){
-			$webseite = 'http://' . $webseite;
-		}
-
-		echo '<div>Webseite: <a class="url" href="' .$webseite. '">'. $webseite .'</a></div>';
-	}
-
-	if($row['jabber'] != ''){
-		echo '<div>XMPP: <a class="url" href="xmpp:'. $row['jabber'] .'">'. $row['jabber'] .'</a></div>';
-	}
-
-	if($row['skype'] != ''){
-		echo '<div>Skype: <a class="url" href="skype:'. $row['skype'] .'">'. $row['skype'] .'</a></div>';
-	}
-
-
-	/*
-	* others
-	*/
-	echo '<br /><b>Weiteres</b>';
-
-	if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'K' && $row['gruppe'] != 'Y'){
-		if($row['semester_reception'] != ''){
-			echo '<div>Reception: '. $libTime->getSemesterString($row['semester_reception']) .'</div>';
-		}
-
-		if($row['semester_promotion'] != ''){
-			echo '<div>Promotion: '. $libTime->getSemesterString($row['semester_promotion']) .'</div>';
-		}
-
-		if($row['semester_philistrierung'] != ''){
-			echo '<div>Philistrierung: '. $libTime->getSemesterString($row['semester_philistrierung']) .'</div>';
-		}
-
-		if($row['semester_aufnahme'] != ''){
-			echo '<div>Aufnahme: '. $libTime->getSemesterString($row['semester_aufnahme']) .'</div>';
-		}
-
-		if($row['semester_fusion'] != ''){
-			echo '<div>Fusion: '. $libTime->getSemesterString($row['semester_fusion']) .'</div>';
-		}
-	}
-
-	if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
-		echo '<div>Ehepartner: <a href="index.php?pid=intranet_person_daten&amp;personid='.$row['heirat_partner'].'" />'. $libMitglied->getMitgliedNameString($row['heirat_partner'], 5) .'</a></div>';
-	}
-
-	/*
-	* assocations
-	*/
-	$stmt = $libDb->prepare('SELECT base_verein.id, base_verein.titel, base_verein.name, base_verein.dachverband, base_verein.ort1 FROM base_verein_mitgliedschaft, base_verein WHERE base_verein_mitgliedschaft.mitglied = :mitglied AND base_verein_mitgliedschaft.verein = base_verein.id');
-	$stmt->bindValue(':mitglied', $personid, PDO::PARAM_INT);
+	$stmt = $libDb->prepare('SELECT beschreibung FROM base_gruppe WHERE bezeichnung=:bezeichnung');
+	$stmt->bindValue(':bezeichnung', $row['gruppe']);
 	$stmt->execute();
+	$stmt->bindColumn('beschreibung', $beschreibung);
+	$stmt->fetch();
 
-	$vereine = array();
+	echo $beschreibung;
+	echo '</span></div>';
+}
 
-	while($rowvereine = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$vereine[] = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowvereine['id']. '">'. $rowvereine['titel'] .' '. $rowvereine['name'] .' im ' .$rowvereine['dachverband']. ' zu ' .$rowvereine['ort1']. '</a>';
+if($row['status'] != ''){
+	echo '<div>Status: ' .$row['status']. '</div>';
+}
+
+
+/*
+* primary address
+*/
+if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != ''){
+	echo '<br /><b>Primäradresse</b>';
+	echo '<div class="adr">';
+
+	if($row['zusatz1'] != ''){
+		echo '<div>Zusatz: <span class="extended-address">' .$row['zusatz1']. '</span></div>';
 	}
 
-	if(count($vereine) > 0){
-		echo '<div>Mitgliedschaften in weiteren Verbindungen: '.implode(', ', $vereine).'</div>';
+	if($row['strasse1'] != ''){
+		echo '<div>Straße: <span class="street-address">' .$row['strasse1']. '</span></div>';
 	}
 
-	echo '<br /><br /><b>Vita</b>';
-
-	if(!$ownprofile && $row['gruppe'] != 'X'){
-		echo ' - <a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
+	if($row['ort1'] != ''){
+		echo '<div>Ort: <span class="locality">' .$row['ort1']. '</span></div>';
 	}
 
-	if($row['vita_letzterautor'] != ''){
-		echo '<span style="float:right">Letzter Autor: '. $libMitglied->getMitgliedNameString($row['vita_letzterautor'], 5).'</span>';
+	if($row['plz1'] != ''){
+		echo '<div>PLZ: <span class="postal-code">' .$row['plz1']. '</span></div>';
 	}
 
-	if($row['vita'] != ''){
-		echo '<br /><div style="border:1px solid #000000;padding:3px;margin-top:2px">'. nl2br($row['vita']) .'</div>';
+	if($row['land1'] != ''){
+		echo '<div>Land: <span class="nation">' .$row['land1']. '</span></div>';
 	}
 
-	echo '<br />';
-?>
-</div>
+	if($row['telefon1'] != ''){
+		echo '<div>Telefon: <span class="tel">' .$row['telefon1']. '</span></div>';
+	}
+
+	if($row['datum_adresse1_stand'] != ''){
+		echo '<div>letzte Änderung: ' .$libTime->convertMysqlDateToDatum($row['datum_adresse1_stand'], 1). '</div>';
+	}
+
+	echo '</div>';
+}
 
 
-<?php
+/*
+* secondary address
+*/
+if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != ''){
+	echo '<br /><b>Sekundäradresse</b>';
+	echo '<div class="adr">';
+
+	if($row['zusatz2'] != ''){
+		echo '<div>Zusatz: <span class="extended-address">' .$row['zusatz2']. '</span></div>';
+	}
+
+	if($row['strasse2'] != ''){
+		echo '<div>Straße: <span class="street-address">' .$row['strasse2']. '</span></div>';
+	}
+
+	if($row['ort2'] != ''){
+		echo '<div>Ort: <span class="locality">' .$row['ort2']. '</span></div>';
+	}
+
+	if($row['plz2'] != ''){
+		echo '<div>PLZ: <span class="postal-code">' .$row['plz2']. '</span></div>';
+	}
+
+	if($row['land2'] != ''){
+		echo '<div>Land: <span class="nation">' .$row['land2']. '</span></div>';
+	}
+
+	if($row['telefon2'] != ''){
+		echo '<div>Telefon: <span class="tel">' .$row['telefon2']. '</span></div>';
+	}
+
+	if($row['datum_adresse2_stand'] != ''){
+		echo '<div>letzte Änderung: ' .$libTime->convertMysqlDateToDatum($row['datum_adresse2_stand'], 1). '</div>';
+	}
+
+	echo '</div>';
+}
+
+
+/*
+* communication
+*/
+echo '<br /><b>Kommunikation</b>';
+
+if($row['email'] != ''){
+	echo '<div>E-Mail: <a class="email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
+}
+
+if($row['mobiltelefon'] != ''){
+	echo '<div>Mobiltelefon: <span class="tel">' .$row['mobiltelefon']. '</span></div>';
+}
+
+if($row['webseite'] != ''){
+	$webseite = $row['webseite'];
+
+	if(substr($webseite, 0, 7) != 'http://' && substr($webseite, 0, 8) != 'https://'){
+		$webseite = 'http://' . $webseite;
+	}
+
+	echo '<div>Webseite: <a class="url" href="' .$webseite. '">' .$webseite. '</a></div>';
+}
+
+if($row['jabber'] != ''){
+	echo '<div>XMPP: <a class="url" href="xmpp:' .$row['jabber']. '">' .$row['jabber']. '</a></div>';
+}
+
+if($row['skype'] != ''){
+	echo '<div>Skype: <a class="url" href="skype:' .$row['skype']. '">' .$row['skype']. '</a></div>';
+}
+
+
+/*
+* others
+*/
+echo '<br /><b>Weiteres</b>';
+
+if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'K' && $row['gruppe'] != 'Y'){
+	if($row['semester_reception'] != ''){
+		echo '<div>Reception: ' .$libTime->getSemesterString($row['semester_reception']). '</div>';
+	}
+
+	if($row['semester_promotion'] != ''){
+		echo '<div>Promotion: ' .$libTime->getSemesterString($row['semester_promotion']). '</div>';
+	}
+
+	if($row['semester_philistrierung'] != ''){
+		echo '<div>Philistrierung: ' .$libTime->getSemesterString($row['semester_philistrierung']). '</div>';
+	}
+
+	if($row['semester_aufnahme'] != ''){
+		echo '<div>Aufnahme: ' .$libTime->getSemesterString($row['semester_aufnahme']). '</div>';
+	}
+
+	if($row['semester_fusion'] != ''){
+		echo '<div>Fusion: ' .$libTime->getSemesterString($row['semester_fusion']). '</div>';
+	}
+}
+
+if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
+	echo '<div>Ehepartner: <a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['heirat_partner']. '" />' .$libMitglied->getMitgliedNameString($row['heirat_partner'], 5). '</a></div>';
+}
+
+/*
+* assocations
+*/
+$stmt = $libDb->prepare('SELECT base_verein.id, base_verein.titel, base_verein.name, base_verein.dachverband, base_verein.ort1 FROM base_verein_mitgliedschaft, base_verein WHERE base_verein_mitgliedschaft.mitglied = :mitglied AND base_verein_mitgliedschaft.verein = base_verein.id');
+$stmt->bindValue(':mitglied', $personid, PDO::PARAM_INT);
+$stmt->execute();
+
+$vereine = array();
+
+while($rowvereine = $stmt->fetch(PDO::FETCH_ASSOC)){
+	$vereine[] = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowvereine['id']. '">' .$rowvereine['titel']. ' ' .$rowvereine['name']. ' im ' .$rowvereine['dachverband']. ' zu ' .$rowvereine['ort1']. '</a>';
+}
+
+if(count($vereine) > 0){
+	echo '<div>Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $vereine). '</div>';
+}
+
+echo '<br /><br /><b>Vita</b>';
+
+if(!$ownprofile && $row['gruppe'] != 'X'){
+	echo ' - <a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
+}
+
+if($row['vita_letzterautor'] != ''){
+	echo '<span style="float:right">Letzter Autor: ' .$libMitglied->getMitgliedNameString($row['vita_letzterautor'], 5). '</span>';
+}
+
+if($row['vita'] != ''){
+	echo '<br /><div style="border:1px solid #000000;padding:3px;margin-top:2px">' .nl2br($row['vita']). '</div>';
+}
+
+echo '<br />';
+echo '</div>';
+
+
 /*
 * passwort change form
 */
 if($ownprofile){
 	echo '<h2>Passwort ändern</h2>';
 
-	echo '<form action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 
 	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
@@ -520,7 +517,7 @@ if($ownprofile){
 if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
 	echo '<h2>Daten ändern</h2>';
 
-	echo '<form action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 
 	echo '<input type="hidden" name="formtyp" value="personendaten" />';
@@ -534,63 +531,41 @@ if($ownprofile){
 
 	echo '<h3>Zur Person</h3>';
 
-	printTextInput('anrede', 'Anrede', $row2['anrede']);
-	printTextInput('titel', 'Titel', $row2['titel']);
-	printTextInput('rang', 'Rang', $row2['rang']);
-	printTextInput('spitzname', 'Spitzname', $row2['spitzname']);
-	printTextInput('beruf', 'Beruf', $row2['beruf']);
+	$libForm->printTextInput('anrede', 'Anrede', $row2['anrede']);
+	$libForm->printTextInput('titel', 'Titel', $row2['titel']);
+	$libForm->printTextInput('rang', 'Rang', $row2['rang']);
+	$libForm->printTextInput('spitzname', 'Spitzname', $row2['spitzname']);
+	$libForm->printTextInput('beruf', 'Beruf', $row2['beruf']);
 
 	if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'Y'){
-		echo '<div class="form-group">';
-		echo '<label for="leibmitglied" class="col-sm-2 control-label">Leibbursch</label>';
-
-		echo '<div class="col-sm-10"><select id="leibmitglied" name="leibmitglied" class="form-control">';
-		echo '<option value="NULL">------------</option>'."\n";
-
-		$stmt = $libDb->prepare("SELECT id, anrede, name, vorname, titel, rang, praefix, suffix FROM base_person ORDER BY name,vorname");
-		$stmt->execute();
-
-		while($rowlm = $stmt->fetch(PDO::FETCH_ASSOC)){
-			if($rowlm['id'] != $personid){
-				echo '<option value="' .$rowlm['id']. '"';
-
-				if($row2['leibmitglied'] == $rowlm['id']){
-					echo " selected";
-				}
-
-				echo '>' .$libMitglied->formatMitgliedNameString($rowlm['anrede'],$rowlm['titel'],$rowlm['rang'],$rowlm['vorname'],$rowlm['praefix'],$rowlm['name'],$rowlm['suffix'],7). '</option>'."\n";
-			}
-		}
-
-		echo '</select></div>';
-		echo '</div>';
+		$libForm->printMitgliederDropDownBox('leibmitglied', 'Leibbursch', $row2['leibmitglied'], true);
 	}
 
 	echo '<h3>Primäradresse</h3>';
 
-	printTextInput('zusatz1', 'Zusatz', $row2['zusatz1']);
-	printTextInput('strasse1', 'Straße', $row2['strasse1']);
-	printTextInput('ort1', 'Ort', $row2['ort1']);
-	printTextInput('plz1', 'PLZ', $row2['plz1']);
-	printTextInput('land1', 'Land', $row2['land1']);
-	printTextInput('telefon1', 'Telefon', $row2['telefon1']);
+	$libForm->printTextInput('zusatz1', 'Zusatz', $row2['zusatz1']);
+	$libForm->printTextInput('strasse1', 'Straße', $row2['strasse1']);
+	$libForm->printTextInput('ort1', 'Ort', $row2['ort1']);
+	$libForm->printTextInput('plz1', 'PLZ', $row2['plz1']);
+	$libForm->printTextInput('land1', 'Land', $row2['land1']);
+	$libForm->printTextInput('telefon1', 'Telefon', $row2['telefon1']);
 
 	echo '<h3>Sekundäradresse</h3>';
 
-	printTextInput('zusatz2', 'Zusatz', $row2['zusatz2']);
-	printTextInput('strasse2', 'Straße', $row2['strasse2']);
-	printTextInput('ort2', 'Ort', $row2['ort2']);
-	printTextInput('plz2', 'PLZ', $row2['plz2']);
-	printTextInput('land2', 'Land', $row2['land2']);
-	printTextInput('telefon2', 'Telefon', $row2['telefon2']);
+	$libForm->printTextInput('zusatz2', 'Zusatz', $row2['zusatz2']);
+	$libForm->printTextInput('strasse2', 'Straße', $row2['strasse2']);
+	$libForm->printTextInput('ort2', 'Ort', $row2['ort2']);
+	$libForm->printTextInput('plz2', 'PLZ', $row2['plz2']);
+	$libForm->printTextInput('land2', 'Land', $row2['land2']);
+	$libForm->printTextInput('telefon2', 'Telefon', $row2['telefon2']);
 
 	echo '<h3>Kommunikation</h3>';
 
-	printTextInput('mobiltelefon', 'Mobiltelefon', $row2['mobiltelefon']);
-	printTextInput('email', 'E-Mail', $row2['email']);
-	printTextInput('jabber', 'XMPP', $row2['jabber']);
-	printTextInput('skype', 'Skype', $row2['skype']);
-	printTextInput('webseite', 'Webseite', $row2['webseite']);
+	$libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $row2['mobiltelefon']);
+	$libForm->printTextInput('email', 'E-Mail', $row2['email']);
+	$libForm->printTextInput('jabber', 'XMPP', $row2['jabber']);
+	$libForm->printTextInput('skype', 'Skype', $row2['skype']);
+	$libForm->printTextInput('webseite', 'Webseite', $row2['webseite']);
 
 	echo '<h3>Weiteres</h3>';
 
@@ -601,26 +576,7 @@ if($ownprofile){
 		$stmt->bindColumn('empfaenger', $empfaenger);
 		$stmt->fetch();
 
-		echo '<div class="form-group">';
-		echo '<label for="empfaenger" class="col-sm-2 control-label">Rundbriefe erhalten</label>';
-		echo '<div class="col-sm-10"><select id="empfaenger" name="empfaenger" class="form-control">';
-		echo '<option value="1"';
-
-		if($empfaenger == 1){
-			echo 'selected';
-		}
-
-		echo '>Ja</option>';
-		echo '<option value="0"';
-
-		if($empfaenger == 0){
-			echo 'selected';
-		}
-
-		echo '>Nein</option>';
-		echo '</select></div>';
-		echo '</div>';
-
+		$libForm->printBoolSelectBox('empfaenger', 'Rundbriefe erhalten', $empfaenger);
 
 		if($row['gruppe'] == 'P' || $row['gruppe'] == 'G' || $row['gruppe'] == 'W'){
 			$stmt = $libDb->prepare("SELECT interessiert FROM mod_rundbrief_empfaenger WHERE id=:id");
@@ -629,25 +585,7 @@ if($ownprofile){
 			$stmt->bindColumn('interessiert', $interessiert);
 			$stmt->fetch();
 
-			echo '<div class="form-group">';
-			echo '<label for="interessiert" class="col-sm-2 control-label">Rundbriefe aus Aktivenleben erhalten</label>';
-			echo '<div class="col-sm-10"><select id="interessiert" name="interessiert" class="form-control">';
-			echo '<option value="1"';
-
-			if($interessiert == 1){
-				echo 'selected';
-			}
-
-			echo '>Ja</option>';
-			echo '<option value="0"';
-
-			if($interessiert == 0){
-				echo 'selected';
-			}
-
-			echo '>Nein</option>';
-			echo '</select></div>';
-			echo '</div>';
+			$libForm->printBoolSelectBox('interessiert', 'Rundbriefe aus Aktivenleben erhalten', $interessiert);
 		}
 	}
 
@@ -658,22 +596,11 @@ if($ownprofile){
 		$stmt->bindColumn('anzahlzipfel', $anzahlzipfel);
 		$stmt->fetch();
 
-		printTextInput('anzahlzipfel', 'Zipfelanzahl', $anzahlzipfel);
+		$libForm->printTextInput('anzahlzipfel', 'Zipfelanzahl', $anzahlzipfel);
 	}
 
-	echo '<div class="form-group">';
-	echo '<label class="col-sm-2 control-label">Region 1</label>';
-	echo '<div class="col-sm-10">';
-	echo $libForm->getRegionDropDownBox('region1', 'Region 1', $row['region1']);
-	echo '</div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<label class="col-sm-2 control-label">Region 2</label>';
-	echo '<div class="col-sm-10">';
-	echo $libForm->getRegionDropDownBox('region2', 'Region 2', $row['region2']);
-	echo '</div>';
-	echo '</div>';
+	$libForm->printRegionDropDownBox('region1', 'Region 1', $row['region1']);
+	$libForm->printRegionDropDownBox('region2', 'Region 2', $row['region2']);
 }
 
 if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
@@ -683,16 +610,8 @@ if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
 	$stmt->bindColumn('vita', $vita);
 	$stmt->fetch();
 
-	echo '<div class="form-group">';
-	echo '<label for="text" class="col-sm-2 control-label">Vita</label>';
-	echo '<div class="col-sm-10"><textarea id="vita" name="vita" rows="10" class="form-control">' .$vita. '</textarea></div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<div class="col-sm-offset-2 col-sm-10">';
-	echo '<button type="submit" class="btn btn-default">Speichern</button>';
-	echo '</div>';
-	echo '</div>';
+	$libForm->printTextarea('vita', 'Vita', $vita);
+	$libForm->printSubmitButton('Speichern');
 
 	echo '</fieldset>';
 	echo '</form>';
@@ -848,12 +767,5 @@ SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname,
 	echo printMitglieder($stmt, 0);
 
 	echo '<p style="clear:both">';
-}
-
-function printTextInput($name, $label, $value){
-	echo '<div class="form-group">';
-	echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-	echo '<div class="col-sm-10"><input type="text" id="' .$name. '" name="' .$name. '" value="' .$value. '" class="form-control" /></div>';
-	echo '</div>';
 }
 ?>

@@ -29,10 +29,7 @@ echo '<h1>Neuer Nachrichtenbeitrag</h1>';
 echo '<form action="index.php?pid=intranet_news_news" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-echo '<div class="form-group">';
-echo '<label for="text" class="col-sm-2 control-label">Nachricht</label>';
-echo '<div class="col-sm-10"><textarea id="text" name="text" rows="10" class="form-control"></textarea></div>';
-echo '</div>';
+$libForm->printTextarea('text', 'Nachricht', '');
 
 
 echo '<div class="form-group">';
@@ -50,29 +47,10 @@ echo '</select></div>';
 echo '</div>';
 
 
-echo '<div class="form-group">';
-echo '<label for="betroffenesmitglied" class="col-sm-2 control-label">Betroffenes Mitglied</label>';
-echo '<div class="col-sm-10"><select id="betroffenesmitglied" name="betroffenesmitglied" class="form-control">';
-echo '<option value="">---------------------------</option>';
-
-$stmt = $libDb->prepare('SELECT * FROM base_person ORDER BY name, vorname');
-$stmt->execute();
-
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<option value="' .$row['id']. '">' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 1). '</option>';
-}
-
-echo '</select></div>';
-echo '</div>';
-
-
+$libForm->printMitgliederDropDownBox('betroffenesmitglied', 'Betroffenes Mitglied', '');
 echo '<p class="col-sm-offset-2 col-sm-10">Bei einer Nachricht mit Bezug zu einem Mitglied wie z. B. einer Hochzeit oder einem Todesfall kann das betroffene Mitglied angeben werden.</p>';
 
-echo '<div class="form-group">';
-echo '<div class="col-sm-offset-2 col-sm-10">';
-echo '<button type="submit" class="btn btn-default">Beitrag abschicken</button>';
-echo '</div>';
-echo '</div>';
+$libForm->printSubmitButton('Beitrag abschicken');
 
 echo '</fieldset>';
 echo '</form>';

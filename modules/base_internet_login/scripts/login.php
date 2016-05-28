@@ -72,21 +72,9 @@ if($libConfig->sitePath != ""){
 echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-echo '<div class="form-group">';
-echo '<label for="intranet_login_username" class="col-sm-2 control-label">Benutzername</label>';
-echo '<div class="col-sm-10"><input type="text" id="intranet_login_username" name="intranet_login_username" class="form-control" /></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="intranet_login_password" class="col-sm-2 control-label">Passwort</label>';
-echo '<div class="col-sm-10"><input type="password" name="intranet_login_password" class="form-control" /></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<div class="col-sm-offset-2 col-sm-10">';
-echo '<button type="submit" class="btn btn-default">Anmelden</button>';
-echo '</div>';
-echo '</div>';
+$libForm->printTextInput('intranet_login_username', 'Benutzername', '');
+$libForm->printTextInput('intranet_login_password', 'Passwort', '', 'password');
+$libForm->printSubmitButton('Anmelden');
 
 echo '</fieldset>';
 echo '</form>';

@@ -132,33 +132,14 @@ echo '<fieldset>';
 echo '<input type="hidden" name="formtyp" value="newsdaten" />';
 echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 
-echo '<div class="form-group">';
-echo '<label for="id" class="col-sm-2 control-label">Id</label>';
-echo '<div class="col-sm-10"><input type="text" id="id" name="id" value="' .$array['id']. '" disabled class="form-control" /></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="startdatum" class="col-sm-2 control-label">Startdatum</label>';
-echo '<div class="col-sm-10"><input type="date" id="startdatum" name="startdatum" value="' .$array['startdatum']. '" class="form-control" /></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="verfallsdatum" class="col-sm-2 control-label">Verfallsdatum</label>';
-echo '<div class="col-sm-10"><input type="date" id="verfallsdatum" name="verfallsdatum" value="' .$array['verfallsdatum']. '" class="form-control" /></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="text" class="col-sm-2 control-label">Beschreibung</label>';
-echo '<div class="col-sm-10"><textarea id="text" name="text" rows="6" class="form-control">' .$array['text']. '</textarea></div>';
-echo '</div>';
+$libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
+$libForm->printTextInput('startdatum', 'Startdatum', $array['startdatum'], 'date');
+$libForm->printTextInput('verfallsdatum', 'Verfallsdatum', $array['verfallsdatum'], 'date');
+$libForm->printTextarea('text', 'Beschreibung', $array['text']);
 
 echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
 
-echo '<div class="form-group">';
-echo '<div class="col-sm-offset-2 col-sm-10">';
-echo '<button type="submit" class="btn btn-default">Speichern</button>';
-echo '</div>';
-echo '</div>';
+$libForm->printSubmitButton('Speichern');
 
 echo '</fieldset>';
 echo '</form>';

@@ -93,21 +93,9 @@ echo '<p>Auf dieser Seite kann ein neues Passwort vergeben werden, falls das alt
 echo '<form action="index.php?pid=login_resetpassword" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-echo '<div class="form-group">';
-echo '<label for="email" class="col-sm-2 control-label">E-Mail-Adresse</label>';
-echo '<div class="col-sm-10"><input type="email" id="email" name="email" class="form-control" /></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="geburtsdatum" class="col-sm-2 control-label">Geburtsdatum</label>';
-echo '<div class="col-sm-10"><input type="geburtsdatum" name="geburtsdatum" class="form-control" /></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<div class="col-sm-offset-2 col-sm-10">';
-echo '<button type="submit" class="btn btn-default">Neues Passwort senden</button>';
-echo '</div>';
-echo '</div>';
+$libForm->printTextInput('email', 'E-Mail-Adresse', '', 'email');
+$libForm->printTextInput('geburtsdatum', 'Geburtsdatum', '', 'date');
+$libForm->printSubmitButton('Neues Passwort senden');
 
 echo '</fieldset>';
 echo '</form>';

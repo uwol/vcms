@@ -45,8 +45,7 @@ if(isset($_POST['formkomplettdargestellt']) && $_POST['formkomplettdargestellt']
 			}
 		}
 	}
-}
-elseif(isset($_GET['action']) && $_GET['action'] == "delete"){
+} elseif(isset($_GET['action']) && $_GET['action'] == "delete"){
 	$moduleid = $_GET['moduleid'];
 	$array_name = $_GET['array_name'];
 	$position = $_GET['position'];
@@ -78,13 +77,13 @@ foreach($storage as $moduleid => $arrays){
 		//positions and values at that positions
 		foreach($positionen as $position => $value){
 			echo '<div class="form-group">';
-			echo '<label class="col-sm-3 control-label">' .$array_name. '</label>';
+			echo '<label class="col-sm-2 control-label">' .$array_name. '</label>';
 
 			echo '<div class="col-sm-1">';
 			echo '<input type="text" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" class="form-control input-sm" />';
 			echo '</div>';
 
-			echo '<div class="col-sm-7">';
+			echo '<div class="col-sm-8">';
 			echo '<input type="text" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" class="form-control input-sm" />';
 			echo '</div>';
 
@@ -102,11 +101,7 @@ foreach($storage as $moduleid => $arrays){
 echo '<input type="hidden" name="action" value="save" />';
 echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
 
-echo '<div class="form-group">';
-echo '<div class="col-sm-offset-3 col-sm-10">';
-echo '<button type="submit" class="btn btn-default">Speichern</button>';
-echo '</div>';
-echo '</div>';
+$libForm->printSubmitButton('Speichern');
 
 echo '</fieldset>';
 echo '</form>';

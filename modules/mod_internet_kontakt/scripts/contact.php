@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
+
 /*
 * action
 */
@@ -64,30 +65,30 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 
 	if(!$libString->isValidEmail($_POST['emailaddress'])){
 		$error_emailaddress = true;
-		$libGlobal->errorTexts[] = "Die angegebene E-Mailadresse ist nicht korrekt.";
+		$libGlobal->errorTexts[] = 'Die angegebene E-Mailadresse ist nicht korrekt.';
 	}
 
 	if(trim($_POST['nachricht']) == ''){
 		$error_message = true;
-		$libGlobal->errorTexts[] = "Es wurde keine Nachricht eingegeben.";
+		$libGlobal->errorTexts[] = 'Es wurde keine Nachricht eingegeben.';
 	}
 
 	if(!$error_emailaddress && !$error_message) {
-		require_once("lib/thirdparty/class.phpmailer.php");
+		require_once('lib/thirdparty/class.phpmailer.php');
 
-		$nachricht = $_POST['name'] ." mit der Telefonnummer ".$_POST['telefon']." und der E-Mailadresse ".$_POST['emailaddress']." hat über das Kontaktformular folgende Nachricht geschrieben\n\r".$_POST['nachricht'];
+		$nachricht = $_POST['name'] .' mit der Telefonnummer '.$_POST['telefon'].' und der E-Mailadresse '.$_POST['emailaddress']." hat über das Kontaktformular folgende Nachricht geschrieben\n\r".$_POST['nachricht'];
 
 		$mail = new PHPMailer();
 		$mail->AddAddress($libConfig->emailInfo);
-		$mail->FromName = $libConfig->verbindungName ." Mailer";
+		$mail->FromName = $libConfig->verbindungName .' Mailer';
 		$mail->Subject = 'Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libConfig->sitePath;
 		$mail->Body = $libString->protectXSS($nachricht);
 		$mail->AddReplyTo($_POST['emailaddress']);
-		$mail->CharSet = "UTF-8";
+		$mail->CharSet = 'UTF-8';
 
 		if($mail->Send()){
 			$mailsent = true;
-			$libGlobal->notificationTexts[] = "Vielen Dank, Ihre Nachricht wurde weitergeleitet.";
+			$libGlobal->notificationTexts[] = 'Vielen Dank, Ihre Nachricht wurde weitergeleitet.';
 		}
 	}
 }
@@ -110,41 +111,41 @@ echo $libConfig->verbindungName .'<br /><br />';
 $vorstand = $libVerein->getAnsprechbarerAktivenVorstandIds();
 
 if($libGenericStorage->loadValueInCurrentModule('showSenior') && $vorstand['senior']){
-	echo "Senior: ".$libMitglied->getMitgliedNameString($vorstand['senior'],0)."<br />";
+	echo 'Senior: '.$libMitglied->getMitgliedNameString($vorstand['senior'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showJubelsenior') && $vorstand['jubelsenior']){
-	echo "Jubelsenior: ".$libMitglied->getMitgliedNameString($vorstand['jubelsenior'],0)."<br />";
+	echo 'Jubelsenior: '.$libMitglied->getMitgliedNameString($vorstand['jubelsenior'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showConsenior') && $vorstand['consenior']){
-	echo "Consenior: ".$libMitglied->getMitgliedNameString($vorstand['consenior'],0)."<br />";
+	echo 'Consenior: '.$libMitglied->getMitgliedNameString($vorstand['consenior'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor') && $vorstand['fuchsmajor']){
-	echo "Fuchsmajor: ".$libMitglied->getMitgliedNameString($vorstand['fuchsmajor'],0)."<br />";
+	echo 'Fuchsmajor: '.$libMitglied->getMitgliedNameString($vorstand['fuchsmajor'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor2') && $vorstand['fuchsmajor2']){
-	echo "Fuchsmajor 2: ".$libMitglied->getMitgliedNameString($vorstand['fuchsmajor2'],0)."<br />";
+	echo 'Fuchsmajor 2: '.$libMitglied->getMitgliedNameString($vorstand['fuchsmajor2'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showScriptor') && $vorstand['scriptor']){
-	echo "Scriptor: ".$libMitglied->getMitgliedNameString($vorstand['scriptor'],0)."<br />";
+	echo 'Scriptor: '.$libMitglied->getMitgliedNameString($vorstand['scriptor'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['quaestor']){
-	echo "Quaestor: ".$libMitglied->getMitgliedNameString($vorstand['quaestor'],0)."<br />";
+	echo 'Quaestor: '.$libMitglied->getMitgliedNameString($vorstand['quaestor'],0).'<br />';
 }
 
-if($libConfig->verbindungZusatz != ""){
-	echo $libConfig->verbindungZusatz."<br />";
+if($libConfig->verbindungZusatz != ''){
+	echo $libConfig->verbindungZusatz.'<br />';
 }
 
 echo '<br />';
 
 echo $libConfig->verbindungStrasse . '<br />';
-echo $libConfig->verbindungPlz ." ".$libConfig->verbindungOrt . '<br />';
+echo $libConfig->verbindungPlz .' '.$libConfig->verbindungOrt . '<br />';
 echo $libConfig->verbindungLand . '<br />';
 echo $libConfig->verbindungTelefon . '<br />';
 echo $libConfig->emailInfo . '<br />';
@@ -169,25 +170,25 @@ if($mailsent){
 } else {
 	$name = '';
 
-	if(isset($_POST['name']) && $_POST['name'] != ""){
+	if(isset($_POST['name']) && $_POST['name'] != ''){
 		$name = $_POST['name'];
 	}
 
 	$email = '';
 
-	if(isset($_POST['emailaddress']) && $_POST['emailaddress'] != ""){
+	if(isset($_POST['emailaddress']) && $_POST['emailaddress'] != ''){
 		$email = $_POST['emailaddress'];
 	}
 
 	$telefon = '';
 
-	if(isset($_POST['telefon']) && $_POST['telefon'] != ""){
+	if(isset($_POST['telefon']) && $_POST['telefon'] != ''){
 		$telefon = $_POST['telefon'];
 	}
 
 	$nachricht = '';
 
-	if(isset($_POST['nachricht']) && $_POST['nachricht'] != ""){
+	if(isset($_POST['nachricht']) && $_POST['nachricht'] != ''){
 		$nachricht = $_POST['nachricht'];
 	}
 
@@ -195,31 +196,11 @@ if($mailsent){
 	echo '<form action="index.php?pid=kontakt_kontakt" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 
-	echo '<div class="form-group">';
-	echo '<label for="name" class="col-sm-2 control-label">Name</label>';
-	echo '<div class="col-sm-10"><input type="text" id="name" name="name" placeholder="Name" value="' .$libString->protectXSS($name). '" class="form-control" /></div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<label for="emailaddress" class="col-sm-2 control-label">E-Mail-Adresse</label>';
-	echo '<div class="col-sm-10"><input type="email" id="emailaddress" name="emailaddress" placeholder="E-Mail-Adresse" value="' .$libString->protectXSS($email). '" class="form-control" /></div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<label for="telefon" class="col-sm-2 control-label">Telefonnummer</label>';
-	echo '<div class="col-sm-10"><input type="tel" id="telefon" name="telefon" placeholder="Telefonnummer" value="' .$libString->protectXSS($telefon). '" class="form-control" /></div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<label for="nachricht" class="col-sm-2 control-label">Nachricht</label>';
-	echo '<div class="col-sm-10"><textarea id="nachricht" name="nachricht" rows="7" class="form-control">' .$libString->protectXSS($nachricht). '</textarea></div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<div class="col-sm-offset-2 col-sm-10">';
-	echo '<button type="submit" class="btn btn-default">Abschicken</button>';
-	echo '</div>';
-	echo '</div>';
+	$libForm->printTextInput('name', 'Name', $libString->protectXSS($name));
+	$libForm->printTextInput('email', 'E-Mail-Adresse', $libString->protectXSS($email), 'email');
+	$libForm->printTextInput('telefon', 'Telefonnummer', $libString->protectXSS($telefon), 'tel');
+	$libForm->printTextarea('nachricht', 'Nachricht', $libString->protectXSS($nachricht));
+	$libForm->printSubmitButton('Abschicken');
 
 	echo '</fieldset>';
 	echo '</form>';

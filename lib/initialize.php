@@ -43,6 +43,7 @@ $_SESSION['session_timeout_timestamp'] = time() + 14400;
 $libConfig = new LibConfig();
 $libGlobal = new LibGlobal();
 $libString = new LibString();
+$libForm = new LibForm();
 $libSecurityManager = new LibSecurityManager();
 $libTime = new LibTime();
 $libDb = new LibDb($libConfig, $libString);

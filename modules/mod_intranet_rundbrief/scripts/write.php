@@ -142,12 +142,7 @@ echo '</label></div>';
 echo '</div></div>';
 
 
-echo '<div class="form-group">';
-echo '<label class="col-sm-2 control-label">Region</label>';
-echo '<div class="col-sm-10">';
-echo $libForm->getRegionDropDownBox("region", "Region", "");
-echo '</div>';
-echo '</div>';
+$libForm->printRegionDropDownBox("region", "Region", "");
 
 
 echo '<hr />';
@@ -170,22 +165,9 @@ echo '</p></div></div>';
 
 echo '<hr />';
 
-
-echo '<div class="form-group">';
-echo '<label for="subject" class="col-sm-2 control-label">Betreff</label>';
-echo '<div class="col-sm-10"><input type="text" id="subject" name="subject" placeholder="Betreff" class="form-control" /></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="nachricht" class="col-sm-2 control-label">Nachricht</label>';
-echo '<div class="col-sm-10"><textarea id="nachricht" name="nachricht" rows="7" class="form-control"></textarea></div>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<div class="col-sm-offset-2 col-sm-10">';
-echo '<button type="submit" class="btn btn-default">Nachricht verschicken</button>';
-echo '</div>';
-echo '</div>';
+$libForm->printTextInput('subject', 'Betreff', 'Betreff');
+$libForm->printTextarea('nachricht', 'Nachricht', '');
+$libForm->printSubmitButton('Nachricht verschicken');
 
 echo '</fieldset>';
 echo '</form>';

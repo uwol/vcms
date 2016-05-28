@@ -27,23 +27,9 @@ echo '<p>Bitte die Daten der Reservierung eingeben.</p>';
 echo '<form action="index.php?pid=intranet_reservierung_liste" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-echo '<div class="form-group">';
-echo '<label for="datum" class="col-sm-2 control-label">Datum</label>';
-echo '<div class="col-sm-10"><input type="date" id="datum" name="datum" class="form-control" value="' .date("Y-m-d"). '" /></div>';
-echo '</div>';
-
-
-echo '<div class="form-group">';
-echo '<label for="beschreibung" class="col-sm-2 control-label">Beschreibung</label>';
-echo '<div class="col-sm-10"><textarea id="beschreibung" name="beschreibung" rows="7" class="form-control" placeholder="Bitte Räumlichkeit, Tageszeit und Art der Nutzung angeben. Bei einem Filmabend Filmtitel nennen."></textarea></div>';
-echo '</div>';
-
-
-echo '<div class="form-group">';
-echo '<div class="col-sm-offset-2 col-sm-10">';
-echo '<button type="submit" class="btn btn-default">Reservierung vornehmen</button>';
-echo '</div>';
-echo '</div>';
+$libForm->printTextInput('datum', 'Datum', date("Y-m-d"), 'date');
+$libForm->printTextarea('beschreibung', 'Beschreibung', 'Bitte Räumlichkeit, Tageszeit und Art der Nutzung angeben. Bei einem Filmabend Filmtitel nennen.');
+$libForm->printSubmitButton('Reservierung vornehmen');
 
 echo '</fieldset>';
 echo '</form>';
