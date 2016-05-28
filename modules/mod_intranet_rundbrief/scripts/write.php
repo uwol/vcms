@@ -165,7 +165,7 @@ echo '</p></div></div>';
 
 echo '<hr />';
 
-$libForm->printTextInput('subject', 'Betreff', 'Betreff');
+$libForm->printTextInput('subject', 'Betreff', '');
 $libForm->printTextarea('nachricht', 'Nachricht', '');
 $libForm->printSubmitButton('Nachricht verschicken');
 
