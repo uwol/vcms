@@ -197,7 +197,7 @@ if($mailsent){
 	echo '<fieldset>';
 
 	$libForm->printTextInput('name', 'Name', $libString->protectXSS($name));
-	$libForm->printTextInput('email', 'E-Mail-Adresse', $libString->protectXSS($email), 'email');
+	$libForm->printTextInput('emailaddress', 'E-Mail-Adresse', $libString->protectXSS($email), 'email');
 	$libForm->printTextInput('telefon', 'Telefonnummer', $libString->protectXSS($telefon), 'tel');
 	$libForm->printTextarea('nachricht', 'Nachricht', $libString->protectXSS($nachricht));
 	$libForm->printSubmitButton('Abschicken');
