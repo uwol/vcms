@@ -36,6 +36,7 @@ if($libAuth->isLoggedin()){
 }
 
 
+echo '<div class="col-md-12">';
 echo '<h2>Impressionen</h2>';
 echo '<hr />';
 echo '<div class="row">';
@@ -78,5 +79,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 }
 
+echo '</div>';
 echo '</div>';
 ?>

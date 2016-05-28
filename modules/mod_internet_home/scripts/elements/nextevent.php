@@ -21,6 +21,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
+echo '<div class="col-md-4">';
 echo '<h2>Nächste Veranstaltungen</h2>';
 echo '<hr />';
 
@@ -52,4 +53,5 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo '<hr />';
+echo '</div>';
 ?>

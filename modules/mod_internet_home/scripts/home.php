@@ -27,17 +27,9 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
 echo '<h1>Willkommen</h1>';
 
 echo '<div class="row">';
-echo '<section class="col-md-8">';
 
 include("elements/announcements.php");
-
-echo '</section>';
-echo '<aside class="col-md-4">';
-
 include("elements/nextevent.php");
-include("elements/socialmedia.php");
-
-echo '</aside>';
-echo '</div>';
-
 include("elements/randomimage.php");
+
+echo '</div>';

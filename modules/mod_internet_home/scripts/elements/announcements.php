@@ -21,6 +21,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
+echo '<div class="col-md-8">';
 echo '<h2>Ankündigungen</h2>';
 echo '<hr />';
 
@@ -59,4 +60,6 @@ if($number > 3){
 	echo '</div>';
 	echo '<hr />';
 }
+
+echo '</div>';
 ?>

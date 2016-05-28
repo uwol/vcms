@@ -83,9 +83,8 @@ nav .navbar-intranet li a {
 
 
 #content {
-	border: 1px solid #333;
-	border-radius: 4px 4px 0 0;
 	background: rgba(255, 255, 255, 0.7);
+	border-top: 1px solid #333;
 	padding: 1em;
 }
 
