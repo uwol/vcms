@@ -68,7 +68,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '&thumb=1" alt="" class="img-responsive center-block thumbnail ' .$visibilityClass. '" />';
 		echo '</a>';
 
-		echo '<hr />';
 		echo '</section>';
 
 		$i++;
@@ -80,5 +79,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo '</div>';
+echo '<hr />';
 echo '</div>';
 ?>

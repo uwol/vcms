@@ -96,8 +96,8 @@ echo '  </head>' . "\r\n";
 echo '  <body>' . "\r\n";
 echo '    <div id="container" class="container">' . "\r\n";
 echo '      <div class="row">' . "\r\n";
-echo '        <div id="logo" class="col-md-2 hidden-xs"></div>' . "\r\n";
-echo '        <header id="header" class="col-md-10">' . "\r\n";
+echo '        <div id="logo" class="col-md-1 hidden-xs"></div>' . "\r\n";
+echo '        <header id="header" class="col-md-11">' . "\r\n";
 echo '          <h1><a href="index.php">' .$libConfig->verbindungName. '</a></h1>' . "\r\n";
 echo '          <h2><a href="index.php">';
 
