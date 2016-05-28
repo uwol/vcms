@@ -20,11 +20,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 require('lib/mitglieder.php');
 
 echo '<h1>'. $libConfig->verbindungName.' - Die Verstorbenen</h1>';
 
 $stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "T" ORDER BY name');
 
-echo printMitglieder($stmt, 1);
+printMitglieder($stmt);
 ?>

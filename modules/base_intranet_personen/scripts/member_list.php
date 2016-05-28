@@ -20,8 +20,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showGroupY'))
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('showGroupY')){
 	$libGenericStorage->saveValueInCurrentModule('showGroupY', 1);
+}
 
 require('lib/mitglieder.php');
 
@@ -29,14 +31,20 @@ require('lib/mitglieder.php');
 echo '<h1>' . $libConfig->verbindungName .' - Die Mitglieder</h1>';
 
 echo '<p>Der Balken unter einem Foto zeigt an, wie häufig ein Mitglied das Intranet besucht. Mitglieder können anhand von Schlüsselwörtern gesucht werden.</p>';
-echo '<p><form method="post" action="index.php?pid=intranet_mitglied_listelebende" style="text-align:center">';
-echo '<input size="40" type="text" name="schluesselwort" /> ';
-echo '<input type="submit" value="Suchen">';
-echo '</form></p>';
+
+echo '<form action="index.php?pid=intranet_mitglied_listelebende" method="post" class="form-inline">';
+echo '<fieldset>';
+echo '<div class="form-group">';
+echo '<label for="searchterm" class="sr-only">Suchbegriff</label>';
+echo '<input type="text" id="searchterm" name="searchterm" class="form-control" />';
+echo '</div> ';
+echo '<button type="submit" class="btn btn-default">Suchen</button>';
+echo '</fieldset>';
+echo '</form>';
 
 
 // search term given?
-if(isset($_POST['schluesselwort']) && $_POST['schluesselwort'] != ""){
+if(isset($_POST['searchterm']) && $_POST['searchterm'] != ''){
 	echo '<h2>Gefundene Personen</h2>';
 
 	$stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe != "X" AND gruppe != "T" AND gruppe != "C" AND (
@@ -48,37 +56,37 @@ if(isset($_POST['schluesselwort']) && $_POST['schluesselwort'] != ""){
 		semester_reception LIKE :semester_reception OR semester_promotion LIKE :semester_promotion OR
 		semester_philistrierung LIKE :semester_philistrierung OR semester_aufnahme LIKE :semester_aufnahme OR
 		semester_fusion LIKE :semester_fusion OR spitzname LIKE :spitzname) ORDER BY name, vorname');
-	$stmt->bindValue(':anrede', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':titel', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':rang', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':name', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':vorname', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':zusatz1', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':strasse1', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':ort1', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':plz1', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':land1', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':zusatz2', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':strasse2', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':ort2', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':plz2', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':land2', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':telefon1', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':telefon2', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':mobiltelefon', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':email', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':webseite', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':status', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':beruf', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':vita', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':semester_reception', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':semester_promotion', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':semester_philistrierung', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':semester_aufnahme', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':semester_fusion', '%'.$_POST['schluesselwort'].'%');
-	$stmt->bindValue(':spitzname', '%'.$_POST['schluesselwort'].'%');
+	$stmt->bindValue(':anrede', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':titel', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':rang', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':name', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':vorname', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':zusatz1', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':strasse1', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':ort1', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':plz1', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':land1', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':zusatz2', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':strasse2', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':ort2', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':plz2', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':land2', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':telefon1', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':telefon2', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':mobiltelefon', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':email', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':webseite', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':status', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':beruf', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':vita', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':semester_reception', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':semester_promotion', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':semester_philistrierung', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':semester_aufnahme', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':semester_fusion', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':spitzname', '%'.$_POST['searchterm'].'%');
 
-	echo printMitglieder($stmt, 0);
+	printMitglieder($stmt);
 }
 //no search term
 else {
@@ -93,9 +101,7 @@ else {
 		echo '<p>Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
 
 		$stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "" OR gruppe IS NULL ORDER BY name');
-		echo printMitglieder($stmt, 0);
-
-		echo '<p style="clear:both">';
+		printMitglieder($stmt);
 	}
 
 	//Füchse
@@ -108,9 +114,7 @@ else {
 		echo '<h2>Die Fuchsia (' .$anzahl. ')</h2>';
 
 		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'F' ORDER BY name");
-		echo printMitglieder($stmt, 0);
-
-		echo '<p style="clear:both">';
+		printMitglieder($stmt);
 	}
 
 	//Burschen
@@ -132,9 +136,7 @@ else {
 			echo '<h3>Aktive Burschen (' .$anzahl. ')</h3>';
 
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status IS NULL OR (status NOT LIKE '%ex loco%' AND status NOT LIKE '%Inaktiv%')) ORDER BY name");
-			echo printMitglieder($stmt, 0);
-
-			echo '<p style="clear:both">';
+			printMitglieder($stmt);
 		}
 
 		//inaktive Burschen
@@ -147,9 +149,7 @@ else {
 			echo '<h3>Inaktive Burschen und Burschen ex-loco (' .$anzahl. ')</h3>';
 
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%') ORDER BY name");
-			echo printMitglieder($stmt, 0);
-
-			echo '<p style="clear:both">';
+			printMitglieder($stmt);
 		}
 	}
 
@@ -163,9 +163,7 @@ else {
 		echo '<h2>Die alten Herren (' .$anzahl. ')</h2>';
 
 		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'P' ORDER BY name");
-		echo printMitglieder($stmt, 1);
-
-		echo '<p style="clear:both">';
+		printMitglieder($stmt);
 	}
 
 	if($libGenericStorage->loadValueInCurrentModule('showGroupY')){
@@ -179,9 +177,7 @@ else {
 			echo '<h2>Vereinsfreunde (' .$anzahl. ')</h2>';
 
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'Y' ORDER BY name");
-			echo printMitglieder($stmt, 0);
-
-			echo '<p style="clear:both">';
+			printMitglieder($stmt);
 		}
 	}
 }

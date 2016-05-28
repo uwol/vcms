@@ -33,9 +33,7 @@ if($anzahl > 0){
 	echo '<h2>Die Couleurdamen (' .$anzahl. ')</h2>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'C' ORDER BY name");
-	echo printMitglieder($stmt, 0);
-
-	echo '<p style="clear:both">';
+	printMitglieder($stmt);
 }
 
 
@@ -48,8 +46,6 @@ if($anzahl > 0){
 	echo '<h2>Die Gattinnen (' .$anzahl. ')</h2>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'G' OR gruppe = 'W' ORDER BY name");
-	echo printMitglieder($stmt, 0);
-
-	echo '<p style="clear:both">';
+	printMitglieder($stmt);
 }
 ?>

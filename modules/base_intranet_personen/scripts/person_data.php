@@ -233,19 +233,20 @@ if($ownprofile){
 	echo $libMitglied->getMitgliedSignature($personid, 'right');
 }
 
+echo '<h3>Zur Person</h3>';
+
 echo '<div class="vcard">';
-echo '<b>Zur Person</b><br />';
 echo '<div class="fn n">';
 
 if($row['anrede'] != ''){
-	echo $row['anrede'] .' ';
+	echo $row['anrede']. ' ';
 }
 
 if($row['titel'] != ''){
-	echo '<span class="title">'. $row['titel'] .'</span>';
+	echo '<span class="title">' .$row['titel']. '</span> ';
 }
 
-echo '<span class="given-name">'. $row['vorname'] .'</span>';
+echo '<span class="given-name">' .$row['vorname']. '</span>';
 echo '<span class="family-name">';
 
 if($row['praefix'] != ''){
@@ -303,7 +304,7 @@ if($row['status'] != ''){
 * primary address
 */
 if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != ''){
-	echo '<br /><b>Primäradresse</b>';
+	echo '<h3>Primäradresse</h3>';
 	echo '<div class="adr">';
 
 	if($row['zusatz1'] != ''){
@@ -342,7 +343,7 @@ if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row
 * secondary address
 */
 if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != ''){
-	echo '<br /><b>Sekundäradresse</b>';
+	echo '<h3>Sekundäradresse</h3>';
 	echo '<div class="adr">';
 
 	if($row['zusatz2'] != ''){
@@ -380,7 +381,7 @@ if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row
 /*
 * communication
 */
-echo '<br /><b>Kommunikation</b>';
+echo '<h3>Kommunikation</h3>';
 
 if($row['email'] != ''){
 	echo '<div>E-Mail: <a class="email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
@@ -394,7 +395,7 @@ if($row['webseite'] != ''){
 	$webseite = $row['webseite'];
 
 	if(substr($webseite, 0, 7) != 'http://' && substr($webseite, 0, 8) != 'https://'){
-		$webseite = 'http://' . $webseite;
+		$webseite = 'http://' .$webseite;
 	}
 
 	echo '<div>Webseite: <a class="url" href="' .$webseite. '">' .$webseite. '</a></div>';
@@ -412,7 +413,7 @@ if($row['skype'] != ''){
 /*
 * others
 */
-echo '<br /><b>Weiteres</b>';
+echo '<h3>Weiteres</h3>';
 
 if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'K' && $row['gruppe'] != 'Y'){
 	if($row['semester_reception'] != ''){
@@ -433,6 +434,12 @@ if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $r
 
 	if($row['semester_fusion'] != ''){
 		echo '<div>Fusion: ' .$libTime->getSemesterString($row['semester_fusion']). '</div>';
+	}
+}
+
+if($row['gruppe'] == 'F' || $row['gruppe'] == 'B' || $row['gruppe'] == 'P' || $row['gruppe'] == 'T'){
+	if($row['leibmitglied'] > 0){
+		echo '<div>Stammbaum: <a href="index.php?pid=intranet_person_stammbaum&mitgliedid=' .$row['id']. '">öffnen</a></div>';
 	}
 }
 
@@ -457,23 +464,23 @@ if(count($vereine) > 0){
 	echo '<div>Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $vereine). '</div>';
 }
 
-echo '<br /><br /><b>Vita</b>';
 
-if(!$ownprofile && $row['gruppe'] != 'X'){
-	echo ' - <a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
-}
+echo '<h3>Vita</h3>';
 
 if($row['vita_letzterautor'] != ''){
 	echo '<span style="float:right">Letzter Autor: ' .$libMitglied->getMitgliedNameString($row['vita_letzterautor'], 5). '</span>';
 }
 
-if($row['vita'] != ''){
-	echo '<br /><div style="border:1px solid #000000;padding:3px;margin-top:2px">' .nl2br($row['vita']). '</div>';
+if(!$ownprofile && $row['gruppe'] != 'X'){
+	echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
 }
 
-echo '<br />';
-echo '</div>';
+if($row['vita'] != ''){
+	echo '<article>' .nl2br($row['vita']). '</article>';
+}
 
+echo '</div>';
+echo '<hr />';
 
 /*
 * passwort change form
@@ -481,41 +488,25 @@ echo '</div>';
 if($ownprofile){
 	echo '<h2>Passwort ändern</h2>';
 
+	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
+
 	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-
 	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
 
-	echo '<div class="form-group">';
-	echo '<label for="oldpwd" class="col-sm-2 control-label">Altes Passwort</label>';
-	echo '<div class="col-sm-10"><input type="password" id="oldpwd" name="oldpwd" class="form-control" /></div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<label for="newpwd1" class="col-sm-2 control-label">Neues Passwort</label>';
-	echo '<div class="col-sm-10">';
-	echo '<input type="password" id="newpwd1" name="newpwd1" class="form-control" />';
-	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
-	echo '</div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<label for="newpwd2" class="col-sm-2 control-label">Neues Passwort (Wiederholung)</label>';
-	echo '<div class="col-sm-10"><input type="password" id="newpwd2" name="newpwd2" class="form-control" /></div>';
-	echo '</div>';
-
-	echo '<div class="form-group">';
-	echo '<div class="col-sm-offset-2 col-sm-10">';
-	echo '<button type="submit" class="btn btn-default">Neues Passwort speichern</button>';
-	echo '</div>';
-	echo '</div>';
+	$libForm->printTextInput('oldpwd', 'Altes Passwort', '', 'password');
+	$libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'newpwd1');
+	$libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'newpwd2');
+	$libForm->printSubmitButton('Neues Passwort speichern');
 
 	echo '</fieldset>';
 	echo '</form>';
+
+	echo '<hr />';
 }
 
 if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
-	echo '<h2>Daten ändern</h2>';
+	echo '<h2>Stammdaten ändern</h2>';
 
 	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
@@ -529,11 +520,13 @@ if($ownprofile){
 	$stmt->execute();
 	$row2 = $stmt->fetch(PDO::FETCH_ASSOC);
 
-	echo '<h3>Zur Person</h3>';
-
 	$libForm->printTextInput('anrede', 'Anrede', $row2['anrede']);
 	$libForm->printTextInput('titel', 'Titel', $row2['titel']);
 	$libForm->printTextInput('rang', 'Rang', $row2['rang']);
+	$libForm->printTextInput('vorname', 'Vorname', $row2['vorname'], 'text', true);
+	$libForm->printTextInput('prefix', 'Präfix', $row2['prefix'], 'text', true);
+	$libForm->printTextInput('name', 'Nachname', $row2['name'], 'text', true);
+	$libForm->printTextInput('suffix', 'Suffix', $row2['suffix'], 'text', true);
 	$libForm->printTextInput('spitzname', 'Spitzname', $row2['spitzname']);
 	$libForm->printTextInput('beruf', 'Beruf', $row2['beruf']);
 
@@ -541,7 +534,7 @@ if($ownprofile){
 		$libForm->printMitgliederDropDownBox('leibmitglied', 'Leibbursch', $row2['leibmitglied'], true);
 	}
 
-	echo '<h3>Primäradresse</h3>';
+	echo '<hr />';
 
 	$libForm->printTextInput('zusatz1', 'Zusatz', $row2['zusatz1']);
 	$libForm->printTextInput('strasse1', 'Straße', $row2['strasse1']);
@@ -550,7 +543,7 @@ if($ownprofile){
 	$libForm->printTextInput('land1', 'Land', $row2['land1']);
 	$libForm->printTextInput('telefon1', 'Telefon', $row2['telefon1']);
 
-	echo '<h3>Sekundäradresse</h3>';
+	echo '<hr />';
 
 	$libForm->printTextInput('zusatz2', 'Zusatz', $row2['zusatz2']);
 	$libForm->printTextInput('strasse2', 'Straße', $row2['strasse2']);
@@ -559,7 +552,7 @@ if($ownprofile){
 	$libForm->printTextInput('land2', 'Land', $row2['land2']);
 	$libForm->printTextInput('telefon2', 'Telefon', $row2['telefon2']);
 
-	echo '<h3>Kommunikation</h3>';
+	echo '<hr />';
 
 	$libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $row2['mobiltelefon']);
 	$libForm->printTextInput('email', 'E-Mail', $row2['email']);
@@ -567,7 +560,10 @@ if($ownprofile){
 	$libForm->printTextInput('skype', 'Skype', $row2['skype']);
 	$libForm->printTextInput('webseite', 'Webseite', $row2['webseite']);
 
-	echo '<h3>Weiteres</h3>';
+	echo '<hr />';
+
+	$libForm->printRegionDropDownBox('region1', 'Region 1', $row['region1']);
+	$libForm->printRegionDropDownBox('region2', 'Region 2', $row['region2']);
 
 	if($libModuleHandler->moduleIsAvailable("mod_intranet_rundbrief")){
 		$stmt = $libDb->prepare("SELECT empfaenger FROM mod_rundbrief_empfaenger WHERE id=:id");
@@ -598,9 +594,6 @@ if($ownprofile){
 
 		$libForm->printTextInput('anzahlzipfel', 'Zipfelanzahl', $anzahlzipfel);
 	}
-
-	$libForm->printRegionDropDownBox('region1', 'Region 1', $row['region1']);
-	$libForm->printRegionDropDownBox('region2', 'Region 2', $row['region2']);
 }
 
 if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
@@ -635,13 +628,11 @@ $stmt->bindColumn('number', $anzahl);
 $stmt->fetch();
 
 if($anzahl > 0){
-	echo '<h3>Leibbursch</h3>';
+	echo '<h2>Leibbursche</h2>';
 
 	$stmt = $libDb->prepare("SELECT bv.id, bv.anrede, bv.titel, bv.rang, bv.vorname, bv.praefix, bv.name, bv.suffix, bv.status, bv.beruf, bv.ort1, bv.tod_datum, bv.datum_geburtstag, bv.gruppe, bv.leibmitglied FROM base_person AS bs, base_person AS bv WHERE bs.id=:id AND bs.leibmitglied=bv.id");
 	$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
-	echo printMitglieder($stmt, 0);
-
-	echo '<p style="clear:both">';
+	printMitglieder($stmt, 0);
 }
 
 
@@ -655,13 +646,11 @@ $stmt->bindColumn('number', $anzahl);
 $stmt->fetch();
 
 if($anzahl > 0){
-	echo '<h3>Leibverhältnisse</h3>';
+	echo '<h2>Leibverhältnisse</h2>';
 
 	$stmt = $libDb->prepare("SELECT bs.id, bs.anrede, bs.titel, bs.rang, bs.vorname, bs.praefix, bs.name, bs.suffix, bs.status, bs.beruf, bs.ort1, bs.tod_datum, bs.datum_geburtstag, bs.gruppe, bs.leibmitglied FROM base_person AS bs WHERE bs.leibmitglied=:leibmitglied");
 	$stmt->bindValue(':leibmitglied', $personid, PDO::PARAM_INT);
-	echo printMitglieder($stmt, 0);
-
-	echo '<p style="clear:both">';
+	printMitglieder($stmt, 0);
 }
 
 
@@ -676,14 +665,12 @@ $stmt->bindColumn('number', $anzahl);
 $stmt->fetch();
 
 if($anzahl > 0){
-	echo '<h3>Confuchsen</h3>';
+	echo '<h2>Confuchsen</h2>';
 
 	$stmt = $libDb->prepare("SELECT confuchs.id, confuchs.anrede, confuchs.titel, confuchs.rang, confuchs.vorname, confuchs.praefix, confuchs.name, confuchs.suffix, confuchs.status, confuchs.beruf, confuchs.ort1, confuchs.tod_datum, confuchs.datum_geburtstag, confuchs.gruppe, confuchs.leibmitglied FROM base_person AS confuchs, base_person AS ich WHERE confuchs.semester_reception = ich.semester_reception AND ich.id=:id1 AND confuchs.id!=:id2");
 	$stmt->bindValue(':id1', $personid, PDO::PARAM_INT);
 	$stmt->bindValue(':id2', $personid, PDO::PARAM_INT);
-	echo printMitglieder($stmt, 0);
-
-	echo '<p style="clear:both">';
+	printMitglieder($stmt, 0);
 }
 
 
@@ -764,8 +751,6 @@ SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname,
 ");
 	$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
 	$stmt->execute();
-	echo printMitglieder($stmt, 0);
-
-	echo '<p style="clear:both">';
+	printMitglieder($stmt, 0);
 }
 ?>

@@ -19,10 +19,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 class LibForm{
 
+	var $colLabel = 2;
+	var $colInput = 10;
+
 	function printTextInput($name, $label, $value, $type = 'text', $disabled = false){
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
 
 		if($disabled){
 			echo ' disabled';
@@ -34,14 +37,14 @@ class LibForm{
 
 	function printTextarea($name, $label, $value){
 		echo '<div class="form-group">';
-		echo '<label for="text" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><textarea id="' .$name. '" name="' .$name. '" rows="10" class="form-control">' .$value. '</textarea></div>';
+		echo '<label for="text" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><textarea id="' .$name. '" name="' .$name. '" rows="10" class="form-control">' .$value. '</textarea></div>';
 		echo '</div>';
 	}
 
 	function printSubmitButton($label){
 		echo '<div class="form-group">';
-		echo '<div class="col-sm-offset-2 col-sm-10">';
+		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
 		echo '<button type="submit" class="btn btn-default">' .$label. '</button>';
 		echo '</div>';
 		echo '</div>';
@@ -51,8 +54,8 @@ class LibForm{
 		global $libDb, $libMitglied;
 
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
 			echo ' disabled';
@@ -85,8 +88,8 @@ class LibForm{
 		global $libDb;
 
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
 			echo ' disabled';
@@ -119,8 +122,8 @@ class LibForm{
 		global $libDb;
 
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
 			echo ' disabled';
@@ -153,8 +156,8 @@ class LibForm{
 		global $libDb;
 
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
 			echo ' disabled';
@@ -187,8 +190,8 @@ class LibForm{
 		global $libDb;
 
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
 			echo ' disabled';
@@ -221,8 +224,8 @@ class LibForm{
 		global $libDb;
 
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
 			echo ' disabled';
@@ -262,8 +265,8 @@ class LibForm{
 		global $libDb;
 
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><select id="' .$name. '" name="' .$name. '"';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		if($disabled){
 			echo ' disabled';
@@ -294,8 +297,8 @@ class LibForm{
 
 	function printBoolSelectBox($name, $label, $selectedValue = 0){
 		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-2 control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10"><select name="' .$name. '" class="form-control">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select name="' .$name. '" class="form-control">';
 		echo '<option value="1"';
 
 		if($selectedValue == 1){

@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 require('lib/mitglieder.php');
 
 echo '<h1>Regionalzirkel</h1>';
@@ -43,8 +44,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
 		$stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
 
-		echo printMitglieder($stmt2, 0);
-		echo '<p style="clear:both">';
+		printMitglieder($stmt2);
 	}
 }
 ?>
