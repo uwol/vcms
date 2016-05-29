@@ -17,14 +17,91 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
-echo "\r\n";
-echo '          </main>' . "\r\n";
-echo '        </div>' . "\r\n";
-echo '      </div>' . "\r\n";
-echo '      <div class="row">' . "\r\n";
-echo '        <footer class="col-md-12"></footer>' . "\r\n";
-echo '      </div>' . "\r\n";
-echo '    </div>' . "\r\n";
-echo '  </body>' . "\r\n";
-echo '</html>' . "\r\n";
+echo PHP_EOL;
+echo '          </main>' . PHP_EOL;
+echo '        </div>' . PHP_EOL;
+echo '      </div>' . PHP_EOL;
+echo '      <div class="row">' . PHP_EOL;
+echo '        <div class="col-md-12">' . PHP_EOL;
+echo '          <footer>' . PHP_EOL;
+echo '            <div class="social-buttons text-right">' . PHP_EOL;
+
+
+$title = $libConfig->verbindungName;
+$description = $libConfig->seiteBeschreibung;
+
+
+//facebook
+$fb_url = 'http://' .$libConfig->sitePath;
+$fb_likebutton_url = $libGenericStorage->loadValue('mod_internet_home', 'fb_likebutton_url');
+
+if($fb_likebutton_url != ''){
+	$fb_url = $fb_likebutton_url;
+}
+
+echo '<script type="text/javascript">';
+echo 'function insertFbLikeButton() {';
+echo '	var container = document.getElementById("fblikebuttoncontainer");';
+echo '	fbFrame = document.createElement("iframe");';
+echo '	fbFrame.setAttribute("src", "http://www.facebook.com/plugins/like.php?layout=button_count&show_faces=false&width=150&action=like&colorscheme=light&height=22&href=' .urlencode($fb_url). '");';
+echo '	fbFrame.setAttribute("scrolling", "no");';
+echo '	fbFrame.setAttribute("frameborder", 0);';
+echo '	fbFrame.style.border = "none";';
+echo '	fbFrame.style.overflow = "hidden";';
+echo '	fbFrame.style.width = "150px";';
+echo '	fbFrame.style.height = "22px";';
+echo '	fbFrame.setAttribute("allowTransparency", true);';
+echo '  container.style.display = "block";';
+echo '	container.replaceChild(fbFrame, document.getElementById("fblikebuttonlink"));';
+echo '}';
+echo '</script>';
+
+echo '<span id="fblikebuttoncontainer">';
+echo '<a id="fblikebuttonlink" onclick="insertFbLikeButton();" style="cursor:pointer;text-decoration:none">';
+echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
+echo '</a>';
+echo '</span> ';
+
+// google+
+$googleplus_url = 'http://' .$libConfig->sitePath;
+
+echo '<script type="text/javascript">';
+echo 'function insertGooglePlusButton() {';
+echo '	var container = document.getElementById("googleplusbuttoncontainer");';
+echo '	googleplusScript = document.createElement("script");';
+echo '	googleplusScript.setAttribute("src", "https://apis.google.com/js/plusone.js");';
+echo '	googleplusScript.setAttribute("type", "text/javascript");';
+echo '	plusoneButton = document.createElement("div");';
+echo '  plusoneButton.setAttribute("data-size", "medium");';
+echo '	plusoneButton.setAttribute("class", "g-plusone");';
+echo '  container.style.display = "block";';
+echo '	container.appendChild(googleplusScript);';
+echo '	container.replaceChild(plusoneButton, document.getElementById("googleplusbuttonlink"));';
+echo '}';
+echo '</script>';
+
+echo '<span id="googleplusbuttoncontainer">';
+echo '<a id="googleplusbuttonlink" onclick="insertGooglePlusButton();" style="cursor:pointer;text-decoration:none">';
+echo '<img src="styles/icons/social/google-plus.svg" alt="G+" class="icon" />';
+echo '</a>';
+echo '</span> ';
+
+//twitter
+$url = 'http://' .$libConfig->sitePath;
+echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
+echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
+echo '</a> ';
+
+//rss
+echo '<a href="http://' .$libConfig->sitePath. '/inc.php?iid=internet_home_rssfeed">';
+echo '<img src="styles/icons/social/rss.svg" alt="RSS" class="icon" />';
+echo '</a> ';
+
+echo '            </div>' . PHP_EOL;
+echo '          </footer>' . PHP_EOL;
+echo '        </div>' . PHP_EOL;
+echo '      </div>' . PHP_EOL;
+echo '    </div>' . PHP_EOL;
+echo '  </body>' . PHP_EOL;
+echo '</html>' . PHP_EOL;
 ?>

@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
+
 if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
 	$libGenericStorage->saveValueInCurrentModule('fb:admins', 0);
 }
@@ -34,7 +35,7 @@ echo '<h1>Willkommen</h1>';
 echo '<div class="row">';
 
 include("elements/announcements.php");
-include("elements/nextevent.php");
+include("elements/nextevents.php");
 include("elements/thumbnails.php");
 
 echo '</div>';

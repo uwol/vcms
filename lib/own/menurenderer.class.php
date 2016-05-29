@@ -34,16 +34,16 @@ class LibMenuRenderer{
 		$menuAdministration->reduceByAccessRestriction($gruppe, $aemter);
 
 		$retstr = '';
-		$retstr .= '          <nav class="navbar navbar-default">' . "\r\n";
-        $retstr .= '            <div class="container-fluid">' . "\r\n";
+		$retstr .= '          <nav class="navbar navbar-default">' . PHP_EOL;
+        $retstr .= '            <div class="container-fluid">' . PHP_EOL;
 
         $retstr .= $this->getNavbarCollapsed();
 
         $retstr .= $this->getNavbarInternet($menuInternet, $aktivesPid);
         $retstr .= $this->getNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid);
 
-		$retstr .= '            </div>' . "\r\n";
-		$retstr .= '          </nav>' . "\r\n";
+		$retstr .= '            </div>' . PHP_EOL;
+		$retstr .= '          </nav>' . PHP_EOL;
 
 		return $retstr;
 	}
@@ -54,11 +54,11 @@ class LibMenuRenderer{
 		$rootMenuFolderInternet = $menuInternet->getRootMenuFolder();
 
 		if($rootMenuFolderInternet->hasElements()){
-			$retstr .= '              <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . "\r\n";
-			$retstr .= '                <ul class="nav navbar-nav navbar-right">' . "\r\n";
+			$retstr .= '              <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
+			$retstr .= '                <ul class="nav navbar-nav navbar-right">' . PHP_EOL;
 			$retstr .= $this->getMenuLevel($rootMenuFolderInternet, 0, $aktivesPid);
-			$retstr .= '                </ul>' . "\r\n";
-			$retstr .= '              </div>' . "\r\n";
+			$retstr .= '                </ul>' . PHP_EOL;
+			$retstr .= '              </div>' . PHP_EOL;
 		}
 
 		return $retstr;
@@ -71,12 +71,12 @@ class LibMenuRenderer{
 		$rootMenuFolderAdministration = $menuAdministration->getRootMenuFolder();
 
 		if($rootMenuFolderIntranet->hasElements()){
-			$retstr .= '              <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . "\r\n";
-			$retstr .= '                <ul class="nav navbar-nav navbar-right">' . "\r\n";
+			$retstr .= '              <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . PHP_EOL;
+			$retstr .= '                <ul class="nav navbar-nav navbar-right">' . PHP_EOL;
 			$retstr .= $this->getMenuLevel($rootMenuFolderIntranet, 0, $aktivesPid);
 			$retstr .= $this->getMenuLevel($rootMenuFolderAdministration, 0, $aktivesPid);
-			$retstr .= '                </ul>' . "\r\n";
-			$retstr .= '              </div>' . "\r\n";
+			$retstr .= '                </ul>' . PHP_EOL;
+			$retstr .= '              </div>' . PHP_EOL;
 		}
 
 		return $retstr;
@@ -97,11 +97,11 @@ class LibMenuRenderer{
 
 				$retstr .= '<a href="index.php?pid=' . $folderElement->getPid() . '">';
 				$retstr .= $folderElement->getName();
-				$retstr .= '</a></li>' . "\r\n";
+				$retstr .= '</a></li>' . PHP_EOL;
 			}
 			//folder?
 			elseif($folderElement->getType() == 2){
-				$retstr .= $this->defaultIndent . $this->indent($depth) . '<li class="dropdown">' . "\r\n";
+				$retstr .= $this->defaultIndent . $this->indent($depth) . '<li class="dropdown">' . PHP_EOL;
 
 				$retstr .= $this->defaultIndent . $this->indent($depth) . '  <a href="index.php?';
 
@@ -116,22 +116,22 @@ class LibMenuRenderer{
 
 				$retstr .= '" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
 				$retstr .= $folderElement->getName();
-				$retstr .= '<span class="caret"></span></a>' . "\r\n";
+				$retstr .= '<span class="caret"></span></a>' . PHP_EOL;
 
 				//menu folder with elements?
 				if($folderElement->hasElements()){
-					$retstr .= $this->defaultIndent . $this->indent($depth) . '  <ul class="dropdown-menu">' . "\r\n";
+					$retstr .= $this->defaultIndent . $this->indent($depth) . '  <ul class="dropdown-menu">' . PHP_EOL;
 					$retstr .= $this->getMenuLevel($folderElement, $depth+1, $pid);
-					$retstr .= $this->defaultIndent . $this->indent($depth) . '  </ul>' . "\r\n";
+					$retstr .= $this->defaultIndent . $this->indent($depth) . '  </ul>' . PHP_EOL;
 				}
 
-				$retstr .= $this->defaultIndent . $this->indent($depth) . '</li>' . "\r\n";
+				$retstr .= $this->defaultIndent . $this->indent($depth) . '</li>' . PHP_EOL;
 			}
 			//external link?
 			elseif($folderElement->getType() == 3){
 				$retstr .= $this->defaultIndent . $this->indent($depth) . '<li><a href="' .$folderElement->getPid(). '">';
 				$retstr .= $folderElement->getName();
-				$retstr .= '</a></li>' . "\r\n";
+				$retstr .= '</a></li>' . PHP_EOL;
 			}
 		}
 
@@ -141,14 +141,14 @@ class LibMenuRenderer{
 	function getNavbarCollapsed(){
 		$retstr = '';
 
-		$retstr .= '              <div class="navbar-header">' . "\r\n";
-		$retstr .= '                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . "\r\n";
-        $retstr .= $this->defaultIndent . '<span class="sr-only">Navigation</span>' . "\r\n";
-        $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . "\r\n";
-        $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . "\r\n";
-		$retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . "\r\n";
-		$retstr .= '                </button>' . "\r\n";
-		$retstr .= '              </div>' . "\r\n";
+		$retstr .= '              <div class="navbar-header">' . PHP_EOL;
+		$retstr .= '                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . PHP_EOL;
+        $retstr .= $this->defaultIndent . '<span class="sr-only">Navigation</span>' . PHP_EOL;
+        $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
+        $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
+		$retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
+		$retstr .= '                </button>' . PHP_EOL;
+		$retstr .= '              </div>' . PHP_EOL;
 
 		return $retstr;
 	}

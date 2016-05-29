@@ -23,12 +23,13 @@ if(!is_object($libGlobal))
 
 echo '<div class="col-md-8">';
 echo '<h2>Ankündigungen</h2>';
-echo '<hr />';
 
 $stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum = '0000-00-00 00:00:00') ORDER BY startdatum DESC LIMIT 0,3");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+	echo '<hr />';
+
 	echo '<div class="row">';
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$row['id']. '.jpg';
 
@@ -43,7 +44,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</div>';
 
 	echo '</div>';
-	echo '<hr />';
 }
 
 // link
@@ -53,12 +53,12 @@ $stmt->bindColumn('number', $number);
 $stmt->fetch();
 
 if($number > 3){
+	echo '<hr />';
 	echo '<div class="row">';
 	echo '<div class="col-xs-12">';
 	echo '<a href="index.php?pid=home_ankuendigungen">Weitere Ankündigungen ...</a>';
 	echo '</div>';
 	echo '</div>';
-	echo '<hr />';
 }
 
 echo '</div>';

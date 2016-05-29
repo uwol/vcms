@@ -52,6 +52,5 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</p>';
 }
 
-echo '<hr />';
 echo '</div>';
 ?>

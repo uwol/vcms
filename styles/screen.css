@@ -11,13 +11,16 @@ fieldset {
 	border: 1px solid #333;
 }
 
+
 #container {
 	min-height: 100%;
 }
 
+
 #logo {
 	height: 100px;
 }
+
 
 #header h1 a, #header h2 a {
 	text-decoration: none;
@@ -81,86 +84,89 @@ nav .navbar-intranet li a {
 }
 
 
-#content {
+main, footer {
 	background: rgba(255, 255, 255, 0.7);
-	border-top: 1px solid #333;
 	padding: 1em;
 }
 
-#content h1 {
+main {
+	border-top: 1px solid #333;
+}
+
+main h1 {
 	font-size: 1.5em;
 	font-weight: bolder;
 	margin: 10pt 5pt 10pt 10pt;
 	text-align: center;
 }
 
-#content h2 {
+main h2 {
 	font-size: 1.2em;
 	font-weight: bold;
 	margin: 10pt 5pt 10pt 10pt;
 	text-align: center;
 }
 
-#content h3 {
+main h3 {
 	font-size: 1.0em;
 	font-weight: bold;
 }
 
-#content h4 {
+main h4 {
 	font-size: 1.0em;
 	font-weight: bold;
 }
 
-#content a {
+main a {
 	text-decoration: none;
 }
 
-#content hr {
+main hr {
 	clear: both;
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
 
-#content table {
+main table {
 	width: 100%;
 	border-width: 0;
 	margin: 0;
 	padding: 0;
 }
 
-#content th {
+main th {
 	font-weight: bold;
 	height: 20px;
 	text-align: center;
 	vertical-align: middle;
 }
 
-#content td {
+main td {
 	vertical-align: top;
 	border-width: 0;
 }
 
-#content dd {
+main dd {
 	margin-left: 2em;
 }
 
-#content .icon {
+main .icon {
 	width: 24px;
 	margin: 0 2px;
 }
 
-#content .icon_small {
+main .icon_small {
 	width: 14px;
 	margin: 0 2px;
 }
 
-#content .notificationBox {
+main .notificationBox {
 	border: 1px solid green;
 	background-color: #58FA58;
 	padding: 1px;
 }
 
-#content .errorBox {
+main .errorBox {
 	border: 1px solid red;
 	background-color: #F6CECE;
 	padding: 1px;
@@ -168,98 +174,99 @@ nav .navbar-intranet li a {
 
 /* member signature */
 
-#content .memberSignatureBox {
+main .memberSignatureBox {
 	width: 100px;
 	line-height: 0;
 }
 
-#content .memberSignatureImg {
+main .memberSignatureImg {
 	width: 100px;
 	height: 133px;
 	margin: 0;
 }
 
-#content .memberActivityBar {
+main .memberActivityBar {
 	display: inline-block;
 	height: .2em;
 	margin: .2em 0 0 0;
 }
 
-#content .memberActivityBarActive {
+main .memberActivityBarActive {
 	background-color: black;
 }
 
-#content .memberActivityBarInactive {
+main .memberActivityBarInactive {
 	background-color: white;
 }
 
 /* calendar */
 
-#content .calendarYear {
+main .calendarYear {
 	table-layout: fixed;
 	border-spacing: 2px;
 	border-collapse: separate;
 	width: 100%;
 }
 
-#content .calendarMonthName {
+main .calendarMonthName {
 	text-align: center;
 }
 
-#content .calendarDayName {
+main .calendarDayName {
 	text-align: center;
 	font-size: 10pt;
 	font-weight: bold;
 }
 
-#content .calendarDay {
+main .calendarDay {
 	border: thin solid #000000;
 	font-size: 8pt;
 }
 
-#content .calendarEvent {
+main .calendarEvent {
 	text-align: center;
 	padding: 5px;
 }
 
-#content .calendarEvent .summary {
+main .calendarEvent .summary {
 	font-size: 8pt;
 }
 
 /* gallery */
 
-#content .gallery {
+main .gallery {
 	text-align: center;
 }
 
-#content .gallery .thumbBox {
+main .gallery .thumbBox {
 	margin-bottom: 30px;
 }
 
-#content .gallery .public {
+main .gallery .public {
 	border: 2px solid green;
 }
 
-#content .gallery .internal {
+main .gallery .internal {
 	border: 2px solid yellow;
 }
 
-#content .gallery .private {
+main .gallery .private {
 	border: 2px solid red;
 }
 
-#content .carousel-control.left, #content .carousel-control.right {
+main .carousel-control.left, main .carousel-control.right {
 	background-image:none;
 }
 
 /* thumbnail */
 
-#content .thumbnail {
+main .thumbnail {
 	max-height: 150px;
 	margin-bottom: 0;
 }
 
 
-footer {
-	text-align: center;
+footer .social-buttons .icon {
+	width: 24px;
+	margin: 5px;
 }
