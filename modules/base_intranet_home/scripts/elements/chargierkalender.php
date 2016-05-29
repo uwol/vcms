@@ -60,12 +60,13 @@ $stmtCount->fetch();
 // if there are entries
 if($count > 0){
 	echo '<h2>Chargierkalender</h2>';
-	echo '<hr />';
 
 	$stmt = $libDb->prepare('SELECT * FROM mod_chargierkalender_veranstaltung WHERE datum >= NOW() ORDER BY datum LIMIT 0,2');
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		echo '<hr />';
+
 		echo '<form action="index.php?pid=intranet_home" method="post">';
 		echo '<input type="hidden" name="chargierveranstaltungid" value="' .$row['id']. '" />';
 
@@ -93,7 +94,6 @@ if($count > 0){
 		}
 
 		echo '</a>';
-		echo '<hr />';
 	}
 }
 ?>

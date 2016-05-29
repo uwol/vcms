@@ -60,12 +60,13 @@ $stmtCount->fetch();
 // if there are entries
 if($count > 0){
 	echo '<h2>Veranstaltungen</h2>';
-	echo '<hr />';
 
 	$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,3');
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		echo '<hr />';
+
 		echo '<form action="index.php?pid=intranet_home" method="post">';
 		echo '<input type="hidden" name="eventid" value="' .$row['id']. '" />';
 
@@ -85,7 +86,6 @@ if($count > 0){
 		echo '</form>';
 		echo '<b>'.$libTime->formatDateTimeString($row['datum'], 1).'</b> - ';
 		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid='.$row['id'].'">'.$row['titel'].'</a>';
-		echo '<hr />';
 	}
 }
 ?>

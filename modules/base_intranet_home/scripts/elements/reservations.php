@@ -33,12 +33,13 @@ $stmtCount->fetch();
 // if there are entries
 if($count > 0){
 	echo '<h2>Reservierungen</h2>';
-	echo '<hr />';
 
 	$stmt = $libDb->prepare("SELECT person, datum, beschreibung FROM mod_reservierung_reservierung WHERE DATEDIFF(NOW(), datum) <= 0 ORDER BY datum LIMIT 0,2");
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		echo '<hr />';
+
 		$date = $libTime->formatDateTimeString($row['datum'], 2);
 
 		echo $libMitglied->getMitgliedSignature($row['person'], 'right');
@@ -53,8 +54,6 @@ if($count > 0){
 
 			echo '</a>';
 		}
-
-		echo '<hr />';
 	}
 }
 ?>

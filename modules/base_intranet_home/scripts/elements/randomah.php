@@ -68,6 +68,4 @@ if(is_numeric($row['id'])){
 } else {
 	echo 'In der Datenbank sind keine alten Herren vorhanden.';
 }
-
-echo '<hr />';
 ?>

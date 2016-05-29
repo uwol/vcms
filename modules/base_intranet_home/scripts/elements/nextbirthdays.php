@@ -63,6 +63,4 @@ echo '</dl>';
 if($i==0){
 	echo '<p>In der Datenbank sind bei den Mitgliedern keine Geburtstage angegeben.</p>';
 }
-
-echo '<hr />';
 ?>
