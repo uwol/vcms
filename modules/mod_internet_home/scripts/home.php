@@ -24,12 +24,17 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
 	$libGenericStorage->saveValueInCurrentModule('fb:admins', 0);
 }
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('fb_likebutton_url')){
+	$libGenericStorage->saveValueInCurrentModule('fb_likebutton_url', '');
+}
+
+
 echo '<h1>Willkommen</h1>';
 
 echo '<div class="row">';
 
 include("elements/announcements.php");
 include("elements/nextevent.php");
-include("elements/randomimage.php");
+include("elements/thumbnails.php");
 
 echo '</div>';

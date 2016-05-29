@@ -54,7 +54,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$keys = array_keys($pictures);
 		$pictureid = $keys[$zufallszahl];
 
-		echo '<section class="col-md-3">';
+		echo '<section class="col-sm-6 col-md-4 col-lg-3">';
 		echo '<h3>' .wordwrap($row['titel'], 50, '-', 1). '</h3> ';
 
 		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
