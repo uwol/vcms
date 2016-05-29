@@ -104,9 +104,22 @@ echo $libString->getNotificationBoxText();
 echo '<h2>Kontaktadresse</h2>';
 
 echo '<div class="row">';
-echo '<section class="col-sm-8">';
+echo '<div class="col-sm-8">';
+echo '<address>';
 
 echo $libConfig->verbindungName .'<br /><br />';
+
+if($libConfig->verbindungZusatz != ''){
+	echo $libConfig->verbindungZusatz.'<br />';
+}
+
+echo $libConfig->verbindungStrasse . '<br />';
+echo $libConfig->verbindungPlz .' '.$libConfig->verbindungOrt . '<br />';
+echo $libConfig->verbindungLand . '<br />';
+echo $libConfig->verbindungTelefon . '<br />';
+echo $libConfig->emailInfo . '<br />';
+
+echo '</address>';
 
 $vorstand = $libVerein->getAnsprechbarerAktivenVorstandIds();
 
@@ -138,19 +151,7 @@ if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['qu
 	echo 'Quaestor: '.$libMitglied->getMitgliedNameString($vorstand['quaestor'],0).'<br />';
 }
 
-if($libConfig->verbindungZusatz != ''){
-	echo $libConfig->verbindungZusatz.'<br />';
-}
-
-echo '<br />';
-
-echo $libConfig->verbindungStrasse . '<br />';
-echo $libConfig->verbindungPlz .' '.$libConfig->verbindungOrt . '<br />';
-echo $libConfig->verbindungLand . '<br />';
-echo $libConfig->verbindungTelefon . '<br />';
-echo $libConfig->emailInfo . '<br />';
-
-echo '</section>';
+echo '</div>';
 
 echo '<aside class="col-sm-4">';
 echo '<img src="' . $libModuleHandler->getModuleDirectory() . 'custom/img/haus.jpg" alt="Haus" class="img-responsive center-block" />';
