@@ -209,33 +209,10 @@ echo '</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-if($ownprofile){
-	echo '<div style="float:right;text-align:right">';
-	echo $libMitglied->getMitgliedSignature($personid, 'right');
-	echo '</div>';
+echo '<div class="row">';
+echo '<div class="col-sm-9 vcard">';
 
-	echo '<div style="float:right;text-align:right">';
-
-	//image upload form
-	echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'">';
-	echo '<input name="bilddatei" type="file" size="10" /><br />';
-	echo '<input type="submit" value="Foto hochladen" style="width: 10em" />';
-	echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
-	echo '</form>';
-
-	//image deletion form
-	echo '<form method="post" action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'">';
-	echo '<input type="hidden" name="formtyp" value="fotodatendelete" />';
-	echo '<input type="submit" value="Foto löschen" style="width: 10em" />';
-	echo '</form>';
-	echo '</div>';
-} else {
-	echo $libMitglied->getMitgliedSignature($personid, 'right');
-}
-
-echo '<h3>Zur Person</h3>';
-
-echo '<div class="vcard">';
+echo '<div>';
 echo '<div class="fn n">';
 
 if($row['anrede'] != ''){
@@ -246,7 +223,7 @@ if($row['titel'] != ''){
 	echo '<span class="title">' .$row['titel']. '</span> ';
 }
 
-echo '<span class="given-name">' .$row['vorname']. '</span>';
+echo '<span class="given-name">' .$row['vorname']. '</span> ';
 echo '<span class="family-name">';
 
 if($row['praefix'] != ''){
@@ -299,13 +276,18 @@ if($row['status'] != ''){
 	echo '<div>Status: ' .$row['status']. '</div>';
 }
 
+if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
+	echo '<div>Ehepartner: <a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['heirat_partner']. '" />' .$libMitglied->getMitgliedNameString($row['heirat_partner'], 5). '</a></div>';
+}
+
+echo '</div>';
 
 /*
 * primary address
 */
 if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != ''){
-	echo '<h3>Primäradresse</h3>';
-	echo '<div class="adr">';
+	echo '<hr />';
+	echo '<address class="adr">';
 
 	if($row['zusatz1'] != ''){
 		echo '<div>Zusatz: <span class="extended-address">' .$row['zusatz1']. '</span></div>';
@@ -335,7 +317,7 @@ if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row
 		echo '<div>letzte Änderung: ' .$libTime->convertMysqlDateToDatum($row['datum_adresse1_stand'], 1). '</div>';
 	}
 
-	echo '</div>';
+	echo '</address>';
 }
 
 
@@ -343,8 +325,8 @@ if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row
 * secondary address
 */
 if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != ''){
-	echo '<h3>Sekundäradresse</h3>';
-	echo '<div class="adr">';
+	echo '<hr />';
+	echo '<address class="adr">';
 
 	if($row['zusatz2'] != ''){
 		echo '<div>Zusatz: <span class="extended-address">' .$row['zusatz2']. '</span></div>';
@@ -374,48 +356,54 @@ if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row
 		echo '<div>letzte Änderung: ' .$libTime->convertMysqlDateToDatum($row['datum_adresse2_stand'], 1). '</div>';
 	}
 
-	echo '</div>';
+	echo '</address>';
 }
 
 
 /*
 * communication
 */
-echo '<h3>Kommunikation</h3>';
+if($row['email'] != '' || $row['mobiltelefon'] != '' || $row['webseite'] != '' || $row['jabber'] != '' ||  $row['skype'] != ''){
+	echo '<hr />';
+	echo '<div>';
 
-if($row['email'] != ''){
-	echo '<div>E-Mail: <a class="email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
-}
-
-if($row['mobiltelefon'] != ''){
-	echo '<div>Mobiltelefon: <span class="tel">' .$row['mobiltelefon']. '</span></div>';
-}
-
-if($row['webseite'] != ''){
-	$webseite = $row['webseite'];
-
-	if(substr($webseite, 0, 7) != 'http://' && substr($webseite, 0, 8) != 'https://'){
-		$webseite = 'http://' .$webseite;
+	if($row['email'] != ''){
+		echo '<div>E-Mail: <a class="email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
 	}
 
-	echo '<div>Webseite: <a class="url" href="' .$webseite. '">' .$webseite. '</a></div>';
-}
+	if($row['mobiltelefon'] != ''){
+		echo '<div>Mobiltelefon: <span class="tel">' .$row['mobiltelefon']. '</span></div>';
+	}
 
-if($row['jabber'] != ''){
-	echo '<div>XMPP: <a class="url" href="xmpp:' .$row['jabber']. '">' .$row['jabber']. '</a></div>';
-}
+	if($row['webseite'] != ''){
+		$webseite = $row['webseite'];
 
-if($row['skype'] != ''){
-	echo '<div>Skype: <a class="url" href="skype:' .$row['skype']. '">' .$row['skype']. '</a></div>';
+		if(substr($webseite, 0, 7) != 'http://' && substr($webseite, 0, 8) != 'https://'){
+			$webseite = 'http://' .$webseite;
+		}
+
+		echo '<div>Webseite: <a class="url" href="' .$webseite. '">' .$webseite. '</a></div>';
+	}
+
+	if($row['jabber'] != ''){
+		echo '<div>XMPP: <a class="url" href="xmpp:' .$row['jabber']. '">' .$row['jabber']. '</a></div>';
+	}
+
+	if($row['skype'] != ''){
+		echo '<div>Skype: <a class="url" href="skype:' .$row['skype']. '">' .$row['skype']. '</a></div>';
+	}
+
+	echo '</div>';
 }
 
 
 /*
 * others
 */
-echo '<h3>Weiteres</h3>';
-
 if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'K' && $row['gruppe'] != 'Y'){
+	echo '<hr />';
+	echo '<div>';
+
 	if($row['semester_reception'] != ''){
 		echo '<div>Reception: ' .$libTime->getSemesterString($row['semester_reception']). '</div>';
 	}
@@ -435,6 +423,8 @@ if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $r
 	if($row['semester_fusion'] != ''){
 		echo '<div>Fusion: ' .$libTime->getSemesterString($row['semester_fusion']). '</div>';
 	}
+
+	echo '</div>';
 }
 
 if($row['gruppe'] == 'F' || $row['gruppe'] == 'B' || $row['gruppe'] == 'P' || $row['gruppe'] == 'T'){
@@ -443,9 +433,6 @@ if($row['gruppe'] == 'F' || $row['gruppe'] == 'B' || $row['gruppe'] == 'P' || $r
 	}
 }
 
-if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
-	echo '<div>Ehepartner: <a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['heirat_partner']. '" />' .$libMitglied->getMitgliedNameString($row['heirat_partner'], 5). '</a></div>';
-}
 
 /*
 * assocations
@@ -465,22 +452,49 @@ if(count($vereine) > 0){
 }
 
 
-echo '<h3>Vita</h3>';
-
-if($row['vita_letzterautor'] != ''){
-	echo '<span style="float:right">Letzter Autor: ' .$libMitglied->getMitgliedNameString($row['vita_letzterautor'], 5). '</span>';
-}
-
-if(!$ownprofile && $row['gruppe'] != 'X'){
-	echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
-}
-
 if($row['vita'] != ''){
-	echo '<article>' .nl2br($row['vita']). '</article>';
+	echo '<hr />';
+
+	echo '<article>';
+	echo '<div class="pull-right text-right">';
+
+	if($row['vita_letzterautor'] != ''){
+		echo 'Letzter Autor: ' .$libMitglied->getMitgliedNameString($row['vita_letzterautor'], 5). '<br />';
+	}
+
+	if(!$ownprofile && $row['gruppe'] != 'X'){
+		echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
+	}
+
+	echo '</div>';
+
+	echo nl2br($row['vita']);
+	echo '</article>';
 }
 
 echo '</div>';
-echo '<hr />';
+echo '<div class="col-sm-3">';
+
+echo $libMitglied->getMitgliedSignature($personid);
+
+if($ownprofile){
+	//image upload form
+	echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '">';
+	echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
+	echo '<input name="bilddatei" type="file" size="10" />';
+	echo '<input type="submit" value="Foto hochladen" />';
+	echo '</form>';
+
+	//image deletion form
+	echo '<form method="post" action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'">';
+	echo '<input type="hidden" name="formtyp" value="fotodatendelete" />';
+	echo '<input type="submit" value="Foto löschen" />';
+	echo '</form>';
+}
+
+echo '</div>';
+echo '</div>';
+
 
 /*
 * passwort change form
@@ -501,8 +515,6 @@ if($ownprofile){
 
 	echo '</fieldset>';
 	echo '</form>';
-
-	echo '<hr />';
 }
 
 if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){

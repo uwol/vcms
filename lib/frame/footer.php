@@ -44,12 +44,12 @@ if($fb_url != ''){
 $url = 'http://' .$libConfig->sitePath;
 echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
 echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
-echo '</a> ';
+echo '</a>';
 
 //rss
 echo '<a href="http://' .$libConfig->sitePath. '/inc.php?iid=internet_home_rssfeed">';
 echo '<img src="styles/icons/social/rss.svg" alt="RSS" class="icon" />';
-echo '</a> ';
+echo '</a>';
 
 echo '            </div>' . PHP_EOL;
 echo '          </footer>' . PHP_EOL;
