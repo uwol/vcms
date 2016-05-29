@@ -147,11 +147,7 @@ $libForm->printRegionDropDownBox("region", "Region", "");
 
 echo '<hr />';
 
-
-echo '<div class="form-group">';
-echo '<label class="col-sm-2 control-label">Absender</label>';
-echo '<div class="col-sm-8"><p class="form-control-static">';
-echo $libMitglied->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4);
+$formattedMitgliedNameString = $libMitglied->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4);
 
 $stmt = $libDb->prepare("SELECT email FROM base_person WHERE id=:id");
 $stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
@@ -159,9 +155,9 @@ $stmt->execute();
 $stmt->bindColumn('email', $email);
 $stmt->fetch();
 
-echo ' &lt;' .$email. '&gt;';
-echo '</p></div></div>';
+$formattedSenderString = $formattedMitgliedNameString. ' &lt;' .$email. '&gt;';
 
+$libForm->printStaticText('Absender', $formattedSenderString);
 
 echo '<hr />';
 

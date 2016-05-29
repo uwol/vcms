@@ -64,12 +64,13 @@ $stmt->execute();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo $libMitglied->getMitgliedSignature($row['person'], 'right');
 
-	echo '<h3>' . $libTime->wochentag($row['datum']).', '.$libTime->formatDateTimeString($row['datum'], 2). '</h3>';
-	echo $row['beschreibung'];
+	echo '<time>' . $libTime->wochentag($row['datum']).', '.$libTime->formatDateTimeString($row['datum'], 2). '</time>';
 
 	if($libAuth->getId() == $row['person']){
 		echo ' - <a href="index.php?pid=intranet_reservierung_liste&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">Reservierung löschen</a>';
 	}
+
+	echo '<p>' .$row['beschreibung']. '</p>';
 
 	echo '<hr />';
 }

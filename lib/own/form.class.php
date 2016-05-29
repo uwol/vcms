@@ -52,6 +52,14 @@ class LibForm{
 		echo '</div>';
 	}
 
+	function printStaticText($label, $value){
+		echo '<div class="form-group">';
+		echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><p class="form-control-static">';
+		echo $value;
+		echo '</p></div></div>';
+	}
+
 	function printSubmitButton($label){
 		echo '<div class="form-group">';
 		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
