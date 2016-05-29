@@ -90,7 +90,7 @@ if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'bildupload'){
 		$libImage = new LibImage($libTime, $libGenericStorage);
 		$libImage->saveStartseitenBildByFilesArray($_REQUEST['id'], 'bilddatei');
 	}
-} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'bilddelete'){
+} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'bilddelete'){
 	$libImage = new LibImage($libTime, $libGenericStorage);
 	$libImage->deleteStartseitenBild($_REQUEST['id']);
 }
@@ -107,7 +107,6 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<p>Hier können die Daten einer Ankündigung auf der Startseite bearbeitet werden. Das Startdatum und Verfallsdatum müssen so gewählt werden, dass sich der Zeitraum ergibt, in dem die Ankündigung angezeigt werden soll. Falls der Zeitraum der Ankündigung nicht begrenzt sein soll, kann das Verfallsdatum auf 0000-00-00 00:00:00 belassen werden. Die Ankündigung wird automatisch in das Archiv verschoben, wenn sie verfällt oder neuere Ankündigung existieren.</p>';
-
 echo '<p>Anstatt von HTML können die folgenden <a href="http://de.wikipedia.org/wiki/Bbcode">BBCodes</a> verwendet werden: [b]fett[/b], [i]kursiv[/i], [url=http://www.wikipedia.de]Link[/url]</li>';
 
 /*
@@ -116,6 +115,11 @@ echo '<p>Anstatt von HTML können die folgenden <a href="http://de.wikipedia.org
 if($array['id'] != ''){
 	echo '<p><a href="index.php?pid=intranet_internethome_nachricht_adminliste&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
 }
+
+
+echo '<div class="row">';
+echo '<div class="col-sm-9">';
+
 
 /*
 * form
@@ -145,6 +149,9 @@ echo '</fieldset>';
 echo '</form>';
 
 
+echo '</div>';
+echo '<div class="col-sm-3">';
+
 if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 	if(isset($_REQUEST['id']) && $_REQUEST['id'] != ''){
 		$array['id'] = $_REQUEST['id'];
@@ -153,26 +160,24 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$array['id']. '.jpg';
 
 	if(is_file($posssibleImage)){
-		echo '<img src="' .$posssibleImage. '" style="margin:5px;';
-		list($width, $height, $type, $attr) = getimagesize($posssibleImage);
-
-		if(($width / 4 * 3) >= $height){
-			echo 'width:400px;';
-		} else {
-			echo 'height:300px;';
-		}
-
-		echo '" alt="" /><br />';
+		echo '<div class="col-sm-offset-2 col-sm-10">';
+		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="Veranstaltungsbild" />';
+		echo '</div>';
 	}
 
-	echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id='. $array['id'] .'">';
+	//image upload form
+	echo '<form action="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$array['id']. '" method="post" enctype="multipart/form-data" class="form-horizontal">';
 	echo '<input type="hidden" name="formtyp" value="bildupload" />';
-	echo '<input name="bilddatei" type="file" size="10" />';
-	echo '<input type="submit" value="Bild hochladen" /><br />';
+	$libForm->printFileUpload('bilddatei', 'Bild hochladen');
 	echo '</form>';
 
-	if(is_file($posssibleImage)){
-		echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;aktion=bilddelete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')">Bild löschen</a>';
-	}
+	//image deletion form
+	echo '<form action="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id='. $array['id'] .'" method="post" class="form-horizontal">';
+	echo '<input type="hidden" name="aktion" value="bilddelete" />';
+	$libForm->printSubmitButton('Bild löschen');
+	echo '</form>';
 }
+
+echo '</div>';
+echo '</div>';
 ?>

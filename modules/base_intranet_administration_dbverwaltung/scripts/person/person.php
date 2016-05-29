@@ -196,8 +196,6 @@ if($libAuth->isLoggedin()){
 	}
 
 
-
-
 	/**
 	*
 	* Einleitender Text
@@ -211,28 +209,6 @@ if($libAuth->isLoggedin()){
 
 	echo '<p>Hier können sämtliche Daten einer Person bearbeitet werden. Die Gruppe (Fuchs, Bursch etc.) kann nur von einem Internetwart ausgewählt werden, da sie als Zugangskontrolle für Seiten im VCMS dient.</p>';
 
-	if($mgarray['id'] != ""){
-		echo '<div style="float:right;text-align:right">';
-		echo $libMitglied->getMitgliedSignature($mgarray['id'], "right");
-		echo '</div>';
-
-		echo '<div style="float:right;text-align:right">';
-		//Fotouploadform
-		echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'">';
-		echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
-		echo '<input name="bilddatei" type="file" size="10" /><br />';
-		echo '<input type="submit" value="Foto hochladen" style="width: 10em" />';
-		echo '</form>';
-
-		//Fotolöschform
-		echo '<form method="post" action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'">';
-		echo '<input type="hidden" name="formtyp" value="fotodatendelete" />';
-		echo '<input type="submit" value="Foto löschen" style="width: 10em" />';
-		echo '</form>';
-		echo '</div>';
-	}
-
-
 	/**
 	*
 	* Löschoption
@@ -245,6 +221,9 @@ if($libAuth->isLoggedin()){
 			echo '<p><a href="index.php?pid=intranet_admin_db_personenliste&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
 		}
 	}
+
+	echo '<div class="row">';
+	echo '<div class="col-sm-9">';
 
 
 	/**
@@ -367,6 +346,31 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
+
+
+	echo '</div>';
+	echo '<div class="col-sm-3">';
+
+	if($mgarray['id'] != ""){
+		echo '<div class="col-sm-offset-2 col-sm-10">';
+		echo $libMitglied->getMitgliedSignature($mgarray['id']);
+		echo '</div>';
+
+		//image upload form
+		echo '<form action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'" method="post" enctype="multipart/form-data" class="form-horizontal">';
+		echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
+		$libForm->printFileUpload('bilddatei', 'Foto hochladen');
+		echo '</form>';
+
+		//image deletion form
+		echo '<form action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'" method="post" class="form-horizontal">';
+		echo '<input type="hidden" name="formtyp" value="fotodatendelete" />';
+		$libForm->printSubmitButton('Foto löschen');
+		echo '</form>';
+	}
+
+	echo '</div>';
+	echo '</div>';
 }
 
 function updateGruppeStand($id){

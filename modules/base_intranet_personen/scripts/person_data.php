@@ -475,20 +475,21 @@ if($row['vita'] != ''){
 echo '</div>';
 echo '<div class="col-sm-3">';
 
+echo '<div class="col-sm-offset-2 col-sm-10">';
 echo $libMitglied->getMitgliedSignature($personid);
+echo '</div>';
 
 if($ownprofile){
 	//image upload form
-	echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '">';
+	echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" class="form-horizontal">';
 	echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
-	echo '<input name="bilddatei" type="file" size="10" />';
-	echo '<input type="submit" value="Foto hochladen" />';
+	$libForm->printFileUpload('bilddatei', 'Foto hochladen');
 	echo '</form>';
 
 	//image deletion form
-	echo '<form method="post" action="index.php?pid=intranet_person_daten&amp;personid='. $personid .'">';
+	echo '<form method="post" action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" class="form-horizontal">';
 	echo '<input type="hidden" name="formtyp" value="fotodatendelete" />';
-	echo '<input type="submit" value="Foto löschen" />';
+	$libForm->printSubmitButton('Foto löschen');
 	echo '</form>';
 }
 

@@ -42,6 +42,16 @@ class LibForm{
 		echo '</div>';
 	}
 
+	function printFileUpload($name, $label){
+		echo '<div class="form-group">';
+		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
+		echo '<label class="btn btn-default btn-file">' .$label;
+		echo '<input type="file" name="' .$name. '" onchange="this.form.submit()" style="display:none">';
+		echo '</label>';
+		echo '</div>';
+		echo '</div>';
+	}
+
 	function printSubmitButton($label){
 		echo '<div class="form-group">';
 		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';

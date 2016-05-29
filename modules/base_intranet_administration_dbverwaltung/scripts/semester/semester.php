@@ -202,41 +202,20 @@ if($libAuth->isLoggedin()){
 	* Löschoption
 	*
 	*/
+
 	if($semesterarray['semester'] != ''){
 		echo '<p><a href="index.php?pid=intranet_admin_db_semesterliste&amp;aktion=delete&amp;semester=' .$semesterarray['semester']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
 	}
 
-	/**
-	*
-	* Fotoform einblenden
-	*
-	*/
-	if($aktion != 'blank'){
-		echo '<h2>Semestercover hochladen</h2>';
+	echo '<div class="row">';
+	echo '<div class="col-sm-9">';
 
-		if($semesterarray['semester'] != ''){
-			echo $libTime->getSemesterCoverString($semesterarray['semester']);
-		}
-
-		//Fotouploadform
-		echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_db_semester&amp;semester='. $semesterarray['semester'] .'">';
-		echo '<input type="hidden" name="formtyp" value="semestercoverupload" />';
-		echo '<input name="semestercover" type="file"><br />';
-		echo '<input type="submit" value="Semestercover hochladen"></form>';
-
-		//Fotolöschform
-		echo '<form method="post" action="index.php?pid=intranet_admin_db_semester&amp;semester='. $semesterarray['semester'] .'">';
-		echo '<input type="hidden" name="formtyp" value="semestercoverdelete" />';
-		echo '<input type="submit" value="Semestercover löschen"></form>';
-	}
 
 	/**
 	*
 	* Ausgabe des Forms starten
 	*
 	*/
-	echo '<h2>Semesterdaten</h2>';
-
 	if($aktion == 'blank'){
 		$extraActionParam = "&amp;aktion=insert";
 	} else {
@@ -257,7 +236,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('semester', 'Semester', $semesterarray['semester'], 'text', $semesterDisabled);
 
 	//Vorstand
-	echo '<h3>Vorstand</h3>';
+	echo '<h2>Vorstand</h2>';
 	$libForm->printMitgliederDropDownBox('senior', 'Senior', $semesterarray['senior']);
 	$libForm->printBoolSelectBox('sen_dech', 'Senior Decharge', $semesterarray['sen_dech']);
 	$libForm->printMitgliederDropDownBox('consenior', 'Consenior', $semesterarray['consenior']);
@@ -273,7 +252,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printMitgliederDropDownBox('fuchsmajor2', 'Fuchsmajor 2', $semesterarray['fuchsmajor2']);
 	$libForm->printBoolSelectBox('fm2_dech', 'Fuchsmajor 2 Decharge', $semesterarray['fm2_dech']);
 
-	echo '<h3>Philister-Vorstand</h3>';
+	echo '<h2>Philister-Vorstand</h2>';
 	$libForm->printMitgliederDropDownBox('ahv_senior', 'AHV Senior', $semesterarray['ahv_senior']);
 	$libForm->printMitgliederDropDownBox('ahv_consenior', 'AHV Consenior', $semesterarray['ahv_consenior']);
 	$libForm->printMitgliederDropDownBox('ahv_keilbeauftragter', 'AHV Keilbeauftragter', $semesterarray['ahv_keilbeauftragter']);
@@ -282,13 +261,13 @@ if($libAuth->isLoggedin()){
 	$libForm->printMitgliederDropDownBox('ahv_beisitzer1', 'AHV Beisitzer 1', $semesterarray['ahv_beisitzer1']);
 	$libForm->printMitgliederDropDownBox('ahv_beisitzer2', 'AHV Beisitzer 2', $semesterarray['ahv_beisitzer2']);
 
-	echo '<h3>Hausvereins-Vorstand</h3>';
+	echo '<h2>Hausvereins-Vorstand</h2>';
 	$libForm->printMitgliederDropDownBox('hv_vorsitzender', 'HV Vorsitzender', $semesterarray['hv_vorsitzender']);
 	$libForm->printMitgliederDropDownBox('hv_kassierer', 'HV Kassierer', $semesterarray['hv_kassierer']);
 	$libForm->printMitgliederDropDownBox('hv_beisitzer1', 'HV Beisitzer 1', $semesterarray['hv_beisitzer1']);
 	$libForm->printMitgliederDropDownBox('hv_beisitzer2', 'HV Beisitzer 2', $semesterarray['hv_beisitzer2']);
 
-	echo '<h3>Warte</h3>';
+	echo '<h2>Warte</h2>';
 	$libForm->printMitgliederDropDownBox('archivar', 'Archivar', $semesterarray['archivar']);
 	$libForm->printMitgliederDropDownBox('redaktionswart', 'Redaktionswart', $semesterarray['redaktionswart']);
 	$libForm->printMitgliederDropDownBox('hauswart', 'Hauswart', $semesterarray['hauswart']);
@@ -345,5 +324,36 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
+
+	echo '</div>';
+	echo '<div class="col-sm-3">';
+
+	/**
+	*
+	* Fotoform einblenden
+	*
+	*/
+	if($aktion != 'blank'){
+		if($semesterarray['semester'] != ''){
+			echo '<div class="col-sm-12">';
+			echo $libTime->getSemesterCoverString($semesterarray['semester']);
+			echo '</div>';
+		}
+
+		//image upload form
+		echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_db_semester&amp;semester='. $semesterarray['semester'] .'" class="form-horizontal">';
+		echo '<input type="hidden" name="formtyp" value="semestercoverupload" />';
+		$libForm->printFileUpload('semestercover', 'Semestercover hochladen');
+		echo '</form>';
+
+		//image deletion form
+		echo '<form method="post" action="index.php?pid=intranet_admin_db_semester&amp;semester='. $semesterarray['semester'] .'" class="form-horizontal">';
+		echo '<input type="hidden" name="formtyp" value="semestercoverdelete" />';
+		$libForm->printSubmitButton('Semestercover löschen');
+		echo '</form>';
+	}
+
+	echo '</div>';
+	echo '</div>';
 }
 ?>

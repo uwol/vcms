@@ -566,7 +566,7 @@ class LibTime{
 		}
 
 		if($file != ""){
-			return '<img src="custom/semestercover/' .$file. '" class="semestercover" alt="Semestercover" />';
+			return '<img src="custom/semestercover/' .$file. '" class="img-responsive center-block" alt="Semestercover" />';
 		}
 	}
 
