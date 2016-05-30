@@ -27,11 +27,11 @@ $stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdat
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<div class="col-xs-6">';
+	echo '<div class="col-sm-6">';
 	echo '<div class="row">';
-	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$row['id']. '.jpg';
 
 	echo '<div class="hidden-xs col-sm-6">';
+	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$row['id']. '.jpg';
 
 	if(is_file($posssibleImage)){
 		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="" />';
@@ -40,7 +40,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</div>';
 
 	echo '<div class="col-xs-12 col-sm-6">';
-	echo $libString->parseBBCode(nl2br(trim($row['text'])));
+	echo '<p>' .$libString->parseBBCode(nl2br(trim($row['text']))). '</p>';
 	echo '</div>';
 
 	echo '</div>';

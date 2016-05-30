@@ -35,21 +35,22 @@ $description = $libConfig->seiteBeschreibung;
 $fb_url = $libGenericStorage->loadValue('mod_internet_home', 'fb_likebutton_url');
 
 if($fb_url != ''){
-	echo '<a href="' .$fb_url. '">';
-	echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
-	echo '</a>';
+	echo '              <a href="' .$fb_url. '" rel="nofollow">' . PHP_EOL;
+	echo '                <img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />' . PHP_EOL;
+	echo '              </a>' . PHP_EOL;
 }
 
 //twitter
 $url = 'http://' .$libConfig->sitePath;
-echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
-echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
-echo '</a>';
+
+echo '              <a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">' . PHP_EOL;
+echo '                <img src="styles/icons/social/twitter.svg" alt="T" class="icon" />' . PHP_EOL;
+echo '              </a>' . PHP_EOL;
 
 //rss
-echo '<a href="http://' .$libConfig->sitePath. '/inc.php?iid=internet_home_rssfeed">';
-echo '<img src="styles/icons/social/rss.svg" alt="RSS" class="icon" />';
-echo '</a>';
+echo '              <a href="http://' .$libConfig->sitePath. '/inc.php?iid=internet_home_rssfeed" rel="nofollow">' . PHP_EOL;
+echo '                <img src="styles/icons/social/rss.svg" alt="RSS" class="icon" />' . PHP_EOL;
+echo '              </a>' . PHP_EOL;
 
 echo '            </div>' . PHP_EOL;
 echo '          </footer>' . PHP_EOL;

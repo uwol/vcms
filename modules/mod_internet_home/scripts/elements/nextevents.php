@@ -28,11 +28,12 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="col-sm-3">';
+	echo '<p>';
 
 	printVeranstaltungTitle($row);
 	printVeranstaltungTime($row);
-	printVeranstaltungOrt($row);
 
+	echo '</p>';
 	echo '</div>';
 }
 

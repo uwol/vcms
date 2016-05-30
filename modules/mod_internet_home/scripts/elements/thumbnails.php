@@ -52,7 +52,10 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			$pictureid = $keys[$zufallszahl];
 
 			echo '<div class="col-sm-3">';
+			echo '<p>';
+
 			printVeranstaltungTitle($row);
+			printVeranstaltungTime($row);
 
 			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
 
@@ -64,10 +67,8 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 
 			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block thumbnail ' .$visibilityClass. '" />';
 			echo '</a>';
-
-
-			printVeranstaltungTime($row);
-			printVeranstaltungOrt($row);
+		
+			echo '</p>';
 			echo '</div>';
 			
 			$i++;
