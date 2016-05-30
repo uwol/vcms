@@ -40,6 +40,7 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 	echo '<hr />';
 	echo '<div class="row">';
 
+	$maxNumberOfThumbnails = 4;
 	$i = 0;
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -71,7 +72,7 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 
 			$i++;
 
-			if($i >= 4){
+			if($i >= $maxNumberOfThumbnails){
 				break;
 			}
 		}
