@@ -33,13 +33,15 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="row">';
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$row['id']. '.jpg';
 
+	echo '<div class="hidden-xs col-sm-4">';
+
 	if(is_file($posssibleImage)){
-		echo '<div class="col-sm-4">';
-		echo '<img src="' .$posssibleImage. '" class="img-responsive" alt="" />';
-		echo '</div>';
+		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="" />';
 	}
 
-	echo '<div class="col-sm-8">';
+	echo '</div>';
+
+	echo '<div class="col-xs-12 col-sm-8">';
 	echo $libString->parseBBCode(nl2br(trim($row['text'])));
 	echo '</div>';
 

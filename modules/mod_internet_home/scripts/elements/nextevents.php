@@ -26,12 +26,23 @@ echo '<h2>Nächste Veranstaltungen</h2>';
 echo '<hr />';
 
 echo '<div class="row">';
+echo '<div class="hidden-xs col-sm-4 col-md-12">';
+
+$semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
+
+if($semesterCoverString != ''){
+	echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
+	echo $semesterCoverString;
+	echo '</a>';
+}
+
+echo '</div>';
+echo '<div class="col-xs-12 col-sm-8 col-md-12">';
 
 $stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,4");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<div class="col-sm-6 col-md-12">';
 	echo '<p>';
 	echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a><br />';
 
@@ -56,9 +67,9 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	echo '</p>';
-	echo '</div>';
 }
 
+echo '</div>';
 echo '</div>';
 echo '</div>';
 ?>
