@@ -34,12 +34,13 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if(is_numeric($row['id'])){
 	echo '<div class="row">';
+	echo '<div class="col-sm-4">';
 
-	echo '<div class="col-sm-6">';
 	echo $libMitglied->getMitgliedSignature($row['id']);
-	echo '</div>';
 
-	echo '<div class="col-sm-6">';
+	echo '</div>';
+	echo '<div class="col-sm-8">';
+
 	echo '<b>' .wordwrap($libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0), 12, '<br />', 1);
 
 	$chargen = $libMitglied->getChargenString($row['id']);
@@ -75,6 +76,6 @@ if(is_numeric($row['id'])){
 	echo '</div>';
 	echo '</div>';
 } else {
-	echo 'In der Datenbank sind keine alten Herren vorhanden.';
+	echo '<p>In der Datenbank sind keine alten Herren vorhanden.</p>';
 }
 ?>

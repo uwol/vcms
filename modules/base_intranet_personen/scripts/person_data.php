@@ -214,7 +214,7 @@ echo '<div class="col-sm-3">';
 
 
 echo '<div class="center-block personSignatureBox personSignatureBoxLarge">';
-echo '<div class="personImgBox">';
+echo '<div class="imgBox">';
 
 if($ownprofile){
 	echo '<span class="deleteIconBox">';

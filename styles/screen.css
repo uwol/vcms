@@ -181,6 +181,18 @@ main .errorBox {
 	padding: 1px;
 }
 
+/* image delete icon */
+
+main .imgBox .deleteIconBox {
+	position: absolute;
+}
+
+main .imgBox .deleteIconBox .icon {
+	margin: 0;
+	padding: 1px;
+	background-color: white;
+}
+
 /* person signature */
 
 main .personSignatureBox {
@@ -193,29 +205,19 @@ main .personSignatureBoxLarge {
 	width: 150px;
 }
 
-main .personSignatureBox .personImgBox {
+main .personSignatureBox .imgBox {
 	background-color: white;
 	border: 1px solid #333;
 }
 
-main .personSignatureBox .personImgBox .personImg {
+main .personSignatureBox .imgBox .personImg {
 	width: 100px;
 	height: 133px;
 }
 
-main .personSignatureBox .personImgBox .personImgLarge {
+main .personSignatureBox .imgBox .personImgLarge {
 	width: 150px;
 	height: 200px;
-}
-
-main .personSignatureBox .personImgBox .deleteIconBox {
-	position: absolute;
-}
-
-main .personSignatureBox .personImgBox .deleteIconBox .icon {
-	margin: 0;
-	padding: 1px;
-	background-color: white;
 }
 
 main .personSignatureBox .personActivityBox {

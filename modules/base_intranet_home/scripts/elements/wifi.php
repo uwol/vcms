@@ -20,13 +20,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if(!$libGenericStorage->attributeExistsInCurrentModule('wifiPassword')){
 	$libGenericStorage->saveValueInCurrentModule('wifiPassword', '');
 }
 
+
 if($libGenericStorage->loadValueInCurrentModule('wifiPassword') != ''){
 	echo '<h2>WLAN</h2>';
 	echo '<hr />';
+	echo '<div class="row">';
+	echo '<div class="col-xs-12">';
 	echo '<p>Das Passwort für das WLAN auf dem Haus lautet: ' .$libGenericStorage->loadValueInCurrentModule('wifiPassword'). '</p>';
+	echo '</div>';
+	echo '</div>';
 }
 ?>

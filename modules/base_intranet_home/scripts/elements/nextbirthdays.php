@@ -28,6 +28,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 echo '<h2>Geburtstage</h2>';
 echo '<hr />';
 
+echo '<div class="row">';
+echo '<div class="col-xs-12">';
+
 echo '<p>Als iCalendar-Dateien:<br />';
 echo '&nbsp;&nbsp;<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_geburtstageaktivitas&amp;user='. $libGenericStorage->loadValueInCurrentModule("userNameICalendar"). '&amp;pass='. $libGenericStorage->loadValueInCurrentModule("passwordICalendar"). '">Geburtstage Aktive</a><br />';
 echo '&nbsp;&nbsp;<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_todestage&amp;user=' .$libGenericStorage->loadValueInCurrentModule("userNameICalendar") .'&amp;pass=' .$libGenericStorage->loadValueInCurrentModule("passwordICalendar") .'">Nekrolog</a><br />';
@@ -63,4 +66,7 @@ echo '</dl>';
 if($i==0){
 	echo '<p>In der Datenbank sind bei den Mitgliedern keine Geburtstage angegeben.</p>';
 }
+
+echo '</div>';
+echo '</div>';
 ?>
