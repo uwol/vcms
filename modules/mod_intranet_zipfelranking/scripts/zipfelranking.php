@@ -25,26 +25,27 @@ echo '<h1>Zipfelranking</h1>';
 
 echo '<p>Die Anzahl Zipfel lässt sich im <a href="index.php?pid=intranet_person_daten">Profil</a> eingeben.</p>';
 
-echo '<table>';
-
 $stmt = $libDb->prepare('SELECT * FROM base_person, mod_zipfelranking_anzahl WHERE base_person.id = mod_zipfelranking_anzahl.id AND anzahlzipfel > 0 ORDER BY anzahlzipfel DESC');
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<tr>';
-	echo '<td>';
-	echo '<a id="'. $row['id'] .'">';
-	echo $libMitglied->getMitgliedSignature($row['id'], 'left');
-	echo '</a>'."\n";
-	echo '<b>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 5) . '</b> - '.$row['anzahlzipfel'] . ' Zipfel<br />';
+	echo '<div class="row">';
+	echo '<div class="col-xs-6 col-sm-2">';
+	echo $libMitglied->getMitgliedSignature($row['id']);
+	echo '</div>';
+
+	echo '<div class="col-xs-6 col-sm-2">';
+	echo '<b>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 5). '</b>';
+	echo '<p>' .$row['anzahlzipfel']. ' Zipfel</p>';
+	echo '</div>';
+
+	echo '<div class="hidden-xs col-sm-8">';
 
 	for($j=0; $j<$row['anzahlzipfel'] && $j < 50; $j++){
-		echo '<img src="' . $libModuleHandler->getModuleDirectory() . 'custom/img/zipfel.png" class="zipfel" />';
+		echo '<img src="' .$libModuleHandler->getModuleDirectory(). 'custom/img/zipfel.png" class="zipfel" />';
 	}
 
-	echo "</td>";
-	echo "</tr>";
+	echo '</div>';
+	echo '</div>';
 }
-
-
-echo "</table>\n";
+?>

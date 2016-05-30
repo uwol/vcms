@@ -55,23 +55,30 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<p>Um eine Reservierung anzulegen, bitte <a href="index.php?pid=intranet_reservierung_buchen">diese Seite</a> öffnen.</p>';
-echo '<hr />';
 
 $stmt = $libDb->prepare("SELECT * FROM mod_reservierung_reservierung WHERE datum >= :datum ORDER BY datum");
 $stmt->bindValue(':datum', date('Y-m-d'));
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo $libMitglied->getMitgliedSignature($row['person'], 'right');
+	echo '<hr />';
+	echo '<div class="row">';
 
-	echo '<time>' . $libTime->wochentag($row['datum']).', '.$libTime->formatDateTimeString($row['datum'], 2). '</time>';
+	echo '<div class="col-xs-12 col-sm-10">';
+	echo '<h4>' . $libTime->wochentag($row['datum']).', '.$libTime->formatDateTimeString($row['datum'], 2). '</h4>';
 
 	if($libAuth->getId() == $row['person']){
 		echo ' - <a href="index.php?pid=intranet_reservierung_liste&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">Reservierung löschen</a>';
 	}
 
 	echo '<p>' .$row['beschreibung']. '</p>';
+	echo '</div>';
 
-	echo '<hr />';
+	echo '<div class="col-xs-12 col-sm-2">';
+
+	echo $libMitglied->getMitgliedSignature($row['person']);
+
+	echo '</div>';
+	echo '</div>';
 }
 ?>

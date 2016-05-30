@@ -61,6 +61,10 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete' && isset($_REQU
 	}
 }
 
+/*
+* output
+*/
+
 echo '<h1>Neuigkeiten im ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
 
 echo $libString->getErrorBoxText();
@@ -93,9 +97,21 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($lastsetmonth != substr($row['eingabedatum'], 0, 7)){
 		echo '<h2>- ' .$libTime->getMonthName(substr($row['eingabedatum'], 5, 2)). ' ' .substr($row['eingabedatum'], 0, 4). ' -</h2>';
 		$lastsetmonth = substr($row['eingabedatum'], 0, 7);
+	} else {
+		echo '<hr/>';
 	}
 
-	echo '<div id="' .$row['id']. '">';
+	echo '<div id="' .$row['id']. '" class="row">';
+
+	echo '<div class="hidden-xs col-sm-2">';
+
+	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
+		echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied']);
+	}
+
+	echo '</div>';
+
+	echo '<div class="col-xs-12 col-sm-8">';
 	echo '<h4>' .$libTime->convertMysqlDateToDatum($row['eingabedatum']). ' - ' .$row['bezeichnung'];
 
 	if((in_array('internetwart', $libAuth->getAemter()))
@@ -105,19 +121,16 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	echo '</h4>';
 
-	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
-		echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied'], 'left');
-	}
-
-	if($row['autor'] != '' && $row['autor'] > 0){
-		echo $libMitglied->getMitgliedSignature($row['autor'], 'right');
-	}
-
 	if($row['text'] != ''){
 		echo nl2br($row['text']);
 	}
 
 	echo '</div>';
-	echo '<hr/>';
+
+	echo '<div class="col-xs-12 col-sm-2">';
+	echo $libMitglied->getMitgliedSignature($row['autor']);
+	echo '</div>';
+
+	echo '</div>';
 }
 ?>

@@ -29,34 +29,34 @@ function printMitglieder($stmt){
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 
-		echo '<a id="' .$row['id']. '">';
-		echo $libMitglied->getMitgliedSignature($row['id'], 'left');
-		echo '</a>';
-
+		echo '<div class="row">';
+		echo '<div class="col-xs-6">';
+		echo $libMitglied->getMitgliedSignature($row['id']);
+		echo '</div>';
+		echo '<div class="col-xs-6">';
 		echo '<b>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
-
-		$string = $libMitglied->getChargenString($row['id'])." ".$libMitglied->getVereineString($row['id']);
+		echo $libMitglied->getChargenString($row['id']). ' ' .$libMitglied->getVereineString($row['id']);
 
 		if($row['status'] != ''){
-			$string .= ' '. $row['status'];
-		}
-
-		if(trim($string) != ''){
-			echo $string .'<br />';
+			echo ' ' .$row['status'];
 		}
 
 		if($row['ort1'] != ''){
-			echo $row['ort1']. '<br />';
+			echo '<br />' .$row['ort1'];
 		}
 
 		if($row['tod_datum'] != '' && $row['tod_datum'] != '0000-00-00'){
+			echo '<br />';
+
 			if($row['datum_geburtstag'] != '0000-00-00'){
 				echo substr($row['datum_geburtstag'], 0, 4);
 			}
 
-			echo ' - ' .substr($row['tod_datum'], 0, 4). '<br />';
+			echo ' - ' .substr($row['tod_datum'], 0, 4);
 		}
 
+		echo '</div>';
+		echo '</div>';
 		echo '</div>';
 	}
 

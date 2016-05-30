@@ -39,14 +39,18 @@ if($count > 0){
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<hr />';
+		echo '<div class="row">';
 
-		$date = $libTime->formatDateTimeString($row['eingabedatum'], 2);
+		echo '<div class="hidden-xs col-sm-2">';
 
 		if($row['betroffenesmitglied'] != ''){
-			echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied'], 'left');
+			echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied']);
 		}
 
-		echo $libMitglied->getMitgliedSignature($row['autor'], 'right');
+		echo '</div>';
+
+		echo '<div class="col-xs-12 col-sm-8">';
+		$date = $libTime->formatDateTimeString($row['eingabedatum'], 2);
 		echo '<b>' .$date. ' - ' .$row['bezeichnung']. '</b><br />';
 
 		if(($row['text']) != ''){
@@ -54,6 +58,14 @@ if($count > 0){
 			echo $libString->truncate(trim($row['text']), 300);
 			echo '</a>';
 		}
+
+		echo '</div>';
+
+		echo '<div class="hidden-xs col-sm-2">';
+		echo $libMitglied->getMitgliedSignature($row['autor']);
+		echo '</div>';
+
+		echo '</div>';
 	}
 }
 ?>

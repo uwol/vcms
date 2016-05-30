@@ -167,11 +167,6 @@ if($libAuth->isLoggedin()){
 				$libImage->savePersonFotoByFilesArray($libAuth->getId(), 'bilddatei');
 			}
 		}
-	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'fotodatendelete'){
-		if($ownprofile){
-			$libImage = new LibImage($libTime, $libGenericStorage);
-			$libImage->deletePersonFoto($libAuth->getId());
-		}
 	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'personpasswort'){
 		if($ownprofile){
 			if(!$libAuth->checkPasswordForPerson($libAuth->getId(), $_POST['oldpwd'])){
@@ -183,6 +178,11 @@ if($libAuth->isLoggedin()){
 			} else {
 				$libAuth->savePassword($libAuth->getId(), $_POST['newpwd1']);
 			}
+		}
+	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'fotodelete'){
+		if($ownprofile){
+			$libImage = new LibImage($libTime, $libGenericStorage);
+			$libImage->deletePersonFoto($libAuth->getId());
 		}
 	}
 }
@@ -210,6 +210,35 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<div class="row">';
+echo '<div class="col-sm-3">';
+
+
+echo '<div class="center-block personSignatureBox personSignatureBoxLarge">';
+echo '<div class="personImgBox">';
+
+if($ownprofile){
+	echo '<span class="deleteIconBox">';
+	echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;aktion=fotodelete">';
+	echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon" />';
+	echo '</a>';
+	echo '</span>';
+}
+
+echo $libMitglied->getMitgliedImage($personid, true);
+echo '</div>';
+
+echo $libMitglied->getMitgliedIntranetActivityBox($personid);
+echo '</div>';
+
+if($ownprofile){
+	//image upload form
+	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
+	echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
+	$libForm->printFileUpload('bilddatei', 'Foto hochladen');
+	echo '</form>';
+}
+
+echo '</div>';
 echo '<div class="col-sm-9 vcard">';
 
 echo '<div>';
@@ -470,27 +499,6 @@ if($row['vita'] != ''){
 
 	echo nl2br($row['vita']);
 	echo '</article>';
-}
-
-echo '</div>';
-echo '<div class="col-sm-3">';
-
-echo '<div class="col-sm-offset-2 col-sm-10">';
-echo $libMitglied->getMitgliedSignature($personid);
-echo '</div>';
-
-if($ownprofile){
-	//image upload form
-	echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" class="form-horizontal">';
-	echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
-	$libForm->printFileUpload('bilddatei', 'Foto hochladen');
-	echo '</form>';
-
-	//image deletion form
-	echo '<form method="post" action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" class="form-horizontal">';
-	echo '<input type="hidden" name="formtyp" value="fotodatendelete" />';
-	$libForm->printSubmitButton('Foto löschen');
-	echo '</form>';
 }
 
 echo '</div>';

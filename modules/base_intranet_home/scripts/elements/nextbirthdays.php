@@ -46,13 +46,13 @@ echo '<dl>';
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$date = substr($row['datum_geburtstag'], 8, 2) .'.'. substr($row['datum_geburtstag'], 5, 2) .'.'. substr($row['datum_geburtstag'], 0, 4);
-	echo '<dt><b>'.$date;
+	echo '<dt>'.$date;
 
 	if($libTime->checkrundergeburtstag(substr($row['datum_geburtstag'], 0, 4), @date('Y')) != false){
 		echo ', <font color=#FF0000>'.$libTime->checkrundergeburtstag(substr($row['datum_geburtstag'], 0, 4), @date('Y')).' Jahre</font>';
 	}
 
-	echo '</b></dt>';
+	echo '</dt>';
 	echo '<dd><a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['id']. '">'. $libMitglied->getMitgliedNameString($row['id'], 0) .'</a></dd>';
 
 	$i++;

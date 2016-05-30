@@ -26,24 +26,22 @@ if($libAuth->isLoggedin() && isset($_GET['id']) && is_numeric($_GET['id']) &&
 
 	$path = "custom/intranet/mitgliederfotos/". $_GET['id'] .".jpg";
 
-	if(!is_file($path)){
-		$path = "custom/intranet/mitgliederfotos/blank.jpg";
+	if(is_file($path)){
+		// send headers
+		header("Content-type: image/jpeg\n");
+		header("Content-transfer-encoding: binary\n");
+		header("Content-length: " . filesize($path) . "\n");
+
+		if($_GET['id'] != $libAuth->getId()){
+			$expires = 60*60*24;
+			header("Pragma: public");
+			header("Cache-Control: maxage=".$expires);
+			header("Cache-Control: private");
+			header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expires) . ' GMT');
+		}
+
+		$fp=fopen($path, "r");
+		fpassthru($fp);
 	}
-
-	// send headers
-	header("Content-type: image/jpeg\n");
-	header("Content-transfer-encoding: binary\n");
-	header("Content-length: " . filesize($path) . "\n");
-
-	if($_GET['id'] != $libAuth->getId()){
-		$expires = 60*60*24;
-		header("Pragma: public");
-		header("Cache-Control: maxage=".$expires);
-		header("Cache-Control: private");
-		header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expires) . ' GMT');
-	}
-
-	$fp=fopen($path, "r");
-	fpassthru($fp);
 }
 ?>

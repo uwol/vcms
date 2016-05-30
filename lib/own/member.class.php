@@ -104,7 +104,7 @@ class LibMember{
 		return $activity;
 	}
 
-	function getMitgliedIntranetActivityString($id){
+	function getMitgliedIntranetActivityBox($id){
 		// determine group
 		$stmt = $this->libDb->prepare("SELECT gruppe FROM base_person WHERE id=:id");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -112,62 +112,55 @@ class LibMember{
 		$stmt->bindColumn('gruppe', $gruppe);
 		$stmt->fetch();
 
-		$retstr = '';
+		$retstr = '<div class="personActivityBox">';
 
-		if($gruppe == 'T' || $gruppe == 'V' || $gruppe == 'X'){
-			$retstr .= '<span class="memberActivityBar" style="width:100%"></span>';
-		} else {
-			$activityPercent = $this->getMitgliedIntranetActivity($id) * 100;
-			$balkenBreiteActivity = ceil($activityPercent);
-			$balkenBreiteInactivity = 100 - $balkenBreiteActivity;
+		$activityPercent = $this->getMitgliedIntranetActivity($id) * 100;
+		$balkenBreiteActivity = ceil($activityPercent);
+		$balkenBreiteInactivity = 100 - $balkenBreiteActivity;
 
-			if($balkenBreiteActivity > 0){
-				$retstr .= '<span class="memberActivityBar memberActivityBarActive" style="width:' .$balkenBreiteActivity. '%"></span>';
-			}
-
-			if($balkenBreiteInactivity > 0){
-				$retstr .= '<span class="memberActivityBar memberActivityBarInactive" style="width:' .$balkenBreiteInactivity. '%"></span>';
-			}
+		if($balkenBreiteActivity > 0){
+			$retstr .= '<span class="personActivityBar personActivityBarActive" style="width:' .$balkenBreiteActivity. '%"></span>';
 		}
+
+		if($balkenBreiteInactivity > 0){
+			$retstr .= '<span class="personActivityBar personActivityBarInactive" style="width:' .$balkenBreiteInactivity. '%"></span>';
+		}
+
+		$retstr .= '</div>';
 
 		return $retstr;
 	}
 
-	function getMitgliedSignature($id, $pullType = 'left'){
-		$retstr = '';
+	function getMitgliedSignature($id){
+		$retstr = '<div class="personSignatureBox center-block">';
+		$retstr .= '<div class="personImgBox">';
+		$retstr .= $this->getMitgliedImage($id);
+		$retstr .= '</div>';
 
-		$margin = '.5em';
+		$retstr .= $this->getMitgliedIntranetActivityBox($id);
+		$retstr .= '</div>';
 
-		$pullString = '';
-		$marginString = '';
+		return $retstr;
+	}
 
-		if($pullType == 'left'){
-			$pullString = 'pull-left';
-			$marginString = 'margin: 0 ' . $margin . ' ' . $margin . ' 0;';
-		} elseif($pullType == 'right'){
-			$pullString = 'pull-right';
-			$marginString = 'margin: 0 0 ' . $margin . ' ' . $margin . ';';
-		} else {
-			$marginString = 'margin: 0 0 ' . $margin . ' 0;';
-		}
-
-		$retstr .= '<div class="memberSignatureBox ' .$pullString. '" style="' . $marginString . '">';
+	function getMitgliedImage($id, $large = false){
+		$retstr = '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$id. '">';
 
 		/*
 		* member image
 		*/
 		if(is_numeric($id)){
-			$retstr .= '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$id. '">';
-			$retstr .= '<img src="inc.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="memberSignatureImg" alt="Mitgliedsbild" />';
-			$retstr .= "</a>\n";
+			$retstr .= '<img src="inc.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="img-responsive personImg';
+
+			if($large){
+				$retstr .= ' personImgLarge ';
+			}
+
+			$retstr .= '" alt="" />';
 		}
 
-		/*
-		* activity bar
-		*/
-		$retstr .= $this->getMitgliedIntranetActivityString($id);
+		$retstr .= '</a>';
 
-		$retstr .= '</div>';
 		return $retstr;
 	}
 

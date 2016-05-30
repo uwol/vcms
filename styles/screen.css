@@ -117,6 +117,7 @@ main h3 {
 }
 
 main h4 {
+	margin-top: 0;
 	font-size: 1.0em;
 	font-weight: bold;
 }
@@ -150,6 +151,10 @@ main td {
 	border-width: 0;
 }
 
+main dt {
+	font-weight: normal;
+}
+
 main dd {
 	margin-left: 2em;
 }
@@ -176,30 +181,59 @@ main .errorBox {
 	padding: 1px;
 }
 
-/* member signature */
+/* person signature */
 
-main .memberSignatureBox {
+main .personSignatureBox {
+	position: relative;
 	width: 100px;
+	margin-bottom: 0.5em;
+}
+
+main .personSignatureBoxLarge {
+	width: 150px;
+}
+
+main .personSignatureBox .personImgBox {
+	background-color: white;
+	border: 1px solid #333;
+}
+
+main .personSignatureBox .personImgBox .personImg {
+	width: 100px;
+	height: 133px;
+}
+
+main .personSignatureBox .personImgBox .personImgLarge {
+	width: 150px;
+	height: 200px;
+}
+
+main .personSignatureBox .personImgBox .deleteIconBox {
+	position: absolute;
+}
+
+main .personSignatureBox .personImgBox .deleteIconBox .icon {
+	margin: 0;
+	padding: 1px;
+	background-color: white;
+}
+
+main .personSignatureBox .personActivityBox {
+	width: 100%;
 	line-height: 0;
 }
 
-main .memberSignatureImg {
-	width: 100px;
-	height: 133px;
-	margin: 0;
-}
-
-main .memberActivityBar {
+main .personSignatureBox .personActivityBox .personActivityBar {
 	display: inline-block;
 	height: .2em;
 	margin: .2em 0 0 0;
 }
 
-main .memberActivityBarActive {
+main .personSignatureBox .personActivityBox .personActivityBarActive {
 	background-color: black;
 }
 
-main .memberActivityBarInactive {
+main .personSignatureBox .personActivityBox .personActivityBarInactive {
 	background-color: white;
 }
 
