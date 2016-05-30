@@ -544,29 +544,49 @@ class LibTime{
 		return $alter;
 	}
 
-	function getSemesterCoverString($semesterString){
+	function determineSemesterCover($semesterString){
 		if(!$this->isValidSemesterString($semesterString)){
 			return;
 		}
 
 		$file = '';
 
-		if(is_file("custom/semestercover/".$semesterString.".jpg")){
+		if(is_file("custom/semestercover/".$semesterString. ".jpg")){
 			$file = $semesterString.".jpg";
-		} elseif(is_file("custom/semestercover/".strtolower($semesterString).".jpg")){
+		} elseif(is_file("custom/semestercover/".strtolower($semesterString). ".jpg")){
 			$file = strtolower($semesterString).".jpg";
-		} elseif(is_file("custom/semestercover/".$semesterString.".png")){
+		} elseif(is_file("custom/semestercover/".$semesterString. ".png")){
 			$file = $semesterString.".png";
-		} elseif(is_file("custom/semestercover/".strtolower($semesterString).".png")){
+		} elseif(is_file("custom/semestercover/".strtolower($semesterString). ".png")){
 			$file = strtolower($semesterString).".png";
-		} elseif(is_file("custom/semestercover/".$semesterString.".gif")){
+		} elseif(is_file("custom/semestercover/".$semesterString. ".gif")){
 			$file = $semesterString.".gif";
-		} elseif(is_file("custom/semestercover/".strtolower($semesterString).".gif")){
-			$file = strtolower($semesterString).".gif";
+		} elseif(is_file("custom/semestercover/".strtolower($semesterString). ".gif")){
+			$file = strtolower($semesterString). ".gif";
 		}
 
+		return $file;
+	}
+
+	function hasSemesterCover($semesterString){
+		if(!$this->isValidSemesterString($semesterString)){
+			return;
+		}
+
+		$file = $this->determineSemesterCover($semesterString);
+		$result = $file != '';
+		return $result;
+	}
+
+	function getSemesterCoverString($semesterString){
+		if(!$this->isValidSemesterString($semesterString)){
+			return;
+		}
+
+		$file = $this->determineSemesterCover($semesterString);
+
 		if($file != ""){
-			return '<img src="custom/semestercover/' .$file. '" class="img-responsive center-block semestercover" alt="Semestercover" />';
+			return '<img src="custom/semestercover/' .$file. '" class="img-responsive center-block" alt="Semestercover" />';
 		}
 	}
 

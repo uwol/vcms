@@ -175,7 +175,7 @@ if($libAuth->isLoggedin()){
 			$libImage = new LibImage($libTime, $libGenericStorage);
 			$libImage->saveSemesterCoverByFilesArray($semesterarray['semester'], 'semestercover');
 		}
-	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'semestercoverdelete'){
+	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'semestercoverdelete'){
 		if($semesterarray['semester'] != ''){
 			$libImage = new LibImage($libTime, $libGenericStorage);
 			$libImage->deleteSemesterCover($semesterarray['semester']);
@@ -208,6 +208,39 @@ if($libAuth->isLoggedin()){
 	}
 
 	echo '<div class="row">';
+	echo '<div class="col-sm-3">';
+
+	/**
+	*
+	* Fotoform einblenden
+	*
+	*/
+	if($aktion != 'blank' && $semesterarray['semester'] != ''){
+		echo '<div class="center-block">';
+		echo '<div class="imgBox">';
+
+		$hasSemesterCover = $libTime->hasSemesterCover($semesterarray['semester']);
+
+		if($hasSemesterCover){
+			echo '<span class="deleteIconBox">';
+			echo '<a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$semesterarray['semester']. '&amp;aktion=semestercoverdelete">';
+			echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon" />';
+			echo '</a>';
+			echo '</span>';
+		}
+
+		echo $libTime->getSemesterCoverString($semesterarray['semester']);
+		echo '</div>';
+		echo '</div>';
+
+		//image upload form
+		echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_db_semester&amp;semester='. $semesterarray['semester'] .'" class="form-horizontal text-center">';
+		echo '<input type="hidden" name="formtyp" value="semestercoverupload" />';
+		$libForm->printFileUpload('semestercover', 'Semestercover hochladen');
+		echo '</form>';
+	}
+
+	echo '</div>';
 	echo '<div class="col-sm-9">';
 
 
@@ -324,34 +357,6 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
-
-	echo '</div>';
-	echo '<div class="col-sm-3">';
-
-	/**
-	*
-	* Fotoform einblenden
-	*
-	*/
-	if($aktion != 'blank'){
-		if($semesterarray['semester'] != ''){
-			echo '<div class="col-sm-12">';
-			echo $libTime->getSemesterCoverString($semesterarray['semester']);
-			echo '</div>';
-		}
-
-		//image upload form
-		echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_db_semester&amp;semester='. $semesterarray['semester'] .'" class="form-horizontal">';
-		echo '<input type="hidden" name="formtyp" value="semestercoverupload" />';
-		$libForm->printFileUpload('semestercover', 'Semestercover hochladen');
-		echo '</form>';
-
-		//image deletion form
-		echo '<form method="post" action="index.php?pid=intranet_admin_db_semester&amp;semester='. $semesterarray['semester'] .'" class="form-horizontal">';
-		echo '<input type="hidden" name="formtyp" value="semestercoverdelete" />';
-		$libForm->printSubmitButton('Semestercover löschen');
-		echo '</form>';
-	}
 
 	echo '</div>';
 	echo '</div>';

@@ -180,7 +180,7 @@ if($libAuth->isLoggedin()){
 
 	//Bildupload durchführen
 	//wurde eine Datei hochgeladen?
-	if(isset($_POST['formtyp']) && $_POST['formtyp'] == "fotodatenupload"){
+	if(isset($_POST['formtyp']) && $_POST['formtyp'] == "fotoupload"){
 		//wurde eine Datei hochgeladen?
 		if($_FILES['bilddatei']['tmp_name'] != ""){
 			if($mgarray['id'] != ""){
@@ -188,8 +188,8 @@ if($libAuth->isLoggedin()){
 				$libImage->savePersonFotoByFilesArray($mgarray['id'], "bilddatei");
 			}
 		}
-	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == "fotodatendelete"){
-		if($mgarray['id'] != ""){
+	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == "fotodelete"){
+		if($mgarray['id'] != ''){
 			$libImage = new LibImage($libTime, $libGenericStorage);
 			$libImage->deletePersonFoto($mgarray['id']);
 		}
@@ -223,6 +223,30 @@ if($libAuth->isLoggedin()){
 	}
 
 	echo '<div class="row">';
+	echo '<div class="col-sm-3">';
+
+	if($mgarray['id'] != ''){
+		echo '<div class="center-block personSignatureBox personSignatureBoxLarge">';
+		echo '<div class="imgBox">';
+
+		echo '<span class="deleteIconBox">';
+		echo '<a href="index.php?pid=intranet_admin_db_person&amp;id=' .$mgarray['id']. '&amp;aktion=fotodelete">';
+		echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon" />';
+		echo '</a>';
+		echo '</span>';
+
+		echo $libMitglied->getMitgliedImage($mgarray['id'], true);
+		echo '</div>';
+		echo '</div>';
+
+		//image upload form
+		echo '<form action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
+		echo '<input type="hidden" name="formtyp" value="fotoupload" />';
+		$libForm->printFileUpload('bilddatei', 'Foto hochladen');
+		echo '</form>';
+	}
+
+	echo '</div>';
 	echo '<div class="col-sm-9">';
 
 
@@ -346,28 +370,6 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
-
-
-	echo '</div>';
-	echo '<div class="col-sm-3">';
-
-	if($mgarray['id'] != ""){
-		echo '<div class="col-sm-offset-2 col-sm-10">';
-		echo $libMitglied->getMitgliedSignature($mgarray['id']);
-		echo '</div>';
-
-		//image upload form
-		echo '<form action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'" method="post" enctype="multipart/form-data" class="form-horizontal">';
-		echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
-		$libForm->printFileUpload('bilddatei', 'Foto hochladen');
-		echo '</form>';
-
-		//image deletion form
-		echo '<form action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'" method="post" class="form-horizontal">';
-		echo '<input type="hidden" name="formtyp" value="fotodatendelete" />';
-		$libForm->printSubmitButton('Foto löschen');
-		echo '</form>';
-	}
 
 	echo '</div>';
 	echo '</div>';
