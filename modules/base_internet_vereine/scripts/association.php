@@ -43,21 +43,24 @@ if(isset($_GET['verein'])){
 	$filePathZirkelGif = 'custom/kvvereine/zirkel/' .$vereinarray['id']. '.gif';
 
 	if(is_file($filePathZirkelSvg)){
-		echo '<div><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></div>';
+		echo '<p><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></p>';
 	} else if(is_file($filePathZirkelGif)){
-		echo '<div><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></div>';
+		echo '<p><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></p>';
 	}
 
+	$filePathWappenSvg = 'custom/kvvereine/wappen/' .$vereinarray['id']. '.svg';
 	$filePathWappenJpg = 'custom/kvvereine/wappen/' .$vereinarray['id']. '.jpg';
 
-	if(is_file($filePathWappenJpg)){
-		echo '<div><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></div>';
+	if(is_file($filePathWappenSvg)){
+		echo '<p><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-responsive center-block" /></p>';
+	} else if(is_file($filePathWappenJpg)){
+		echo '<p><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></p>';
 	}
 
 	$filePathHausJpg = 'custom/kvvereine/haus/' .$vereinarray['id']. '.jpg';
 
 	if(is_file($filePathHausJpg)){
-		echo '<div><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></div>';
+		echo '<p><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></p>';
 	}
 
 	echo '</div>';
@@ -67,7 +70,7 @@ if(isset($_GET['verein'])){
 	/*
 	* association address
 	*/
-	echo '<p>';
+	echo '<address>';
 
 	if($vereinarray['zusatz1'] != ''){
 		echo $vereinarray['zusatz1']. '<br />';
@@ -86,14 +89,14 @@ if(isset($_GET['verein'])){
 	}
 
 	if($vereinarray['telefon1'] != ''){
-		echo 'Tel.: ' .$vereinarray['telefon1']. '<br />';
+		echo $vereinarray['telefon1']. '<br />';
 	}
 
 	if($vereinarray['webseite'] != ''){
 		echo '<a href="http://' .$vereinarray['webseite']. '">' .$vereinarray['webseite']. '</a><br />';
 	}
 
-	echo '</p>';
+	echo '</address>';
 
 	/*
 	* association data
@@ -103,7 +106,7 @@ if(isset($_GET['verein'])){
 		echo '<b>Farben:</b> ' .$vereinarray['farbe1']. ' ' .$vereinarray['farbe2']. ' ' .$vereinarray['farbe3'];
 		echo '</p>';
 
-		echo '<div>';
+		echo '<p>';
 		echo '<table style="border:1px solid black;width:50px;border-collapse:collapse">';
 
 	    if($vereinarray['farbe1'] != ''){
@@ -123,7 +126,7 @@ if(isset($_GET['verein'])){
 		}
 
 		echo '</table>';
-		echo '</div>';
+		echo '</p>';
 	}
 
 	echo '<p>';

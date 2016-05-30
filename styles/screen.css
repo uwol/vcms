@@ -93,6 +93,11 @@ main {
 	border-top: 1px solid #333;
 }
 
+main p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
 main h1 {
 	font-size: 1.5em;
 	font-weight: bolder;
@@ -209,6 +214,11 @@ main .calendarYear {
 
 main .calendarMonthName {
 	text-align: center;
+}
+
+main .calendarMonthName h2 {
+	text-align: center;
+	margin: 10px 0;
 }
 
 main .calendarDayName {
