@@ -30,12 +30,41 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('fb_likebutton_url')){
 }
 
 
+function printVeranstaltungTitle($row){
+	echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a><br />';
+}
+
+function printVeranstaltungTime($row){
+	global $libTime;
+
+	echo '<time>';
+
+	$date = substr($row['datum'], 0, 10);
+	$datearray = explode('-', $date);
+	$dateString = $datearray[2]. '.' .$datearray[1]. '.';
+	$timeString = substr($row['datum'], 11, 5);
+
+	echo $libTime->wochentag($row['datum']). ', ' .$dateString;
+	echo '<br />';
+
+	if($timeString != '00:00'){
+		echo $timeString;
+	}
+
+	echo '</time>';
+}
+
+function printVeranstaltungOrt($row){
+	if($row['ort'] != ''){
+		echo '<address>' .$row['ort']. '</address>';
+	}
+}
+
+
 echo '<h1>Willkommen</h1>';
 
-echo '<div class="row">';
-
 include("elements/announcements.php");
-include("elements/nextevents.php");
+echo '<hr />';
 include("elements/thumbnails.php");
-
-echo '</div>';
+echo '<hr />';
+include("elements/nextevents.php");

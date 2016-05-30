@@ -26,7 +26,7 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 
 	$libGallery = new LibGallery($libDb);
 
-	$stmt = $libDb->prepare('SELECT id, titel FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 90 ORDER BY RAND()');
+	$stmt = $libDb->prepare('SELECT id, titel, datum, ort FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
 	$stmt->execute();
 
 	if($libAuth->isLoggedin()){
@@ -35,13 +35,10 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 		$level = 0;
 	}
 
-	echo '<div class="col-md-12">';
-	echo '<h2>Impressionen</h2>';
-	echo '<hr />';
 	echo '<div class="row">';
 
-	$maxNumberOfThumbnails = 4;
 	$i = 0;
+	$maxNumberOfThumbnails = 4;
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		// is there a gallery?
@@ -54,8 +51,8 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			$keys = array_keys($pictures);
 			$pictureid = $keys[$zufallszahl];
 
-			echo '<section class="col-sm-6 col-md-4 col-lg-3">';
-			echo '<h3>' .wordwrap($row['titel'], 50, '-', 1). '</h3> ';
+			echo '<div class="col-sm-3">';
+			printVeranstaltungTitle($row);
 
 			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
 
@@ -65,20 +62,22 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 				$visibilityClass = "internal";
 			}
 
-			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '&thumb=1" alt="" class="img-responsive center-block thumbnail ' .$visibilityClass. '" />';
+			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block thumbnail ' .$visibilityClass. '" />';
 			echo '</a>';
 
-			echo '</section>';
 
+			printVeranstaltungTime($row);
+			printVeranstaltungOrt($row);
+			echo '</div>';
+			
 			$i++;
 
-			if($i >= $maxNumberOfThumbnails){
+			if($i > $maxNumberOfThumbnails - 1){
 				break;
 			}
 		}
 	}
 
-	echo '</div>';
 	echo '</div>';
 }
 ?>

@@ -21,19 +21,17 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<div class="col-md-8">';
-echo '<h2>Ankündigungen</h2>';
+echo '<div class="row">';
 
-$stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum = '0000-00-00 00:00:00') ORDER BY startdatum DESC LIMIT 0,3");
+$stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum = '0000-00-00 00:00:00') ORDER BY startdatum DESC LIMIT 0,2");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<hr />';
-
+	echo '<div class="col-xs-6">';
 	echo '<div class="row">';
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$row['id']. '.jpg';
 
-	echo '<div class="hidden-xs col-sm-4">';
+	echo '<div class="hidden-xs col-sm-6">';
 
 	if(is_file($posssibleImage)){
 		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="" />';
@@ -41,24 +39,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	echo '</div>';
 
-	echo '<div class="col-xs-12 col-sm-8">';
+	echo '<div class="col-xs-12 col-sm-6">';
 	echo $libString->parseBBCode(nl2br(trim($row['text'])));
 	echo '</div>';
 
-	echo '</div>';
-}
-
-// link
-$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM mod_internethome_nachricht WHERE startdatum < NOW() ORDER BY startdatum DESC');
-$stmt->execute();
-$stmt->bindColumn('number', $number);
-$stmt->fetch();
-
-if($number > 3){
-	echo '<hr />';
-	echo '<div class="row">';
-	echo '<div class="col-xs-12">';
-	echo '<a href="index.php?pid=home_ankuendigungen">Weitere Ankündigungen ...</a>';
 	echo '</div>';
 	echo '</div>';
 }
