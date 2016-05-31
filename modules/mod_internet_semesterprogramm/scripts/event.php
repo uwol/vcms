@@ -263,7 +263,7 @@ function printAnmeldeStatus($row){
 				$libForm->printSubmitButtonInline('Abmelden');
 			} else {
 				echo '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
-				$libForm->printSubmitButtonInline('Anmelden');			
+				$libForm->printSubmitButtonInline('Anmelden');
 			}
 
 			echo '</form>';

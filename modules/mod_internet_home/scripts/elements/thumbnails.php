@@ -55,10 +55,10 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
 			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block thumbnail" />';
 			echo '</a>';
-		
+
 			echo '</div>';
 			echo '</div>';
-			
+
 			$i++;
 
 			if($i > $maxNumberOfThumbnails - 1){

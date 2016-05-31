@@ -307,6 +307,7 @@ main .carousel-control.left, main .carousel-control.right {
 
 main .thumbnail {
 	padding: 0;
+	margin-bottom: 0;
 	border-radius: 0;
 }
 
@@ -317,16 +318,12 @@ main .thumbBox {
 }
 
 main .thumbBox .thumbnail {
-	margin-bottom: 0;
 	height: 100%;
-	-webkit-transition:all .3s linear;
-	transition:all .3s linear;
+	transition: all .3s linear;
 }
 
 main .thumbBox .thumbnail:hover {
-	transform:scale(1.1);
-	-ms-transform:scale(1.1);
-	-webkit-transform:scale(1.1);
+	transform: scale(1.1);
 }
 
 
