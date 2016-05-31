@@ -200,7 +200,6 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 
 	foreach($pictures as $key => $picture){
 		echo '<div class="col-lg-3 col-md-4 col-xs-6">';
-		echo '<div class="thumbBox">';
 
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			echo '<div class="center-block">';
@@ -215,6 +214,8 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 
 			echo '</div>';
 		}
+
+		echo '<div class="thumbBox">';
 
 		$visibility = $libGallery->getPublicityLevel($picture);
 		$visibilityClass = '';

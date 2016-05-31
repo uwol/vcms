@@ -198,7 +198,7 @@ function printAnmeldungen($row){
 function printSemesterCover($row){
 	global $libTime;
 
-	echo '<div>';
+	echo '<div class="thumbBox">';
 
 	$semester = $libTime->getSemesterEinesDatums($row['datum']);
 	$semesterCoverString = $libTime->getSemesterCoverString($semester);

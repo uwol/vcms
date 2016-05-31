@@ -29,12 +29,6 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 	$stmt = $libDb->prepare('SELECT id, titel, datum, ort FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
 	$stmt->execute();
 
-	if($libAuth->isLoggedin()){
-		$level = 1;
-	} else {
-		$level = 0;
-	}
-
 	echo '<div class="row">';
 
 	$i = 0;
@@ -42,8 +36,8 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		// is there a gallery?
-		if($libGallery->hasPictures($row['id'], $level)){
-			$pictures = $libGallery->getPictures($row['id'], $level);
+		if($libGallery->hasPictures($row['id'], 0)){
+			$pictures = $libGallery->getPictures($row['id'], 0);
 
 			//determine random image
 			srand(microtime() * 1000000);
@@ -53,22 +47,16 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 
 			echo '<div class="col-sm-3">';
 			echo '<p>';
-
 			printVeranstaltungTitle($row);
 			printVeranstaltungTime($row);
+			echo '</p>';
 
+			echo '<div class="thumbBox">';
 			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
-
-			$visibilityClass = '';
-
-			if($libGallery->getPublicityLevel($pictures[$pictureid]) == 1){
-				$visibilityClass = "internal";
-			}
-
-			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block thumbnail ' .$visibilityClass. '" />';
+			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block thumbnail" />';
 			echo '</a>';
 		
-			echo '</p>';
+			echo '</div>';
 			echo '</div>';
 			
 			$i++;
