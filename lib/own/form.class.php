@@ -61,9 +61,13 @@ class LibForm{
 	function printSubmitButton($label){
 		echo '<div class="form-group">';
 		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
+		$this->printSubmitButtonInline($label);
+		echo '</div>';
+		echo '</div>';
+	}
+
+	function printSubmitButtonInline($label){
 		echo '<button type="submit" class="btn btn-default">' .$label. '</button>';
-		echo '</div>';
-		echo '</div>';
 	}
 
 	function printMitgliederDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){

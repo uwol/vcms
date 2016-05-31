@@ -235,34 +235,35 @@ function printSocialButtons($row){
 }
 
 function printAnmeldeStatus($row){
-	global $libAuth, $libDb;
+	global $libAuth, $libDb, $libForm;
 
 	if($libAuth->isLoggedin()){
 		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");
 		$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 		$stmt->bindValue(':veranstaltung', $row["id"], PDO::PARAM_INT);
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahl);
+		$stmt->bindColumn('number', $angemeldet);
 		$stmt->fetch();
 
 		echo '<p>';
 
-		if($anzahl > 0){
-			echo '<img src="styles/icons/calendar/angemeldet.svg" alt="angemeldet" class="icon_small" /> angemeldet';
+		if($angemeldet){
+			echo '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> angemeldet';
 		} else {
-			echo '<img src="styles/icons/calendar/abgemeldet.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
+			echo '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
 		}
 
 		echo '</p>';
 
-		//event in future?
 		if(date('Y-m-d H:i:s') < $row['datum']){
-			echo '<form action="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '" method="post">';
+			echo '<form action="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '" method="post" class="form-inline">';
 
-			if($anzahl > 0){
-				echo '<input type="submit" value="Abmelden" name="Button" class="eventbutton" /><input type="hidden" name="changeanmeldenstate" value="abmelden" />';
+			if($angemeldet){
+				echo '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
+				$libForm->printSubmitButtonInline('Abmelden');
 			} else {
-				echo '<input type="submit" value="Anmelden" name="Button" class="eventbutton" /><input type="hidden" name="changeanmeldenstate" value="anmelden" />';
+				echo '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
+				$libForm->printSubmitButtonInline('Anmelden');			
 			}
 
 			echo '</form>';

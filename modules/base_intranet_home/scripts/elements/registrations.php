@@ -61,14 +61,14 @@ $stmtCount->fetch();
 if($count > 0){
 	echo '<h2>Veranstaltungen</h2>';
 
-	$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,3');
+	$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,4');
 	$stmt->execute();
 
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<hr />';
+	echo '<div class="row">';
 
-		echo '<form action="index.php?pid=intranet_home" method="post">';
-		echo '<input type="hidden" name="eventid" value="' .$row['id']. '" />';
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		echo '<div class="col-sm-6">';
+		echo '<hr />';
 
 		$stmt2 = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung');
 		$stmt2->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
@@ -77,15 +77,32 @@ if($count > 0){
 		$stmt2->bindColumn('number', $angemeldet);
 		$stmt2->fetch();
 
+		echo '<b>'.$libTime->formatDateTimeString($row['datum'], 1).'</b> - ';
+		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid='.$row['id'].'">'.$row['titel'].'</a>';
+
+		echo '<form action="index.php?pid=intranet_home" method="post" class="form-inline">';
+		echo '<input type="hidden" name="eventid" value="' .$row['id']. '" />';
+
 		if($angemeldet){
-			echo '<input type="hidden" name="veranstaltungenchangeanmeldenstate" value="abmelden" /><input type="submit" value="Abmelden" style="margin:0;padding:0;color:green;" />';
+			echo '<input type="hidden" name="veranstaltungenchangeanmeldenstate" value="abmelden" />';
+			$libForm->printSubmitButtonInline('Abmelden');
 		} else {
-			echo '<input type="hidden" name="veranstaltungenchangeanmeldenstate" value="anmelden" /><input type="submit" value="Anmelden" style="margin:0;padding:0;color:red;" />';
+			echo '<input type="hidden" name="veranstaltungenchangeanmeldenstate" value="anmelden" />';
+			$libForm->printSubmitButtonInline('Anmelden');
+		}
+
+		echo ' ';
+
+		if($angemeldet){
+			echo '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> angemeldet';
+		} else {
+			echo '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
 		}
 
 		echo '</form>';
-		echo '<b>'.$libTime->formatDateTimeString($row['datum'], 1).'</b> - ';
-		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid='.$row['id'].'">'.$row['titel'].'</a>';
+		echo '</div>';
 	}
+
+	echo '</div>';
 }
 ?>

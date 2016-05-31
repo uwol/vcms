@@ -92,7 +92,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if($libAuth->isloggedin() == true && $anzahl > 0){
 		$event->isAttended(true);
-		$event->attendedImageUrl = 'styles/icons/calendar/angemeldet.svg';
+		$event->attendedImageUrl = 'styles/icons/calendar/attending.svg';
 	}
 
 	$event->setDescription($description);
