@@ -279,14 +279,6 @@ main .calendarEvent .summary {
 
 /* gallery */
 
-main .gallery {
-	text-align: center;
-}
-
-main .gallery .thumbBox {
-	margin-bottom: 30px;
-}
-
 main .gallery .public {
 	border: 2px solid green;
 }
