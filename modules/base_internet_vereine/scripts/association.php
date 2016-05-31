@@ -93,7 +93,7 @@ if(isset($_GET['verein'])){
 	}
 
 	if($vereinarray['webseite'] != ''){
-		echo '<a href="http://' .$vereinarray['webseite']. '">' .$vereinarray['webseite']. '</a><br />';
+		echo '<a href="' .$vereinarray['webseite']. '">' .$vereinarray['webseite']. '</a><br />';
 	}
 
 	echo '</address>';
@@ -253,15 +253,22 @@ if(isset($_GET['verein'])){
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<div class="col-sm-3">';
+			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 
+			echo '<div class="row">';
+			echo '<div class="col-xs-6">';
 			echo $libMitglied->getMitgliedSignature($row['mitglied'], '');
 
 			if($row['ehrenmitglied'] == 1){
 				echo 'Ehrenmitgl. ';
 			}
 
+			echo '</div>';
+			echo '<div class="col-xs-6">';
 			echo $libMitglied->getMitgliedNameString($row['mitglied'], 0);
+			echo '</div>';
+			echo '</div>';
+
 			echo '</div>';
 		}
 

@@ -37,7 +37,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</div>';
 }
 
-echo '<div class="col-sm-3">';
+echo '<div class="col-sm-6 col-md-3">';
 
 $semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
 

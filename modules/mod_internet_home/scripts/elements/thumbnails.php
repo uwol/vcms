@@ -45,7 +45,7 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			$keys = array_keys($pictures);
 			$pictureid = $keys[$zufallszahl];
 
-			echo '<div class="col-sm-3">';
+			echo '<div class="col-sm-6 col-md-3">';
 			echo '<p>';
 			printVeranstaltungTitle($row);
 			printVeranstaltungTime($row);
