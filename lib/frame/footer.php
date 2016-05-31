@@ -26,31 +26,28 @@ echo '        <div class="col-md-12">' . PHP_EOL;
 echo '          <footer>' . PHP_EOL;
 echo '            <div class="social-buttons text-right">' . PHP_EOL;
 
-
 $title = $libConfig->verbindungName;
 $description = $libConfig->seiteBeschreibung;
 
 
+//wikipedia
+$wp_url = $libGenericStorage->loadValue('mod_internet_home', 'wp_url');
+
+if($wp_url != ''){
+	echo '              <a href="' .$wp_url. '" rel="nofollow"><img src="styles/icons/social/wikipedia.svg" alt="WP" class="icon" /></a>' . PHP_EOL;
+}
+
+
 //facebook
-$fb_url = $libGenericStorage->loadValue('mod_internet_home', 'fb_likebutton_url');
+$fb_url = $libGenericStorage->loadValue('mod_internet_home', 'fb_url');
 
 if($fb_url != ''){
-	echo '              <a href="' .$fb_url. '" rel="nofollow">' . PHP_EOL;
-	echo '                <img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />' . PHP_EOL;
-	echo '              </a>' . PHP_EOL;
+	echo '              <a href="' .$fb_url. '" rel="nofollow"><img src="styles/icons/social/facebook.svg" alt="FB" class="icon" /></a>' . PHP_EOL;
 }
 
 //twitter
-$url = 'http://' .$libConfig->sitePath;
-
-echo '              <a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">' . PHP_EOL;
-echo '                <img src="styles/icons/social/twitter.svg" alt="T" class="icon" />' . PHP_EOL;
-echo '              </a>' . PHP_EOL;
-
-//rss
-echo '              <a href="http://' .$libConfig->sitePath. '/inc.php?iid=internet_home_rssfeed" rel="nofollow">' . PHP_EOL;
-echo '                <img src="styles/icons/social/rss.svg" alt="RSS" class="icon" />' . PHP_EOL;
-echo '              </a>' . PHP_EOL;
+$twitter_url = 'http://' .$libConfig->sitePath;
+echo '              <a href="http://twitter.com/share?url=' .urlencode($twitter_url). '&amp;text=' .urlencode($title). '" rel="nofollow"><img src="styles/icons/social/twitter.svg" alt="T" class="icon" /></a>' . PHP_EOL;
 
 echo '            </div>' . PHP_EOL;
 echo '          </footer>' . PHP_EOL;

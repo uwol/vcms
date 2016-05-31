@@ -21,12 +21,16 @@ if(!is_object($libGlobal))
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
-	$libGenericStorage->saveValueInCurrentModule('fb:admins', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('fb_url')){
+	$libGenericStorage->saveValueInCurrentModule('fb_url', '');
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('fb_likebutton_url')){
-	$libGenericStorage->saveValueInCurrentModule('fb_likebutton_url', '');
+if(!$libGenericStorage->attributeExistsInCurrentModule('wp_url')){
+	$libGenericStorage->saveValueInCurrentModule('wp_url', '');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
+	$libGenericStorage->saveValueInCurrentModule('fb:admins', 0);
 }
 
 

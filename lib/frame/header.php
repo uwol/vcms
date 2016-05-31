@@ -115,7 +115,7 @@ echo '</a></h2>' . PHP_EOL;
 echo '          <span id="signout">';
 
 if($libAuth->isLoggedin()){
-	echo '            <a href="index.php?session_destroy=1">abmelden</a>';
+	echo '<a href="index.php?session_destroy=1">abmelden</a>';
 }
 
 echo '</span>' . PHP_EOL;
