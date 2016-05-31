@@ -303,6 +303,10 @@ main .thumbnail {
 	border-radius: 0;
 }
 
+main .thumbnailControls {
+	text-align: center;
+}
+
 main .thumbnailBox {
 	text-align: center;
 }

@@ -199,10 +199,10 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 	echo '<div class="row gallery">';
 
 	foreach($pictures as $key => $picture){
-		echo '<div class="col-lg-3 col-md-4 col-xs-6">';
+		echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
-			echo '<div class="center-block">';
+			echo '<div class="thumbnailControls">';
 
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/public.svg" class="icon_small" /></a>';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/internal.svg" class="icon_small" /></a>';
