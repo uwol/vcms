@@ -75,197 +75,236 @@ echo '<h1>' .$row['titel']. '</h1>';
 echo '<div class="row">';
 echo '<div class="col-sm-9">';
 
-/*
-* date and time
-*/
-$time = substr($row['datum'], 11, 5);
-
-// no time
-if($time == '00:00'){
-	$time = '';
-} elseif(substr($time, 3, 2) == 00){
-	$time = substr($time, 0, 2). 'h s.t.';
-} elseif(substr($time, 3, 2) == 15){
-	$time = substr($time, 0, 2). 'h c.t.';
-}
-
-$datum = $libTime->formatDateTimeString($row['datum'], 2);
-
-/*
-* status
-*/
-if ($row['status'] == 'o'){
-	$status = 'offiziell';
-} elseif ($row['status'] == 'ho'){
-	$status = 'hochoffiziell';
-} elseif($row['status'] == ''){
-	$status = 'inoffiziell';
-} else {
-	$status = $row['status'];
-}
-
-/*
-* general infos
-*/
-echo '<p>';
-echo '<b>Am ' .$datum. '</b>';
-
-if($time != ''){
-	echo '<br /><b> um ' .$time. '</b>';
-}
-
-if (($row['ort']) != ''){
-	echo '<br /><b>Ort: '.$row['ort'] .'</b>';
-}
-
-echo '</p>';
-
-echo '<p><b>Status:</b> ' .$status. '</p>';
-
-if(($row['beschreibung']) != ''){
-	echo '<p><b>Beschreibung:</b><br />' .nl2br($row['beschreibung']). '</p>';
-}
-
-if(($row['spruch']) != ''){
-	echo '<p><b>Spruch:</b><br />' .nl2br($row['spruch']). '</p>';
-}
-
-/*
-* show registrations
-*/
-echo '<p><b>Anmeldungen:</b><br />';
-
-if($libAuth->isLoggedin()){
-	$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
-	$stmt->bindValue(':veranstaltung', $id, PDO::PARAM_INT);
-	$stmt->execute();
-
-	$anmeldungWritten = false;
-
-	while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
-		if($anmeldungWritten){
-			echo ', ';
-		}
-
-		echo '<a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libMitglied->getMitgliedNameString($eventrow['person'], 0) .'</a>';
-		$anmeldungWritten = true;
-	}
-} else {
-	echo 'Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.';
-}
-
-echo '</p>';
-
-/*
-* gallery
-*/
-if(!$libAuth->isLoggedin()){
-	// are there images?
-	if(count($libGallery->getPictures($row['id'], 1)) > count($libGallery->getPictures($row['id'], 0))){
-		echo '<p>Teile der Galerie sind ebenfalls erst nach einer Anmeldung im Intranet sichtbar.</p>';
-	}
-}
+printEventDetails($row);
+printAnmeldungen($row);
 
 echo '</div>';
-
-//-------------------------------------- interactive box start ------------------------------------------
-
 echo '<div class="col-sm-3">';
-echo '<p>';
 
-$semester = $libTime->getSemesterEinesDatums($row['datum']);
-$url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$id. '&amp;semester=' .$semester;
-$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateTimeString($row['datum'], 2);
-
-//facebook
-echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
-echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
-echo '</a> ';
-
-//twitter
-echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
-echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
-echo '</a> ';
-
-echo '</p>';
-
+printSemesterCover($row);
 echo '<hr />';
+printAnmeldeStatus($row);
+echo '<hr />';
+printSocialButtons($row);
 
-/**
-* registration status
-*/
-if($libAuth->isLoggedin()){
-	$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");
-	$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
-	$stmt->bindValue(':veranstaltung', $row["id"], PDO::PARAM_INT);
-	$stmt->execute();
-	$stmt->bindColumn('number', $anzahl);
-	$stmt->fetch();
+echo '</div>';
+echo '</div>';
 
-    echo '<p>';
+printGallery($row);
 
-	if($anzahl > 0){
-		echo '<img src="styles/icons/calendar/angemeldet.svg" alt="angemeldet" class="icon_small" /> angemeldet';
+
+// -----------------------------------------------------------
+
+function printEventDetails($row){
+	global $libTime;
+
+	/*
+	* date and time
+	*/
+	$time = substr($row['datum'], 11, 5);
+
+	// no time
+	if($time == '00:00'){
+		$time = '';
+	} elseif(substr($time, 3, 2) == 00){
+		$time = substr($time, 0, 2). 'h s.t.';
+	} elseif(substr($time, 3, 2) == 15){
+		$time = substr($time, 0, 2). 'h c.t.';
+	}
+
+	$datum = $libTime->formatDateTimeString($row['datum'], 2);
+
+	/*
+	* status
+	*/
+	if ($row['status'] == 'o'){
+		$status = 'offiziell';
+	} elseif ($row['status'] == 'ho'){
+		$status = 'hochoffiziell';
+	} elseif($row['status'] == ''){
+		$status = 'inoffiziell';
 	} else {
-		echo '<img src="styles/icons/calendar/abgemeldet.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
+		$status = $row['status'];
+	}
+
+	/*
+	* general infos
+	*/
+	echo '<p>';
+	echo '<b>Am ' .$datum. '</b>';
+
+	if($time != ''){
+		echo '<br /><b> um ' .$time. '</b>';
+	}
+
+	if (($row['ort']) != ''){
+		echo '<br /><b>Ort: '.$row['ort'] .'</b>';
 	}
 
 	echo '</p>';
 
-	//event in future?
-	if(@date('Y-m-d H:i:s') < $row['datum']){
-		echo '<form action="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '" method="post" style="margin-top:5px;" >';
+	echo '<h4>Status</h4>';
+	echo '<p>' .$status. '</p>';
 
-		if($anzahl > 0){
-			echo '<input type="submit" value="Abmelden" name="Button" class="eventbutton" /><input type="hidden" name="changeanmeldenstate" value="abmelden" />';
-		} else {
-			echo '<input type="submit" value="Anmelden" name="Button" class="eventbutton" /><input type="hidden" name="changeanmeldenstate" value="anmelden" />';
-		}
-
-		echo '</form>';
+	if(($row['beschreibung']) != ''){
+		echo '<h4>Beschreibung</h4>';
+		echo '<p>' .nl2br($row['beschreibung']). '</p>';
 	}
-} else {
-	echo '<p>Für den Anmeldestatus bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.</p>';
+
+	if(($row['spruch']) != ''){
+		echo '<h4>Spruch</h4>';
+		echo '<p>' .nl2br($row['spruch']). '</p>';
+	}
 }
 
-echo '</div>';
+function printAnmeldungen($row){
+	global $libAuth, $libDb, $libGallery, $libMitglied;
 
-//-------------------------------------- interactive box end ------------------------------------------
+	echo '<h4>Anmeldungen</h4>';
+	echo '<p>';
 
+	if($libAuth->isLoggedin()){
+		$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
+		$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
+		$stmt->execute();
 
-echo '</div>';
+		$anmeldungWritten = false;
 
+		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
+			if($anmeldungWritten){
+				echo ', ';
+			}
 
-$level = 0;
-if($libAuth->isLoggedin()){
-	$level = 1;
-}
-
-if($libGallery->hasPictures($row['id'], $level)){
-	echo '<hr />';
-
-	echo '<div class="row gallery">';
-
-	$pictures = $libGallery->getPictures($row['id'], $level);
-
-	foreach($pictures as $key => $value){
-		echo '<div class="col-lg-3 col-md-4 col-xs-6">';
-		echo '<div class="thumbBox">';
-
-		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
-
-		$visibilityClass = '';
-
-		if($libGallery->getPublicityLevel($value) == 1){
-			$visibilityClass = "internal";
+			echo '<a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libMitglied->getMitgliedNameString($eventrow['person'], 0). '</a>';
+			$anmeldungWritten = true;
 		}
+	} else {
+		echo 'Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.';
+	}
 
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive thumbnail center-block ' .$visibilityClass. '" />';
+	echo '</p>';
+
+	/*
+	* gallery
+	*/
+	if(!$libAuth->isLoggedin()){
+		// are there images?
+		if(count($libGallery->getPictures($row['id'], 1)) > count($libGallery->getPictures($row['id'], 0))){
+			echo '<p>Teile der Galerie sind ebenfalls erst nach einer Anmeldung im Intranet sichtbar.</p>';
+		}
+	}
+}
+
+function printSemesterCover($row){
+	global $libTime;
+
+	echo '<div>';
+
+	$semester = $libTime->getSemesterEinesDatums($row['datum']);
+	$semesterCoverString = $libTime->getSemesterCoverString($semester);
+
+	if($semesterCoverString != ''){
+		echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$semester. '">';
+		echo $semesterCoverString;
 		echo '</a>';
-		echo '</div>';
-		echo '</div>';
 	}
 
 	echo '</div>';
+}
+
+function printSocialButtons($row){
+	global $libConfig, $libTime;
+
+	echo '<p>';
+
+	$semester = $libTime->getSemesterEinesDatums($row['datum']);
+	$url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
+	$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateTimeString($row['datum'], 2);
+
+	//facebook
+	echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
+	echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
+	echo '</a> ';
+
+	//twitter
+	echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
+	echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
+	echo '</a> ';
+
+	echo '</p>';
+}
+
+function printAnmeldeStatus($row){
+	global $libAuth, $libDb;
+
+	if($libAuth->isLoggedin()){
+		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");
+		$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
+		$stmt->bindValue(':veranstaltung', $row["id"], PDO::PARAM_INT);
+		$stmt->execute();
+		$stmt->bindColumn('number', $anzahl);
+		$stmt->fetch();
+
+		echo '<p>';
+
+		if($anzahl > 0){
+			echo '<img src="styles/icons/calendar/angemeldet.svg" alt="angemeldet" class="icon_small" /> angemeldet';
+		} else {
+			echo '<img src="styles/icons/calendar/abgemeldet.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
+		}
+
+		echo '</p>';
+
+		//event in future?
+		if(date('Y-m-d H:i:s') < $row['datum']){
+			echo '<form action="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '" method="post">';
+
+			if($anzahl > 0){
+				echo '<input type="submit" value="Abmelden" name="Button" class="eventbutton" /><input type="hidden" name="changeanmeldenstate" value="abmelden" />';
+			} else {
+				echo '<input type="submit" value="Anmelden" name="Button" class="eventbutton" /><input type="hidden" name="changeanmeldenstate" value="anmelden" />';
+			}
+
+			echo '</form>';
+		}
+	} else {
+		echo '<p>Für den Anmeldestatus bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.</p>';
+	}
+}
+
+function printGallery($row){
+	global $libAuth, $libGallery;
+
+	$level = 0;
+	if($libAuth->isLoggedin()){
+		$level = 1;
+	}
+
+	if($libGallery->hasPictures($row['id'], $level)){
+		echo '<hr />';
+		echo '<div class="row gallery">';
+
+		$pictures = $libGallery->getPictures($row['id'], $level);
+
+		foreach($pictures as $key => $value){
+			echo '<div class="col-lg-3 col-md-4 col-xs-6">';
+			echo '<div class="thumbBox">';
+
+			echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
+
+			$visibilityClass = '';
+
+			if($libGallery->getPublicityLevel($value) == 1){
+				$visibilityClass = "internal";
+			}
+
+			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive thumbnail center-block ' .$visibilityClass. '" />';
+			echo '</a>';
+			echo '</div>';
+			echo '</div>';
+		}
+
+		echo '</div>';
+	}
 }
 ?>

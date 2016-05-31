@@ -545,7 +545,7 @@ if($ownprofile){
 	$libForm->printTextInput('titel', 'Titel', $row2['titel']);
 	$libForm->printTextInput('rang', 'Rang', $row2['rang']);
 	$libForm->printTextInput('vorname', 'Vorname', $row2['vorname'], 'text', true);
-	$libForm->printTextInput('prefix', 'Präfix', $row2['prefix'], 'text', true);
+	$libForm->printTextInput('praefix', 'Präfix', $row2['praefix'], 'text', true);
 	$libForm->printTextInput('name', 'Nachname', $row2['name'], 'text', true);
 	$libForm->printTextInput('suffix', 'Suffix', $row2['suffix'], 'text', true);
 	$libForm->printTextInput('spitzname', 'Spitzname', $row2['spitzname']);
