@@ -290,7 +290,7 @@ function printGallery($row){
 		$pictures = $libGallery->getPictures($row['id'], $level);
 
 		foreach($pictures as $key => $value){
-			echo '<div class="col-lg-3 col-md-4 col-xs-6">';
+			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 			echo '<div class="thumbnailBox">';
 			echo '<div class="thumbnailOverflow">';
 
