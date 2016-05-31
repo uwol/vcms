@@ -36,7 +36,7 @@ class FolderElement{
 
 	function getFileSystemPath(){
 		if(is_object($this->nestingFolder)){
-			return $this->nestingFolder->getFileSystemPath() . '/' . $this->fileSystemFileName;
+			return $this->nestingFolder->getFileSystemPath(). '/' .$this->fileSystemFileName;
 		} else {
 			return $this->fileSystemFileName;
 		}
@@ -80,7 +80,7 @@ class FolderElement{
 	}
 
 	function getMetaFileSystemName($name, $groupArray){
-		$securityPrefix = implode("", array_unique($groupArray));
+		$securityPrefix = implode('', array_unique($groupArray));
 
 		$stringArray = array();
 		$stringArray[] = $securityPrefix;
@@ -208,18 +208,18 @@ class Folder extends FolderElement{
 		if(count($name) > 0){
 			$metaFileSystemName = $this->getMetaFileSystemName($name, $groupArray);
 			//copy($tmpFileSystemName, $this->getFileSystemPath() . '/' .$metaFileSystemName);
-			move_uploaded_file($tmpFileSystemName, $this->getFileSystemPath() . '/' .$metaFileSystemName);
+			move_uploaded_file($tmpFileSystemName, $this->getFileSystemPath(). '/' .$metaFileSystemName);
 		}
 	}
 
 	function delete(){
-		if($this->isDeleteAble() && @rmdir($this->getFileSystemPath())){
+		if($this->isDeleteable() && @rmdir($this->getFileSystemPath())){
 			$this->nestingFolder->friend_removeFolderElement($this);
 			$this->nestingFolder = '';
 		}
 	}
 
-	function isDeleteAble(){
+	function isDeleteable(){
 		if($this->isAmtsRootFolder){
 			return false;
 		}
@@ -247,8 +247,8 @@ class Folder extends FolderElement{
 		sort($partArray);
 
 		foreach($partArray as $part){
-			if($part != "." && $part != ".."){
-				$folderElementString = $this->getFileSystemPath() ."/". $part;
+			if($part != '.' && $part != '..'){
+				$folderElementString = $this->getFileSystemPath(). '/' .$part;
 
 				if(is_file($folderElementString)){
 					$folderElement = new File($this, $part);
@@ -283,16 +283,16 @@ class File extends FolderElement{
 	function getExtension(){
 		$path_parts = pathinfo($this->name);
 
-		if(isset($path_parts["extension"])){
-			return strtolower($path_parts["extension"]);
+		if(isset($path_parts['extension'])){
+			return strtolower($path_parts['extension']);
 		}
 	}
 
 	function getFilename(){
 		$path_parts = pathinfo($this->name);
 
-		if(isset($path_parts["filename"])){
-			return $path_parts["filename"];
+		if(isset($path_parts['filename'])){
+			return $path_parts['filename'];
 		}
 	}
 

@@ -21,7 +21,13 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-require_once("lib/lib.php");
+require_once('lib/lib.php');
+
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('rightsPreselection')){
+	$libGenericStorage->saveValueInCurrentModule('rightsPreselection', 1);
+}
+
 
 if(!isset($_SESSION['openFolders']) || !is_array($_SESSION['openFolders'])){
 	$_SESSION['openFolders'] = array();
@@ -29,21 +35,12 @@ if(!isset($_SESSION['openFolders']) || !is_array($_SESSION['openFolders'])){
 
 $rootFolderPathString = 'custom/intranet/downloads';
 
-
-/*
-* configuration
-*/
-
-if($libGenericStorage->loadValueInCurrentModule('rightsPreselection') == ''){
-	$libGenericStorage->saveValueInCurrentModule('rightsPreselection', 1);
-}
-
 /*
 * pre scan actions
 */
 foreach($libAuth->getAemter() as $amt){
-	if(!is_dir($rootFolderPathString .'/'. $amt)){
-		mkdir($rootFolderPathString .'/'. $amt);
+	if(!is_dir($rootFolderPathString. '/' .$amt)){
+		mkdir($rootFolderPathString. '/' .$amt);
 	}
 }
 
@@ -63,7 +60,7 @@ $hashes = $rootFolderObject->getHashMap();
 */
 
 //delete file
-if(isset($_GET['aktion']) && $_GET['aktion'] == "delete" && isset($_GET['hash'])){
+if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete' && isset($_GET['hash'])){
 	$element = $hashes[$_GET['hash']];
 
 	if(in_array($element->owningAmt, $libAuth->getAemter())){
@@ -74,14 +71,14 @@ if(isset($_GET['aktion']) && $_GET['aktion'] == "delete" && isset($_GET['hash'])
 	}
 }
 //upload file
-elseif(isset($_POST['aktion']) && $_POST['aktion'] == "upload" && isset($_POST['hash'])){
+elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'upload' && isset($_POST['hash'])){
 	$folder = $hashes[$_POST['hash']];
 
 	if(in_array($folder->owningAmt, $libAuth->getAemter())){
 		if(isset($_POST['gruppen']) && count($_POST['gruppen']) > 0){
-			if($_FILES["datei"]['tmp_name'] != ""){
+			if($_FILES['datei']['tmp_name'] != ''){
 				$groupArray = array_merge($_POST['gruppen'], array($libAuth->getGruppe()));
-				$folder->addFile($_FILES["datei"]['tmp_name'], $_FILES["datei"]['name'], $groupArray);
+				$folder->addFile($_FILES['datei']['tmp_name'], $_FILES['datei']['name'], $groupArray);
 				$libGlobal->notificationTexts[] = 'Die Datei wurde hochgeladen.';
 				$rootFolderObject->scanFileSystem();
 			}
@@ -124,58 +121,77 @@ if(count($libAuth->getAemter()) > 0){
 	* upload form
 	*/
 	echo '<h2>Datei hochladen</h2>';
-	echo '<div style="border: 1px solid #000000; padding:5px; width:100%">';
 
-	echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_download_directories">'."\n";
+	echo '<form action="index.php?pid=intranet_download_directories" method="post" enctype="multipart/form-data" class="form-horizontal">';
+	echo '<fieldset>';
+	echo '<input type="hidden" name="aktion" value="upload" />';
 
-	echo '<br />Datei <input name="datei" type="file" /> '."\n";
-
-	echo 'in den Ordner <select name="hash">';
+	echo '<div class="form-group">';
+	echo '<label for="hash" class="col-sm-2 control-label">in den Ordner</label>';
+	echo '<div class="col-sm-2"><select name="hash" class="form-control">';
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-			echo '<option value="' .$folderElement->getHash(). '">'.$folderElement->name.'</option>'."\n";
+			echo '<option value="' .$folderElement->getHash(). '">'.$folderElement->name.'</option>';
 		}
 	}
 
-	echo '</select><br />'."\n";
+	echo '</select></div>';
+	echo '</div>';
 
-	echo 'mit Leserecht für folgende Gruppen<br />';
+
+	echo '<div class="form-group">';
+	echo '<label class="col-sm-2 control-label">mit Leserecht für</label>';
+	echo '<div class="col-sm-10">';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_gruppe ORDER BY bezeichnung");
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		if($row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "V"){
-			echo '<input type="checkbox" name="gruppen[]" value="' .$row['bezeichnung']. '" ';
+			echo '<div class="checkbox"><label><input type="checkbox" name="gruppen[]" value="' .$row['bezeichnung']. '"';
 
 			if($libGenericStorage->loadValueInCurrentModule('rightsPreselection') == 1){
 				echo 'checked="checked"';
 			}
 
-			echo ' /> ' .$row['bezeichnung'].' - ' .$row['beschreibung']. '<br />'."\n";
+			echo '/>';
+			echo $row['bezeichnung'].' - ' .$row['beschreibung'];
+			echo '</label></div>';
 		}
 	}
 
-	echo '<input type="hidden" name="aktion" value="upload" />'."\n";
+	echo '</div></div>';
 
-	echo '<br /><input type="submit" value="hochladen" /><br />'."\n";
-	echo '</form>'."\n";
+	echo '<div class="form-group">';
+	echo '<div class="col-sm-offset-2 col-sm-2">';
+	echo '<label class="btn btn-default btn-file">Datei hochladen';
+	echo '<input type="file" name="datei" onchange="this.form.submit()" style="display:none">';
+	echo '</label>';
+	echo '</div>';
 	echo '</div>';
 
+	echo '</fieldset>';
+	echo '</form>';
 
 
 	/*
 	* new folder form
 	*/
-	echo '<h2>Neuen Ordner anlegen</h2>';
-	echo '<div style="border: 1px solid #000000; padding:5px; width:100%">';
+	echo '<h2>Ordner anlegen</h2>';
 
-	echo '<form method="post" action="index.php?pid=intranet_download_directories">'."\n";
+	echo '<form action="index.php?pid=intranet_download_directories" method="post" class="form-horizontal">';
+	echo '<fieldset>';
+	echo '<input type="hidden" name="aktion" value="newfolder" />';
 
-	echo '<br />Ordner <input name="foldername" type="text" /> '."\n";
+	echo '<div class="form-group">';
+	echo '<label for="foldername" class="col-sm-2 control-label">neuen Ordner</label>';
+	echo '<div class="col-sm-2"><input type="text" id="foldername" name="foldername" class="form-control" /></div>';
+	echo '</div>';
 
-	echo 'in Ordner <select name="hash">';
+	echo '<div class="form-group">';
+	echo '<label for="hash" class="col-sm-2 control-label">in Ordner</label>';
+	echo '<div class="col-sm-2"><select name="hash" class="form-control">';
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
@@ -183,17 +199,17 @@ if(count($libAuth->getAemter()) > 0){
 		}
 	}
 
-	echo '</select><br /><br />'."\n";
-
-	echo '<input type="hidden" name="aktion" value="newfolder" />'."\n";
-
-	echo '<input type="submit" value="anlegen" /><br />'."\n";
-
-	echo '</form>'."\n";
+	echo '</select></div>';
 	echo '</div>';
+
+	echo '<div class="form-group">';
+	echo '<div class="col-sm-offset-2 col-sm-2">';
+	echo '<button type="submit" class="btn btn-default">anlegen</button>';
+	echo '</div>';
+	echo '</div>';
+
+	echo '</form>';
 }
-
-
 
 
 
@@ -225,8 +241,8 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				echo ' - ' . getSizeString($folderElement->getSize());
 			}
 
-			if($folderElement->isDeleteAble() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
-				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><img src="' . $libModuleHandler->getModuleDirectory(). '/img/cross.png" style="height:14px" alt="löschen" /></a>';
+			if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
+				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" alt="löschen" /></a>';
 			}
 
 			echo '<br />';
@@ -267,7 +283,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				default : echo 'other.jpg'; break;
 			}
 
-			echo '" style="width:16px;height:16px" alt="Icon" />';
+			echo '" class="icon_small" alt="Icon" />';
 
 			$fileName = $folderElement->getFilename();
 
@@ -276,7 +292,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			echo ' - ' . getSizeString($folderElement->getSize());
 
 			if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><img src="' . $libModuleHandler->getModuleDirectory(). '/img/cross.png" style="height:14px" alt="löschen" /></a>';
+				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" alt="löschen" /></a>';
 			}
 
 			echo '<br />';
