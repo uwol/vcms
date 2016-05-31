@@ -311,18 +311,23 @@ main .thumbnail {
 	border-radius: 0;
 }
 
-main .thumbBox {
-	width: 100%;
+main .thumbnailBox {
+	text-align: center;
+}
+
+main .thumbnailBox .thumbnailOverflow {
+	display: inline-block;
+	width: auto;
 	height: 150px;
 	overflow: hidden;
 }
 
-main .thumbBox .thumbnail {
+main .thumbnailBox .thumbnailOverflow .thumbnail {
 	height: 100%;
 	transition: all .3s linear;
 }
 
-main .thumbBox .thumbnail:hover {
+main .thumbnailBox .thumbnailOverflow .thumbnail:hover {
 	transform: scale(1.1);
 }
 

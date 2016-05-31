@@ -215,7 +215,8 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 			echo '</div>';
 		}
 
-		echo '<div class="thumbBox">';
+		echo '<div class="thumbnailBox">';
+		echo '<div class="thumbnailOverflow">';
 
 		$visibility = $libGallery->getPublicityLevel($picture);
 		$visibilityClass = '';
@@ -232,6 +233,7 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive thumbnail center-block ' .$visibilityClass. '">';
 		echo '</a>';
 
+		echo '</div>';
 		echo '</div>';
 		echo '</div>';
 	}

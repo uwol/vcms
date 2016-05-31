@@ -42,10 +42,12 @@ echo '<div class="col-sm-3">';
 $semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
 
 if($semesterCoverString != ''){
-	echo '<div class="thumbBox">';
+	echo '<div class="thumbnailBox">';
+	echo '<div class="thumbnailOverflow">';
 	echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
 	echo $semesterCoverString;
 	echo '</a>';
+	echo '</div>';
 	echo '</div>';
 }
 

@@ -198,7 +198,8 @@ function printAnmeldungen($row){
 function printSemesterCover($row){
 	global $libTime;
 
-	echo '<div class="thumbBox">';
+	echo '<div class="thumbnailBox">';
+	echo '<div class="thumbnailOverflow">';
 
 	$semester = $libTime->getSemesterEinesDatums($row['datum']);
 	$semesterCoverString = $libTime->getSemesterCoverString($semester);
@@ -209,6 +210,7 @@ function printSemesterCover($row){
 		echo '</a>';
 	}
 
+	echo '</div>';
 	echo '</div>';
 }
 
@@ -289,7 +291,8 @@ function printGallery($row){
 
 		foreach($pictures as $key => $value){
 			echo '<div class="col-lg-3 col-md-4 col-xs-6">';
-			echo '<div class="thumbBox">';
+			echo '<div class="thumbnailBox">';
+			echo '<div class="thumbnailOverflow">';
 
 			echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
 
@@ -301,6 +304,7 @@ function printGallery($row){
 
 			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive thumbnail center-block ' .$visibilityClass. '" />';
 			echo '</a>';
+			echo '</div>';
 			echo '</div>';
 			echo '</div>';
 		}
