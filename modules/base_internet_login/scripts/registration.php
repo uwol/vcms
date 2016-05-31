@@ -46,10 +46,10 @@ if(isset($_POST['registrierung_name']) || isset($_POST['registrierung_telnr']) |
 	}
 
 	if(!isset($_POST['registrierung_emailadresse']) || $_POST['registrierung_emailadresse'] == ""){
-		$libGlobal->errorTexts[] = "Bitte geben Sie eine E-Mailadresse an.";
+		$libGlobal->errorTexts[] = "Bitte geben Sie eine E-Mail-Adresse an.";
 		$formError = true;
 	} elseif(isset($_POST['registrierung_emailadresse']) && !$libString->isValidEmail($_POST['registrierung_emailadresse'])){
-		$libGlobal->errorTexts[] = "Die E-Mailadresse ist nicht gültig.";
+		$libGlobal->errorTexts[] = "Die E-Mail-Adresse ist nicht gültig.";
 		$formError = true;
 	}
 
@@ -94,7 +94,7 @@ username: ".$libString->protectXSS($_POST['registrierung_loginname'])."
 password_hash: ".$password_hash."
 Geburtsdatum: " .$libString->protectXSS($_POST['registrierung_geburtsdatum']). "
 
-Die Person hat zur Identifizierung die Telefonnummer ".$libString->protectXSS($_POST['registrierung_telnr'])." und die E-Mailadresse ".$libString->protectXSS($_POST['registrierung_emailadresse'])." angegeben. Vor einer Kontaktierung sind die Kontaktdaten und das Geburtsdatum auf Plausibilität zu prüfen. Im Fall einer Freischaltung lautet die Antwortmail:
+Die Person hat zur Identifizierung die Telefonnummer ".$libString->protectXSS($_POST['registrierung_telnr'])." und die E-Mail-Adresse ".$libString->protectXSS($_POST['registrierung_emailadresse'])." angegeben. Vor einer Kontaktierung sind die Kontaktdaten und das Geburtsdatum auf Plausibilität zu prüfen. Im Fall einer Freischaltung lautet die Antwortmail:
 
 ------------------------
 
@@ -127,7 +127,7 @@ MBuH, ";
 	if($mail->Send()){
 		echo "<h1>E-Mail verschickt</h1><p class=text>Die Daten wurden weitergeleitet. Der Webmaster wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Webmaster.</p>";
 	} else {
-		echo "<h1>Fehler</h1>Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mailadresse ". $libConfig->emailWebmaster;
+		echo "<h1>Fehler</h1>Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ". $libConfig->emailWebmaster;
 	}
 } else {
 	echo '<h1>Registrierung</h1>';
@@ -135,7 +135,7 @@ MBuH, ";
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p>Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mailadresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Webmaster weitergeleitet wird.</p>';
+	echo '<p>Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Webmaster weitergeleitet wird.</p>';
 
 	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
 

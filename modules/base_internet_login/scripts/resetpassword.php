@@ -27,7 +27,7 @@ if(isset($_POST['email']) && $_POST['email'] != "" &&
 		isset($_POST['geburtsdatum']) && $_POST['geburtsdatum'] != ""){
 
 	if(!$libString->isValidEmail($_POST['email'])){
-		$libGlobal->errorTexts[] = "Fehler: Die angegebene Adresse ist keine E-Mailadresse.";
+		$libGlobal->errorTexts[] = "Fehler: Die angegebene Adresse ist keine E-Mail-Adresse.";
 	} else {
 		$stmt = $libDb->prepare("SELECT id, username, email, datum_geburtstag FROM base_person WHERE email=:email AND gruppe != 'T' AND gruppe != 'X' AND gruppe != 'V' AND gruppe != '' AND username != '' AND username IS NOT NULL LIMIT 0,1");
 		$stmt->bindValue(':email', $_POST['email']);
@@ -54,7 +54,7 @@ if(isset($_POST['email']) && $_POST['email'] != "" &&
 			$libAuth->savePassword($row['id'], $newPassword, true);
 
 			//send reset password
-			$text = "Auf ".$libConfig->sitePath." wurde Dein Passwort für den Benutzernamen ".$row['username']." mit der E-Mailadresse " .$row['email']. " zurückgesetzt. Das neue Passwort lautet
+			$text = "Auf ".$libConfig->sitePath." wurde Dein Passwort für den Benutzernamen ".$row['username']." mit der E-Mail-Adresse " .$row['email']. " zurückgesetzt. Das neue Passwort lautet
 ".$newPassword."
 und kann im Intranet auf der Seite \"Mein Profil\" geändert werden.";
 			$mail = new PHPMailer();
@@ -79,7 +79,7 @@ und kann im Intranet auf der Seite \"Mein Profil\" geändert werden.";
 		}
 
 		//in any case, even if if not changed!
-		$libGlobal->notificationTexts[] =  "Falls das Geburtsdatum korrekt und die E-Mailadresse in Deinem Nutzerkonto eingetragen ist, wurde eine E-Mail mit einem neuen Passwort an die E-Mailadresse verschickt.";
+		$libGlobal->notificationTexts[] =  "Falls das Geburtsdatum korrekt und die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist, wurde eine E-Mail mit einem neuen Passwort an die E-Mail-Adresse verschickt.";
 	}
 }
 
@@ -88,7 +88,7 @@ echo '<h1>Neues Passwort setzen</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Auf dieser Seite kann ein neues Passwort vergeben werden, falls das alte vergessen wurde. Bitte gib Dein Geburtsdatum und die E-Mailadresse an, die in Deinem Intranetkonto angegeben ist. An diese E-Mailadresse wird das neue Passwort verschickt.</p>';
+echo '<p>Auf dieser Seite kann ein neues Passwort vergeben werden, falls das alte vergessen wurde. Bitte gib Dein Geburtsdatum und die E-Mail-Adresse an, die in Deinem Intranetkonto angegeben ist. An diese E-Mail-Adresse wird das neue Passwort verschickt.</p>';
 
 echo '<form action="index.php?pid=login_resetpassword" method="post" class="form-horizontal">';
 echo '<fieldset>';

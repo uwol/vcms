@@ -65,7 +65,7 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 
 	if(!$libString->isValidEmail($_POST['emailaddress'])){
 		$error_emailaddress = true;
-		$libGlobal->errorTexts[] = 'Die angegebene E-Mailadresse ist nicht korrekt.';
+		$libGlobal->errorTexts[] = 'Die angegebene E-Mail-Adresse ist nicht korrekt.';
 	}
 
 	if(trim($_POST['nachricht']) == ''){
@@ -76,7 +76,7 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 	if(!$error_emailaddress && !$error_message) {
 		require_once('lib/thirdparty/class.phpmailer.php');
 
-		$nachricht = $_POST['name'] .' mit der Telefonnummer '.$_POST['telefon'].' und der E-Mailadresse '.$_POST['emailaddress']." hat über das Kontaktformular folgende Nachricht geschrieben\n\r".$_POST['nachricht'];
+		$nachricht = $_POST['name'] .' mit der Telefonnummer '.$_POST['telefon'].' und der E-Mail-Adresse '.$_POST['emailaddress']." hat über das Kontaktformular folgende Nachricht geschrieben\n\r".$_POST['nachricht'];
 
 		$mail = new PHPMailer();
 		$mail->AddAddress($libConfig->emailInfo);
