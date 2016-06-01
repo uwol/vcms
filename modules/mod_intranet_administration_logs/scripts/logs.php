@@ -33,11 +33,11 @@ $stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors, mitglied
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<tr>'."\n";
+	echo '<tr>';
 	echo '<td>' .$row['numberOfLoginErrors']. '</td>';
 	echo '<td><span style="color:red">Passwort falsch</span></td>';
 	echo '<td><a href="index.php?pid=intranet_person_daten&personid=' .$row['mitglied']. '">' .$libMitglied->getMitgliedNameString($row['mitglied'], $mode = 4). '</a></td>';
-	echo '</tr>'."\n";
+	echo '</tr>';
 }
 
 echo '</table>';
@@ -55,7 +55,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$time = substr($row['datum'], 11, 5);
 	$datum = substr($row['datum'], 8, 2). "." .substr($row['datum'], 5, 2). "." .substr($row['datum'], 0, 4);
 
-	echo '<tr>'."\n";
+	echo '<tr>';
 	echo '<td>' .$libTime->wochentag($row['datum']). " " .$datum. " " .$time. '</td>';
 	echo '<td>';
 
@@ -74,7 +74,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</td>';
 	echo '<td><a href="index.php?pid=intranet_person_daten&personid=' .$row['mitglied']. '">' .$libMitglied->getMitgliedNameString($row['mitglied'], $mode = 4). '</a></td>';
 	echo '<td>' .$row['ipadresse']. '</td>';
-	echo '</tr>'."\n";
+	echo '</tr>';
 }
 
 echo '</table>';

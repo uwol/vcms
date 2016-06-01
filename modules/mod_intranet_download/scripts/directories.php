@@ -195,7 +195,7 @@ if(count($libAuth->getAemter()) > 0){
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-			echo '<option value="' .$folderElement->getHash(). '">'.$folderElement->name.'</option>'."\n";
+			echo '<option value="' .$folderElement->getHash(). '">'.$folderElement->name.'</option>';
 		}
 	}
 

@@ -52,7 +52,7 @@ if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 			// send headers
 			header("Content-type: image/jpeg\n");
 			header("Content-transfer-encoding: binary\n");
-			header("Content-length: " . filesize($path) . "\n");
+			header("Content-length: " .filesize($path). "\n");
 
 			// send content
 			$fp=fopen($path, "r");
