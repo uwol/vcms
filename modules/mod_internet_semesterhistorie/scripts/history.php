@@ -81,9 +81,13 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<div class="row">';
 		echo '<div class="col-xs-12">';
 
+		echo '<div class="thumbnailBox">';
+		echo '<div class="thumbnailOverflow">';
 		echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$row['semester']. '">';
 		echo $semesterCoverString;
 		echo '</a>';
+		echo '</div>';
+		echo '</div>';
 
 		echo '</div>';
 		echo '</div>';
