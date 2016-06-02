@@ -38,18 +38,20 @@ if($count > 0){
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		$colsSm = 12;
+
 		echo '<hr />';
 		echo '<div class="row">';
 
-		echo '<div class="hidden-xs col-sm-2">';
-
 		if($row['betroffenesmitglied'] != ''){
+			echo '<div class="hidden-xs col-sm-2">';
 			echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied']);
+			echo '</div>';
+
+			$colsSm = $colsSm - 2;
 		}
 
-		echo '</div>';
-
-		echo '<div class="col-xs-12 col-sm-8">';
+		echo '<div class="col-xs-12 col-sm-' .($colsSm-2). '">';
 		$date = $libTime->formatDateTimeString($row['eingabedatum'], 2);
 		echo '<b>' .$date. ' - ' .$row['bezeichnung']. '</b><br />';
 
