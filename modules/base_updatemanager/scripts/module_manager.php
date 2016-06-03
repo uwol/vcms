@@ -58,7 +58,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 			//untar module package
 			$tar = new Archive_Tar('./temp/'.$_REQUEST['modul'].'.tar');
-			echo '<p style="color:blue">Entpacke das Paket in den temp/-Ordner.</p>';
+			echo '<p style="color:blue">Entpacke das Paket in den temp-Ordner.</p>';
 			$tar->extract('temp/');
 
 			if(is_dir('temp/'.$_REQUEST['modul'])){
@@ -92,7 +92,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 			echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
 			@unlink('./temp/'.$_REQUEST['modul'].'.tar');
 
-			echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp/.</p>';
+			echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp.</p>';
 
 			if(is_dir('./temp/'.$_REQUEST['modul'])){
 				deleteDirectory('./temp/'.$_REQUEST['modul']);
@@ -138,7 +138,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 		//untar module package
 		$tar = new Archive_Tar('./temp/'.$_REQUEST['modul'].'.tar');
-		echo '<p style="color:blue">Entpacke das Paket in den temp/-Ordner.</p>';
+		echo '<p style="color:blue">Entpacke das Paket in den temp-Ordner.</p>';
 		$tar->extract('temp/');
 
 		if(is_dir('temp/'.$_REQUEST['modul'])){
@@ -193,10 +193,10 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 			echo '<p style="color:red">Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
 		}
 
-		echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp/.</p>';
+		echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
 		@unlink('./temp/'.$_REQUEST['modul'].'.tar');
 
-		echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp/.</p>';
+		echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp.</p>';
 
 		if(is_dir('./temp/'.$_REQUEST['modul'])){
 			deleteDirectory('./temp/'.$_REQUEST['modul']);
@@ -216,7 +216,7 @@ if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == 'updateEngine' || $_REQ
 
 	//untar engine package
 	$tar = new Archive_Tar('./temp/engine.tar');
-	echo '<p style="color:blue">Entpacke das Enginepaket in den temp/-Ordner.</p>';
+	echo '<p style="color:blue">Entpacke das Enginepaket in den temp-Ordner.</p>';
 	$tar->extract('temp/');
 
 	if(is_dir('temp/engine')){
@@ -241,10 +241,10 @@ if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == 'updateEngine' || $_REQ
 		echo '<p style="color:red">Fehler: Das heruntergeladene Enginepaket konnte nicht entpackt werden.</p>';
 	}
 
-	echo '<p style="color:blue">Lösche das temporäre Enginepaket aus dem Ordner temp/.</p>';
+	echo '<p style="color:blue">Lösche das temporäre Enginepaket aus dem Ordner temp.</p>';
 	@unlink('./temp/engine.tar');
 
-	echo '<p style="color:blue">Lösche den temporären Engineordner aus dem Ordner temp/.</p>';
+	echo '<p style="color:blue">Lösche den temporären Engineordner aus dem Ordner temp.</p>';
 
 	if(is_dir('./temp/engine')){
 		deleteDirectory('./temp/engine');

@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Modul-Manager";
-$version = "2.18";
+$version = "2.19";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
