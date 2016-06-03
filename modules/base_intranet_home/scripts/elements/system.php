@@ -195,7 +195,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			}
 
 			echo '</ul>';
-			echo '<p>Leserechte können z. B. mit einem FTP-Programm eingerichtet werden.</p>';
+			echo '<p>Zugriffsrechte können z. B. mit einem FTP-Programm eingerichtet werden.</p>';
 		}
 
 		echo '<hr />';
