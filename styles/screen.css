@@ -279,15 +279,15 @@ main .calendarEvent .summary {
 
 /* gallery */
 
-main .gallery .public {
+main .public {
 	border: 2px solid green;
 }
 
-main .gallery .internal {
+main .internal {
 	border: 2px solid yellow;
 }
 
-main .gallery .private {
+main .private {
 	border: 2px solid red;
 }
 

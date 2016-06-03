@@ -62,25 +62,20 @@ echo '</form>';
 
 echo '<h2>Bestehende Galerien</h2>';
 
-$fd = opendir('custom/veranstaltungsfotos/');
+$files = array_diff(scandir('custom/veranstaltungsfotos/'), array('..', '.'));
 $folders = array();
 
-if($fd){
-	while(($part = readdir($fd)) == true){
-		if($part != '.' && $part != '..'){
-			if(is_dir('custom/veranstaltungsfotos/'.$part)){
-				$folders[] = $part;
-			}
-		}
+foreach ($files as $file){
+	if(is_dir('custom/veranstaltungsfotos/' .$file)){
+		$folders[] = $file;
 	}
 }
 
-// sort arrays
 rsort($folders);
 reset($folders);
 
 // semester selection
-$stmt = $libDb->prepare("SELECT id, DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
+$stmt = $libDb->prepare("SELECT id, DATE_FORMAT(datum, '%Y-%m-01') AS datum FROM base_veranstaltung ORDER BY datum DESC");
 $stmt->execute();
 
 $daten = array();
@@ -115,19 +110,19 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		//are there images?
 		if($libGallery->hasPictures($row['id'], 2)){
-			echo '<img style="width:50px;';
+			echo '<img style="width:100px" ';
 
 			//are there pooled images?
     		if($libGallery->getPictures($row['id'], 2) > $libGallery->getPictures($row['id'], 1)){
-    			echo 'border-width: 3px; border-style: solid; border-color: red;';
+    			echo 'class="private" ';
     		}
 
-    		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$row['id'].'&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '&amp;thumb=1" alt="Foto" /><br /> ';
+    		echo 'src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '&amp;thumb=1" alt="Foto" />';
 		}
 
 		echo '</td>';
-		echo '<td>'.$row['titel'].'</td>';
-		echo '<td>'.$row['datum'].'</td>';
+		echo '<td>' .$row['titel']. '</td>';
+		echo '<td>' .$row['datum']. '</td>';
 		echo '<td><a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$row['id']. '">bearbeiten</a></td>';
 		echo '</tr>';
 	}
