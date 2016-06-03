@@ -81,7 +81,7 @@ $stmt->execute();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
 	echo '<td>';
-	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$row['id']. '.jpg';
+	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$row['id']. '.jpg';
 
  	if(is_file($posssibleImage)){
  		echo '<img src="'.$posssibleImage.'" style="width:80px;margin:5px 5px 5px 0" alt="" />';

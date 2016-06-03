@@ -226,7 +226,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 		if($folderElement->type == 1){
 			if($folderElement->isOpen){
 				echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
-				echo '<img src="'.$libModuleHandler->getModuleDirectory().'img/folder_table.png" alt="Icon" /> ';
+				echo '<img src="'.$libModuleHandler->getModuleDirectory().'/img/folder_table.png" alt="Icon" /> ';
 			} else{
 				echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
 				echo '<img src="' . $libModuleHandler->getModuleDirectory(). '/img/folder.png" alt="Icon" /> ';
@@ -255,7 +255,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 		elseif($folderElement->type == 2 && in_array($libAuth->getGruppe(), $folderElement->readGroups)){
 			$extension = $folderElement->getExtension();
 
-			echo '<img src="' . $libModuleHandler->getModuleDirectory(). 'img/';
+			echo '<img src="' . $libModuleHandler->getModuleDirectory(). '/img/';
 
 			switch($extension){
 				case "doc": echo 'doc.png'; break;

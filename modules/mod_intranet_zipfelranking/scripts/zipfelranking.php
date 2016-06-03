@@ -42,7 +42,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="hidden-xs col-sm-8">';
 
 	for($j=0; $j<$row['anzahlzipfel'] && $j < 50; $j++){
-		echo '<img src="' .$libModuleHandler->getModuleDirectory(). 'custom/img/zipfel.png" class="zipfel" />';
+		echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/zipfel.png" class="zipfel" />';
 	}
 
 	echo '</div>';

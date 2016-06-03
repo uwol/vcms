@@ -34,27 +34,27 @@ if($id == ''){
 	exit;
 }
 
-require($libModuleHandler->getModuleDirectory()."scripts/lib/gallery.class.php");
+require($libModuleHandler->getModuleDirectory(). '/scripts/lib/gallery.class.php');
 $libGallery = new LibGallery($libDb);
 
 
-$stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE id=:id");
+$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE id=:id');
 $stmt->bindValue(':id', $id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 if($libAuth->isLoggedIn()){
-	if(isset($_POST["changeanmeldenstate"]) && $_POST["changeanmeldenstate"] != ""){
+	if(isset($_POST['changeanmeldenstate']) && $_POST['changeanmeldenstate'] != ''){
 		// event in future?
-		if(@date("Y-m-d H:i:s") < $row["datum"]){
-			if($_POST["changeanmeldenstate"] == "anmelden"){
-				$stmt = $libDb->prepare("INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)");
+		if(date('Y-m-d H:i:s') < $row['datum']){
+			if($_POST['changeanmeldenstate'] == 'anmelden'){
+				$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)');
 				$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
 				$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 				$stmt->execute();
 			} else {
-				$stmt = $libDb->prepare("DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung AND person=:person");
+				$stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung AND person=:person');
 				$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
 				$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 				$stmt->execute();

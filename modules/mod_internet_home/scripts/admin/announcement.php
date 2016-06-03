@@ -124,7 +124,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 		$array['id'] = $_REQUEST['id'];
 	}
 
-	$posssibleImage = $libModuleHandler->getModuleDirectory(). 'custom/bilder/' .$array['id']. '.jpg';
+	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$array['id']. '.jpg';
 
 	if(is_file($posssibleImage)){
 		echo '<div class="center-block">';

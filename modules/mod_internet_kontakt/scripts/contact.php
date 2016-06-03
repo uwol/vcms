@@ -154,7 +154,7 @@ if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['qu
 echo '</div>';
 
 echo '<aside class="col-sm-4">';
-echo '<img src="' . $libModuleHandler->getModuleDirectory() . 'custom/img/haus.jpg" alt="Haus" class="img-responsive center-block" />';
+echo '<img src="' . $libModuleHandler->getModuleDirectory() . '/custom/img/haus.jpg" alt="Haus" class="img-responsive center-block" />';
 echo '</aside>';
 
 echo '</div>';

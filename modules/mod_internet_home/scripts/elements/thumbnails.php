@@ -22,7 +22,7 @@ if(!is_object($libGlobal))
 
 
 if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
-	include($libModuleHandler->getModuleDirectoryByModuleid('mod_internet_semesterprogramm') . 'scripts/lib/gallery.class.php');
+	include($libModuleHandler->getModuleDirectoryByModuleid('mod_internet_semesterprogramm') . '/scripts/lib/gallery.class.php');
 
 	$libGallery = new LibGallery($libDb);
 

@@ -33,8 +33,8 @@ echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . 
 echo '    <link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css">' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/screen.css" />' . PHP_EOL;
 
-if($libGlobal->module->getStyleSheet() != ""){
-	echo '    <link rel="stylesheet" href="' .$libModuleHandler->getModuleDirectory().$libGlobal->module->getStyleSheet(). '" />'.PHP_EOL;
+if($libGlobal->module->getStyleSheet() != ''){
+	echo '    <link rel="stylesheet" href="' .$libModuleHandler->getModuleDirectory(). '/' .$libGlobal->module->getStyleSheet(). '" />'.PHP_EOL;
 }
 
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
