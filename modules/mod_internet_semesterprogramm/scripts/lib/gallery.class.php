@@ -42,7 +42,7 @@ class LibGallery{
 			exit();
 		}
 
-		$path = "custom/veranstaltungsfotos/" . $eventid . "/";
+		$path = 'custom/veranstaltungsfotos/' .$eventid;
 
 		//escape prevention
 		if(preg_match("/\.\./", $path)){
@@ -51,19 +51,17 @@ class LibGallery{
 
 	    $pictures = array();
 
-		if(is_dir("custom/veranstaltungsfotos/".$eventid."/")){
-			$handle = opendir($path); //Verzeichnis öffnen
+		if(is_dir($path)){
+			$files = array_diff(scandir($path), array('..', '.'));
 
-	    	if($handle){
-	    		while(($part = readdir($handle)) == true){
-	    			if($part != "." && $part != ".." && $part != "thumbs"){
-	    				//image?
-	    				$fileParts = explode(".", $part);
+			foreach ($files as $file){
+				if($file != "thumbs"){
+					//image?
+					$fileParts = explode(".", $file);
 
-	    				if(strtolower($fileParts[count($fileParts)-1]) == "jpg"){
-							$pictures[] = $part;
-	    				}
-	    			}
+					if(strtolower($fileParts[count($fileParts)-1]) == "jpg"){
+						$pictures[] = $file;
+					}
 				}
 	    	}
 	    }

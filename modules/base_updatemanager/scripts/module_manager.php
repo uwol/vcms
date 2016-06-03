@@ -25,7 +25,7 @@ if(isset($_REQUEST['modul']) && !preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['modu
 	die();
 
 
-require_once("lib/thirdparty/PEAR/Archive/Tar.php");
+require_once('lib/thirdparty/PEAR/Archive/Tar.php');
 $repoHostname = 'repository.' . $libGlobal->vcmsHostname;
 $websiteHostname = 'www.' . $libGlobal->vcmsHostname;
 
@@ -35,19 +35,19 @@ echo '<div style="background-color:#FFFF99">';
 /*
 * clean up
 */
-deleteDirectory("temp");
-@mkdir("temp/");
+deleteDirectory('temp');
+@mkdir('temp');
 $libCronJobs->repairHtaccessFiles();
 
 
 /*
 * actions
 */
-if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] != "engine"){
+if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] != 'engine'){
 	/*
 	* install module
 	*/
-	if($_REQUEST['aktion'] == "installModule" && $_REQUEST['modul'] != ""){
+	if($_REQUEST['aktion'] == 'installModule' && $_REQUEST['modul'] != ''){
 		//module not installed, yet?
 		if(!$libModuleHandler->moduleIsAvailable($_REQUEST['modul'])){
 
@@ -57,16 +57,16 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] !
 				'./temp/'.$_REQUEST['modul'].'.tar');
 
 			//untar module package
-			$tar = new Archive_Tar("./temp/".$_REQUEST['modul'].".tar");
+			$tar = new Archive_Tar('./temp/'.$_REQUEST['modul'].'.tar');
 			echo '<p style="color:blue">Entpacke das Paket in den temp/-Ordner.</p>';
-			$tar->extract("temp/");
+			$tar->extract('temp/');
 
-			if(is_dir("temp/".$_REQUEST['modul'])){
-				if(is_file("temp/".$_REQUEST['modul']."/meta.php")){
-					if(!is_dir("modules/".$_REQUEST['modul'])){
+			if(is_dir('temp/'.$_REQUEST['modul'])){
+				if(is_file('temp/'.$_REQUEST['modul'].'/meta.php')){
+					if(!is_dir('modules/'.$_REQUEST['modul'])){
 
 						//copy temporary module folder
-						copyFolder("temp/".$_REQUEST['modul']."/", "modules/".$_REQUEST['modul']."/");
+						copyFolder('temp/'.$_REQUEST['modul'].'/', 'modules/'.$_REQUEST['modul']);
 
 						//refresh module handler
 						$libModuleHandler = new LibModuleHandler();
@@ -74,9 +74,9 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] !
 						//run installation script
 						$module = $libModuleHandler->getModuleByModuleid($_REQUEST['modul']);
 
-						if($module->getInstallScript() != ""){
+						if($module->getInstallScript() != ''){
 							echo '<p style="color:blue">Führe Installationsscript des Moduls aus.</p>';
-							include($module->getPath().$module->getInstallScript());
+							include($module->getPath(). '/' .$module->getInstallScript());
 						}
 					} else {
 						echo '<p style="color:red">Fehler: Das Modul ist bereits installiert.</p>';
@@ -89,13 +89,13 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] !
 			}
 
 			//delete temporary module folder
-			echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp/.</p>';
-			@unlink("./temp/".$_REQUEST['modul'].".tar");
+			echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
+			@unlink('./temp/'.$_REQUEST['modul'].'.tar');
 
 			echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp/.</p>';
 
-			if(is_dir("./temp/".$_REQUEST['modul'])){
-				deleteDirectory("./temp/".$_REQUEST['modul']);
+			if(is_dir('./temp/'.$_REQUEST['modul'])){
+				deleteDirectory('./temp/'.$_REQUEST['modul']);
 			}
 		} else {
 			echo '<p style="color:red">Fehler: Das Modul ist bereits installiert.</p>';
@@ -105,20 +105,20 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] !
 	/*
 	* uninstall module
 	*/
-	elseif($_REQUEST['aktion'] == "uninstallModule" && $_REQUEST['modul'] != ""){
-		if($_REQUEST['modul'] != "engine"){
+	elseif($_REQUEST['aktion'] == 'uninstallModule' && $_REQUEST['modul'] != ''){
+		if($_REQUEST['modul'] != 'engine'){
 
 			//run uninstall script
 			$module = $libModuleHandler->getModuleByModuleid($_REQUEST['modul']);
 
-			if(is_object($module) && $module->getUninstallScript() != ""){
+			if(is_object($module) && $module->getUninstallScript() != ''){
 				echo '<p style="color:blue">Führe Deinstallationsscript des Moduls aus.</p>';
-				include($module->getPath().$module->getUninstallScript());
+				include($module->getPath(). '/' .$module->getUninstallScript());
 			}
 
 			//delete module directory
 			echo '<p style="color:blue">Lösche den Modulordner aus dem Ordner modules/.</p>';
-			deleteDirectory("./modules/".$_REQUEST['modul']);
+			deleteDirectory('./modules/'.$_REQUEST['modul']);
 
 			//refresh module handler
 			$libModuleHandler = new LibModuleHandler();
@@ -130,56 +130,47 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] !
 	/*
 	* update module
 	*/
-	elseif(($_REQUEST['aktion'] == "updateModule" || $_REQUEST['aktion'] == "reinstallModule") && $_REQUEST['modul'] != ""){
+	elseif(($_REQUEST['aktion'] == 'updateModule' || $_REQUEST['aktion'] == 'reinstallModule') && $_REQUEST['modul'] != ''){
 		//download module package
 		echo '<p style="color:blue">Lade Modulpaket aus dem Repository.</p>';
 		downloadContent('http://' .$repoHostname. '/packages/'.$_REQUEST['modul'].'.tar',
 			'./temp/'.$_REQUEST['modul'].'.tar');
 
 		//untar module package
-		$tar = new Archive_Tar("./temp/".$_REQUEST['modul'].".tar");
+		$tar = new Archive_Tar('./temp/'.$_REQUEST['modul'].'.tar');
 		echo '<p style="color:blue">Entpacke das Paket in den temp/-Ordner.</p>';
-		$tar->extract("temp/");
+		$tar->extract('temp/');
 
-		if(is_dir("temp/".$_REQUEST['modul'])){
-			if(is_file("temp/".$_REQUEST['modul']."/meta.php")){
-				if(is_dir("modules/".$_REQUEST['modul'])){
+		if(is_dir('temp/'.$_REQUEST['modul'])){
+			if(is_file('temp/'.$_REQUEST['modul'].'/meta.php')){
+				if(is_dir('modules/'.$_REQUEST['modul'])){
 
-					if(is_dir("temp/".$_REQUEST['modul']."/custom")){
-						deleteDirectory("./temp/".$_REQUEST['modul']."/custom");
+					if(is_dir('temp/'.$_REQUEST['modul'].'/custom')){
+						deleteDirectory('./temp/'.$_REQUEST['modul'].'/custom');
 					}
 
 					//clean module folder except custom
-					$fd = opendir("modules/".$_REQUEST['modul']);
+					$files = array_diff(scandir('modules/'.$_REQUEST['modul']), array('..', '.', 'custom'));
 
-					if($fd){
-						while (($part = readdir($fd)) == true){
-							if ($part != "." && $part != ".."){
-								if(is_dir("modules/".$_REQUEST['modul']."/". $part) && $part != "custom"){
-									echo 'Lösche '."modules/".$_REQUEST['modul']."/". $part."<br />";
-									deleteDirectory("modules/".$_REQUEST['modul']."/". $part);
-								} elseif(is_file("modules/".$_REQUEST['modul']."/". $part)){
-									echo 'Lösche '."modules/".$_REQUEST['modul']."/". $part."<br />";
-									unlink("modules/".$_REQUEST['modul']."/". $part);
-								}
-							}
+					foreach ($files as $file){
+						if(is_dir('modules/'.$_REQUEST['modul']. '/' .$file)){
+							echo 'Lösche '.'modules/'.$_REQUEST['modul'].'/'. $file.'<br />';
+							deleteDirectory('modules/'.$_REQUEST['modul'].'/'. $file);
+						} elseif(is_file('modules/'.$_REQUEST['modul'].'/'. $file)){
+							echo 'Lösche '.'modules/'.$_REQUEST['modul'].'/'. $file.'<br />';
+							unlink('modules/'.$_REQUEST['modul'].'/'. $file);
 						}
 					}
 
 					//copy all temporary files except the custom directory
 					echo '<p style="color:blue">Kopiere aktualisiertes Modul in den Modulordner modules/' .$_REQUEST['modul']. '</p>';
-					$fd = opendir("temp/".$_REQUEST['modul']);
-
-					if($fd){
-						while (($part = readdir($fd)) == true){
-							if ($part != "." && $part != ".."){
-								if(is_dir("temp/".$_REQUEST['modul']."/". $part) && $part != "custom"){
-									copyFolder("temp/".$_REQUEST['modul']."/".$part."/", "modules/".$_REQUEST['modul']."/".$part."/");
-								} elseif(is_file("temp/".$_REQUEST['modul']."/". $part)){
-									copy("temp/".$_REQUEST['modul']."/". $part,"modules/".$_REQUEST['modul']."/". $part);
-								}
-							}
-						}
+					
+					$files = array_diff(scandir('temp/'.$_REQUEST['modul']), array('..', '.', 'custom'));
+					
+					if(is_dir('temp/'.$_REQUEST['modul'].'/'. $part)){
+						copyFolder('temp/'.$_REQUEST['modul'].'/'.$part.'/', 'modules/'.$_REQUEST['modul'].'/'.$part);
+					} elseif(is_file('temp/'.$_REQUEST['modul'].'/'. $part)){
+						copy('temp/'.$_REQUEST['modul'].'/'. $part,'modules/'.$_REQUEST['modul'].'/'. $part);
 					}
 
 					//refresh module handler
@@ -188,9 +179,9 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] !
 					//run update script
 					$module = $libModuleHandler->getModuleByModuleid($_REQUEST['modul']);
 
-					if($module->getUpdateScript() != ""){
+					if($module->getUpdateScript() != ''){
 						echo '<p style="color:blue">Führe Aktualisierungsscript des Moduls aus.</p>';
-						include($module->getPath().$module->getUpdateScript());
+						include($module->getPath(). '/' .$module->getUpdateScript());
 					}
 				} else {
 					echo '<p style="color:red">Fehler: Das zu aktualisierende Modul ist nicht installiert.</p>';
@@ -203,12 +194,12 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] !
 		}
 
 		echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp/.</p>';
-		@unlink("./temp/".$_REQUEST['modul'].".tar");
+		@unlink('./temp/'.$_REQUEST['modul'].'.tar');
 
 		echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp/.</p>';
 
-		if(is_dir("./temp/".$_REQUEST['modul'])){
-			deleteDirectory("./temp/".$_REQUEST['modul']);
+		if(is_dir('./temp/'.$_REQUEST['modul'])){
+			deleteDirectory('./temp/'.$_REQUEST['modul']);
 		}
 	}
 }
@@ -217,32 +208,32 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != "" && $_REQUEST['modul'] !
 /*
 * update engine
 */
-if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == "updateEngine" || $_REQUEST['aktion'] == "reinstallEngine")){
+if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == 'updateEngine' || $_REQUEST['aktion'] == 'reinstallEngine')){
 	//download engine package
 	echo '<p style="color:blue">Lade Enginepaket aus dem Repository.</p>';
 	downloadContent('http://' .$repoHostname. '/packages/engine.tar',
 		'./temp/engine.tar');
 
 	//untar engine package
-	$tar = new Archive_Tar("./temp/engine.tar");
+	$tar = new Archive_Tar('./temp/engine.tar');
 	echo '<p style="color:blue">Entpacke das Enginepaket in den temp/-Ordner.</p>';
-	$tar->extract("temp/");
+	$tar->extract('temp/');
 
-	if(is_dir("temp/engine")){
-		if(is_file("temp/engine/index.php") && is_file("temp/engine/inc.php") && is_dir("temp/engine/lib")){
+	if(is_dir('temp/engine')){
+		if(is_file('temp/engine/index.php') && is_file('temp/engine/inc.php') && is_dir('temp/engine/lib')){
 			$libCronJobs->deleteFiles();
 
-			@unlink("inc.php");
-			@unlink("index.php");
+			@unlink('inc.php');
+			@unlink('index.php');
 
-			deleteDirectory("design");
-			deleteDirectory("js");
-			deleteDirectory("lib");
-			deleteDirectory("styles");
+			deleteDirectory('design');
+			deleteDirectory('js');
+			deleteDirectory('lib');
+			deleteDirectory('styles');
 
 			echo '<p style="color:blue">Installiere die neue Engine.</p>';
 
-			copyFolder("temp/engine/", "./");
+			copyFolder('temp/engine', '.');
 		} else {
 			echo '<p style="color:red">Fehler: Das Enginepaket ist fehlerhaft. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
 		}
@@ -251,12 +242,12 @@ if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == "updateEngine" || $_REQ
 	}
 
 	echo '<p style="color:blue">Lösche das temporäre Enginepaket aus dem Ordner temp/.</p>';
-	@unlink("./temp/engine.tar");
+	@unlink('./temp/engine.tar');
 
 	echo '<p style="color:blue">Lösche den temporären Engineordner aus dem Ordner temp/.</p>';
 
-	if(is_dir("./temp/engine")){
-		deleteDirectory("./temp/engine");
+	if(is_dir('./temp/engine')){
+		deleteDirectory('./temp/engine');
 	}
 
 	die('</div><a href="index.php?pid=updater_liste">Klicke hier</a>, um die Modulliste anzuzeigen.');
@@ -271,12 +262,12 @@ echo '</div>';
 */
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
-?>
 
-<p>Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen. Mit base_ markierte Module können nicht deinstalliert werden, weil sie grundlegende Funktionen im VCMS erfüllen.</p>
-<p>Während einer Installation, Deinstallation und Aktualisierung darf der Vorgang nicht abgebrochen werden. Generell sollten regelmäßig von den Verzeichnissen auf dem Webserver per FTP und der Datenbank per Datenbankbackupmodul Backups angefertigt werden, insbesondere vor Updates.</p>
-<table>
-<?php
+echo '<p>Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen. Mit base_ markierte Module können nicht deinstalliert werden, weil sie grundlegende Funktionen im VCMS erfüllen.</p>';
+echo '<p>Während einer Installation, Deinstallation und Aktualisierung darf der Vorgang nicht abgebrochen werden. Generell sollten regelmäßig von den Verzeichnissen auf dem Webserver per FTP und der Datenbank per Datenbankbackupmodul Backups angefertigt werden, insbesondere vor Updates.</p>';
+
+echo '<table>';
+
 echo '<tr>';
 echo '<th>Modulname</th><th>Status</th>';
 echo '<th>Version<br />(installiert)</th>';
@@ -291,7 +282,7 @@ $manifestArray = explode("\n", $manifestString);
 
 $modules = array();
 foreach($manifestArray as $row){
-	$array = explode(" ", $row);
+	$array = explode(' ', $row);
 
 	if(is_array($array) && isset($array[0]) && isset($array[1])){
 		$modules[trim($array[0])] = trim($array[1]);
@@ -302,14 +293,14 @@ $installedModules = array();
 
 foreach($libModuleHandler->getModules() as $module){
 	if(!array_key_exists($module->getId(), $modules)){
-		$modules[$module->getId()] = "";
+		$modules[$module->getId()] = '';
 	}
 }
 
 ksort($modules);
 
 $actualEngineVersion = (double) $libGlobal->version;
-$newEngineVersion = (double) $modules["engine"];
+$newEngineVersion = (double) $modules['engine'];
 
 $engineIsOld = false;
 
@@ -336,14 +327,14 @@ foreach($modules as $key => $value){
 	//status
 	echo '<td style="border: 1px solid #000000;">';
 
-	if($key != "engine"){
+	if($key != 'engine'){
 		if($libModuleHandler->moduleIsAvailable($key)){
 			echo 'installiert';
 		} else {
 			echo 'nicht installiert';
 		}
 	} else {
-		echo "installiert";
+		echo 'installiert';
 	}
 
 	echo '</td>';
@@ -351,7 +342,7 @@ foreach($modules as $key => $value){
 	//version of installed module
 	echo '<td style="border: 1px solid #000000;">';
 
-	if($key != "engine"){
+	if($key != 'engine'){
 		if($libModuleHandler->moduleIsAvailable($key)){
 			$module = $libModuleHandler->getModuleByModuleid($key);
 			echo $module->getVersion();
@@ -365,10 +356,10 @@ foreach($modules as $key => $value){
 	//version of module in repo
 	echo '<td style="border: 1px solid #000000;">';
 
-	if($value != ""){
+	if($value != ''){
 		echo $value;
 	} else {
-		echo "nicht im Repository";
+		echo 'nicht im Repository';
 	}
 
 	echo '</td>';
@@ -377,7 +368,7 @@ foreach($modules as $key => $value){
 	// install action
 	echo '<td style="border: 1px solid #000000;text-align:center">';
 
-	if($key != "engine"){
+	if($key != 'engine'){
 		if(!$libModuleHandler->moduleIsAvailable($key)){
 			if(!$engineIsOld){
 				echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/add.png" alt="installieren"/></a>';
@@ -391,7 +382,7 @@ foreach($modules as $key => $value){
 	// update action
 	echo '<td style="border: 1px solid #000000;text-align:center">';
 
-	if($key == "engine"){
+	if($key == 'engine'){
 		if($engineIsOld){
 			echo '<a href="index.php?pid=updater_liste&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/arrow_up.png" alt="aktualisieren"/></a>';
 		}
@@ -417,14 +408,14 @@ foreach($modules as $key => $value){
 	// delete action
 	echo '<td style="border: 1px solid #000000;text-align:center">';
 
-	if($key != "engine"){
+	if($key != 'engine'){
 		if($libModuleHandler->moduleIsAvailable($key)){
 			if(!$engineIsOld){
 				$module = $libModuleHandler->getModuleByModuleid($key);
 				$actualversion = (double) $module->getVersion();
 				$newversion = (double) $value;
 
-				if(substr($key, 0, 5) != "base_"){
+				if(substr($key, 0, 5) != 'base_'){
 					echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')"><img src="' .$libModuleHandler->getModuleDirectory(). 'img/bin_closed.png" alt="deinstallieren"/></a>';
 				}
 			}
@@ -438,25 +429,19 @@ foreach($modules as $key => $value){
 //delete installer and recreate htaccess files
 $libCronJobs->deleteFiles();
 $libCronJobs->repairHtaccessFiles();
-?>
-</table>
+
+echo '</table>';
 
 
-
-<?php
 function deleteDirectory($directory){
 	if(is_dir($directory)){
-		$fd = opendir($directory);
+		$files = array_diff(scandir($directory), array('..', '.'));
 
-		if($fd){
-			while(($part = readdir($fd)) == true){
-				if($part != "." && $part != ".."){
-					if(is_dir($directory."/". $part)){
-						deleteDirectory($directory."/". $part);
-					} elseif(is_file($directory."/". $part)){
-						unlink($directory."/". $part);
-					}
-				}
+		foreach ($files as $file){
+			if(is_dir($directory .'/'. $file)){
+				deleteDirectory($directory .'/'. $file);
+			} elseif(is_file($directory .'/'. $file)){
+				unlink($directory .'/'. $file);
 			}
 		}
 
@@ -466,36 +451,20 @@ function deleteDirectory($directory){
 	}
 }
 
-function copyFolder($source, $dest, $recursive = true){
+function copyFolder($source, $dest){
 	if(!is_dir($dest)){
 		mkdir($dest);
 	}
 
-	$handle = @opendir($source);
+	$files = array_diff(scandir($source), array('..', '.'));
 
-	if(!$handle){
-    	return false;
-    }
-
-    while($file = @readdir($handle)){
-        if($file == '.' || $file == '..'){
-            continue;
-        }
-
-        if(!$recursive && $source != $source.$file."/"){
-            if(is_dir($source.$file)){
-                continue;
-            }
-        }
-
-        if(is_dir($source.$file)){
-            copyFolder($source.$file."/", $dest.$file."/", $recursive);
+    foreach ($files as $file){
+        if(is_dir($source. '/' .$file)){
+            copyFolder($source. '/' .$file, $dest. '/' .$file);
         } else {
-            copy($source.$file, $dest.$file);
+            copy($source. '/' .$file, $dest. '/' .$file);
         }
     }
-
-    @closedir($handle);
 }
 
 function downloadContent($url, $destinationFile = false){

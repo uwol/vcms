@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 require_once($libModuleHandler->getModuleDirectory() . '/scripts/lib/gallery.class.php');
 
 $libGallery = new LibGallery();
@@ -62,11 +63,13 @@ echo '</form>';
 
 echo '<h2>Bestehende Galerien</h2>';
 
-$files = array_diff(scandir('custom/veranstaltungsfotos/'), array('..', '.'));
+$veranstaltungsFotosDir = 'custom/veranstaltungsfotos';
+
+$files = array_diff(scandir($veranstaltungsFotosDir), array('..', '.'));
 $folders = array();
 
 foreach ($files as $file){
-	if(is_dir('custom/veranstaltungsfotos/' .$file)){
+	if(is_dir($veranstaltungsFotosDir. '/' .$file)){
 		$folders[] = $file;
 	}
 }

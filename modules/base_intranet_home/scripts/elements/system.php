@@ -95,9 +95,9 @@ if(in_array('internetwart', $libAuth->getAemter())){
 
 	foreach($dirs as $dir){
 		if(!is_dir($dir)){
-			$errors[] = 'Ordner '. $dir .' fehlt.';
+			$errors[] = 'Ordner ' .$dir. ' fehlt.';
 		} else {
-			$oks[] = 'Ordner ' .$dir.' vorhanden.';
+			$oks[] = 'Ordner ' .$dir. ' vorhanden.';
 		}
 	}
 
@@ -116,29 +116,31 @@ if(in_array('internetwart', $libAuth->getAemter())){
 		}
 	}
 
-	$modulespath = 'modules/';
 
-	$fd = opendir($modulespath);
+	$modulesDir = 'modules';
 
-	while (($part = readdir($fd)) == true){
-		//module folders
-		if (is_dir($modulespath . $part) && $part != '.' && $part != '..'){
-			$modulePath = $modulespath . $part .'/';
+	$files = array_diff(scandir($modulesDir), array('..', '.'));
+	$folders = array();
+
+	foreach ($files as $file){
+		//module folder
+		if (is_dir($modulesDir. '/' .$file)){
+			$modulePath = $modulesDir. '/' .$file;
 
 			//deny access to folder by htaccess
-			if(is_dir($modulePath. 'scripts/')){
-				if(hasHtaccessDenyFile($modulePath. 'scripts/')){
-					$securedFolders[] = $modulePath. 'scripts';
+			if(is_dir($modulePath. '/scripts')){
+				if(hasHtaccessDenyFile($modulePath. '/scripts')){
+					$securedFolders[] = $modulePath. '/scripts';
 				} else {
-					$unsecuredFolders[] = $modulePath. 'scripts';
+					$unsecuredFolders[] = $modulePath. '/scripts';
 				}
 			}
 
-			if(is_dir($modulePath. 'install/')){
-				if(hasHtaccessDenyFile($modulePath. 'install/')){
-					$securedFolders[] = $modulePath. 'install';
+			if(is_dir($modulePath. '/install')){
+				if(hasHtaccessDenyFile($modulePath. '/install')){
+					$securedFolders[] = $modulePath. '/install';
 				} else {
-					$unsecuredFolders[] = $modulePath. 'install';
+					$unsecuredFolders[] = $modulePath. '/install';
 				}
 			}
 		}
@@ -221,16 +223,19 @@ function hasHtaccessDenyFile($directory){
 function searchNotReadAbleFiles($dir){
 	$notReadableFiles = array();
 
-	$fd = @opendir($dir);
+	$files = array_diff(scandir($dir), array('..', '.'));
+	$folders = array();
 
-	while (($part = @readdir($fd)) == true){
-		if($part != '.' && $part != '..'){
-			if(!@posix_access($dir . '/' . $part, POSIX_R_OK)){
-				$notReadableFiles[] = $dir . '/' . $part;
+	foreach ($files as $file){
+		if(is_dir($dir. '/' .$file)){
+			$folders[] = $file;
+
+			if(!@posix_access($dir . '/' . $file, POSIX_R_OK | POSIX_W_OK)){
+				$notReadableFiles[] = $dir. '/' .$file;
 			}
 
-			if(@is_dir($dir . '/' . $part) && $dir.'/'.$part != 'custom/veranstaltungsfotos'){
-				$notReadableFiles = array_merge($notReadableFiles, searchNotReadAbleFiles($dir . '/' . $part));
+			if(@is_dir($dir. '/' .$file) && $dir. '/' .$file != 'custom/veranstaltungsfotos'){
+				$notReadableFiles = array_merge($notReadableFiles, searchNotReadAbleFiles($dir . '/' . $file));
 			}
 		}
 	}

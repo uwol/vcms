@@ -72,75 +72,75 @@ class LibCronjobs{
 		* checks for missing folders
 		*/
 
-		if(!is_dir('modules/')){
-			die('Fehler: Fehlender Ordner modules/');
+		if(!is_dir('modules')){
+			die('Fehler: Fehlender Ordner modules');
 		}
 
-		if(!is_dir('custom/')){
-			die('Fehler: Fehlender Ordner custom/');
+		if(!is_dir('custom')){
+			die('Fehler: Fehlender Ordner custom');
 		}
 
-		if(!is_dir('temp/')){
+		if(!is_dir('temp')){
 			@mkdir('temp');
 		}
 
-		if(!is_dir('custom/styles/')){
+		if(!is_dir('custom/styles')){
 			@mkdir('custom/styles');
 		}
 
-		if(!is_dir('custom/intranet/')){
+		if(!is_dir('custom/intranet')){
 			@mkdir('custom/intranet');
 		}
 
-		if(!is_dir('custom/intranet/downloads/')){
+		if(!is_dir('custom/intranet/downloads')){
 			@mkdir('custom/intranet/downloads');
 		}
 
-		if(!is_dir('custom/intranet/mitgliederfotos/')){
+		if(!is_dir('custom/intranet/mitgliederfotos')){
 			@mkdir('custom/intranet/mitgliederfotos');
 		}
 
-		if(!is_dir('custom/semestercover/')){
+		if(!is_dir('custom/semestercover')){
 			@mkdir('custom/semestercover');
 		}
 
-		if(!is_dir('custom/veranstaltungsfotos/')){
+		if(!is_dir('custom/veranstaltungsfotos')){
 			@mkdir('custom/veranstaltungsfotos');
 		}
 	}
 
 	function repairHtaccessFiles(){
-		if(!$this->hasHtaccessDenyFile('lib/')){
-			$this->generateHtaccessDenyFile('lib/');
+		if(!$this->hasHtaccessDenyFile('lib')){
+			$this->generateHtaccessDenyFile('lib');
 		}
 
-		if(!$this->hasHtaccessDenyFile('custom/intranet/')){
-			$this->generateHtaccessDenyFile('custom/intranet/');
+		if(!$this->hasHtaccessDenyFile('custom/intranet')){
+			$this->generateHtaccessDenyFile('custom/intranet');
 		}
 
-		if(!$this->hasHtaccessDenyFile('custom/veranstaltungsfotos/')){
-			$this->generateHtaccessDenyFile('custom/veranstaltungsfotos/');
+		if(!$this->hasHtaccessDenyFile('custom/veranstaltungsfotos')){
+			$this->generateHtaccessDenyFile('custom/veranstaltungsfotos');
 		}
 
-		if(!$this->hasHtaccessDenyFile('temp/')){
-			$this->generateHtaccessDenyFile('temp/');
+		if(!$this->hasHtaccessDenyFile('temp')){
+			$this->generateHtaccessDenyFile('temp');
 		}
 
-		$fd = opendir('modules/');
+		$files = array_diff(scandir('modules'), array('..', '.'));
 
-		while(($part = readdir($fd)) == true){
-			if(is_dir('modules/' . $part) && $part != '.' && $part != '..'){
-				$modulePath = 'modules/' . $part .'/';
+		foreach ($files as $file){
+			if(is_dir('modules/' .$file)){
+				$modulePath = 'modules/' .$file;
 
-				if(is_dir($modulePath.'scripts/')){
-					if(!$this->hasHtaccessDenyFile($modulePath.'scripts/')){
-						$this->generateHtaccessDenyFile($modulePath.'scripts/');
+				if(is_dir($modulePath. '/scripts')){
+					if(!$this->hasHtaccessDenyFile($modulePath. '/scripts')){
+						$this->generateHtaccessDenyFile($modulePath. '/scripts');
 					}
 				}
 
-				if(is_dir($modulePath.'install/')){
-					if(!$this->hasHtaccessDenyFile($modulePath.'install/')){
-						$this->generateHtaccessDenyFile($modulePath.'install/');
+				if(is_dir($modulePath. '/install')){
+					if(!$this->hasHtaccessDenyFile($modulePath. '/install')){
+						$this->generateHtaccessDenyFile($modulePath. '/install');
 					}
 				}
 			}
@@ -170,14 +170,14 @@ class LibCronjobs{
     }
 
     function generateHtaccessFile($directory, $content){
-    	$filename = $directory.'.htaccess';
+    	$filename = $directory. '/.htaccess';
 	    $handle = @fopen($filename, 'w');
     	@fwrite($handle, $content);
     	@fclose($handle);
     }
 
     function hasHtaccessDenyFile($directory){
-    	$filename = $directory.'.htaccess';
+    	$filename = $directory. '/.htaccess';
 
     	if(!is_file($filename)){
     		return false;

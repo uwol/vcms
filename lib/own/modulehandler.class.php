@@ -37,17 +37,15 @@ class LibModuleHandler{
 	}
 
 	function initModules(){
-		$modulespath = 'modules/';
+		$modulespath = 'modules';
 
-		$fd = opendir($modulespath);
+		$files = array_diff(scandir($modulespath), array('..', '.'));
 
-		if($fd){
-			while(($directory = readdir($fd)) == true){
-				if(is_dir($modulespath . $directory) && $directory != '.' && $directory != '..'){
-					$this->initModule($directory);
-				}
+		foreach ($files as $file){
+			if(is_dir($modulespath .'/'. $file)){
+				$this->initModule($file);
 			}
-
+	
 			$this->checkDependencies();
 		} else {
 			die('Fehler: Das Modulverzeichnis kann nicht geöffnet werden.');
@@ -57,78 +55,75 @@ class LibModuleHandler{
 	function initModule($directory){
 		global $libConfig, $libGlobal, $libString, $libTime, $libVerein, $libDb, $libMitglied, $libGenericStorage, $libSecurityManager, $libAuth;
 
-		$modulePath = 'modules/' . $directory . '/';
+		$modulePath = 'modules/' . $directory;
 
 		//read meta.php of module
-		if(file_exists($modulePath.'meta.php')){
-			require($modulePath.'meta.php');
+		if(file_exists($modulePath. '/meta.php')){
+			require($modulePath. '/meta.php');
 		} else {
-			echo('Fehler: Die Modulinformationsdatei '. $modulePath
-				.'meta.php konnte nicht gefunden werden.<br />');
+			echo('Fehler: Die Modulinformationsdatei ' .$modulePath. '/meta.php konnte nicht gefunden werden.<br />');
 		}
 
 		// validate meta.php; following variables have to be present in meta.php
 		if($version == ''){
-			echo('Fehler: Keine Variable version in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Keine Variable version in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!is_numeric($version)){
-			echo('Fehler: Versionsangabe nicht numerisch in Modul ' . $modulePath
-				. '. Korrekt wäre zum Beispiel 1.6<br />');
+			echo('Fehler: Versionsangabe nicht numerisch in Modul ' .$modulePath. '. Korrekt wäre zum Beispiel 1.6<br />');
 		}
 
 		if($moduleName == ''){
-			echo('Fehler: Keine Variable moduleName in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Keine Variable moduleName in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!isset($styleSheet)){
-			echo('Fehler: Keine Variable styleSheet in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Keine Variable styleSheet in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!isset($installScript)){
-			echo('Fehler: Keine Variable installScript in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Keine Variable installScript in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!isset($uninstallScript)){
-			echo('Fehler: Keine Variable uninstallScript in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Keine Variable uninstallScript in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!isset($updateScript)){
-			echo('Fehler: Keine Variable updateScript in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Keine Variable updateScript in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!is_array($pages)){
-			echo('Fehler: Kein Array pages in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Kein Array pages in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!is_array($dependencies)){
-			echo('Fehler: Kein Array dependencies in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Kein Array dependencies in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!is_array($includes)){
-			echo('Fehler: Kein Array includes in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Kein Array includes in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!is_array($headerStrings)){
-			echo('Fehler: Kein Array headerStrings in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Kein Array headerStrings in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!is_array($menuElementsInternet)){
-			echo('Fehler: Kein Array menuElementsInternet in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Kein Array menuElementsInternet in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!is_array($menuElementsIntranet)){
-			echo('Fehler: Kein Array menuElementsIntranet in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Kein Array menuElementsIntranet in Modul ' .$modulePath. '<br />');
 		}
 
 		if(!is_array($menuElementsAdministration)){
-			echo('Fehler: Kein Array menuElementsAdministration in Modul ' . $modulePath.'<br />');
+			echo('Fehler: Kein Array menuElementsAdministration in Modul ' .$modulePath. '<br />');
 		}
 
 		//check for colliding module id
 		if(array_key_exists($directory, $this->modules)){
-			echo('Fehler: Die Modul-Id '. $directory. ' in Modul ' .$modulePath. ' ist bereits in Modul '
-				.$this->modules[$directory]->getName(). ' im Verzeichnis ' .$this->modules[$directory]->getPath(). ' vergeben.<br />');
+			echo('Fehler: Die Modul-Id '. $directory. ' in Modul ' .$modulePath. ' ist bereits in Modul ' .$this->modules[$directory]->getName(). ' im Verzeichnis ' .$this->modules[$directory]->getPath(). ' vergeben.<br />');
 		}
 
 		//regenerate page array
@@ -145,20 +140,18 @@ class LibModuleHandler{
 						$libSecurityManager->getPossibleAemter());
 
 					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
-						echo('Fehler: Seite ' .$page->getPid(). ' in Modul ' . $modulePath. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' . implode(', ', $impossibleAemter).'<br />');
+						echo('Fehler: Seite ' .$page->getPid(). ' in Modul ' .$modulePath. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter). '<br />');
 					}
 				}
 			}
 
 			$pagedir = $page->getDirectory();
 
-			if($pagedir != ''
-				&& substr($pagedir, strlen($pagedir)-1, 1) != '/'){
-				echo('In Modul '. $modulePath. ' endet der Pfad ' .$pagedir.
-				' der Seite '.$page->getPid().' nicht mit einem / <br />');
+			if($pagedir != '' && substr($pagedir, strlen($pagedir)-1, 1) != '/'){
+				echo('In Modul ' .$modulePath. ' endet der Pfad ' .$pagedir. ' der Seite '.$page->getPid().' nicht mit einem / <br />');
 			}
 
-			$page->setDirectory($modulePath.$page->getDirectory());
+			$page->setDirectory($modulePath. '/' .$page->getDirectory());
 			$pagesarray[$page->getPid()] = $page;
 		}
 
@@ -179,20 +172,18 @@ class LibModuleHandler{
 						$libSecurityManager->getPossibleAemter());
 
 					if(is_array($impossibleAemter) && count($impossibleAemter) >0){
-						echo('Fehler: Include ' .$include->getPid(). ' in Modul ' . $modulePath. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' . implode(', ', $impossibleAemter).'<br />');
+						echo('Fehler: Include ' .$include->getPid(). ' in Modul ' . $modulePath. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter). '<br />');
 					}
 				}
 			}
 
 			$includeDir = $include->getDirectory();
 
-			if($includeDir != ''
-				&& substr($includeDir,strlen($includeDir)-1,1) != '/'){
-				echo('In Modul '. $modulePath. ' endet der Pfad ' .$includeDir.
-				' des Include '.$include->getIid().' nicht mit einem / <br />');
+			if($includeDir != '' && substr($includeDir,strlen($includeDir)-1,1) != '/'){
+				echo('In Modul '. $modulePath. ' endet der Pfad ' .$includeDir. ' des Include '.$include->getIid().' nicht mit einem / <br />');
 			}
 
-			$include->setDirectory($modulePath.$include->getDirectory());
+			$include->setDirectory($modulePath .'/'. $include->getDirectory());
 			$includesarray[$include->getIid()] = $include;
 		}
 
@@ -334,7 +325,7 @@ class LibModuleHandler{
 				}
 
 				if(!$modulPresent){
-					echo('Fehler: Modul ' .$module->getName() .' hat unerfüllte Abhängigkeit: Dependency '. $dependency->getDependencyName() .' mit Modul-Id '. $dependency->getModuleId() .' ist nicht erfüllt<br />');
+					echo('Fehler: Modul ' .$module->getName() .' hat unerfüllte Abhängigkeit: Dependency '. $dependency->getDependencyName(). ' mit Modul-Id '. $dependency->getModuleId(). ' ist nicht erfüllt<br />');
 				}
 
 				if(!$rightVersion){
@@ -342,11 +333,11 @@ class LibModuleHandler{
 
 					//min dependency
 					if($dependency->getDependencyType() == 1){
-						echo('Fehler: Modul ' .$module->getName() .' hat unerfüllte MinDependency: Modul '. $masterModule->getName() .' mit Modul-Id '. $masterModule->getId() .' hat Version '. $masterModule->getVersion() .', gefordert ist mindestens Version '. $dependency->getModuleVersion().'<br />');
+						echo('Fehler: Modul ' .$module->getName() .' hat unerfüllte MinDependency: Modul ' .$masterModule->getName(). ' mit Modul-Id ' .$masterModule->getId(). ' hat Version ' .$masterModule->getVersion(). ', gefordert ist mindestens Version ' .$dependency->getModuleVersion(). '<br />');
 					}
 					//exakt dependency
 					elseif($dependency->getDependencyType() == 2){
-						echo('Fehler: Modul ' .$module->getName() .' hat unerfüllte ExaktDependency: Modul '. $masterModule->getName() .' mit Modul-Id '. $masterModule->getName() .' hat Version '. $masterModule->getVersion() .', gefordert ist exakt Version '. $dependency->getModuleVersion().'<br />');
+						echo('Fehler: Modul ' .$module->getName() .' hat unerfüllte ExaktDependency: Modul ' . $masterModule->getName(). ' mit Modul-Id ' .$masterModule->getName(). ' hat Version ' .$masterModule->getVersion(). ', gefordert ist exakt Version ' .$dependency->getModuleVersion(). '<br />');
 					} else {
 						echo('Fehler: Der Modulehandler hat bei der Dependency-Fehlerausgabe Probleme');
 					}

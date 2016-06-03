@@ -236,26 +236,24 @@ class Folder extends FolderElement{
 	*/
 
 	function scanFileSystem(){
-		$fd = opendir($this->getFileSystemPath());
+		$files = array_diff(scandir($this->getFileSystemPath()), array('..', '.'));
 
-		$partArray = array();
+		$fileArray = array();
 
-		while (($part = readdir($fd)) == true){
-			$partArray[] = $part;
+		foreach ($files as $file){
+			$fileArray[] = $file;
 		}
 
-		sort($partArray);
+		sort($fileArray);
 
-		foreach($partArray as $part){
-			if($part != '.' && $part != '..'){
-				$folderElementString = $this->getFileSystemPath(). '/' .$part;
+		foreach($fileArray as $file){
+			$folderElementString = $this->getFileSystemPath(). '/' .$file;
 
-				if(is_file($folderElementString)){
-					$folderElement = new File($this, $part);
-				} elseif(is_dir($folderElementString)){
-					$folderName = $part;
-					$folderElement = new Folder($this, $folderName, $part);
-				}
+			if(is_file($folderElementString)){
+				$folderElement = new File($this, $file);
+			} elseif(is_dir($folderElementString)){
+				$folderName = $file;
+				$folderElement = new Folder($this, $folderName, $file);
 			}
 		}
 	}
