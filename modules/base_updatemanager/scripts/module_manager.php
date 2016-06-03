@@ -53,20 +53,19 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 			//download module package
 			echo '<p style="color:blue">Lade Modulpaket aus dem Repository.</p>';
-			downloadContent('http://' .$repoHostname. '/packages/'.$_REQUEST['modul'].'.tar',
-				'./temp/'.$_REQUEST['modul'].'.tar');
+			downloadContent('http://' .$repoHostname. '/packages/'. $_REQUEST['modul']. '.tar', './temp/' .$_REQUEST['modul']. '.tar');
 
 			//untar module package
-			$tar = new Archive_Tar('./temp/'.$_REQUEST['modul'].'.tar');
+			$tar = new Archive_Tar('./temp/' .$_REQUEST['modul']. '.tar');
 			echo '<p style="color:blue">Entpacke das Paket in den temp-Ordner.</p>';
 			$tar->extract('temp/');
 
-			if(is_dir('temp/'.$_REQUEST['modul'])){
-				if(is_file('temp/'.$_REQUEST['modul'].'/meta.php')){
-					if(!is_dir('modules/'.$_REQUEST['modul'])){
+			if(is_dir('temp/' .$_REQUEST['modul'])){
+				if(is_file('temp/' .$_REQUEST['modul']. '/meta.php')){
+					if(!is_dir('modules/' .$_REQUEST['modul'])){
 
 						//copy temporary module folder
-						copyFolder('temp/'.$_REQUEST['modul'].'/', 'modules/'.$_REQUEST['modul']);
+						copyFolder('temp/' .$_REQUEST['modul']. '/', 'modules/' .$_REQUEST['modul']);
 
 						//refresh module handler
 						$libModuleHandler = new LibModuleHandler();
@@ -76,7 +75,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 						if($module->getInstallScript() != ''){
 							echo '<p style="color:blue">Führe Installationsscript des Moduls aus.</p>';
-							include($module->getPath(). '/' .$module->getInstallScript());
+							include($module->getPath(). '/'. $module->getInstallScript());
 						}
 					} else {
 						echo '<p style="color:red">Fehler: Das Modul ist bereits installiert.</p>';
@@ -90,12 +89,12 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 			//delete temporary module folder
 			echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
-			@unlink('./temp/'.$_REQUEST['modul'].'.tar');
+			@unlink('./temp/' .$_REQUEST['modul']. '.tar');
 
 			echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp.</p>';
 
-			if(is_dir('./temp/'.$_REQUEST['modul'])){
-				deleteDirectory('./temp/'.$_REQUEST['modul']);
+			if(is_dir('./temp/' .$_REQUEST['modul'])){
+				deleteDirectory('./temp/' .$_REQUEST['modul']);
 			}
 		} else {
 			echo '<p style="color:red">Fehler: Das Modul ist bereits installiert.</p>';
@@ -118,7 +117,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 			//delete module directory
 			echo '<p style="color:blue">Lösche den Modulordner aus dem Ordner modules/.</p>';
-			deleteDirectory('./modules/'.$_REQUEST['modul']);
+			deleteDirectory('./modules/' .$_REQUEST['modul']);
 
 			//refresh module handler
 			$libModuleHandler = new LibModuleHandler();
@@ -133,44 +132,46 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 	elseif(($_REQUEST['aktion'] == 'updateModule' || $_REQUEST['aktion'] == 'reinstallModule') && $_REQUEST['modul'] != ''){
 		//download module package
 		echo '<p style="color:blue">Lade Modulpaket aus dem Repository.</p>';
-		downloadContent('http://' .$repoHostname. '/packages/'.$_REQUEST['modul'].'.tar',
-			'./temp/'.$_REQUEST['modul'].'.tar');
+		downloadContent('http://' .$repoHostname. '/packages/'. $_REQUEST['modul']. '.tar',
+			'./temp/' .$_REQUEST['modul']. '.tar');
 
 		//untar module package
-		$tar = new Archive_Tar('./temp/'.$_REQUEST['modul'].'.tar');
+		$tar = new Archive_Tar('./temp/' .$_REQUEST['modul']. '.tar');
 		echo '<p style="color:blue">Entpacke das Paket in den temp-Ordner.</p>';
 		$tar->extract('temp/');
 
-		if(is_dir('temp/'.$_REQUEST['modul'])){
-			if(is_file('temp/'.$_REQUEST['modul'].'/meta.php')){
-				if(is_dir('modules/'.$_REQUEST['modul'])){
+		if(is_dir('temp/' .$_REQUEST['modul'])){
+			if(is_file('temp/' .$_REQUEST['modul']. '/meta.php')){
+				if(is_dir('modules/' .$_REQUEST['modul'])){
 
-					if(is_dir('temp/'.$_REQUEST['modul'].'/custom')){
-						deleteDirectory('./temp/'.$_REQUEST['modul'].'/custom');
+					if(is_dir('temp/' .$_REQUEST['modul']. '/custom')){
+						deleteDirectory('./temp/' .$_REQUEST['modul']. '/custom');
 					}
 
 					//clean module folder except custom
-					$files = array_diff(scandir('modules/'.$_REQUEST['modul']), array('..', '.', 'custom'));
+					$files = array_diff(scandir('modules/' .$_REQUEST['modul']), array('..', '.', 'custom'));
 
 					foreach ($files as $file){
-						if(is_dir('modules/'.$_REQUEST['modul']. '/' .$file)){
-							echo 'Lösche '.'modules/'.$_REQUEST['modul'].'/'. $file.'<br />';
-							deleteDirectory('modules/'.$_REQUEST['modul'].'/'. $file);
-						} elseif(is_file('modules/'.$_REQUEST['modul'].'/'. $file)){
-							echo 'Lösche '.'modules/'.$_REQUEST['modul'].'/'. $file.'<br />';
-							unlink('modules/'.$_REQUEST['modul'].'/'. $file);
+						if(is_dir('modules/' .$_REQUEST['modul']. '/' .$file)){
+							echo 'Lösche '.'modules/' .$_REQUEST['modul']. '/' .$file. '<br />';
+							deleteDirectory('modules/' .$_REQUEST['modul']. '/' .$file);
+						} elseif(is_file('modules/' .$_REQUEST['modul']. '/' .$file)){
+							echo 'Lösche modules/' .$_REQUEST['modul']. '/' .$file. '<br />';
+							unlink('modules/' .$_REQUEST['modul']. '/' .$file);
 						}
 					}
 
 					//copy all temporary files except the custom directory
 					echo '<p style="color:blue">Kopiere aktualisiertes Modul in den Modulordner modules/' .$_REQUEST['modul']. '</p>';
 					
-					$files = array_diff(scandir('temp/'.$_REQUEST['modul']), array('..', '.', 'custom'));
-					
-					if(is_dir('temp/'.$_REQUEST['modul'].'/'. $part)){
-						copyFolder('temp/'.$_REQUEST['modul'].'/'.$part.'/', 'modules/'.$_REQUEST['modul'].'/'.$part);
-					} elseif(is_file('temp/'.$_REQUEST['modul'].'/'. $part)){
-						copy('temp/'.$_REQUEST['modul'].'/'. $part,'modules/'.$_REQUEST['modul'].'/'. $part);
+					$files = array_diff(scandir('temp/' .$_REQUEST['modul']), array('..', '.', 'custom'));
+
+					foreach ($files as $file){
+						if(is_dir('temp/' .$_REQUEST['modul']. '/' .$file)){
+							copyFolder('temp/' .$_REQUEST['modul']. '/' .$file, 'modules/' .$_REQUEST['modul']. '/' .$file);
+						} elseif(is_file('temp/' .$_REQUEST['modul']. '/' .$file)){
+							copy('temp/' .$_REQUEST['modul']. '/' .$file, 'modules/' .$_REQUEST['modul']. '/' .$file);
+						}
 					}
 
 					//refresh module handler
@@ -194,12 +195,12 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 		}
 
 		echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
-		@unlink('./temp/'.$_REQUEST['modul'].'.tar');
+		@unlink('./temp/' .$_REQUEST['modul']. '.tar');
 
 		echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp.</p>';
 
-		if(is_dir('./temp/'.$_REQUEST['modul'])){
-			deleteDirectory('./temp/'.$_REQUEST['modul']);
+		if(is_dir('./temp/' .$_REQUEST['modul'])){
+			deleteDirectory('./temp/' .$_REQUEST['modul']);
 		}
 	}
 }
@@ -277,7 +278,7 @@ echo '<th><img src="' .$libModuleHandler->getModuleDirectory(). '/img/arrow_up.p
 echo '<th><img src="' .$libModuleHandler->getModuleDirectory(). '/img/bin_closed.png" alt="deinstallieren"/></th>';
 echo '</tr>';
 
-$manifestString = downloadContent('http://' .$repoHostname. '/manifest.php?id='.$libConfig->sitePath);
+$manifestString = downloadContent('http://' .$repoHostname. '/manifest.php?id=' .$libConfig->sitePath);
 $manifestArray = explode("\n", $manifestString);
 
 $modules = array();
@@ -438,10 +439,10 @@ function deleteDirectory($directory){
 		$files = array_diff(scandir($directory), array('..', '.'));
 
 		foreach ($files as $file){
-			if(is_dir($directory .'/'. $file)){
-				deleteDirectory($directory .'/'. $file);
-			} elseif(is_file($directory .'/'. $file)){
-				unlink($directory .'/'. $file);
+			if(is_dir($directory. '/' .$file)){
+				deleteDirectory($directory. '/' .$file);
+			} elseif(is_file($directory. '/' .$file)){
+				unlink($directory. '/' .$file);
 			}
 		}
 
