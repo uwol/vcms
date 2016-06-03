@@ -163,7 +163,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 					//copy all temporary files except the custom directory
 					echo '<p style="color:blue">Kopiere aktualisiertes Modul in den Modulordner modules/' .$_REQUEST['modul']. '</p>';
-					
+
 					$files = array_diff(scandir('temp/' .$_REQUEST['modul']), array('..', '.', 'custom'));
 
 					foreach ($files as $file){

@@ -45,7 +45,7 @@ class LibModuleHandler{
 			if(is_dir($modulespath .'/'. $file)){
 				$this->initModule($file);
 			}
-	
+
 			$this->checkDependencies();
 		}
 	}
