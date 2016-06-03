@@ -47,8 +47,6 @@ class LibModuleHandler{
 			}
 	
 			$this->checkDependencies();
-		} else {
-			die('Fehler: Das Modulverzeichnis kann nicht geöffnet werden.');
 		}
 	}
 
