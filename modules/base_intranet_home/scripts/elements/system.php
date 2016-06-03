@@ -21,8 +21,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('searchNotReadAbleFiles')){
-	$libGenericStorage->saveValueInCurrentModule('searchNotReadAbleFiles', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('checkFilePermissions')){
+	$libGenericStorage->saveValueInCurrentModule('checkFilePermissions', 0);
 }
 
 if(!$libGenericStorage->attributeExistsInCurrentModule('showTrauerflor')){
@@ -150,7 +150,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* nonreadable files
 	*/
 	if(function_exists('posix_access')){
-		if($libGenericStorage->loadValueInCurrentModule('searchNotReadAbleFiles') == 1){
+		if($libGenericStorage->loadValueInCurrentModule('checkFilePermissions') == 1){
 			$notReadableFiles = searchNotReadAbleFiles('.');
 		}
 	}
@@ -187,7 +187,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 		}
 
 		if(is_array($notReadableFiles) && count($notReadableFiles) > 0){
-			echo '<p>PHP besitzt für die folgenden Dateien bzw. Ordner keine Leserechte:</p>';
+			echo '<p>PHP besitzt für die folgenden Dateien bzw. Ordner keine Zugriffsrechte:</p>';
 			echo '<ul>';
 
 			foreach($notReadableFiles as $file){
@@ -195,7 +195,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			}
 
 			echo '</ul>';
-			echo '<p>Leserechte können z.B. mit einem FTP-Programm eingerichtet werden.</p>';
+			echo '<p>Leserechte können z. B. mit einem FTP-Programm eingerichtet werden.</p>';
 		}
 
 		echo '<hr />';
