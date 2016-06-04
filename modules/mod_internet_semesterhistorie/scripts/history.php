@@ -91,6 +91,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		echo '</div>';
 		echo '</div>';
+		
+		echo '<hr />';
 	}
 
 	/**
@@ -102,35 +104,35 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="col-sm-2">';
 	if($row['senior']){
 		echo $libMitglied->getMitgliedSignature($row['senior'], '');
-		echo '<p><b>Senior:</b> ' .$libMitglied->getMitgliedNameString($row['senior'], 0). '</p>';
+		echo '<p>Senior: ' .$libMitglied->getMitgliedNameString($row['senior'], 0). '</p>';
 	}
 	echo '</div>';
 
 	echo '<div class="col-sm-2">';
 	if($row['consenior']){
 		echo $libMitglied->getMitgliedSignature($row['consenior'], '');
-		echo '<p><b>Consenior:</b> ' .$libMitglied->getMitgliedNameString($row['consenior'], 0). '</p>';
+		echo '<p>Consenior: ' .$libMitglied->getMitgliedNameString($row['consenior'], 0). '</p>';
 	}
 	echo '</div>';
 
 	echo '<div class="col-sm-2">';
 	if($row['fuchsmajor']){
 		echo $libMitglied->getMitgliedSignature($row['fuchsmajor'], '');
-		echo '<p><b>Fuchsmajor:</b> ' .$libMitglied->getMitgliedNameString($row['fuchsmajor'], 0). '</p>';
+		echo '<p>Fuchsmajor: ' .$libMitglied->getMitgliedNameString($row['fuchsmajor'], 0). '</p>';
 	}
 	echo '</div>';
 
 	echo '<div class="col-sm-2">';
 	if($row['scriptor']){
 		echo $libMitglied->getMitgliedSignature($row['scriptor'], '');
-		echo '<p><b>Scriptor:</b> ' .$libMitglied->getMitgliedNameString($row['scriptor'], 0). '</p>';
+		echo '<p>Scriptor: ' .$libMitglied->getMitgliedNameString($row['scriptor'], 0). '</p>';
 	}
 	echo '</div>';
 
 	echo '<div class="col-sm-2">';
 	if($row['quaestor']){
 		echo $libMitglied->getMitgliedSignature($row['quaestor'], '');
-		echo '<p><b>Quaestor:</b> ' .$libMitglied->getMitgliedNameString($row['quaestor'], 0). '</p>';
+		echo '<p>Quaestor: ' .$libMitglied->getMitgliedNameString($row['quaestor'], 0). '</p>';
 	}
 	echo '</div>';
 
@@ -261,7 +263,7 @@ function printVereinsGruppe($stmt, $title){
 
 	if(count($namensStrings) > 0){
 		echo '<div>';
-    	echo '<b>' .$title. ':</b> ';
+    	echo $title. ': ';
     	echo implode(', ', $namensStrings);
     	echo '</div>';
 	}
@@ -272,7 +274,7 @@ function printAmt($amtsname, $id){
 
 	if($id != ''){
 		echo '<div>';
-		echo '<b>' .$amtsname. ':</b> <a href="index.php?pid=intranet_person_daten&amp;personid=' .$id. '">' .$libMitglied->getMitgliedNameString($id, 0). '</a>';
+		echo $amtsname. ': <a href="index.php?pid=intranet_person_daten&amp;personid=' .$id. '">' .$libMitglied->getMitgliedNameString($id, 0). '</a>';
 		echo '</div>';
 	}
 }
