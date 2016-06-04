@@ -62,9 +62,8 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<hr />';
-	echo '<div class="row">';
-
-	echo '<div class="col-xs-12 col-sm-10">';
+	echo '<div class="media">';
+	echo '<div class="media-body">';
 	echo '<h4>' . $libTime->wochentag($row['datum']).', '.$libTime->formatDateTimeString($row['datum'], 2). '</h4>';
 
 	if($libAuth->getId() == $row['person']){
@@ -74,7 +73,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<p>' .$row['beschreibung']. '</p>';
 	echo '</div>';
 
-	echo '<div class="col-xs-12 col-sm-2">';
+	echo '<div class="media-right">';
 
 	echo $libMitglied->getMitgliedSignature($row['person']);
 

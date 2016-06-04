@@ -38,26 +38,21 @@ if($count > 0){
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<div class="row">';
-
-		echo '<div class="col-xs-12 col-sm-10">';
+		echo '<div class="media">';
+		echo '<div class="media-body">';
 
 		$date = $libTime->formatDateTimeString($row['datum'], 2);
-		echo '<b>' .$date. ' - ' .$libMitglied->getMitgliedNameString($row['person'],0). '</b><br />';
+		echo '<b>' .$date. ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</b><br />';
 
 		if(($row['beschreibung']) != ''){
-			echo '<a href="index.php?pid=intranet_reservierung_liste">'.nl2br(substr($row['beschreibung'], 0, 200));
-
-			if(strlen($row['beschreibung']) > 200){
-				echo ' ...';
-			}
-
+			echo '<a href="index.php?pid=intranet_reservierung_liste">';
+			echo $libString->truncate(trim($row['beschreibung']), 200);
 			echo '</a>';
 		}
 
 		echo '</div>';
 
-		echo '<div class="hidden-xs col-sm-2">';
+		echo '<div class="media-right">';
 		echo $libMitglied->getMitgliedSignature($row['person']);
 		echo '</div>';
 

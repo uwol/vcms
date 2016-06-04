@@ -101,17 +101,15 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<hr/>';
 	}
 
-	echo '<div id="' .$row['id']. '" class="row">';
-
-	echo '<div class="hidden-xs col-sm-2">';
+	echo '<div id="' .$row['id']. '" class="media">';
 
 	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
+		echo '<div class="media-left">';
 		echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied']);
+		echo '</div>';
 	}
 
-	echo '</div>';
-
-	echo '<div class="col-xs-12 col-sm-8">';
+	echo '<div class="media-body">';
 	echo '<h4>' .$libTime->convertMysqlDateToDatum($row['eingabedatum']). ' - ' .$row['bezeichnung'];
 
 	if((in_array('internetwart', $libAuth->getAemter()))
@@ -127,7 +125,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	echo '</div>';
 
-	echo '<div class="col-xs-12 col-sm-2">';
+	echo '<div class="media-right">';
 	echo $libMitglied->getMitgliedSignature($row['autor']);
 	echo '</div>';
 
