@@ -61,14 +61,13 @@ $stmtCount->fetch();
 if($count > 0){
 	echo '<h2>Chargierkalender</h2>';
 
-	$stmt = $libDb->prepare('SELECT * FROM mod_chargierkalender_veranstaltung WHERE datum >= NOW() ORDER BY datum LIMIT 0,4');
+	$stmt = $libDb->prepare('SELECT * FROM mod_chargierkalender_veranstaltung WHERE datum >= NOW() ORDER BY datum LIMIT 0,3');
 	$stmt->execute();
 
 	echo '<div class="row">';
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<div class="col-sm-6">';
-		echo '<hr />';
+		echo '<div class="col-xs-12">';
 
 		$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM mod_chargierkalender_teilnahme WHERE mitglied=:mitglied AND chargierveranstaltung=:chargierveranstaltung");
 		$stmt2->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
@@ -103,6 +102,7 @@ if($count > 0){
 
 		echo '</form>';
 		echo '</div>';
+		echo '<hr />';
 	}
 
 	echo '</div>';

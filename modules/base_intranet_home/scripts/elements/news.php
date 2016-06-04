@@ -34,13 +34,12 @@ $stmtCount->fetch();
 if($count > 0){
 	echo '<h2>Neues</h2>';
 
-	$stmt = $libDb->prepare('SELECT mod_news_kategorie.bezeichnung, mod_news_news.eingabedatum, mod_news_news.id, mod_news_news.text, mod_news_news.betroffenesmitglied, mod_news_news.autor FROM mod_news_news LEFT JOIN mod_news_kategorie ON mod_news_news.kategorieid=mod_news_kategorie.id ORDER BY mod_news_news.eingabedatum DESC LIMIT 0,3');
+	$stmt = $libDb->prepare('SELECT mod_news_kategorie.bezeichnung, mod_news_news.eingabedatum, mod_news_news.id, mod_news_news.text, mod_news_news.betroffenesmitglied, mod_news_news.autor FROM mod_news_news LEFT JOIN mod_news_kategorie ON mod_news_news.kategorieid=mod_news_kategorie.id ORDER BY mod_news_news.eingabedatum DESC LIMIT 0,4');
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$colsSm = 12;
 
-		echo '<hr />';
 		echo '<div class="row">';
 
 		if($row['betroffenesmitglied'] != ''){
@@ -68,6 +67,7 @@ if($count > 0){
 		echo '</div>';
 
 		echo '</div>';
+		echo '<hr />';
 	}
 }
 ?>

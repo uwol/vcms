@@ -24,23 +24,15 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 /*
 * output
 */
-
-echo '<h2>Geburtstage</h2>';
-echo '<hr />';
-
 echo '<div class="row">';
-echo '<div class="col-xs-12">';
-
-echo '<p>Als iCalendar-Dateien:<br />';
-echo '&nbsp;&nbsp;<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_geburtstageaktivitas&amp;user='. $libGenericStorage->loadValueInCurrentModule("userNameICalendar"). '&amp;pass='. $libGenericStorage->loadValueInCurrentModule("passwordICalendar"). '">Geburtstage Aktive</a><br />';
-echo '&nbsp;&nbsp;<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_todestage&amp;user=' .$libGenericStorage->loadValueInCurrentModule("userNameICalendar") .'&amp;pass=' .$libGenericStorage->loadValueInCurrentModule("passwordICalendar") .'">Nekrolog</a><br />';
-echo '</p>';
+echo '<div class="hidden-xs hidden-sm col-md-12">';
+echo '<h2>Geburtstage</h2>';
 
 //komplexe Abfrage, um im Dezember Geburtstage aus dem folgenden Jahr zu ermitteln
 //Monate werden dazu normalisiert auf Raum 0 1 2 ... 10 11 relativ zum aktuellen Monat mit: (x_1 + 12 - x) % 12 = y
 //z.B. im Dezember x = 12 => für Dezember: (12 + 12 - 12) % 12 = 0, für Januar: (1 + 12 - 12) % 12 = 1
 
-$stmt = $libDb->prepare("SELECT id, datum_geburtstag FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND datum_geburtstag != '' AND datum_geburtstag != '0000-00-00' AND (MOD(DATE_FORMAT(datum_geburtstag, '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(datum_geburtstag, '%d')) >= (MOD(DATE_FORMAT(NOW(), '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(NOW(), '%d')) ORDER BY (MOD(DATE_FORMAT(datum_geburtstag, '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(datum_geburtstag, '%d')) LIMIT 0,10");
+$stmt = $libDb->prepare("SELECT id, datum_geburtstag FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND datum_geburtstag != '' AND datum_geburtstag != '0000-00-00' AND (MOD(DATE_FORMAT(datum_geburtstag, '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(datum_geburtstag, '%d')) >= (MOD(DATE_FORMAT(NOW(), '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(NOW(), '%d')) ORDER BY (MOD(DATE_FORMAT(datum_geburtstag, '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(datum_geburtstag, '%d')) LIMIT 0,5");
 $stmt->execute();
 
 $i = 0;
@@ -66,6 +58,13 @@ echo '</dl>';
 if($i==0){
 	echo '<p>In der Datenbank sind bei den Mitgliedern keine Geburtstage angegeben.</p>';
 }
+
+echo '<hr />';
+
+echo '<p>Als iCalendar-Dateien:<br />';
+echo '&nbsp;&nbsp;<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_geburtstageaktivitas&amp;user='. $libGenericStorage->loadValueInCurrentModule("userNameICalendar"). '&amp;pass='. $libGenericStorage->loadValueInCurrentModule("passwordICalendar"). '">Geburtstage Aktive</a><br />';
+echo '&nbsp;&nbsp;<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_todestage&amp;user=' .$libGenericStorage->loadValueInCurrentModule("userNameICalendar") .'&amp;pass=' .$libGenericStorage->loadValueInCurrentModule("passwordICalendar") .'">Nekrolog</a><br />';
+echo '</p>';
 
 echo '</div>';
 echo '</div>';

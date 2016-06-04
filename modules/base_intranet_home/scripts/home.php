@@ -31,7 +31,19 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<div class="row">';
-echo '<section class="col-md-8">';
+echo '<aside class="col-md-3">';
+
+require_once("elements/events.php");
+
+if($libModuleHandler->moduleIsAvailable("mod_intranet_chargierkalender")){
+	require_once("elements/chargierkalender.php");
+}
+
+require_once("elements/birthdays.php");
+require_once("elements/wifi.php");
+
+echo '</aside>';
+echo '<section class="col-md-9">';
 
 require_once("elements/system.php");
 
@@ -39,22 +51,9 @@ if($libModuleHandler->moduleIsAvailable("mod_intranet_news")){
 	require_once("elements/news.php");
 }
 
-require_once("elements/registrations.php");
-
-if($libModuleHandler->moduleIsAvailable("mod_intranet_chargierkalender")){
-	require_once("elements/chargierkalender.php");
-}
-
 if($libModuleHandler->moduleIsAvailable("mod_intranet_reservierungen")){
 	require_once("elements/reservations.php");
 }
 
 echo '</section>';
-echo '<aside class="col-md-4">';
-
-require_once("elements/randomah.php");
-require_once("elements/nextbirthdays.php");
-require_once("elements/wifi.php");
-
-echo '</aside>';
 echo '</div>';

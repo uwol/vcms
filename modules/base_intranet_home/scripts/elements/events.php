@@ -61,14 +61,13 @@ $stmtCount->fetch();
 if($count > 0){
 	echo '<h2>Veranstaltungen</h2>';
 
-	$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,4');
+	$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,3');
 	$stmt->execute();
 
 	echo '<div class="row">';
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<div class="col-sm-6">';
-		echo '<hr />';
+		echo '<div class="col-xs-12">';
 
 		$stmt2 = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung');
 		$stmt2->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
@@ -101,6 +100,7 @@ if($count > 0){
 
 		echo '</form>';
 		echo '</div>';
+		echo '<hr />';
 	}
 
 	echo '</div>';

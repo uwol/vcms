@@ -38,7 +38,6 @@ if($count > 0){
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<hr />';
 		echo '<div class="row">';
 
 		echo '<div class="col-xs-12 col-sm-10">';
@@ -63,6 +62,7 @@ if($count > 0){
 		echo '</div>';
 
 		echo '</div>';
+		echo '<hr />';
 	}
 }
 ?>
