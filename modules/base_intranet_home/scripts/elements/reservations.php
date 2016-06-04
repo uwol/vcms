@@ -42,7 +42,7 @@ if($count > 0){
 		echo '<div class="media-body">';
 
 		$date = $libTime->formatDateTimeString($row['datum'], 2);
-		echo '<b>' .$date. ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</b><br />';
+		echo '<h4 class="media-heading">' .$date. ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</h4>';
 
 		if(($row['beschreibung']) != ''){
 			echo '<a href="index.php?pid=intranet_reservierung_liste">';

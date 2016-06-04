@@ -110,7 +110,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	echo '<div class="media-body">';
-	echo '<h4>' .$libTime->convertMysqlDateToDatum($row['eingabedatum']). ' - ' .$row['bezeichnung'];
+	echo '<h4 class="media-heading">' .$libTime->convertMysqlDateToDatum($row['eingabedatum']). ' - ' .$row['bezeichnung'];
 
 	if((in_array('internetwart', $libAuth->getAemter()))
 			|| ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)){
