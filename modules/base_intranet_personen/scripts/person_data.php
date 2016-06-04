@@ -481,25 +481,31 @@ if(count($vereine) > 0){
 }
 
 
+echo '<hr />';
+
+echo '<article class="media">';
+echo '<div class="media-body">';
+
 if($row['vita'] != ''){
-	echo '<hr />';
-
-	echo '<article>';
-	echo '<div class="pull-right text-right">';
-
-	if($row['vita_letzterautor'] != ''){
-		echo 'Letzter Autor: ' .$libMitglied->getMitgliedNameString($row['vita_letzterautor'], 5). '<br />';
-	}
-
-	if(!$ownprofile && $row['gruppe'] != 'X'){
-		echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
-	}
-
-	echo '</div>';
-
-	echo nl2br($row['vita']);
-	echo '</article>';
+	echo nl2br(trim($row['vita']));
+} else {
+	echo 'Keine Vita erfasst.';
 }
+
+echo '</div>';
+echo '<div class="media-right">';
+
+if($row['vita_letzterautor'] != ''){
+	echo 'Letzter Autor: ' .$libMitglied->getMitgliedNameString($row['vita_letzterautor'], 5). '<br />';
+}
+
+if(!$ownprofile && $row['gruppe'] != 'X'){
+	echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
+}
+	
+echo '</div>';
+echo '</article>';
+
 
 echo '</div>';
 echo '</div>';
