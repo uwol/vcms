@@ -31,7 +31,7 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<div class="row">';
-echo '<aside class="col-md-3">';
+echo '<aside class="hidden-xs hidden-sm col-md-3">';
 
 require_once("elements/events.php");
 

@@ -76,33 +76,26 @@ if($count > 0){
 		$stmt2->bindColumn('number', $angemeldet);
 		$stmt2->fetch();
 
-		echo '<b>' .$libTime->formatDateTimeString($row['datum'], 2). '</b> - ';
+		echo '<form action="index.php?pid=intranet_home" method="post" class="form-horizontal">';
+		echo '<input type="hidden" name="chargierveranstaltungid" value="' .$row['id']. '" />';
+
+		echo '<div class="form-control-static">';
+		echo $libTime->formatDateTimeString($row['datum'], 2). ' ';
 		echo '<a href="index.php?pid=intranet_chargierkalender_kalender&amp;semester=' .$libTime->getSemesterEinesDatums($row['datum']). '#t' .$row['id']. '">';
 		echo $libVerein->getVereinNameString($row['verein']);
 		echo '</a>';
-
-		echo '<form action="index.php?pid=intranet_home" method="post" class="form-inline">';
-		echo '<input type="hidden" name="chargierveranstaltungid" value="' .$row['id']. '" />';
+		echo '</div>';
 
 		if($angemeldet){
 			echo '<input type="hidden" name="chargierkalenderchangeanmeldenstate" value="abmelden" />';
-			$libForm->printSubmitButtonInline('Abmelden');
+			$libForm->printSubmitButtonInline('<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> Abmelden');
 		} else {
 			echo '<input type="hidden" name="chargierkalenderchangeanmeldenstate" value="anmelden" />';
-			$libForm->printSubmitButtonInline('Anmelden');
-		}
-
-		echo ' ';
-
-		if($angemeldet){
-			echo '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> angemeldet';
-		} else {
-			echo '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
+			$libForm->printSubmitButtonInline('<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> Anmelden');
 		}
 
 		echo '</form>';
 		echo '</div>';
-		echo '<hr />';
 	}
 
 	echo '</div>';
