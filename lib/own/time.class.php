@@ -639,9 +639,10 @@ class LibTime{
 		if(count($semesters) > 1 || ((count($semesters) == 1) && ($semesters[1] != $globalsemester))){
 			$retstr .= '<form action="index.php" class="form-inline">';
 			$retstr .= '<fieldset>';
+			$retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';
 			$retstr .= '<div class="form-group">';
 			$retstr .= '<label for="semester" class="sr-only">Semester</label>';
-			$retstr .= '<select name="semester" class="form-control" onchange=\'this.form.submit()\'>';
+			$retstr .= '<select id="semester" name="semester" class="form-control" onchange=\'this.form.submit()\'>';
 
 			foreach($semesters as $semester){
 				if($semester != '' && $this->isValidSemesterString($semester)){
@@ -658,7 +659,6 @@ class LibTime{
 			}
 
 			$retstr .= '</select> ';
-			$retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';
 			$retstr .= '<button type="submit" class="btn btn-default">Semester wählen</button>';
 			$retstr .= '</div>';
 			$retstr .= '</fieldset>';

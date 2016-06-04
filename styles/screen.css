@@ -7,8 +7,9 @@ body {
 }
 
 fieldset {
-	padding: 8px;
 	border: 1px solid #333;
+	padding: 8px;
+	margin-bottom: 1em;
 }
 
 
