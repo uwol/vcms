@@ -114,7 +114,7 @@ class LibString{
 
 		if(isset($libGlobal->notificationTexts) && is_array($libGlobal->notificationTexts)){
 			if(count($libGlobal->notificationTexts) > 0){
-				return '<p class="notificationBox">'. implode('<br />', $libGlobal->notificationTexts). '</p>';
+				return '<p class="alert alert-success" role="alert">'. implode('<br />', $libGlobal->notificationTexts). '</p>';
 			}
 		}
 	}
@@ -124,7 +124,7 @@ class LibString{
 
 		if(isset($libGlobal->errorTexts) && is_array($libGlobal->errorTexts)){
 			if(count($libGlobal->errorTexts) > 0){
-				return '<p class="errorBox">'. implode('<br />', $libGlobal->errorTexts). '</p>';
+				return '<p class="alert alert-danger" role="alert">'. implode('<br />', $libGlobal->errorTexts). '</p>';
 			}
 		}
 	}

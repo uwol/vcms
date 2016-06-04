@@ -170,18 +170,6 @@ main .icon_small {
 	margin: 0 2px;
 }
 
-main .notificationBox {
-	border: 1px solid green;
-	background-color: #58FA58;
-	padding: 1px;
-}
-
-main .errorBox {
-	border: 1px solid red;
-	background-color: #F6CECE;
-	padding: 1px;
-}
-
 /* image delete icon */
 
 main .imgBox .deleteIconBox {

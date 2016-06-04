@@ -55,7 +55,7 @@ class LibMenuRenderer{
 
 		if($rootMenuFolderInternet->hasElements()){
 			$retstr .= '              <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
-			$retstr .= '                <ul class="nav navbar-nav navbar-right">' . PHP_EOL;
+			$retstr .= '                <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
 			$retstr .= $this->getMenuLevel($rootMenuFolderInternet, 0, $aktivesPid);
 			$retstr .= '                </ul>' . PHP_EOL;
 			$retstr .= '              </div>' . PHP_EOL;
@@ -72,7 +72,7 @@ class LibMenuRenderer{
 
 		if($rootMenuFolderIntranet->hasElements()){
 			$retstr .= '              <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . PHP_EOL;
-			$retstr .= '                <ul class="nav navbar-nav navbar-right">' . PHP_EOL;
+			$retstr .= '                <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
 			$retstr .= $this->getMenuLevel($rootMenuFolderIntranet, 0, $aktivesPid);
 			$retstr .= $this->getMenuLevel($rootMenuFolderAdministration, 0, $aktivesPid);
 			$retstr .= '                </ul>' . PHP_EOL;

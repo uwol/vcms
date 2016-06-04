@@ -30,7 +30,7 @@ $repoHostname = 'repository.' . $libGlobal->vcmsHostname;
 $websiteHostname = 'www.' . $libGlobal->vcmsHostname;
 
 echo '<h1>Module</h1>';
-echo '<div style="background-color:#FFFF99">';
+echo '<div class="alert alert-info" role="alert">';
 
 /*
 * clean up
@@ -52,12 +52,12 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 		if(!$libModuleHandler->moduleIsAvailable($_REQUEST['modul'])){
 
 			//download module package
-			echo '<p style="color:blue">Lade Modulpaket aus dem Repository.</p>';
+			echo '<p>Lade Modulpaket aus dem Repository.</p>';
 			downloadContent('http://' .$repoHostname. '/packages/'. $_REQUEST['modul']. '.tar', './temp/' .$_REQUEST['modul']. '.tar');
 
 			//untar module package
 			$tar = new Archive_Tar('./temp/' .$_REQUEST['modul']. '.tar');
-			echo '<p style="color:blue">Entpacke das Paket in den temp-Ordner.</p>';
+			echo '<p>Entpacke das Paket in den temp-Ordner.</p>';
 			$tar->extract('temp/');
 
 			if(is_dir('temp/' .$_REQUEST['modul'])){
@@ -74,30 +74,30 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 						$module = $libModuleHandler->getModuleByModuleid($_REQUEST['modul']);
 
 						if($module->getInstallScript() != ''){
-							echo '<p style="color:blue">Führe Installationsscript des Moduls aus.</p>';
+							echo '<p>Führe Installationsskript des Moduls aus.</p>';
 							include($module->getPath(). '/'. $module->getInstallScript());
 						}
 					} else {
-						echo '<p style="color:red">Fehler: Das Modul ist bereits installiert.</p>';
+						echo '<p>Fehler: Das Modul ist bereits installiert.</p>';
 					}
 				} else {
-					echo '<p style="color:red">Fehler: Das heruntergeladene Modulpaket enthält keine meta.php. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
+					echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.php. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
 				}
 			} else {
-				echo '<p style="color:red">Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
+				echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
 			}
 
 			//delete temporary module folder
-			echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
+			echo '<p>Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
 			@unlink('./temp/' .$_REQUEST['modul']. '.tar');
 
-			echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp.</p>';
+			echo '<p>Lösche den temporären Modulordner aus dem Ordner temp.</p>';
 
 			if(is_dir('./temp/' .$_REQUEST['modul'])){
 				deleteDirectory('./temp/' .$_REQUEST['modul']);
 			}
 		} else {
-			echo '<p style="color:red">Fehler: Das Modul ist bereits installiert.</p>';
+			echo '<p>Fehler: Das Modul ist bereits installiert.</p>';
 		}
 	}
 
@@ -111,12 +111,12 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 			$module = $libModuleHandler->getModuleByModuleid($_REQUEST['modul']);
 
 			if(is_object($module) && $module->getUninstallScript() != ''){
-				echo '<p style="color:blue">Führe Deinstallationsscript des Moduls aus.</p>';
+				echo '<p>Führe Deinstallationsskript des Moduls aus.</p>';
 				include($module->getPath(). '/' .$module->getUninstallScript());
 			}
 
 			//delete module directory
-			echo '<p style="color:blue">Lösche den Modulordner aus dem Ordner modules/.</p>';
+			echo '<p>Lösche den Modulordner aus dem Ordner modules/.</p>';
 			deleteDirectory('./modules/' .$_REQUEST['modul']);
 
 			//refresh module handler
@@ -131,13 +131,13 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 	*/
 	elseif(($_REQUEST['aktion'] == 'updateModule' || $_REQUEST['aktion'] == 'reinstallModule') && $_REQUEST['modul'] != ''){
 		//download module package
-		echo '<p style="color:blue">Lade Modulpaket aus dem Repository.</p>';
+		echo '<p>Lade Modulpaket aus dem Repository.</p>';
 		downloadContent('http://' .$repoHostname. '/packages/'. $_REQUEST['modul']. '.tar',
 			'./temp/' .$_REQUEST['modul']. '.tar');
 
 		//untar module package
 		$tar = new Archive_Tar('./temp/' .$_REQUEST['modul']. '.tar');
-		echo '<p style="color:blue">Entpacke das Paket in den temp-Ordner.</p>';
+		echo '<p>Entpacke das Paket in den temp-Ordner.</p>';
 		$tar->extract('temp/');
 
 		if(is_dir('temp/' .$_REQUEST['modul'])){
@@ -162,7 +162,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 					}
 
 					//copy all temporary files except the custom directory
-					echo '<p style="color:blue">Kopiere aktualisiertes Modul in den Modulordner modules/' .$_REQUEST['modul']. '</p>';
+					echo '<p>Kopiere aktualisiertes Modul in den Modulordner modules/' .$_REQUEST['modul']. '</p>';
 
 					$files = array_diff(scandir('temp/' .$_REQUEST['modul']), array('..', '.', 'custom'));
 
@@ -181,23 +181,23 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 					$module = $libModuleHandler->getModuleByModuleid($_REQUEST['modul']);
 
 					if($module->getUpdateScript() != ''){
-						echo '<p style="color:blue">Führe Aktualisierungsscript des Moduls aus.</p>';
+						echo '<p>Führe Aktualisierungsscript des Moduls aus.</p>';
 						include($module->getPath(). '/' .$module->getUpdateScript());
 					}
 				} else {
-					echo '<p style="color:red">Fehler: Das zu aktualisierende Modul ist nicht installiert.</p>';
+					echo '<p>Fehler: Das zu aktualisierende Modul ist nicht installiert.</p>';
 				}
 			} else {
-				echo '<p style="color:red">Fehler: Das heruntergeladene Modulpaket enthält keine meta.php. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
+				echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.php. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
 			}
 		} else {
-			echo '<p style="color:red">Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
+			echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
 		}
 
-		echo '<p style="color:blue">Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
+		echo '<p>Lösche das temporäre Modulpaket aus dem Ordner temp.</p>';
 		@unlink('./temp/' .$_REQUEST['modul']. '.tar');
 
-		echo '<p style="color:blue">Lösche den temporären Modulordner aus dem Ordner temp.</p>';
+		echo '<p>Lösche den temporären Modulordner aus dem Ordner temp.</p>';
 
 		if(is_dir('./temp/' .$_REQUEST['modul'])){
 			deleteDirectory('./temp/' .$_REQUEST['modul']);
@@ -211,13 +211,13 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 */
 if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == 'updateEngine' || $_REQUEST['aktion'] == 'reinstallEngine')){
 	//download engine package
-	echo '<p style="color:blue">Lade Enginepaket aus dem Repository.</p>';
+	echo '<p>Lade Enginepaket aus dem Repository.</p>';
 	downloadContent('http://' .$repoHostname. '/packages/engine.tar',
 		'./temp/engine.tar');
 
 	//untar engine package
 	$tar = new Archive_Tar('./temp/engine.tar');
-	echo '<p style="color:blue">Entpacke das Enginepaket in den temp-Ordner.</p>';
+	echo '<p>Entpacke das Enginepaket in den temp-Ordner.</p>';
 	$tar->extract('temp/');
 
 	if(is_dir('temp/engine')){
@@ -232,20 +232,20 @@ if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == 'updateEngine' || $_REQ
 			deleteDirectory('lib');
 			deleteDirectory('styles');
 
-			echo '<p style="color:blue">Installiere die neue Engine.</p>';
+			echo '<p>Installiere die neue Engine.</p>';
 
 			copyFolder('temp/engine', '.');
 		} else {
-			echo '<p style="color:red">Fehler: Das Enginepaket ist fehlerhaft. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
+			echo '<p>Fehler: Das Enginepaket ist fehlerhaft. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
 		}
 	} else {
-		echo '<p style="color:red">Fehler: Das heruntergeladene Enginepaket konnte nicht entpackt werden.</p>';
+		echo '<p>Fehler: Das heruntergeladene Enginepaket konnte nicht entpackt werden.</p>';
 	}
 
-	echo '<p style="color:blue">Lösche das temporäre Enginepaket aus dem Ordner temp.</p>';
+	echo '<p>Lösche das temporäre Enginepaket aus dem Ordner temp.</p>';
 	@unlink('./temp/engine.tar');
 
-	echo '<p style="color:blue">Lösche den temporären Engineordner aus dem Ordner temp.</p>';
+	echo '<p>Lösche den temporären Engineordner aus dem Ordner temp.</p>';
 
 	if(is_dir('./temp/engine')){
 		deleteDirectory('./temp/engine');
@@ -254,7 +254,7 @@ if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == 'updateEngine' || $_REQ
 	die('</div><a href="index.php?pid=updater_liste">Klicke hier</a>, um die Modulliste anzuzeigen.');
 }
 
-echo '<p style="color:blue">Lade Paketinformationen aus dem Repository.</p>';
+echo '<p>Lade Paketinformationen aus dem Repository.</p>';
 echo '</div>';
 
 
