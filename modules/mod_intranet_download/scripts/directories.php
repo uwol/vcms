@@ -224,31 +224,33 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 	foreach($rootFolderObject->nestedFolderElements as $folderElement){
 		//folder?
 		if($folderElement->type == 1){
-			if($folderElement->isOpen){
-				echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
-				echo '<img src="'.$libModuleHandler->getModuleDirectory().'/img/folder_table.png" alt="Icon" /> ';
-			} else{
-				echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
-				echo '<img src="' . $libModuleHandler->getModuleDirectory(). '/img/folder.png" alt="Icon" /> ';
-			}
+			if(!$folderElement->isAmtsRootFolder() || $folderElement->hasNestedFolderElements()){
+				if($folderElement->isOpen){
+					echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
+					echo '<img src="styles/icons/file/folder_open.svg" alt="F" class="icon_small" /> ';
+				} else{
+					echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
+					echo '<img src="styles/icons/file/folder.svg" alt="F" class="icon_small" /> ';
+				}
 
-			echo $folderElement->name;
-			echo '</a>';
+				echo $folderElement->name;
+				echo '</a>';
 
-			$size = $folderElement->getSize();
+				$size = $folderElement->getSize();
 
-			if($size > 0){
-				echo ' - ' . getSizeString($folderElement->getSize());
-			}
+				if($size > 0){
+					echo ' - ' . getSizeString($folderElement->getSize());
+				}
 
-			if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
-				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" alt="löschen" /></a>';
-			}
+				if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
+					echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" alt="löschen" /></a>';
+				}
 
-			echo '<br />';
+				echo '<br />';
 
-			if($folderElement->isOpen){
-				listFolderContentRec($folderElement, false);
+				if($folderElement->isOpen){
+					listFolderContentRec($folderElement, false);
+				}
 			}
 		}
 		//file & readable?

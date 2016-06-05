@@ -219,12 +219,20 @@ class Folder extends FolderElement{
 		}
 	}
 
+	function hasNestedFolderElements(){
+		return count($this->nestedFolderElements) > 0;
+	}
+
+	function isAmtsRootFolder(){
+		return $this->isAmtsRootFolder;
+	}
+
 	function isDeleteable(){
 		if($this->isAmtsRootFolder){
 			return false;
 		}
 
-		if(count($this->nestedFolderElements) > 0){
+		if($this->hasNestedFolderElements()){
 			return false;
 		}
 
