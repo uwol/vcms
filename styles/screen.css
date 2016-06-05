@@ -161,13 +161,14 @@ main dd {
 }
 
 main .icon {
-	width: 24px;
+	height: 24px;
 	margin: 0 2px;
 }
 
 main .icon_small {
-	width: 14px;
-	margin: 0 2px;
+	height: 0.8em;
+	margin: 0;
+	vertical-align: baseline;
 }
 
 /* image delete icon */

@@ -34,7 +34,7 @@ $stmtCount->fetch();
 if($count > 0){
 	echo '<h2>Reservierungen</h2>';
 
-	$stmt = $libDb->prepare("SELECT person, datum, beschreibung FROM mod_reservierung_reservierung WHERE DATEDIFF(NOW(), datum) <= 0 ORDER BY datum LIMIT 0,2");
+	$stmt = $libDb->prepare("SELECT person, datum, beschreibung FROM mod_reservierung_reservierung WHERE DATEDIFF(NOW(), datum) <= 0 ORDER BY datum LIMIT 0,3");
 	$stmt->execute();
 
 	$firstLine = true;

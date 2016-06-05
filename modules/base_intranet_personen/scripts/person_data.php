@@ -411,7 +411,27 @@ if($row['email'] != '' || $row['mobiltelefon'] != '' || $row['webseite'] != '' |
 			$webseite = 'http://' .$webseite;
 		}
 
-		echo '<div>Webseite: <a class="url" href="' .$webseite. '">' .$webseite. '</a></div>';
+		$icon = '';
+
+		if(strstr($webseite, 'linkedin')){
+			$icon = 'linkedin.svg';
+		} elseif(strstr($webseite, 'xing')){
+			$icon = 'xing.svg';
+		} elseif(strstr($webseite, 'twitter')){
+			$icon = 'twitter.svg';
+		} elseif(strstr($webseite, 'facebook')){
+			$icon = 'facebook.svg';
+		}
+
+		echo '<div>';
+
+		if($icon != ''){
+			echo '<img src="styles/icons/social/' .$icon. '" class="icon_small" alt="Icon" /> ';
+		}
+
+		echo 'Webseite: ';
+		echo '<a class="url" href="' .$webseite. '">' .$webseite. '</a>';
+		echo '</div>';
 	}
 
 	if($row['jabber'] != ''){
@@ -419,7 +439,10 @@ if($row['email'] != '' || $row['mobiltelefon'] != '' || $row['webseite'] != '' |
 	}
 
 	if($row['skype'] != ''){
-		echo '<div>Skype: <a class="url" href="skype:' .$row['skype']. '">' .$row['skype']. '</a></div>';
+		echo '<div>';
+		echo '<img src="styles/icons/social/skype.svg" class="icon_small" alt="S" /> ';
+		echo 'Skype: <a class="url" href="skype:' .$row['skype']. '">' .$row['skype']. '</a>';
+		echo '</div>';
 	}
 
 	echo '</div>';
