@@ -46,7 +46,6 @@ if($count > 0){
 
 		echo '<div class="media">';
 		echo '<div class="media-body">';
-
 		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['datum'], 2). ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</h4>';
 
 		if(($row['beschreibung']) != ''){

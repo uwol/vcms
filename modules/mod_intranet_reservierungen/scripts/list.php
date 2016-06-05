@@ -33,7 +33,7 @@ if(isset($_POST["datum"]) && $_POST["datum"] < @date("Y-m-d")){
 	$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt->execute();
 
-	$libGlobal->notificationTexts[] = 'Die Reservierung wurde durchgeführt.';
+	$libGlobal->notificationTexts[] = 'Die Reservierung wurde gespeichert.';
 }
 
 if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET["id"]) && $_GET["id"] != ''){
@@ -64,7 +64,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<hr />';
 	echo '<div class="media">';
 	echo '<div class="media-body">';
-	echo '<h4 class="media-heading">' . $libTime->wochentag($row['datum']).', '.$libTime->formatDateTimeString($row['datum'], 2). '</h4>';
+	echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['datum'], 2). ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</h4>';
 
 	if($libAuth->getId() == $row['person']){
 		echo ' - <a href="index.php?pid=intranet_reservierung_liste&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">Reservierung löschen</a>';
