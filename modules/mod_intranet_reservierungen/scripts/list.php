@@ -68,7 +68,9 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['datum'], 2). ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0);
 
 	if($libAuth->getId() == $row['person']){
-		echo ' - <a href="index.php?pid=intranet_reservierung_liste&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">Reservierung löschen</a>';
+		echo ' - <a href="index.php?pid=intranet_reservierung_liste&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
+		echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" />';
+		echo '</a>';
 	}
 
 	echo '</h4>';
