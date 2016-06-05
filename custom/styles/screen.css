@@ -28,30 +28,30 @@ header #signout a {
 }
 
 
-#content a:link, #content a:visited {
+main a:link, main a:visited {
 	color: #961419;
 }
 
-#content a:hover, #content a:active, #content a:focus {
+main a:hover, main a:active, main a:focus {
 	color: #000080;
 }
 
-#content h1, #content h2 {
+main h1, main h2 {
 	color: #961419;
 }
 
-#content th {
+main th {
 	background-color: #E8CAA2;
 }
 
-#content .calendarMonthName, #content .calendarDayName {
+main .calendarMonthName, main .calendarDayName {
 	background-color: #E8CAA2;
 }
 
-#content .calendarDay {
+main .calendarDay {
 	border: thin solid #E8CAA2;
 }
 
-#content .today {
+main .today {
 	border: thin solid #961419;
 }

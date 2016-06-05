@@ -86,7 +86,7 @@ nav .navbar-intranet li a {
 
 
 main, footer {
-	background: rgba(255, 255, 255, 0.7);
+	background: rgba(255, 255, 255, 0.8);
 	padding: 1em;
 }
 
@@ -101,26 +101,21 @@ main p {
 
 main h1 {
 	font-size: 1.5em;
-	font-weight: bolder;
 	text-align: center;
 }
 
 main h2 {
 	font-size: 1.2em;
-	font-weight: bold;
 	text-align: center;
 }
 
 main h3 {
 	font-size: 1.0em;
-	font-weight: bold;
-	text-align: center;
 }
 
 main h4 {
-	margin-top: 0;
 	font-size: 1.0em;
-	font-weight: bold;
+	margin-top: 0;
 }
 
 main a:link, main a:hover {
@@ -141,7 +136,6 @@ main table {
 }
 
 main th {
-	font-weight: bold;
 	height: 20px;
 	text-align: center;
 	vertical-align: middle;
@@ -250,7 +244,6 @@ main .calendarMonthName h2 {
 main .calendarDayName {
 	text-align: center;
 	font-size: 10pt;
-	font-weight: bold;
 }
 
 main .calendarDay {
@@ -282,7 +275,7 @@ main .private {
 }
 
 main .carousel-control.left, main .carousel-control.right {
-	background-image:none;
+	background-image: none;
 }
 
 /* thumbnail */

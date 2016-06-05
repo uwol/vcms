@@ -253,12 +253,12 @@ class LibChargierKalenderEvent{
 		}
 
 		if($this->summary != ''){
-			$retstr .= '<br /><br />';
+			$retstr .= '<br />';
 		}
 
 		//description
 		if($this->description != ''){
-			$retstr .= $libString->silbentrennung($this->description, 14).'<br />';
+			$retstr .= $libString->silbentrennung($this->description, 14). '<br />';
 		}
 
 		//location
@@ -267,7 +267,6 @@ class LibChargierKalenderEvent{
 		}
 
 		if(count($this->angemeldeteMitglieder) > 0){
-			$retstr .= '<br />';
 			$mitgliederLinks = array();
 
 			foreach($this->angemeldeteMitglieder as $key => $value){
