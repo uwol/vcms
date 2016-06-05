@@ -50,7 +50,7 @@ class LibDb{
 		}
 	}
 
-	function insertId(){
+	function lastInsertId(){
 		return $this->connection->lastInsertId();
 	}
 
@@ -181,7 +181,7 @@ class LibDb{
 			}
 		} else {
 			$keys = array_keys($idArray);
-			$lastInsertId = $this->insertId();
+			$lastInsertId = $this->lastInsertId();
 
 			$stmt = $this->prepare('SELECT * FROM '.$table.' WHERE '.$keys[0].'=:lastinsert');
 			$stmt->bindValue(':lastinsert', $lastInsertId, PDO::PARAM_INT);

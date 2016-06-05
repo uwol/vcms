@@ -21,9 +21,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-/*
-* action
-*/
+$lastInsertId = '';
+
 if(isset($_POST["datum"]) && $_POST["datum"] < @date("Y-m-d")){
 	$libGlobal->errorTexts[] = "Das Datum liegt in der Vergangenheit.";
 } elseif(isset($_POST["datum"]) && isset($_POST["beschreibung"])){
@@ -32,6 +31,8 @@ if(isset($_POST["datum"]) && $_POST["datum"] < @date("Y-m-d")){
 	$stmt->bindValue(':beschreibung', $libString->protectXss($_POST["beschreibung"]));
 	$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt->execute();
+
+	$lastInsertId = $libDb->lastInsertId();
 
 	$libGlobal->notificationTexts[] = 'Die Reservierung wurde gespeichert.';
 }
@@ -62,7 +63,7 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<hr />';
-	echo '<div class="media">';
+	echo '<div class="media' .$libString->printLastInsertId($lastInsertId, $row['id']). '">';
 	echo '<div class="media-body">';
 	echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['datum'], 2). ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</h4>';
 

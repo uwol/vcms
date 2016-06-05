@@ -310,6 +310,10 @@ main .thumbnailBox .thumbnailOverflow .thumbnail:hover {
 	transform: scale(1.1);
 }
 
+main .lastInsertId {
+	display: none;
+}
+
 
 footer .social-buttons .icon {
 	width: 24px;

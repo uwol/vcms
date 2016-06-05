@@ -62,6 +62,7 @@ if(is_array($libGlobal->module->getHeaderStrings())){
 echo '    <script src="styles/jquery-2.2.3.min.js"></script>' . PHP_EOL;
 echo '    <script src="styles/bootstrap/bootstrap.min.js"></script>' . PHP_EOL;
 echo '    <script src="styles/gallery/modal.js"></script>' . PHP_EOL;
+echo '    <script src="styles/screen.js"></script>' . PHP_EOL;
 
 /*
 * robots

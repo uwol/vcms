@@ -21,10 +21,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(isset($_POST['kategorie']) && isset($_POST['betroffenesmitglied']) && isset($_POST['text']) && trim($_POST['text']) != ''){ //wurde ein Beitrag eingegeben?
-    /*
-	* save news
-	*/
+$lastInsertId = '';
+
+if(isset($_POST['kategorie']) && isset($_POST['betroffenesmitglied']) && isset($_POST['text']) && trim($_POST['text']) != ''){
 	$betroffenesmitglied = null;
 
 	if(is_numeric($_POST['betroffenesmitglied']) && $_POST['betroffenesmitglied'] > 0){
@@ -37,6 +36,8 @@ if(isset($_POST['kategorie']) && isset($_POST['betroffenesmitglied']) && isset($
 	$stmt->bindValue(':betroffenesmitglied', $betroffenesmitglied, PDO::PARAM_INT);
 	$stmt->bindValue(':autor', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt->execute();
+
+	$lastInsertId = $libDb->lastInsertId();
 
     $libMitglied->setMitgliedIntranetActivity($libAuth->getId(), 2, 0);
 
@@ -101,7 +102,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<hr/>';
 	}
 
-	echo '<div id="' .$row['id']. '" class="media">';
+	echo '<div id="' .$row['id']. '" class="media' .$libString->printLastInsertId($lastInsertId, $row['id']). '">';
 
 	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
 		echo '<div class="media-left">';

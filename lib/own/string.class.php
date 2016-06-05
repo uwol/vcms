@@ -129,6 +129,12 @@ class LibString{
 		}
 	}
 
+	function printLastInsertIdClass($lastInsertId, $id){
+		if($lastInsertId == $id){
+			echo ' lastInsertId ';		
+		}
+	}
+
 	/*
 	* hyphenation
 	*/
