@@ -547,8 +547,8 @@ if($ownprofile){
 	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
 
 	$libForm->printTextInput('oldpwd', 'Altes Passwort', '', 'password');
-	$libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'newpwd1');
-	$libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'newpwd2');
+	$libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password');
+	$libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password');
 	$libForm->printSubmitButton('Neues Passwort speichern');
 
 	echo '</fieldset>';
