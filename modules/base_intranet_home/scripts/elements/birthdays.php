@@ -24,9 +24,13 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 /*
 * output
 */
-echo '<h2>Geburtstage</h2>';
-echo '<div class="row">';
-echo '<div class="col-md-12">';
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-heading">';
+echo '<h2 class="panel-title">Geburtstage</h2>';
+echo '</div>';
+echo '<div class="panel-body">';
+
 
 //komplexe Abfrage, um im Dezember Geburtstage aus dem folgenden Jahr zu ermitteln
 //Monate werden dazu normalisiert auf Raum 0 1 2 ... 10 11 relativ zum aktuellen Monat mit: (x_1 + 12 - x) % 12 = y

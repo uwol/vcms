@@ -502,7 +502,7 @@ if($row['vita_letzterautor'] != ''){
 if(!$ownprofile && $row['gruppe'] != 'X'){
 	echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '&amp;modifyvita=1">ändern</a>';
 }
-	
+
 echo '</div>';
 echo '</article>';
 

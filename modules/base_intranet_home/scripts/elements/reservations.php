@@ -37,12 +37,17 @@ if($count > 0){
 	$stmt = $libDb->prepare("SELECT person, datum, beschreibung FROM mod_reservierung_reservierung WHERE DATEDIFF(NOW(), datum) <= 0 ORDER BY datum LIMIT 0,2");
 	$stmt->execute();
 
+	$firstLine = true;
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		if(!$firstLine){
+			echo '<hr />';
+		}
+
 		echo '<div class="media">';
 		echo '<div class="media-body">';
 
-		$date = $libTime->formatDateTimeString($row['datum'], 2);
-		echo '<h4 class="media-heading">' .$date. ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</h4>';
+		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['datum'], 2). ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</h4>';
 
 		if(($row['beschreibung']) != ''){
 			echo '<a href="index.php?pid=intranet_reservierung_liste">';
@@ -57,7 +62,8 @@ if($count > 0){
 		echo '</div>';
 
 		echo '</div>';
-		echo '<hr />';
+
+		$firstLine = false;
 	}
 }
 ?>

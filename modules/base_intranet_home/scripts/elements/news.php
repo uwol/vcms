@@ -37,7 +37,13 @@ if($count > 0){
 	$stmt = $libDb->prepare('SELECT mod_news_kategorie.bezeichnung, mod_news_news.eingabedatum, mod_news_news.id, mod_news_news.text, mod_news_news.betroffenesmitglied, mod_news_news.autor FROM mod_news_news LEFT JOIN mod_news_kategorie ON mod_news_news.kategorieid=mod_news_kategorie.id ORDER BY mod_news_news.eingabedatum DESC LIMIT 0,4');
 	$stmt->execute();
 
+	$firstLine = true;
+
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		if(!$firstLine){
+			echo '<hr />';
+		}
+
 		echo '<div class="media">';
 
 		if($row['betroffenesmitglied'] != ''){
@@ -47,8 +53,7 @@ if($count > 0){
 		}
 
 		echo '<div class="media-body">';
-		$date = $libTime->formatDateTimeString($row['eingabedatum'], 2);
-		echo '<h4 class="media-heading">' .$date. ' - ' .$row['bezeichnung']. '</h4>';
+		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' - ' .$row['bezeichnung']. '</h4>';
 
 		if(($row['text']) != ''){
 			echo '<a href="index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterEinesDatums($row['eingabedatum']). '#' .$row['id']. '">';
@@ -63,7 +68,8 @@ if($count > 0){
 		echo '</div>';
 
 		echo '</div>';
-		echo '<hr />';
+
+		$firstLine = false;
 	}
 }
 ?>
