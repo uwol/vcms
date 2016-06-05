@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Chargierkalender";
-$version = "2.15";
+$version = "2.16";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";

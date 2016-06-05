@@ -279,14 +279,20 @@ class LibChargierKalenderEvent{
 
 		//registration
 		if($this->anmeldeButtonEnabled){
-			$retstr .= '<form action="index.php?pid=intranet_chargierkalender_kalender" method="post">';
+			$retstr .= '<form action="index.php?pid=intranet_chargierkalender_kalender" method="post" class="form-horizontal">';
 			$retstr .= '<input type="hidden" name="eventid" value="' .$this->id. '" />';
 			$retstr .= '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
 
     		if($this->angemeldet){
-    			$retstr .= '<input type="hidden" name="changeanmeldenstate" value="abmelden" /><input type="submit" value="Abmelden" style="padding:0px;color:green;" />';
+    			$retstr .= '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
+				$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
+				$retstr .= '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> Abmelden';
+				$retstr .= '</button>';
    			} else {
-    			$retstr .= '<input type="hidden" name="changeanmeldenstate" value="anmelden" /><input type="submit" value="Anmelden" style="padding:0px;color:red;" />';
+    			$retstr .= '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
+				$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
+				$retstr .= '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> Anmelden';
+				$retstr .= '</button>';
     		}
 
     		$retstr .= '</form>';
