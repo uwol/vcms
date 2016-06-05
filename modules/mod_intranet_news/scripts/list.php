@@ -102,7 +102,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<hr/>';
 	}
 
-	echo '<div id="' .$row['id']. '" class="media' .$libString->printLastInsertId($lastInsertId, $row['id']). '">';
+	echo '<div id="' .$row['id']. '" class="media' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
 
 	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
 		echo '<div class="media-left">';
@@ -121,7 +121,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</h4>';
 
 	if($row['text'] != ''){
-		echo nl2br($row['text']);
+		echo '<p>' .nl2br($row['text']). '</p>';
 	}
 
 	echo '</div>';

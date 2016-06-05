@@ -63,22 +63,26 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<hr />';
-	echo '<div class="media' .$libString->printLastInsertId($lastInsertId, $row['id']). '">';
+	echo '<div class="media' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
 	echo '<div class="media-body">';
-	echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['datum'], 2). ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</h4>';
+	echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['datum'], 2). ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0);
 
 	if($libAuth->getId() == $row['person']){
 		echo ' - <a href="index.php?pid=intranet_reservierung_liste&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">Reservierung löschen</a>';
 	}
 
-	echo '<p>' .$row['beschreibung']. '</p>';
+	echo '</h4>';
+
+	if($row['beschreibung'] != ''){
+		echo '<p>' .nl2br($row['beschreibung']). '</p>';
+	}
+
 	echo '</div>';
 
 	echo '<div class="media-right">';
-
 	echo $libMitglied->getMitgliedSignature($row['person']);
-
 	echo '</div>';
+
 	echo '</div>';
 }
 ?>

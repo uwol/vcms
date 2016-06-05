@@ -129,9 +129,9 @@ class LibString{
 		}
 	}
 
-	function printLastInsertIdClass($lastInsertId, $id){
+	function getLastInsertId($lastInsertId, $id){
 		if($lastInsertId == $id){
-			echo ' lastInsertId ';		
+			return ' lastInsertId ';		
 		}
 	}
 
