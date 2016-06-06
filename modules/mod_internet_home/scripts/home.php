@@ -29,10 +29,6 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('wp_url')){
 	$libGenericStorage->saveValueInCurrentModule('wp_url', '');
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('fb:admins')){
-	$libGenericStorage->saveValueInCurrentModule('fb:admins', 0);
-}
-
 
 function printVeranstaltungTitle($row){
 	echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a>';
