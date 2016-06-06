@@ -46,7 +46,14 @@ if($count > 0){
 
 		echo '<div class="media">';
 		echo '<div class="media-body">';
-		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['datum'], 2). ' - ' .$libMitglied->getMitgliedNameString($row['person'], 0). '</h4>';
+
+		echo '<h4 class="media-heading">';
+		echo $libTime->formatDateTimeString($row['datum'], 2);
+		echo ' ';
+		echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['person']. '">';
+		echo $libMitglied->getMitgliedNameString($row['person'], 0);
+		echo '</a>';
+		echo '</h4>';
 
 		if(($row['beschreibung']) != ''){
 			echo '<a href="index.php?pid=intranet_reservierung_liste">';

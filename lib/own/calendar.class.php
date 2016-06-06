@@ -23,8 +23,8 @@ class LibCalendar{
 
 	function __construct($startDate, $endDate){
 		$this->eventSet = new LibEventSet();
-		$startYear = intval(substr($startDate,0,4));
-		$endYear = intval(substr($endDate,0,4));
+		$startYear = intval(substr($startDate, 0, 4));
+		$endYear = intval(substr($endDate, 0, 4));
 
 		for($i = $startYear; $i <= $endYear; $i++){
 			$this->years[] = new LibYear($i, $startDate, $endDate);
@@ -84,7 +84,7 @@ class LibYear{
 	function toString($eventSet){
 		$monthNames = array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
 		$retstr = '';
-		$retstr .= '<table class="calendarYear">'."\n\r";
+		$retstr .= '<table class="calendarYear">'.PHP_EOL;
 
 		foreach($this->months as $month){
 			$retstr .= '<tr><td colspan="7" ';
@@ -137,26 +137,26 @@ class LibMonth{
 	}
 
 	function getNumberOfDays(){
-		return 31-((($this->number-(($this->number<8)?1:0))%2)+(($this->number==2)?((!($this->year->getNumber()%((!($this->year->getNumber()%100))?400:4)))?1:2):0));
+		return 31 - ((($this->number - (($this->number < 8)?1:0)) % 2) + (($this->number == 2)?((!($this->year->getNumber() % ((!($this->year->getNumber() % 100))?400:4)))?1:2):0));
 	}
 
 	function toString($eventSet, $weekShift=1){
 		$dayNames = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
 		$retstr = '';
-		$br = "\n\r";
+
 		$weekShift = $weekShift % 7;
 
 		//heading with day names
-		$retstr .= '<tr>'.$br;
+		$retstr .= '<tr>'.PHP_EOL;
 
 		for($i=0+$weekShift;$i<count($dayNames)+$weekShift;$i++){
 			$retstr .= '<td class="calendarDayName">';
 			$retstr .= $dayNames[$i % 7];
-			$retstr .= '</td>'.$br;
+			$retstr .= '</td>'.PHP_EOL;
 		}
 
-		$retstr .= '</tr>'.$br;
-		$retstr .= '<tr>'.$br;
+		$retstr .= '</tr>'.PHP_EOL;
+		$retstr .= '<tr>'.PHP_EOL;
 
 		//weeks
 		$dayCounter = 1;
@@ -170,18 +170,18 @@ class LibMonth{
 				$retstr .= $day->toString($eventSet);
 
 				if($day->getType() == (6 + $weekShift) % 7){
-					$retstr .= '</tr><tr>'.$br;
+					$retstr .= '</tr><tr>'.PHP_EOL;
 				}
 
 				$dayCounter++;
 			} else {
-				$retstr .= '<td></td>'.$br;
+				$retstr .= '<td></td>'.PHP_EOL;
 			}
 
 			$colCounter = ($colCounter + 1) % 7;
 		}
 
-		$retstr .= '</tr>'.$br;
+		$retstr .= '</tr>'.PHP_EOL;
 		return $retstr;
 	}
 }
@@ -263,7 +263,7 @@ class LibDay{
 		}
 
 		//footer
-		$retstr .= '</td>'."\n\r";
+		$retstr .= '</td>'.PHP_EOL;
 		return $retstr;
 	}
 }
@@ -403,11 +403,11 @@ class LibEvent{
 	}
 
 	function getDateOfDateTime($dateTime){
-		return substr($dateTime,0,10);
+		return substr($dateTime, 0, 10);
 	}
 
 	function getTimeOfDateTime($dateTime){
-		return substr($dateTime,11,5);
+		return substr($dateTime, 11, 5);
 	}
 
 	function toString($forDate = ''){
@@ -426,20 +426,20 @@ class LibEvent{
 
 				//s.t./c.t. ?
 				if($this->timeStyle == 1){
-					if(substr($timeString,3,2) == 00){
-						$timeString = substr($timeString,0,2).'h s.t.';
-					} elseif(substr($timeString,3,2) == 15){
-						$timeString = substr($timeString,0,2).'h c.t.';
+					if(substr($timeString, 3, 2) == 00){
+						$timeString = substr($timeString, 0, 2). 'h s.t.';
+					} elseif(substr($timeString, 3, 2) == 15){
+						$timeString = substr($timeString, 0, 2). 'h c.t.';
 					}
 				}
 			}
 		}
 
 		//format dateTime for microformats
-		$dtstart = substr($this->startDateTime,0,4) . substr($this->startDateTime,5,2) . substr($this->startDateTime,8,2);
+		$dtstart = substr($this->startDateTime, 0, 4) . substr($this->startDateTime, 5, 2) . substr($this->startDateTime, 8, 2);
 
 		if(!$this->allDay){
-			$dtstart .= 'T'. substr($this->startDateTime,11,2) . substr($this->startDateTime,14,2) . substr($this->startDateTime,17,2);
+			$dtstart .= 'T'. substr($this->startDateTime, 11, 2) . substr($this->startDateTime, 14, 2) . substr($this->startDateTime, 17, 2);
 		}
 
 		/*
@@ -452,7 +452,7 @@ class LibEvent{
 		}
 
 		$retstr .= '<div class="calendarEvent vevent"><a id="t' .$this->id . $idSuffix .'"></a>';
-		$retstr .= '<abbr class="dtstart" title="' .$dtstart. '"><b>'.$timeString.'</b></abbr><br />';
+		$retstr .= '<abbr class="dtstart" title="' .$dtstart. '"><b>' .$timeString. '</b></abbr><br />';
 
 		//link
 		if($this->linkUrl != ''){
@@ -461,7 +461,7 @@ class LibEvent{
 
 		//summary
 		$retstr .= '<span class="summary">';
-		$retstr .= $libString->silbentrennung($this->summary, 14);
+		$retstr .= $this->summary;
 		$retstr .= '</span><br />';
 
 		//image
@@ -480,17 +480,17 @@ class LibEvent{
 
 		//location
 		if($this->location != ''){
-			$retstr .= '<span class="location">' . $libString->silbentrennung($this->location, 14) . '</span><br />';
+			$retstr .= '<span class="location">' .$this->location. '</span><br />';
 		}
 
 		//status
 		if($this->status != ''){
-			$retstr .= '<b>'.$this->status.'</b> ';
+			$retstr .= '<b>' .$this->status. '</b> ';
 		}
 
 		//attended
 		if($this->attended && $this->attendedImageUrl != ''){
-			$retstr .= '<img src="'.$this->attendedImageUrl.'" alt="angemeldet" class="icon_small" /> ';
+			$retstr .= '<img src="' .$this->attendedImageUrl. '" alt="angemeldet" class="icon_small" /> ';
 		}
 
 		//footer

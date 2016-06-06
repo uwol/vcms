@@ -92,6 +92,13 @@ main, footer {
 
 main {
 	border-top: 1px solid #333;
+	/* hyphenate */
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-webkit-hyphens: auto;
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
 }
 
 main p {

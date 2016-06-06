@@ -244,7 +244,7 @@ class LibChargierKalenderEvent{
 		//summary
 		if($this->summary != ''){
 			$retstr .= '<span class="summary">';
-			$retstr .= $libString->silbentrennung($this->summary, 14);
+			$retstr .= $this->summary;
 			$retstr .= '</span>';
 		}
 
@@ -258,19 +258,19 @@ class LibChargierKalenderEvent{
 
 		//description
 		if($this->description != ''){
-			$retstr .= $libString->silbentrennung($this->description, 14). '<br />';
+			$retstr .= $this->description. '<br />';
 		}
 
 		//location
 		if($this->location != ''){
-			$retstr .= '<span class="location">' . $libString->silbentrennung($this->location, 14) . '</span><br />';
+			$retstr .= '<span class="location">' .$this->location. '</span><br />';
 		}
 
 		if(count($this->angemeldeteMitglieder) > 0){
 			$mitgliederLinks = array();
 
 			foreach($this->angemeldeteMitglieder as $key => $value){
-				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person_daten&amp;personid='.$key.'">'.$libString->silbentrennung($value, 14).'</a>';
+				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person_daten&amp;personid='.$key.'">' .$value. '</a>';
 			}
 
 			$retstr .= implode(', ', $mitgliederLinks);

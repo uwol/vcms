@@ -1,3 +1,3 @@
 $(document).ready(function() {
-	$(".lastInsertId").slideDown();
+	$(".lastInsertId").slideDown(1000);
 })

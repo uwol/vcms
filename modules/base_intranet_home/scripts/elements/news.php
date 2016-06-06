@@ -53,7 +53,7 @@ if($count > 0){
 		}
 
 		echo '<div class="media-body">';
-		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' - ' .$row['bezeichnung']. '</h4>';
+		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' ' .$row['bezeichnung']. '</h4>';
 
 		if(($row['text']) != ''){
 			echo '<a href="index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterEinesDatums($row['eingabedatum']). '#' .$row['id']. '">';
