@@ -32,7 +32,8 @@ if($libGenericStorage->loadValueInCurrentModule('wifiPassword') != ''){
 	echo '<h2 class="panel-title">WLAN</h2>';
 	echo '</div>';
 	echo '<div class="panel-body">';
-	echo '<p>Das Passwort für das WLAN auf dem Haus lautet: ' .$libGenericStorage->loadValueInCurrentModule('wifiPassword'). '</p>';
+	echo '<p>Das Passwort für das WLAN auf dem Haus lautet:</p>';
+	echo '<p>' .$libGenericStorage->loadValueInCurrentModule('wifiPassword'). '</p>';
 	echo '</div>';
 	echo '</div>';
 }
