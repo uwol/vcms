@@ -34,7 +34,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$row['id']. '.jpg';
 
 	if(is_file($posssibleImage)){
-		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="" />';
+		echo '<p><img src="' .$posssibleImage. '" class="img-responsive center-block" alt="" /></p>';
 	}
 
 	echo '</div>';
