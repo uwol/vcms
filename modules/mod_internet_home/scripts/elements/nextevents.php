@@ -27,7 +27,7 @@ $stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum > NOW() OR
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<div class="col-sm-3">';
+	echo '<div class="col-sm-6 col-md-3">';
 	echo '<p>';
 
 	printVeranstaltungTitle($row);
