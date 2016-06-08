@@ -109,18 +109,18 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	// is there a gallery for the event?
 	if(in_array($row['id'], $folders)){
 		echo '<tr>';
-		echo '<td>';
+		echo '<td class="imgColumn">';
 
 		//are there images?
 		if($libGallery->hasPictures($row['id'], 2)){
-			echo '<img style="width:100px" ';
+			echo '<img class="img-responsive center-block';
 
 			//are there pooled images?
     		if($libGallery->getPictures($row['id'], 2) > $libGallery->getPictures($row['id'], 1)){
-    			echo 'class="private" ';
+    			echo ' private';
     		}
 
-    		echo 'src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
+    		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
 		}
 
 		echo '</td>';
@@ -163,11 +163,11 @@ if(count($foldersWithoutEvent) > 0){
 
 		// are there images in the folder?
 		if($libGallery->hasPictures($folder, 2)){
-			echo '<img style="width:50px;';
+			echo '<img class="img-responsive center-block img-column';
 
 			//pooled images?
     		if($libGallery->getPictures($folder, 2) > $libGallery->getPictures($folder, 1)){
-    			echo 'border-width: 3px; border-style: solid; border-color: red;';
+    			echo ' private';
     		}
 
     		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$folder.'&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" /><br /> ';

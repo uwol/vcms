@@ -288,14 +288,7 @@ function printGallery($row){
 		foreach($pictures as $key => $value){
 			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 			echo '<div class="thumbnail">';
-
-			$visibilityClass = '';
-
-			if($libGallery->getPublicityLevel($value) == 1){
-				$visibilityClass = " internal";
-			}
-
-			echo '<div class="thumbnailOverflow' .$visibilityClass. '">';
+			echo '<div class="thumbnailOverflow">';
 			echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
 			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '" alt="" class="img-responsive center-block" />';
 			echo '</a>';
