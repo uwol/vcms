@@ -21,36 +21,48 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<div class="row">';
+if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
+	$stmtCount = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung WHERE datum > NOW()');
+	$stmtCount->execute();
+	$stmtCount->bindColumn('number', $count);
+	$stmtCount->fetch();
 
-$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,3');
-$stmt->execute();
+	// if there are entries
+	if($count > 0){
+		echo '<hr />';
+		echo '<div class="row">';
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<div class="col-sm-6 col-md-3">';
-	echo '<p>';
+		$semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
+		$semesterCoverAvailable = $semesterCoverString != '';
+		$maxNumberOfNextEvents = $semesterCoverAvailable ? 3 : 4;
 
-	printVeranstaltungTitle($row);
-	printVeranstaltungTime($row);
+		$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfNextEvents);
+		$stmt->execute();
 
-	echo '</p>';
-	echo '</div>';
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			echo '<div class="col-sm-6 col-md-3">';
+			echo '<p>';
+
+			printVeranstaltungTitle($row);
+			printVeranstaltungTime($row);
+
+			echo '</p>';
+			echo '</div>';
+		}
+
+		if($semesterCoverAvailable){
+			echo '<div class="col-sm-6 col-md-3">';
+			echo '<div class="thumbnailBox">';
+			echo '<div class="thumbnailOverflow">';
+			echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
+			echo $semesterCoverString;
+			echo '</a>';
+			echo '</div>';
+			echo '</div>';
+			echo '</div>';
+		}
+
+		echo '</div>';
+	}
 }
-
-echo '<div class="col-sm-6 col-md-3">';
-
-$semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
-
-if($semesterCoverString != ''){
-	echo '<div class="thumbnailBox">';
-	echo '<div class="thumbnailOverflow">';
-	echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
-	echo $semesterCoverString;
-	echo '</a>';
-	echo '</div>';
-	echo '</div>';
-}
-
-echo '</div>';
-echo '</div>';
 ?>

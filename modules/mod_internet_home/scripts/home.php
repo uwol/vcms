@@ -56,7 +56,5 @@ function printVeranstaltungTime($row){
 echo '<h1>Willkommen</h1>';
 
 include("elements/announcements.php");
-echo '<hr />';
-include("elements/thumbnails.php");
-echo '<hr />';
+include("elements/pastevents.php");
 include("elements/nextevents.php");

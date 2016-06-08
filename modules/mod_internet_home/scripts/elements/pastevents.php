@@ -22,28 +22,41 @@ if(!is_object($libGlobal))
 
 
 if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
-	include($libModuleHandler->getModuleDirectoryByModuleid('mod_internet_semesterprogramm') . '/scripts/lib/gallery.class.php');
+	include($libModuleHandler->getModuleDirectoryByModuleid('mod_internet_semesterprogramm'). '/scripts/lib/gallery.class.php');
 
 	$libGallery = new LibGallery($libDb);
 
 	$stmt = $libDb->prepare('SELECT id, titel, datum, ort FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
 	$stmt->execute();
 
-	echo '<div class="row">';
-
-	$i = 0;
 	$maxNumberOfThumbnails = 4;
+	$i = 0;
+
+	$galleryIds = array();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		// is there a gallery?
 		if($libGallery->hasPictures($row['id'], 0)){
-			$pictures = $libGallery->getPictures($row['id'], 0);
+			$galleryIds[] = $row['id'];
+			$i++;
+
+			if($i > $maxNumberOfThumbnails - 1){
+				break;
+			}
+		}
+	}
+
+	if(count($galleryIds) > 0){
+		echo '<hr />';
+		echo '<div class="row">';
+
+		foreach($galleryIds as $galleryId){
+			$pictures = $libGallery->getPictures($galleryId, 0);
 
 			//determine random image
 			srand(microtime() * 1000000);
-			$zufallszahl = rand(0, count($pictures)-1);
+			$randomNumber = rand(0, count($pictures)-1);
 			$keys = array_keys($pictures);
-			$pictureid = $keys[$zufallszahl];
+			$pictureid = $keys[$randomNumber];
 
 			echo '<div class="col-sm-6 col-md-3">';
 			echo '<p>';
@@ -53,22 +66,16 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 
 			echo '<div class="thumbnailBox">';
 			echo '<div class="thumbnailOverflow">';
-			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
-			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block thumbnail" />';
+			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$galleryId. '">';
+			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$galleryId. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block thumbnail" />';
 			echo '</a>';
 			echo '</div>';
 			echo '</div>';
 
-			echo '</div>';
-
-			$i++;
-
-			if($i > $maxNumberOfThumbnails - 1){
-				break;
-			}
+			echo '</div>';	
 		}
+		
+		echo '</div>';
 	}
-
-	echo '</div>';
 }
 ?>
