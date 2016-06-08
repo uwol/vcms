@@ -207,7 +207,7 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/public.svg" class="icon_small" /></a> ';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/internal.svg" class="icon_small" /></a> ';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/private.svg" class="icon_small" /></a>';
-			
+
 			echo '<br />';
 
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-left.svg" class="icon_small" /></a> ';

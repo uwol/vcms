@@ -202,9 +202,11 @@ function printSemesterCover($row){
 	$semesterCoverString = $libTime->getSemesterCoverString($semester);
 
 	if($semesterCoverString != ''){
+		echo '<div class="semestercoverBox center-block">';
 		echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$semester. '">';
 		echo $semesterCoverString;
 		echo '</a>';
+		echo '</div>';
 	}
 }
 

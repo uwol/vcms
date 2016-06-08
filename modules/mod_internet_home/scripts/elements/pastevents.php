@@ -77,9 +77,9 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			echo '</div>';
 			echo '</div>';
 
-			echo '</div>';	
+			echo '</div>';
 		}
-		
+
 		echo '</div>';
 	}
 }
