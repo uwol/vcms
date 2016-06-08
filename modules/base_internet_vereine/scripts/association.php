@@ -70,6 +70,7 @@ if(isset($_GET['verein'])){
 	/*
 	* association address
 	*/
+	echo '<h3>Adresse</h3>';
 	echo '<address>';
 
 	if($vereinarray['zusatz1'] != ''){
@@ -98,15 +99,17 @@ if(isset($_GET['verein'])){
 
 	echo '</address>';
 
+
+	echo '<h3>Daten zum Verein</h3>';
+
 	/*
 	* association data
 	*/
 	if($vereinarray['farbe1'] != ''){
 		echo '<p>';
-		echo '<b>Farben:</b> ' .$vereinarray['farbe1']. ' ' .$vereinarray['farbe2']. ' ' .$vereinarray['farbe3'];
+		echo 'Farben: ' .$vereinarray['farbe1']. ' ' .$vereinarray['farbe2']. ' ' .$vereinarray['farbe3'];
 		echo '</p>';
 
-		echo '<p>';
 		echo '<table style="border:1px solid black;width:50px;border-collapse:collapse">';
 
 	    if($vereinarray['farbe1'] != ''){
@@ -126,22 +129,21 @@ if(isset($_GET['verein'])){
 		}
 
 		echo '</table>';
-		echo '</p>';
 	}
 
 	echo '<p>';
 	if($vereinarray['datum_gruendung'] != ''){
-		echo '<b>Gründungsdatum:</b> ';
+		echo 'Gründungsdatum: ';
 		echo $libVerein->getGruendungString($vereinarray['datum_gruendung']);
 		echo '<br />';
 	}
 
 	if($vereinarray['dachverband'] != ''){
-		echo '<b>Dachverband:</b> ' .$vereinarray['dachverband']. '<br />';
+		echo 'Dachverband: ' .$vereinarray['dachverband']. '<br />';
 	}
 
 	if($vereinarray['dachverbandnr'] != ''){
-		echo '<b>KV-Nr.</b>: ' .$vereinarray['dachverbandnr']. '<br />';
+		echo 'KV-Nr.: ' .$vereinarray['dachverbandnr']. '<br />';
 	}
 
 	$aktivstring = '';
@@ -150,30 +152,30 @@ if(isset($_GET['verein'])){
 	}
 
 	if($vereinarray['kuerzel'] != ''){
-		echo '<b>Kürzel</b>: ' .$vereinarray['kuerzel'] . $aktivstring. '<br />';
+		echo 'Kürzel: ' .$vereinarray['kuerzel'] . $aktivstring. '<br />';
 	}
 
 	if($vereinarray['aktivitas'] == 1){
-		echo '<b>Aktivitas</b>: Ja<br />';
+		echo 'Aktivitas: Ja<br />';
 	} else {
-		echo '<b>Aktivitas</b>: Nein<br />';
+		echo 'Aktivitas: Nein<br />';
 	}
 
 	if($vereinarray['ahahschaft'] == 1){
-		echo '<b>Altherrenschaft</b>: Ja<br />';
+		echo 'Altherrenschaft: Ja<br />';
 	} else {
-		echo '<b>Altherrenschaft</b>: Nein<br />';
+		echo 'Altherrenschaft: Nein<br />';
 	}
 
 	if($vereinarray['mutterverein'] != ''){
-		echo '<b>Mutter:</b> ';
+		echo 'Mutter: ';
 		echo '<a href="index.php?pid=vereindetail&amp;verein=' .$vereinarray['mutterverein']. '">';
 		echo $libVerein->getVereinNameString($vereinarray['mutterverein']). '</a>';
 		echo '<br />';
 	}
 
 	if($vereinarray['fusioniertin'] != ''){
-		echo '<b>Fusioniert in:</b> ';
+		echo 'Fusioniert in: ';
 		echo '<a href="index.php?pid=vereindetail&amp;verein=' .$vereinarray['fusioniertin']. '">';
 		echo $libVerein->getVereinNameString($vereinarray['fusioniertin']). '</a>';
 		echo '<br />';
@@ -182,52 +184,52 @@ if(isset($_GET['verein'])){
 	$toechterstr = $libVerein->getToechterString($vereinarray['id']);
 
 	if($toechterstr != ''){
-		echo '<b>Töchter:</b> ' .$toechterstr. '<br />';
+		echo 'Töchter: ' .$toechterstr. '<br />';
 	}
 
 	$fusionersstr = $libVerein->getFusionertString($vereinarray['id']);
 
 	if($fusionersstr != ''){
-		echo '<b>Fusioniert aus:</b> ' .$fusionersstr. '<br />';
+		echo 'Fusioniert aus: ' .$fusionersstr. '<br />';
 	}
 
 	if($vereinarray['wahlspruch'] != ''){
-		echo '<b>Wahlspruch:</b> ' .$vereinarray['wahlspruch']. '<br />';
+		echo 'Wahlspruch: ' .$vereinarray['wahlspruch']. '<br />';
 	}
 
 	echo '</p>';
 
 	if($vereinarray['farbenstrophe'] != ''){
+		echo '<h3>Farbenstrophe</h3>';
 		echo '<p>';
-		echo '<b>Farbenstrophe:</b><br />';
 		echo nl2br($vereinarray['farbenstrophe']);
 		echo '</p>';
 	}
 
 	if($vereinarray['farbenstrophe_inoffiziell'] != ''){
+		echo '<h3>inoffizielle Farbenstrophe</h3>';
 		echo '<p>';
-		echo '<b>inoffizielle Farbenstrophe:</b><br />';
 		echo nl2br($vereinarray['farbenstrophe_inoffiziell']);
 		echo '</p>';
 	}
 
 	if($vereinarray['fuchsenstrophe'] != ''){
+		echo '<h3>Fuchsenstrophe</h3>';
 		echo '<p>';
-		echo '<b>Fuchsenstrophe:</b><br />';
 		echo nl2br($vereinarray['fuchsenstrophe']);
 		echo '</p>';
 	}
 
 	if($vereinarray['bundeslied'] != ''){
+		echo '<h3>Bundeslied</h3>';
 		echo '<p>';
-		echo '<b>Bundeslied:</b><br />';
 		echo nl2br($vereinarray['bundeslied']);
 		echo '</p>';
 	}
 
 	if($vereinarray['beschreibung'] != ''){
+		echo '<h3>Weitere Informationen</h3>';
 		echo '<p>';
-		echo '<b>weitere Informationen:</b><br />';
 		echo nl2br($vereinarray['beschreibung']);
 		echo '</p>';
 	}
