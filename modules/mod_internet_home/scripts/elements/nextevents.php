@@ -55,11 +55,9 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 		if($semesterCoverAvailable){
 			echo '<div class="col-sm-6 col-md-3">';
 			echo '<div class="thumbnail">';
-			echo '<div class="thumbnailOverflow">';
 			echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
 			echo $semesterCoverString;
 			echo '</a>';
-			echo '</div>';
 
 			echo '<div class="caption">';
 			echo '<h4>';

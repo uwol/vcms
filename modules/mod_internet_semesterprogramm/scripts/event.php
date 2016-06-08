@@ -198,9 +198,6 @@ function printAnmeldungen($row){
 function printSemesterCover($row){
 	global $libTime;
 
-	echo '<div class="thumbnail">';
-	echo '<div class="thumbnailOverflow">';
-
 	$semester = $libTime->getSemesterEinesDatums($row['datum']);
 	$semesterCoverString = $libTime->getSemesterCoverString($semester);
 
@@ -209,9 +206,6 @@ function printSemesterCover($row){
 		echo $semesterCoverString;
 		echo '</a>';
 	}
-
-	echo '</div>';
-	echo '</div>';
 }
 
 function printSocialButtons($row){
