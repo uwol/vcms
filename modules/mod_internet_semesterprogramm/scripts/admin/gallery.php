@@ -181,7 +181,7 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		echo '<hr />';
 
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerienliste&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" /> Komplette Galerie löschen.</a>';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerienliste&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" /> Komplette Galerie löschen</a>';
 
 		echo '<p>';
 		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlichalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><img src="styles/icons/image/public.svg" class="icon_small" /> Sämtliche Bilder veröffentlichen</a><br />';
