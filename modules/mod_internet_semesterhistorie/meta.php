@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Semesterhistorie";
-$version = "2.12";
+$version = "2.13";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";

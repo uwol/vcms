@@ -36,28 +36,39 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 		$semesterCoverAvailable = $semesterCoverString != '';
 		$maxNumberOfNextEvents = $semesterCoverAvailable ? 3 : 4;
 
-		$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfNextEvents);
+		$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfNextEvents);
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			echo '<div class="col-sm-6 col-md-3">';
-			echo '<p>';
+			echo '<div class="thumbnail">';
+			echo '<div class="caption">';
 
 			printVeranstaltungTitle($row);
 			printVeranstaltungTime($row);
 
-			echo '</p>';
+			echo '</div>';
+			echo '</div>';
 			echo '</div>';
 		}
 
 		if($semesterCoverAvailable){
 			echo '<div class="col-sm-6 col-md-3">';
-			echo '<div class="thumbnailBox">';
+			echo '<div class="thumbnail">';
 			echo '<div class="thumbnailOverflow">';
 			echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
 			echo $semesterCoverString;
 			echo '</a>';
 			echo '</div>';
+
+			echo '<div class="caption">';
+			echo '<h4>';
+			echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
+			echo 'Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester);
+			echo '</a>';
+			echo '</h4>';
+			echo '</div>';
+
 			echo '</div>';
 			echo '</div>';
 		}

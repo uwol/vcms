@@ -26,17 +26,17 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 
 	$libGallery = new LibGallery($libDb);
 
-	$stmt = $libDb->prepare('SELECT id, titel, datum, ort FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
+	$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
 	$stmt->execute();
 
 	$maxNumberOfThumbnails = 4;
 	$i = 0;
 
-	$galleryIds = array();
+	$eventIds = array();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		if($libGallery->hasPictures($row['id'], 0)){
-			$galleryIds[] = $row['id'];
+			$eventIds[] = $row['id'];
 			$i++;
 
 			if($i > $maxNumberOfThumbnails - 1){
@@ -45,12 +45,17 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 		}
 	}
 
-	if(count($galleryIds) > 0){
+	if(count($eventIds) > 0){
 		echo '<hr />';
 		echo '<div class="row">';
 
-		foreach($galleryIds as $galleryId){
-			$pictures = $libGallery->getPictures($galleryId, 0);
+		foreach($eventIds as $eventId){
+			$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE id = :id');
+			$stmt->bindValue(':id', $eventId);
+			$stmt->execute();
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			$pictures = $libGallery->getPictures($eventId, 0);
 
 			//determine random image
 			srand(microtime() * 1000000);
@@ -59,16 +64,16 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			$pictureid = $keys[$randomNumber];
 
 			echo '<div class="col-sm-6 col-md-3">';
-			echo '<p>';
+
+			echo '<div class="thumbnail">';
+			echo '<div class="thumbnailOverflow">';
+			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$eventId. '">';
+			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$eventId. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block" />';
+			echo '</a>';
+			echo '</div>';
+			echo '<div class="caption">';
 			printVeranstaltungTitle($row);
 			printVeranstaltungTime($row);
-			echo '</p>';
-
-			echo '<div class="thumbnailBox">';
-			echo '<div class="thumbnailOverflow">';
-			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$galleryId. '">';
-			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$galleryId. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block thumbnail" />';
-			echo '</a>';
 			echo '</div>';
 			echo '</div>';
 

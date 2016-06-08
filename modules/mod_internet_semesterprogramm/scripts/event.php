@@ -198,7 +198,7 @@ function printAnmeldungen($row){
 function printSemesterCover($row){
 	global $libTime;
 
-	echo '<div class="thumbnailBox">';
+	echo '<div class="thumbnail">';
 	echo '<div class="thumbnailOverflow">';
 
 	$semester = $libTime->getSemesterEinesDatums($row['datum']);
@@ -291,18 +291,17 @@ function printGallery($row){
 
 		foreach($pictures as $key => $value){
 			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-			echo '<div class="thumbnailBox">';
-			echo '<div class="thumbnailOverflow">';
-
-			echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
+			echo '<div class="thumbnail">';
 
 			$visibilityClass = '';
 
 			if($libGallery->getPublicityLevel($value) == 1){
-				$visibilityClass = "internal";
+				$visibilityClass = " internal";
 			}
 
-			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive thumbnail center-block ' .$visibilityClass. '" />';
+			echo '<div class="thumbnailOverflow' .$visibilityClass. '">';
+			echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
+			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive center-block" />';
 			echo '</a>';
 			echo '</div>';
 			echo '</div>';

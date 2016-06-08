@@ -204,19 +204,20 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			echo '<div class="thumbnailControls">';
 
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/public.svg" class="icon_small" /></a>';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/internal.svg" class="icon_small" /></a>';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/private.svg" class="icon_small" /></a><br />';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/public.svg" class="icon_small" /></a> ';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/internal.svg" class="icon_small" /></a> ';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><img src="styles/icons/image/private.svg" class="icon_small" /></a>';
+			
+			echo '<br />';
 
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-left.svg" class="icon_small" /></a>';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-right.svg" class="icon_small" /></a>';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-left.svg" class="icon_small" /></a> ';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><img src="styles/icons/image/rotate-right.svg" class="icon_small" /></a> ';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" /></a><br />';
 
 			echo '</div>';
 		}
 
-		echo '<div class="thumbnailBox">';
-		echo '<div class="thumbnailOverflow">';
+		echo '<div class="thumbnail">';
 
 		$visibility = $libGallery->getPublicityLevel($picture);
 		$visibilityClass = '';
@@ -229,11 +230,12 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 			$visibilityClass = 'private';
 		}
 
+		echo '<div class="thumbnailOverflow ' .$visibilityClass. '">';
 		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive thumbnail center-block ' .$visibilityClass. '">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$key. '&amp;thumb=1" class="img-responsive center-block">';
 		echo '</a>';
-
 		echo '</div>';
+
 		echo '</div>';
 		echo '</div>';
 	}

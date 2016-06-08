@@ -31,12 +31,13 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('wp_url')){
 
 
 function printVeranstaltungTitle($row){
-	echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a>';
-	echo '<br />';
+	echo '<h4><a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a></h4>';
 }
 
 function printVeranstaltungTime($row){
 	global $libTime;
+
+	echo '<p>';
 
 	$date = substr($row['datum'], 0, 10);
 	$datearray = explode('-', $date);
@@ -44,12 +45,13 @@ function printVeranstaltungTime($row){
 	$timeString = substr($row['datum'], 11, 5);
 
 	echo $libTime->wochentag($row['datum']). ', ' .$dateString;
-	echo '<br />';
 
 	if($timeString != '00:00'){
-		echo $timeString;
 		echo '<br />';
+		echo $timeString;
 	}
+
+	echo '</p>';
 }
 
 

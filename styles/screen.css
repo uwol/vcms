@@ -289,7 +289,7 @@ main .carousel-control.left, main .carousel-control.right {
 
 main .thumbnail {
 	padding: 0;
-	margin-bottom: 0;
+	margin-bottom: 5px;
 	border-radius: 0;
 }
 
@@ -297,24 +297,20 @@ main .thumbnailControls {
 	text-align: center;
 }
 
-main .thumbnailBox {
-	text-align: center;
-}
-
-main .thumbnailBox .thumbnailOverflow {
-	display: inline-block;
-	width: auto;
+main .thumbnail .thumbnailOverflow {
+	width: 100%;
 	height: 150px;
+	max-width: 400px;
+	margin: 0 auto;
 	overflow: hidden;
 }
 
-main .thumbnailBox .thumbnailOverflow .thumbnail {
-	height: 100%;
-	transition: all .3s linear;
+main .thumbnail .thumbnailOverflow img {
+	width: 100%;
 }
 
-main .thumbnailBox .thumbnailOverflow .thumbnail:hover {
-	transform: scale(1.1);
+main .semestercover {
+	max-height: 250px;
 }
 
 main .lastInsertId {

@@ -4,17 +4,17 @@ $(document).ready(function() {
 		$('#modalCarousel').carousel({interval:false});
 	});
 
-	$('.gallery .thumbnail').click(function(e){
+	$('.gallery .thumbnail img').click(function(e){
 		e.preventDefault();
 		
-		var clickedThumbnail = this;
+		var clickedThumbnailImg = this;
 
 		$('.carousel-inner').empty();
-		$('.gallery .thumbnail').each(function() {
-			var currentThumbnail = this;
-			var itemDiv = createCarouselItem(currentThumbnail);
+		$('.gallery .thumbnail img').each(function() {
+			var currentThumbnailImg = this;
+			var itemDiv = createCarouselItem(currentThumbnailImg);
 
-			if(currentThumbnail == clickedThumbnail){
+			if(currentThumbnailImg == clickedThumbnailImg){
 				itemDiv.addClass('active');
 			}
 		});
@@ -24,8 +24,8 @@ $(document).ready(function() {
 	});
 });
 
-function createCarouselItem(thumbnail){
-	var a = $(thumbnail).parent();
+function createCarouselItem(thumbnailImg){
+	var a = $(thumbnailImg).parent();
 	var thumbnailHref = $(a).attr('href');
 
 	var itemDiv = $('<div class="item"></div>');
