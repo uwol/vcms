@@ -64,9 +64,10 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			echo '<div class="caption">';
 			echo '<h4>';
 			echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
-			echo 'Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester);
+			echo $libTime->getSemesterString($libGlobal->semester);
 			echo '</a>';
 			echo '</h4>';
+			echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></p>';
 			echo '</div>';
 
 			echo '</div>';

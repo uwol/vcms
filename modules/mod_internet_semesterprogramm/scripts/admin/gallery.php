@@ -184,9 +184,9 @@ if(is_dir("custom/veranstaltungsfotos/" .$id)){
 		echo '<a href="index.php?pid=semesterprogramm_admin_galerienliste&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" /> Komplette Galerie löschen.</a>';
 
 		echo '<p>';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlichalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><img src="styles/icons/image/public.svg" class="icon_small" /> Sämtliche Bilder veröffentlichen.</a><br />';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranetalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><img src="styles/icons/image/internal.svg" class="icon_small" /> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken.</a><br />';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=poolalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><img src="styles/icons/image/private.svg" class="icon_small" /> Sämtliche Bilder in Ablage zurücklegen.</a>';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlichalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><img src="styles/icons/image/public.svg" class="icon_small" /> Sämtliche Bilder veröffentlichen</a><br />';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranetalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><img src="styles/icons/image/internal.svg" class="icon_small" /> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken</a><br />';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=poolalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><img src="styles/icons/image/private.svg" class="icon_small" /> Sämtliche Bilder in Ablage zurücklegen</a>';
 		echo '</p>';
 
 		echo '<p>Nach dem Rotieren eines Fotos wird dieses evtl. erst nach einer Aktualisierung der Seite rotiert darstellt.</p>';
