@@ -120,7 +120,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     			echo 'class="private" ';
     		}
 
-    		echo 'src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '&amp;thumb=1" alt="Foto" />';
+    		echo 'src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
 		}
 
 		echo '</td>';
@@ -170,7 +170,7 @@ if(count($foldersWithoutEvent) > 0){
     			echo 'border-width: 3px; border-style: solid; border-color: red;';
     		}
 
-    		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$folder.'&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($folder, 2). '&amp;thumb=1" alt="Foto" /><br /> ';
+    		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$folder.'&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" /><br /> ';
 		}
 
 		echo '</td>';

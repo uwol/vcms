@@ -297,7 +297,7 @@ function printGallery($row){
 
 			echo '<div class="thumbnailOverflow' .$visibilityClass. '">';
 			echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
-			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '&amp;thumb=1" alt="" class="img-responsive center-block" />';
+			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '" alt="" class="img-responsive center-block" />';
 			echo '</a>';
 			echo '</div>';
 			echo '</div>';

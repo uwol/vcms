@@ -18,9 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
 class LibImage{
-	var $galleryThumbWidth = 200;
-	var $galleryThumbHeight = 150;
-
 	var $galleryImageWidth = 800;
 	var $galleryImageHeight = 600;
 
@@ -152,7 +149,7 @@ class LibImage{
 		}
 
 		//$libGlobal->notificationTexts[] = 'Modifiziere Foto mit ImageMagick.';
-		system('convert -geometry ' .escapeshellarg($newWidth). 'x' .escapeshellarg($newHeight). " -quality 75 '".escapeshellarg($imagePath)."' '".escapeshellarg($imagePath)."'");
+		system('convert -strip -geometry ' .escapeshellarg($newWidth). 'x' .escapeshellarg($newHeight). " -quality 75 '".escapeshellarg($imagePath)."' '".escapeshellarg($imagePath)."'");
 	}
 
 
@@ -235,7 +232,7 @@ class LibImage{
 		}
 
 		//$libGlobal->notificationTexts[] = 'Rotiere Foto mit ImageMagick.';
-		system('convert -rotate ' .escapeshellarg($degree). " '".escapeshellarg($imagePath)."' '".escapeshellarg($imagePath)."'");
+		system('convert -strip -rotate ' .escapeshellarg($degree). " '".escapeshellarg($imagePath)."' '".escapeshellarg($imagePath)."'");
 	}
 
 	//Image Upload------------------------------------------------------------------
@@ -424,10 +421,8 @@ class LibImage{
 		}
 
 		$fotoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $_FILES[$tmpFileVarName]['name']);
-		$fotoThumbFileName = preg_replace('/[^A-Za-z0-9\._]/', '', 'thumb_'.$_FILES[$tmpFileVarName]['name']);
 
 		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
-		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs', $fotoThumbFileName, $this->galleryThumbWidth, $this->galleryThumbHeight);
 	}
 
 	function saveVeranstaltungsFotoByAjax($veranstaltungId, $targetFilename, $tmpFilename){
@@ -439,10 +434,8 @@ class LibImage{
 		}
 
 		$fotoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $targetFilename);
-		$fotoThumbFileName = preg_replace('/[^A-Za-z0-9\._]/', '', 'thumb_'.$targetFilename);
 
 		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
-		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs', $fotoThumbFileName, $this->galleryThumbWidth, $this->galleryThumbHeight, true);
 	}
 
 
@@ -453,10 +446,7 @@ class LibImage{
 			return;
 		}
 
-		$fotoThumbFileName = 'thumb_'.$fotoFileName;
-
 		$this->deleteImage('custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName);
-		$this->deleteImage('custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs', $fotoThumbFileName);
 
 		if(count(@scandir('custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs')) == 2){
 			rmdir('custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs');

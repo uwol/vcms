@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
-include "lib/gallery.class.php";
+include 'lib/gallery.class.php';
 $libGallery = new LibGallery($libDb);
 
 if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
@@ -37,13 +37,7 @@ if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 		$pictures = $libGallery->getPictures($_GET['eventid'], $level);
 
 		if(isset($pictures[$_GET['pictureid']]) && $pictures[$_GET['pictureid']] != ''){
-
-			// if a thumbnail is requested
-			if(isset($_GET["thumb"]) && $_GET["thumb"] == 1){
-				$path = "custom/veranstaltungsfotos/". $_GET['eventid'] ."/thumbs/thumb_". $pictures[$_GET['pictureid']];
-			} else {
-				$path = "custom/veranstaltungsfotos/". $_GET['eventid'] ."/". $pictures[$_GET['pictureid']];
-			}
+			$path = 'custom/veranstaltungsfotos/' .$_GET['eventid']. '/' .$pictures[$_GET['pictureid']];
 
 			if(!is_file($path)){
 				exit();
@@ -55,7 +49,7 @@ if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 			header("Content-length: " .filesize($path). "\n");
 
 			// send content
-			$fp=fopen($path, "r");
+			$fp=fopen($path, 'r');
 			fpassthru($fp);
 			fclose($fp);
 		}

@@ -80,7 +80,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$description = "";
 
 	if($libGallery->hasPictures($row['id'], $level)){
-		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], $level). '&amp;thumb=1');
+		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], $level));
 	}
 
 	$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");
