@@ -427,23 +427,23 @@ class LibTime{
 	}
 
 	function getSemesterEinesTimestamps($timestamp){
-		$semester = $this->getSemesterAtDate(@date("Y-m-d", $timestamp));
+		$semester = $this->getSemesterAtDate(@date('Y-m-d', $timestamp));
 		return $semester['name'];
 	}
 
 	function getAktuellesSemester(){
-		$semester = $this->getSemesterAtDate(@date("Y-m-d"));
+		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
 		return $semester['name'];
 	}
 
 	function getVorherigesSemester(){
-		$semester = $this->getSemesterAtDate(@date("Y-m-d"));
+		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
 		$previousSemester = $this->getPreviousSemester($semester);
 		return $previousSemester['name'];
 	}
 
 	function getNaechstesSemester(){
-		$semester = $this->getSemesterAtDate(@date("Y-m-d"));
+		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
 		$followingSemester = $this->getFollowingSemester($semester);
 		return $followingSemester['name'];
 	}
@@ -459,48 +459,48 @@ class LibTime{
 	}
 
 	function wochentag($datum){
-		$wochentage = array("So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa.");
-		$wochentag = $wochentage[@date("w", strtotime($datum))];
+		$wochentage = array('So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.');
+		$wochentag = $wochentage[@date('w', strtotime($datum))];
 		return $wochentag;
 	}
 
 	function getMonthName($i){
 		switch ($i) {
-			case "01":
-				return "Januar";
+			case '01':
+				return 'Januar';
 				break;
-			case "02":
-				return "Februar";
+			case '02':
+				return 'Februar';
 				break;
-			case "03":
-				return "März";
+			case '03':
+				return 'März';
 				break;
-			case "04":
-				return "April";
+			case '04':
+				return 'April';
 				break;
-			case "05":
-				return "Mai";
+			case '05':
+				return 'Mai';
 				break;
-			case "06":
-				return "Juni";
+			case '06':
+				return 'Juni';
 				break;
-			case "07":
-				return "Juli";
+			case '07':
+				return 'Juli';
 				break;
-			case "08":
-				return "August";
+			case '08':
+				return 'August';
 				break;
-			case "09":
-				return "September";
+			case '09':
+				return 'September';
 				break;
-			case "10":
-				return "Oktober";
+			case '10':
+				return 'Oktober';
 				break;
-			case "11":
-				return "November";
+			case '11':
+				return 'November';
 				break;
-			case "12":
-				return "Dezember";
+			case '12':
+				return 'Dezember';
 				break;
 		}
 	}
@@ -528,7 +528,7 @@ class LibTime{
 
 	/**
 	* Überprüft einen Geburtstag auf Festlichkeit wie 50ten etc., und gibt alter zu diesem Geburtstag zurück
-	* Es müssen das Geburtsjahr und das aktuelle Jahr in der Form ("1930","2000") übergeben werden.
+	* Es müssen das Geburtsjahr und das aktuelle Jahr in der Form ('1930','2000') übergeben werden.
 	*/
 	function checkRunderGeburtstag($geburtsjahr, $geburtstagsjahr){
 		$interessantejahre = array(30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130);
@@ -551,18 +551,18 @@ class LibTime{
 
 		$file = '';
 
-		if(is_file("custom/semestercover/".$semesterString. ".jpg")){
-			$file = $semesterString.".jpg";
-		} elseif(is_file("custom/semestercover/".strtolower($semesterString). ".jpg")){
-			$file = strtolower($semesterString).".jpg";
-		} elseif(is_file("custom/semestercover/".$semesterString. ".png")){
-			$file = $semesterString.".png";
-		} elseif(is_file("custom/semestercover/".strtolower($semesterString). ".png")){
-			$file = strtolower($semesterString).".png";
-		} elseif(is_file("custom/semestercover/".$semesterString. ".gif")){
-			$file = $semesterString.".gif";
-		} elseif(is_file("custom/semestercover/".strtolower($semesterString). ".gif")){
-			$file = strtolower($semesterString). ".gif";
+		if(is_file('custom/semestercover/'.$semesterString. '.jpg')){
+			$file = $semesterString.'.jpg';
+		} elseif(is_file('custom/semestercover/'.strtolower($semesterString). '.jpg')){
+			$file = strtolower($semesterString).'.jpg';
+		} elseif(is_file('custom/semestercover/'.$semesterString. '.png')){
+			$file = $semesterString.'.png';
+		} elseif(is_file('custom/semestercover/'.strtolower($semesterString). '.png')){
+			$file = strtolower($semesterString).'.png';
+		} elseif(is_file('custom/semestercover/'.$semesterString. '.gif')){
+			$file = $semesterString.'.gif';
+		} elseif(is_file('custom/semestercover/'.strtolower($semesterString). '.gif')){
+			$file = strtolower($semesterString). '.gif';
 		}
 
 		return $file;
@@ -585,7 +585,7 @@ class LibTime{
 
 		$file = $this->determineSemesterCover($semesterString);
 
-		if($file != ""){
+		if($file != ''){
 			return '<img src="custom/semestercover/' .$file. '" class="img-responsive center-block" alt="Semestercover" />';
 		}
 	}
@@ -598,35 +598,36 @@ class LibTime{
 		}
 
 		$ssAbk = 'SS';
+		$wsAbk = 'WS';
+		
 		if($enableAbbr){
-			$ssAbk = "<abbr title=\"Sommersemester\">SS</abbr>\xc2\xa0"; // \xc2\xa0 is non-breaking space
+			$ssAbk = "<abbr title=\"Sommersemester\">SS</abbr>"; // \xc2\xa0 is non-breaking space
+		}
+
+		if($enableAbbr){
+			$wsAbk = "<abbr title=\"Wintersemester\">WS</abbr>"; // \xc2\xa0 is non-breaking space
 		}
 
 		$ssRegexp = '/SS[0-9]{4}/';
-
-		$wsAbk = 'WS';
-		if($enableAbbr){
-			$wsAbk = "<abbr title=\"Wintersemester\">WS</abbr>\xc2\xa0"; // \xc2\xa0 is non-breaking space
-		}
-
 		$wsRegexp = '/WS[0-9]{8}/';
 
 		$jahrestrenner  = '/';
+		$space = '&nbsp;';
 
 		$matches = array();
 
 		//summer semester?
 		if(preg_match($ssRegexp, $semester['name'], $matches)){
-			return $ssAbk.$semester['startyear'];
+			return $ssAbk.$space.$semester['startyear'];
 		}
 		//winter semester?
 		elseif(preg_match($wsRegexp, $semester['name'], $matches)){
-			return $wsAbk.$semester['startyear'].$jahrestrenner.substr($semester['endyear'], 2, 2);
+			return $wsAbk.$space.$semester['startyear'].$jahrestrenner.substr($semester['endyear'], 2, 2);
 		} else {
 			if($semester['overlapping']){
-				return $semester['prefix'].' '.$semester['startyear'].$jahrestrenner.substr($semester['endyear'], 2, 2);
+				return $semester['prefix'].$space.$semester['startyear'].$jahrestrenner.substr($semester['endyear'], 2, 2);
 			} else {
-				return $semester['prefix'].' '.$semester['startyear'];
+				return $semester['prefix'].$space.$semester['startyear'];
 			}
 		}
 	}
@@ -750,7 +751,7 @@ class LibTime{
 	}
 
 	function zeroFill($number, $stellen=2){
-		return str_pad((int) $number, $stellen, "0", STR_PAD_LEFT);
+		return str_pad((int) $number, $stellen, '0', STR_PAD_LEFT);
 	}
 
 	function getNumberOfDaysInMonth($year, $month){
