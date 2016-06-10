@@ -29,6 +29,7 @@ if(!is_object($libGlobal))
 * Tabelle base_veranstaltung aktualisieren
 */
 $fieldExists_datumEnde = false;
+$fieldExists_fbEventId = false;
 
 $stmt = $libDb->prepare('SHOW COLUMNS FROM base_veranstaltung');
 $stmt->execute();
@@ -36,12 +37,23 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($row['Field'] == 'datum_ende'){
 		$fieldExists_datumEnde = true;
 	}
+
+	if($row['Field'] == 'fb_eventid'){
+		$fieldExists_fbEventId = true;
+	}
 }
 
 if(!$fieldExists_datumEnde){
 	echo 'Aktualisiere Tabelle: base_veranstaltung<br />';
 
 	$sql = "ALTER TABLE base_veranstaltung ADD datum_ende DATETIME NULL AFTER datum";
+	$libDb->query($sql);
+}
+
+if(!$fieldExists_fbEventId){
+	echo 'Aktualisiere Tabelle: base_veranstaltung<br />';
+
+	$sql = "ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255) NULL";
 	$libDb->query($sql);
 }
 

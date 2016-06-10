@@ -34,7 +34,7 @@ if($libAuth->isLoggedin()){
 
 	$varray = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array("titel", "datum", "datum_ende", "spruch", "beschreibung", "status", "ort");
+	$felder = array("titel", "datum", "datum_ende", "spruch", "beschreibung", "status", "ort", 'fb_eventid');
 
 	/**
 	*
@@ -53,6 +53,7 @@ if($libAuth->isLoggedin()){
 		$varray['beschreibung'] = '';
 		$varray['status'] = '';
 		$varray['ort'] = '';
+		$varray['fb_eventid'] = '';
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
 	elseif($aktion == "insert"){
@@ -146,6 +147,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextarea('beschreibung', 'Beschreibung', $varray['beschreibung']);
 	$libForm->printTextInput('status', 'Status (Maximal 2 Buchstaben, z. B. ho oder o)', $varray['status']);
 	$libForm->printTextInput('ort', 'Ort', $varray['ort']);
+	$libForm->printTextInput('fb_eventid', 'FB Event-Id', $varray['fb_eventid']);
 
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
 

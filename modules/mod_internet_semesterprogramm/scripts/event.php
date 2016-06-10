@@ -21,6 +21,10 @@ if(!is_object($libGlobal))
 	exit();
 
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('fbAccessToken')){
+	$libGenericStorage->saveValueInCurrentModule('fbAccessToken', '');
+}
+
 /*
 * actions
 */
@@ -73,21 +77,42 @@ if($libAuth->isLoggedIn()){
 echo '<h1>' .$row['titel']. '</h1>';
 
 echo '<div class="row">';
-echo '<div class="col-sm-9">';
 
-printEventDetails($row);
-printAnmeldungen($row);
-
-echo '</div>';
+// Caption-Box
 echo '<div class="col-sm-3">';
-
+echo '<div class="thumbnail">';
+echo '<div class="thumbnailOverflow">';
 printSemesterCover($row);
-echo '<hr />';
+echo '</div>';
+echo '<div class="caption">';
 printAnmeldeStatus($row);
 echo '<hr />';
 printSocialButtons($row);
-
 echo '</div>';
+echo '</div>';
+echo '</div>';
+
+
+// Haupttext
+$col = 9;
+if(isFbEvent($row)){
+	$col = $col - 3;
+}
+
+echo '<div class="col-sm-' .$col. '">';
+printEventDetails($row);
+printAnmeldungen($row);
+echo '</div>';
+
+
+// Facebook
+if(isFbEvent($row)){
+	echo '<div class="col-sm-3">';
+	printFacebookEvent($row);
+	echo '</div>';
+}
+
+
 echo '</div>';
 
 printGallery($row);
@@ -288,5 +313,87 @@ function printGallery($row){
 
 		echo '</div>';
 	}
+}
+
+function printFacebookEvent($row){
+	global $libGenericStorage, $libString, $libTime;
+
+	$fbAccessToken = $libGenericStorage->loadValueInCurrentModule('fbAccessToken');
+
+	if(isFbEvent($row) && ini_get('allow_url_fopen') && $fbAccessToken != ''){
+		$fbEventId = $row['fb_eventid'];
+
+		$fbUrl = 'https://www.facebook.com';
+		$fbGraphUrl = 'https://graph.facebook.com';
+		$fbAccessTokenQuery = '?access_token=' .$fbAccessToken;
+		
+		$fbEventEndpoint = $fbGraphUrl. '/' .$fbEventId.$fbAccessTokenQuery;
+		$fbEventPhotosEndpoint = $fbGraphUrl. '/' .$fbEventId. '/photos' .$fbAccessTokenQuery;
+		$fbEventInterestedEndpoint = $fbGraphUrl. '/' .$fbEventId. '/interested' .$fbAccessTokenQuery. '&summary=count';
+		$fbEventAttendingEndpoint = $fbGraphUrl. '/' .$fbEventId. '/attending' .$fbAccessTokenQuery. '&summary=count';
+
+		$eventLink = $fbUrl. '/events/' .$fbEventId;
+
+		$eventJson = file_get_contents($fbEventEndpoint);
+		$eventObject = json_decode($eventJson, true);
+		$eventObjectName = $eventObject['name'];
+		$eventObjectDescription = $eventObject['description'];
+		$eventObjectDescriptionTruncated = $libString->truncate($eventObjectDescription, 100);
+
+		$eventPhotosJson = file_get_contents($fbEventPhotosEndpoint);
+		$eventPhotosObject = json_decode($eventPhotosJson, true);
+		$eventPhotoSource = $eventPhotosObject['data'][0]['source'];
+
+		$eventInterestedJson = file_get_contents($fbEventInterestedEndpoint);
+		$eventInterestedObject = json_decode($eventInterestedJson, true);
+		$eventInterestedCount = $eventInterestedObject['summary']['count'];
+
+		$eventAttendingJson = file_get_contents($fbEventAttendingEndpoint);
+		$eventAttendingObject = json_decode($eventAttendingJson, true);
+		$eventAttendingCount = $eventAttendingObject['summary']['count'];
+
+		echo '<div class="thumbnail">';
+
+		echo '<div class="thumbnailOverflow">';
+		echo '<a href="' .$eventLink. '">';
+		echo '<img src="' .$eventPhotoSource. '" alt="" class="img-responsive center-block" />';
+		echo '</a>';
+		echo '</div>';
+
+		echo '<div class="caption">';
+		echo '<div class="media">';
+
+		echo '<div class="media-left" style="text-align:center">';
+		echo '<span style="font-size:32px;line-height:32px">' .substr($row['datum'], 8, 2). '</span><br />';
+		$monatName = $libTime->getMonth((int) substr($row['datum'], 5, 2));
+		$monatNameSubstr = substr($monatName, 0, 3);
+		$monatNameUpper = strtoupper($monatNameSubstr);
+		echo '<span style="font-size:12px;line-height:12px;color:#e34e60">' .$monatNameUpper. '</span>';
+		echo '</div>';
+
+		echo '<div class="media-body">';
+
+		echo '<h4 style="font-weight:bold;margin-top:0;margin-bottom:0;font-size:14px">';
+		echo '<a href="' .$eventLink. '" style="color:black">';
+		echo $libString->protectXss($eventObjectName);
+		echo '</a>';
+		echo '</h4>';
+
+		echo '<p style="color:#90949c;margin-top:0;margin-bottom:0;font-size:12px">';
+		echo $eventInterestedCount. ' Personen sind interessiert';
+		echo ' · ';
+		echo $eventAttendingCount. ' Personen nehmen teil';
+		echo '</p>';
+
+		echo '</div>';
+
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+	}
+}
+
+function isFbEvent($row){
+	return isset($row['fb_eventid']) && is_numeric($row['fb_eventid']);
 }
 ?>
