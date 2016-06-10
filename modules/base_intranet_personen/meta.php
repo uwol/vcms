@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Personen";
-$version = "2.35";
+$version = "2.36";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";

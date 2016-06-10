@@ -65,17 +65,17 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 $physikumSemester = $libTime->getSemesterName();
 for($i = 0; $i < 4; $i++){
-	$physikumSemester = $libTime->getVorherigesSemesterEinesSemesters($physikumSemester);
+	$physikumSemester = $libTime->getPreviousSemesterNameOfSemester($physikumSemester);
 }
 
 $bachelorSemester = $libTime->getSemesterName();
 for($i = 0; $i < 6; $i++){
-	$bachelorSemester = $libTime->getVorherigesSemesterEinesSemesters($bachelorSemester);
+	$bachelorSemester = $libTime->getPreviousSemesterNameOfSemester($bachelorSemester);
 }
 
 $masterSemester = $libTime->getSemesterName();
 for($i = 0; $i < 10; $i++){
-	$masterSemester = $libTime->getVorherigesSemesterEinesSemesters($masterSemester);
+	$masterSemester = $libTime->getPreviousSemesterNameOfSemester($masterSemester);
 }
 
 /*
