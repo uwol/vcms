@@ -30,7 +30,8 @@ $stmtCount->bindColumn('number', $numberOfNextEvents);
 $stmtCount->fetch();
 
 $fb_url = $libGenericStorage->loadValueInCurrentModule('fb_url');
-$fbUrlExists = $fb_url != '';
+$showFbPagePlugin = $libGenericStorage->loadValueInCurrentModule('showFbPagePlugin');
+$fbPagePluginEnabled = $showFbPagePlugin && $fb_url != '';
 
 
 if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbUrlExists){
@@ -38,11 +39,11 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbUrlExists){
 	echo '<div class="row">';
 
 	if($numberOfNextEvents > 0){
-		if($semesterCoverAvailable && $fbUrlExists){
+		if($semesterCoverAvailable && $fbPagePluginEnabled){
 			$maxNumberOfEvents = 1;
 		} elseif($semesterCoverAvailable){
 			$maxNumberOfEvents = 3;
-		} elseif($fbUrlExists){
+		} elseif($fbPagePluginEnabled){
 			$maxNumberOfEvents = 2;
 		} else {
 			$maxNumberOfEvents = 4;
@@ -83,7 +84,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbUrlExists){
 		echo '</div>';
 	}
 
-	if($fbUrlExists){
+	if($fbPagePluginEnabled){
 		echo '<div class="col-sm-6 col-md-6">';
 		echo '<div class="thumbnail">';
 		echo '<div class="caption">';
