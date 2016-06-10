@@ -37,7 +37,7 @@ function printVeranstaltungTitle($row){
 function printVeranstaltungDateTime($row){
 	global $libTime;
 
-	echo '<p>';
+	echo '<time>';
 
 	$date = $libTime->formatDateTimeString($row['datum'], 2);
 	$time = $libTime->formatDateTimeString($row['datum'], 3);
@@ -49,7 +49,7 @@ function printVeranstaltungDateTime($row){
 		echo $time;
 	}
 
-	echo '</p>';
+	echo '</time>';
 }
 
 

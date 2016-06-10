@@ -120,21 +120,20 @@ function printEventDetails($row){
 	/*
 	* general infos
 	*/
-	echo '<p>';
+	echo '<time>';
 	echo 'Am ' .$date;
 
 	if($time != ''){
 		echo ' um ' .$time;
 	}
 
-	echo '</p>';
+	echo '</time>';
 
 	if ($row['ort'] != ''){
 		echo '<address>Ort: ' .$row['ort']. '</address>';
 	}
 
-	echo '<h4>Status</h4>';
-	echo '<p>' .$status. '</p>';
+	echo '<p>Status: ' .$status. '</p>';
 
 	if($row['beschreibung'] != ''){
 		echo '<h4>Beschreibung</h4>';
