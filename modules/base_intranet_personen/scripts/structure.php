@@ -112,13 +112,13 @@ echo '<table style="border:1px solid black; width:100%">';
 //for all semesters
 foreach($tArray as $key1 => $value1){
 	if($key1 == $physikumSemester){
-		echo '<tr><td colspan="20" style="text-align: center"><b>1. Staatsexamen Medizin</b></td></tr>';
+		echo '<tr><td colspan="20" style="text-align: center">1. Staatsexamen Medizin</td></tr>';
 	}
 
 	if($key1 == $bachelorSemester){
-		echo '<tr><td colspan="20" style="text-align: center"><b>Bachelor</b></td></tr>';
+		echo '<tr><td colspan="20" style="text-align: center">Bachelor</td></tr>';
 	} elseif($key1 == $masterSemester){
-		echo '<tr><td colspan="20" style="text-align: center"><b>Master / 1. Staatsexamen Jura / 2. Staatsexamen Medizin / Diplom</b></td></tr>';
+		echo '<tr><td colspan="20" style="text-align: center">Master / 1. Staatsexamen Jura / 2. Staatsexamen Medizin</td></tr>';
 	}
 
 	echo '<tr>';

@@ -340,7 +340,7 @@ if($libAuth->isLoggedin()){
 	if(in_array("internetwart",$libAuth->getAemter())){
 		//ist das zu bearbeitende Mitglied jemals Internetwart gewesen
 		if($mgarray['id'] != "" && $libMitglied->hasBeenInternetWartAnyTime($mgarray['id'])){
-			echo '<p><b>!!! VORSICHT BEI DER MODIFIKATION DER FOLGENDEN DATEN !!!</b></p>';
+			echo '<p>!!! VORSICHT BEI DER MODIFIKATION DER FOLGENDEN DATEN !!!</p>';
 			echo '<p>Diese Person ist ein Internetwart.</p>';
 
 			$valideInternetWarte = $libVerein->getValideInternetWarte();
@@ -357,8 +357,8 @@ if($libAuth->isLoggedin()){
 		$libForm->printTextInput('datum_gruppe_stand', 'Stand', $mgarray['datum_gruppe_stand'], 'date', true);
 
 		//Credentials
-		echo '<p><b>Achtung</b></p>';
-		echo '<p>Durch Eingabe von Benutzername und Passwort wird Zugang zum Intranet gewährt. Dies geschieht meistens aufgrund einer Registrierungsanfrage. Es ist vor einer Freischaltung <b>unbedingt</b> die Person zu kontaktieren, die sich registriert hat. Falls dies telefonisch erfolgt, sollte die TelefonNr. dem Verein bekannt sein, und nicht auf die TelefonNr. aus der Registrierungsmail vertraut werden. Ein einziger falsch vergebener Intranetaccount genügt, um das Intranet zu kompromittieren!</p>';
+		echo '<p>Achtung</p>';
+		echo '<p>Durch Eingabe von Benutzername und Passwort wird Zugang zum Intranet gewährt. Dies geschieht meistens aufgrund einer Registrierungsanfrage. Es ist vor einer Freischaltung unbedingt die Person zu kontaktieren, die sich registriert hat. Falls dies telefonisch erfolgt, sollte die TelefonNr. dem Verein bekannt sein, und nicht auf die TelefonNr. aus der Registrierungsmail vertraut werden. Ein einziger falsch vergebener Intranetaccount genügt, um das Intranet zu kompromittieren!</p>';
 
 		$libForm->printTextInput('username', 'Benutzername', $mgarray['username']);
 		$libForm->printTextInput('password_hash', 'Password-Hash', $mgarray['password_hash']);
