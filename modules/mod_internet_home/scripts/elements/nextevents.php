@@ -21,22 +21,34 @@ if(!is_object($libGlobal))
 	exit();
 
 
-if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
-	$stmtCount = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung WHERE datum > NOW()');
-	$stmtCount->execute();
-	$stmtCount->bindColumn('number', $count);
-	$stmtCount->fetch();
+$semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
+$semesterCoverAvailable = $semesterCoverString != '';
 
-	// if there are entries
-	if($count > 0){
-		echo '<hr />';
-		echo '<div class="row">';
+$stmtCount = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung WHERE datum > NOW()');
+$stmtCount->execute();
+$stmtCount->bindColumn('number', $numberOfNextEvents);
+$stmtCount->fetch();
 
-		$semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
-		$semesterCoverAvailable = $semesterCoverString != '';
-		$maxNumberOfNextEvents = $semesterCoverAvailable ? 3 : 4;
+$fb_url = $libGenericStorage->loadValueInCurrentModule('fb_url');
+$fbUrlExists = $fb_url != '';
 
-		$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfNextEvents);
+
+if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbUrlExists){
+	echo '<hr />';
+	echo '<div class="row">';
+
+	if($numberOfNextEvents > 0){
+		if($semesterCoverAvailable && $fbUrlExists){
+			$maxNumberOfEvents = 1;
+		} elseif($semesterCoverAvailable){
+			$maxNumberOfEvents = 3;
+		} elseif($fbUrlExists){
+			$maxNumberOfEvents = 2;
+		} else {
+			$maxNumberOfEvents = 4;
+		}
+
+		$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfEvents);
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -51,26 +63,38 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			echo '</div>';
 			echo '</div>';
 		}
+	}
 
-		if($semesterCoverAvailable){
-			echo '<div class="col-sm-6 col-md-3">';
-			echo '<div class="thumbnail">';
-			echo '<div class="semestercoverBox center-block">';
-			echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
-			echo $semesterCoverString;
-			echo '</a>';
-			echo '</div>';
+	if($semesterCoverAvailable){
+		echo '<div class="col-sm-6 col-md-3">';
+		echo '<div class="thumbnail">';
+		echo '<div class="semestercoverBox center-block">';
+		echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
+		echo $semesterCoverString;
+		echo '</a>';
+		echo '</div>';
 
-			echo '<div class="caption">';
-			echo '<h4><a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h4>';
-			echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
-			echo '</div>';
-
-			echo '</div>';
-			echo '</div>';
-		}
+		echo '<div class="caption">';
+		echo '<h4><a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h4>';
+		echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
+		echo '</div>';
 
 		echo '</div>';
+		echo '</div>';
 	}
+
+	if($fbUrlExists){
+		echo '<div class="col-sm-6 col-md-6">';
+		echo '<div class="thumbnail">';
+		echo '<div class="caption">';
+		echo '<div style="max-width:500px" class="center-block">';
+		echo '<iframe src="https://www.facebook.com/plugins/page.php?href=' .urlencode($fb_url). '&tabs&width=340&height=154&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId" width="100%" height="154" class="facebookPagePlugin" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>';			
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+	}
+
+	echo '</div>';
 }
 ?>
