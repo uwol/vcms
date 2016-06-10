@@ -272,7 +272,7 @@ class LibMember{
 		$stmt->bindValue(':vopxx', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':vopxxx', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':vopxxxx', $id, PDO::PARAM_INT);
-		$stmt->bindValue(':semester', $this->libTime->getAktuellesSemester());
+		$stmt->bindValue(':semester', $this->libTime->getSemesterName());
 		$stmt->execute();
 
 		$chargenAktuell = array();
@@ -387,7 +387,7 @@ class LibMember{
 		$stmt->bindValue(':vopxx', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':vopxxx', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':vopxxxx', $id, PDO::PARAM_INT);
-		$stmt->bindValue(':semester', $this->libTime->getAktuellesSemester());
+		$stmt->bindValue(':semester', $this->libTime->getSemesterName());
 		$stmt->execute();
 
 		$chargen = array();

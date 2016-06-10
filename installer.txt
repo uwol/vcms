@@ -1,1 +1,181 @@
-<?php/*This file is part of VCMS.This program is free software; you can redistribute it and/ormodify it under the terms of the GNU General Public Licenseas published by the Free Software Foundation; either version 2of the License, or (at your option) any later version.This program is distributed in the hope that it will be useful,but WITHOUT ANY WARRANTY; without even the implied warranty ofMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See theGNU General Public License for more details.You should have received a copy of the GNU General Public Licensealong with this program; if not, write to the Free SoftwareFoundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA*/require_once('custom/systemconfig.php');require_once('lib/masterinclude.php');?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml">	<head>		<meta http-equiv="content-type" content="text/xhtml; charset=UTF-8" />		<title>VCMS Installer</title>		<meta http-equiv="content-language"	 content="de" />		<meta name="robots" content="noindex, nofollow, noarchive" />		<style type="text/css">			body {				text-align: justify;				margin-left: auto;				margin-right: auto;				width: 70%;				font-family: arial,helvetica,sans-serif;			}			h1 {color: #FF6600;}			h2, h3 {color: #FF9900;}			a {color: #FF9900;}			li {margin-bottom: 1em}		</style>	</head>	<body>		<div style="background-color:#E8E8E8;padding:10px"><?php/** check configuration*/if($libConfig->mysqlServer == ''){	echo '<p style="color:red">Warnung: In der Konfiguration ist kein MySQL-Server angegeben.</p>';} else {	echo '<p style="color:green">OK: In der Konfiguration ist ein MySQL-Server angegeben: ' .$libConfig->mysqlServer. '</p>';}if($libConfig->mysqlPort != ''){	echo '<p style="color:green">OK: In der Konfiguration ist ein MySQL-Port angegeben: ' .$libConfig->mysqlPort. '</p>';}if($libConfig->mysqlDb == ''){	echo '<p style="color:red">Warnung: In der Konfiguration ist keine MySQL-Datenbank angegeben.</p>';} else {	echo '<p style="color:green">OK: In der Konfiguration ist eine MySQL-Datenbank angegeben: ' .$libConfig->mysqlDb. '</p>';}if($libConfig->mysqlUser == ''){	echo '<p style="color:red">Warnung: In der Konfiguration ist kein MySQL-User angegeben.</p>';} else {	echo '<p style="color:green">OK: In der Konfiguration ist ein MySQL-User angegeben: ' .$libConfig->mysqlUser. '</p>';}if($libConfig->mysqlPass == ''){	echo '<p style="color:red">Warnung: In der Konfiguration ist kein MySQL-Passwort angegeben.</p>';} else {	echo '<p style="color:green">OK: In der Konfiguration ist ein MySQL-Passwort angegeben.</p>';}/** actions*/if(isset($_REQUEST['aktion'])){	/*	* install all modules	*/	if($_REQUEST['aktion'] == 'installAllModules'){		echo '<h3>Installation sämtlicher Module. Falls ein Modul bereits installiert worden ist, kann es zu Fehlermeldungen kommen.</h3>';		foreach($libModuleHandler->getModules() as $module){			if($module->getInstallScript() != ''){				echo '<p style="color:blue">Der Installer ' .$module->getPath().$module->getInstallScript(). ' wird gestartet.</p>';				include($module->getPath().$module->getInstallScript());			}		}		echo '<p style="color:blue">Falls keine Fehlermeldung erschienen ist, sollte die Installation durchgeführt worden sein.</p>';	}	/*	* generate an internetwart	*/	elseif($_REQUEST['aktion'] == 'createInternetWart'){		if(isset($_REQUEST['benutzername']) && trim($_REQUEST['benutzername']) != '' && isset($_REQUEST['pwd1']) && trim($_REQUEST['pwd1']) != ''){			if($_REQUEST['pwd1'] == $_REQUEST['pwd2']){				if($libAuth->isValidPassword($_REQUEST['pwd1'])){					echo '<p style="color:blue">Datensatz für neuen Benutzer wird angelegt</p>';					$stmt = $libDb->prepare('INSERT INTO base_person (name, vorname, username, gruppe) VALUES (:name, :vorname, :username, :gruppe)');					$stmt->bindValue(':name', trim($_REQUEST['name']));					$stmt->bindValue(':vorname', trim($_REQUEST['vorname']));					$stmt->bindValue(':username', trim($_REQUEST['benutzername']));					$stmt->bindValue(':gruppe', 'B');					$stmt->execute();					$stmt = $libDb->prepare('SELECT id FROM base_person WHERE username = :username');					$stmt->bindValue(':username', trim($_REQUEST['benutzername']));					$stmt->execute();					$stmt->bindColumn('id', $id);					$stmt->fetch();					$libAuth->savePassword($id, $_REQUEST['pwd1']);					$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE semester = :semester');					$stmt->bindValue(':semester', $libTime->getAktuellesSemester());					$stmt->execute();					$stmt->bindColumn('number', $number);					$stmt->fetch();					if($number == 0){						echo '<p style="color:blue">Datensatz für das aktuelle Semester wird angelegt. Das neue Mitglied wird als Internetwart angegeben.</p>';						$stmt = $libDb->prepare('INSERT INTO base_semester (semester, internetwart) VALUES (:semester, :internetwart)');						$stmt->bindValue(':semester', $libTime->getAktuellesSemester());						$stmt->bindValue(':internetwart', $id);						$stmt->execute();					} else {						echo '<p style="color:blue">Neuer Benutzer wird als Internetwart in das aktuelle Semester eingefügt. Falls bisher ein Internetwart in diesem Semester eingetragen war, wird dieser damit aus dem Semester entfernt.</p>';						$stmt = $libDb->prepare('UPDATE base_semester SET internetwart=:internetwart WHERE semester=:semester');						$stmt->bindValue(':semester', $libTime->getAktuellesSemester());						$stmt->bindValue(':internetwart', $id);						$stmt->execute();					}					echo '<p style="color:blue">Fertig. Falls keine Fehlermeldung angezeigt wurde, sollte nun der Login unter dem neuen Benutzer mit Internetwart-Rechten möglich sein.</p>';				} else {					echo '<p style="color:red">Fehler: Das Passwort ist nicht komplex genug.</p>';				}			} else {				echo '<p style="color:red">Fehler: Die Passwörter stimmen nicht überein.</p>';			}		} else {			echo '<p style="color:red">Fehler: Benutzername oder Passwort wurden nicht angegeben.</p>';		}	}}/** output*/?>		</div>		<h1>Bitte Aktion wählen:</h1>		<h3>Schritt 1: Installation des Gesamtsystems</h3>		<p>Mit dem Aufruf der <a href="installer.php?aktion=installAllModules">Gesamtinstallation</a> wird die Installation für das Basissystem und alle Module gestartet. Dies ist normalerweise nur einmal bei der Erstinstallation des VCMS notwendig.</p>		<h3>Schritt 2: Einfügen eines Internetwarts</h3>		<p>Nach der Grundinstallation muss ein Internetwart angelegt werden, um sich initial im Intranet anmelden zu können.</p>		<form action="installer.php" method="post">		<input type="hidden" name="aktion" value="createInternetWart" />		<input type="text" name="vorname" size="20" /> Vorname<br />		<input type="text" name="name" size="20" /> Nachname<br />		<input type="text" name="benutzername" size="20" /> Benutzername<br />		<input type="password" name="pwd1" size="20" /> Passwort<br />		<input type="password" name="pwd2" size="20" /> Wiederholung des Passworts<br />		<input type="submit" value="Internetwart anlegen" />		</form>		<p><?php echo $libAuth->getPasswordRequirements(); ?></p>	</body></html>
+<?php
+/*
+This file is part of VCMS.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+*/
+
+require_once('custom/systemconfig.php');
+require_once('lib/masterinclude.php');
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/xhtml; charset=UTF-8" />
+		<title>VCMS Installer</title>
+		<meta http-equiv="content-language"	 content="de" />
+		<meta name="robots" content="noindex, nofollow, noarchive" />
+
+		<style type="text/css">
+			body {
+				text-align: justify;
+				margin-left: auto;
+				margin-right: auto;
+				width: 70%;
+				font-family: arial,helvetica,sans-serif;
+			}
+			h1 {color: #FF6600;}
+			h2, h3 {color: #FF9900;}
+			a {color: #FF9900;}
+			li {margin-bottom: 1em}
+		</style>
+	</head>
+	<body>
+		<div style="background-color:#E8E8E8;padding:10px">
+<?php
+
+/*
+* check configuration
+*/
+if($libConfig->mysqlServer == ''){
+	echo '<p style="color:red">Warnung: In der Konfiguration ist kein MySQL-Server angegeben.</p>';
+} else {
+	echo '<p style="color:green">OK: In der Konfiguration ist ein MySQL-Server angegeben: ' .$libConfig->mysqlServer. '</p>';
+}
+
+if($libConfig->mysqlPort != ''){
+	echo '<p style="color:green">OK: In der Konfiguration ist ein MySQL-Port angegeben: ' .$libConfig->mysqlPort. '</p>';
+}
+
+if($libConfig->mysqlDb == ''){
+	echo '<p style="color:red">Warnung: In der Konfiguration ist keine MySQL-Datenbank angegeben.</p>';
+} else {
+	echo '<p style="color:green">OK: In der Konfiguration ist eine MySQL-Datenbank angegeben: ' .$libConfig->mysqlDb. '</p>';
+}
+
+if($libConfig->mysqlUser == ''){
+	echo '<p style="color:red">Warnung: In der Konfiguration ist kein MySQL-User angegeben.</p>';
+} else {
+	echo '<p style="color:green">OK: In der Konfiguration ist ein MySQL-User angegeben: ' .$libConfig->mysqlUser. '</p>';
+}
+
+if($libConfig->mysqlPass == ''){
+	echo '<p style="color:red">Warnung: In der Konfiguration ist kein MySQL-Passwort angegeben.</p>';
+} else {
+	echo '<p style="color:green">OK: In der Konfiguration ist ein MySQL-Passwort angegeben.</p>';
+}
+
+
+/*
+* actions
+*/
+if(isset($_REQUEST['aktion'])){
+	/*
+	* install all modules
+	*/
+	if($_REQUEST['aktion'] == 'installAllModules'){
+		echo '<h3>Installation sämtlicher Module. Falls ein Modul bereits installiert worden ist, kann es zu Fehlermeldungen kommen.</h3>';
+
+		foreach($libModuleHandler->getModules() as $module){
+			if($module->getInstallScript() != ''){
+				echo '<p style="color:blue">Der Installer ' .$module->getPath().$module->getInstallScript(). ' wird gestartet.</p>';
+				include($module->getPath().$module->getInstallScript());
+			}
+		}
+
+		echo '<p style="color:blue">Falls keine Fehlermeldung erschienen ist, sollte die Installation durchgeführt worden sein.</p>';
+	}
+	/*
+	* generate an internetwart
+	*/
+	elseif($_REQUEST['aktion'] == 'createInternetWart'){
+		if(isset($_REQUEST['benutzername']) && trim($_REQUEST['benutzername']) != '' && isset($_REQUEST['pwd1']) && trim($_REQUEST['pwd1']) != ''){
+			if($_REQUEST['pwd1'] == $_REQUEST['pwd2']){
+				if($libAuth->isValidPassword($_REQUEST['pwd1'])){
+					echo '<p style="color:blue">Datensatz für neuen Benutzer wird angelegt</p>';
+
+					$stmt = $libDb->prepare('INSERT INTO base_person (name, vorname, username, gruppe) VALUES (:name, :vorname, :username, :gruppe)');
+					$stmt->bindValue(':name', trim($_REQUEST['name']));
+					$stmt->bindValue(':vorname', trim($_REQUEST['vorname']));
+					$stmt->bindValue(':username', trim($_REQUEST['benutzername']));
+					$stmt->bindValue(':gruppe', 'B');
+					$stmt->execute();
+
+					$stmt = $libDb->prepare('SELECT id FROM base_person WHERE username = :username');
+					$stmt->bindValue(':username', trim($_REQUEST['benutzername']));
+					$stmt->execute();
+					$stmt->bindColumn('id', $id);
+					$stmt->fetch();
+
+					$libAuth->savePassword($id, $_REQUEST['pwd1']);
+
+					$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE semester = :semester');
+					$stmt->bindValue(':semester', $libTime->getSemesterName());
+					$stmt->execute();
+					$stmt->bindColumn('number', $number);
+					$stmt->fetch();
+
+					if($number == 0){
+						echo '<p style="color:blue">Datensatz für das aktuelle Semester wird angelegt. Das neue Mitglied wird als Internetwart angegeben.</p>';
+						$stmt = $libDb->prepare('INSERT INTO base_semester (semester, internetwart) VALUES (:semester, :internetwart)');
+						$stmt->bindValue(':semester', $libTime->getSemesterName());
+						$stmt->bindValue(':internetwart', $id);
+						$stmt->execute();
+					} else {
+						echo '<p style="color:blue">Neuer Benutzer wird als Internetwart in das aktuelle Semester eingefügt. Falls bisher ein Internetwart in diesem Semester eingetragen war, wird dieser damit aus dem Semester entfernt.</p>';
+						$stmt = $libDb->prepare('UPDATE base_semester SET internetwart=:internetwart WHERE semester=:semester');
+						$stmt->bindValue(':semester', $libTime->getSemesterName());
+						$stmt->bindValue(':internetwart', $id);
+						$stmt->execute();
+					}
+
+					echo '<p style="color:blue">Fertig. Falls keine Fehlermeldung angezeigt wurde, sollte nun der Login unter dem neuen Benutzer mit Internetwart-Rechten möglich sein.</p>';
+				} else {
+					echo '<p style="color:red">Fehler: Das Passwort ist nicht komplex genug.</p>';
+				}
+			} else {
+				echo '<p style="color:red">Fehler: Die Passwörter stimmen nicht überein.</p>';
+			}
+		} else {
+			echo '<p style="color:red">Fehler: Benutzername oder Passwort wurden nicht angegeben.</p>';
+		}
+	}
+}
+
+/*
+* output
+*/
+?>
+		</div>
+
+		<h1>Bitte Aktion wählen:</h1>
+
+		<h3>Schritt 1: Installation des Gesamtsystems</h3>
+		<p>Mit dem Aufruf der <a href="installer.php?aktion=installAllModules">Gesamtinstallation</a> wird die Installation für das Basissystem und alle Module gestartet. Dies ist normalerweise nur einmal bei der Erstinstallation des VCMS notwendig.</p>
+
+		<h3>Schritt 2: Einfügen eines Internetwarts</h3>
+		<p>Nach der Grundinstallation muss ein Internetwart angelegt werden, um sich initial im Intranet anmelden zu können.</p>
+		<form action="installer.php" method="post">
+		<input type="hidden" name="aktion" value="createInternetWart" />
+		<input type="text" name="vorname" size="20" /> Vorname<br />
+		<input type="text" name="name" size="20" /> Nachname<br />
+		<input type="text" name="benutzername" size="20" /> Benutzername<br />
+		<input type="password" name="pwd1" size="20" /> Passwort<br />
+		<input type="password" name="pwd2" size="20" /> Wiederholung des Passworts<br />
+		<input type="submit" value="Internetwart anlegen" />
+		</form>
+		<p><?php echo $libAuth->getPasswordRequirements(); ?></p>
+	</body>
+</html>

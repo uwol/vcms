@@ -57,7 +57,7 @@ if($libAuth->isLoggedin()){
 		$stmt->execute();
 		$letztesSemester = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		$semesterarray['semester'] = $libTime->getNaechstesSemester();
+		$semesterarray['semester'] = $libTime->getFollowingSemesterName();
 
 		foreach($vorstand as $amt){
 			$semesterarray[$amt] = '';

@@ -45,7 +45,7 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			echo '<div class="caption">';
 
 			printVeranstaltungTitle($row);
-			printVeranstaltungTime($row);
+			printVeranstaltungDateTime($row);
 
 			echo '</div>';
 			echo '</div>';

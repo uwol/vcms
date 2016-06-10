@@ -56,7 +56,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$datum = substr($row['datum'], 8, 2). "." .substr($row['datum'], 5, 2). "." .substr($row['datum'], 0, 4);
 
 	echo '<tr>';
-	echo '<td>' .$libTime->wochentag($row['datum']). " " .$datum. " " .$time. '</td>';
+	echo '<td>' .$libTime->getWeekday($row['datum']). " " .$datum. " " .$time. '</td>';
 	echo '<td>';
 
 	switch($row['aktion']){

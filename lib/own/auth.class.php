@@ -151,9 +151,9 @@ class LibAuth{
 
 			//b. determine functions
 			$stmt = $libDb->prepare("SELECT * FROM base_semester WHERE semester = :semester_aktuell OR semester = :semester_naechst OR semester = :semester_vorherig");
-			$stmt->bindValue(':semester_aktuell', $libTime->getAktuellesSemester());
-			$stmt->bindValue(':semester_naechst', $libTime->getNaechstesSemester());
-			$stmt->bindValue(':semester_vorherig', $libTime->getVorherigesSemester());
+			$stmt->bindValue(':semester_aktuell', $libTime->getSemesterName());
+			$stmt->bindValue(':semester_naechst', $libTime->getFollowingSemesterName());
+			$stmt->bindValue(':semester_vorherig', $libTime->getPreviousSemesterName());
 			$stmt->execute();
 
 			//for all semesters

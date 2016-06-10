@@ -71,7 +71,7 @@ if(version_compare(PHP_VERSION, '5.1.0') >= 0){
 if(isset($_REQUEST['semester']) && $libTime->isValidSemesterString($_REQUEST['semester'])){
 	$libGlobal->semester = $_REQUEST['semester'];
 } else {
-	$libGlobal->semester = $libTime->getAktuellessemester();
+	$libGlobal->semester = $libTime->getSemesterName();
 }
 
 

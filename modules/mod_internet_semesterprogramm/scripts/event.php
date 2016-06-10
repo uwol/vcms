@@ -101,18 +101,8 @@ function printEventDetails($row){
 	/*
 	* date and time
 	*/
-	$time = substr($row['datum'], 11, 5);
-
-	// no time
-	if($time == '00:00'){
-		$time = '';
-	} elseif(substr($time, 3, 2) == 00){
-		$time = substr($time, 0, 2). 'h s.t.';
-	} elseif(substr($time, 3, 2) == 15){
-		$time = substr($time, 0, 2). 'h c.t.';
-	}
-
-	$datum = $libTime->formatDateTimeString($row['datum'], 2);
+	$date = $libTime->formatDateTimeString($row['datum'], 2);
+	$time = $libTime->formatDateTimeString($row['datum'], 3);
 
 	/*
 	* status
@@ -131,27 +121,27 @@ function printEventDetails($row){
 	* general infos
 	*/
 	echo '<p>';
-	echo '<b>Am ' .$datum. '</b>';
+	echo 'Am ' .$date;
 
 	if($time != ''){
-		echo '<br /><b> um ' .$time. '</b>';
-	}
-
-	if (($row['ort']) != ''){
-		echo '<br /><b>Ort: '.$row['ort'] .'</b>';
+		echo ' um ' .$time;
 	}
 
 	echo '</p>';
 
+	if ($row['ort'] != ''){
+		echo '<address>Ort: ' .$row['ort']. '</address>';
+	}
+
 	echo '<h4>Status</h4>';
 	echo '<p>' .$status. '</p>';
 
-	if(($row['beschreibung']) != ''){
+	if($row['beschreibung'] != ''){
 		echo '<h4>Beschreibung</h4>';
 		echo '<p>' .nl2br($row['beschreibung']). '</p>';
 	}
 
-	if(($row['spruch']) != ''){
+	if($row['spruch'] != ''){
 		echo '<h4>Spruch</h4>';
 		echo '<p>' .nl2br($row['spruch']). '</p>';
 	}
@@ -198,7 +188,7 @@ function printAnmeldungen($row){
 function printSemesterCover($row){
 	global $libTime;
 
-	$semester = $libTime->getSemesterEinesDatums($row['datum']);
+	$semester = $libTime->getSemesterNameAtDate($row['datum']);
 	$semesterCoverString = $libTime->getSemesterCoverString($semester);
 
 	if($semesterCoverString != ''){
@@ -215,7 +205,7 @@ function printSocialButtons($row){
 
 	echo '<p>';
 
-	$semester = $libTime->getSemesterEinesDatums($row['datum']);
+	$semester = $libTime->getSemesterNameAtDate($row['datum']);
 	$url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
 	$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateTimeString($row['datum'], 2);
 

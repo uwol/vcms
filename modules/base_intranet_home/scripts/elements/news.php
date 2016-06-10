@@ -56,7 +56,7 @@ if($count > 0){
 		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' ' .$row['bezeichnung']. '</h4>';
 
 		if(($row['text']) != ''){
-			echo '<a href="index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterEinesDatums($row['eingabedatum']). '#' .$row['id']. '">';
+			echo '<a href="index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterNameAtDate($row['eingabedatum']). '#' .$row['id']. '">';
 			echo $libString->truncate(trim($row['text']), 400);
 			echo '</a>';
 		}

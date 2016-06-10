@@ -134,9 +134,9 @@ class LibAssociation{
 		$aktuellermonat = @date('m');
 
 		if($aktuellermonat == 2 || $aktuellermonat == 3 || $aktuellermonat == 8 || $aktuellermonat == 9){
-			$vorstandssemester = $this->libTime->getNaechstesSemester();
+			$vorstandssemester = $this->libTime->getFollowingSemesterName();
 		} else {
-			$vorstandssemester = $this->libTime->getAktuellesSemester();
+			$vorstandssemester = $this->libTime->getSemesterName();
 		}
 
 		$stmt = $this->libDb->prepare("SELECT senior, jubelsenior, consenior, fuchsmajor, fuchsmajor2, scriptor, quaestor FROM base_semester WHERE semester = :semester");

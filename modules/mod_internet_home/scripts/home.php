@@ -34,21 +34,19 @@ function printVeranstaltungTitle($row){
 	echo '<h4><a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a></h4>';
 }
 
-function printVeranstaltungTime($row){
+function printVeranstaltungDateTime($row){
 	global $libTime;
 
 	echo '<p>';
 
-	$date = substr($row['datum'], 0, 10);
-	$datearray = explode('-', $date);
-	$dateString = $datearray[2]. '.' .$datearray[1]. '.';
-	$timeString = substr($row['datum'], 11, 5);
+	$date = $libTime->formatDateTimeString($row['datum'], 2);
+	$time = $libTime->formatDateTimeString($row['datum'], 3);
 
-	echo $libTime->wochentag($row['datum']). ', ' .$dateString;
+	echo $date;
 
-	if($timeString != '00:00'){
+	if($time != ''){
 		echo '<br />';
-		echo $timeString;
+		echo $time;
 	}
 
 	echo '</p>';

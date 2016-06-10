@@ -21,23 +21,23 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-$semesterIterator = $libTime->getAktuellesSemester();
+$semesterIterator = $libTime->getSemesterName();
 
 for($i=0; $i<50; $i++){
-	$semesterIterator = $libTime->getVorherigesSemesterEinesSemesters($semesterIterator);
+	$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
 }
 
 $semester50zurueck = $semesterIterator;
-$semester49zurueck = $libTime->getNaechstesSemesterEinesSemesters($semester50zurueck);
-$semester51zurueck = $libTime->getVorherigesSemesterEinesSemesters($semester50zurueck);
+$semester49zurueck = $libTime->getFollowingSemesterNameOfSemester($semester50zurueck);
+$semester51zurueck = $libTime->getPreviousSemesterNameOfSemester($semester50zurueck);
 
 for($i=0; $i<50; $i++){
-	$semesterIterator = $libTime->getVorherigesSemesterEinesSemesters($semesterIterator);
+	$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
 }
 
 $semester100zurueck = $semesterIterator;
-$semester99zurueck = $libTime->getNaechstesSemesterEinesSemesters($semester100zurueck);
-$semester101zurueck = $libTime->getVorherigesSemesterEinesSemesters($semester100zurueck);
+$semester99zurueck = $libTime->getFollowingSemesterNameOfSemester($semester100zurueck);
+$semester101zurueck = $libTime->getPreviousSemesterNameOfSemester($semester100zurueck);
 ?>
 <h1>Export</h1>
 <p>Das VCMS kann Datenbestände als CSV- und HTML-Tabellen exportieren. Die Dateien können in Word und LibreOffice/OpenOffice in der Serienbrieffunktion verwendet werden. Bitte behandle diese Dateien vertraulich, verschicke sie nicht per E-Mail und lösche sie nach der Verwendung.</p>

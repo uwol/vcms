@@ -403,16 +403,23 @@ class LibTime{
 
 	//-------------------------------- operations on semester string giving semester string -------------------------------------------------
 
-	function getNaechstesSemesterEinesSemesters($semesterString){
-		if(!$this->isValidSemesterString($semesterString)){
-			return '';
-		}
-
-		$semester = $this->getFollowingSemester($this->getSemesterFromSemesterString($semesterString));
+	function getSemesterNameAtDate($datum){
+		$semester = $this->getSemesterAtDate($datum);
 		return $semester['name'];
 	}
 
-	function getVorherigesSemesterEinesSemesters($semesterString){
+	function getSemesterName(){
+		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
+		return $semester['name'];
+	}
+
+	function getPreviousSemesterName(){
+		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
+		$previousSemester = $this->getPreviousSemester($semester);
+		return $previousSemester['name'];
+	}
+
+	function getPreviousSemesterNameOfSemester($semesterString){
 		if(!$this->isValidSemesterString($semesterString)){
 			return '';
 		}
@@ -421,36 +428,19 @@ class LibTime{
 		return $semester['name'];
 	}
 
-	function getSemesterEinesDatums($datum){
-		$semester = $this->getSemesterAtDate($datum);
-		return $semester['name'];
-	}
-
-	function getSemesterEinesTimestamps($timestamp){
-		$semester = $this->getSemesterAtDate(@date('Y-m-d', $timestamp));
-		return $semester['name'];
-	}
-
-	function getAktuellesSemester(){
-		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
-		return $semester['name'];
-	}
-
-	function getVorherigesSemester(){
-		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
-		$previousSemester = $this->getPreviousSemester($semester);
-		return $previousSemester['name'];
-	}
-
-	function getNaechstesSemester(){
+	function getFollowingSemesterName(){
 		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
 		$followingSemester = $this->getFollowingSemester($semester);
 		return $followingSemester['name'];
 	}
 
-	function getSemesterJahr($semesterString){
-		$semester = $this->getSemesterFromSemesterString($semesterString);
-		return $semester['startyear'];
+	function getFollowingSemesterNameOfSemester($semesterString){
+		if(!$this->isValidSemesterString($semesterString)){
+			return '';
+		}
+
+		$semester = $this->getFollowingSemester($this->getSemesterFromSemesterString($semesterString));
+		return $semester['name'];
 	}
 
 	function getShortSemester($semesterString){
@@ -458,58 +448,23 @@ class LibTime{
 		return $semester['prefix'].$semester['startyear'];
 	}
 
-	function wochentag($datum){
+	function getWeekday($datum){
 		$wochentage = array('So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.');
 		$wochentag = $wochentage[@date('w', strtotime($datum))];
 		return $wochentag;
 	}
 
-	function getMonthName($i){
-		switch ($i) {
-			case '01':
-				return 'Januar';
-				break;
-			case '02':
-				return 'Februar';
-				break;
-			case '03':
-				return 'März';
-				break;
-			case '04':
-				return 'April';
-				break;
-			case '05':
-				return 'Mai';
-				break;
-			case '06':
-				return 'Juni';
-				break;
-			case '07':
-				return 'Juli';
-				break;
-			case '08':
-				return 'August';
-				break;
-			case '09':
-				return 'September';
-				break;
-			case '10':
-				return 'Oktober';
-				break;
-			case '11':
-				return 'November';
-				break;
-			case '12':
-				return 'Dezember';
-				break;
-		}
+	function getMonth($i){
+		$months = array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
+				'August', 'September', 'Oktober', 'November', 'Dezember');
+		return $months[$i-1];
 	}
 
 	function getSemestersFromDates($daten){
 		$semesters = array();
 
 		for($i = 0; $i<count($daten); $i++){
-			$semester = $this->getSemesterEinesDatums($daten[$i]);
+			$semester = $this->getSemesterNameAtDate($daten[$i]);
 
 			if($semester != ''){
 				$semesters[] = $semester;
@@ -599,7 +554,7 @@ class LibTime{
 
 		$ssAbk = 'SS';
 		$wsAbk = 'WS';
-		
+
 		if($enableAbbr){
 			$ssAbk = "<abbr title=\"Sommersemester\">SS</abbr>"; // \xc2\xa0 is non-breaking space
 		}
@@ -672,15 +627,28 @@ class LibTime{
 	//-------------------- conversions ------------------------------------------
 
 	function formatDateTimeString($dateTime, $mode = 0){
-		if($dateTime != ''){
-			if($mode == 0){
-				return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4) .' '. substr($dateTime, 11, 8);
-			} elseif($mode == 1){
-				return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4) .' '. substr($dateTime, 11, 5);
-			} elseif($mode == 2){
-				return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4);
+		$result = '';
+
+		if($mode == 0){
+			return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4) .' '. substr($dateTime, 11, 8);
+		} elseif($mode == 1){
+			return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4) .' '. substr($dateTime, 11, 5);
+		} elseif($mode == 2){
+			return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4);
+		} elseif($mode == 3){
+			$time = substr($dateTime, 11, 5);
+
+			// no time
+			if($time == '00:00'){
+				$result = '';
+			} elseif(substr($time, 3, 2) == 00){
+				$result = substr($time, 0, 2). 'h s.t.';
+			} elseif(substr($time, 3, 2) == 15){
+				$result = substr($time, 0, 2). 'h c.t.';
 			}
 		}
+
+		return $result;
 	}
 
 	function convertMysqlDateToDatum($mysqldatetime){
