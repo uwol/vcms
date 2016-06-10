@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 echo '<h1>Statusänderungen</h1>';
 echo '<p>Das VCMS speichert den Zeitpunkt von Änderungen an Adressen und Gruppenzugehörigkeiten. Die folgenden Tabellen listen die letzten Änderungen an diesen Daten auf. Dies kann z. B. dazu dienen, ein parallel geführtes Mitgliederverzeichnis aktuell zu halten.</p>';
 
@@ -27,18 +28,19 @@ echo '<h2>Gruppenänderungen</h2>';
 echo '<table>';
 echo '<tr><th style="20%">Person</th><th style="60%">Gruppe</th><th style="20%">Änderungsdatum</th></tr>';
 
-$stmt = $libDb->prepare('SELECT *,base_gruppe.beschreibung AS gruppenbeschreibung FROM base_person,base_gruppe WHERE base_person.gruppe = base_gruppe.bezeichnung AND datum_gruppe_stand IS NOT NULL AND datum_gruppe_stand != "" ORDER BY datum_gruppe_stand DESC LIMIT 0,100');
+$stmt = $libDb->prepare('SELECT *, base_gruppe.beschreibung AS gruppenbeschreibung FROM base_person, base_gruppe WHERE base_person.gruppe = base_gruppe.bezeichnung AND datum_gruppe_stand IS NOT NULL AND datum_gruppe_stand != "" ORDER BY datum_gruppe_stand DESC LIMIT 0,100');
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
-	echo '<td>' .$libMitglied->formatMitgliedNameString($row['anrede'],$row['titel'],$row['rang'],$row['vorname'],$row['praefix'],$row['name'],$row['suffix'],0). '</td>';
-	echo '<td>'.$row['gruppenbeschreibung'].'</td>';
-	echo '<td>'.$row['datum_gruppe_stand'].'</td>';
+	echo '<td>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0). '</td>';
+	echo '<td>' .$row['gruppenbeschreibung']. '</td>';
+	echo '<td>' .$libTime->formatDateTimeString($row['datum_gruppe_stand'], 2). '</td>';
 	echo '</tr>';
 }
 
 echo '</table>';
+
 
 
 echo '<h2>Änderungen an Adresse 1</h2>';
@@ -50,36 +52,37 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
-	echo '<td>' .$libMitglied->formatMitgliedNameString($row['anrede'],$row['titel'],$row['rang'],$row['vorname'],$row['praefix'],$row['name'],$row['suffix'],0). '</td>';
+	echo '<td>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0). '</td>';
 
-	$adrStr = "";
+	$adrStr = '';
 
-	if($row['zusatz1'] != ""){
-		$adrStr .= $row['zusatz1']."<br />";
+	if($row['zusatz1'] != ''){
+		$adrStr .= $row['zusatz1']. '<br />';
 	}
 
-	if($row['strasse1'] != ""){
-		$adrStr .= $row['strasse1']."<br />";
+	if($row['strasse1'] != ''){
+		$adrStr .= $row['strasse1']. '<br />';
 	}
 
-	if($row['plz1'] != "" || $row['ort1'] != ""){
-		$adrStr .= $row['plz1']." " .$row['ort1']. "<br />";
+	if($row['plz1'] != '' || $row['ort1'] != ''){
+		$adrStr .= $row['plz1']. ' ' .$row['ort1']. '<br />';
 	}
 
-	if($row['land1'] != ""){
-		$adrStr .= $row['land1']."<br />";
+	if($row['land1'] != ''){
+		$adrStr .= $row['land1']. '<br />';
 	}
 
-	if($row['telefon1'] != ""){
-		$adrStr .= $row['telefon1']."<br />";
+	if($row['telefon1'] != ''){
+		$adrStr .= $row['telefon1']. '<br />';
 	}
 
-	echo '<td>'.$adrStr.'</td>';
-	echo '<td>'.$row['datum_adresse1_stand'].'</td>';
+	echo '<td>' .$adrStr. '</td>';
+	echo '<td>' .$libTime->formatDateTimeString($row['datum_adresse1_stand'], 2). '</td>';
 	echo '</tr>';
 }
 
 echo '</table>';
+
 
 
 echo '<h2>Änderungen an Adresse 2</h2>';
@@ -115,8 +118,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$adrStr .= $row['telefon2']."<br />";
 	}
 
-	echo '<td>'.$adrStr.'</td>';
-	echo '<td>'.$row['datum_adresse2_stand'].'</td>';
+	echo '<td>' .$adrStr. '</td>';
+	echo '<td>' .$libTime->formatDateTimeString($row['datum_adresse2_stand'], 2). '</td>';
 	echo '</tr>';
 }
 

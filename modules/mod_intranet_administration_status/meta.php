@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Admin Statusänderungen";
-$version = "2.08";
+$version = "2.10";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";

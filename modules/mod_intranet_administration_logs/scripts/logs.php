@@ -20,8 +20,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-echo '<h1>Log</h1>';
 
+echo '<h1>Log</h1>';
 
 echo '<h2>Erfolglose Intranet-Anmeldungen</h2>';
 echo 'Personen mit mindestens fünf erfolglosen Intranet-Anmeldungen in den letzten zwei Monaten.';
@@ -52,11 +52,10 @@ $stmt = $libDb->prepare('SELECT aktion, datum, mitglied, ipadresse FROM sys_log_
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$time = substr($row['datum'], 11, 5);
-	$datum = substr($row['datum'], 8, 2). "." .substr($row['datum'], 5, 2). "." .substr($row['datum'], 0, 4);
+	$dateTime = $libTime->formatDateTimeString($row['datum'], 1);
 
 	echo '<tr>';
-	echo '<td>' .$libTime->getWeekday($row['datum']). " " .$datum. " " .$time. '</td>';
+	echo '<td>' .$libTime->getWeekday($row['datum']). ', ' .$dateTime. '</td>';
 	echo '<td>';
 
 	switch($row['aktion']){
