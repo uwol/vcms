@@ -72,8 +72,6 @@ if($libAuth->isLoggedIn()){
 /*
 * output
 */
-
-
 echo '<h1>' .$row['titel']. '</h1>';
 
 echo '<div class="row">';
@@ -95,7 +93,7 @@ echo '</div>';
 
 // Haupttext
 $col = 9;
-if(isFbEvent($row)){
+if(isFacebookEvent($row)){
 	$col = $col - 3;
 }
 
@@ -106,7 +104,7 @@ echo '</div>';
 
 
 // Facebook
-if(isFbEvent($row)){
+if(isFacebookEvent($row)){
 	echo '<div class="col-sm-3">';
 	printFacebookEvent($row);
 	echo '</div>';
@@ -318,9 +316,8 @@ function printGallery($row){
 function printFacebookEvent($row){
 	global $libGenericStorage, $libString, $libTime;
 
-	$fbAccessToken = $libGenericStorage->loadValueInCurrentModule('fbAccessToken');
-
-	if(isFbEvent($row) && ini_get('allow_url_fopen') && $fbAccessToken != ''){
+	if(isFacebookEvent($row)){
+		$fbAccessToken = $libGenericStorage->loadValueInCurrentModule('fbAccessToken');
 		$fbEventId = $row['fb_eventid'];
 
 		$fbUrl = 'https://www.facebook.com';
@@ -393,7 +390,12 @@ function printFacebookEvent($row){
 	}
 }
 
-function isFbEvent($row){
-	return isset($row['fb_eventid']) && is_numeric($row['fb_eventid']);
+function isFacebookEvent($row){
+	global $libGenericStorage;
+
+	$fbAccessToken = $libGenericStorage->loadValueInCurrentModule('fbAccessToken');
+	$result = isset($row['fb_eventid']) && is_numeric($row['fb_eventid'])
+		&& ini_get('allow_url_fopen') && $fbAccessToken != '';
+	return $result;
 }
 ?>
