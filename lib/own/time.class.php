@@ -645,6 +645,8 @@ class LibTime{
 				$result = substr($time, 0, 2). 'h s.t.';
 			} elseif(substr($time, 3, 2) == 15){
 				$result = substr($time, 0, 2). 'h c.t.';
+			} else {
+				$result = $time;
 			}
 		}
 
