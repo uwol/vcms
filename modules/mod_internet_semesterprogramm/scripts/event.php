@@ -231,10 +231,12 @@ function printSocialButtons($row){
 	$url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
 	$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateTimeString($row['datum'], 2);
 
-	//facebook
-	echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
-	echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
-	echo '</a> ';
+	if(!isFacebookEvent($row)){
+		//facebook
+		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
+		echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
+		echo '</a> ';
+	}
 
 	//twitter
 	echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
@@ -324,18 +326,11 @@ function printFacebookEvent($row){
 		$fbGraphUrl = 'https://graph.facebook.com';
 		$fbAccessTokenQuery = '?access_token=' .$fbAccessToken;
 		
-		$fbEventEndpoint = $fbGraphUrl. '/' .$fbEventId.$fbAccessTokenQuery;
 		$fbEventPhotosEndpoint = $fbGraphUrl. '/' .$fbEventId. '/photos' .$fbAccessTokenQuery;
 		$fbEventInterestedEndpoint = $fbGraphUrl. '/' .$fbEventId. '/interested' .$fbAccessTokenQuery. '&summary=count';
 		$fbEventAttendingEndpoint = $fbGraphUrl. '/' .$fbEventId. '/attending' .$fbAccessTokenQuery. '&summary=count';
 
 		$eventLink = $fbUrl. '/events/' .$fbEventId;
-
-		$eventJson = file_get_contents($fbEventEndpoint);
-		$eventObject = json_decode($eventJson, true);
-		$eventObjectName = $eventObject['name'];
-		$eventObjectDescription = $eventObject['description'];
-		$eventObjectDescriptionTruncated = $libString->truncate($eventObjectDescription, 100);
 
 		$eventPhotosJson = file_get_contents($fbEventPhotosEndpoint);
 		$eventPhotosObject = json_decode($eventPhotosJson, true);
@@ -349,11 +344,13 @@ function printFacebookEvent($row){
 		$eventAttendingObject = json_decode($eventAttendingJson, true);
 		$eventAttendingCount = $eventAttendingObject['summary']['count'];
 
+		// ------------------
+
 		echo '<div class="thumbnail">';
 
 		echo '<div class="thumbnailOverflow">';
-		echo '<a href="' .$eventLink. '">';
-		echo '<img src="' .$eventPhotoSource. '" alt="" class="img-responsive center-block" />';
+		echo '<a href="' .$libString->protectXss($eventLink). '">';
+		echo '<img src="' .$libString->protectXss($eventPhotoSource). '" alt="" class="img-responsive center-block" />';
 		echo '</a>';
 		echo '</div>';
 
@@ -362,29 +359,34 @@ function printFacebookEvent($row){
 
 		echo '<div class="media-left" style="text-align:center">';
 		echo '<span style="font-size:32px;line-height:32px">' .substr($row['datum'], 8, 2). '</span><br />';
+
 		$monatName = $libTime->getMonth((int) substr($row['datum'], 5, 2));
 		$monatNameSubstr = substr($monatName, 0, 3);
 		$monatNameUpper = strtoupper($monatNameSubstr);
+
 		echo '<span style="font-size:12px;line-height:12px;color:#e34e60">' .$monatNameUpper. '</span>';
 		echo '</div>';
 
 		echo '<div class="media-body">';
 
 		echo '<h4 style="font-weight:bold;margin-top:0;margin-bottom:0;font-size:14px">';
-		echo '<a href="' .$eventLink. '" style="color:black">';
-		echo $libString->protectXss($eventObjectName);
-		echo '</a>';
+		echo '<a href="' .$libString->protectXss($eventLink). '" style="color:black">' .$row['titel']. '</a>';
 		echo '</h4>';
 
 		echo '<p style="color:#90949c;margin-top:0;margin-bottom:0;font-size:12px">';
-		echo $eventInterestedCount. ' Personen sind interessiert';
+		echo $libString->protectXss($eventInterestedCount). ' Personen sind interessiert';
 		echo ' · ';
-		echo $eventAttendingCount. ' Personen nehmen teil';
+		echo $libString->protectXss($eventAttendingCount). ' Personen nehmen teil';
 		echo '</p>';
 
 		echo '</div>';
-
 		echo '</div>';
+
+		echo '<hr />';
+		echo '<a href="' .$libString->protectXss($eventLink). '">';
+		echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
+		echo '</a>';
+
 		echo '</div>';
 		echo '</div>';
 	}

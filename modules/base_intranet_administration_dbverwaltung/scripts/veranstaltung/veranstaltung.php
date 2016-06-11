@@ -147,7 +147,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextarea('beschreibung', 'Beschreibung', $varray['beschreibung']);
 	$libForm->printTextInput('status', 'Status (Maximal 2 Buchstaben, z. B. ho oder o)', $varray['status']);
 	$libForm->printTextInput('ort', 'Ort', $varray['ort']);
-	$libForm->printTextInput('fb_eventid', 'FB Event-Id', $varray['fb_eventid']);
+	$libForm->printTextInput('fb_eventid', '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon_small" /> Event-Id', $varray['fb_eventid']);
 
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
 
