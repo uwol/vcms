@@ -61,7 +61,7 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	//build event
-	$event = new LibEvent($row['datum']);
+	$event = new LibCalendarEvent($row['datum']);
 	$event->setId($row['id']);
 	$event->setLocation($row['ort']);
 	$event->setSummary($row['titel']);

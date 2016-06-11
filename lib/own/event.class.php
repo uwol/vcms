@@ -17,20 +17,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
-class LibGlobal{
-	var $semester;
-	var $module;
-	var $pid;
-	var $page;
-	var $iid;
-	var $libInclude;
-	var $version = '4.89';
-	var $errorTexts = array();
-	var $notificationTexts = array();
-	var $vcmsHostname;
+class LibEvent{
 
-	function __construct() {
-		$this->vcmsHostname = 'ver' . 'bin' . 'dung' . 'scms' . '.' . 'de';
+	function isFacebookEvent($row){
+		global $libGenericStorage;
+
+		$fbAccessToken = $libGenericStorage->loadValue('mod_internet_home', 'fbAccessToken');
+		$result = isset($row['fb_eventid']) && is_numeric($row['fb_eventid'])
+			&& ini_get('allow_url_fopen') && $fbAccessToken != '';
+		return $result;
 	}
 }
 ?>

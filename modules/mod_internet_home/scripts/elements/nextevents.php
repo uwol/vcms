@@ -85,7 +85,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbUrlExists){
 	}
 
 	if($fbPagePluginEnabled){
-		echo '<div class="col-sm-6 col-md-6">';
+		echo '<div class="col-sm-12 col-md-6">';
 		echo '<div class="thumbnail">';
 		echo '<div class="caption">';
 		echo '<div style="max-width:500px" class="center-block">';

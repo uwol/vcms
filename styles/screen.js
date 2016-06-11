@@ -45,7 +45,7 @@ function adjustThumbnailImgMarginTop(thumbnailImg){
 
 /* adjust facebook plugins */
 
-function adjustFacebookPagePlugins(){
+function adjustFacebookPagePluginsSrc(){
 	$("iframe.facebookPagePlugin").each(function() {
 		var iframe = $(this);
 		var width = iframe.width();
@@ -56,14 +56,31 @@ function adjustFacebookPagePlugins(){
 	});
 }
 
+function adjustFacebookEventPluginsHeight(){
+	$("iframe.facebookEventPlugin").each(function() {
+		adjustFacebookEventPluginHeight(this);
+	});
+}
 
+function adjustFacebookEventPluginHeight(iframe){
+	var iframewindow = iframe.contentWindow? iframe.contentWindow : iframe.contentDocument.defaultView;
+	var contentHeight = iframewindow.document.body.scrollHeight + "px";
+	iframe.height = contentHeight;
+}
+
+// --------------------
 
 $(document).ready(function() {
 	animateLasteInsertId();
 	adjustThumbnailImgsOnReady();
-	adjustFacebookPagePlugins();
-});
 
+	adjustFacebookPagePluginsSrc();
+	adjustFacebookEventPluginsHeight();
+
+	$("iframe.facebookEventPlugin").load(function(){
+		adjustFacebookEventPluginHeight(this);
+	});
+});
 
 var resizeDebounce;
 
@@ -71,6 +88,6 @@ $(window).resize(function() {
 	clearTimeout(resizeDebounce);
 	resizeDebounce = setTimeout(function(){
 		adjustThumbnailImgsOnResize();
-		adjustFacebookPagePlugins();
+		adjustFacebookPagePluginSrc();
 	}, 500);
 });

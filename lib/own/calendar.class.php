@@ -22,7 +22,7 @@ class LibCalendar{
 	var $eventSet;
 
 	function __construct($startDate, $endDate){
-		$this->eventSet = new LibEventSet();
+		$this->eventSet = new LibCalendarEventSet();
 		$startYear = intval(substr($startDate, 0, 4));
 		$endYear = intval(substr($endDate, 0, 4));
 
@@ -270,7 +270,7 @@ class LibDay{
 
 //-------------------------------------------------------------------------------------
 
-class LibEventSet{
+class LibCalendarEventSet{
 	var $events = array();
 
 	function addEvent($event){
@@ -307,7 +307,7 @@ class LibEventSet{
 	}
 }
 
-class LibEvent{
+class LibCalendarEvent{
 	//time infos
 	var $startDateTime; //2008-12-24 20:15:00
 	var $endDateTime;

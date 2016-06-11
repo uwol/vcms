@@ -30,7 +30,7 @@ echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . 
 /*
 * stylesheets
 */
-echo '    <link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css">' . PHP_EOL;
+echo '    <link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/screen.css" />' . PHP_EOL;
 
 if($libGlobal->module->getStyleSheet() != ''){

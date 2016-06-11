@@ -46,6 +46,7 @@ $libString = new LibString();
 $libForm = new LibForm();
 $libSecurityManager = new LibSecurityManager();
 $libTime = new LibTime();
+$libEvent = new LibEvent();
 $libDb = new LibDb($libConfig, $libString);
 $libVerein = new LibAssociation($libDb, $libTime);
 $libMitglied = new LibMember($libTime, $libDb, $libConfig);

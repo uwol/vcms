@@ -24,6 +24,7 @@ require_once('own/calendar.class.php');
 require_once('own/cronjobs.class.php');
 require_once('own/db.class.php');
 require_once('own/dependency.class.php');
+require_once('own/event.class.php');
 require_once('own/form.class.php');
 require_once('own/genericstorage.class.php');
 require_once('own/global.class.php');
