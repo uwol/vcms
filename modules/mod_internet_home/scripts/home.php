@@ -25,6 +25,10 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('fb_url')){
 	$libGenericStorage->saveValueInCurrentModule('fb_url', '');
 }
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('fbAccessToken')){
+	$libGenericStorage->saveValueInCurrentModule('fbAccessToken', '');
+}
+
 if(!$libGenericStorage->attributeExistsInCurrentModule('showFbPagePlugin')){
 	$libGenericStorage->saveValueInCurrentModule('showFbPagePlugin', 1);
 }

@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Homepage";
-$version = "2.69";
+$version = "2.70";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";

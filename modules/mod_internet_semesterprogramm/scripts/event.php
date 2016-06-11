@@ -21,10 +21,6 @@ if(!is_object($libGlobal))
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('fbAccessToken')){
-	$libGenericStorage->saveValueInCurrentModule('fbAccessToken', '');
-}
-
 /*
 * actions
 */
@@ -226,7 +222,7 @@ function printSemesterCover($row){
 }
 
 function printSocialButtons($row){
-	global $libConfig, $libTime;
+	global $libConfig, $libTime, $libEvent;
 
 	echo '<p>';
 
@@ -234,7 +230,7 @@ function printSocialButtons($row){
 	$url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
 	$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateTimeString($row['datum'], 2);
 
-	if(!isFacebookEvent($row)){
+	if(!$libEvent->isFacebookEvent($row)){
 		//facebook
 		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
 		echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
