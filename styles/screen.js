@@ -88,6 +88,7 @@ $(window).resize(function() {
 	clearTimeout(resizeDebounce);
 	resizeDebounce = setTimeout(function(){
 		adjustThumbnailImgsOnResize();
-		adjustFacebookPagePluginSrc();
+		adjustFacebookPagePluginsSrc();
+		adjustFacebookEventPluginsHeight();
 	}, 500);
 });
