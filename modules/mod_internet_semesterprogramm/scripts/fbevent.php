@@ -38,7 +38,7 @@ echo '<body style="background-color:transparent">';
 echo '<main style="padding:0;border:0">';
 
 if($libEvent->isFacebookEvent($row)){
-	$fbAccessToken = $libGenericStorage->loadValueInCurrentModule('fbAccessToken');
+	$fbAccessToken = $libGenericStorage->loadValue('mod_internet_home', 'fbAccessToken');
 	$fbEventId = $row['fb_eventid'];
 
 	$fbUrl = 'https://www.facebook.com';
