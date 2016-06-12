@@ -86,9 +86,12 @@ if($libEvent->isFacebookEvent($row)){
 	echo '</div>';
 
 	echo '<hr />';
+	
+	echo '<p>';
 	echo '<a href="' .$libString->protectXss($eventLink). '">';
 	echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
 	echo '</a>';
+	echo '</p>';
 
 	echo '</div>';
 	echo '</div>';
