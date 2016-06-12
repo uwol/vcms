@@ -105,7 +105,7 @@ echo '</div>';
 // Facebook
 if($libEvent->isFacebookEvent($row)){
 	echo '<div class="col-md-4 col-lg-3">';
-	echo '<iframe src="inc.php?iid=fb_event&eventid=' .$row['id']. '" class="facebookEventPlugin" width="100%" height="0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>';
+	echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
 	echo '</div>';
 }
 

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 if(!is_object($libGlobal))
 	exit();
@@ -21,21 +20,6 @@ $stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE id=:id');
 $stmt->bindValue(':id', $id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-echo '<html lang="de">';
-echo '<head>';
-echo '<meta charset="utf-8" />';
-echo '<title>' .$row['titel']. '</title>';
-echo '<link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />';
-echo '<link rel="stylesheet" href="styles/screen.css" />';
-echo '<script src="styles/jquery-2.2.3.min.js"></script>';
-echo '<script src="styles/bootstrap/bootstrap.min.js"></script>';
-echo '<script src="styles/screen.js"></script>';
-echo '<meta name="robots" content="noindex, nofollow, noarchive" />';
-echo '</head>';
-echo '<body style="background-color:transparent">';
-echo '<main style="padding:0;border:0">';
 
 if($libEvent->isFacebookEvent($row)){
 	$fbAccessToken = $libGenericStorage->loadValue('mod_internet_home', 'fbAccessToken');
@@ -109,8 +93,4 @@ if($libEvent->isFacebookEvent($row)){
 	echo '</div>';
 	echo '</div>';
 }
-
-echo '</main>';
-echo '</body>';
-echo '</html>';
 ?>

@@ -14,7 +14,7 @@ function adjustThumbnailImgsOnReady(){
 	});
 }
 
-function adjustThumbnailImgsOnResize(){
+function adjustThumbnailImgs(){
 	$(".thumbnail .thumbnailOverflow img").each(function() {
 		adjustThumbnailImg($(this));
 	});
@@ -56,30 +56,29 @@ function adjustFacebookPagePluginsSrc(){
 	});
 }
 
-function adjustFacebookEventPluginsHeight(){
-	$("iframe.facebookEventPlugin").each(function() {
-		adjustFacebookEventPluginHeight(this);
+function loadFacebookEventPlugins(){
+	$(".facebookEventPlugin").each(function() {
+		var div = $(this);
+		var eventid = div.attr('data-eventid');
+
+		$.ajax({
+			url: "inc.php?iid=fb_event&eventid=" + eventid,
+			context: document.body
+		}).done(function(html) {
+			div.replaceWith(html);
+			adjustThumbnailImgs();
+		});
 	});
 }
 
-function adjustFacebookEventPluginHeight(iframe){
-	var iframewindow = iframe.contentWindow? iframe.contentWindow : iframe.contentDocument.defaultView;
-	var contentHeight = iframewindow.document.body.scrollHeight + "px";
-	iframe.height = contentHeight;
-}
 
 // --------------------
 
 $(document).ready(function() {
 	animateLasteInsertId();
 	adjustThumbnailImgsOnReady();
-
 	adjustFacebookPagePluginsSrc();
-	adjustFacebookEventPluginsHeight();
-
-	$("iframe.facebookEventPlugin").load(function(){
-		adjustFacebookEventPluginHeight(this);
-	});
+	loadFacebookEventPlugins();
 });
 
 var resizeDebounce;
@@ -87,8 +86,7 @@ var resizeDebounce;
 $(window).resize(function() {
 	clearTimeout(resizeDebounce);
 	resizeDebounce = setTimeout(function(){
-		adjustThumbnailImgsOnResize();
+		adjustThumbnailImgs();
 		adjustFacebookPagePluginsSrc();
-		adjustFacebookEventPluginsHeight();
 	}, 500);
 });
