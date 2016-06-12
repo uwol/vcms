@@ -6,7 +6,7 @@ function animateLasteInsertId(){
 
 /* adjust thumbnails */
 
-function adjustThumbnailImgsOnReady(){
+function adjustThumbnailImgsOnLoad(){
 	$(".thumbnail .thumbnailOverflow img").load(function() {
 		adjustThumbnailImg($(this));
 	}).each(function() {
@@ -66,7 +66,7 @@ function loadFacebookEventPlugins(){
 			context: document.body
 		}).done(function(html) {
 			div.replaceWith(html);
-			adjustThumbnailImgs();
+			adjustThumbnailImgsOnLoad();
 		});
 	});
 }
@@ -76,7 +76,7 @@ function loadFacebookEventPlugins(){
 
 $(document).ready(function() {
 	animateLasteInsertId();
-	adjustThumbnailImgsOnReady();
+	adjustThumbnailImgsOnLoad();
 	adjustFacebookPagePluginsSrc();
 	loadFacebookEventPlugins();
 });
