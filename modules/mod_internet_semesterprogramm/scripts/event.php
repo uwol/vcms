@@ -104,7 +104,7 @@ echo '</div>';
 
 // Facebook
 if($libEvent->isFacebookEvent($row)){
-	echo '<div class="col-md-4 col-lg-3">';
+	echo '<div class="col-sm-12 col-md-4 col-lg-3">';
 	echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
 	echo '</div>';
 }
