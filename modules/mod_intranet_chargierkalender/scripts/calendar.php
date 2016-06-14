@@ -218,7 +218,11 @@ class LibChargierKalenderEvent{
 					$timeString = substr($timeString, 0, 2)."h s.t.";
 				} elseif(substr($timeString, 3, 2) == 15){
 					$timeString = substr($timeString, 0, 2)."h c.t.";
+				} else {
+					$timeString = $timeString. 'h';
 				}
+			} else {
+				$timeString = $timeString. 'h';
 			}
 		}
 
