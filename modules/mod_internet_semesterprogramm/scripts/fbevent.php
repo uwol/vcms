@@ -25,11 +25,11 @@ if($libEvent->isFacebookEvent($row)){
 	$fbAccessToken = $libGenericStorage->loadValue('mod_internet_home', 'fbAccessToken');
 	$fbEventId = $row['fb_eventid'];
 
-	$eventUrl = $fbUrl. '/events/' .$fbEventId;
-
 	$fbUrl = 'https://www.facebook.com';
 	$fbGraphUrl = 'https://graph.facebook.com';
 	$fbAccessTokenQuery = '?access_token=' .$fbAccessToken;
+
+	$eventUrl = $fbUrl. '/events/' .$fbEventId;
 
 	$fbEventPhotosEndpoint = $fbGraphUrl. '/' .$fbEventId. '/photos' .$fbAccessTokenQuery;
 	$fbEventInterestedEndpoint = $fbGraphUrl. '/' .$fbEventId. '/interested' .$fbAccessTokenQuery. '&summary=count';
