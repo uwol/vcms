@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
-$pageTitle = $libConfig->verbindungName;
-$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/';
+$pageTitle = '';
+$pageCanonicalUrl = '';
+$pageOgUrl = '';
 
-if($libGlobal->pid != $libConfig->defaultHome){
-	$pageTitle .= ' - ' . $libGlobal->page->getTitle();
-}
+if($libGlobal->pid == $libConfig->defaultHome){
+	$pageTitle = $libConfig->verbindungName;
+	$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/';
+	$pageOgUrl = 'http://' .$libConfig->sitePath. '/'; 
+} else {
+	$pageTitle = $libConfig->verbindungName. ' - ' . $libGlobal->page->getTitle();
+	$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/index.php?pid=' .$libGlobal->pid;
+	$pageOgUrl = 'http://' .$libConfig->sitePath. '/'; 
 
-if($libGlobal->page->getPid() == 'semesterprogramm_event'){
-	if(isset($_REQUEST['eventid'])){
+	if($libGlobal->page->getPid() == 'semesterprogramm_event' 
+			&& isset($_REQUEST['eventid']) && is_numeric($_REQUEST['eventid'])){
+		$pageCanonicalUrl .= '&amp;eventid=' .$_REQUEST['eventid'];
+		$pageOgUrl .= 'index.php?pid=' .$libGlobal->pid. '&amp;eventid=' .$_REQUEST['eventid'];
+
 		$stmt = $libDb->prepare("SELECT titel, datum FROM base_veranstaltung WHERE id=:id");
 		$stmt->bindValue(':id', $_REQUEST['eventid'], PDO::PARAM_INT);
 		$stmt->execute();
@@ -17,7 +26,6 @@ if($libGlobal->page->getPid() == 'semesterprogramm_event'){
 
 		if($event['titel'] != ''){
 			$pageTitle = $libConfig->verbindungName . ' - ' . $event['titel'] . ' am ' . $libTime->formatDateTimeString($event['datum'], 2);
-			$pageCanonicalUrl .= 'index.php?pid=' .$libGlobal->pid. '&amp;eventid=' .$_REQUEST['eventid'];
 		}
 
 		unset($event);
@@ -86,7 +94,7 @@ echo '    <link rel="canonical" href="' .$pageCanonicalUrl. '"/>' . PHP_EOL;
 */
 echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'fbAppId'). '"/>' . PHP_EOL;
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
-echo '    <meta property="og:url" content="' .$pageCanonicalUrl. '"/>' . PHP_EOL;
+echo '    <meta property="og:url" content="' .$pageOgUrl. '"/>' . PHP_EOL;
 echo '    <meta property="og:title" content="' .$pageTitle. '"/>' . PHP_EOL;
 echo '    <meta property="og:image" content="http://' .$libConfig->sitePath. '/custom/styles/og_image.jpg"/>' . PHP_EOL;
 echo '    <meta property="og:image:type" content="image/jpeg" />' . PHP_EOL;
