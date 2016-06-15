@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" prefix="og: http://ogp.me/ns#">
+<html lang="de">
 <?php
 $pageTitle = $libConfig->verbindungName . ' - ' . $libGlobal->page->getTitle();
 
@@ -19,7 +19,7 @@ if($libGlobal->page->getPid() == 'semesterprogramm_event'){
 	}
 }
 
-echo '  <head>' . PHP_EOL;
+echo '  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# business: http://ogp.me/ns/business#">' . PHP_EOL;
 echo '    <meta charset="utf-8" />' . PHP_EOL;
 echo '    <meta http-equiv="X-UA-Compatible" content="IE=edge" />' . PHP_EOL;
 echo '    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' . PHP_EOL;
@@ -78,19 +78,19 @@ if($libGlobal->page->hasAccessRestriction()){
 */
 if($libGlobal->pid == $libConfig->defaultHome){
 	echo '    <link rel="canonical" href="http://' .$libConfig->sitePath. '/"/>' . PHP_EOL;
-    echo '    <meta property="og:title" content="' .$libConfig->verbindungName. '"/>' . PHP_EOL;
-    echo '    <meta property="og:type" content="non_profit"/>' . PHP_EOL;
-    echo '    <meta property="og:url" content="http://' .$libConfig->sitePath. '/"/>' . PHP_EOL;
-    echo '    <meta property="og:site_name" content="' .$libConfig->sitePath. '"/>' . PHP_EOL;
-    echo '    <meta property="og:description" content="' .$libConfig->seiteBeschreibung. '"/>' . PHP_EOL;
-    echo '    <meta property="og:street-address" content="' .$libConfig->verbindungStrasse. '"/>' . PHP_EOL;
-    echo '    <meta property="og:locality" content="' .$libConfig->verbindungOrt. '"/>' . PHP_EOL;
-    echo '    <meta property="og:postal-code" content="' .$libConfig->verbindungPlz. '"/>' . PHP_EOL;
-    echo '    <meta property="og:country-name" content="' .$libConfig->verbindungLand. '"/>' . PHP_EOL;
-    echo '    <meta property="og:email" content="' .$libConfig->emailInfo. '"/>' . PHP_EOL;
-    echo '    <meta property="og:phone_number" content="' .$libConfig->verbindungTelefon. '"/>' . PHP_EOL;
 }
 
+echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'fbAppId'). '"/>' . PHP_EOL;
+echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
+echo '    <meta property="og:url" content="http://' .$libConfig->sitePath. '/"/>' . PHP_EOL;
+echo '    <meta property="og:title" content="' .$pageTitle. '"/>' . PHP_EOL;
+echo '    <meta property="og:image" content="http://' .$libConfig->sitePath. '/custom/styles/og_image.jpg"/>' . PHP_EOL;
+echo '    <meta property="og:site_name" content="' .$libConfig->sitePath. '"/>' . PHP_EOL;
+echo '    <meta property="og:description" content="' .$libConfig->seiteBeschreibung. '"/>' . PHP_EOL;
+echo '    <meta property="business:contact_data:street_address" content="' .$libConfig->verbindungStrasse. '"/>' . PHP_EOL;
+echo '    <meta property="business:contact_data:locality" content="' .$libConfig->verbindungOrt. '"/>' . PHP_EOL;
+echo '    <meta property="business:contact_data:postal_code" content="' .$libConfig->verbindungPlz. '"/>' . PHP_EOL;
+echo '    <meta property="business:contact_data:country_name" content="' .$libConfig->verbindungLand. '"/>' . PHP_EOL;
 echo '  </head>' . PHP_EOL;
 echo '  <body>' . PHP_EOL;
 echo '    <div id="container" class="container">' . PHP_EOL;

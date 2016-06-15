@@ -22,7 +22,7 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if($libEvent->isFacebookEvent($row)){
-	$fbAccessToken = $libGenericStorage->loadValue('mod_internet_home', 'fbAccessToken');
+	$fbAccessToken = $libGenericStorage->loadValue('base_core', 'fbAccessToken');
 	$fbEventId = $row['fb_eventid'];
 
 	$fbUrl = 'https://www.facebook.com';
