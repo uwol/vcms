@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
-$pageTitle = $libConfig->verbindungName . ' - ' . $libGlobal->page->getTitle();
+$pageTitle = $libConfig->verbindungName;
+$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/';
+
+if($libGlobal->pid != $libConfig->defaultHome){
+	$pageTitle .= ' - ' . $libGlobal->page->getTitle();
+}
 
 if($libGlobal->page->getPid() == 'semesterprogramm_event'){
 	if(isset($_REQUEST['eventid'])){
@@ -12,6 +17,7 @@ if($libGlobal->page->getPid() == 'semesterprogramm_event'){
 
 		if($event['titel'] != ''){
 			$pageTitle = $libConfig->verbindungName . ' - ' . $event['titel'] . ' am ' . $libTime->formatDateTimeString($event['datum'], 2);
+			$pageCanonicalUrl .= 'index.php?pid=' .$libGlobal->pid. '&amp;eventid=' .$_REQUEST['eventid'];
 		}
 
 		unset($event);
@@ -73,18 +79,19 @@ if($libGlobal->page->hasAccessRestriction()){
 	echo '    <meta name="robots" content="index, follow, noarchive" />' . PHP_EOL;
 }
 
+echo '    <link rel="canonical" href="' .$pageCanonicalUrl. '"/>' . PHP_EOL;
+
 /*
 * Opengraph / Facebook meta data
 */
-if($libGlobal->pid == $libConfig->defaultHome){
-	echo '    <link rel="canonical" href="http://' .$libConfig->sitePath. '/"/>' . PHP_EOL;
-}
-
 echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'fbAppId'). '"/>' . PHP_EOL;
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
-echo '    <meta property="og:url" content="http://' .$libConfig->sitePath. '/"/>' . PHP_EOL;
+echo '    <meta property="og:url" content="' .$pageCanonicalUrl. '"/>' . PHP_EOL;
 echo '    <meta property="og:title" content="' .$pageTitle. '"/>' . PHP_EOL;
 echo '    <meta property="og:image" content="http://' .$libConfig->sitePath. '/custom/styles/og_image.jpg"/>' . PHP_EOL;
+echo '    <meta property="og:image:type" content="image/jpeg" />' . PHP_EOL;
+echo '    <meta property="og:image:height" content="265"/>' . PHP_EOL;
+echo '    <meta property="og:image:width" content="265"/>' . PHP_EOL;
 echo '    <meta property="og:site_name" content="' .$libConfig->sitePath. '"/>' . PHP_EOL;
 echo '    <meta property="og:description" content="' .$libConfig->seiteBeschreibung. '"/>' . PHP_EOL;
 echo '    <meta property="business:contact_data:street_address" content="' .$libConfig->verbindungStrasse. '"/>' . PHP_EOL;
