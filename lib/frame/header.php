@@ -81,7 +81,6 @@ if($libGlobal->pid == $libConfig->defaultHome){
     echo '    <meta property="og:title" content="' .$libConfig->verbindungName. '"/>' . PHP_EOL;
     echo '    <meta property="og:type" content="non_profit"/>' . PHP_EOL;
     echo '    <meta property="og:url" content="http://' .$libConfig->sitePath. '/"/>' . PHP_EOL;
-    echo '    <meta property="og:image" content="http://' .$libConfig->sitePath. '/custom/design/topleft.png"/>' . PHP_EOL;
     echo '    <meta property="og:site_name" content="' .$libConfig->sitePath. '"/>' . PHP_EOL;
     echo '    <meta property="og:description" content="' .$libConfig->seiteBeschreibung. '"/>' . PHP_EOL;
     echo '    <meta property="og:street-address" content="' .$libConfig->verbindungStrasse. '"/>' . PHP_EOL;
