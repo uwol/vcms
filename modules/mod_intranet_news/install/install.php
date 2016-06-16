@@ -58,7 +58,7 @@ $sql = "INSERT IGNORE INTO mod_news_kategorie (id, bezeichnung) VALUES (1, 'Tode
 (6, 'Eintritt'),
 (8, 'Veranstaltung'),
 (9, 'Adressänderung'),
-(10, 'allgemeiner Hinweis'),
+(10, 'Allgemeiner Hinweis'),
 (11, 'Philistrierung'),
 (12, 'Neuerung'),
 (13, 'Kritik'),

@@ -59,7 +59,7 @@ if($count > 0){
 
 		if(($row['text']) != ''){
 			echo '<p>';
-			$truncateReplacement = ' <b><a href="' .$link. '">...</a></b>';
+			$truncateReplacement = ' <a href="' .$link. '">...</a>';
 			echo $libString->truncate(trim($row['text']), 500, $truncateReplacement);
 			echo '</p>';
 		}

@@ -87,7 +87,7 @@ nav .navbar-intranet li a {
 
 main, footer {
 	background: rgba(255, 255, 255, 0.8);
-	padding: 0.5em;
+	padding: 0.6em;
 }
 
 main {
@@ -118,6 +118,7 @@ main h2 {
 
 main h3 {
 	font-size: 1.1em;
+	font-weight: normal;
 }
 
 main a:link, main a:hover {
