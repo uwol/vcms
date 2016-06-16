@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Chargierkalender";
-$version = "2.19";
+$version = "2.20";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";
@@ -14,7 +14,7 @@ $pages[] = new LibPage("intranet_chargierkalender_adminveranstaltung", "scripts/
 
 $menuElementsIntranet[] = new LibMenuEntry("intranet_chargierkalender_kalender", "Chargieren", 10525);
 $menuElementsInternet = array();
-$menuElementsAdministration[] = new LibMenuEntry("intranet_chargierkalender_adminliste", "Chargiereintrag", 560);
+$menuElementsAdministration[] = new LibMenuEntry("intranet_chargierkalender_adminliste", "Chargiereintrag", 205);
 $dependencies = array();
 $includes = array();
 $headerStrings = array();
