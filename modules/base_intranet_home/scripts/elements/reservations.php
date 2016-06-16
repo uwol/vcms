@@ -56,9 +56,11 @@ if($count > 0){
 		echo '</h4>';
 
 		if(($row['beschreibung']) != ''){
+			echo '<p>';
 			echo '<a href="index.php?pid=intranet_reservierung_liste">';
 			echo $libString->truncate(trim($row['beschreibung']), 200);
 			echo '</a>';
+			echo '</p>';
 		}
 
 		echo '</div>';

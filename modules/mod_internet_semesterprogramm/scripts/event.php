@@ -256,28 +256,24 @@ function printAnmeldeStatus($row){
 		$stmt->bindColumn('number', $angemeldet);
 		$stmt->fetch();
 
-		echo '<p>';
-
-		if($angemeldet){
-			echo '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> angemeldet';
-		} else {
-			echo '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
-		}
-
-		echo '</p>';
-
 		if(date('Y-m-d H:i:s') < $row['datum']){
 			echo '<form action="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '" method="post" class="form-inline">';
 
 			if($angemeldet){
 				echo '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
-				$libForm->printSubmitButtonInline('Abmelden');
+				$libForm->printSubmitButtonInline('<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> Abmelden');
 			} else {
 				echo '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
-				$libForm->printSubmitButtonInline('Anmelden');
+				$libForm->printSubmitButtonInline('<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> Anmelden');
 			}
 
 			echo '</form>';
+		} else {
+			if($angemeldet){
+				echo '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> angemeldet';
+			} else {
+				echo '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
+			}
 		}
 	} else {
 		echo '<p>Für den Anmeldestatus bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.</p>';

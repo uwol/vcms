@@ -67,7 +67,7 @@ class LibForm{
 	}
 
 	function printSubmitButtonInline($label){
-		echo '<button type="submit" class="btn btn-default">' .$label. '</button>';
+		echo '<button type="submit" class="btn btn-default btn-sm">' .$label. '</button>';
 	}
 
 	function printMitgliederDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){

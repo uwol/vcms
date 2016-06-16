@@ -40,6 +40,8 @@ if($count > 0){
 	$firstLine = true;
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		$link = 'index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterNameAtDate($row['eingabedatum']). '#' .$row['id'];
+
 		if(!$firstLine){
 			echo '<hr />';
 		}
@@ -53,12 +55,13 @@ if($count > 0){
 		}
 
 		echo '<div class="media-body">';
-		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' ' .$row['bezeichnung']. '</h4>';
+		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' <a href="' .$link. '">' .$row['bezeichnung']. '</a></h4>';
 
 		if(($row['text']) != ''){
-			echo '<a href="index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterNameAtDate($row['eingabedatum']). '#' .$row['id']. '">';
-			echo $libString->truncate(trim($row['text']), 400);
-			echo '</a>';
+			echo '<p>';
+			$truncateReplacement = ' <b><a href="' .$link. '">...</a></b>';
+			echo $libString->truncate(trim($row['text']), 500, $truncateReplacement);
+			echo '</p>';
 		}
 
 		echo '</div>';
