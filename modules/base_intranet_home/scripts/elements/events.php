@@ -61,7 +61,7 @@ $stmtCount->fetch();
 if($count > 0){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-heading">';
-	echo '<h2 class="panel-title">Veranstaltungen</h2>';
+	echo '<h3 class="panel-title">Veranstaltungen</h3>';
 	echo '</div>';
 	echo '<div class="panel-body">';
 

@@ -161,8 +161,12 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* output
 	*/
 	if(count($errors) > 0 || count($unsecuredFolders) > 0 || count($notReadableFiles) > 0){
-		echo '<h2>System-Probleme</h2>';
-		echo '<hr />';
+		echo '<div class="panel panel-default">';
+		echo '<div class="panel-heading">';
+		echo '<h3 class="panel-title">Systemprobleme</h3>';
+		echo '</div>';
+	
+		echo '<div class="panel-body">';
 
 		if(count($errors) > 0){
 			echo '<ul>';
@@ -183,7 +187,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			}
 
 			echo '</ul>';
-			echo '<p>Auf Dateien in diesen Ordnern kann aus dem Internet zugegriffen werden. Um den Schutz zu erneuern, rufe den Modul-Manager auf. Falls dies nicht hilft, gib PHP Schreibrechte auf die genannten Ordner, damit das VCMS htaccess-Dateien anlegen kann.</p>';
+			echo '<p>Auf Dateien in diesen Ordnern kann aus dem Internet zugegriffen werden. Um den Schutz zu erneuern, rufe den Modul-Manager auf. Falls dies nicht hilft, gib PHP Schreibrechte auf die genannten Ordner, damit das System htaccess-Dateien anlegen kann.</p>';
 		}
 
 		if(is_array($notReadableFiles) && count($notReadableFiles) > 0){
@@ -198,7 +202,8 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			echo '<p>Zugriffsrechte können z. B. mit einem FTP-Programm eingerichtet werden.</p>';
 		}
 
-		echo '<hr />';
+		echo '</div>';
+		echo '</div>';
 	}
 }
 

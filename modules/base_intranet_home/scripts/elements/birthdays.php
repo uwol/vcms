@@ -27,7 +27,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">';
-echo '<h2 class="panel-title">Geburtstage</h2>';
+echo '<h3 class="panel-title">Geburtstage</h3>';
 echo '</div>';
 echo '<div class="panel-body">';
 

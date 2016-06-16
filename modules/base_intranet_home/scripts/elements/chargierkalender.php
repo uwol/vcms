@@ -61,7 +61,7 @@ $stmtCount->fetch();
 if($count > 0){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-heading">';
-	echo '<h2 class="panel-title">Chargierkalender</h2>';
+	echo '<h3 class="panel-title">Chargierkalender</h3>';
 	echo '</div>';
 	echo '<div class="panel-body">';
 
@@ -81,7 +81,7 @@ if($count > 0){
 
 		echo '<div class="form-control-static">';
 		echo $libTime->formatDateTimeString($row['datum'], 2). ' ';
-		echo '<a href="index.php?pid=intranet_chargierkalender_kalender&amp;semester=' .$libTime->getSemesterNameAtDate($row['datum']). '#t' .$row['id']. '">';
+		echo '<a href="index.php?pid=intranet_chargierkalender_kalender&amp;semester=' .$libTime->getSemesterNameAtDate($row['datum']). '#' .$row['id']. '">';
 		echo $libVerein->getVereinNameString($row['verein']);
 		echo '</a>';
 		echo '</div>';

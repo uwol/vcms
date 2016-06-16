@@ -237,7 +237,7 @@ class LibChargierKalenderEvent{
 		* print event
 		*/
 		//header
-		$retstr .= '<div class="calendarEvent vevent">';
+		$retstr .= '<div id="' .$this->id. '" class="calendarEvent vevent">';
 		$retstr .= '<abbr class="dtstart" title="' .$dtstart. '"><b>'.$timeString.'</b></abbr><br />';
 
 		//link
@@ -274,7 +274,7 @@ class LibChargierKalenderEvent{
 			$mitgliederLinks = array();
 
 			foreach($this->angemeldeteMitglieder as $key => $value){
-				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person_daten&amp;personid='.$key.'">' .$value. '</a>';
+				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$key. '">' .$value. '</a>';
 			}
 
 			$retstr .= implode(', ', $mitgliederLinks);

@@ -170,6 +170,17 @@ main .icon_small, main a .icon_small {
 	display: inline;
 }
 
+/* panel */
+
+main .panel {
+	border-radius: 0;
+}
+
+main .panel .panel-heading {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
 /* image delete icon */
 
 main .imgBox .deleteIconBox {
