@@ -1,12 +1,12 @@
 <?php
 $moduleName = "Intranet Home";
-$version = "2.47";
+$version = "2.48";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
 $updateScript = "install/update.php";
 
-$pages[] = new LibPage("intranet_home", "scripts/", "home.php", new LibAccessRestriction(array("F", "B", "P", "C", "G", "W", "Y"), ""), "Intranet");
+$pages[] = new LibPage("intranet_home", "scripts/", "home.php", new LibAccessRestriction(array("F", "B", "P", "C", "G", "W", "Y"), ""), "Portal");
 $dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);
 $menuElementsInternet = array();
 $menuElementsIntranet[] = new LibMenuEntry("intranet_home", "Intranet", 50);

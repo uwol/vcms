@@ -26,7 +26,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule("userNameICalendar") || !
 	$libGenericStorage->saveValueInCurrentModule("passwordICalendar", $libString->randomAlphaNumericString(40));
 }
 
-echo '<h1>Intranet</h1>';
+echo '<h1>Portal</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
@@ -46,6 +46,7 @@ require_once("elements/wifi.php");
 echo '</aside>';
 echo '<section class="col-md-9">';
 
+require_once("elements/log.php");
 require_once("elements/system.php");
 
 if($libModuleHandler->moduleIsAvailable("mod_intranet_news")){
