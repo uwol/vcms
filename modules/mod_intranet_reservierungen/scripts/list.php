@@ -66,7 +66,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="media' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
 	echo '<div class="media-body">';
 
-	echo '<h4 class="media-heading">';
+	echo '<h3 class="media-heading">';
 	echo $libTime->formatDateTimeString($row['datum'], 2);
 	echo ' ';
 	echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['person']. '">';
@@ -79,7 +79,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '</a>';
 	}
 
-	echo '</h4>';
+	echo '</h3>';
 
 	if($row['beschreibung'] != ''){
 		echo '<p>' .nl2br($row['beschreibung']). '</p>';

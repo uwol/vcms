@@ -78,9 +78,9 @@ if($libEvent->isFacebookEvent($row)){
 
 				echo '<div class="media-body">';
 
-				echo '<h4 style="font-weight:bold;margin-top:0;margin-bottom:0;font-size:14px">';
+				echo '<h3 style="font-weight:bold;margin-top:0;margin-bottom:0;font-size:14px">';
 				echo '<a href="' .$libString->protectXss($eventUrl). '" style="color:black">' .$row['titel']. '</a>';
-				echo '</h4>';
+				echo '</h3>';
 
 				echo '<p style="color:#90949c;margin-top:0;margin-bottom:0;font-size:12px">';
 				echo $libString->protectXss($eventInterestedCount). ' Personen sind interessiert';

@@ -43,7 +43,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('showFbPagePlugin')){
 
 
 function printVeranstaltungTitle($row){
-	echo '<h4><a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a></h4>';
+	echo '<h3><a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a></h3>';
 }
 
 function printVeranstaltungDateTime($row){

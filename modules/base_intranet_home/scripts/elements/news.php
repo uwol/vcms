@@ -55,7 +55,7 @@ if($count > 0){
 		}
 
 		echo '<div class="media-body">';
-		echo '<h4 class="media-heading">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' <a href="' .$link. '">' .$row['bezeichnung']. '</a></h4>';
+		echo '<h3 class="media-heading">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' <a href="' .$link. '">' .$row['bezeichnung']. '</a></h3>';
 
 		if(($row['text']) != ''){
 			echo '<p>';

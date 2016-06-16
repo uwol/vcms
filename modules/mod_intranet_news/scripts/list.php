@@ -111,7 +111,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	echo '<div class="media-body">';
-	echo '<h4 class="media-heading">';
+	echo '<h3 class="media-heading">';
 	echo $libTime->convertMysqlDateToDatum($row['eingabedatum']);
 	echo ' ';
 	echo $row['bezeichnung'];
@@ -123,7 +123,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '</a>';
 	}
 
-	echo '</h4>';
+	echo '</h3>';
 
 	if($row['text'] != ''){
 		echo '<p>' .nl2br($row['text']). '</p>';

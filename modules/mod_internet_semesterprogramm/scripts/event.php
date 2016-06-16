@@ -158,12 +158,12 @@ function printEventDetails($row){
 	echo '<p>Status: ' .$status. '</p>';
 
 	if($row['beschreibung'] != ''){
-		echo '<h4>Beschreibung</h4>';
+		echo '<h3>Beschreibung</h3>';
 		echo '<p>' .nl2br($row['beschreibung']). '</p>';
 	}
 
 	if($row['spruch'] != ''){
-		echo '<h4>Spruch</h4>';
+		echo '<h3>Spruch</h3>';
 		echo '<p>' .nl2br($row['spruch']). '</p>';
 	}
 }
@@ -171,7 +171,7 @@ function printEventDetails($row){
 function printAnmeldungen($row){
 	global $libAuth, $libDb, $libGallery, $libMitglied;
 
-	echo '<h4>Anmeldungen</h4>';
+	echo '<h3>Anmeldungen</h3>';
 	echo '<p>';
 
 	if($libAuth->isLoggedin()){

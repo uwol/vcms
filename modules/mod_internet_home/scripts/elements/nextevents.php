@@ -76,7 +76,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbUrlExists){
 		echo '</div>';
 
 		echo '<div class="caption">';
-		echo '<h4><a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h4>';
+		echo '<h3><a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
 		echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
 		echo '</div>';
 
