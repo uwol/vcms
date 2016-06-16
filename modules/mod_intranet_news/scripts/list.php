@@ -131,9 +131,11 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo nl2br($row['text']);
 	echo '</div>';
 
-	echo '<div class="media-right">';
-	echo $libMitglied->getMitgliedSignature($row['autor']);
-	echo '</div>';
+	if($row['autor'] != '' && $row['autor'] > 0){
+		echo '<div class="media-right">';
+		echo $libMitglied->getMitgliedSignature($row['autor']);
+		echo '</div>';
+	}
 
 	echo '</div>';
 	echo '</div>';
