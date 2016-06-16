@@ -55,18 +55,17 @@ echo '<h1>Reservierungen</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Um eine Reservierung anzulegen, bitte <a href="index.php?pid=intranet_reservierung_buchen">diese Seite</a> öffnen.</p>';
+echo '<p><a href="index.php?pid=intranet_reservierung_buchen">Eine Reservierung hinzufügen</a></p>';
+echo '<hr />';
 
 $stmt = $libDb->prepare("SELECT * FROM mod_reservierung_reservierung WHERE datum >= :datum ORDER BY datum");
 $stmt->bindValue(':datum', date('Y-m-d'));
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<hr />';
-	echo '<div class="media' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
-	echo '<div class="media-body">';
-
-	echo '<h3 class="media-heading">';
+	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
+	echo '<div class="panel-heading">';
+	echo '<h3 class="panel-title">';
 	echo $libTime->formatDateTimeString($row['datum'], 2);
 	echo ' ';
 	echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['person']. '">';
@@ -80,17 +79,20 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	echo '</h3>';
-
-	if($row['beschreibung'] != ''){
-		echo '<p>' .nl2br($row['beschreibung']). '</p>';
-	}
-
+	echo '</div>';
+	
+	echo '<div class="panel-body">';
+	echo '<div class="media">';
+	echo '<div class="media-body">';
+	echo nl2br($row['beschreibung']);
 	echo '</div>';
 
 	echo '<div class="media-right">';
 	echo $libMitglied->getMitgliedSignature($row['person']);
 	echo '</div>';
 
+	echo '</div>';
+	echo '</div>';
 	echo '</div>';
 }
 ?>

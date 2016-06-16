@@ -62,6 +62,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete' && isset($_REQU
 	}
 }
 
+
 /*
 * output
 */
@@ -96,23 +97,14 @@ $lastsetmonth = '';
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	//month name
 	if($lastsetmonth != substr($row['eingabedatum'], 0, 7)){
-		echo '<h2>- ' .$libTime->getMonth((int) substr($row['eingabedatum'], 5, 2)). ' ' .substr($row['eingabedatum'], 0, 4). ' -</h2>';
+		echo '<h2>' .$libTime->getMonth((int) substr($row['eingabedatum'], 5, 2)). ' ' .substr($row['eingabedatum'], 0, 4). '</h2>';
 		$lastsetmonth = substr($row['eingabedatum'], 0, 7);
-	} else {
-		echo '<hr/>';
 	}
 
-	echo '<div id="' .$row['id']. '" class="media' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
-
-	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
-		echo '<div class="media-left">';
-		echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied']);
-		echo '</div>';
-	}
-
-	echo '<div class="media-body">';
-	echo '<h3 class="media-heading">';
-	echo $libTime->convertMysqlDateToDatum($row['eingabedatum']);
+	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
+	echo '<div class="panel-heading">';
+	echo '<h3 class="panel-title">';
+	echo $libTime->formatDateTimeString($row['eingabedatum'], 2);
 	echo ' ';
 	echo $row['bezeichnung'];
 
@@ -124,17 +116,27 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	echo '</h3>';
+	echo '</div>';
+	
+	echo '<div class="panel-body">';
+	echo '<div class="media">';
 
-	if($row['text'] != ''){
-		echo '<p>' .nl2br($row['text']). '</p>';
+	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
+		echo '<div class="media-left">';
+		echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied']);
+		echo '</div>';
 	}
 
+	echo '<div class="media-body">';
+	echo nl2br($row['text']);
 	echo '</div>';
 
 	echo '<div class="media-right">';
 	echo $libMitglied->getMitgliedSignature($row['autor']);
 	echo '</div>';
 
+	echo '</div>';
+	echo '</div>';
 	echo '</div>';
 }
 ?>
