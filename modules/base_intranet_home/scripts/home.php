@@ -26,7 +26,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule("userNameICalendar") || !
 	$libGenericStorage->saveValueInCurrentModule("passwordICalendar", $libString->randomAlphaNumericString(40));
 }
 
-echo '<h1>Portal</h1>';
+echo '<h1>Intranet-Portal</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
