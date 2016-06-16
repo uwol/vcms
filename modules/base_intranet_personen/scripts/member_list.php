@@ -129,12 +129,10 @@ else {
 		//aktive Burschen
 		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'B' AND (status IS NULL OR (status NOT LIKE '%ex loco%' AND status NOT LIKE '%Inaktiv%'))");
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahl);
+		$stmt->bindColumn('number', $anzahlAktiv);
 		$stmt->fetch();
 
-		if($anzahl > 0){
-			echo '<h3>Aktive Burschen (' .$anzahl. ')</h3>';
-
+		if($anzahlAktiv > 0){
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status IS NULL OR (status NOT LIKE '%ex loco%' AND status NOT LIKE '%Inaktiv%')) ORDER BY name");
 			printMitglieder($stmt);
 		}
@@ -142,12 +140,14 @@ else {
 		//inaktive Burschen
 		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%')");
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahl);
+		$stmt->bindColumn('number', $anzahlInaktivExLoco);
 		$stmt->fetch();
 
-		if($anzahl > 0){
-			echo '<h3>Inaktive Burschen und Burschen ex-loco (' .$anzahl. ')</h3>';
+		if($anzahlAktiv > 0 && $anzahlInaktivExLoco > 0){
+			echo '<hr />';
+		}
 
+		if($anzahlInaktivExLoco > 0){
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%') ORDER BY name");
 			printMitglieder($stmt);
 		}
