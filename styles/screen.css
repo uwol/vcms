@@ -139,14 +139,23 @@ main table {
 }
 
 main th {
-	height: 20px;
+	padding: 2px;
 	text-align: center;
 	vertical-align: middle;
 }
 
 main td {
+	padding: 2px;
 	vertical-align: top;
 	border-width: 0;
+}
+
+main td.imgColumn {
+	max-width: 100px;
+}
+
+main td.toolColumn {
+	text-align: center;
 }
 
 main dt {
@@ -336,11 +345,6 @@ main .carousel-control.left, main .carousel-control.right {
 main .lastInsertId {
 	display: none;
 }
-
-main .imgColumn {
-	padding: 3px;
-}
-
 
 footer .social-buttons .icon {
 	width: 24px;

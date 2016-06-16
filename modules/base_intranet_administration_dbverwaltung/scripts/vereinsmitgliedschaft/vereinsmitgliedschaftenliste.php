@@ -44,19 +44,23 @@ if($libAuth->isLoggedin()){
 	echo '<p><a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaft&amp;aktion=blank">Eine neue Vereinsmitgliedschaft anlegen</a></p>';
 
 	echo '<table>';
-	echo '<tr><th style="width:40%">Verein</th><th style="width:50%">Mitglied</th><th style="width:10%">Aktion</th></tr>';
+	echo '<tr><th>Verein</th><th>Mitglied</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_verein_mitgliedschaft,base_verein WHERE base_verein_mitgliedschaft.verein = base_verein.id ORDER BY base_verein.titel ASC");
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
-		echo "<td>" .$row['titel']." " .$row['name']. "</td>";
+		echo '<td>' .$row['titel']. ' ' .$row['name']. '</td>';
 		echo '<td>' .$libMitglied->getMitgliedNameString($row['mitglied'],7). '</td>';
-		echo '<td><a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaft&amp;verein=' .$row['verein']. '&amp;mitglied=' .$row['mitglied']. '">Ändern</a></td>';
-		echo "</tr>";
+		echo '<td class="toolColumn">';
+		echo '<a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaft&amp;verein=' .$row['verein']. '&amp;mitglied=' .$row['mitglied']. '">';
+		echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+		echo '</a>';
+		echo '</td>';
+		echo '</tr>';
 	}
 
-	echo "</table>";
+	echo '</table>';
 }
 ?>

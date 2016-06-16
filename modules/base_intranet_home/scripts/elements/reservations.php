@@ -46,11 +46,9 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="media-body">';
 
 	if(($row['beschreibung']) != ''){
-		echo '<p>';
 		echo '<a href="' .$link. '">';
 		echo $libString->truncate(trim($row['beschreibung']), 200);
 		echo '</a>';
-		echo '</p>';
 	}
 
 	echo '</div>';

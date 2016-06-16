@@ -94,8 +94,8 @@ echo '<br />';
 
 
 //list events
-echo '<table style="width:100%">';
-echo '<tr><th style="width:13%">Bild</th><th style="width:57%">Titel</th><th style="width:20%">Veranstaltungsdatum</th><th style="width:10%">Aktion</th></tr>';
+echo '<table>';
+echo '<tr><th>Bild</th><th>Titel</th><th>Datum</th><th></th></tr>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
@@ -126,7 +126,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '</td>';
 		echo '<td>' .$row['titel']. '</td>';
 		echo '<td>' .$row['datum']. '</td>';
-		echo '<td><a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$row['id']. '">bearbeiten</a></td>';
+		echo '<td class="toolColumn">';
+		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$row['id']. '">';
+		echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+		echo '</td>';
 		echo '</tr>';
 	}
 }

@@ -60,7 +60,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<p>Die folgenden Status dienen der weiteren Einteilung der Personen. Die Angabe eines Status bei einer Person hat keine Auswirkung auf die Zugangskontrolle für Seiten. Trotzdem sollten die standardmäßig vorhandenen Status nicht durch eigene ersetzt werden. Sinnvoll ist nur das Hinzufügen neuartiger Status.</p>';
 	echo '<table>';
-	echo '<tr><th style="width:30%">Bezeichnung</th><th style="width:60%">Beschreibung</th><th style="width:10%">Aktion</th></tr>';
+	echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_status");
 	$stmt->execute();
@@ -71,7 +71,11 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['beschreibung']. '</td>';
 
 		if($row['bezeichnung'] != "A-Phil" && $row['bezeichnung'] != "B-Phil" && $row['bezeichnung'] != "Ehrenmitglied" && $row['bezeichnung'] != "ex loco" && $row['bezeichnung'] != "HV-M" && $row['bezeichnung'] != "Inaktiv ex loco" && $row['bezeichnung'] != "Inaktiv" && $row['bezeichnung'] != "VG"){
-			echo '<td><a href="index.php?pid=intranet_admin_db_status&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Löschen</a></td>';
+			echo '<td class="toolColumn">';
+			echo '<a href="index.php?pid=intranet_admin_db_status&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" />';
+			echo '</a>';
+			echo '</td>';
 		}
 
 		echo "</tr>";

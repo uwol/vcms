@@ -65,7 +65,7 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlob
 echo '<br />';
 
 echo '<table>';
-echo '<tr><th style="width:10%">Id</th><th style="width:55%">Verein</th><th style="width:25%">Datum</th><th style="width:10%">Aktion</th></tr>';
+echo '<tr><th>Id</th><th>Verein</th><th>Datum</th><th></th></tr>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
@@ -77,11 +77,15 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
-	echo "<td>" .$row['id']. "</td>";
+	echo '<td>' .$row['id']. '</td>';
 	echo '<td>' .$libVerein->getVereinNameString($row['verein']). '</td>';
 	echo '<td>' .$row['datum']. '</td>';
-	echo '<td><a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;id=' .$row['id']. '">Bearbeiten</a></td>';
-	echo "</tr>";
+	echo '<td class="toolColumn">';
+	echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;id=' .$row['id']. '">';
+	echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+	echo '</a>';
+	echo '</td>';
+	echo '</tr>';
 }
 
 echo "</table>";

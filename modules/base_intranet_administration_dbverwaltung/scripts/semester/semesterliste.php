@@ -50,7 +50,7 @@ if($libAuth->isLoggedin()){
 		}
 	}
 
-	echo "<h1>Semester</h1>";
+	echo '<h1>Semester</h1>';
 
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
@@ -58,19 +58,23 @@ if($libAuth->isLoggedin()){
 	echo '<p><a href="index.php?pid=intranet_admin_db_semester&amp;aktion=blank">Ein neues Semester anlegen</a></p>';
 
 	echo '<table>';
-	echo '<tr><th style="width:25%">Semester</th><th style="width:25%">Senior</th><th style="width:20%">Fuchsmajor</th><th style="width:20%">Internetwart</th><th style="width:10%">Aktion</th></tr>';
+	echo '<tr><th>Semester</th><th>Senior</th><th>Fuchsmajor</th><th>Internetwart</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_semester ORDER BY SUBSTRING(semester,3) DESC");
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
-		echo "<td>" .$row['semester']. "</td>";
+		echo '<td>' .$row['semester']. '</td>';
 		echo '<td>' .$libMitglied->getMitgliedNameString($row['senior'],5). '</td>';
 		echo '<td>' .$libMitglied->getMitgliedNameString($row['fuchsmajor'],5). '</td>';
 		echo '<td>' .$libMitglied->getMitgliedNameString($row['internetwart'],5). '</td>';
-		echo '<td><a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$row['semester']. '">Ändern</a></td>';
-		echo "</tr>";
+		echo '<td class="toolColumn">';
+		echo '<a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$row['semester']. '">';
+		echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+		echo '</a>';
+		echo '</td>';
+		echo '</tr>';
 	}
 
 	echo "</table>";

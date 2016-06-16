@@ -68,7 +68,7 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlob
 echo '<br />';
 
 echo '<table>';
-echo '<tr><th style="width:20%">Bild</th><th style="width:20%">Zeitraum</th><th style="width:50%">Text</th><th style="width:10%">Aktion</th></tr>';
+echo '<tr><th>Bild</th><th>Zeitraum</th><th>Text</th><th></th></tr>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
@@ -90,8 +90,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
  	echo '</td>';
 	echo '<td>' .$row['startdatum']. '<br />bis<br /> ' .$row['verfallsdatum']. '<br /><br /></td>';
 	echo '<td>'.$libString->deleteBBCode($row['text']). '<br /><br /></td>';
-	echo '<td>';
-	echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$row['id']. '">Bearbeiten</a>';
+	echo '<td class="toolColumn">';
+	echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$row['id']. '">';
+	echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+	echo '</a>';
 	echo '</td>';
 	echo "</tr>";
 }

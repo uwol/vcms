@@ -43,22 +43,26 @@ if($libAuth->isLoggedin()){
 	echo '<p><a href="index.php?pid=intranet_admin_db_vip&amp;aktion=blank">Einen neuen Vip anlegen</a></p>';
 
 	echo '<table>';
-	echo '<tr><th style="width:10%">Id</th><th style="width:10%">Praefix</th><th style="width:30%">Name</th><th style="width:10%">Suffix</th><th style="width:30%">Vorname</th><th style="width:10%">Aktion</th></tr>';
+	echo '<tr><th>Id</th><th>Praefix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_vip ORDER BY name");
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
-		echo "<td>" .$row['id']. "</td>";
-		echo "<td>" .$row['praefix']. "</td>";
+		echo '<td>' .$row['id']. '</td>';
+		echo '<td>' .$row['praefix']. '</td>';
 		echo '<td>' .$row['name']. '</td>';
 		echo '<td>' .$row['suffix']. '</td>';
 		echo '<td>' .$row['vorname']. '</td>';
-		echo '<td><a href="index.php?pid=intranet_admin_db_vip&amp;id=' .$row['id']. '">Ändern</a></td>';
-		echo "</tr>";
+		echo '<td class="toolColumn">';
+		echo '<a href="index.php?pid=intranet_admin_db_vip&amp;id=' .$row['id']. '">';
+		echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+		echo '</a>';
+		echo '</td>';
+		echo '</tr>';
 	}
 
-	echo "</table>";
+	echo '</table>';
 }
 ?>

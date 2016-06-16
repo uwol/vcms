@@ -182,14 +182,14 @@ if($libAuth->isLoggedin()){
 	echo '</p>';
 
 	echo '<table>';
-	echo '<tr><th style="width:10%">Id</th><th style="width:5%">Präfix</th><th style="width:25%">Name</th><th style="width:5%">Suffix</th><th style="width:20%">Vorname</th><th style="width:5%">Gruppe</th><th style="width:10%">Status</th><th style="width:10%">Reception</th><th style="width:10%">Aktion</th></tr>';
+	echo '<tr><th>Id</th><th>Präfix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th>Gruppe</th><th>Status</th><th>Reception</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person ORDER BY ".$order);
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
-		echo "<td>" .$row['id']. "</td>";
+		echo '<td>' .$row['id']. '</td>';
 		echo '<td>' .$row['praefix']. '</td>';
 		echo '<td>' .$row['name']. '</td>';
 		echo '<td>' .$row['suffix']. '</td>';
@@ -197,10 +197,14 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['gruppe']. '</td>';
 		echo '<td>' .$row['status']. '</td>';
 		echo '<td>' .$row['semester_reception']. '</td>';
-		echo '<td><a href="index.php?pid=intranet_admin_db_person&amp;id=' .$row['id']. '">Ändern</a></td>';
-		echo "</tr>";
+		echo '<td class="toolColumn">';
+		echo '<a href="index.php?pid=intranet_admin_db_person&amp;id=' .$row['id']. '">';
+		echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+		echo '</a>';
+		echo '</td>';
+		echo '</tr>';
 	}
 
-	echo "</table>";
+	echo '</table>';
 }
 ?>

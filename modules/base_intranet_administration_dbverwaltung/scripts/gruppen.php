@@ -64,7 +64,7 @@ if($libAuth->isLoggedin()){
 	echo '<p>Eine Einteilung der Mitglieder in Vorstandsmitglieder, Warte etc. wird nicht über Gruppen, sondern über die Semestertabelle vorgenommen.</p>';
 
 	echo '<table>';
-	echo '<tr><th style="width:10%">Bezeichnung</th><th style="width:80%">Beschreibung</th><th style="width:10%">Aktion</th></tr>';
+	echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_gruppe");
 	$stmt->execute();
@@ -75,7 +75,11 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['beschreibung']. '</td>';
 
 		if($row['bezeichnung'] != "F" && $row['bezeichnung'] != "B" && $row['bezeichnung'] != "P" && $row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "C" && $row['bezeichnung'] != "G" && $row['bezeichnung'] != "W" && $row['bezeichnung'] != "V" && $row['bezeichnung'] != "Y"){
-			echo '<td><a href="index.php?pid=intranet_admin_db_gruppen&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Löschen</a></td>';
+			echo '<td class="toolColumn">';
+			echo '<a href="index.php?pid=intranet_admin_db_gruppen&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" />';
+			echo '</a>';
+			echo '</td>';
 		}
 
 		echo "</tr>";

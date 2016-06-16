@@ -60,7 +60,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<p>Die folgenden Regionen dienen der Einteilung der Mitglieder in Zirkel.</p>';
 	echo '<table>';
-	echo '<tr><th style="width:50%">Region</th><th style="width:40%">Anzahl Personen</th><th style="width:10%">Aktion</th></tr>';
+	echo '<tr><th>Region</th><th>Anzahl Personen</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT bezeichnung,id FROM base_region");
 	$stmt->execute();
@@ -75,7 +75,11 @@ if($libAuth->isLoggedin()){
 		echo '<tr>';
 		echo '<td>' .$row['bezeichnung']. '</td>';
 		echo '<td>' .$anzahl. ' Personen</td>';
-		echo '<td><a href="index.php?pid=intranet_admin_db_region&amp;aktion=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Löschen</a></td>';
+		echo '<td class="toolColumn">';
+		echo '<a href="index.php?pid=intranet_admin_db_region&amp;aktion=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+		echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" />';
+		echo '</a>';
+		echo '</td>';
 		echo "</tr>";
 	}
 
