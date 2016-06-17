@@ -118,7 +118,6 @@ main h2 {
 
 main h3 {
 	font-size: 1.1em;
-	font-weight: normal;
 }
 
 main a:link, main a:hover {
@@ -183,6 +182,10 @@ main .icon_small, main a .icon_small {
 
 main .panel {
 	border-radius: 0;
+}
+
+main .panel .panel-title {
+	font-weight: normal;
 }
 
 main .panel .panel-heading {
@@ -309,6 +312,7 @@ main .thumbnail {
 
 main .thumbnail .caption h3 {
 	margin-top: 0;
+	font-weight: normal;
 }
 
 main .thumbnailControls {
@@ -345,6 +349,7 @@ main .carousel-control.left, main .carousel-control.right {
 main .lastInsertId {
 	display: none;
 }
+
 
 footer .social-buttons .icon {
 	width: 24px;
