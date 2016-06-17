@@ -122,7 +122,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="media">';
 
 	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
-		echo '<div class="media-left">';
+		echo '<div class="media-left hidden-xs">';
 		echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied']);
 		echo '</div>';
 	}
@@ -132,7 +132,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</div>';
 
 	if($row['autor'] != '' && $row['autor'] > 0){
-		echo '<div class="media-right">';
+		echo '<div class="media-right hidden-xs">';
 		echo $libMitglied->getMitgliedSignature($row['autor']);
 		echo '</div>';
 	}

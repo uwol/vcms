@@ -39,21 +39,22 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="media">';
 
 	if($row['betroffenesmitglied'] != ''){
-		echo '<div class="media-left">';
+		echo '<div class="media-left hidden-xs">';
 		echo $libMitglied->getMitgliedSignature($row['betroffenesmitglied']);
 		echo '</div>';
 	}
 
 	echo '<div class="media-body">';
 
-	if(($row['text']) != ''){
+	if($row['text'] != ''){
 		$truncateReplacement = ' <a href="' .$link. '">...</a>';
-		echo $libString->truncate(trim($row['text']), 500, $truncateReplacement);
+		$text = trim($row['text']);
+		echo $libString->truncate($text, 500, $truncateReplacement);
 	}
 
 	echo '</div>';
 
-	echo '<div class="media-right">';
+	echo '<div class="media-right hidden-xs">';
 	echo $libMitglied->getMitgliedSignature($row['autor']);
 	echo '</div>';
 

@@ -45,15 +45,16 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="media">';
 	echo '<div class="media-body">';
 
-	if(($row['beschreibung']) != ''){
+	if($row['beschreibung'] != ''){
 		echo '<a href="' .$link. '">';
-		echo $libString->truncate(trim($row['beschreibung']), 200);
+		$description = trim($row['beschreibung']);
+		echo $libString->truncate($description, 500);
 		echo '</a>';
 	}
 
 	echo '</div>';
 
-	echo '<div class="media-right">';
+	echo '<div class="media-right hidden-xs">';
 	echo $libMitglied->getMitgliedSignature($row['person']);
 	echo '</div>';
 
