@@ -26,8 +26,9 @@ if(isset($_REQUEST['modul']) && !preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['modu
 
 
 require_once('lib/thirdparty/PEAR/Archive/Tar.php');
+
 $repoHostname = 'repository.' . $libGlobal->vcmsHostname;
-$websiteHostname = 'www.' . $libGlobal->vcmsHostname;
+$gitHubRepoUrl = 'https://github.com/uwol/vcms/tree/master';
 
 echo '<h1>Module</h1>';
 echo '<div class="alert alert-info" role="alert">';
@@ -81,7 +82,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 						echo '<p>Fehler: Das Modul ist bereits installiert.</p>';
 					}
 				} else {
-					echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.php. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
+					echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.php</p>';
 				}
 			} else {
 				echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
@@ -188,7 +189,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 					echo '<p>Fehler: Das zu aktualisierende Modul ist nicht installiert.</p>';
 				}
 			} else {
-				echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.php. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
+				echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.php.</p>';
 			}
 		} else {
 			echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
@@ -236,7 +237,7 @@ if(isset($_REQUEST['aktion']) && ($_REQUEST['aktion'] == 'updateEngine' || $_REQ
 
 			copyFolder('temp/engine', '.');
 		} else {
-			echo '<p>Fehler: Das Enginepaket ist fehlerhaft. Bitte melden sie dies unter ' .$websiteHostname. '.</p>';
+			echo '<p>Fehler: Das Enginepaket ist fehlerhaft.</p>';
 		}
 	} else {
 		echo '<p>Fehler: Das heruntergeladene Enginepaket konnte nicht entpackt werden.</p>';
@@ -273,9 +274,9 @@ echo '<tr>';
 echo '<th>Modulname</th><th>Status</th>';
 echo '<th>Version<br />(installiert)</th>';
 echo '<th>Version<br />(Repository)</th>';
-echo '<th><img src="' .$libModuleHandler->getModuleDirectory(). '/img/add.png" alt="installieren"/></th>';
-echo '<th><img src="' .$libModuleHandler->getModuleDirectory(). '/img/arrow_up.png" alt="aktualisieren"/></th>';
-echo '<th><img src="' .$libModuleHandler->getModuleDirectory(). '/img/bin_closed.png" alt="deinstallieren"/></th>';
+echo '<th class="toolColumn"></th>';
+echo '<th class="toolColumn"></th>';
+echo '<th class="toolColumn"></th>';
 echo '</tr>';
 
 $manifestString = downloadContent('http://' .$repoHostname. '/manifest.php?id=' .$libConfig->sitePath);
@@ -311,10 +312,17 @@ if($newEngineVersion > $actualEngineVersion){
 
 foreach($modules as $key => $value){
 	//module id
-	echo '<tr><td style="border: 1px solid #000000;">';
+	echo '<tr>';
+	echo '<td>';
 
 	if($value){
-		echo '<a href="http://' .$repoHostname. '/changelogs/' .$key. '.txt" target="_blank">';
+		if($key != 'engine'){
+			$url = $gitHubRepoUrl. '/modules/' .$key;
+		} else {
+			$url = $gitHubRepoUrl;
+		}
+		
+		echo '<a href="' .$url. '">';
 	}
 
 	echo $key;
@@ -326,7 +334,7 @@ foreach($modules as $key => $value){
 	echo '</td>';
 
 	//status
-	echo '<td style="border: 1px solid #000000;">';
+	echo '<td>';
 
 	if($key != 'engine'){
 		if($libModuleHandler->moduleIsAvailable($key)){
@@ -341,7 +349,7 @@ foreach($modules as $key => $value){
 	echo '</td>';
 
 	//version of installed module
-	echo '<td style="border: 1px solid #000000;">';
+	echo '<td>';
 
 	if($key != 'engine'){
 		if($libModuleHandler->moduleIsAvailable($key)){
@@ -355,7 +363,7 @@ foreach($modules as $key => $value){
 	echo '</td>';
 
 	//version of module in repo
-	echo '<td style="border: 1px solid #000000;">';
+	echo '<td>';
 
 	if($value != ''){
 		echo $value;
@@ -367,12 +375,14 @@ foreach($modules as $key => $value){
 
 
 	// install action
-	echo '<td style="border: 1px solid #000000;text-align:center">';
+	echo '<td class="toolColumn">';
 
 	if($key != 'engine'){
 		if(!$libModuleHandler->moduleIsAvailable($key)){
 			if(!$engineIsOld){
-				echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')"><img src="' .$libModuleHandler->getModuleDirectory(). '/img/add.png" alt="installieren"/></a>';
+				echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
+				echo '<img src="styles/icons/basic/add.svg" alt="add" class="icon_small" />';
+				echo '</a>';
 			}
 		}
 	}
@@ -381,11 +391,13 @@ foreach($modules as $key => $value){
 
 
 	// update action
-	echo '<td style="border: 1px solid #000000;text-align:center">';
+	echo '<td class="toolColumn">';
 
 	if($key == 'engine'){
 		if($engineIsOld){
-			echo '<a href="index.php?pid=updater_liste&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')"><img src="' .$libModuleHandler->getModuleDirectory(). '/img/arrow_up.png" alt="aktualisieren"/></a>';
+			echo '<a href="index.php?pid=updater_liste&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
+			echo '<img src="styles/icons/basic/up.svg" alt="up" class="icon_small" />';
+			echo '</a>';
 		}
 	} else {
 		if($libModuleHandler->moduleIsAvailable($key)){
@@ -394,10 +406,10 @@ foreach($modules as $key => $value){
 			$newversion = (double) $value;
 
 			if($newversion > $actualversion){
-				if($engineIsOld){
-					echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/img/cross.png" alt="Erst Engine aktualisieren"/>';
-				} else {
-					echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=updateModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')"><img src="' .$libModuleHandler->getModuleDirectory(). '/img/arrow_up.png" alt="aktualisieren"/></a>';
+				if(!$engineIsOld){
+					echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=updateModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
+					echo '<img src="styles/icons/basic/up.svg" alt="up" class="icon_small" />';
+					echo '</a>';
 				}
 			}
 		}
@@ -407,7 +419,7 @@ foreach($modules as $key => $value){
 
 
 	// delete action
-	echo '<td style="border: 1px solid #000000;text-align:center">';
+	echo '<td class="toolColumn">';
 
 	if($key != 'engine'){
 		if($libModuleHandler->moduleIsAvailable($key)){
@@ -417,7 +429,9 @@ foreach($modules as $key => $value){
 				$newversion = (double) $value;
 
 				if(substr($key, 0, 5) != 'base_'){
-					echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')"><img src="' .$libModuleHandler->getModuleDirectory(). '/img/bin_closed.png" alt="deinstallieren"/></a>';
+					echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
+					echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" />';
+					echo '</a>';
 				}
 			}
 		}

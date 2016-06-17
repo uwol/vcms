@@ -183,14 +183,14 @@ function printAnmeldungen($row){
 
 		$anmeldungWritten = false;
 
-		echo '<p class="p-attendee">';
+		echo '<p>';
 
 		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($anmeldungWritten){
 				echo ', ';
 			}
 
-			echo '<a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libMitglied->getMitgliedNameString($eventrow['person'], 0). '</a>';
+			echo '<span class="p-attendee"><a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libMitglied->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
 			$anmeldungWritten = true;
 		}
 
