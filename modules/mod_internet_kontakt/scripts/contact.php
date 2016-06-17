@@ -105,21 +105,24 @@ echo '<h2>Kontaktadresse</h2>';
 
 echo '<div class="row">';
 echo '<div class="col-sm-8">';
-echo '<address>';
 
-echo $libConfig->verbindungName .'<br /><br />';
+echo '<div class="h-card">';
+echo '<p class="p-name p-org">' .$libConfig->verbindungName. '</p>';
+
+echo '<address class="p-adr">';
 
 if($libConfig->verbindungZusatz != ''){
-	echo $libConfig->verbindungZusatz.'<br />';
+	echo '<span class="p-extended-address">' .$libConfig->verbindungZusatz.'</span><br />';
 }
 
-echo $libConfig->verbindungStrasse . '<br />';
-echo $libConfig->verbindungPlz .' '.$libConfig->verbindungOrt . '<br />';
-echo $libConfig->verbindungLand . '<br />';
-echo $libConfig->verbindungTelefon . '<br />';
-echo $libConfig->emailInfo . '<br />';
+echo '<span class="p-street-address">' .$libConfig->verbindungStrasse. '</span><br />';
+echo '<span class="p-postal-code">' .$libConfig->verbindungPlz. '</span> <span class="p-locality">' .$libConfig->verbindungOrt. '</span><br />';
+echo '<span class="p-country-name">' .$libConfig->verbindungLand. '</span><br />';
+echo '<span class="p-tel">' .$libConfig->verbindungTelefon. '</span><br />';
+echo '<span class="u-email">' .$libConfig->emailInfo. '</span><br />';
 
 echo '</address>';
+echo '</div>';
 
 $vorstand = $libVerein->getAnsprechbarerAktivenVorstandIds();
 

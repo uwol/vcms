@@ -240,12 +240,12 @@ class LibDay{
 		$aktuell = '';
 
 		if($this->isToday()){
-			$class = 'today';
+			$class = ' today';
 			$aktuell = '<a id="aktuell"></a>';
 		}
 
 		//header
-		$retstr .= '<td class="calendarDay ' .$class .'">';
+		$retstr .= '<td class="calendarDay' .$class .'">';
 		$retstr .= $aktuell;
 		$retstr .= '<b>' .$this->number. '</b><br /><br />';
 
@@ -455,8 +455,8 @@ class LibCalendarEvent{
 			$idSuffix = '_'.$forDate;
 		}
 
-		$retstr .= '<div class="calendarEvent vevent"><a id="t' .$this->id . $idSuffix .'"></a>';
-		$retstr .= '<abbr class="dtstart" title="' .$dtstart. '"><b>' .$timeString. '</b></abbr><br />';
+		$retstr .= '<div class="calendarEvent h-event"><a id="t' .$this->id . $idSuffix .'"></a>';
+		$retstr .= '<time class="dt-start" datetime="' .$dtstart. '"><b>' .$timeString. '</b></time><br />';
 
 		//link
 		if($this->linkUrl != ''){
@@ -464,7 +464,7 @@ class LibCalendarEvent{
 		}
 
 		//summary
-		$retstr .= '<span class="summary">';
+		$retstr .= '<span class="p-name">';
 		$retstr .= $this->summary;
 		$retstr .= '</span><br />';
 
@@ -479,12 +479,14 @@ class LibCalendarEvent{
 
 		//description
 		if($this->description != ''){
-			$retstr .= $this->description.'<br />';
+			$retstr .= '<span class="p-description">';
+			$retstr .= $this->description;
+			$retstr .= '</span><br />';
 		}
 
 		//location
 		if($this->location != ''){
-			$retstr .= '<span class="location">' .$this->location. '</span><br />';
+			$retstr .= '<address class="p-location">' .$this->location. '</address><br />';
 		}
 
 		//status

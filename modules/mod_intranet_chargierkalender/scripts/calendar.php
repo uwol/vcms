@@ -237,8 +237,8 @@ class LibChargierKalenderEvent{
 		* print event
 		*/
 		//header
-		$retstr .= '<div id="' .$this->id. '" class="calendarEvent vevent">';
-		$retstr .= '<abbr class="dtstart" title="' .$dtstart. '"><b>'.$timeString.'</b></abbr><br />';
+		$retstr .= '<div id="' .$this->id. '" class="calendarEvent h-event">';
+		$retstr .= '<time class="dt-start" datetime="' .$dtstart. '"><b>'.$timeString.'</b></time><br />';
 
 		//link
 		if($this->linkUrl != ''){
@@ -247,7 +247,7 @@ class LibChargierKalenderEvent{
 
 		//summary
 		if($this->summary != ''){
-			$retstr .= '<span class="summary">';
+			$retstr .= '<span class="p-name">';
 			$retstr .= $this->summary;
 			$retstr .= '</span>';
 		}
@@ -262,12 +262,14 @@ class LibChargierKalenderEvent{
 
 		//description
 		if($this->description != ''){
-			$retstr .= $this->description. '<br />';
+			$retstr .= '<span class="p-description">';
+			$retstr .= $this->description;
+			$retstr .= '</span><br />';
 		}
 
 		//location
 		if($this->location != ''){
-			$retstr .= '<span class="location">' .$this->location. '</span><br />';
+			$retstr .= '<address class="p-location">' .$this->location. '</address><br />';
 		}
 
 		if(count($this->angemeldeteMitglieder) > 0){

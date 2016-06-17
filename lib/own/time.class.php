@@ -653,18 +653,6 @@ class LibTime{
 		return $result;
 	}
 
-	function convertMysqlDateToDatum($mysqldatetime){
-		return $this->formatDateTimeString($mysqldatetime, 2);
-	}
-
-	function convertMysqlDateTimeToDatum($mysqldatetime, $mode){
-		if($mode == 1){
-			return $this->formatDateTimeString($mysqldatetime, 2);
-		} elseif($mode == 2){
-			return $this->formatDateTimeString($mysqldatetime, 0);
-		}
-	}
-
 	function assureMysqlDateTime($dateTime){
 		$dateTime = trim($dateTime);
 

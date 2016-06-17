@@ -68,8 +68,8 @@ if($libAuth->isLoggedIn()){
 /*
 * output
 */
-echo '<h1>' .$row['titel']. '</h1>';
-
+echo '<div class="h-event">';
+echo '<h1 class="p-name">' .$row['titel']. '</h1>';
 echo '<div class="row">';
 
 // Caption-Box
@@ -109,11 +109,11 @@ if($libEvent->isFacebookEvent($row)){
 	echo '</div>';
 }
 
-
 echo '</div>';
 
 printGallery($row);
 
+echo '</div>';
 
 // -----------------------------------------------------------
 
@@ -125,6 +125,22 @@ function printEventDetails($row){
 	*/
 	$date = $libTime->formatDateTimeString($row['datum'], 2);
 	$time = $libTime->formatDateTimeString($row['datum'], 3);
+
+	echo '<time class="dt-start" datetime="' .$row['datum']. '">';
+	echo 'Am ' .$date;
+
+	if($time != ''){
+		echo ' um ' .$time;
+	}
+
+	echo '</time>';
+
+	/*
+	* location
+	*/
+	if ($row['ort'] != ''){
+		echo '<address>Ort: <span class="p-location">' .$row['ort']. '</span></address>';
+	}
 
 	/*
 	* status
@@ -139,27 +155,14 @@ function printEventDetails($row){
 		$status = $row['status'];
 	}
 
+	echo '<p>Status: <span class="p-category">' .$status. '</span></p>';
+
 	/*
-	* general infos
+	* description
 	*/
-	echo '<time>';
-	echo 'Am ' .$date;
-
-	if($time != ''){
-		echo ' um ' .$time;
-	}
-
-	echo '</time>';
-
-	if ($row['ort'] != ''){
-		echo '<address>Ort: ' .$row['ort']. '</address>';
-	}
-
-	echo '<p>Status: ' .$status. '</p>';
-
 	if($row['beschreibung'] != ''){
 		echo '<h3>Beschreibung</h3>';
-		echo '<p>' .nl2br($row['beschreibung']). '</p>';
+		echo '<p class="p-description">' .nl2br($row['beschreibung']). '</p>';
 	}
 
 	if($row['spruch'] != ''){
@@ -172,7 +175,6 @@ function printAnmeldungen($row){
 	global $libAuth, $libDb, $libGallery, $libMitglied;
 
 	echo '<h3>Anmeldungen</h3>';
-	echo '<p>';
 
 	if($libAuth->isLoggedin()){
 		$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
@@ -180,6 +182,8 @@ function printAnmeldungen($row){
 		$stmt->execute();
 
 		$anmeldungWritten = false;
+
+		echo '<p class="p-attendee">';
 
 		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($anmeldungWritten){
@@ -189,11 +193,11 @@ function printAnmeldungen($row){
 			echo '<a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libMitglied->getMitgliedNameString($eventrow['person'], 0). '</a>';
 			$anmeldungWritten = true;
 		}
-	} else {
-		echo 'Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.';
-	}
 
-	echo '</p>';
+		echo '</p>';
+	} else {
+		echo '<p>Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.</p>';
+	}
 
 	/*
 	* gallery
