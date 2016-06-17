@@ -196,6 +196,7 @@ if($libAuth->isLoggedin()){
 	echo $libString->getNotificationBoxText();
 
 	echo '<p>Hier können sämtliche Daten eines Semesters bearbeitet werden. Diese Seite ist nur für den Internetwart zugänglich, weil über die Vergabe von Vorstands- und Wartsposten im Semester die Zugangsberechtigungen geregelt werden. Wenn der Vorstand Semesterdaten ändern dürfte, könnte er seine eigenen Zugangsrechte erweitern.</p>';
+	echo '<hr />';
 
 	/**
 	*

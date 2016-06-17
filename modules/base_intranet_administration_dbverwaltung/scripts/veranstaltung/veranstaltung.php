@@ -112,6 +112,7 @@ if($libAuth->isLoggedin()){
 	echo $libString->getNotificationBoxText();
 
 	echo '<p>Hier können sämtliche Daten einer Veranstaltung bearbeitet werden.</p>';
+	echo '<hr />';
 
 	/**
 	*
