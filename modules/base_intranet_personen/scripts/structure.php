@@ -107,7 +107,7 @@ echo 'Anzahl Aktive ex loco oder inaktiv: ' . $inaktive . '<br />';
 
 echo '</p>';
 
-echo '<table style="border:1px solid black; width:100%">';
+echo '<table style="border: 1px solid #333">';
 
 //for all semesters
 foreach($tArray as $key1 => $value1){
@@ -123,7 +123,7 @@ foreach($tArray as $key1 => $value1){
 
 	echo '<tr>';
 	$rowspan = max(1, ceil(count($value1) / $personsPerRow));
-	echo '<td style="border:1px solid black" rowspan=' .$rowspan. '>';
+	echo '<td style="border:1px solid #333" rowspan=' .$rowspan. '>';
 	echo '<a href="index.php?pid=semesterhistorie_liste&amp;semester=' .$key1. '">' . $key1 . '</a>';
 	echo '</td>';
 
@@ -136,8 +136,7 @@ foreach($tArray as $key1 => $value1){
 		}
 
 		echo '<td style="';
-		//if($i < $personsPerRow)
-			//echo 'border-top:1px solid black;';
+
 		if(strstr(strtolower($value2['status']), 'ex loco')){
 			echo 'background-color: #F5A9A9">';
 		} elseif(strstr(strtolower($value2['status']), 'inaktiv')){

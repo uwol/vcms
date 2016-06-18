@@ -730,6 +730,8 @@ function printCommunication($row){
 				$icon = 'twitter.svg';
 			} elseif(strstr($webseite, 'facebook')){
 				$icon = 'facebook.svg';
+			} elseif(strstr($webseite, 'wikipedia')){
+				$icon = 'wikipedia.svg';
 			}
 
 			echo '<div>';
