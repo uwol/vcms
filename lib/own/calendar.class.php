@@ -486,7 +486,7 @@ class LibCalendarEvent{
 
 		//location
 		if($this->location != ''){
-			$retstr .= '<address class="p-location">' .$this->location. '</address><br />';
+			$retstr .= '<address class="p-location">' .$this->location. '</address>';
 		}
 
 		//status

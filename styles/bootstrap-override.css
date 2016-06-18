@@ -1,0 +1,120 @@
+#header h1 a, #header h2 a {
+	text-decoration: none;
+	color: inherit;
+}
+
+#header h1 {
+	margin-bottom: 0;
+	line-height: 0.8;
+	font-size: 3.5em;
+	font-family: serif;
+}
+
+#header h2 {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 2.2em;
+	font-family: serif;
+}
+
+nav.navbar {
+	margin-bottom: 0;
+}
+
+nav.navbar-default {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+nav.navbar-default .navbar-nav li a,
+nav.navbar-default .navbar-nav li.active a,
+nav.navbar-default .navbar-nav .open .dropdown-menu li a {
+	color: #333;
+}
+
+nav .navbar-internet li a {
+	padding: 10px;
+}
+
+nav .navbar-intranet {
+	font-size: 0.8em;
+}
+
+nav .navbar-intranet .dropdown-menu {
+	font-size: 1em;
+}
+
+nav .navbar-intranet li a {
+	padding: 5px;
+}
+
+main h1 {
+	font-size: 1.7em;
+	text-align: center;
+}
+
+main h2 {
+	font-size: 1.4em;
+	text-align: center;
+}
+
+main h3 {
+	font-size: 1.1em;
+}
+
+main a:link, main a:hover {
+	text-decoration: none;
+}
+
+main hr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+main p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+main address {
+	margin-bottom: 0;
+}
+
+main dt {
+	font-weight: normal;
+}
+
+main dd {
+	margin-left: 2em;
+}
+
+main .panel, main .thumbnail {
+	margin-bottom: 10px;
+}
+
+main .panel {
+	border-radius: 0;
+}
+
+main .panel .panel-title {
+	font-weight: normal;
+}
+
+main .panel .panel-heading {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+main .thumbnail {
+	padding: 0;
+	border-radius: 0;
+}
+
+main .thumbnail .caption h3 {
+	margin-top: 0;
+	font-weight: normal;
+}
+
+main .carousel-control.left, main .carousel-control.right {
+	background-image: none;
+}

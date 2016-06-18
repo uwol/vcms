@@ -124,6 +124,8 @@ echo '<span class="u-email">' .$libConfig->emailInfo. '</span><br />';
 echo '</address>';
 echo '</div>';
 
+echo '<p>';
+
 $vorstand = $libVerein->getAnsprechbarerAktivenVorstandIds();
 
 if($libGenericStorage->loadValueInCurrentModule('showSenior') && $vorstand['senior']){
@@ -154,6 +156,7 @@ if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['qu
 	echo 'Quaestor: '.$libMitglied->getMitgliedNameString($vorstand['quaestor'],0).'<br />';
 }
 
+echo '</p>';
 echo '</div>';
 
 echo '<aside class="col-sm-4">';
