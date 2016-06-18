@@ -35,7 +35,6 @@ $fbPagePluginEnabled = $showFbPagePlugin && $fb_url != '';
 
 
 if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbUrlExists){
-	echo '<hr />';
 	echo '<div class="row">';
 
 	if($numberOfNextEvents > 0){

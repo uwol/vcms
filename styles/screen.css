@@ -320,7 +320,7 @@ main .thumbnailControls {
 }
 
 main .thumbnail .thumbnailOverflow {
-	max-width: 266px; /* corresponding to semester cover */
+	max-width: 400px; /* corresponding to semester cover */
 	width: 100%;
 	margin: 0 auto;
 	overflow: hidden;
@@ -335,7 +335,7 @@ main .thumbnail .thumbnailOverflow img {
 /* semester cover */
 
 main .semestercoverBox {
-	max-width: 266px; /* corresponding to thumbnail overflow */
+	max-width: 400px; /* corresponding to thumbnail overflow */
 }
 
 /* modal window */

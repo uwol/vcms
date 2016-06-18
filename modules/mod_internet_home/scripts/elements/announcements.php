@@ -28,9 +28,12 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="col-sm-6">';
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
+	
 	echo '<div class="row">';
 
-	echo '<div class="hidden-xs col-sm-6">';
+	echo '<div class="col-xs-12 col-sm-6">';
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$row['id']. '.jpg';
 
 	if(is_file($posssibleImage)){
@@ -43,6 +46,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<p>' .$libString->parseBBCode(nl2br(trim($row['text']))). '</p>';
 	echo '</div>';
 
+	echo '</div>';
+	echo '</div>';
 	echo '</div>';
 	echo '</div>';
 }

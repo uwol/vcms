@@ -46,7 +46,6 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 	}
 
 	if(count($eventIds) > 0){
-		echo '<hr />';
 		echo '<div class="row">';
 
 		foreach($eventIds as $eventId){

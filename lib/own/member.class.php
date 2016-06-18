@@ -112,27 +112,31 @@ class LibMember{
 		$stmt->bindColumn('gruppe', $gruppe);
 		$stmt->fetch();
 
-		$retstr = '<div class="personActivityBox">';
+		$retstr = '';
 
-		$activityPercent = $this->getMitgliedIntranetActivity($id) * 100;
-		$balkenBreiteActivity = ceil($activityPercent);
-		$balkenBreiteInactivity = 100 - $balkenBreiteActivity;
+		if($gruppe != 'T' && $gruppe != 'V'){
+			$retstr .= '<div class="personActivityBox">';
 
-		if($balkenBreiteActivity > 0){
-			$retstr .= '<span class="personActivityBar personActivityBarActive" style="width:' .$balkenBreiteActivity. '%"></span>';
+			$activityPercent = $this->getMitgliedIntranetActivity($id) * 100;
+			$balkenBreiteActivity = ceil($activityPercent);
+			$balkenBreiteInactivity = 100 - $balkenBreiteActivity;
+
+			if($balkenBreiteActivity > 0){
+				$retstr .= '<span class="personActivityBar personActivityBarActive" style="width:' .$balkenBreiteActivity. '%"></span>';
+			}
+
+			if($balkenBreiteInactivity > 0){
+				$retstr .= '<span class="personActivityBar personActivityBarInactive" style="width:' .$balkenBreiteInactivity. '%"></span>';
+			}
+
+			$retstr .= '</div>';
 		}
-
-		if($balkenBreiteInactivity > 0){
-			$retstr .= '<span class="personActivityBar personActivityBarInactive" style="width:' .$balkenBreiteInactivity. '%"></span>';
-		}
-
-		$retstr .= '</div>';
 
 		return $retstr;
 	}
 
 	function getMitgliedSignature($id){
-		$retstr = '<div class="personSignatureBox center-block">';
+		$retstr = '<div class="personSignatureBox center-block media-object">';
 		$retstr .= '<div class="imgBox">';
 		$retstr .= $this->getMitgliedImage($id);
 		$retstr .= '</div>';
