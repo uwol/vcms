@@ -150,39 +150,63 @@ main .personSignatureBox .personActivityBox .personActivityBarInactive {
 
 /* calendar */
 
-main .calendarYear {
-	table-layout: fixed;
-	border-spacing: 2px;
-	border-collapse: separate;
+main {
 	width: 100%;
 }
 
 main .calendarMonthName {
-	text-align: center;
+	width: 100%;
 }
 
 main .calendarMonthName h2 {
 	text-align: center;
-	margin: 10px 0;
+	margin: 0;
+	padding: 0.5em;
+}
+
+main .calendarCellContainer {
+    display: flex;
+	display: -webkit-flex;
+	flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+}
+
+main .calendarCell {
+	padding: 0.5em;
+}
+
+@media (max-width: 768px){
+	main .calendarCell {
+		width: 100%;
+	}
+}
+
+@media (min-width: 768px){
+	main .calendarCell {
+		width: 14.285714285714285714285714285714%;
+	}
 }
 
 main .calendarDayName {
 	text-align: center;
-	font-size: 10pt;
 }
 
 main .calendarDay {
 	border: thin solid #000000;
-	font-size: 8pt;
+	text-align: left;
 }
 
-main .calendarEvent {
+main .calendarDay .calendarEvent {
 	text-align: center;
-	padding: 5px;
+	margin-bottom: 1em;
 }
 
-main .calendarEvent .summary {
-	font-size: 8pt;
+main .calendarYear .calendarDay .calendarEvent time {
+	font-weight: bold;
+}
+
+main .calendarYear .calendarDay .calendarEvent .status {
+	font-weight: bold;
 }
 
 /* gallery */

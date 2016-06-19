@@ -57,8 +57,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
 
-echo '<br />';
-
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 $calendar = new LibCalendar($zeitraum[0], $zeitraum[1]);
 
@@ -305,7 +303,7 @@ class LibChargierKalenderEvent{
 		}
 
 		//footer
-		$retstr .= "</div><br />";
+		$retstr .= "</div>";
 		return $retstr;
 	}
 }

@@ -83,16 +83,18 @@ class LibYear{
 
 	function toString($eventSet){
 		$monthNames = array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
+
 		$retstr = '';
-		$retstr .= '<table class="calendarYear">'.PHP_EOL;
+		$retstr .= '<div class="calendarYear">'.PHP_EOL;
 
 		foreach($this->months as $month){
-			$retstr .= '<tr><td colspan="7" ';
-			$retstr .= ' class="calendarMonthName"><h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2></td></tr>';
+			$retstr .= '<div class="calendarMonthName">';
+			$retstr .= '<h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2>';
+			$retstr .= '</div>';
 			$retstr .= $month->toString($eventSet);
 		}
 
-		$retstr .= '</table>';
+		$retstr .= '</div>';
 		return $retstr;
 	}
 }
@@ -142,46 +144,44 @@ class LibMonth{
 
 	function toString($eventSet, $weekShift=1){
 		$dayNames = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
+
 		$retstr = '';
 
 		$weekShift = $weekShift % 7;
 
 		//heading with day names
-		$retstr .= '<tr>'.PHP_EOL;
+		$retstr .= '<div class="calendarCellContainer">'.PHP_EOL;
 
-		for($i=0+$weekShift;$i<count($dayNames)+$weekShift;$i++){
-			$retstr .= '<td class="calendarDayName">';
+		for($i=0+$weekShift; $i<count($dayNames)+$weekShift; $i++){
+			$retstr .= '<div class="calendarCell calendarDayName hidden-xs">';
 			$retstr .= $dayNames[$i % 7];
-			$retstr .= '</td>'.PHP_EOL;
+			$retstr .= '</div>'.PHP_EOL;
 		}
 
-		$retstr .= '</tr>'.PHP_EOL;
-		$retstr .= '<tr>'.PHP_EOL;
+		$retstr .= '</div>'.PHP_EOL;
 
-		//weeks
+		//week
+		$retstr .= '<div class="calendarCellContainer">'.PHP_EOL;
+
 		$dayCounter = 1;
 		$colCounter = 0 + $weekShift;
 
-		//as long, as there are days left for output
+		//as long, as there are columns left for output
 		while($dayCounter < count($this->days)+1){
 			$day = $this->days[$dayCounter];
 
+			//as long, as there are days left for output
 			if($day->getType() == $colCounter){
 				$retstr .= $day->toString($eventSet);
-
-				if($day->getType() == (6 + $weekShift) % 7){
-					$retstr .= '</tr><tr>'.PHP_EOL;
-				}
-
 				$dayCounter++;
 			} else {
-				$retstr .= '<td></td>'.PHP_EOL;
+				$retstr .= '<div class="calendarCell hidden-xs"></div>'.PHP_EOL;
 			}
 
 			$colCounter = ($colCounter + 1) % 7;
 		}
 
-		$retstr .= '</tr>'.PHP_EOL;
+		$retstr .= '</div>'.PHP_EOL;
 		return $retstr;
 	}
 }
@@ -234,21 +234,6 @@ class LibDay{
 	}
 
 	function toString($eventSet){
-		$retstr = '';
-
-		$class = '';
-		$aktuell = '';
-
-		if($this->isToday()){
-			$class = ' today';
-			$aktuell = '<a id="aktuell"></a>';
-		}
-
-		//header
-		$retstr .= '<td class="calendarDay' .$class .'">';
-		$retstr .= $aktuell;
-		$retstr .= '<b>' .$this->number. '</b><br /><br />';
-
 		//print events of day
 		$year = $this->month->getYear();
 		$yearNumber = $year->getNumber();
@@ -256,14 +241,24 @@ class LibDay{
 		$dayNumber = str_pad($this->number, 2, 0, STR_PAD_LEFT);
 		$events = $eventSet->getEventsOfDate($yearNumber.'-'.$monthNumber.'-'.$dayNumber);
 
-		if(is_array($events)){
-			foreach($eventSet->getEventsOfDate($yearNumber.'-'.$monthNumber.'-'.$dayNumber) as $event){
+		$hasEvents = is_array($events) && sizeof($events > 0);
+
+		$todayClass = $this->isToday() ? ' today' : '';
+		$hiddenClass = $hasEvents ? '' : ' hidden-xs';
+
+		//header
+		$retstr = '';
+		$retstr .= '<div class="calendarCell calendarDay' .$todayClass.$hiddenClass. '">';
+		$retstr .= $this->number;
+
+		if($hasEvents){
+			foreach($events as $event){
 				$retstr .= $event->toString($yearNumber.'-'.$monthNumber.'-'.$dayNumber);
 			}
 		}
 
 		//footer
-		$retstr .= '</td>'.PHP_EOL;
+		$retstr .= '</div>'.PHP_EOL;
 		return $retstr;
 	}
 }
@@ -456,7 +451,7 @@ class LibCalendarEvent{
 		}
 
 		$retstr .= '<div class="calendarEvent h-event"><a id="t' .$this->id . $idSuffix .'"></a>';
-		$retstr .= '<time class="dt-start" datetime="' .$dtstart. '"><b>' .$timeString. '</b></time><br />';
+		$retstr .= '<time class="dt-start" datetime="' .$dtstart. '">' .$timeString. '</time><br />';
 
 		//link
 		if($this->linkUrl != ''){
@@ -470,7 +465,11 @@ class LibCalendarEvent{
 
 		//image
 		if($this->imageUrl != ''){
+			$retstr .= '<div class="thumbnail">';
+			$retstr .= '<div class="thumbnailOverflow">';
 			$retstr .= '<img class="img-responsive center-block" src="'.$this->imageUrl.'" alt="Foto" />';
+			$retstr .= '</div>';
+			$retstr .= '</div>';
 		}
 
 		if($this->linkUrl != ''){
@@ -481,7 +480,7 @@ class LibCalendarEvent{
 		if($this->description != ''){
 			$retstr .= '<span class="p-description">';
 			$retstr .= $this->description;
-			$retstr .= '</span><br />';
+			$retstr .= '</span>';
 		}
 
 		//location
@@ -491,16 +490,18 @@ class LibCalendarEvent{
 
 		//status
 		if($this->status != ''){
-			$retstr .= '<b>' .$this->status. '</b> ';
+			$retstr .= '<span class="status">';
+			$retstr .= $this->status;
+			$retstr .= '</span>';
 		}
 
 		//attended
 		if($this->attended && $this->attendedImageUrl != ''){
-			$retstr .= '<img src="' .$this->attendedImageUrl. '" alt="angemeldet" class="icon_small" /> ';
+			$retstr .= '<img src="' .$this->attendedImageUrl. '" alt="angemeldet" class="icon_small" />';
 		}
 
 		//footer
-		$retstr .= '</div><br />';
+		$retstr .= '</div>';
 
 		return $retstr;
 	}
