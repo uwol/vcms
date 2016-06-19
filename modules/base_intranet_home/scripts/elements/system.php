@@ -165,7 +165,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 		echo '<div class="panel-heading">';
 		echo '<h3 class="panel-title">Systemprobleme</h3>';
 		echo '</div>';
-	
+
 		echo '<div class="panel-body">';
 
 		if(count($errors) > 0){

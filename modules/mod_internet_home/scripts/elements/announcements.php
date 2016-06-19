@@ -30,7 +30,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="col-sm-6">';
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
-	
+
 	echo '<div class="row">';
 
 	echo '<div class="col-xs-12 col-sm-6">';

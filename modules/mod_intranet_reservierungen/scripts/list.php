@@ -81,7 +81,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	echo '</h3>';
 	echo '</div>';
-	
+
 	echo '<div class="panel-body">';
 	echo '<div class="media">';
 	echo '<div class="media-body">';

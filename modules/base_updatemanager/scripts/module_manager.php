@@ -321,7 +321,7 @@ foreach($modules as $key => $value){
 		} else {
 			$url = $gitHubRepoUrl;
 		}
-		
+
 		echo '<a href="' .$url. '">';
 	}
 

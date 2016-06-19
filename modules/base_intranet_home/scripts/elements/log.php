@@ -35,7 +35,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 		echo '<div class="panel-heading">';
 		echo '<h3 class="panel-title">Erfolglose Intranet-Anmeldungen</h3>';
 		echo '</div>';
-	
+
 		echo '<div class="panel-body">';
 		echo 'Personen mit mindestens ' .$numberOfLoginErrorsThreshold. ' erfolglosen Intranet-Anmeldungen in den letzten ' .$numberOfLoginErrorDaysThreshold. ' Tagen.';
 
@@ -50,7 +50,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			echo '<td><a href="index.php?pid=intranet_person_daten&personid=' .$row['mitglied']. '">' .$libMitglied->getMitgliedNameString($row['mitglied'], 4). '</a></td>';
 			echo '</tr>';
 		}
-		
+
 		echo '</table>';
 
 		echo '</div>';

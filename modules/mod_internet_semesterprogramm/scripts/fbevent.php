@@ -35,14 +35,14 @@ if($libEvent->isFacebookEvent($row)){
 	$fbEventInterestedEndpoint = $fbGraphUrl. '/' .$fbEventId. '/interested' .$fbAccessTokenQuery. '&summary=count';
 	$fbEventAttendingEndpoint = $fbGraphUrl. '/' .$fbEventId. '/attending' .$fbAccessTokenQuery. '&summary=count';
 
-	$eventPhotosJson = file_get_contents($fbEventPhotosEndpoint);	
+	$eventPhotosJson = file_get_contents($fbEventPhotosEndpoint);
 
 	if(!empty($eventPhotosJson)){
 		$eventPhotosObject = json_decode($eventPhotosJson, true);
 		$eventPhotoSource = $eventPhotosObject['data'][0]['source'];
 
 		$eventInterestedJson = file_get_contents($fbEventInterestedEndpoint);
-		
+
 		if(!empty($eventInterestedJson)){
 			$eventInterestedObject = json_decode($eventInterestedJson, true);
 			$eventInterestedCount = $eventInterestedObject['summary']['count'];
@@ -92,7 +92,7 @@ if($libEvent->isFacebookEvent($row)){
 				echo '</div>';
 
 				echo '<hr />';
-	
+
 				echo '<p>';
 				echo '<a href="' .$libString->protectXss($eventUrl). '">';
 				echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
