@@ -88,7 +88,10 @@ class LibYear{
 		$retstr .= '<div class="calendarYear">'.PHP_EOL;
 
 		foreach($this->months as $month){
-			$retstr .= '<div class="calendarMonthName">';
+			$hasEvents = $month->hasEvents($eventSet);
+			$hiddenClass = $hasEvents ? '' : ' hidden-xs';
+
+			$retstr .= '<div class="calendarMonthName' .$hiddenClass. '">';
 			$retstr .= '<h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2>';
 			$retstr .= '</div>';
 			$retstr .= $month->toString($eventSet);
@@ -140,6 +143,16 @@ class LibMonth{
 
 	function getNumberOfDays(){
 		return 31 - ((($this->number - (($this->number < 8)?1:0)) % 2) + (($this->number == 2)?((!($this->year->getNumber() % ((!($this->year->getNumber() % 100))?400:4)))?1:2):0));
+	}
+
+	function hasEvents($eventSet){
+		foreach($this->days as $day){
+			if($day->hasEvents($eventSet)){
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	function toString($eventSet, $weekShift=1){
@@ -219,6 +232,23 @@ class LibDay{
 		return $this->type;
 	}
 
+	function getDate(){
+		$year = $this->month->getYear();
+		$yearNumber = $year->getNumber();
+		$monthNumber = str_pad($this->month->getNumber(), 2, 0, STR_PAD_LEFT);
+		$dayNumber = str_pad($this->number, 2, 0, STR_PAD_LEFT);
+		return $yearNumber.'-'.$monthNumber.'-'.$dayNumber;
+	}
+
+	function getEvents($eventSet){
+		return $eventSet->getEventsOfDate($this->getDate());
+	}
+
+	function hasEvents($eventSet){
+		$events = $this->getEvents($eventSet);
+		return is_array($events) && sizeof($events > 0);
+	}
+
 	function isToday(){
 		$year = $this->month->getYear();
 
@@ -235,13 +265,8 @@ class LibDay{
 
 	function toString($eventSet){
 		//print events of day
-		$year = $this->month->getYear();
-		$yearNumber = $year->getNumber();
-		$monthNumber = str_pad($this->month->getNumber(), 2, 0, STR_PAD_LEFT);
-		$dayNumber = str_pad($this->number, 2, 0, STR_PAD_LEFT);
-		$events = $eventSet->getEventsOfDate($yearNumber.'-'.$monthNumber.'-'.$dayNumber);
-
-		$hasEvents = is_array($events) && sizeof($events > 0);
+		$hasEvents = $this->hasEvents($eventSet);
+		$events = $this->getEvents($eventSet);
 
 		$todayClass = $this->isToday() ? ' today' : '';
 		$hiddenClass = $hasEvents ? '' : ' hidden-xs';
@@ -253,7 +278,7 @@ class LibDay{
 
 		if($hasEvents){
 			foreach($events as $event){
-				$retstr .= $event->toString($yearNumber.'-'.$monthNumber.'-'.$dayNumber);
+				$retstr .= $event->toString($this->getDate());
 			}
 		}
 

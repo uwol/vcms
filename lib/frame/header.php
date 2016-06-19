@@ -8,13 +8,13 @@ $pageOgUrl = '';
 if($libGlobal->pid == $libConfig->defaultHome){
 	$pageTitle = $libConfig->verbindungName;
 	$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/';
-	$pageOgUrl = 'http://' .$libConfig->sitePath. '/'; 
+	$pageOgUrl = 'http://' .$libConfig->sitePath. '/';
 } else {
 	$pageTitle = $libConfig->verbindungName. ' - ' . $libGlobal->page->getTitle();
 	$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/index.php?pid=' .$libGlobal->pid;
-	$pageOgUrl = 'http://' .$libConfig->sitePath. '/'; 
+	$pageOgUrl = 'http://' .$libConfig->sitePath. '/';
 
-	if($libGlobal->page->getPid() == 'semesterprogramm_event' 
+	if($libGlobal->page->getPid() == 'semesterprogramm_event'
 			&& isset($_REQUEST['eventid']) && is_numeric($_REQUEST['eventid'])){
 		$pageCanonicalUrl .= '&amp;eventid=' .$_REQUEST['eventid'];
 		$pageOgUrl .= 'index.php?pid=' .$libGlobal->pid. '&amp;eventid=' .$_REQUEST['eventid'];
