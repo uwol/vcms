@@ -44,14 +44,14 @@ main th {
 	background-color: #E8CAA2;
 }
 
-main .calendarMonthName, main .calendarDayName {
+main .calendar .calendarMonthName, main .calendar .calendarDayName {
 	background-color: #E8CAA2;
 }
 
-main .calendarDay {
+main .calendar .calendarDay {
 	border: thin solid #E8CAA2;
 }
 
-main .today {
+main .calendar .today {
 	border: thin solid #961419;
 }

@@ -150,62 +150,62 @@ main .personSignatureBox .personActivityBox .personActivityBarInactive {
 
 /* calendar */
 
-main {
+main .calendar {
 	width: 100%;
 }
 
-main .calendarMonthName {
+main .calendar .calendarMonthName {
 	width: 100%;
 }
 
-main .calendarMonthName h2 {
+main .calendar .calendarMonthName h2 {
 	text-align: center;
 	margin: 0;
 	padding: 0.5em;
 }
 
-main .calendarCellContainer {
+main .calendar .calendarCellContainer {
     display: flex;
 	display: -webkit-flex;
 	flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
 }
 
-main .calendarCell {
+main .calendar .calendarCell {
 	padding: 0.5em;
 }
 
 @media (max-width: 768px){
-	main .calendarCell {
+	main .calendar .calendarCell {
 		width: 100%;
 	}
 }
 
 @media (min-width: 768px){
-	main .calendarCell {
+	main .calendar .calendarCell {
 		width: 14.285714285714285714285714285714%;
 	}
 }
 
-main .calendarDayName {
+main .calendar .calendarDayName {
 	text-align: center;
 }
 
-main .calendarDay {
+main .calendar .calendarDay {
 	border: thin solid #000000;
 	text-align: left;
 }
 
-main .calendarDay .calendarEvent {
+main .calendar .calendarDay .calendarEvent {
 	text-align: center;
 	margin-bottom: 1em;
 }
 
-main .calendarYear .calendarDay .calendarEvent time {
+main .calendar .calendarYear .calendarDay .calendarEvent time {
 	font-weight: bold;
 }
 
-main .calendarYear .calendarDay .calendarEvent .status {
+main .calendar .calendarYear .calendarDay .calendarEvent .status {
 	font-weight: bold;
 }
 
