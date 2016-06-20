@@ -131,7 +131,7 @@ class LibForm{
 				echo ' selected="selected"';
 			}
 
-			echo '>' .$row['titel']. ' ' .$row['name']. '</option>';
+			echo '>' .$row['name']. ', ' .$row['titel']. '</option>';
 		}
 
 		echo '</select></div>';
