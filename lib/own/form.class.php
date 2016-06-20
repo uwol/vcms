@@ -37,7 +37,7 @@ class LibForm{
 
 	function printTextarea($name, $label, $value){
 		echo '<div class="form-group">';
-		echo '<label for="text" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><textarea id="' .$name. '" name="' .$name. '" rows="10" class="form-control">' .$value. '</textarea></div>';
 		echo '</div>';
 	}

@@ -169,7 +169,7 @@ echo '</div>';
 echo '<h2>Kontakt aufnehmen</h2>';
 
 echo '<div class="row">';
-echo '<section class="col-md-12">';
+echo '<div class="col-md-12">';
 
 
 if($mailsent){
@@ -213,7 +213,7 @@ if($mailsent){
 	echo '</form>';
 }
 
-echo '</section>';
+echo '</div>';
 echo '</div>';
 
 if($libGenericStorage->loadValueInCurrentModule('showHaftungshinweis') == 1){
