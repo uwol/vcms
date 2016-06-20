@@ -651,7 +651,7 @@ class LibTime{
 	function formatDateTimeString($dateTime){
 		$dateString = $this->formatDateString($dateTime);
 		$timeString = $this->formatTimeString($dateTime);
-		
+
 		return $dateString. ' ' .$timeString;
 	}
 
@@ -662,7 +662,7 @@ class LibTime{
 		$hour = (int) substr($dateTime, 11, 2);
 		$minute = (int) substr($dateTime, 14, 2);
 		$second = (int) substr($dateTime, 17, 2);
-		
+
 		if($hour == 0 && $minute == 0 && $second == 0){
 			return str_pad($year, 4, '0', STR_PAD_LEFT). '-' .str_pad($month, 2, '0', STR_PAD_LEFT). '-' .str_pad($day, 2, '0', STR_PAD_LEFT);
 		} else {

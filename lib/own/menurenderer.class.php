@@ -94,12 +94,7 @@ class LibMenuRenderer{
 		foreach($menuFolder->getElements() as $folderElement){
 			//internal link?
 			if($folderElement->getType() == 1){
-				if($folderElement->getPid() == $pid){
-					$retstr .= $this->defaultIndent . $this->indent($depth) . '<li class="active">';
-				} else {
-					$retstr .= $this->defaultIndent . $this->indent($depth) . '<li>';
-				}
-
+				$retstr .= $this->getLiTag($folderElement, $depth, $pid);
 				$retstr .= '<a href="index.php?pid=' . $folderElement->getPid() . '">';
 				$retstr .= $folderElement->getName();
 				$retstr .= '</a></li>' . PHP_EOL;
@@ -134,13 +129,14 @@ class LibMenuRenderer{
 			}
 			//external link?
 			elseif($folderElement->getType() == 3){
-				$retstr .= $this->defaultIndent . $this->indent($depth) . '<li><a href="' .$folderElement->getPid(). '">';
+				$retstr .= $this->getLiTag($folderElement, $depth, $pid);
+				$retstr .= '<a href="' .$folderElement->getPid(). '">';
 				$retstr .= $folderElement->getName();
 				$retstr .= '</a></li>' . PHP_EOL;
 			}
 			//login / logout
 			elseif($folderElement->getType() == 4){
-				$retstr .= '<li>';
+				$retstr .= $this->getLiTag($folderElement, $depth, $pid);
 
 				if(!$this->libAuth->isLoggedin()){
 					$retstr .= '<a href="index.php?pid=' . $folderElement->getPid() . '">';
@@ -180,6 +176,18 @@ class LibMenuRenderer{
 		}
 
 		return $str;
+	}
+
+	function getLiTag($folderElement, $depth, $pid){
+		$retstr = '';
+
+		if($folderElement->getPid() == $pid){
+			$retstr .= $this->defaultIndent . $this->indent($depth) . '<li class="active">';
+		} else {
+			$retstr .= $this->defaultIndent . $this->indent($depth) . '<li>';
+		}
+
+		return $retstr;
 	}
 }
 ?>
