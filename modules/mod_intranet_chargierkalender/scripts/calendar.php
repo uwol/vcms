@@ -22,7 +22,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 echo '<h1>Chargierkalender ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
-echo '<p>Hier kannst Du zu Chargierveranstaltungen des Semesters eine feste Zusage geben.</p>';
 
 /*
 * actions
@@ -211,7 +210,7 @@ class LibChargierKalenderEvent{
 		* print event
 		*/
 		//header
-		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendarEvent h-event">';
+		$retstr .= '<div id="t' .$this->id. '" class="calendarEvent h-event">';
 		$retstr .= '<div><time class="dt-start" datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link

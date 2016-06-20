@@ -81,7 +81,7 @@ if($count > 0){
 
 		echo '<div class="form-control-static">';
 		echo $libTime->formatDateString($row['datum']). ' ';
-		echo '<a href="index.php?pid=intranet_chargierkalender_kalender&amp;semester=' .$libTime->getSemesterNameAtDate($row['datum']). '#' .$row['id']. '">';
+		echo '<a href="index.php?pid=intranet_chargierkalender_kalender&amp;semester=' .$libTime->getSemesterNameAtDate($row['datum']). '#t' .$row['id']. '">';
 		echo $libVerein->getVereinNameString($row['verein']);
 		echo '</a>';
 		echo '</div>';
