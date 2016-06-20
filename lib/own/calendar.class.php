@@ -344,7 +344,6 @@ class LibCalendarEvent{
 	var $imageUrl;
 
 	//meta infos
-	var $timeStyle; // 0-Normal, 1-s.t./c.t.
 	var $attended;
 	var $attendedImageUrl;
 
@@ -394,10 +393,6 @@ class LibCalendarEvent{
 		$this->imageUrl = $imageUrl;
 	}
 
-	function setTimeStyle($timeStyle){
-		$this->timeStyle = $timeStyle;
-	}
-
 	function isAttended($attended){
 		$this->attended = $attended;
 	}
@@ -426,15 +421,11 @@ class LibCalendarEvent{
 		return substr($dateTime, 0, 10);
 	}
 
-	function getTimeOfDateTime($dateTime){
-		return substr($dateTime, 11, 5);
-	}
-
 	function toString($forDate = ''){
 		//optionally, $forDate contains the date this event should be printed for
 		//this is relevant for multi-day events, that should not contain time information for
 		//days between startDate and endDate
-		global $libString;
+		global $libString, $libTime;
 
 		$retstr = '';
 		$timeString = '';
@@ -442,41 +433,15 @@ class LibCalendarEvent{
 		//format timeString
 		if(!$this->allDay){ //event with timeinfo?
 			if($forDate == $this->getStartDate()){
-				$timeString = $this->getTimeOfDateTime($this->startDateTime);
-
-				//s.t./c.t. ?
-				if($this->timeStyle == 1){
-					if(substr($timeString, 3, 2) == 00){
-						$timeString = substr($timeString, 0, 2). 'h s.t.';
-					} elseif(substr($timeString, 3, 2) == 15){
-						$timeString = substr($timeString, 0, 2). 'h c.t.';
-					} else {
-						$timeString = $timeString. 'h';
-					}
-				} else {
-					$timeString = $timeString. 'h';
-				}
+				$timeString = $libTime->formatTimeString($this->startDateTime);
 			}
-		}
-
-		//format dateTime for microformats
-		$dtstart = substr($this->startDateTime, 0, 4) . substr($this->startDateTime, 5, 2) . substr($this->startDateTime, 8, 2);
-
-		if(!$this->allDay){
-			$dtstart .= 'T'. substr($this->startDateTime, 11, 2) . substr($this->startDateTime, 14, 2) . substr($this->startDateTime, 17, 2);
 		}
 
 		/*
 		* print event
 		*/
-		$idSuffix = '';
-
-		if($forDate != ''){
-			$idSuffix = '_'.$forDate;
-		}
-
-		$retstr .= '<div class="calendarEvent h-event"><a id="t' .$this->id . $idSuffix .'"></a>';
-		$retstr .= '<div><time class="dt-start" datetime="' .$dtstart. '">' .$timeString. '</time></div>';
+		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendarEvent h-event">';
+		$retstr .= '<div><time class="dt-start" datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link
 		if($this->linkUrl != ''){
@@ -484,9 +449,9 @@ class LibCalendarEvent{
 		}
 
 		//summary
-		$retstr .= '<span class="p-name">';
+		$retstr .= '<div class="p-name">';
 		$retstr .= $this->summary;
-		$retstr .= '</span><br />';
+		$retstr .= '</div>';
 
 		//image
 		if($this->imageUrl != ''){

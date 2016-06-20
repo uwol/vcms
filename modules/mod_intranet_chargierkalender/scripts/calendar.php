@@ -20,10 +20,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-?>
-<h1>Chargierkalender <?php echo $libTime->getSemesterString($libGlobal->semester); ?></h1>
-<p>Hier kannst Du zu Chargierveranstaltungen des Semesters eine feste Zusage geben.</p>
-<?php
+
+echo '<h1>Chargierkalender ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
+echo '<p>Hier kannst Du zu Chargierveranstaltungen des Semesters eine feste Zusage geben.</p>';
+
 /*
 * actions
 */
@@ -129,7 +129,6 @@ class LibChargierKalenderEvent{
 	var $description;
 	var $location;
 	var $linkUrl;
-	var $timeStyle;
 
 	var $angemeldet;
 	var $anmeldeButtonEnabled;
@@ -195,48 +194,25 @@ class LibChargierKalenderEvent{
 	}
 
 	function getDateOfDateTime($dateTime){
-		return substr($dateTime,0,10);
+		return substr($dateTime, 0, 10);
 	}
 
-	function getTimeOfDateTime($dateTime){
-		return substr($dateTime,11,5);
-	}
+	function toString($forDate = ''){
+		global $libString, $libTime, $libGlobal;
 
-	function toString(){
-		global $libString, $libGlobal;
 		$retstr = '';
-
-		//format timeString
 		$timeString = '';
+
 		if(!$this->allDay){ //event with timeinfo?
-			$timeString = $this->getTimeOfDateTime($this->startDateTime);
-
-			if($this->timeStyle == 1){ //s.t./c.t. ?
-				if(substr($timeString, 3, 2) == 00){
-					$timeString = substr($timeString, 0, 2)."h s.t.";
-				} elseif(substr($timeString, 3, 2) == 15){
-					$timeString = substr($timeString, 0, 2)."h c.t.";
-				} else {
-					$timeString = $timeString. 'h';
-				}
-			} else {
-				$timeString = $timeString. 'h';
-			}
-		}
-
-		//format dateTime for microformats
-		$dtstart = substr($this->startDateTime, 0, 4) . substr($this->startDateTime, 5, 2) . substr($this->startDateTime, 8, 2);
-
-		if(!$this->allDay){
-			$dtstart .= "T". substr($this->startDateTime, 11, 2) . substr($this->startDateTime, 14, 2) . substr($this->startDateTime, 17, 2);
+			$timeString = $libTime->formatTimeString($this->startDateTime);
 		}
 
 		/*
 		* print event
 		*/
 		//header
-		$retstr .= '<div id="' .$this->id. '" class="calendarEvent h-event">';
-		$retstr .= '<time class="dt-start" datetime="' .$dtstart. '"><b>'.$timeString.'</b></time><br />';
+		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendarEvent h-event">';
+		$retstr .= '<div><time class="dt-start" datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link
 		if($this->linkUrl != ''){
@@ -244,25 +220,19 @@ class LibChargierKalenderEvent{
 		}
 
 		//summary
-		if($this->summary != ''){
-			$retstr .= '<span class="p-name">';
-			$retstr .= $this->summary;
-			$retstr .= '</span>';
-		}
+		$retstr .= '<div class="p-name">';
+		$retstr .= $this->summary;
+		$retstr .= '</div>';
 
 		if($this->linkUrl != ''){
 			$retstr .= '</a>';
 		}
 
-		if($this->summary != ''){
-			$retstr .= '<br />';
-		}
-
 		//description
 		if($this->description != ''){
-			$retstr .= '<span class="p-description">';
+			$retstr .= '<div class="p-description">';
 			$retstr .= $this->description;
-			$retstr .= '</span><br />';
+			$retstr .= '</div>';
 		}
 
 		//location
@@ -277,8 +247,9 @@ class LibChargierKalenderEvent{
 				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$key. '">' .$value. '</a>';
 			}
 
+			$retstr .= '<div>';
 			$retstr .= implode(', ', $mitgliederLinks);
-			$retstr .= '<br />';
+			$retstr .= '</div>';
 		}
 
 		//registration
@@ -303,7 +274,7 @@ class LibChargierKalenderEvent{
 		}
 
 		//footer
-		$retstr .= "</div>";
+		$retstr .= '</div>';
 		return $retstr;
 	}
 }

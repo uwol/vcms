@@ -50,7 +50,7 @@ function printVeranstaltungDateTime($row){
 	global $libTime;
 
 	echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '">';
-	echo $libTime->formatDateString($row['datum']);
+	echo $libTime->formatDateTimeString($row['datum']);
 	echo '</time>';
 }
 

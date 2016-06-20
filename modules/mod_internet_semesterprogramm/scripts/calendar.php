@@ -66,7 +66,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$event->setLocation($row['ort']);
 	$event->setSummary($row['titel']);
 	$event->setLinkUrl('index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']);
-	$event->setTimeStyle(1);
 	$event->setStatus($row['status']);
 
 	if(substr($row['datum'], 11, 8) == "00:00:00"){

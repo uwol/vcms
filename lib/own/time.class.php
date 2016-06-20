@@ -664,7 +664,7 @@ class LibTime{
 		$second = (int) substr($dateTime, 17, 2);
 		
 		if($hour == 0 && $minute == 0 && $second == 0){
-			return str_pad($year, 4, '0', STR_PAD_LEFT).str_pad($month, 2, '0', STR_PAD_LEFT).str_pad($day, 2, '0', STR_PAD_LEFT);
+			return str_pad($year, 4, '0', STR_PAD_LEFT). '-' .str_pad($month, 2, '0', STR_PAD_LEFT). '-' .str_pad($day, 2, '0', STR_PAD_LEFT);
 		} else {
 			$dateTimeObject = new DateTime($dateTime);
 			$dateTimeObject->setTimezone(new DateTimeZone('UTC'));
