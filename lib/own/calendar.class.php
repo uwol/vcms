@@ -180,12 +180,12 @@ class LibMonth{
 		$colCounter = 0 + $weekShift;
 
 		//as long, as there are columns left for output
-		while($dayCounter < count($this->days)+1){
-			$day = $this->days[$dayCounter];
+		while($colCounter != $weekShift || $dayCounter < count($this->days)+1){
+			$dayExists = isset($this->days[$dayCounter]);
 
 			//as long, as there are days left for output
-			if($day->getType() == $colCounter){
-				$retstr .= $day->toString($eventSet);
+			if($dayExists && $this->days[$dayCounter]->getType() == $colCounter){
+				$retstr .= $this->days[$dayCounter]->toString($eventSet);
 				$dayCounter++;
 			} else {
 				$retstr .= '<div class="calendarCell hidden-xs"></div>'.PHP_EOL;

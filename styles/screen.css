@@ -156,6 +156,7 @@ main .calendar {
 
 main .calendar .calendarMonthName {
 	width: 100%;
+	margin-top: 1px;
 }
 
 main .calendar .calendarMonthName h2 {
@@ -166,12 +167,13 @@ main .calendar .calendarMonthName h2 {
 
 main .calendar .calendarCellContainer {
     display: flex;
-	display: -webkit-flex;
 	flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
+	flex: none;
+	justify-content: space-around;
 }
 
 main .calendar .calendarCell {
+	margin-top: 1px;
 	padding: 0.5em;
 }
 
@@ -183,7 +185,8 @@ main .calendar .calendarCell {
 
 @media (min-width: 768px){
 	main .calendar .calendarCell {
-		width: 14.285714285714285714285714285714%;
+		/* (100% / 7) - 0.1% */
+		width: 14.185714285714285714285714285714%;
 	}
 }
 
