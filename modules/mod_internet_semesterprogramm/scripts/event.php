@@ -123,14 +123,13 @@ function printEventDetails($row){
 	/*
 	* date and time
 	*/
-	$date = $libTime->formatDateTimeString($row['datum'], 2);
-	$time = $libTime->formatDateTimeString($row['datum'], 3);
+	echo '<time class="dt-start" datetime="' .$libTime->formatUtcString($row['datum']). '">';
+	echo 'Am ' .$libTime->formatDateString($row['datum']);
 
-	echo '<time class="dt-start" datetime="' .$row['datum']. '">';
-	echo 'Am ' .$date;
+	$timeString = $libTime->formatTimeString($row['datum']);
 
-	if($time != ''){
-		echo ' um ' .$time;
+	if($timeString != ''){
+		echo ' um ' .$timeString;
 	}
 
 	echo '</time>';
@@ -232,7 +231,7 @@ function printSocialButtons($row){
 
 	$semester = $libTime->getSemesterNameAtDate($row['datum']);
 	$url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
-	$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateTimeString($row['datum'], 2);
+	$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateString($row['datum']);
 
 	if(!$libEvent->isFacebookEvent($row)){
 		//facebook

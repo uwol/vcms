@@ -80,7 +80,7 @@ if($count > 0){
 		echo '<input type="hidden" name="chargierveranstaltungid" value="' .$row['id']. '" />';
 
 		echo '<div class="form-control-static">';
-		echo $libTime->formatDateTimeString($row['datum'], 2). ' ';
+		echo $libTime->formatTimeString($row['datum']). ' ';
 		echo '<a href="index.php?pid=intranet_chargierkalender_kalender&amp;semester=' .$libTime->getSemesterNameAtDate($row['datum']). '#' .$row['id']. '">';
 		echo $libVerein->getVereinNameString($row['verein']);
 		echo '</a>';

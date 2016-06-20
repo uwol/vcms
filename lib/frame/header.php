@@ -25,7 +25,7 @@ if($libGlobal->pid == $libConfig->defaultHome){
 		$event = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if($event['titel'] != ''){
-			$pageTitle = $libConfig->verbindungName . ' - ' . $event['titel'] . ' am ' . $libTime->formatDateTimeString($event['datum'], 2);
+			$pageTitle = $libConfig->verbindungName . ' - ' . $event['titel'] . ' am ' . $libTime->formatDateString($event['datum']);
 		}
 
 		unset($event);

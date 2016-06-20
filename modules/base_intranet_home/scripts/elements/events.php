@@ -80,7 +80,7 @@ if($count > 0){
 		echo '<input type="hidden" name="eventid" value="' .$row['id']. '" />';
 
 		echo '<div class="form-control-static">';
-		echo $libTime->formatDateTimeString($row['datum'], 2). ' ';
+		echo $libTime->formatDateString($row['datum']). ' ';
 		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a>';
 		echo '</div>';
 

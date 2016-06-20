@@ -32,7 +32,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-heading">';
-	echo '<h3 class="panel-title">' .$libTime->formatDateTimeString($row['eingabedatum'], 2). ' <a href="' .$link. '">' .$row['bezeichnung']. '</a></h3>';
+	echo '<h3 class="panel-title">' .$libTime->formatDateString($row['eingabedatum']). ' <a href="' .$link. '">' .$row['bezeichnung']. '</a></h3>';
 	echo '</div>';
 
 	echo '<div class="panel-body">';

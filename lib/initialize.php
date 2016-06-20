@@ -57,12 +57,10 @@ $libModuleHandler = new LibModuleHandler();
 /*
 * set timezone
 */
-if(version_compare(PHP_VERSION, '5.1.0') >= 0){
-	if(isset($libConfig->timezone) && $libConfig->timezone != ''){
-		date_default_timezone_set($libConfig->timezone);
-	} else {
-		date_default_timezone_set('Europe/Berlin');
-	}
+if(isset($libConfig->timezone) && $libConfig->timezone != ''){
+	date_default_timezone_set($libConfig->timezone);
+} else {
+	date_default_timezone_set('Europe/Berlin');
 }
 
 

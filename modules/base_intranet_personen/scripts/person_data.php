@@ -648,7 +648,7 @@ function printPrimaryAddress($row){
 		}
 
 		if($row['datum_adresse1_stand'] != ''){
-			echo '<div>letzte Änderung: ' .$libTime->formatDateTimeString($row['datum_adresse1_stand'], 2). '</div>';
+			echo '<div>letzte Änderung: ' .$libTime->formatDateString($row['datum_adresse1_stand']). '</div>';
 		}
 
 		echo '</address>';
@@ -690,7 +690,7 @@ function printSecondaryAddress($row){
 		}
 
 		if($row['datum_adresse2_stand'] != ''){
-			echo '<div>letzte Änderung: ' .$libTime->formatDateTimeString($row['datum_adresse2_stand'], 2). '</div>';
+			echo '<div>letzte Änderung: ' .$libTime->formatDateString($row['datum_adresse2_stand']). '</div>';
 		}
 
 		echo '</address>';

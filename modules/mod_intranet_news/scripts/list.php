@@ -104,7 +104,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
 	echo '<div class="panel-heading">';
 	echo '<h3 class="panel-title">';
-	echo $libTime->formatDateTimeString($row['eingabedatum'], 2);
+	echo $libTime->formatDateString($row['eingabedatum']);
 	echo ' ';
 	echo $row['bezeichnung'];
 

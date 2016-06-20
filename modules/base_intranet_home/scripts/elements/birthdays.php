@@ -45,7 +45,7 @@ echo '<dl>';
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<dt>';
-	echo $libTime->formatDateTimeString($row['datum_geburtstag'], 2);
+	echo $libTime->formatDateString($row['datum_geburtstag']);
 
 	if($libTime->checkrundergeburtstag(substr($row['datum_geburtstag'], 0, 4), @date('Y')) != false){
 		echo ' '.$libTime->checkrundergeburtstag(substr($row['datum_geburtstag'], 0, 4), @date('Y')).' Jahre';

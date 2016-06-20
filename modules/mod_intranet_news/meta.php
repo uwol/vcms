@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Neuigkeiten";
-$version = "2.25";
+$version = "2.26";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";

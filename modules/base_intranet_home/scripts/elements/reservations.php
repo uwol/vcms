@@ -33,7 +33,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-heading">';
 	echo '<h3 class="panel-title">';
-	echo $libTime->formatDateTimeString($row['datum'], 2);
+	echo $libTime->formatDateString($row['datum']);
 	echo ' ';
 	echo 'Reservierung durch <a href="' .$link. '">';
 	echo $libMitglied->getMitgliedNameString($row['person'], 0);

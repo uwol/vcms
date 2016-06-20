@@ -49,19 +49,9 @@ function printVeranstaltungTitle($row){
 function printVeranstaltungDateTime($row){
 	global $libTime;
 
-	$date = $libTime->formatDateTimeString($row['datum'], 2);
-	$time = $libTime->formatDateTimeString($row['datum'], 3);
-
-	echo '<time>';
-	echo $date;
+	echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '">';
+	echo $libTime->formatDateString($row['datum']);
 	echo '</time>';
-
-	if($time != ''){
-		echo '<br />';
-		echo '<time>';
-		echo $time;
-		echo '</time>';
-	}
 }
 
 

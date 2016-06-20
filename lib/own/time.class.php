@@ -626,31 +626,50 @@ class LibTime{
 
 	//-------------------- conversions ------------------------------------------
 
-	function formatDateTimeString($dateTime, $mode = 0){
+	function formatDateString($dateTime){
+		return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4);
+	}
+
+	function formatTimeString($dateTime){
+		$time = substr($dateTime, 11, 5);
 		$result = '';
 
-		if($mode == 0){
-			return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4) .' '. substr($dateTime, 11, 8);
-		} elseif($mode == 1){
-			return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4) .' '. substr($dateTime, 11, 5);
-		} elseif($mode == 2){
-			return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4);
-		} elseif($mode == 3){
-			$time = substr($dateTime, 11, 5);
-
-			// no time
-			if($time == '00:00'){
-				$result = '';
-			} elseif(substr($time, 3, 2) == 00){
-				$result = substr($time, 0, 2). 'h s.t.';
-			} elseif(substr($time, 3, 2) == 15){
-				$result = substr($time, 0, 2). 'h c.t.';
-			} else {
-				$result = $time. 'h';
-			}
+		// no time
+		if($time == '00:00'){
+			$result .= '';
+		} elseif(substr($time, 3, 2) == 00){
+			$result .= ' ' .substr($time, 0, 2). 'h s.t.';
+		} elseif(substr($time, 3, 2) == 15){
+			$result .= ' ' .substr($time, 0, 2). 'h c.t.';
+		} else {
+			$result .= ' ' .$time. 'h';
 		}
 
 		return $result;
+	}
+
+	function formatDateTimeString($dateTime){
+		$dateString = $this->formatDateString($dateTime);
+		$timeString = $this->formatTimeString($dateTime);
+		
+		return $dateString. ' ' .$timeString;
+	}
+
+	function formatUtcString($dateTime){
+		$year = (int) substr($dateTime, 0, 4);
+		$month = (int) substr($dateTime, 5, 2);
+		$day = (int) substr($dateTime, 8, 2);
+		$hour = (int) substr($dateTime, 11, 2);
+		$minute = (int) substr($dateTime, 14, 2);
+		$second = (int) substr($dateTime, 17, 2);
+		
+		if($hour == 0 && $minute == 0 && $second == 0){
+			return str_pad($year, 4, '0', STR_PAD_LEFT).str_pad($month, 2, '0', STR_PAD_LEFT).str_pad($day, 2, '0', STR_PAD_LEFT);
+		} else {
+			$dateTimeObject = new DateTime($dateTime);
+			$dateTimeObject->setTimezone(new DateTimeZone('UTC'));
+			return $dateTimeObject->format('Y-m-d').'T'.$dateTimeObject->format('H:i:s').'Z';
+		}
 	}
 
 	function assureMysqlDateTime($dateTime){
