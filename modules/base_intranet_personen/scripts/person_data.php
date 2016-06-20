@@ -816,8 +816,14 @@ function printAssociationDetails($row){
 		$vereine[] = $vereinStr;
 	}
 
-	if(count($vereine) > 0){
-		echo '<div>Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $vereine). '</div>';
+	$vereineAnzahl = count($vereine);
+
+	if($vereineAnzahl > 0){
+		echo '<div>';
+		echo '<span class="badge">' .$vereineAnzahl. '</span>';
+		echo ' ';
+		echo 'Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $vereine);
+		echo '</div>';
 	}
 
 	/*
@@ -832,7 +838,9 @@ function printAssociationDetails($row){
 
 		if($chargierAnzahl > 0){
 			echo '<div>';
-			echo $chargierAnzahl. '-mal Chargierter: ';
+			echo '<span class="label ' .getClassForChargierAnzahl($chargierAnzahl). '">' .$chargierAnzahl. '</span>';
+			echo ' ';
+			echo 'Chargierter: ';
 
 			$stmt = $libDb->prepare('SELECT datum, beschreibung, verein FROM mod_chargierkalender_veranstaltung, mod_chargierkalender_teilnahme WHERE mod_chargierkalender_veranstaltung.id = mod_chargierkalender_teilnahme.chargierveranstaltung AND mod_chargierkalender_teilnahme.mitglied = :mitglied ORDER BY mod_chargierkalender_veranstaltung.datum DESC');
 			$stmt->bindValue(':mitglied', $row['id'], PDO::PARAM_INT);
@@ -860,6 +868,18 @@ function printAssociationDetails($row){
 			echo '</div>';
 		}
 	}
+}
+
+function getClassForChargierAnzahl($chargierAnzahl){
+	$result = 'label-danger';
+
+	if($chargierAnzahl >= 10){
+		$result = 'label-success';
+	} elseif($chargierAnzahl >= 5){
+		$result = 'label-warning';
+	}
+
+	return $result;
 }
 
 function printVita($row){

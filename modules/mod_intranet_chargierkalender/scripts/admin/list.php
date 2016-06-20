@@ -65,7 +65,7 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlob
 echo '<br />';
 
 echo '<table>';
-echo '<tr><th>Id</th><th>Verein</th><th>Datum</th><th></th></tr>';
+echo '<tr><th>Id</th><th>Verein</th><th>Beschreibung</th><th>Datum</th><th></th></tr>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
@@ -79,6 +79,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
 	echo '<td>' .$row['id']. '</td>';
 	echo '<td>' .$libVerein->getVereinNameString($row['verein']). '</td>';
+	echo '<td>' .$row['beschreibung']. '</td>';
 	echo '<td>' .$row['datum']. '</td>';
 	echo '<td class="toolColumn">';
 	echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;id=' .$row['id']. '">';

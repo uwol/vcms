@@ -107,7 +107,7 @@ echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 $libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
 $libForm->printTextInput('datum', 'Datum', $array['datum'], 'date');
 $libForm->printVereineDropDownBox("verein", "Verein", $array['verein'], true, false);
-$libForm->printTextarea('beschreibung', 'Beschreibung', $array['beschreibung']);
+$libForm->printTextInput('beschreibung', 'Beschreibung', $array['beschreibung']);
 
 echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
 
