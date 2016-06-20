@@ -141,12 +141,12 @@ class LibMenuRenderer{
 				if(!$this->libAuth->isLoggedin()){
 					$retstr .= '<a href="index.php?pid=' . $folderElement->getPid() . '">';
 					$retstr .= $folderElement->getName();
-					$retstr .= '</a>' . PHP_EOL;
+					$retstr .= '</a>';
 				} else {
 					$retstr .= '<a href="index.php?session_destroy=1">' .$folderElement->getNameLogout(). '</a>';
 				}
 
-				$retstr .= '</li>';
+				$retstr .= '</li>' . PHP_EOL;
 			}
 		}
 

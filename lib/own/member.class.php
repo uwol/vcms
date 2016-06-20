@@ -112,11 +112,9 @@ class LibMember{
 		$stmt->bindColumn('gruppe', $gruppe);
 		$stmt->fetch();
 
-		$retstr = '';
+		$retstr = '<div class="personActivityBox">';
 
 		if($gruppe != 'T' && $gruppe != 'V'){
-			$retstr .= '<div class="personActivityBox">';
-
 			$activityPercent = $this->getMitgliedIntranetActivity($id) * 100;
 			$balkenBreiteActivity = ceil($activityPercent);
 			$balkenBreiteInactivity = 100 - $balkenBreiteActivity;
@@ -128,9 +126,12 @@ class LibMember{
 			if($balkenBreiteInactivity > 0){
 				$retstr .= '<span class="personActivityBar personActivityBarInactive" style="width:' .$balkenBreiteInactivity. '%"></span>';
 			}
-
-			$retstr .= '</div>';
+		} else {
+			// required for correct height of cell in bootstrap row
+			$retstr .= '<span class="personActivityBar"></span>';
 		}
+
+		$retstr .= '</div>';
 
 		return $retstr;
 	}
