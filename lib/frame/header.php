@@ -126,21 +126,12 @@ if($libConfig->verbindungOrt != ''){
 
 echo '</a></h2>' . PHP_EOL;
 
-// sign out button
-echo '          <span id="signout">';
-
-if($libAuth->isLoggedin()){
-	echo '<a href="index.php?session_destroy=1">abmelden</a>';
-}
-
-echo '</span>' . PHP_EOL;
-
 echo '        </header>' . PHP_EOL;
 echo '      </div>' . PHP_EOL;
 echo '      <div class="row">' . PHP_EOL;
 echo '        <div class="col-md-12">' . PHP_EOL;
 
-$libMenuRenderer = new LibMenuRenderer();
+$libMenuRenderer = new LibMenuRenderer($libAuth);
 echo $libMenuRenderer->getMenuHtml($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
 
 echo '        </div>' . PHP_EOL;

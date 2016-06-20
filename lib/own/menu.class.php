@@ -127,21 +127,6 @@ class LibMenuEntry extends LibMenuElement{
 }
 
 
-class LibMenuEntryExternalLink extends LibMenuElement{
-	function __construct($pid, $name, $position){
-		parent::__construct($pid, $name, $position, 3);
-	}
-
-	function copy(){
-		$menuEntryExternalLink = new LibMenuEntryExternalLink($this->pid, $this->name, $this->position);
-		$menuEntryExternalLink->accessRestriction = $this->accessRestriction;
-		$menuEntryExternalLink->type = $this->type;
-		$menuEntryExternalLink->id = $this->id;
-		return $menuEntryExternalLink;
-	}
-}
-
-
 class LibMenuFolder extends LibMenuElement{
 	var $elements = array();
 
@@ -304,6 +289,44 @@ class LibMenuFolder extends LibMenuElement{
 		}
 
 		return $menuFolder;
+	}
+}
+
+
+class LibMenuEntryExternalLink extends LibMenuElement{
+	function __construct($pid, $name, $position){
+		parent::__construct($pid, $name, $position, 3);
+	}
+
+	function copy(){
+		$menuEntryExternalLink = new LibMenuEntryExternalLink($this->pid, $this->name, $this->position);
+		$menuEntryExternalLink->accessRestriction = $this->accessRestriction;
+		$menuEntryExternalLink->type = $this->type;
+		$menuEntryExternalLink->id = $this->id;
+		return $menuEntryExternalLink;
+	}
+}
+
+
+class LibMenuEntryLogin extends LibMenuElement{
+	var $nameLogout;
+
+	function __construct($pid, $name, $nameLogout, $position){
+		parent::__construct($pid, $name, $position, 4);
+
+		$this->nameLogout = $nameLogout;
+	}
+
+	function copy(){
+		$menuEntry = new LibMenuEntryLogin($this->pid, $this->name, $this->nameLogout, $this->position);
+		$menuEntry->accessRestriction = $this->accessRestriction;
+		$menuEntry->type = $this->type;
+		$menuEntry->id = $this->id;
+		return $menuEntry;
+	}
+
+	function getNameLogout(){
+		return $this->nameLogout;
 	}
 }
 ?>

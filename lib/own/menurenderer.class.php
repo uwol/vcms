@@ -20,6 +20,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 class LibMenuRenderer{
 
 	var $defaultIndent = '                  ';
+	var $libAuth;
+
+	function __construct(LibAuth $libAuth){
+		$this->libAuth = $libAuth;
+	}
 
 	function getMenuHtml($menuInternet, $menuIntranet, $menuAdministration, $aktivesPid, $gruppe, $aemter){
 		global $libGlobal;
@@ -132,6 +137,20 @@ class LibMenuRenderer{
 				$retstr .= $this->defaultIndent . $this->indent($depth) . '<li><a href="' .$folderElement->getPid(). '">';
 				$retstr .= $folderElement->getName();
 				$retstr .= '</a></li>' . PHP_EOL;
+			}
+			//login / logout
+			elseif($folderElement->getType() == 4){
+				$retstr .= '<li>';
+
+				if(!$this->libAuth->isLoggedin()){
+					$retstr .= '<a href="index.php?pid=' . $folderElement->getPid() . '">';
+					$retstr .= $folderElement->getName();
+					$retstr .= '</a>' . PHP_EOL;
+				} else {
+					$retstr .= '<a href="index.php?session_destroy=1">' .$folderElement->getNameLogout(). '</a>';
+				}
+
+				$retstr .= '</li>';
 			}
 		}
 

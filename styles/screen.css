@@ -20,16 +20,6 @@ fieldset {
 	height: 100px;
 }
 
-#header #signout {
-	position: absolute;
-	bottom: 0.5em;
-	right: 2em;
-}
-
-#header #signout a {
-	text-decoration: none;
-}
-
 main, footer {
 	background: rgba(255, 255, 255, 0.8);
 	padding: 0.6em;

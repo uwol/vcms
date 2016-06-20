@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Login";
-$version = "2.12";
+$version = "2.13";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -9,7 +9,7 @@ $updateScript = "";
 $pages[] = new LibPage("login_login", "scripts/", "login.php", "", "Login");
 $pages[] = new LibPage("login_registrierung", "scripts/", "registration.php", "", "Registrierung");
 $pages[] = new LibPage("login_resetpassword", "scripts/", "resetpassword.php", "", "Passwort zurücksetzen");
-$menuElementsInternet[] = new LibMenuEntry("login_login", "Login", 99999);
+$menuElementsInternet[] = new LibMenuEntryLogin("login_login", "Login", "Logout", 99999);
 $menuElementsIntranet = array();
 $menuElementsAdministration = array();
 $dependencies = array();
