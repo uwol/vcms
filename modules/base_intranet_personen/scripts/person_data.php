@@ -761,7 +761,7 @@ function printCommunication($row){
 }
 
 function printAssociationDetails($row){
-	global $libDb, $libTime;
+	global $libVerein, $libDb, $libTime, $libModuleHandler;
 
 	/*
 	* others
@@ -808,12 +808,57 @@ function printAssociationDetails($row){
 
 	$vereine = array();
 
-	while($rowvereine = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$vereine[] = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowvereine['id']. '">' .$rowvereine['titel']. ' ' .$rowvereine['name']. ' im ' .$rowvereine['dachverband']. ' zu ' .$rowvereine['ort1']. '</a>';
+	while($rowVerein = $stmt->fetch(PDO::FETCH_ASSOC)){
+		$vereinStr = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowVerein['id']. '">';
+		$vereinStr .= $rowVerein['titel']. ' ' .$rowVerein['name']. ' im ' .$rowVerein['dachverband']. ' zu ' .$rowVerein['ort1'];
+		$vereinStr .= '</a>';
+
+		$vereine[] = $vereinStr;
 	}
 
 	if(count($vereine) > 0){
 		echo '<div>Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $vereine). '</div>';
+	}
+
+	/*
+	* chargiert
+	*/
+	if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')){
+		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM mod_chargierkalender_teilnahme WHERE mitglied = :mitglied');
+		$stmt->bindValue(':mitglied', $row['id'], PDO::PARAM_INT);
+		$stmt->execute();
+		$stmt->bindColumn('number', $chargierAnzahl);
+		$stmt->fetch();
+
+		if($chargierAnzahl > 0){
+			echo '<div>';
+			echo $chargierAnzahl. '-mal Chargierter: ';
+
+			$stmt = $libDb->prepare('SELECT datum, beschreibung, verein FROM mod_chargierkalender_veranstaltung, mod_chargierkalender_teilnahme WHERE mod_chargierkalender_veranstaltung.id = mod_chargierkalender_teilnahme.chargierveranstaltung AND mod_chargierkalender_teilnahme.mitglied = :mitglied ORDER BY mod_chargierkalender_veranstaltung.datum DESC');
+			$stmt->bindValue(':mitglied', $row['id'], PDO::PARAM_INT);
+			$stmt->execute();
+
+			$chargierEvents = array();
+
+			while($rowEvent = $stmt->fetch(PDO::FETCH_ASSOC)){
+				$chargierEventStr = '';
+
+				if(isset($rowEvent['verein']) && is_numeric($rowEvent['verein'])){
+					$chargierEventStr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$rowEvent['verein']. '">';
+					$chargierEventStr .= $libVerein->getVereinNameString($rowEvent['verein']);
+					$chargierEventStr .= '</a>';
+				} else {
+					$chargierEventStr .= $rowEvent['beschreibung'];
+				}
+
+				$chargierEventStr .= ' (<time datetime="' .$libTime->formatUtcString($rowEvent['datum']). '">' .$libTime->formatYearString($rowEvent['datum']). '</time>)';
+
+				$chargierEvents[] = $chargierEventStr;
+			}
+
+			echo implode(', ', $chargierEvents);
+			echo '</div>';
+		}
 	}
 }
 
