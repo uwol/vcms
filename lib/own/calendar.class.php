@@ -476,7 +476,7 @@ class LibCalendarEvent{
 		}
 
 		$retstr .= '<div class="calendarEvent h-event"><a id="t' .$this->id . $idSuffix .'"></a>';
-		$retstr .= '<time class="dt-start" datetime="' .$dtstart. '">' .$timeString. '</time><br />';
+		$retstr .= '<div><time class="dt-start" datetime="' .$dtstart. '">' .$timeString. '</time></div>';
 
 		//link
 		if($this->linkUrl != ''){
@@ -503,9 +503,9 @@ class LibCalendarEvent{
 
 		//description
 		if($this->description != ''){
-			$retstr .= '<span class="p-description">';
+			$retstr .= '<div class="p-description">';
 			$retstr .= $this->description;
-			$retstr .= '</span>';
+			$retstr .= '</div>';
 		}
 
 		//location
@@ -513,16 +513,16 @@ class LibCalendarEvent{
 			$retstr .= '<address class="p-location">' .$this->location. '</address>';
 		}
 
+		//attended
+		if($this->attended && $this->attendedImageUrl != ''){
+			$retstr .= '<img src="' .$this->attendedImageUrl. '" alt="angemeldet" class="icon_small" /> ';
+		}
+
 		//status
 		if($this->status != ''){
 			$retstr .= '<span class="status">';
 			$retstr .= $this->status;
 			$retstr .= '</span>';
-		}
-
-		//attended
-		if($this->attended && $this->attendedImageUrl != ''){
-			$retstr .= '<img src="' .$this->attendedImageUrl. '" alt="angemeldet" class="icon_small" />';
 		}
 
 		//footer

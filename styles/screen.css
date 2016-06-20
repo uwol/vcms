@@ -201,30 +201,18 @@ main .calendar .calendarDay {
 
 main .calendar .calendarDay .calendarEvent {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-top: 1em;
 }
 
-main .calendar .calendarYear .calendarDay .calendarEvent time {
+main .calendar .calendarDay .calendarEvent time {
 	font-weight: bold;
 }
 
-main .calendar .calendarYear .calendarDay .calendarEvent .status {
-	font-weight: bold;
+main .calendar .calendarDay .calendarEvent .thumbnail {
+	margin-bottom: 0;
 }
 
 /* gallery */
-
-main .public {
-	border: 2px solid green;
-}
-
-main .internal {
-	border: 2px solid yellow;
-}
-
-main .private {
-	border: 2px solid red;
-}
 
 main .thumbnailControls {
 	text-align: center;
@@ -241,6 +229,18 @@ main .thumbnail .thumbnailOverflow {
 main .thumbnail .thumbnailOverflow img {
 	margin-top: 0; /* is adjusted by screen.js */
 	width: 100%;
+}
+
+main .public {
+	border: 2px solid green;
+}
+
+main .internal {
+	border: 2px solid yellow;
+}
+
+main .private {
+	border: 2px solid red;
 }
 
 /* semester cover */
