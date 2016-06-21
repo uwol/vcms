@@ -32,6 +32,11 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('showTrauerflor')){
 
 if(in_array('internetwart', $libAuth->getAemter())){
 	/*
+	* actions
+	*/
+	$libCronJobs->executeJobs();
+
+	/*
 	* output
 	*/
 	$oks = array();

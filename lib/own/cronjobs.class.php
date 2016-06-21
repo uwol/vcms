@@ -26,10 +26,7 @@ class LibCronjobs{
 		'LICENSE', 'LICENSE.txt', 'README.md', '.gitignore');
 
 	function __construct(LibDb $libDb){
-		global $libGenericStorage;
-
 		$this->libDb = $libDb;
-
 
 		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_log_intranet WHERE aktion = 10 AND DATEDIFF(NOW(), datum) < 1');
 		$stmt->execute();
@@ -37,21 +34,27 @@ class LibCronjobs{
 		$stmt->fetch();
 
 		if($numberOfCronJobExecutionsToday == 0){
-			$this->deleteFiles();
-			$this->createMissingDirectories();
-			$this->repairHtaccessFiles();
-			$this->cleanSysLogIntranet();
-
-			if(!$libGenericStorage->attributeExists('base_core', 'cronjobsLeereAusgetretene')){
-				$libGenericStorage->saveValue('base_core', 'cronjobsLeereAusgetretene', 0);
-			}
-
-			if($libGenericStorage->loadValue('base_core', 'cronjobsLeereAusgetretene') == 1){
-				$this->cleanBasePerson();
-			}
-
-			$this->libDb->query("INSERT INTO sys_log_intranet (aktion, datum) VALUES (10, NOW())");
+			$this->executeJobs();
 		}
+	}
+
+	function executeJobs(){
+		global $libGenericStorage;
+
+		$this->deleteFiles();
+		$this->createMissingDirectories();
+		$this->repairHtaccessFiles();
+		$this->cleanSysLogIntranet();
+
+		if(!$libGenericStorage->attributeExists('base_core', 'cronjobsLeereAusgetretene')){
+			$libGenericStorage->saveValue('base_core', 'cronjobsLeereAusgetretene', 0);
+		}
+
+		if($libGenericStorage->loadValue('base_core', 'cronjobsLeereAusgetretene') == 1){
+			$this->cleanBasePerson();
+		}
+
+		$this->libDb->query("INSERT INTO sys_log_intranet (aktion, datum) VALUES (10, NOW())");
 	}
 
 	function deleteFiles(){
