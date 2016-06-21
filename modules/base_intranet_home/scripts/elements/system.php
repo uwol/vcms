@@ -69,7 +69,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* register_globals
 	*/
 	if(ini_get('register_globals')){ //ist register_globals in der php.ini aktiviert?
-		$errors[] = 'In der PHP-Version auf diesem Server ist register_globals=On konfiguriert. Diese Einstellung ist veraltet und äußerst unsicher. Bitte ändere den Wert in der PHP-Konfiguration Deines Hostings auf register_globals=Off.';
+		$errors[] = 'In der PHP-Version auf diesem Server ist register_globals=On konfiguriert. Bitte Wert in der PHP-Konfiguration auf register_globals=Off ändern.';
 	} else {
 		$oks[] = 'register_globals=Off ist konfiguriert.';
 	}
@@ -192,7 +192,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			}
 
 			echo '</ul>';
-			echo '<p>Auf Dateien in diesen Ordnern kann aus dem Internet zugegriffen werden. Um den Schutz zu erneuern, rufe den Modul-Manager auf. Falls dies nicht hilft, gib PHP Schreibrechte auf die genannten Ordner, damit das System htaccess-Dateien anlegen kann.</p>';
+			echo '<p>Auf Dateien in diesen Ordnern kann aus dem Internet zugegriffen werden. PHP benötigt Schreibrechte auf die genannten Ordner, damit das System htaccess-Dateien anlegen kann.</p>';
 		}
 
 		if(is_array($notReadableFiles) && count($notReadableFiles) > 0){
@@ -204,7 +204,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			}
 
 			echo '</ul>';
-			echo '<p>Zugriffsrechte können z. B. mit einem FTP-Programm eingerichtet werden.</p>';
+			echo '<p>Zugriffsrechte können mit einem FTP-Programm eingerichtet werden.</p>';
 		}
 
 		echo '</div>';
