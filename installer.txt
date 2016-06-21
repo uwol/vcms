@@ -90,8 +90,8 @@ if(isset($_REQUEST['aktion'])){
 
 		foreach($libModuleHandler->getModules() as $module){
 			if($module->getInstallScript() != ''){
-				echo '<p style="color:blue">Der Installer ' .$module->getPath().$module->getInstallScript(). ' wird gestartet.</p>';
-				include($module->getPath().$module->getInstallScript());
+				echo '<p style="color:blue">Der Installer ' .$module->getPath().'/'.$module->getInstallScript(). ' wird gestartet.</p>';
+				include($module->getPath().'/'.$module->getInstallScript());
 			}
 		}
 

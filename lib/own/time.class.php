@@ -592,7 +592,7 @@ class LibTime{
 
 		$retstr = '';
 
-		if(count($semesters) > 1 || ((count($semesters) == 1) && ($semesters[1] != $globalsemester))){
+		if(count($semesters) > 1 || (count($semesters) == 1 && ($semesters[0] != $globalsemester))){
 			$retstr .= '<form action="index.php" class="form-inline">';
 			$retstr .= '<fieldset>';
 			$retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';

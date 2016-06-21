@@ -34,6 +34,10 @@ $sql = "CREATE TABLE mod_internethome_nachricht (
 $libDb->query($sql);
 
 echo 'Füge Standarddatensatz ein.';
-$sql = "INSERT IGNORE INTO mod_internethome_nachricht (id,startdatum,verfallsdatum,text) VALUES (1,'2000-01-01 20:00:00','0000-00-00 00:00:00', 'Dies ist ein Beispielbeitrag für die Startseite')";
-$libDb->query($sql);
+
+$sql1 = "INSERT IGNORE INTO mod_internethome_nachricht (id, startdatum, verfallsdatum, text) VALUES (1, '2000-01-01 20:00:00', '0000-00-00 00:00:00', 'Dies ist ein Beispielbeitrag für die Startseite')";
+$libDb->query($sql1);
+
+$sql2 = "INSERT IGNORE INTO mod_internethome_nachricht (id, startdatum, verfallsdatum, text) VALUES (2, '2000-02-01 20:00:00', '0000-00-00 00:00:00', 'Dies ist ein weiterer Beispielbeitrag für die Startseite')";
+$libDb->query($sql2);
 ?>

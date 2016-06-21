@@ -54,9 +54,11 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	echo '</div>';
 
-	echo '<div class="media-right hidden-xs">';
-	echo $libMitglied->getMitgliedSignature($row['autor']);
-	echo '</div>';
+	if($row['autor'] != ''){
+		echo '<div class="media-right hidden-xs">';
+		echo $libMitglied->getMitgliedSignature($row['autor']);
+		echo '</div>';
+	}
 
 	echo '</div>';
 	echo '</div>';

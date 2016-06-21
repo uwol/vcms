@@ -46,7 +46,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* php_version
 	*/
 	if(version_compare(PHP_VERSION, '5.4') < 0){
-		$errors[] = 'Die PHP-Version auf diesem Server ist ' .PHP_VERSION. '. Empfohlen wird <a href="http://de.wikipedia.org/wiki/PHP#Wichtige_Versionen">zur Sicherheit</a> mindestens PHP-Version 5.4.';
+		$errors[] = 'Die PHP-Version auf diesem Server ist ' .PHP_VERSION. '. Empfohlen wird min. Version 5.4.';
 	} else {
 		$oks[] = 'PHP-Version=' .PHP_VERSION. '.';
 	}
@@ -64,7 +64,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* register_globals
 	*/
 	if(ini_get('register_globals')){ //ist register_globals in der php.ini aktiviert?
-		$errors[] = 'In der PHP-Version auf diesem Server ist register_globals=On konfiguriert. Diese Einstellung ist veraltet und äußerst unsicher, da sie das Auftreten von Sicherheitslücken deutlich wahrscheinlicher macht. Bitte ändere den Wert in der PHP-Konfiguration Deines Hostings auf register_globals=Off.';
+		$errors[] = 'In der PHP-Version auf diesem Server ist register_globals=On konfiguriert. Diese Einstellung ist veraltet und äußerst unsicher. Bitte ändere den Wert in der PHP-Konfiguration Deines Hostings auf register_globals=Off.';
 	} else {
 		$oks[] = 'register_globals=Off ist konfiguriert.';
 	}
@@ -82,7 +82,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* HTTPS check
 	*/
 	if($libGenericStorage->loadValue('base_internet_login', 'useHttps') != '1'){
-		$errors[] = 'HTTPS ist nicht für das Intranet aktiviert. Damit ist es für Dritte ein Leichtes, mit Wireshark in einem öffentlichen (Uni-)Netz die Logindaten abzuhören. Falls der Webserver <a href="https://' .$libConfig->sitePath. '" target="_blank">HTTPS unterstützt</a>, sollte HTTPS in der Konfiguration aktiviert werden.';
+		$errors[] = 'HTTPS ist nicht für das Intranet aktiviert. Falls der Webserver <a href="https://' .$libConfig->sitePath. '" target="_blank">HTTPS unterstützt</a>, sollte HTTPS in der Konfiguration aktiviert werden.';
 	} else {
 		$oks[] = 'HTTPS ist für das Intranet aktiviert.';
 	}
@@ -172,7 +172,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			echo '<ul>';
 
 			foreach($errors as $error){
-				echo '<li><img src="styles/icons/basic/error.svg" alt="Error" class="icon_small" />' .$error. '</li>';
+				echo '<li><img src="styles/icons/basic/error.svg" alt="Error" class="icon_small" /> ' .$error. '</li>';
 			}
 
 			echo '</ul>';

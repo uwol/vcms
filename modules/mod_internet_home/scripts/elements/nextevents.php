@@ -34,7 +34,7 @@ $showFbPagePlugin = $libGenericStorage->loadValueInCurrentModule('showFbPagePlug
 $fbPagePluginEnabled = $showFbPagePlugin && $fb_url != '';
 
 
-if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbUrlExists){
+if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbPagePluginEnabled){
 	echo '<div class="row">';
 
 	if($numberOfNextEvents > 0){
