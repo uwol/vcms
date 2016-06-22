@@ -200,5 +200,9 @@ class LibDb{
 			return PDO::PARAM_STR;
 		}
 	}
+
+	function setErrModeWarning(){
+		$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	}
 }
 ?>
