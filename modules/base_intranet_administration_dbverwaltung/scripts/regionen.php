@@ -59,7 +59,8 @@ if($libAuth->isLoggedin()){
 	echo $libString->getNotificationBoxText();
 
 	echo '<p>Die folgenden Regionen dienen der Einteilung der Mitglieder in Zirkel.</p>';
-	echo '<table>';
+
+	echo '<table class="table table-condensed">';
 	echo '<tr><th>Region</th><th>Anzahl Personen</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT bezeichnung,id FROM base_region");

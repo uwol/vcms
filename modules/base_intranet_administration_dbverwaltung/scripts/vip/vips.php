@@ -42,7 +42,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<p><a href="index.php?pid=intranet_admin_db_vip&amp;aktion=blank">Einen neuen Vip anlegen</a></p>';
 
-	echo '<table>';
+	echo '<table class="table table-condensed">';
 	echo '<tr><th>Id</th><th>Praefix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_vip ORDER BY name");

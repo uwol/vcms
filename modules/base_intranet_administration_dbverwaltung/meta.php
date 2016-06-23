@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Verwaltung";
-$version = "2.21";
+$version = "2.22";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -10,17 +10,17 @@ $vorstand = array("senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajo
 $internetwart = array("internetwart");
 
 //Datenbank
-$pages[] = new LibPage("intranet_admin_db_personenliste", "scripts/person/", "personenliste.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Personen");
+$pages[] = new LibPage("intranet_admin_db_personenliste", "scripts/person/", "personen.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Personen");
 $pages[] = new LibPage("intranet_admin_db_person", "scripts/person/", "person.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Person");
-$pages[] = new LibPage("intranet_admin_db_semesterliste", "scripts/semester/", "semesterliste.php", new LibAccessRestriction("", $internetwart), "Semester");
+$pages[] = new LibPage("intranet_admin_db_semesterliste", "scripts/semester/", "semesters.php", new LibAccessRestriction("", $internetwart), "Semester");
 $pages[] = new LibPage("intranet_admin_db_semester", "scripts/semester/", "semester.php", new LibAccessRestriction("", $internetwart), "Semester");
-$pages[] = new LibPage("intranet_admin_db_veranstaltungsliste", "scripts/veranstaltung/", "veranstaltungsliste.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Veranstaltungen");
+$pages[] = new LibPage("intranet_admin_db_veranstaltungsliste", "scripts/veranstaltung/", "veranstaltungen.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Veranstaltungen");
 $pages[] = new LibPage("intranet_admin_db_veranstaltung", "scripts/veranstaltung/", "veranstaltung.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Veranstaltung");
-$pages[] = new LibPage("intranet_admin_db_vereinsliste", "scripts/verein/", "vereinsliste.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Vereine");
+$pages[] = new LibPage("intranet_admin_db_vereinsliste", "scripts/verein/", "vereine.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Vereine");
 $pages[] = new LibPage("intranet_admin_db_verein", "scripts/verein/", "verein.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Verein");
-$pages[] = new LibPage("intranet_admin_db_vipliste", "scripts/vip/", "vipliste.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Vips");
+$pages[] = new LibPage("intranet_admin_db_vipliste", "scripts/vip/", "vips.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Vips");
 $pages[] = new LibPage("intranet_admin_db_vip", "scripts/vip/", "vip.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Vip");
-$pages[] = new LibPage("intranet_admin_db_vereinsmitgliedschaftenliste", "scripts/vereinsmitgliedschaft/", "vereinsmitgliedschaftenliste.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Vereinsmitgliedschaften");
+$pages[] = new LibPage("intranet_admin_db_vereinsmitgliedschaftenliste", "scripts/vereinsmitgliedschaft/", "vereinsmitgliedschaften.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Vereinsmitgliedschaften");
 $pages[] = new LibPage("intranet_admin_db_vereinsmitgliedschaft", "scripts/vereinsmitgliedschaft/", "vereinsmitgliedschaft.php", new LibAccessRestriction("", array_merge($vorstand, $internetwart)), "Vereinsmitgliedschaft");
 
 $pages[] = new LibPage("intranet_admin_db_gruppen", "scripts/", "gruppen.php", new LibAccessRestriction("", $internetwart), "Gruppen");

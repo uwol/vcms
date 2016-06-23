@@ -43,7 +43,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<p><a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaft&amp;aktion=blank">Eine neue Vereinsmitgliedschaft anlegen</a></p>';
 
-	echo '<table>';
+	echo '<table class="table table-condensed">';
 	echo '<tr><th>Verein</th><th>Mitglied</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_verein_mitgliedschaft,base_verein WHERE base_verein_mitgliedschaft.verein = base_verein.id ORDER BY base_verein.titel ASC");

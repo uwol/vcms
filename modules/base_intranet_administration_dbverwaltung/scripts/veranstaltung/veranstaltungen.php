@@ -65,7 +65,7 @@ if($libAuth->isLoggedin()){
 	echo '<br />';
 
 	//Datenausgeben
-	echo '<table>';
+	echo '<table class="table table-condensed">';
 	echo '<tr><th>Id</th><th>Datum</th><th>Titel</th><th>Status</th><th></th></tr>';
 
 	$zeitraum = $libTime->getZeitraum($libGlobal->semester);

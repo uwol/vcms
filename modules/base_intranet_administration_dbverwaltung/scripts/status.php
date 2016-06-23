@@ -59,7 +59,8 @@ if($libAuth->isLoggedin()){
 	echo $libString->getNotificationBoxText();
 
 	echo '<p>Die folgenden Status dienen der weiteren Einteilung der Personen. Die Angabe eines Status bei einer Person hat keine Auswirkung auf die Zugangskontrolle für Seiten. Trotzdem sollten die standardmäßig vorhandenen Status nicht durch eigene ersetzt werden. Sinnvoll ist nur das Hinzufügen neuartiger Status.</p>';
-	echo '<table>';
+
+	echo '<table class="table table-condensed">';
 	echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_status");

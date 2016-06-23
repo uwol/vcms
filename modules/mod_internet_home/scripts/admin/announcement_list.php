@@ -66,7 +66,7 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlob
 
 echo '<br />';
 
-echo '<table>';
+echo '<table class="table table-condensed">';
 echo '<tr><th>Bild</th><th>Zeitraum</th><th>Text</th><th></th></tr>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);

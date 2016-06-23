@@ -57,7 +57,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<p><a href="index.php?pid=intranet_admin_db_semester&amp;aktion=blank">Ein neues Semester anlegen</a></p>';
 
-	echo '<table>';
+	echo '<table class="table table-condensed">';
 	echo '<tr><th>Semester</th><th>Senior</th><th>Fuchsmajor</th><th>Internetwart</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_semester ORDER BY SUBSTRING(semester,3) DESC");

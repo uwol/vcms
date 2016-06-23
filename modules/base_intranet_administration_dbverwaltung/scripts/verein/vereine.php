@@ -60,7 +60,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<p><a href="index.php?pid=intranet_admin_db_verein&amp;aktion=blank">Einen neuen Verein anlegen</a></p>';
 
-	echo '<table>';
+	echo '<table class="table table-condensed">';
 	echo '<tr><th>Id</th><th>Name</th><th>Dachverband</th><th>Ort</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_verein ORDER BY name");

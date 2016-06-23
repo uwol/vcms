@@ -181,7 +181,7 @@ if($libAuth->isLoggedin()){
 
 	echo '</p>';
 
-	echo '<table>';
+	echo '<table class="table table-condensed">';
 	echo '<tr><th>Id</th><th>Präfix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th>Gruppe</th><th>Status</th><th>Reception</th><th></th></tr>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person ORDER BY ".$order);
