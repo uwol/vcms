@@ -94,7 +94,7 @@ echo '<br />';
 
 
 //list events
-echo '<table>';
+echo '<table class="table table-condensed">';
 echo '<tr><th>Bild</th><th>Titel</th><th>Datum</th><th></th></tr>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);

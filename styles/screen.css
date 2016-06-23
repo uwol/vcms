@@ -40,25 +40,6 @@ main hr {
 	clear: both;
 }
 
-main table {
-	width: 100%;
-	border-width: 0;
-	margin: 0;
-	padding: 0;
-}
-
-main th {
-	padding: 2px;
-	text-align: center;
-	vertical-align: middle;
-}
-
-main td {
-	padding: 2px;
-	vertical-align: top;
-	border-width: 0;
-}
-
 main td.imgColumn {
 	max-width: 100px;
 }
