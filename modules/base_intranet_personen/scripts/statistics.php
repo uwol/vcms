@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-echo '<h1>Alterstrukturen</h1>';
+echo '<h1>Statistik</h1>';
 
 
 $personsPerRow = 4;
@@ -82,11 +82,9 @@ for($i = 0; $i < 10; $i++){
 * output age structure of Aktivitas
 */
 
-echo '<h2>Altersstruktur der Aktivitas</h2>';
+echo '<h2>Struktur der Aktivitas</h2>';
 
-echo '<p>Diese Tabelle strukturiert die Aktivitas anhand der Receptionssemester und soll helfen, Überalterungseffekte in der Aktivitas zu verhindern. Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, Inaktive und Aktive ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Vornamen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
-
-echo '<p>Die Studienabschlüsse dienen der groben zeitlichen Orientierung. Eine Darstellung der Studienstände der einzelnen BbBb ist damit nicht verbunden. Bei Aktiven, die im höheren Fachsemester recipiert wurden, ist dies zu beachten. </p>';
+echo '<p>Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, Inaktive und Aktive ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
 
 echo '<p>';
 
@@ -107,7 +105,7 @@ echo 'Anzahl Aktive ex loco oder inaktiv: ' . $inaktive . '<br />';
 
 echo '</p>';
 
-echo '<table style="border: 1px solid #333">';
+echo '<table class="table table-bordered table-condensed">';
 
 //for all semesters
 foreach($tArray as $key1 => $value1){
@@ -123,7 +121,7 @@ foreach($tArray as $key1 => $value1){
 
 	echo '<tr>';
 	$rowspan = max(1, ceil(count($value1) / $personsPerRow));
-	echo '<td style="border:1px solid #333" rowspan=' .$rowspan. '>';
+	echo '<td rowspan=' .$rowspan. '>';
 	echo '<a href="index.php?pid=semesterhistorie_liste&amp;semester=' .$key1. '">' . $key1 . '</a>';
 	echo '</td>';
 
@@ -177,78 +175,69 @@ echo '</table>';
 * age structure of AHAH
 */
 
-$klassenBreite = 10;
-$klassenPixelBreite = 50;
-$maxBalkenPixelHeight = 300;
-
-$ageArray = array();
-
-
-$stmt = $libDb->prepare("SELECT YEAR(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(datum_geburtstag) + 1)) AS age FROM base_person WHERE gruppe='P' HAVING age > 0 ORDER BY datum_geburtstag DESC");
-$stmt->execute();
-
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	if(!isset($ageArray[$row['age']])){
-		$ageArray[$row['age']] = 0;
-	}
-
-	$ageArray[$row['age']] = $ageArray[$row['age']] + 1;
-}
-
-$ageClasses = array();
-
-foreach($ageArray as $key => $value){
-	$ageClass = $key - ($key % $klassenBreite);
-
-	if(!isset($ageClasses[$ageClass])){
-		$ageClasses[$ageClass] = 0;
-	}
-
-	$ageClasses[$ageClass] = $ageClasses[$ageClass] + $value;
-}
-
-/*
-* output
-*/
 echo '<h2>Altersstruktur der Altherrenschaft</h2>';
 
-echo '<p>Dieses Säulendiagramm stellt die Altherrenschaft klassifiziert nach Altersgruppen dar. In jeder Säule steht die Anzahl alter Herren der entsprechenden Altersklasse. Die Verteilung sollte annähernd gleichverteilt oder linkslastig sein, um langfristig die Stabilität des Vereins sicherzustellen.</p>';
+$classWidth = 5;
+$agesAhAh = fetchAges('P');
+$ageClassesAhAh = calculateAgeClasses($agesAhAh, $classWidth);
 
+if(empty($ageClassesAhAh)){
+	echo '<p>Bei den alten Herren sind keine Geburtstage eingetragen.</p>';
+} else {
+	echo '<canvas id="age_structure" style="width:100%;height:300px"></canvas>' . PHP_EOL;
+	echo '<script>' . PHP_EOL;
+	echo 'var ageStructureContext = document.getElementById(\'age_structure\').getContext(\'2d\');' . PHP_EOL;
+	echo 'var ahahLabels = [' .implode(', ', array_keys($ageClassesAhAh)). '];' . PHP_EOL;
+	echo 'var ahahData = [' .implode(', ', array_values($ageClassesAhAh)). '];' . PHP_EOL;
 
-$maxClass = 0;
-foreach($ageClasses as $key => $value){
-	if($value > $maxClass){
-		$maxClass = $value;
-	}
+	echo 'var data = {' . PHP_EOL;
+	echo '  labels: ahahLabels, ' . PHP_EOL;
+	echo '  datasets: [' . PHP_EOL;
+	echo '    {' . PHP_EOL;
+	echo '      label: "AHAH", ' . PHP_EOL;
+	echo '      data: ahahData' . PHP_EOL;
+	echo '    }' . PHP_EOL;
+	echo '  ]' . PHP_EOL;
+	echo '};' . PHP_EOL;
+
+	echo 'var myBarChart = new Chart(ageStructureContext, { type: \'bar\', data: data, options: {} });' . PHP_EOL;
+	echo '</script>' . PHP_EOL;
 }
 
-$koeff = 0;
 
-if($maxClass > 0){
-	$koeff = $maxBalkenPixelHeight / $maxClass;
+function fetchAges($gruppe){
+	global $libDb;
 
-	echo '<div style="position:relative;height:' .($maxBalkenPixelHeight + 50). 'px">';
-	$i = 0;
+	$stmt = $libDb->prepare("SELECT YEAR(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(datum_geburtstag) + 1)) AS age FROM base_person WHERE gruppe=:gruppe HAVING age > 0 ORDER BY datum_geburtstag DESC");
+	$stmt->bindValue(':gruppe', $gruppe);
+	$stmt->execute();
 
-	foreach($ageClasses as $key => $value){
-		$left = $i * $klassenPixelBreite;
-		echo '<div style="width:' .$klassenPixelBreite. 'px;position:absolute;bottom:0;left:' .$left. 'px;text-align:center;">';
+	$ageArray = array();
 
-		$height = max(16, floor($value * $koeff));
-		echo '<div style="height:' .$height. 'px;background-color:#FF8000">';
-		echo $value;
-		echo '</div>';
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		if(!isset($ageArray[$row['age']])){
+			$ageArray[$row['age']] = 0;
+		}
 
-		echo '<br />';
-
-		echo $key . '-' . ($key + $klassenBreite - 1);
-		echo '</div>';
-
-		$i++;
+		$ageArray[$row['age']] = $ageArray[$row['age']] + 1;
 	}
 
-	echo '</div>';
-} else {
-	echo 'Problem: Bei den alten Herren sind keine Geburtstage eingetragen.';
+	return $ageArray;
+}
+
+function calculateAgeClasses($ageArray, $classWidth){
+	$ageClasses = array();
+
+	foreach($ageArray as $key => $value){
+		$ageClass = $key - ($key % $classWidth);
+
+		if(!isset($ageClasses[$ageClass])){
+			$ageClasses[$ageClass] = 0;
+		}
+
+		$ageClasses[$ageClass] = $ageClasses[$ageClass] + $value;
+	}
+
+	return $ageClasses;
 }
 ?>
