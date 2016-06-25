@@ -42,6 +42,17 @@ class LibForm{
 		echo '</div>';
 	}
 
+	function printFileInput($name, $label){
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-10">';
+		echo '<label class="btn btn-default btn-file">Datei wählen';
+		echo '<input type="file" name="' .$name. '" style="display:none">';
+		echo '</label>';
+		echo '</div>';
+		echo '</div>';
+	}
+
 	function printFileUpload($name, $label){
 		echo '<div class="form-group">';
 		echo '<label class="btn btn-default btn-file">' .$label;

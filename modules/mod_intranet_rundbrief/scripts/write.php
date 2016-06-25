@@ -93,7 +93,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('smtpPassword')){
 echo '<h1>Rundbrief an Mitglieder verschicken</h1>';
 echo '<p>Auf dieser Seite kann per E-Mail ein Rundbrief an diejenigen Mitglieder verschickt werden, die sich nicht aus dem Verteiler ausgetragen haben.</p>';
 
-echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');" class="form-horizontal">';
+echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" enctype="multipart/form-data" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');" class="form-horizontal">';
 echo '<fieldset>';
 
 
@@ -163,6 +163,7 @@ echo '<hr />';
 
 $libForm->printTextInput('subject', 'Betreff', '');
 $libForm->printTextarea('nachricht', 'Nachricht', '');
+$libForm->printFileInput('anhang', 'Anhang');
 $libForm->printSubmitButton('Nachricht verschicken');
 
 echo '</fieldset>';

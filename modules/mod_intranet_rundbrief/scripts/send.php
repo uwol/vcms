@@ -20,130 +20,133 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-require_once("lib/thirdparty/class.phpmailer.php");
 
-echo '<h1>Versendung der Nachricht</h1>';
+require_once('lib/thirdparty/class.phpmailer.php');
 
-$stmt = $libDb->prepare("SELECT email FROM base_person WHERE id=:id");
+echo '<h1>Versand der Nachricht</h1>';
+
+
+$stmt = $libDb->prepare('SELECT email FROM base_person WHERE id=:id');
 $stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 $stmt->execute();
 $stmt->bindColumn('email', $email);
 $stmt->fetch();
 
 
-if(!isset($_POST["nachricht"]) || $_POST["nachricht"] == '' || !isset($_POST["subject"])){
-	$libGlobal->errorTexts[] = "Es wurde kein Nachrichtentext eingegeben.";
+if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['subject'])){
+	$libGlobal->errorTexts[] = 'Es wurde kein Nachrichtentext eingegeben.';
 } else {
 	/*
 	* build receiver string
 	*/
-	$betreffgruppenstring = "";
+	$betreffgruppenstring = '';
 
-	if(isset($_POST["fuchsia"]) && $_POST["fuchsia"] == "on"){
-		$betreffgruppen[] = "Füchse";
+	if(isset($_POST['fuchsia']) && $_POST['fuchsia'] == 'on'){
+		$betreffgruppen[] = 'Füchse';
 	}
 
-	if(isset($_POST["burschen"]) && $_POST["burschen"] == "on"){
-		$betreffgruppen[] = "Burschen";
+	if(isset($_POST['burschen']) && $_POST['burschen'] == 'on'){
+		$betreffgruppen[] = 'Burschen';
 	}
 
-	if(isset($_POST["ahah_interessiert"]) && $_POST["ahah_interessiert"] == "on" && (!isset($_POST["ahah"]) || $_POST["ahah"] != "on")){
-		$betreffgruppen[] = "Int. AHAH";
+	if(isset($_POST['ahah_interessiert']) && $_POST['ahah_interessiert'] == 'on' && (!isset($_POST['ahah']) || $_POST['ahah'] != 'on')){
+		$betreffgruppen[] = 'Int. AHAH';
 	}
 
-	if(isset($_POST["ahah"]) && $_POST["ahah"] == "on"){
-		$betreffgruppen[] = "AHAH";
+	if(isset($_POST['ahah']) && $_POST['ahah'] == 'on'){
+		$betreffgruppen[] = 'AHAH';
 	}
 
-	if(isset($_POST["couleurdamen"]) && $_POST["couleurdamen"] == "on"){
-		$betreffgruppen[] = "Couleurdamen";
+	if(isset($_POST['couleurdamen']) && $_POST['couleurdamen'] == 'on'){
+		$betreffgruppen[] = 'Couleurdamen';
 	}
 
-	if(isset($_POST["gattinnen_interessiert"]) && $_POST["gattinnen_interessiert"] == "on" && (!isset($_POST["gattinnen"]) || $_POST["gattinnen"] != "on")){
-		$betreffgruppen[] = "Int. Gattinnen";
+	if(isset($_POST['gattinnen_interessiert']) && $_POST['gattinnen_interessiert'] == 'on' && (!isset($_POST['gattinnen']) || $_POST['gattinnen'] != 'on')){
+		$betreffgruppen[] = 'Int. Gattinnen';
 	}
 
-	if(isset($_POST["gattinnen"]) && $_POST["gattinnen"] == "on"){
-		$betreffgruppen[] = "Gattinnen";
+	if(isset($_POST['gattinnen']) && $_POST['gattinnen'] == 'on'){
+		$betreffgruppen[] = 'Gattinnen';
 	}
 
 	if(count($betreffgruppen) == 0){
-		$libGlobal->errorTexts[] = "Es wurde keine Adressatengruppe ausgewählt.";
+		$libGlobal->errorTexts[] = 'Es wurde keine Adressatengruppe ausgewählt.';
 	}
 
-	$betreffgruppenstring = "[".implode("-",$betreffgruppen)."] ";
+	$betreffgruppenstring = '['.implode('-',$betreffgruppen).'] ';
 
-	$betreffregionstring = "";
+	$betreffregionstring = '';
 
-	if($_POST["region"] != "" && $_POST["region"] != "NULL"){
-		$stmt = $libDb->prepare("SELECT bezeichnung FROM base_region WHERE id=:id");
-		$stmt->bindValue(':id', $_POST["region"], PDO::PARAM_INT);
+	if($_POST['region'] != '' && $_POST['region'] != 'NULL'){
+		$stmt = $libDb->prepare('SELECT bezeichnung FROM base_region WHERE id=:id');
+		$stmt->bindValue(':id', $_POST['region'], PDO::PARAM_INT);
 		$stmt->execute();
 		$stmt->bindColumn('bezeichnung', $region);
 		$stmt->fetch();
 
-		if($region != ""){
-			$betreffregionstring = "[" .$region. "] ";
+		if($region != ''){
+			$betreffregionstring = '[' .$region. '] ';
 		}
 	}
 
 	/*
 	* build subject
 	*/
-	$subject = "[".$libConfig->verbindungName."] ". $betreffgruppenstring . $betreffregionstring . $_POST["subject"];
+	$subject = '['.$libConfig->verbindungName.'] '. $betreffgruppenstring . $betreffregionstring . $_POST['subject'];
 
 	/*
 	* start output
 	*/
-	echo 'Die Nachricht: <p>' .$subject. '</p><p>' .nl2br($_POST['nachricht']) .'</p><p>wird an die folgenden Adressaten verschickt: </p>';
+	echo '<p>' .$libString->protectXss($subject). '</p>';
+	echo '<p>' .nl2br($libString->protectXss($_POST['nachricht'])). '</p>';
 
 	/*
 	* build and send mail
 	*/
 	$domain = $libConfig->sitePath;
 
-	if(substr($domain,0,4) == "www."){
+	if(substr($domain, 0, 4) == 'www.'){
 		$domain = substr($domain, 4);
 	}
 
 	//evaluate group cheboxes
-	$sqlgruppen_string = "";
+	$sqlgruppen_string = '';
 	$sqlgruppen = array();
 
-	if(isset($_POST["fuchsia"]) && $_POST["fuchsia"] == "on"){
+	if(isset($_POST['fuchsia']) && $_POST['fuchsia'] == 'on'){
 		$sqlgruppen[] = "gruppe='F'";
 	}
 
-	if(isset($_POST["burschen"]) && $_POST["burschen"] == "on"){
+	if(isset($_POST['burschen']) && $_POST['burschen'] == 'on'){
 		$sqlgruppen[] = "gruppe='B'";
 	}
 
-	if(isset($_POST["ahah_interessiert"]) && $_POST["ahah_interessiert"] == "on"){
+	if(isset($_POST['ahah_interessiert']) && $_POST['ahah_interessiert'] == 'on'){
 		$sqlgruppen[] = "(gruppe = 'P' AND interessiert = 1)";
 	}
 
-	if(isset($_POST["ahah"]) && $_POST["ahah"] == "on"){
+	if(isset($_POST['ahah']) && $_POST['ahah'] == 'on'){
 		$sqlgruppen[] = "gruppe='P'";
 	}
 
-	if(isset($_POST["couleurdamen"]) && $_POST["couleurdamen"] == "on"){
+	if(isset($_POST['couleurdamen']) && $_POST['couleurdamen'] == 'on'){
 		$sqlgruppen[] = "gruppe='C'";
 	}
 
-	if(isset($_POST["gattinnen_interessiert"]) && $_POST["gattinnen_interessiert"] == "on"){
+	if(isset($_POST['gattinnen_interessiert']) && $_POST['gattinnen_interessiert'] == 'on'){
 		$sqlgruppen[] = "((gruppe='G' OR gruppe='W') AND interessiert = 1)";
 	}
 
-	if(isset($_POST["gattinnen"]) && $_POST["gattinnen"] == "on"){
+	if(isset($_POST['gattinnen']) && $_POST['gattinnen'] == 'on'){
 		$sqlgruppen[] = "(gruppe='G' OR gruppe='W')";
 	}
 
-	$sqlgruppen_string = " AND (".implode(" OR ",$sqlgruppen).") ";
+	$sqlgruppen_string = ' AND ('.implode(' OR ',$sqlgruppen).') ';
 
 	//evaluate regional restrictions
-	$regionString = "";
+	$regionString = '';
 
-	if($_POST["region"] != "" && $_POST["region"] != "NULL"){
+	if($_POST['region'] != '' && $_POST['region'] != 'NULL'){
 		$regionString = " AND (region1=:region OR region2=:region) ";
 	}
 
@@ -154,8 +157,8 @@ if(!isset($_POST["nachricht"]) || $_POST["nachricht"] == '' || !isset($_POST["su
 	$sql = "SELECT anrede, titel, rang, vorname, praefix, name, suffix, email FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 ".$regionString.$sqlgruppen_string ." AND gruppe != 'X' AND gruppe != 'T' AND gruppe != 'V' ORDER BY name";
 	$stmt = $libDb->prepare($sql);
 
-	if($regionString != ""){
-		$stmt->bindValue(':region', $_POST["region"], PDO::PARAM_INT);
+	if($regionString != ''){
+		$stmt->bindValue(':region', $_POST['region'], PDO::PARAM_INT);
 	}
 
 	$stmt->execute();
@@ -163,13 +166,13 @@ if(!isset($_POST["nachricht"]) || $_POST["nachricht"] == '' || !isset($_POST["su
 	$i = 0;
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$empfaengerArray[$i][0] = $row["email"];
-		$empfaengerArray[$i][1] = $libMitglied->formatMitgliedNameString($row["anrede"], $row["titel"], $row["rang"], $row["vorname"], $row["praefix"], $row["name"], $row["suffix"], 0);
+		$empfaengerArray[$i][0] = $row['email'];
+		$empfaengerArray[$i][1] = $libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 		$i++;
 	}
 
 	//add Fuchsmajor
-	if(isset($_POST["fuchsia"]) && $_POST["fuchsia"] == "on" && (!isset($_POST["burschen"]) || $_POST["burschen"] != "on")){
+	if(isset($_POST['fuchsia']) && $_POST['fuchsia'] == 'on' && (!isset($_POST['burschen']) || $_POST['burschen'] != 'on')){
 		$vorstand = $libVerein->getAnsprechbarerAktivenVorstandIds();
 
 		$stmt = $libDb->prepare("SELECT anrede, titel, rang, vorname, praefix, name, suffix, email FROM base_person, mod_rundbrief_empfaenger WHERE (base_person.id = :fuchsmajor OR base_person.id = :fuchsmajor2) AND base_person.id = mod_rundbrief_empfaenger.id AND gruppe != 'X' AND gruppe != 'T' AND gruppe != 'V' AND empfaenger=1");
@@ -178,15 +181,22 @@ if(!isset($_POST["nachricht"]) || $_POST["nachricht"] == '' || !isset($_POST["su
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			if($row["email"] != ""){
-				$empfaengerArray[$i][0] = $row["email"];
-				$empfaengerArray[$i][1] = $libMitglied->formatMitgliedNameString($row["anrede"], $row["titel"], $row["rang"], $row["vorname"], $row["praefix"], $row["name"], $row["suffix"], 0);
+			if($row['email'] != ''){
+				$empfaengerArray[$i][0] = $row['email'];
+				$empfaengerArray[$i][1] = $libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 				$i++;
 			}
 		}
 	}
 
-	echo '<table>';
+	//attachement
+	$attachementFile = '';
+	$attachementName = '';
+
+	if(isset($_FILES['anhang']) && isset($_FILES['anhang']['tmp_name']) && isset($_FILES['anhang']['name'])){
+		$attachementFile = $_FILES['anhang']['tmp_name'];
+		$attachementName = $_FILES['anhang']['name'];
+	}
 
 	//send mail
 	$empfangerPerMail = 15;
@@ -194,30 +204,45 @@ if(!isset($_POST["nachricht"]) || $_POST["nachricht"] == '' || !isset($_POST["su
 
 	for($j=0; $j<$anzahlMails; $j++){
 		$subEmpfaengerArray = array_slice($empfaengerArray, $j*$empfangerPerMail, $empfangerPerMail);
+
+		echo '<hr />';
+		echo '<p>Sende E-Mail ' .$mailNumber;
+
+		if(is_file($attachementFile)){
+			echo ' mit Anhang';
+		}
+
+		echo ' an:</p>';
+		echo '<p>';
+
+		foreach($subEmpfaengerArray as $empfaenger){
+			echo $empfaenger[1]. ' &lt;' .$empfaenger[0]. '&gt;<br />';
+		}
+
+		echo '</p>';
+
 		sendMail(
-			"rundbrief@".$domain,
+			'rundbrief@'.$domain,
 			$libMitglied->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4),
 			$subject,
 			$email,
-			$_POST["nachricht"],
+			$_POST['nachricht'],
 			$subEmpfaengerArray,
-			$j + 1);
+			$j + 1,
+			$attachementFile,
+			$attachementName);
 	}
-
-	echo '</table>';
 }
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaengerArray, $mailNumber){
+function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaengerArray, $mailNumber, $attachementFile, $attachementName){
 	global $libAuth, $libGenericStorage;
 
-	echo '<tr><td colspan="2"><br /><strong>Sende Mail ' .$mailNumber. '</strong></td></tr>';
 	$mail = new PHPMailer();
 	$mail->CharSet = "UTF-8";
-
 	$mail->From = $from;
 	$mail->FromName = $fromName;
 
@@ -229,12 +254,14 @@ function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaenger
 	$mail->Subject = $subject;
 	$mail->IsHTML(false);
 	$mail->AddReplyTo($replyEmail);
-
 	$mail->Body = stripslashes($message);
 
 	foreach($empfaengerArray as $empfaenger){
 		$mail->AddBCC($empfaenger[0]);
-		echo '<tr><td>' .$empfaenger[0]. '</td><td>' .$empfaenger[1]. '</td></tr>';
+	}
+
+	if(is_file($attachement)){
+		$mail->AddAttachment($attachementFile, $attachementName);
 	}
 
 	/*
@@ -249,10 +276,7 @@ function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaenger
 	}
 
 	if(!$mail->Send()){
-		echo '<tr><td colspan="2">';
-		echo '<strong>Fehler beim Versenden:</strong><br />';
-		echo $mail->ErrorInfo;
-		echo '</td></tr>';
+		echo '<p>Fehler beim Versand: ' .$mail->ErrorInfo. '</p>';
 	}
 }
 
@@ -261,7 +285,7 @@ function istImVorstand($aemter){
 		return false;
 	}
 
-	$vorstandsaemter = array("senior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "jubelsenior", "ahv_senior", "ahv_consenior", "ahv_keilbeauftragter", "ahv_scriptor", "ahv_quaestor");
+	$vorstandsaemter = array('senior', 'consenior', 'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior', 'ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor');
 	$vorstandsaemterderperson = array_intersect($aemter, $vorstandsaemter);
 
 	if(count($vorstandsaemterderperson) > 0){
