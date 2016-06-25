@@ -260,7 +260,7 @@ function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaenger
 		$mail->AddBCC($empfaenger[0]);
 	}
 
-	if(is_file($attachement)){
+	if(is_file($attachementFile)){
 		$mail->AddAttachment($attachementFile, $attachementName);
 	}
 
