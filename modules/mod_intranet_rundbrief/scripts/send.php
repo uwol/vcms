@@ -203,6 +203,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	$anzahlMails = ceil(count($empfaengerArray) / $empfangerPerMail);
 
 	for($j=0; $j<$anzahlMails; $j++){
+		$mailNumber = $j + 1;
 		$subEmpfaengerArray = array_slice($empfaengerArray, $j*$empfangerPerMail, $empfangerPerMail);
 
 		echo '<hr />';
@@ -222,15 +223,9 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		echo '</p>';
 
 		sendMail(
-			'rundbrief@'.$domain,
+			'rundbrief@' .$domain,
 			$libMitglied->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4),
-			$subject,
-			$email,
-			$_POST['nachricht'],
-			$subEmpfaengerArray,
-			$j + 1,
-			$attachementFile,
-			$attachementName);
+			$subject, $email, $_POST['nachricht'], $subEmpfaengerArray, $attachementFile, $attachementName);
 	}
 }
 
@@ -238,7 +233,7 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaengerArray, $mailNumber, $attachementFile, $attachementName){
+function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaengerArray, $attachementFile, $attachementName){
 	global $libAuth, $libGenericStorage;
 
 	$mail = new PHPMailer();
