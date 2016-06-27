@@ -93,7 +93,10 @@ echo '    <link rel="canonical" href="' .$pageCanonicalUrl. '"/>' . PHP_EOL;
 /*
 * Opengraph / Facebook meta data
 */
-echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'fbAppId'). '"/>' . PHP_EOL;
+if($libGenericStorage->loadValue('base_core', 'fbAppId')){
+	echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'fbAppId'). '"/>' . PHP_EOL;
+}
+
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
 echo '    <meta property="og:url" content="' .$pageOgUrl. '"/>' . PHP_EOL;
 echo '    <meta property="og:title" content="' .$pageTitle. '"/>' . PHP_EOL;
