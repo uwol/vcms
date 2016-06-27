@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet-Portal";
-$version = "2.59";
+$version = "2.60";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";

@@ -29,6 +29,23 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('showTrauerflor')){
 	$libGenericStorage->saveValueInCurrentModule('showTrauerflor', 0);
 }
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('smtpEnable')){
+	$libGenericStorage->saveValue('base_core', 'smtpEnable', 0);
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('smtpHost')){
+	$libGenericStorage->saveValue('base_core', 'smtpHost', '');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('smtpUsername')){
+	$libGenericStorage->saveValue('base_core', 'smtpUsername', '');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('smtpPassword')){
+	$libGenericStorage->saveValue('base_core', 'smtpPassword', '');
+}
+
+
 
 if(in_array('internetwart', $libAuth->getAemter())){
 	/*

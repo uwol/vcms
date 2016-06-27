@@ -84,7 +84,7 @@ if(isset($_POST['registrierung_name']) || isset($_POST['registrierung_telnr']) |
 
 
 if($formSent && !$formError){
-	require_once("lib/thirdparty/class.phpmailer.php");
+	require_once('lib/thirdparty/class.phpmailer.php');
 
 	$password_hash = $libAuth->encryptPassword($_POST['registrierung_pwd1']);
 
@@ -116,12 +116,12 @@ MBuH, ";
 	/*
 	* SMTP mode
 	*/
-	if($libGenericStorage->loadValueInCurrentModule('smtpEnable') == 1){
+	if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
 		$mail->IsSMTP();
 		$mail->SMTPAuth = true;
-		$mail->Host = $libGenericStorage->loadValueInCurrentModule('smtpHost');
-		$mail->Username = $libGenericStorage->loadValueInCurrentModule('smtpUsername');
-		$mail->Password = $libGenericStorage->loadValueInCurrentModule('smtpPassword');
+		$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
+		$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
+		$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
 	}
 
 	if($mail->Send()){
@@ -167,7 +167,7 @@ MBuH, ";
 
 	$urlPrefix = '';
 
-	if($libConfig->sitePath != ""){
+	if($libConfig->sitePath != ''){
 		if($libGenericStorage->loadValueInCurrentModule('useHttps') == '1'){
 			$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
 

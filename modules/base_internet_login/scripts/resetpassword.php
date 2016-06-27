@@ -21,13 +21,13 @@ if(!is_object($libGlobal))
 	exit();
 
 
-require_once("lib/thirdparty/class.phpmailer.php");
+require_once('lib/thirdparty/class.phpmailer.php');
 
 if(isset($_POST['email']) && $_POST['email'] != "" &&
 		isset($_POST['geburtsdatum']) && $_POST['geburtsdatum'] != ""){
 
 	if(!$libString->isValidEmail($_POST['email'])){
-		$libGlobal->errorTexts[] = "Fehler: Die angegebene Adresse ist keine E-Mail-Adresse.";
+		$libGlobal->errorTexts[] = 'Fehler: Die angegebene Adresse ist keine E-Mail-Adresse.';
 	} else {
 		$stmt = $libDb->prepare("SELECT id, username, email, datum_geburtstag FROM base_person WHERE email=:email AND gruppe != 'T' AND gruppe != 'X' AND gruppe != 'V' AND gruppe != '' AND username != '' AND username IS NOT NULL LIMIT 0,1");
 		$stmt->bindValue(':email', $_POST['email']);
@@ -67,12 +67,12 @@ und kann im Intranet auf der Seite \"Mein Profil\" geändert werden.";
 			/*
 			* SMTP mode
 			*/
-			if($libGenericStorage->loadValueInCurrentModule('smtpEnable') == 1){
+			if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
 				$mail->IsSMTP();
 				$mail->SMTPAuth = true;
-				$mail->Host = $libGenericStorage->loadValueInCurrentModule('smtpHost');
-				$mail->Username = $libGenericStorage->loadValueInCurrentModule('smtpUsername');
-				$mail->Password = $libGenericStorage->loadValueInCurrentModule('smtpPassword');
+				$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
+				$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
+				$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
 			}
 
 			$mail->Send();

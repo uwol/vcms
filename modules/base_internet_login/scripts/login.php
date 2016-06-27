@@ -29,22 +29,6 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('sslProxyUrl')){
 	$libGenericStorage->saveValueInCurrentModule('sslProxyUrl', '');
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpEnable')){
-	$libGenericStorage->saveValueInCurrentModule('smtpEnable', 0);
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpHost')){
-	$libGenericStorage->saveValueInCurrentModule('smtpHost', '');
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpUsername')){
-	$libGenericStorage->saveValueInCurrentModule('smtpUsername', '');
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpPassword')){
-	$libGenericStorage->saveValueInCurrentModule('smtpPassword', '');
-}
-
 
 echo '<h1>Intranet-Login</h1>';
 
@@ -52,7 +36,6 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<p>Bitte zum Anmelden den Benutzernamen und das Passwort eingeben.</p>';
-
 
 $urlPrefix = '';
 
@@ -79,12 +62,8 @@ $libForm->printSubmitButton('Anmelden');
 echo '</fieldset>';
 echo '</form>';
 
-
 echo '<h2>Registrierung</h2>';
-
 echo '<p>Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=login_registrierung">Registrierungsseite</a> angefordert werden kann.</p>';
 
-
 echo '<h2>Passwort vergessen?</h2>';
-
 echo '<p>Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=login_resetpassword">ein neues Passwort</a> per Email zuschicken lassen.</p>';

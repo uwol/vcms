@@ -262,12 +262,12 @@ function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaenger
 	/*
 	* SMTP mode
 	*/
-	if($libGenericStorage->loadValueInCurrentModule('smtpEnable') == 1){
+	if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
 		$mail->IsSMTP();
 		$mail->SMTPAuth = true;
-		$mail->Host = $libGenericStorage->loadValueInCurrentModule('smtpHost');
-		$mail->Username = $libGenericStorage->loadValueInCurrentModule('smtpUsername');
-		$mail->Password = $libGenericStorage->loadValueInCurrentModule('smtpPassword');
+		$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
+		$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
+		$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
 	}
 
 	if(!$mail->Send()){

@@ -73,22 +73,6 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('preselectInteressierteAH
 	$libGenericStorage->saveValueInCurrentModule('preselectInteressierteAHAH', 1);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpEnable')){
-	$libGenericStorage->saveValueInCurrentModule('smtpEnable', 0);
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpHost')){
-	$libGenericStorage->saveValueInCurrentModule('smtpHost', '');
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpUsername')){
-	$libGenericStorage->saveValueInCurrentModule('smtpUsername', '');
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpPassword')){
-	$libGenericStorage->saveValueInCurrentModule('smtpPassword', '');
-}
-
 
 echo '<h1>Rundbrief an Mitglieder verschicken</h1>';
 echo '<p>Auf dieser Seite kann per E-Mail ein Rundbrief an diejenigen Mitglieder verschickt werden, die sich nicht aus dem Verteiler ausgetragen haben.</p>';
