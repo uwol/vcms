@@ -45,6 +45,7 @@ class LibCronjobs{
 		$this->createMissingDirectories();
 		$this->repairHtaccessFiles();
 		$this->cleanSysLogIntranet();
+		$this->initConfiguration();
 
 		if(!$libGenericStorage->attributeExists('base_core', 'cronjobsLeereAusgetretene')){
 			$libGenericStorage->saveValue('base_core', 'cronjobsLeereAusgetretene', 0);
@@ -159,6 +160,37 @@ class LibCronjobs{
 		$this->libDb->query("UPDATE base_person SET zusatz1=NULL, strasse1=NULL, ort1=NULL, plz1=NULL, land1=NULL, datum_adresse1_stand=NULL, zusatz2=NULL, strasse2=NULL, ort2=NULL, plz2=NULL, land2=NULL, datum_adresse2_stand=NULL, region1=NULL, region2=NULL, telefon1=NULL, telefon2=NULL, mobiltelefon=NULL, email=NULL, skype=NULL, jabber=NULL, webseite=NULL, datum_geburtstag=NULL, beruf=NULL, heirat_partner=NULL, heirat_datum=NULL, tod_datum=NULL, tod_ort=NULL, status=NULL, spitzname=NULL, vita=NULL, vita_letzterautor=NULL, bemerkung=NULL, username=NULL, password_hash=NULL, validationkey=NULL WHERE gruppe='X' AND (datum_gruppe_stand = '0000-00-00' OR datum_gruppe_stand IS NULL OR DATEDIFF(NOW(), datum_gruppe_stand) > 30)");
 	}
 
+	function initConfiguration(){
+		global $libGenericStorage;
+
+		if(!$libGenericStorage->attributeExists('base_core', 'showTrauerflor')){
+			$libGenericStorage->saveValue('base_core', 'showTrauerflor', 0);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'smtpEnable')){
+			$libGenericStorage->saveValue('base_core', 'smtpEnable', 0);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'smtpHost')){
+			$libGenericStorage->saveValue('base_core', 'smtpHost', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'smtpUsername')){
+			$libGenericStorage->saveValue('base_core', 'smtpUsername', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'smtpPassword')){
+			$libGenericStorage->saveValue('base_core', 'smtpPassword', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'fbAppId')){
+			$libGenericStorage->saveValue('base_core', 'fbAppId', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'fbSecretKey')){
+			$libGenericStorage->saveValue('base_core', 'fbSecretKey', '');
+		}
+	}
 
 	//------------------------------------------------------
 

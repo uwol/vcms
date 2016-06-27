@@ -21,9 +21,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule("userNameICalendar") || !$libGenericStorage->attributeExistsInCurrentModule("passwordICalendar")){
-	$libGenericStorage->saveValueInCurrentModule("userNameICalendar", $libString->randomAlphaNumericString(40));
-	$libGenericStorage->saveValueInCurrentModule("passwordICalendar", $libString->randomAlphaNumericString(40));
+if(!$libGenericStorage->attributeExistsInCurrentModule('userNameICalendar') || !$libGenericStorage->attributeExistsInCurrentModule('passwordICalendar')){
+	$libGenericStorage->saveValueInCurrentModule('userNameICalendar', $libString->randomAlphaNumericString(40));
+	$libGenericStorage->saveValueInCurrentModule('passwordICalendar', $libString->randomAlphaNumericString(40));
 }
 
 echo '<h1>Intranet-Portal</h1>';
@@ -34,27 +34,27 @@ echo $libString->getNotificationBoxText();
 echo '<div class="row">';
 echo '<aside class="hidden-xs hidden-sm col-md-3">';
 
-require_once("elements/events.php");
+require_once('elements/events.php');
 
-if($libModuleHandler->moduleIsAvailable("mod_intranet_chargierkalender")){
-	require_once("elements/chargierkalender.php");
+if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')){
+	require_once('elements/chargierkalender.php');
 }
 
-require_once("elements/birthdays.php");
-require_once("elements/wifi.php");
+require_once('elements/birthdays.php');
+require_once('elements/wifi.php');
 
 echo '</aside>';
 echo '<section class="col-md-9">';
 
-require_once("elements/log.php");
-require_once("elements/system.php");
+require_once('elements/log.php');
+require_once('elements/system.php');
 
-if($libModuleHandler->moduleIsAvailable("mod_intranet_news")){
-	require_once("elements/news.php");
+if($libModuleHandler->moduleIsAvailable('mod_intranet_news')){
+	require_once('elements/news.php');
 }
 
-if($libModuleHandler->moduleIsAvailable("mod_intranet_reservierungen")){
-	require_once("elements/reservations.php");
+if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')){
+	require_once('elements/reservations.php');
 }
 
 echo '</section>';
