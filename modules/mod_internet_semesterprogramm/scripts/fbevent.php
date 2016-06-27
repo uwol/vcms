@@ -32,78 +32,62 @@ if($libEvent->isFacebookEvent($row)){
 	$fbEventId = $row['fb_eventid'];
 	$eventUrl = $fbUrl. '/events/' .$fbEventId;
 
-	$fbEventPhotosEndpoint = $fbGraphUrl. '/' .$fbEventId. '/photos' .$fbAccessTokenQuery;
-	$fbEventInterestedEndpoint = $fbGraphUrl. '/' .$fbEventId. '/interested' .$fbAccessTokenQuery. '&summary=count';
-	$fbEventAttendingEndpoint = $fbGraphUrl. '/' .$fbEventId. '/attending' .$fbAccessTokenQuery. '&summary=count';
+	$fbEventEndpoint = $fbGraphUrl. '/' .$fbEventId . $fbAccessTokenQuery . '&fields=attending_count,interested_count,cover';
+	$eventJson = file_get_contents($fbEventEndpoint);
 
-	$eventPhotosJson = file_get_contents($fbEventPhotosEndpoint);
+	if(!empty($eventJson)){
+		$eventObject = json_decode($eventJson, true);
 
-	if(!empty($eventPhotosJson)){
-		$eventPhotosObject = json_decode($eventPhotosJson, true);
-		$eventPhotoSource = $eventPhotosObject['data'][0]['source'];
+		$eventCoverSource = $eventObject['cover']['source'];
+		$eventAttendingCount = $eventObject['attending_count'];
+		$eventInterestedCount = $eventObject['interested_count'];
 
-		$eventInterestedJson = file_get_contents($fbEventInterestedEndpoint);
+		echo '<div class="thumbnail">';
 
-		if(!empty($eventInterestedJson)){
-			$eventInterestedObject = json_decode($eventInterestedJson, true);
-			$eventInterestedCount = $eventInterestedObject['summary']['count'];
+		echo '<div class="thumbnailOverflow">';
+		echo '<a href="' .$libString->protectXss($eventUrl). '">';
+		echo '<img src="' .$libString->protectXss($eventCoverSource). '" alt="" class="img-responsive center-block" />';
+		echo '</a>';
+		echo '</div>';
 
-			$eventAttendingJson = file_get_contents($fbEventAttendingEndpoint);
+		echo '<div class="caption">';
+		echo '<div class="media">';
 
-			if(!empty($eventAttendingJson)){
-				$eventAttendingObject = json_decode($eventAttendingJson, true);
-				$eventAttendingCount = $eventAttendingObject['summary']['count'];
+		echo '<div class="media-left" style="text-align:center">';
+		echo '<span style="font-size:32px;line-height:32px">' .substr($row['datum'], 8, 2). '</span><br />';
 
-				// ------------------
+		$monatName = $libTime->getMonth((int) substr($row['datum'], 5, 2));
+		$monatNameSubstr = substr($monatName, 0, 3);
+		$monatNameUpper = strtoupper($monatNameSubstr);
 
-				echo '<div class="thumbnail">';
+		echo '<span style="font-size:12px;line-height:12px;color:#e34e60">' .$monatNameUpper. '</span>';
+		echo '</div>';
 
-				echo '<div class="thumbnailOverflow">';
-				echo '<a href="' .$libString->protectXss($eventUrl). '">';
-				echo '<img src="' .$libString->protectXss($eventPhotoSource). '" alt="" class="img-responsive center-block" />';
-				echo '</a>';
-				echo '</div>';
+		echo '<div class="media-body">';
 
-				echo '<div class="caption">';
-				echo '<div class="media">';
+		echo '<h3 style="font-weight:bold;margin-top:0;margin-bottom:0;font-size:14px">';
+		echo '<a href="' .$libString->protectXss($eventUrl). '" style="color:black">' .$row['titel']. '</a>';
+		echo '</h3>';
 
-				echo '<div class="media-left" style="text-align:center">';
-				echo '<span style="font-size:32px;line-height:32px">' .substr($row['datum'], 8, 2). '</span><br />';
+		echo '<p style="color:#90949c;margin-top:0;margin-bottom:0;font-size:12px">';
+		echo $libString->protectXss($eventInterestedCount). ' Personen sind interessiert';
+		echo ' · ';
+		echo $libString->protectXss($eventAttendingCount). ' Personen nehmen teil';
+		echo '</p>';
 
-				$monatName = $libTime->getMonth((int) substr($row['datum'], 5, 2));
-				$monatNameSubstr = substr($monatName, 0, 3);
-				$monatNameUpper = strtoupper($monatNameSubstr);
+		echo '</div>';
+		echo '</div>';
 
-				echo '<span style="font-size:12px;line-height:12px;color:#e34e60">' .$monatNameUpper. '</span>';
-				echo '</div>';
+		echo '<hr />';
 
-				echo '<div class="media-body">';
+		echo '<p>';
+		echo '<a href="' .$libString->protectXss($eventUrl). '">';
+		echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
+		echo '</a>';
+		echo '</p>';
 
-				echo '<h3 style="font-weight:bold;margin-top:0;margin-bottom:0;font-size:14px">';
-				echo '<a href="' .$libString->protectXss($eventUrl). '" style="color:black">' .$row['titel']. '</a>';
-				echo '</h3>';
-
-				echo '<p style="color:#90949c;margin-top:0;margin-bottom:0;font-size:12px">';
-				echo $libString->protectXss($eventInterestedCount). ' Personen sind interessiert';
-				echo ' · ';
-				echo $libString->protectXss($eventAttendingCount). ' Personen nehmen teil';
-				echo '</p>';
-
-				echo '</div>';
-				echo '</div>';
-
-				echo '<hr />';
-
-				echo '<p>';
-				echo '<a href="' .$libString->protectXss($eventUrl). '">';
-				echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
-				echo '</a>';
-				echo '</p>';
-
-				echo '</div>';
-				echo '</div>';
-			}
-		}
+		echo '</div>';
+		echo '</div>';
 	}
 }
 ?>

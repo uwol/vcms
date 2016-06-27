@@ -64,13 +64,12 @@ class LibGenericStorage{
 	//list
 	function listAllArrayValues(){
 		$result = $this->libDb->query('SELECT moduleid, array_name, value, position FROM sys_genericstorage');
-	
+
 		$array = array();
 
 		foreach($result as $row){
 			$array[$row['moduleid']][$row['array_name']][$row['position']] = $row['value'];
 
-			ksort($array[$row['moduleid']][$row['array_name']][$row['position']]);
 			ksort($array[$row['moduleid']][$row['array_name']]);
 			ksort($array[$row['moduleid']]);
 		}
