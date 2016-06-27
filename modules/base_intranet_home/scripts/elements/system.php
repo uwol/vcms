@@ -29,22 +29,29 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('showTrauerflor')){
 	$libGenericStorage->saveValueInCurrentModule('showTrauerflor', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpEnable')){
+if(!$libGenericStorage->attributeExists('base_core', 'smtpEnable')){
 	$libGenericStorage->saveValue('base_core', 'smtpEnable', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpHost')){
+if(!$libGenericStorage->attributeExists('base_core', 'smtpHost')){
 	$libGenericStorage->saveValue('base_core', 'smtpHost', '');
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpUsername')){
+if(!$libGenericStorage->attributeExists('base_core', 'smtpUsername')){
 	$libGenericStorage->saveValue('base_core', 'smtpUsername', '');
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('smtpPassword')){
+if(!$libGenericStorage->attributeExists('base_core', 'smtpPassword')){
 	$libGenericStorage->saveValue('base_core', 'smtpPassword', '');
 }
 
+if(!$libGenericStorage->attributeExists('base_core', 'fbAppId')){
+	$libGenericStorage->saveValue('base_core', 'fbAppId', '');
+}
+
+if(!$libGenericStorage->attributeExists('base_core', 'fbSecretKey')){
+	$libGenericStorage->saveValue('base_core', 'fbSecretKey', '');
+}
 
 
 if(in_array('internetwart', $libAuth->getAemter())){

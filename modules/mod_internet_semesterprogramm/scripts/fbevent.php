@@ -22,13 +22,14 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if($libEvent->isFacebookEvent($row)){
-	$fbAccessToken = $libGenericStorage->loadValue('base_core', 'fbAccessToken');
-	$fbEventId = $row['fb_eventid'];
-
+	$fbAppId = $libGenericStorage->loadValue('base_core', 'fbAppId');
+	$fbSecretKey = $libGenericStorage->loadValue('base_core', 'fbSecretKey');
+	$fbAccessToken = $fbAppId. '|' .$fbSecretKey;
 	$fbUrl = 'https://www.facebook.com';
 	$fbGraphUrl = 'https://graph.facebook.com';
 	$fbAccessTokenQuery = '?access_token=' .$fbAccessToken;
 
+	$fbEventId = $row['fb_eventid'];
 	$eventUrl = $fbUrl. '/events/' .$fbEventId;
 
 	$fbEventPhotosEndpoint = $fbGraphUrl. '/' .$fbEventId. '/photos' .$fbAccessTokenQuery;

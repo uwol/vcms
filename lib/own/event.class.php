@@ -22,9 +22,11 @@ class LibEvent{
 	function isFacebookEvent($row){
 		global $libGenericStorage;
 
-		$fbAccessToken = $libGenericStorage->loadValue('base_core', 'fbAccessToken');
+		$fbAppId = $libGenericStorage->loadValue('base_core', 'fbAppId');
+		$fbSecretKey = $libGenericStorage->loadValue('base_core', 'fbSecretKey');
+
 		$result = isset($row['fb_eventid']) && is_numeric($row['fb_eventid'])
-			&& ini_get('allow_url_fopen') && $fbAccessToken != '';
+			&& ini_get('allow_url_fopen') && $fbAppId != '' && $fbSecretKey != '';
 		return $result;
 	}
 }

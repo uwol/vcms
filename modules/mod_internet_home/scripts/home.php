@@ -21,14 +21,6 @@ if(!is_object($libGlobal))
 	exit();
 
 
-if(!$libGenericStorage->attributeExists('base_core', 'fbAppId')){
-	$libGenericStorage->saveValue('base_core', 'fbAppId', '');
-}
-
-if(!$libGenericStorage->attributeExists('base_core', 'fbAccessToken')){
-	$libGenericStorage->saveValue('base_core', 'fbAccessToken', '');
-}
-
 if(!$libGenericStorage->attributeExistsInCurrentModule('fb_url')){
 	$libGenericStorage->saveValueInCurrentModule('fb_url', '');
 }
