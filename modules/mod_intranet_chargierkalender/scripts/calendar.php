@@ -260,12 +260,12 @@ class LibChargierKalenderEvent{
     		if($this->angemeldet){
     			$retstr .= '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
 				$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
-				$retstr .= '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> Abmelden';
+				$retstr .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
 				$retstr .= '</button>';
    			} else {
     			$retstr .= '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
 				$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
-				$retstr .= '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> Anmelden';
+				$retstr .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
 				$retstr .= '</button>';
     		}
 

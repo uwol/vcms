@@ -48,27 +48,14 @@ main td.toolColumn {
 	text-align: center;
 }
 
-main .icon, main a .icon {
-	height: 24px;
-	margin: 0 2px;
-	display: inline;
-}
-
-main .icon_small, main a .icon_small {
-	height: 0.8em;
-	margin: 0;
-	vertical-align: baseline;
-	display: inline;
+main .fa {
+	color: #333;
 }
 
 /* image delete icon */
 
 main .imgBox .deleteIconBox {
 	position: absolute;
-}
-
-main .imgBox .deleteIconBox .icon {
-	margin: 0;
 	padding: 1px;
 	background-color: white;
 }
@@ -202,15 +189,27 @@ main .thumbnail .thumbnailOverflow img {
 	width: 100%;
 }
 
-main .public {
+main .fa.public {
+	color: green;
+}
+
+main .fa.internal {
+	color: orange;
+}
+
+main .fa.private {
+	color: red;
+}
+
+main .thumbnail .public {
 	border: 2px solid green;
 }
 
-main .internal {
-	border: 2px solid yellow;
+main .thumbnail .internal {
+	border: 2px solid orange;
 }
 
-main .private {
+main .thumbnail .private {
 	border: 2px solid red;
 }
 
@@ -226,7 +225,10 @@ main .lastInsertId {
 	display: none;
 }
 
-footer .social-buttons .icon {
-	width: 24px;
-	margin: 5px;
+footer .social-buttons {
+	word-spacing: .2em;
+}
+
+footer .social-buttons a {
+	color: #333;
 }

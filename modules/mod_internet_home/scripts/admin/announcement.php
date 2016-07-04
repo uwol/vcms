@@ -134,7 +134,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 
 		echo '<span class="deleteIconBox">';
 		echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$array['id']. '&amp;aktion=bilddelete">';
-		echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon" />';
+		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</span>';
 

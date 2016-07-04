@@ -34,7 +34,7 @@ $description = $libConfig->seiteBeschreibung;
 $wp_url = $libGenericStorage->loadValue('mod_internet_home', 'wp_url');
 
 if($wp_url != ''){
-	echo '              <a href="' .$wp_url. '" rel="nofollow"><img src="styles/icons/social/wikipedia.svg" alt="WP" class="icon" /></a>' . PHP_EOL;
+	echo '              <a href="' .$wp_url. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 
@@ -42,12 +42,12 @@ if($wp_url != ''){
 $fb_url = $libGenericStorage->loadValue('mod_internet_home', 'fb_url');
 
 if($fb_url != ''){
-	echo '              <a href="' .$fb_url. '" rel="nofollow"><img src="styles/icons/social/facebook.svg" alt="FB" class="icon" /></a>' . PHP_EOL;
+	echo '              <a href="' .$fb_url. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 //twitter
 $twitter_url = 'http://' .$libConfig->sitePath;
-echo '              <a href="http://twitter.com/share?url=' .urlencode($twitter_url). '&amp;text=' .urlencode($title). '" rel="nofollow"><img src="styles/icons/social/twitter.svg" alt="T" class="icon" /></a>' . PHP_EOL;
+echo '              <a href="http://twitter.com/share?url=' .urlencode($twitter_url). '&amp;text=' .urlencode($title). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 
 echo '            </div>' . PHP_EOL;
 echo '          </footer>' . PHP_EOL;

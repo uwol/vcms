@@ -110,6 +110,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		//are there images?
 		if($libGallery->hasPictures($row['id'], 2)){
+			echo '<div class="thumbnail">';
+			echo '<div class="thumbnailOverflow">';
 			echo '<img class="img-responsive center-block';
 
 			//are there pooled images?
@@ -118,6 +120,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     		}
 
     		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
+    		echo '</div>';
+    		echo '</div>';
 		}
 
 		echo '</td>';
@@ -125,7 +129,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<td>' .$row['datum']. '</td>';
 		echo '<td class="toolColumn">';
 		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$row['id']. '">';
-		echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</td>';
 		echo '</tr>';
 	}
@@ -163,6 +167,8 @@ if(count($foldersWithoutEvent) > 0){
 
 		// are there images in the folder?
 		if($libGallery->hasPictures($folder, 2)){
+			echo '<div class="thumbnail">';
+			echo '<div class="thumbnailOverflow">';
 			echo '<img class="img-responsive center-block img-column';
 
 			//pooled images?
@@ -170,7 +176,9 @@ if(count($foldersWithoutEvent) > 0){
     			echo ' private';
     		}
 
-    		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$folder.'&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" /><br /> ';
+    		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$folder.'&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" />';
+    		echo '</div>';
+    		echo '</div>';
 		}
 
 		echo '</td>';

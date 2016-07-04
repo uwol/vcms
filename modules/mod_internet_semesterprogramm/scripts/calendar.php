@@ -35,7 +35,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
 
-echo '<p>Das aktuelle Semesterprogramm kann als <a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=semesterprogramm_icalendar"><img src="styles/icons/calendar/calendar.svg" alt="ical" class="icon_small" /> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>';
+echo '<p>Das aktuelle Semesterprogramm kann als <a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=semesterprogramm_icalendar"><i class="fa fa-calendar" aria-hidden="true"></i> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>';
 echo '<div class="vcalendar">';
 
 //access level for galleries
@@ -87,7 +87,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if($libAuth->isloggedin() == true && $anzahl > 0){
 		$event->isAttended(true);
-		$event->attendedImageUrl = 'styles/icons/calendar/attending.svg';
+		$event->setAttendedIcon('<i class="fa fa-check-square-o" aria-hidden="true"></i>');
 	}
 
 	$event->setDescription($description);

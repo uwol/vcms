@@ -227,10 +227,10 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			if(!$folderElement->isAmtsRootFolder() || $folderElement->hasNestedFolderElements()){
 				if($folderElement->isOpen){
 					echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
-					echo '<img src="styles/icons/file/folder_open.svg" alt="F" class="icon_small" /> ';
+					echo '<i class="fa fa-folder-open-o" aria-hidden="true"></i> ';
 				} else{
 					echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
-					echo '<img src="styles/icons/file/folder.svg" alt="F" class="icon_small" /> ';
+					echo '<i class="fa fa-folder-o" aria-hidden="true"></i> ';
 				}
 
 				echo $folderElement->name;
@@ -243,7 +243,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				}
 
 				if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
-					echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" alt="löschen" /></a>';
+					echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
 				}
 
 				echo '<br />';
@@ -294,7 +294,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			echo ' - ' . getSizeString($folderElement->getSize());
 
 			if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><img src="styles/icons/basic/delete.svg" class="icon_small" alt="löschen" /></a>';
+				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
 			}
 
 			echo '<br />';

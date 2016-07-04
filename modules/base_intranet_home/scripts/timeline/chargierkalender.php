@@ -95,19 +95,19 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		if($angemeldet){
 			$form .= '<input type="hidden" name="chargierkalenderchangeanmeldenstate" value="abmelden" />';
 			$form .= '<button type="submit" class="btn btn-default btn-sm">';
-			$form .= '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> Abmelden';
+			$form .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
 			$form .= '</button>';
 		} else {
 			$form .= '<input type="hidden" name="chargierkalenderchangeanmeldenstate" value="anmelden" />';
 			$form .= '<button type="submit" class="btn btn-default btn-sm">';
-			$form .= '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> Anmelden';
+			$form .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
 			$form .= '</button>';
 		}
 
 		$form .= '</form>';
 	} else {
 		if($angemeldet){
-			$description .= '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> angemeldet';
+			$description .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> angemeldet';
 		}
 	}
 

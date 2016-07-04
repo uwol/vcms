@@ -78,7 +78,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$anzahl. ' Personen</td>';
 		echo '<td class="toolColumn">';
 		echo '<a href="index.php?pid=intranet_admin_db_region&amp;aktion=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-		echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" />';
+		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</td>';
 		echo "</tr>";

@@ -345,7 +345,7 @@ class LibCalendarEvent{
 
 	//meta infos
 	var $attended;
-	var $attendedImageUrl;
+	var $attendedIcon;
 
 	//-------------------------------------------------
 
@@ -397,8 +397,8 @@ class LibCalendarEvent{
 		$this->attended = $attended;
 	}
 
-	function setAttendedImageUrl($attendedImageUrl){
-		$this->attendedImageUrl = $attendedImageUrl;
+	function setAttendedIcon($attendedIcon){
+		$this->attendedIcon = $attendedIcon;
 	}
 
 	function getStartDateTime(){
@@ -479,8 +479,8 @@ class LibCalendarEvent{
 		}
 
 		//attended
-		if($this->attended && $this->attendedImageUrl != ''){
-			$retstr .= '<img src="' .$this->attendedImageUrl. '" alt="angemeldet" class="icon_small" /> ';
+		if($this->attended && $this->attendedIcon != ''){
+			$retstr .= $this->attendedIcon. ' ';
 		}
 
 		//status

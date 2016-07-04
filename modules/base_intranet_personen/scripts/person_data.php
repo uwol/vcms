@@ -511,7 +511,7 @@ function printPersonSignature($row, $ownprofile){
 	if($ownprofile){
 		echo '<span class="deleteIconBox">';
 		echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['id']. '&amp;aktion=fotodelete">';
-		echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon" />';
+		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</span>';
 	}
@@ -723,21 +723,21 @@ function printCommunication($row){
 			$icon = '';
 
 			if(strstr($webseite, 'linkedin')){
-				$icon = 'linkedin.svg';
+				$icon = '<i class="fa fa-linkedin-square" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'xing')){
-				$icon = 'xing.svg';
+				$icon = '<i class="fa fa-xing-square" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'twitter')){
-				$icon = 'twitter.svg';
+				$icon = '<i class="fa fa-twitter-square" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'facebook')){
-				$icon = 'facebook.svg';
+				$icon = '<i class="fa fa-facebook-official" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'wikipedia')){
-				$icon = 'wikipedia.svg';
+				$icon = '<i class="fa fa-wikipedia-w" aria-hidden="true"></i>';
 			}
 
 			echo '<div>';
 
 			if($icon != ''){
-				echo '<img src="styles/icons/social/' .$icon. '" class="icon_small" alt="Icon" /> ';
+				echo $icon. ' ';
 			}
 
 			echo 'Webseite: ';
@@ -751,8 +751,8 @@ function printCommunication($row){
 
 		if($row['skype'] != ''){
 			echo '<div>';
-			echo '<img src="styles/icons/social/skype.svg" class="icon_small" alt="S" /> ';
-			echo 'Skype: <a href="skype:' .$row['skype']. '">' .$row['skype']. '</a>';
+			echo '<i class="fa fa-skype" aria-hidden="true"></i> Skype: ';
+			echo '<a href="skype:' .$row['skype']. '">' .$row['skype']. '</a>';
 			echo '</div>';
 		}
 

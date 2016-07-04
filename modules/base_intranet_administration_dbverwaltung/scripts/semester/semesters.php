@@ -71,7 +71,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$libMitglied->getMitgliedNameString($row['internetwart'],5). '</td>';
 		echo '<td class="toolColumn">';
 		echo '<a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$row['semester']. '">';
-		echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</td>';
 		echo '</tr>';

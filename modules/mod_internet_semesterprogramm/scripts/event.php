@@ -233,13 +233,13 @@ function printSocialButtons($row){
 	if(!$libEvent->isFacebookEvent($row)){
 		//facebook
 		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
-		echo '<img src="styles/icons/social/facebook.svg" alt="FB" class="icon" />';
+		echo '<i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>';
 		echo '</a> ';
 	}
 
 	//twitter
 	echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
-	echo '<img src="styles/icons/social/twitter.svg" alt="T" class="icon" />';
+	echo '<i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>';
 	echo '</a> ';
 
 	echo '</p>';
@@ -261,18 +261,18 @@ function printAnmeldeStatus($row){
 
 			if($angemeldet){
 				echo '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
-				$libForm->printSubmitButtonInline('<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> Abmelden');
+				$libForm->printSubmitButtonInline('<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden');
 			} else {
 				echo '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
-				$libForm->printSubmitButtonInline('<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> Anmelden');
+				$libForm->printSubmitButtonInline('<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden');
 			}
 
 			echo '</form>';
 		} else {
 			if($angemeldet){
-				echo '<img src="styles/icons/calendar/attending.svg" alt="angemeldet" class="icon_small" /> angemeldet';
+				echo '<i class="fa fa-check-square-o" aria-hidden="true"></i> angemeldet';
 			} else {
-				echo '<img src="styles/icons/calendar/notattending.svg" alt="abgemeldet" class="icon_small" /> nicht angemeldet';
+				echo '<i class="fa fa-square-o" aria-hidden="true"></i> nicht angemeldet';
 			}
 		}
 	} else {

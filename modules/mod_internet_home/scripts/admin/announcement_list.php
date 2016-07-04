@@ -91,7 +91,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<td>'.$libString->deleteBBCode($row['text']). '<br /><br /></td>';
 	echo '<td class="toolColumn">';
 	echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$row['id']. '">';
-	echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+	echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 	echo '</a>';
 	echo '</td>';
 	echo "</tr>";

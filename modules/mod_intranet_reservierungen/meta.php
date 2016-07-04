@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Reservierungen";
-$version = "2.29";
+$version = "2.30";
 $styleSheet = "";
 $installScript = "install/install.php";
 $uninstallScript = "";

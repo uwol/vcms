@@ -83,7 +83,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<td>' .$row['datum']. '</td>';
 	echo '<td class="toolColumn">';
 	echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;id=' .$row['id']. '">';
-	echo '<img src="styles/icons/basic/edit.svg" alt="edit" class="icon_small" />';
+	echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 	echo '</a>';
 	echo '</td>';
 	echo '</tr>';

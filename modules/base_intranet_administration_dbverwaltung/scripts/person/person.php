@@ -232,7 +232,7 @@ if($libAuth->isLoggedin()){
 
 		echo '<span class="deleteIconBox">';
 		echo '<a href="index.php?pid=intranet_admin_db_person&amp;id=' .$mgarray['id']. '&amp;aktion=fotodelete">';
-		echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon" />';
+		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</span>';
 

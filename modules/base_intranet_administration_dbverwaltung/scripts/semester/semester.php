@@ -225,7 +225,7 @@ if($libAuth->isLoggedin()){
 		if($hasSemesterCover){
 			echo '<span class="deleteIconBox">';
 			echo '<a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$semesterarray['semester']. '&amp;aktion=semestercoverdelete">';
-			echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon" />';
+			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 			echo '</a>';
 			echo '</span>';
 		}

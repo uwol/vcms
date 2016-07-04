@@ -154,23 +154,23 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* output
 	*/
 	if(count($errors) > 0 || count($unsecuredFolders) > 0 || count($notReadableFiles) > 0){
-		$errorImg = '<img src="styles/icons/basic/error.svg" alt="Error" class="icon_small" />';
+		$errorIcon = '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>';
 		$systemText = '';
 
 		if(count($errors) > 0){
-			$systemText .= $errorImg;
+			$systemText .= $errorIcon;
 			$systemText .= implode(' ', $errors);
 			$systemText .= ' ';
 		}
 
 		if(count($unsecuredFolders) > 0){
-			$systemText .= $errorImg. ' Folgende Ordner sind nicht durch eine htaccess-Datei geschützt: ';
+			$systemText .= $errorIcon. ' Folgende Ordner sind nicht durch eine htaccess-Datei geschützt: ';
 			$systemText .= implode(', ', $unsecuredFolders);
 			$systemText .= ' ';
 		}
 
 		if(is_array($notReadableFiles) && count($notReadableFiles) > 0){
-			$systemText .= $errorImg. ' PHP besitzt für die folgenden Dateien bzw. Ordner keine Zugriffsrechte: ';
+			$systemText .= $errorIcon. ' PHP besitzt für die folgenden Dateien bzw. Ordner keine Zugriffsrechte: ';
 			$systemText .= implode(', ', $notReadableFiles);
 			$systemText .= ' ';
 		}

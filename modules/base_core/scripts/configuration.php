@@ -89,7 +89,7 @@ foreach($storage as $moduleid => $arrays){
 
 			echo '<div class="col-sm-1">';
 			echo '<div class="form-control-static">';
-			echo '<a href="index.php?pid=configuration&amp;action=delete&amp;moduleid=' .$moduleid. '&amp;array_name=' .$array_name. '&amp;position=' .$position. '"><img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" /></a>';
+			echo '<a href="index.php?pid=configuration&amp;action=delete&amp;moduleid=' .$moduleid. '&amp;array_name=' .$array_name. '&amp;position=' .$position. '"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>';
 			echo '</div>';
 			echo '</div>';
 

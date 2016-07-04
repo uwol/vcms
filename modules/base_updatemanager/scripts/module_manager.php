@@ -381,7 +381,7 @@ foreach($modules as $key => $value){
 		if(!$libModuleHandler->moduleIsAvailable($key)){
 			if(!$engineIsOld){
 				echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
-				echo '<img src="styles/icons/basic/add.svg" alt="add" class="icon_small" />';
+				echo '<i class="fa fa-plus-circle" aria-hidden="true"></i>';
 				echo '</a>';
 			}
 		}
@@ -396,7 +396,7 @@ foreach($modules as $key => $value){
 	if($key == 'engine'){
 		if($engineIsOld){
 			echo '<a href="index.php?pid=updater_liste&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
-			echo '<img src="styles/icons/basic/up.svg" alt="up" class="icon_small" />';
+			echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
 			echo '</a>';
 		}
 	} else {
@@ -408,7 +408,7 @@ foreach($modules as $key => $value){
 			if($newversion > $actualversion){
 				if(!$engineIsOld){
 					echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=updateModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
-					echo '<img src="styles/icons/basic/up.svg" alt="up" class="icon_small" />';
+					echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
 					echo '</a>';
 				}
 			}
@@ -430,7 +430,7 @@ foreach($modules as $key => $value){
 
 				if(substr($key, 0, 5) != 'base_'){
 					echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
-					echo '<img src="styles/icons/basic/delete.svg" alt="delete" class="icon_small" />';
+					echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 					echo '</a>';
 				}
 			}
