@@ -32,41 +32,59 @@ class LibBirtdayTimelineEvent extends LibTimelineEvent{
 }
 
 
-$isCurrentSemester = $libTime->getSemesterName() == $libGlobal->semester;
+$dateTimeStart = new DateTime($zeitraum[0]);
+$dateTimeEnd = new DateTime($zeitraum[1]);
 
-if($isCurrentSemester){
-	//komplexe Abfrage, um im Dezember Geburtstage aus dem folgenden Jahr zu ermitteln
-	//Monate werden dazu normalisiert auf Raum 0 1 2 ... 10 11 relativ zum aktuellen Monat mit: (x_1 + 12 - x) % 12 = y
-	//z.B. im Dezember x = 12 => für Dezember: (12 + 12 - 12) % 12 = 0, für Januar: (1 + 12 - 12) % 12 = 1
+$period = new DatePeriod($dateTimeStart, new DateInterval('P1Y'), $dateTimeEnd);
+$years = array();
 
-	$stmt = $libDb->prepare("SELECT id, datum_geburtstag FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND datum_geburtstag != '' AND datum_geburtstag != '0000-00-00' AND (MOD(DATE_FORMAT(datum_geburtstag, '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(datum_geburtstag, '%d')) >= (MOD(DATE_FORMAT(NOW(), '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(NOW(), '%d')) ORDER BY (MOD(DATE_FORMAT(datum_geburtstag, '%m') + 12 - DATE_FORMAT(NOW(), '%m'), 12) * 100 + DATE_FORMAT(datum_geburtstag, '%d')) LIMIT 0,3");
+foreach($period as $date){
+    $years[] = $date->format('Y');
+}
+
+foreach($years as $year){
+	addBirthdayTimelineEvents($year, $zeitraum);
+}
+
+function addBirthdayTimelineEvents($year, $zeitraum){
+	global $libDb, $libTime;
+
+	$stmt = $libDb->prepare("SELECT id, datum_geburtstag FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND datum_geburtstag != '' AND datum_geburtstag != '0000-00-00'");
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$year = $libTime->formatYearString($row['datum_geburtstag']);
-		$age = date('Y') - $year;
-		$runderGeburtstag = $libTime->checkrundergeburtstag($year, date('Y'));
+		$birtdayYear = $libTime->formatYearString($row['datum_geburtstag']);
+		$age = $libTime->checkSignificantBirthdayYear($birtdayYear, $year);
 
-		$title = 'Geburtstag von ' .$libMitglied->getMitgliedNameString($row['id'], 0);
-		$description = $age. ' Jahre';
+		if($age){
+			$dateObject = new DateTime($row['datum_geburtstag']);
+			$dateObject->add(new DateInterval('P' .$age. 'Y'));
+			$date = $dateObject->format('Y-m-d');
 
-		$url = 'index.php?pid=intranet_person_daten&amp;personid=' .$row['id'];
-
-		$date = new DateTime($row['datum_geburtstag']);
-		$date->add(new DateInterval('P' .$age. 'Y'));
-		$dateString = $date->format('Y-m-d');
-
-		$timelineEvent = new LibBirtdayTimelineEvent();
-
-		$timelineEvent->setTitle($title);
-		$timelineEvent->setDatetime($dateString);
-		$timelineEvent->setDescription($description);
-		$timelineEvent->setReferencedPersonId($row['id']);
-		$timelineEvent->setUrl($url);
-
-		$timelineEvent->hideReferencedPersonSignature();
-
-		$timelineEventSet->addEvent($timelineEvent);
+			if($zeitraum[0] <= $date && $date <= $zeitraum[1] && $date <= date('Y-m-d')){
+				addBirthdayTimelineEvent($row, $date, $age);
+			}
+		}
 	}
+}
+
+function addBirthdayTimelineEvent($row, $date, $age){
+	global $libMitglied, $timelineEventSet;
+
+	$title = 'Geburtstag von ' .$libMitglied->getMitgliedNameString($row['id'], 0);
+	$description = $age. ' Jahre';
+	$url = 'index.php?pid=intranet_person_daten&amp;personid=' .$row['id'];
+
+	$timelineEvent = new LibBirtdayTimelineEvent();
+
+	$timelineEvent->setTitle($title);
+	$timelineEvent->setDatetime($date);
+	$timelineEvent->setDescription($description);
+	$timelineEvent->setReferencedPersonId($row['id']);
+	$timelineEvent->setUrl($url);
+
+	$timelineEvent->hideReferencedPersonSignature();
+
+	$timelineEventSet->addEvent($timelineEvent);
 }
 ?>

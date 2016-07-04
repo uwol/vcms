@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet Administration für Export";
-$version = "2.10";
+$version = "2.12";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
@@ -17,7 +17,7 @@ $pages[] = new LibPage("intranet_admin_export", "scripts/", "export.php", $ar, "
 
 $includes[] = new LibInclude("intranet_admin_export_daten_adressen", "scripts/", "data_addresses.php", $ar);
 $includes[] = new LibInclude("intranet_admin_export_daten_geburtstage", "scripts/", "data_birthdays.php", $ar);
-$includes[] = new LibInclude("intranet_admin_export_daten_rundegeburtstage", "scripts/", "data_big_birthdays.php", $ar);
+$includes[] = new LibInclude("intranet_admin_export_daten_rundegeburtstage", "scripts/", "data_significant_birthdays.php", $ar);
 $includes[] = new LibInclude("intranet_admin_export_daten_jubilaeen", "scripts/", "data_anniversaries.php", $ar);
 
 $menuElementsInternet = array();

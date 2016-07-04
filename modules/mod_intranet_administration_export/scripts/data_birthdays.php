@@ -20,22 +20,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
-	if(!is_numeric($_GET['jahr']))
+	if(!is_numeric($_GET['jahr'])){
 		die('Das angegebene Jahr ist keine Zahl.');
+	}
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE (gruppe = 'P' OR gruppe = 'B' OR gruppe = 'F' OR gruppe = 'C' OR gruppe = 'W' OR gruppe = 'G') AND datum_geburtstag != '' AND datum_geburtstag IS NOT NULL AND datum_geburtstag != '0000-00-00' ORDER BY DATE_FORMAT(datum_geburtstag, '%m%d')");
 
 	$table = new LibTable($libDb);
-	$table->addHeader(array("datum_geburtstag", "alter", "anrede", "rang", "titel", "vorname", "praefix", "name", "suffix", "zusatz1", "strasse1", "ort1", "plz1", "land1", "telefon1", "email", "status", "gruppe"));
+	$table->addHeader(array('datum_geburtstag', 'alter', 'anrede', 'rang', 'titel', 'vorname', 'praefix', 'name', 'suffix', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'telefon1', 'email', 'status', 'gruppe'));
 
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$table->addRowByArray(array($row["datum_geburtstag"], $_GET['jahr']-$row["datum_geburtstag"], $row["anrede"], $row["rang"], $row["titel"], $row["vorname"], $row["praefix"], $row["name"], $row["suffix"], $row["zusatz1"], $row["strasse1"], $row["ort1"], $row["plz1"], $row["land1"], $row["telefon1"], $row["email"], $row["status"], $row["gruppe"]));
+		$table->addRowByArray(array($row['datum_geburtstag'], $_GET['jahr']-$row['datum_geburtstag'], $row['anrede'], $row['rang'], $row['titel'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], $row['zusatz1'], $row['strasse1'], $row['ort1'], $row['plz1'], $row['land1'], $row['telefon1'], $row['email'], $row['status'], $row['gruppe']));
 	}
 
-	if(isset($_GET['type']) && $_GET['type'] == "csv"){
+	if(isset($_GET['type']) && $_GET['type'] == 'csv'){
 		$table->writeContentAsCSV('geburtstage' .$_GET['jahr']. '.csv');
 	} else {
 		$table->writeContentAsHtmlTable('geburtstage' .$_GET['jahr']. '.html');

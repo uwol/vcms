@@ -29,17 +29,18 @@ if($libAuth->isLoggedin()){
 	$stmt->execute();
 
 	$table = new LibTable($libDb);
-	$table->addHeader(array("datum_geburtstag", "alter", "anrede", "rang", "titel", "vorname", "praefix", "name", "suffix", "zusatz1", "strasse1", "ort1", "plz1", "land1", "telefon1", "email", "status", "gruppe"));
+	$table->addHeader(array('datum_geburtstag', 'alter', 'anrede', 'rang', 'titel', 'vorname', 'praefix', 'name', 'suffix', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'telefon1', 'email', 'status', 'gruppe'));
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$rundesAlter = $libTime->checkrundergeburtstag(substr($row['datum_geburtstag'],0,4),$_GET['jahr']);
+		$year = $libTime->formatYearString($row['datum_geburtstag']);
+		$rundesAlter = $libTime->checkSignificantBirthdayYear($year, $_GET['jahr']);
 
 		if($rundesAlter){
-			$table->addRowByArray(array($row["datum_geburtstag"], $rundesAlter, $row["anrede"], $row["rang"], $row["titel"], $row["vorname"], $row["praefix"], $row["name"], $row["suffix"], $row["zusatz1"], $row["strasse1"], $row["ort1"], $row["plz1"], $row["land1"], $row["telefon1"], $row["email"], $row["status"], $row["gruppe"]));
+			$table->addRowByArray(array($row['datum_geburtstag'], $rundesAlter, $row['anrede'], $row['rang'], $row['titel'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], $row['zusatz1'], $row['strasse1'], $row['ort1'], $row['plz1'], $row['land1'], $row['telefon1'], $row['email'], $row['status'], $row['gruppe']));
 		}
 	}
 
-	if(isset($_GET['type']) && $_GET['type'] == "csv"){
+	if(isset($_GET['type']) && $_GET['type'] == 'csv'){
 		$table->writeContentAsCSV('rundegeburtstage' .$_GET['jahr']. '.csv');
 	} else {
 		$table->writeContentAsHtmlTable('rundegeburtstage' .$_GET['jahr']. '.html');

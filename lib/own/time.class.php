@@ -485,18 +485,17 @@ class LibTime{
 	* Überprüft einen Geburtstag auf Festlichkeit wie 50ten etc., und gibt Alter zu diesem Geburtstag zurück
 	* Es müssen das Geburtsjahr und das aktuelle Jahr in der Form ('1930','2000') übergeben werden.
 	*/
-	function checkRunderGeburtstag($geburtsjahr, $geburtstagsjahr){
-		$interessantejahre = array(30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130);
-		$differenz = $geburtstagsjahr - $geburtsjahr;
-		$alter = false;
+	function checkSignificantBirthdayYear($birthYear, $yearNow){
+		$relevantAges = array(30, 40, 50, 60, 70, 75, 80, 85, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120);
+		$age = $yearNow - $birthYear;
 
-		for($i=0; $i<count($interessantejahre); $i++){
-			if($differenz == $interessantejahre[$i]){
-				$alter = $interessantejahre[$i];
-			}
+		$result = false;
+
+		if(in_array($age, $relevantAges)){
+			$result = $age;
 		}
 
-		return $alter;
+		return $result;
 	}
 
 	function determineSemesterCover($semesterString){
