@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Intranet-Portal";
-$version = "2.65";
+$version = "2.66";
 $styleSheet = "styles/timeline.css";
 $installScript = "";
 $uninstallScript = "";

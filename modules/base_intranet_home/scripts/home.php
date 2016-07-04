@@ -68,6 +68,7 @@ $zeitraumLimit = 14;
 
 $timelineEventSet = new LibTimelineEventSet();
 
+require_once('timeline/now.php');
 require_once('timeline/semester.php');
 require_once('timeline/events.php');
 require_once('timeline/birthdays.php');
@@ -89,7 +90,7 @@ if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')){
 
 echo '<div class="timeline">';
 echo '<div class="timeline-divider"></div>';
-echo '<ul>';
+echo '<div class="timeline-body">';
 
 $timelineEventSet->sortEvents();
 $timelineEvents = $timelineEventSet->getEvents();
@@ -98,7 +99,7 @@ foreach($timelineEvents as $timelineEvent){
 	echo $timelineEvent->toString();
 }
 
-echo '</ul>';
+echo '</div>';
 echo '<div class="timeline-footer"></div>';
 echo '</div>';
 ?>

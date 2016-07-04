@@ -99,7 +99,7 @@ class LibTimelineEvent {
 	function toString(){
 		global $libMitglied, $libTime;
 
-		$retstr = '<li>';
+		$retstr = '<article class="timeline-event">';
 
 		if(!$this->isFullWidth()){
 			$retstr .= '<div class="timeline-badge ' .$this->getBadgeClass(). '">' .$this->getBadgeIcon(). '</div>';
@@ -114,9 +114,9 @@ class LibTimelineEvent {
 		$retstr .= '<div class="panel-heading">';
 		$retstr .= '<h3 class="panel-title">';
 
-		$retstr .= '<span class="text-muted">';
+		$retstr .= '<time class="text-muted" datetime="' .$libTime->formatUtcString($this->datetime). '">';
 		$retstr .= $libTime->formatDateString($this->datetime);
-		$retstr .= '</span> ';
+		$retstr .= '</time> ';
 
 		if($this->url != ''){
 			$retstr .= '<a href="' .$this->url. '">';
@@ -166,7 +166,7 @@ class LibTimelineEvent {
 
 		$retstr .= '</div>';
 		$retstr .= '</div>';
-		$retstr .= '</li>';
+		$retstr .= '</article>';
 
 		return $retstr;
 	}
