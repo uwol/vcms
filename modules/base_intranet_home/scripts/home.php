@@ -72,6 +72,7 @@ require_once('timeline/now.php');
 require_once('timeline/semester.php');
 require_once('timeline/events.php');
 require_once('timeline/birthdays.php');
+require_once('timeline/deceased.php');
 
 if($libModuleHandler->moduleIsAvailable('mod_intranet_news')){
 	require_once('timeline/news.php');

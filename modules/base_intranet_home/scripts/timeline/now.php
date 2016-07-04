@@ -35,8 +35,11 @@ class LibNowTimelineEvent extends LibTimelineEvent{
 	}
 }
 
+$now = date('Y-m-d H:i:s');
 
-$timelineEvent = new LibNowTimelineEvent();
-$timelineEvent->setDatetime(date('Y-m-d H:i:s'));
-$timelineEventSet->addEvent($timelineEvent);
+if($zeitraum[0] <= $now && $now <= $zeitraum[1]){
+	$timelineEvent = new LibNowTimelineEvent();
+	$timelineEvent->setDatetime(date('Y-m-d H:i:s'));
+	$timelineEventSet->addEvent($timelineEvent);
+}
 ?>
