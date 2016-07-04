@@ -227,10 +227,10 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			if(!$folderElement->isAmtsRootFolder() || $folderElement->hasNestedFolderElements()){
 				if($folderElement->isOpen){
 					echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
-					echo '<i class="fa fa-folder-open-o" aria-hidden="true"></i> ';
+					echo '<i class="fa fa-folder-open" aria-hidden="true"></i> ';
 				} else{
 					echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
-					echo '<i class="fa fa-folder-o" aria-hidden="true"></i> ';
+					echo '<i class="fa fa-folder" aria-hidden="true"></i> ';
 				}
 
 				echo $folderElement->name;
@@ -257,35 +257,50 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 		elseif($folderElement->type == 2 && in_array($libAuth->getGruppe(), $folderElement->readGroups)){
 			$extension = $folderElement->getExtension();
 
-			echo '<img src="' . $libModuleHandler->getModuleDirectory(). '/img/';
-
 			switch($extension){
-				case "doc": echo 'doc.png'; break;
-				case "xls": echo 'xls.jpg'; break;
-				case "ppt": echo 'ppt.jpg'; break;
-
-				case "docx": echo 'docx.png'; break;
-				case "pptx": echo 'pptx.png'; break;
-				case "xlsx": echo 'xlsx.png'; break;
-
-				case "odt": echo 'odt.png'; break;
-				case "odp": echo 'odp.png'; break;
-				case "ods": echo 'ods.png'; break;
-				case "odg": echo 'odg.png'; break;
-
-				case "jpg": echo 'jpeg.jpg'; break;
-				case "jpeg": echo 'jpeg.jpg'; break;
-
-				case "cdr": echo 'cdr.png'; break;
-				case "pdf": echo 'pdf.png'; break;
-				case "psd": echo 'psd.png'; break;
-				case "rar": echo 'rar.png'; break;
-				case "zip": echo 'zip.jpg'; break;
-
-				default : echo 'other.jpg'; break;
+				case 'doc':
+				case 'docx':
+					echo '<i class="fa fa-file-word-o" aria-hidden="true"></i>';
+					break;
+				case 'xls':
+				case 'xlsx':
+					echo '<i class="fa fa-file-excel-o" aria-hidden="true"></i>';
+					break;
+				case 'ppt':
+				case 'pptx':
+					echo '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>';
+					break;
+				case 'pdf':
+					echo '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
+					break;
+				case 'cdr':
+				case 'jpg':
+				case 'jpeg':
+				case 'gif':
+				case 'png':
+				case 'svg':
+					echo '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
+					break;
+				case 'txt':
+					echo '<i class="fa fa-file-text" aria-hidden="true"></i>';
+					break;
+				case 'aac':
+				case 'mp3':
+				case 'wav':
+					echo '<i class="fa fa-file-audio-o" aria-hidden="true"></i>';
+					break;
+				case 'mp4':
+				case 'xvid':
+					echo '<i class="fa fa-file-video-o" aria-hidden="true"></i>';
+					break;
+				case 'html':
+				case 'htm':
+				case 'css':
+					echo '<i class="fa fa-file-code-o" aria-hidden="true"></i>';
+					break;
+				default:
+					echo '<i class="fa fa-file-o" aria-hidden="true"></i>';
 			}
-
-			echo '" class="icon_small" alt="Icon" />';
 
 			$fileName = $folderElement->getFilename();
 
