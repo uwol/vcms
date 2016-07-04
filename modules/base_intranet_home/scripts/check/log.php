@@ -31,30 +31,19 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	$stmt->fetch();
 
 	if($anzahl > 0){
-		echo '<div class="panel panel-default">';
-		echo '<div class="panel-heading">';
-		echo '<h3 class="panel-title">Erfolglose Intranet-Anmeldungen</h3>';
-		echo '</div>';
-
-		echo '<div class="panel-body">';
-		echo 'Personen mit mindestens ' .$numberOfLoginErrorsThreshold. ' erfolglosen Intranet-Anmeldungen in den letzten ' .$numberOfLoginErrorDaysThreshold. ' Tagen.';
+		$logText = 'Personen mit erfolglosen Intranet-Anmeldungen in den letzten ' .$numberOfLoginErrorDaysThreshold. ' Tagen: ';
 
 		$stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors, mitglied FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold. ' ORDER BY numberOfLoginErrors DESC');
 		$stmt->execute();
 
-		echo '<table>';
-
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<tr>';
-			echo '<td>' .$row['numberOfLoginErrors']. '</td>';
-			echo '<td><a href="index.php?pid=intranet_person_daten&personid=' .$row['mitglied']. '">' .$libMitglied->getMitgliedNameString($row['mitglied'], 4). '</a></td>';
-			echo '</tr>';
+			$logText .= '<span class="badge">' .$row['numberOfLoginErrors']. '</span>';
+			$logText .= ' ';
+			$logText .= '<a href="index.php?pid=intranet_person_daten&personid=' .$row['mitglied']. '">' .$libMitglied->getMitgliedNameString($row['mitglied'], 4). '</a>';
+			$logText .= ' ';
 		}
 
-		echo '</table>';
-
-		echo '</div>';
-		echo '</div>';
+		$libGlobal->errorTexts[] = $logText;
 	}
 }
 ?>

@@ -21,9 +21,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-require_once($libModuleHandler->getModuleDirectory() . '/scripts/lib/gallery.class.php');
-
-$libGallery = new LibGallery();
 $libImage = new LibImage($libTime, $libGenericStorage);
 
 //deletion

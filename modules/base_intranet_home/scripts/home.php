@@ -21,41 +21,84 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
+require_once('lib/LibTimeline.class.php');
+
+
 if(!$libGenericStorage->attributeExistsInCurrentModule('userNameICalendar') || !$libGenericStorage->attributeExistsInCurrentModule('passwordICalendar')){
 	$libGenericStorage->saveValueInCurrentModule('userNameICalendar', $libString->randomAlphaNumericString(40));
 	$libGenericStorage->saveValueInCurrentModule('passwordICalendar', $libString->randomAlphaNumericString(40));
 }
 
+
 echo '<h1>Intranet-Portal</h1>';
+
+require_once('check/log.php');
+require_once('check/system.php');
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="row">';
-echo '<aside class="hidden-xs hidden-sm col-md-3">';
 
-require_once('elements/events.php');
+// -----------------------------------------------------------------------
 
-if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')){
-	require_once('elements/chargierkalender.php');
+/*
+* semester menu
+*/
+
+$stmt = $libDb->prepare('SELECT * FROM base_semester ORDER BY SUBSTRING(semester, 3) DESC');
+$stmt->execute();
+
+$semesters = array();
+
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+	$semesters[] = $row['semester'];
 }
 
-require_once('elements/birthdays.php');
-require_once('elements/wifi.php');
+echo $libTime->getSemesterMenu($semesters, $libGlobal->semester);
 
-echo '</aside>';
-echo '<section class="col-md-9">';
+$zeitraum = $libTime->getZeitraum($libGlobal->semester);
+$zeitraumLimit = 14;
 
-require_once('elements/log.php');
-require_once('elements/system.php');
+
+// -----------------------------------------------------------------------
+
+/*
+* timeline
+*/
+
+$timelineEventSet = new LibTimelineEventSet();
+
+require_once('timeline/semester.php');
+require_once('timeline/events.php');
+require_once('timeline/birthdays.php');
 
 if($libModuleHandler->moduleIsAvailable('mod_intranet_news')){
-	require_once('elements/news.php');
+	require_once('timeline/news.php');
+}
+
+if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')){
+	require_once('timeline/chargierkalender.php');
 }
 
 if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')){
-	require_once('elements/reservations.php');
+	require_once('timeline/reservations.php');
 }
 
-echo '</section>';
+
+// -----------------------------------------------------------------------
+
+echo '<div class="timeline">';
+echo '<div class="timeline-divider"></div>';
+echo '<ul>';
+
+$timelineEventSet->sortEvents();
+$timelineEvents = $timelineEventSet->getEvents();
+
+foreach($timelineEvents as $timelineEvent){
+	echo $timelineEvent->toString();
+}
+
+echo '</ul>';
+echo '<div class="timeline-footer"></div>';
 echo '</div>';
+?>

@@ -26,14 +26,13 @@ if(!isset($_REQUEST['id']) || !is_numeric($_REQUEST['id']) || !preg_match("/^[0-
 
 
 $id = '';
+
 if(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])){
 	$id = $_REQUEST['id'];
 }
 
-require_once($libModuleHandler->getModuleDirectory(). '/scripts/lib/gallery.class.php');
 
 $libImage = new LibImage($libTime, $libGenericStorage);
-$libGallery = new LibGallery();
 
 
 if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){

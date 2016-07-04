@@ -47,7 +47,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* php_version
 	*/
 	if(version_compare(PHP_VERSION, '5.4') < 0){
-		$errors[] = 'Die PHP-Version auf diesem Server ist ' .PHP_VERSION. '. Empfohlen wird min. Version 5.4.';
+		$errors[] = 'Die PHP-Version ist ' .PHP_VERSION. '.';
 	} else {
 		$oks[] = 'PHP-Version=' .PHP_VERSION. '.';
 	}
@@ -56,43 +56,35 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* safe_mode
 	*/
 	if(ini_get('safe_mode')){ //ist safe_mode in der php.ini aktiviert?
-		$errors[] = 'In der PHP-Version auf diesem Server ist safe_mode=On konfiguriert. Die Einstellung safe_mode=Off ist eine Voraussetzung für den Betrieb des VCMS.';
+		$errors[] = 'In der PHP-Version auf diesem Server ist safe_mode=On konfiguriert.';
 	} else {
 		$oks[] = 'safe_mode=Off ist konfiguriert.';
-	}
-
-	/*
-	* register_globals
-	*/
-	if(ini_get('register_globals')){ //ist register_globals in der php.ini aktiviert?
-		$errors[] = 'In der PHP-Version auf diesem Server ist register_globals=On konfiguriert. Bitte Wert in der PHP-Konfiguration auf register_globals=Off ändern.';
-	} else {
-		$oks[] = 'register_globals=Off ist konfiguriert.';
 	}
 
 	/*
 	* system config
 	*/
 	if($libConfig->sitePath == ''){
-		$errors[] = 'In der Systemkonfiguration ist kein sitepath eingestellt.';
+		$errors[] = 'In der Systemkonfiguration ist kein sitepath konfiguriert.';
 	} else {
-		$oks[] = 'In der Systemkonfiguration ist ein sitepath eingestellt.';
+		$oks[] = 'In der Systemkonfiguration ist ein sitepath konfiguriert.';
 	}
 
 	/*
 	* HTTPS check
 	*/
 	if($libGenericStorage->loadValue('base_internet_login', 'useHttps') != '1'){
-		$errors[] = 'HTTPS ist nicht für das Intranet aktiviert. Falls der Webserver <a href="https://' .$libConfig->sitePath. '" target="_blank">HTTPS unterstützt</a>, sollte HTTPS in der Konfiguration aktiviert werden.';
+		$errors[] = 'HTTPS ist in der Konfiguration für das Intranet nicht aktiviert.';
 	} else {
 		$oks[] = 'HTTPS ist für das Intranet aktiviert.';
 	}
 
-
 	/*
 	* missing folders
 	*/
-	$dirs = array('custom', 'custom/intranet', 'custom/styles', 'custom/intranet/downloads', 'custom/intranet/mitgliederfotos', 'custom/semestercover', 'custom/veranstaltungsfotos', 'temp');
+	$dirs = array('custom', 'custom/intranet', 'custom/styles', 'custom/intranet/downloads',
+			'custom/intranet/mitgliederfotos', 'custom/semestercover', 'custom/veranstaltungsfotos',
+			'temp');
 
 	foreach($dirs as $dir){
 		if(!is_dir($dir)){
@@ -162,49 +154,28 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* output
 	*/
 	if(count($errors) > 0 || count($unsecuredFolders) > 0 || count($notReadableFiles) > 0){
-		echo '<div class="panel panel-default">';
-		echo '<div class="panel-heading">';
-		echo '<h3 class="panel-title">Systemprobleme</h3>';
-		echo '</div>';
-
-		echo '<div class="panel-body">';
+		$errorImg = '<img src="styles/icons/basic/error.svg" alt="Error" class="icon_small" />';
+		$systemText = '';
 
 		if(count($errors) > 0){
-			echo '<ul>';
-
-			foreach($errors as $error){
-				echo '<li><img src="styles/icons/basic/error.svg" alt="Error" class="icon_small" /> ' .$error. '</li>';
-			}
-
-			echo '</ul>';
+			$systemText .= $errorImg;
+			$systemText .= implode(' ', $errors);
+			$systemText .= ' ';
 		}
 
 		if(count($unsecuredFolders) > 0){
-			echo '<p>Folgende Ordner sind nicht durch eine htaccess-Datei geschützt:</p>';
-			echo '<ul>';
-
-			foreach($unsecuredFolders as $folder){
-				echo '<li>' .$folder. '</li>';
-			}
-
-			echo '</ul>';
-			echo '<p>Auf Dateien in diesen Ordnern kann aus dem Internet zugegriffen werden. PHP benötigt Schreibrechte auf die genannten Ordner, damit das System htaccess-Dateien anlegen kann.</p>';
+			$systemText .= $errorImg. ' Folgende Ordner sind nicht durch eine htaccess-Datei geschützt: ';
+			$systemText .= implode(', ', $unsecuredFolders);
+			$systemText .= ' ';
 		}
 
 		if(is_array($notReadableFiles) && count($notReadableFiles) > 0){
-			echo '<p>PHP besitzt für die folgenden Dateien bzw. Ordner keine Zugriffsrechte:</p>';
-			echo '<ul>';
-
-			foreach($notReadableFiles as $file){
-				echo '<li>' .$file . '</li>';
-			}
-
-			echo '</ul>';
-			echo '<p>Zugriffsrechte können mit einem FTP-Programm eingerichtet werden.</p>';
+			$systemText .= $errorImg. ' PHP besitzt für die folgenden Dateien bzw. Ordner keine Zugriffsrechte: ';
+			$systemText .= implode(', ', $notReadableFiles);
+			$systemText .= ' ';
 		}
 
-		echo '</div>';
-		echo '</div>';
+		$libGlobal->errorTexts[] = $systemText;
 	}
 }
 

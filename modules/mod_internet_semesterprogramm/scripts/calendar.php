@@ -21,12 +21,8 @@ if(!is_object($libGlobal))
 	exit();
 
 
-require("lib/gallery.class.php");
-
 echo '<h1>Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
 
-
-$libGallery = new LibGallery();
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();

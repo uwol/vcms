@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Semesterprogramm";
-$version = "2.92";
+$version = "2.93";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";

@@ -44,6 +44,7 @@ $libConfig = new LibConfig();
 $libGlobal = new LibGlobal();
 $libString = new LibString();
 $libForm = new LibForm();
+$libGallery = new LibGallery();
 $libSecurityManager = new LibSecurityManager();
 $libTime = new LibTime();
 $libEvent = new LibEvent();

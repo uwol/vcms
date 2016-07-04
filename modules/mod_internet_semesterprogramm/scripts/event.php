@@ -34,9 +34,6 @@ if($id == ''){
 	exit;
 }
 
-require($libModuleHandler->getModuleDirectory(). '/scripts/lib/gallery.class.php');
-$libGallery = new LibGallery($libDb);
-
 
 $stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE id=:id');
 $stmt->bindValue(':id', $id);

@@ -20,8 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
-include 'lib/gallery.class.php';
-$libGallery = new LibGallery($libDb);
 
 if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 		isset($_GET['pictureid']) && is_numeric($_GET['pictureid']) &&

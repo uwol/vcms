@@ -22,10 +22,6 @@ if(!is_object($libGlobal))
 
 
 if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
-	include($libModuleHandler->getModuleDirectoryByModuleid('mod_internet_semesterprogramm'). '/scripts/lib/gallery.class.php');
-
-	$libGallery = new LibGallery($libDb);
-
 	$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
 	$stmt->execute();
 
@@ -71,8 +67,10 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			echo '</a>';
 			echo '</div>';
 			echo '<div class="caption">';
+
 			printVeranstaltungTitle($row);
 			printVeranstaltungDateTime($row);
+
 			echo '</div>';
 			echo '</div>';
 

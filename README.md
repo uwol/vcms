@@ -49,6 +49,6 @@ Die Module lassen sich aus einem zentralen Repository installieren und aktualisi
 Technische Anforderungen
 ------------------------
 
-* PHP ab Version 5.3
+* PHP ab Version 5.4
 * MySQL ab Version 4.1
 * ImageMagick oder GDlib für Fotogalerien
