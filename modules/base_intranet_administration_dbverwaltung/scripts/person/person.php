@@ -219,35 +219,11 @@ if($libAuth->isLoggedin()){
 	//Ist der Bearbeiter ein Internetwart?
 	if(in_array("internetwart", $libAuth->getAemter())){
 		if($mgarray['id'] != ''){
-			echo '<p><a href="index.php?pid=intranet_admin_db_personenliste&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
+			echo '<p><a href="index.php?pid=intranet_admin_db_personenliste&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 		}
 	}
 
 	echo '<div class="row">';
-	echo '<div class="col-sm-3">';
-
-	if($mgarray['id'] != ''){
-		echo '<div class="center-block personSignatureBox personSignatureBoxLarge">';
-		echo '<div class="imgBox">';
-
-		echo '<span class="deleteIconBox">';
-		echo '<a href="index.php?pid=intranet_admin_db_person&amp;id=' .$mgarray['id']. '&amp;aktion=fotodelete">';
-		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-		echo '</a>';
-		echo '</span>';
-
-		echo $libMitglied->getMitgliedImage($mgarray['id'], true);
-		echo '</div>';
-		echo '</div>';
-
-		//image upload form
-		echo '<form action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
-		echo '<input type="hidden" name="formtyp" value="fotoupload" />';
-		$libForm->printFileUpload('bilddatei', 'Foto hochladen');
-		echo '</form>';
-	}
-
-	echo '</div>';
 	echo '<div class="col-sm-9">';
 
 
@@ -371,6 +347,30 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
+
+	echo '</div>';
+	echo '<div class="col-sm-3">';
+
+	if($mgarray['id'] != ''){
+		echo '<div class="center-block personSignatureBox personSignatureBoxLarge">';
+		echo '<div class="imgBox">';
+
+		echo '<span class="deleteIconBox">';
+		echo '<a href="index.php?pid=intranet_admin_db_person&amp;id=' .$mgarray['id']. '&amp;aktion=fotodelete">';
+		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
+		echo '</a>';
+		echo '</span>';
+
+		echo $libMitglied->getMitgliedImage($mgarray['id'], true);
+		echo '</div>';
+		echo '</div>';
+
+		//image upload form
+		echo '<form action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
+		echo '<input type="hidden" name="formtyp" value="fotoupload" />';
+		$libForm->printFileUpload('bilddatei', 'Foto hochladen');
+		echo '</form>';
+	}
 
 	echo '</div>';
 	echo '</div>';

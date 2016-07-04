@@ -114,43 +114,11 @@ echo '<hr />';
 * deletion
 */
 if($array['id'] != ''){
-	echo '<p><a href="index.php?pid=intranet_internethome_nachricht_adminliste&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
+	echo '<p><a href="index.php?pid=intranet_internethome_nachricht_adminliste&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 }
 
 
 echo '<div class="row">';
-echo '<div class="col-sm-3">';
-
-if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
-	if(isset($_REQUEST['id']) && $_REQUEST['id'] != ''){
-		$array['id'] = $_REQUEST['id'];
-	}
-
-	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$array['id']. '.jpg';
-
-	if(is_file($posssibleImage)){
-		echo '<div class="center-block">';
-		echo '<div class="imgBox">';
-
-		echo '<span class="deleteIconBox">';
-		echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$array['id']. '&amp;aktion=bilddelete">';
-		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-		echo '</a>';
-		echo '</span>';
-
-		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="Veranstaltungsbild" />';
-		echo '</div>';
-		echo '</div>';
-	}
-
-	//image upload form
-	echo '<form action="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$array['id']. '" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
-	echo '<input type="hidden" name="formtyp" value="bildupload" />';
-	$libForm->printFileUpload('bilddatei', 'Bild hochladen');
-	echo '</form>';
-}
-
-echo '</div>';
 echo '<div class="col-sm-9">';
 
 
@@ -181,6 +149,38 @@ $libForm->printSubmitButton('Speichern');
 echo '</fieldset>';
 echo '</form>';
 
+
+echo '</div>';
+echo '<div class="col-sm-3">';
+
+if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
+	if(isset($_REQUEST['id']) && $_REQUEST['id'] != ''){
+		$array['id'] = $_REQUEST['id'];
+	}
+
+	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$array['id']. '.jpg';
+
+	if(is_file($posssibleImage)){
+		echo '<div class="center-block">';
+		echo '<div class="imgBox">';
+
+		echo '<span class="deleteIconBox">';
+		echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$array['id']. '&amp;aktion=bilddelete">';
+		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
+		echo '</a>';
+		echo '</span>';
+
+		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="Veranstaltungsbild" />';
+		echo '</div>';
+		echo '</div>';
+	}
+
+	//image upload form
+	echo '<form action="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$array['id']. '" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
+	echo '<input type="hidden" name="formtyp" value="bildupload" />';
+	$libForm->printFileUpload('bilddatei', 'Bild hochladen');
+	echo '</form>';
+}
 
 echo '</div>';
 echo '</div>';

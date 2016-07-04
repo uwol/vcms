@@ -101,7 +101,7 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 	if($array['id'] != ''){
-		echo '<p><a href="index.php?pid=intranet_admin_db_vipliste&amp;aktion=delete&amp;id='.$array['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">Datensatz löschen</a></p>';
+		echo '<p><a href="index.php?pid=intranet_admin_db_vipliste&amp;aktion=delete&amp;id='.$array['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 	}
 
 	/**
