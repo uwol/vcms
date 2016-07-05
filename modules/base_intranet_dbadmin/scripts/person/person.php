@@ -80,6 +80,9 @@ if($libAuth->isLoggedin()){
 		}
 
 		$valueArray = $_REQUEST;
+		$valueArray['email'] = strtolower($valueArray['email']);
+		$valueArray['jabber'] = strtolower($valueArray['jabber']);
+		$valueArray['webseite'] = strtolower($valueArray['webseite']);
 		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
 		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
 		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);
@@ -139,7 +142,7 @@ if($libAuth->isLoggedin()){
 					//ist dies der letzte valide Internetwart?
 					if(count($valideInternetWarte) < 2){
 						//STOPP, DRAMA ahead, dann gibt es keinen validen Intranetwart mehr
-						die('Fataler Fehler: Der bisherige Intranetwart ist der einzige valide, mit der Änderung gibt es keinen validen Intranetwart mehr!');
+						die('Fehler: Der bisherige Intranetwart ist der einzige valide, mit der Änderung gibt es keinen validen Intranetwart mehr!');
 					}
 				}
 			}
@@ -165,6 +168,9 @@ if($libAuth->isLoggedin()){
 		}
 
 		$valueArray = $_REQUEST;
+		$valueArray['email'] = strtolower($valueArray['email']);
+		$valueArray['jabber'] = strtolower($valueArray['jabber']);
+		$valueArray['webseite'] = strtolower($valueArray['webseite']);
 		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
 		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
 		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);

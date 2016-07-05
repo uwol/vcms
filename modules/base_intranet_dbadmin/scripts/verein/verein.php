@@ -35,7 +35,7 @@ if($libAuth->isLoggedin()){
 
 	$array = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array("name","kuerzel","aktivitas","ahahschaft","titel","rang","dachverband","dachverbandnr","zusatz1","strasse1","ort1","plz1","land1","telefon1","anschreiben_zusenden","mutterverein","fusioniertin","datum_gruendung","webseite","wahlspruch","farbenstrophe","farbenstrophe_inoffiziell","fuchsenstrophe","bundeslied","farbe1","farbe2","farbe3","farbe4","beschreibung");
+	$felder = array("name", "kuerzel", "aktivitas", "ahahschaft", "titel", "rang", "dachverband", "dachverbandnr", "zusatz1", "strasse1", "ort1", "plz1", "land1", "telefon1", "anschreiben_zusenden", "mutterverein", "fusioniertin", "datum_gruendung", "webseite", "wahlspruch", "farbenstrophe", "farbenstrophe_inoffiziell", "fuchsenstrophe", "bundeslied", "farbe1", "farbe2", "farbe3", "farbe4", "beschreibung");
 
 	/**
 	*

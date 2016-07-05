@@ -84,10 +84,10 @@ if($libAuth->isLoggedin()){
 				$stmt->bindValue(':land2', $libString->protectXss(trim($_POST['land2'])));
 				$stmt->bindValue(':telefon2', $libString->protectXss(trim($_POST['telefon2'])));
 				$stmt->bindValue(':mobiltelefon', $libString->protectXss(trim($_POST['mobiltelefon'])));
-				$stmt->bindValue(':email', $libString->protectXss(trim($_POST['email'])));
+				$stmt->bindValue(':email', $libString->protectXss(strtolower(trim($_POST['email']))));
 				$stmt->bindValue(':skype', $libString->protectXss(trim($_POST['skype'])));
-				$stmt->bindValue(':jabber', $libString->protectXss(trim($_POST['jabber'])));
-				$stmt->bindValue(':webseite', $libString->protectXss(trim($_POST['webseite'])));
+				$stmt->bindValue(':jabber', $libString->protectXss(strtolower(trim($_POST['jabber']))));
+				$stmt->bindValue(':webseite', $libString->protectXss(strtolower(trim($_POST['webseite']))));
 				$stmt->bindValue(':spitzname', $libString->protectXss(trim($_POST['spitzname'])));
 				$stmt->bindValue(':beruf', $libString->protectXss(trim($_POST['beruf'])));
 				$stmt->bindValue(':leibmitglied', $leibMitglied, PDO::PARAM_INT);

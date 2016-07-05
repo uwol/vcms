@@ -38,7 +38,7 @@ class LibAuth{
 	function login($email, $password){
 		global $libGlobal, $libDb, $libMitglied, $libTime, $libSecurityManager, $libString;
 
-		$email = trim($email);
+		$email = trim(strtolower($email));
 		$password = trim($password);
 
 		//clean memory

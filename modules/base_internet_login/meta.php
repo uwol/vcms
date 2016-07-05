@@ -1,6 +1,6 @@
 <?php
 $moduleName = "Login";
-$version = "2.16";
+$version = "2.17";
 $styleSheet = "";
 $installScript = "";
 $uninstallScript = "";
