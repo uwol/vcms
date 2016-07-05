@@ -1,10 +1,10 @@
 <?php
 $moduleName = "Intranet-Portal";
-$version = "2.67";
+$version = "2.68";
 $styleSheet = "styles/timeline.css";
 $installScript = "";
 $uninstallScript = "";
-$updateScript = "install/update.php";
+$updateScript = "";
 
 $pages[] = new LibPage("intranet_home", "scripts/", "home.php", new LibAccessRestriction(array("F", "B", "P", "C", "G", "W", "Y"), ""), "Portal");
 $dependencies[] = new LibMinDependency("Login-Modul", "base_internet_login", 1.0);

@@ -21,11 +21,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-/**
-* Datenbankstrukturen installieren
-*/
-
-echo 'Erstelle Tabelle: mod_rundbrief_empfaenger<br />';
+echo 'Erstelle Tabelle mod_rundbrief_empfaenger<br />';
 $sql = "CREATE TABLE mod_rundbrief_empfaenger (
 	id int(11) NOT NULL default '0',
 	empfaenger tinyint(1) NOT NULL default '1',

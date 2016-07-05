@@ -20,11 +20,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
-/**
-* Datenbankstrukturen installieren
-*/
 
-echo 'Erstelle Tabelle: base_gruppe<br />';
+echo 'Erstelle Tabelle base_gruppe<br />';
 $sql = "CREATE TABLE base_gruppe (
   bezeichnung char(1) NOT NULL default '',
   beschreibung varchar(30) NOT NULL default '',
@@ -32,7 +29,8 @@ $sql = "CREATE TABLE base_gruppe (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_status<br />';
+
+echo 'Erstelle Tabelle base_status<br />';
 $sql = "CREATE TABLE base_status (
   bezeichnung varchar(20) NOT NULL default '',
   beschreibung varchar(255) NOT NULL default '',
@@ -40,7 +38,8 @@ $sql = "CREATE TABLE base_status (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_region<br />';
+
+echo 'Erstelle Tabelle base_region<br />';
 $sql = "CREATE TABLE base_region (
   id int(11) NOT NULL  auto_increment,
   bezeichnung varchar(30) NOT NULL default '',
@@ -49,7 +48,8 @@ $sql = "CREATE TABLE base_region (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_person<br />';
+
+echo 'Erstelle Tabelle base_person<br />';
 $sql = "CREATE TABLE base_person (
   id int(11) NOT NULL auto_increment,
   anrede varchar(30) NOT NULL default 'Herr',
@@ -112,7 +112,8 @@ $sql = "CREATE TABLE base_person (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_semester<br />';
+
+echo 'Erstelle Tabelle base_semester<br />';
 $sql = "CREATE TABLE base_semester (
   semester varchar(10) NOT NULL default '',
   senior int(11) default NULL,
@@ -170,7 +171,8 @@ $sql = "CREATE TABLE base_semester (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_veranstaltung<br />';
+
+echo 'Erstelle Tabelle base_veranstaltung<br />';
 $sql = "CREATE TABLE base_veranstaltung (
   id int(11) NOT NULL auto_increment,
   datum datetime NOT NULL default '0000-00-00 00:00:00',
@@ -186,7 +188,8 @@ $sql = "CREATE TABLE base_veranstaltung (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_verein<br />';
+
+echo 'Erstelle Tabelle base_verein<br />';
 $sql = "CREATE TABLE base_verein (
   id int(11) NOT NULL auto_increment,
   name varchar(255) default NULL,
@@ -223,7 +226,8 @@ $sql = "CREATE TABLE base_verein (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_vip<br />';
+
+echo 'Erstelle Tabelle base_vip<br />';
 $sql = "CREATE TABLE base_vip (
   id int(11) NOT NULL auto_increment,
   praefix varchar(30) default NULL,
@@ -247,7 +251,8 @@ $sql = "CREATE TABLE base_vip (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_verein_mitgliedschaft<br />';
+
+echo 'Erstelle Tabelle base_verein_mitgliedschaft<br />';
 $sql = "CREATE TABLE base_verein_mitgliedschaft (
   mitglied int(11) NOT NULL default '0',
   verein int(11) NOT NULL default '0',
@@ -259,7 +264,8 @@ $sql = "CREATE TABLE base_verein_mitgliedschaft (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: base_veranstaltung_teilnahme<br />';
+
+echo 'Erstelle Tabelle base_veranstaltung_teilnahme<br />';
 $sql = "CREATE TABLE base_veranstaltung_teilnahme (
   veranstaltung int(11) NOT NULL default '0',
   person int(11) NOT NULL default '0',
@@ -268,7 +274,8 @@ $sql = "CREATE TABLE base_veranstaltung_teilnahme (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: sys_genericstorage<br />';
+
+echo 'Erstelle Tabelle sys_genericstorage<br />';
 $sql = "CREATE TABLE sys_genericstorage (
   moduleid varchar(100) NOT NULL default '',
   array_name varchar(30) NOT NULL default '',
@@ -278,7 +285,8 @@ $sql = "CREATE TABLE sys_genericstorage (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: sys_log_intranet<br />';
+
+echo 'Erstelle Tabelle sys_log_intranet<br />';
 $sql = "CREATE TABLE sys_log_intranet (
   id int(11) NOT NULL auto_increment,
   mitglied int(11) NOT NULL default '0',
@@ -294,11 +302,8 @@ $sql = "CREATE TABLE sys_log_intranet (
 $libDb->query($sql);
 
 
-/**
-* Standarddatensätze einpflegen
-*/
+echo 'Speichere Standarddatensätze<br />';
 
-echo 'Füge Standarddatensätze ein in Tabelle: base_gruppe<br />';
 $sql = "INSERT IGNORE INTO base_gruppe (bezeichnung, beschreibung) VALUES ('F', 'Fuchs'),
 ('B', 'Bursche'),
 ('P', 'Philister'),
@@ -311,7 +316,7 @@ $sql = "INSERT IGNORE INTO base_gruppe (bezeichnung, beschreibung) VALUES ('F', 
 ('X', 'Ausgetreten');";
 $libDb->query($sql);
 
-echo 'Füge Standarddatensätze ein in Tabelle: base_status<br />';
+
 $sql = "INSERT IGNORE INTO base_status (bezeichnung, beschreibung) VALUES ('A-Phil', 'A-Philister'),
 ('B-Phil', 'B-Philister'),
 ('Ehrenmitglied', 'Ehrenmitglied'),
@@ -321,4 +326,48 @@ $sql = "INSERT IGNORE INTO base_status (bezeichnung, beschreibung) VALUES ('A-Ph
 ('Inaktiv ex loco', 'Inaktives Mitglied an einem anderen Ort'),
 ('VG', 'Verkehrsgast');";
 $libDb->query($sql);
+
+
+echo 'Speichere Demo-Datensätze<br />';
+
+$loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_person (id, vorname, name, gruppe) VALUES (1, :vorname, :name, :gruppe)');
+$stmt->bindValue(':vorname', 'Felix');
+$stmt->bindValue(':name', 'Fuchs');
+$stmt->bindValue(':gruppe', 'F');
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_person (id, vorname, name, gruppe) VALUES (2, :vorname, :name, :gruppe)');
+$stmt->bindValue(':vorname', 'Bernd');
+$stmt->bindValue(':name', 'Bursche');
+$stmt->bindValue(':gruppe', 'B');
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_person (id, titel, vorname, name, gruppe, datum_geburtstag) VALUES (3, :titel, :vorname, :name, :gruppe, DATE_SUB(CURDATE(), INTERVAL 50 YEAR))');
+$stmt->bindValue(':titel', 'Dr.');
+$stmt->bindValue(':vorname', 'Peter');
+$stmt->bindValue(':name', 'Philister');
+$stmt->bindValue(':gruppe', 'P');
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung (id, datum, titel, beschreibung) VALUES (1, DATE_ADD(CURDATE(), INTERVAL 1 DAY), :titel, :beschreibung)');
+$stmt->bindValue(':titel', 'Semestergottesdienst');
+$stmt->bindValue(':beschreibung', $loremIpsum);
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung (id, datum, titel, beschreibung) VALUES (2, DATE_ADD(CURDATE(), INTERVAL 2 DAY), :titel, :beschreibung)');
+$stmt->bindValue(':titel', 'Gästeabend');
+$stmt->bindValue(':beschreibung', $loremIpsum);
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung (id, datum, titel, beschreibung) VALUES (3, DATE_ADD(CURDATE(), INTERVAL 10 DAY), :titel, :beschreibung)');
+$stmt->bindValue(':titel', 'Festkommers');
+$stmt->bindValue(':beschreibung', $loremIpsum);
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung (id, datum, titel, beschreibung) VALUES (4, DATE_ADD(CURDATE(), INTERVAL 11 DAY), :titel, :beschreibung)');
+$stmt->bindValue(':titel', 'Festball');
+$stmt->bindValue(':beschreibung', $loremIpsum);
+$stmt->execute();
 ?>

@@ -21,11 +21,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-/**
-* Datenbankstrukturen installieren
-*/
-
-echo 'Erstelle Tabelle: mod_news_kategorie<br />';
+echo 'Erstelle Tabelle mod_news_kategorie<br />';
 $sql = "CREATE TABLE mod_news_kategorie (
 	id int(11) NOT NULL auto_increment,
 	bezeichnung varchar(255) NOT NULL default '',
@@ -33,7 +29,8 @@ $sql = "CREATE TABLE mod_news_kategorie (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: mod_news_news<br />';
+
+echo 'Erstelle Tabelle mod_news_news<br />';
 $sql = "CREATE TABLE mod_news_news (
 	id int(11) NOT NULL auto_increment,
 	kategorieid int(11) default NULL,
@@ -45,11 +42,8 @@ $sql = "CREATE TABLE mod_news_news (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-/**
-* Datenbankwerte installieren
-*/
 
-echo 'Füge Standarddatensätze ein in Tabelle: mod_news_kategorie<br />';
+echo 'Speichere Standarddatensätze<br />';
 $sql = "INSERT IGNORE INTO mod_news_kategorie (id, bezeichnung) VALUES (1, 'Todesfall'),
 (2, 'Geburt'),
 (3, 'Hochzeit'),
@@ -66,7 +60,20 @@ $sql = "INSERT IGNORE INTO mod_news_kategorie (id, bezeichnung) VALUES (1, 'Tode
 (16, 'Chargieren');";
 $libDb->query($sql);
 
-echo 'Füge Standarddatensatz ein in Tabelle mod_news_news';
-$sql = "INSERT IGNORE INTO mod_news_news (id, kategorieid, eingabedatum, text) VALUES (1, 12, NOW(), 'Dies ist ein Beispielbeitrag im Intranet.');";
-$libDb->query($sql);
+
+echo 'Speichere Demo-Datensätze<br />';
+
+$loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_news_news (id, kategorieid, eingabedatum, text, autor) VALUES (1, 12, NOW(), :text, 1)');
+$stmt->bindValue(':text', $loremIpsum);
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_news_news (id, kategorieid, eingabedatum, text, autor) VALUES (2, 4, DATE_SUB(NOW(), INTERVAL 5 DAY), :text, 1)');
+$stmt->bindValue(':text', $loremIpsum);
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_news_news (id, kategorieid, eingabedatum, text, autor) VALUES (2, 3, DATE_SUB(NOW(), INTERVAL 8 DAY), :text, 1)');
+$stmt->bindValue(':text', $loremIpsum);
+$stmt->execute();
 ?>

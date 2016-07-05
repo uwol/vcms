@@ -33,6 +33,7 @@ $fieldExists_fbEventId = false;
 
 $stmt = $libDb->prepare('SHOW COLUMNS FROM base_veranstaltung');
 $stmt->execute();
+
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($row['Field'] == 'datum_ende'){
 		$fieldExists_datumEnde = true;
@@ -68,6 +69,7 @@ $fieldExists_msn = false;
 
 $stmt = $libDb->prepare('SHOW COLUMNS FROM base_person');
 $stmt->execute();
+
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($row['Field'] == 'austritt_grund'){
 		$fieldExists_austritt_grund = true;
@@ -122,6 +124,7 @@ $fieldExists_vopxxxx = false;
 
 $stmt = $libDb->prepare('SHOW COLUMNS FROM base_semester');
 $stmt->execute();
+
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($row['Field'] == 'vop'){
 		$fieldExists_vop = true;

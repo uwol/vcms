@@ -21,11 +21,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-/**
-* Datenbankstrukturen installieren
-*/
-
-echo 'Erstelle Tabelle: mod_zipfelranking_anzahl<br />';
+echo 'Erstelle Tabelle mod_zipfelranking_anzahl<br />';
 $sql = "CREATE TABLE mod_zipfelranking_anzahl (
 	id int(11) NOT NULL,
 	anzahlzipfel smallint(2),

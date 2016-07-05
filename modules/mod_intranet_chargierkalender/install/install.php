@@ -20,11 +20,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
-/**
-* Datenbankstrukturen installieren
-*/
 
-echo 'Erstelle Tabelle: mod_chargierkalender_veranstaltung<br />';
+echo 'Erstelle Tabelle mod_chargierkalender_veranstaltung<br />';
 $sql = "CREATE TABLE mod_chargierkalender_veranstaltung (
   id int(11) NOT NULL auto_increment,
   datum datetime NOT NULL default '0000-00-00 00:00:00',
@@ -34,7 +31,8 @@ $sql = "CREATE TABLE mod_chargierkalender_veranstaltung (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Erstelle Tabelle: mod_chargierkalender_teilnahme<br />';
+
+echo 'Erstelle Tabelle mod_chargierkalender_teilnahme<br />';
 $sql = "CREATE TABLE mod_chargierkalender_teilnahme (
   chargierveranstaltung int(1) NOT NULL default '0',
   mitglied int(11) NOT NULL default '0',
@@ -42,6 +40,16 @@ $sql = "CREATE TABLE mod_chargierkalender_teilnahme (
   KEY mitglied (mitglied)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
+
+
+echo 'Speichere Demo-Datensätze<br />';
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_chargierkalender_veranstaltung (id, datum, beschreibung) VALUES (1, DATE_ADD(NOW(), INTERVAL 5 DAY), :text)');
+$stmt->bindValue(':text', 'Große Prozession');
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_chargierkalender_teilnahme (chargierveranstaltung, mitglied) VALUES (1, 1)');
+$stmt->execute();
 ?>
 
 

@@ -20,11 +20,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
-/**
-* Datenbankstrukturen installieren
-*/
 
-echo 'Erstelle Tabelle: mod_reservierung_reservierung<br />';
+echo 'Erstelle Tabelle mod_reservierung_reservierung<br />';
 $sql = "CREATE TABLE mod_reservierung_reservierung (
 	id int(11) NOT NULL auto_increment,
 	datum date NOT NULL default '0000-00-00',
@@ -33,4 +30,17 @@ $sql = "CREATE TABLE mod_reservierung_reservierung (
 	PRIMARY KEY  (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
+
+
+echo 'Speichere Demo-Datensätze<br />';
+
+$loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_reservierung_reservierung (id, datum, beschreibung, person) VALUES (1, DATE_ADD(NOW(), INTERVAL 5 DAY), :text, 1)');
+$stmt->bindValue(':text', $loremIpsum);
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_reservierung_reservierung (id, datum, beschreibung, person) VALUES (2, DATE_ADD(NOW(), INTERVAL 10 DAY), :text, 1)');
+$stmt->bindValue(':text', $loremIpsum);
+$stmt->execute();
 ?>

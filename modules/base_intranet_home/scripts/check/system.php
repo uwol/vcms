@@ -154,28 +154,21 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* output
 	*/
 	if(count($errors) > 0 || count($unsecuredFolders) > 0 || count($notReadableFiles) > 0){
-		$errorIcon = '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>';
-		$systemText = '';
-
-		if(count($errors) > 0){
-			$systemText .= $errorIcon;
-			$systemText .= implode(' ', $errors);
-			$systemText .= ' ';
+		foreach($errors as $error){
+			$libGlobal->errorTexts[] = $error;
 		}
 
-		if(count($unsecuredFolders) > 0){
-			$systemText .= $errorIcon. ' Folgende Ordner sind nicht durch eine htaccess-Datei geschützt: ';
-			$systemText .= implode(', ', $unsecuredFolders);
-			$systemText .= ' ';
+		if(is_array($unsecuredFolders) && count($unsecuredFolders) > 0){
+			$unsecuredFoldersText = 'Folgende Ordner sind nicht durch eine htaccess-Datei geschützt: ';
+			$unsecuredFoldersText .= $libString->protectXSS(implode(', ', $unsecuredFolders));
+			$libGlobal->errorTexts[] = $unsecuredFoldersText;
 		}
 
 		if(is_array($notReadableFiles) && count($notReadableFiles) > 0){
-			$systemText .= $errorIcon. ' PHP besitzt für die folgenden Dateien bzw. Ordner keine Zugriffsrechte: ';
-			$systemText .= implode(', ', $notReadableFiles);
-			$systemText .= ' ';
+			$notReadableFilesText = 'PHP besitzt für die folgenden Dateien bzw. Ordner keine Zugriffsrechte: ';
+			$notReadableFilesText .= $libString->protectXSS(implode(', ', $notReadableFiles));
+			$libGlobal->errorTexts[] = $notReadableFilesText;
 		}
-
-		$libGlobal->errorTexts[] = $systemText;
 	}
 }
 

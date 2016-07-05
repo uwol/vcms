@@ -20,10 +20,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
-/**
-* Datenbankstrukturen installieren
-*/
-echo 'Erstelle Tabelle: mod_internethome_nachricht<br />';
+
+echo 'Erstelle Tabelle mod_internethome_nachricht<br />';
 $sql = "CREATE TABLE mod_internethome_nachricht (
   id int(11) NOT NULL auto_increment,
   startdatum datetime NOT NULL default '0000-00-00 00:00:00',
@@ -33,11 +31,16 @@ $sql = "CREATE TABLE mod_internethome_nachricht (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
-echo 'Füge Standarddatensatz ein.';
 
-$sql1 = "INSERT IGNORE INTO mod_internethome_nachricht (id, startdatum, verfallsdatum, text) VALUES (1, '2000-01-01 20:00:00', '0000-00-00 00:00:00', 'Dies ist ein Beispielbeitrag für die Startseite')";
-$libDb->query($sql1);
+echo 'Speichere Standarddatensätze';
 
-$sql2 = "INSERT IGNORE INTO mod_internethome_nachricht (id, startdatum, verfallsdatum, text) VALUES (2, '2000-02-01 20:00:00', '0000-00-00 00:00:00', 'Dies ist ein weiterer Beispielbeitrag für die Startseite')";
-$libDb->query($sql2);
+$loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_internethome_nachricht (id, startdatum, text) VALUES (1, NOW(), :text)');
+$stmt->bindValue(':text', $loremIpsum);
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO mod_internethome_nachricht (id, startdatum, text) VALUES (2, NOW(), :text)');
+$stmt->bindValue(':text', $loremIpsum);
+$stmt->execute();
 ?>
