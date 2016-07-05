@@ -644,7 +644,7 @@ function printPrimaryAddress($row){
 		}
 
 		if($row['telefon1'] != ''){
-			echo '<div>Telefon: <span class="p-tel">' .$row['telefon1']. '</span></div>';
+			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: <span class="p-tel">' .$row['telefon1']. '</span></div>';
 		}
 
 		if($row['datum_adresse1_stand'] != ''){
@@ -686,7 +686,7 @@ function printSecondaryAddress($row){
 		}
 
 		if($row['telefon2'] != ''){
-			echo '<div>Telefon: <span class="p-tel">' .$row['telefon2']. '</span></div>';
+			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: <span class="p-tel">' .$row['telefon2']. '</span></div>';
 		}
 
 		if($row['datum_adresse2_stand'] != ''){
@@ -706,11 +706,11 @@ function printCommunication($row){
 		echo '<div>';
 
 		if($row['email'] != ''){
-			echo '<div>E-Mail-Adresse: <a class="u-email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
+			echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> E-Mail-Adresse: <a class="u-email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
 		}
 
 		if($row['mobiltelefon'] != ''){
-			echo '<div>Mobiltelefon: <span class="p-tel">' .$row['mobiltelefon']. '</span></div>';
+			echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> Mobiltelefon: <span class="p-tel">' .$row['mobiltelefon']. '</span></div>';
 		}
 
 		if($row['webseite'] != ''){
@@ -723,15 +723,17 @@ function printCommunication($row){
 			$icon = '';
 
 			if(strstr($webseite, 'linkedin')){
-				$icon = '<i class="fa fa-linkedin-square" aria-hidden="true"></i>';
+				$icon = '<i class="fa fa-linkedin-square fa-fw" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'xing')){
-				$icon = '<i class="fa fa-xing-square" aria-hidden="true"></i>';
+				$icon = '<i class="fa fa-xing-square fa-fw" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'twitter')){
-				$icon = '<i class="fa fa-twitter-square" aria-hidden="true"></i>';
+				$icon = '<i class="fa fa-twitter-square fa-fw" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'facebook')){
-				$icon = '<i class="fa fa-facebook-official" aria-hidden="true"></i>';
+				$icon = '<i class="fa fa-facebook-official fa-fw" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'wikipedia')){
-				$icon = '<i class="fa fa-wikipedia-w" aria-hidden="true"></i>';
+				$icon = '<i class="fa fa-wikipedia-w fa-fw" aria-hidden="true"></i>';
+			} elseif(strstr($webseite, 'instagram')){
+				$icon = '<i class="fa fa-instagram fa-fw" aria-hidden="true"></i>';
 			}
 
 			echo '<div>';
@@ -746,12 +748,12 @@ function printCommunication($row){
 		}
 
 		if($row['jabber'] != ''){
-			echo '<div>XMPP: <a href="xmpp:' .$row['jabber']. '">' .$row['jabber']. '</a></div>';
+			echo '<div><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i> XMPP: <a href="xmpp:' .$row['jabber']. '">' .$row['jabber']. '</a></div>';
 		}
 
 		if($row['skype'] != ''){
 			echo '<div>';
-			echo '<i class="fa fa-skype" aria-hidden="true"></i> Skype: ';
+			echo '<i class="fa fa-skype fa-fw" aria-hidden="true"></i> Skype: ';
 			echo '<a href="skype:' .$row['skype']. '">' .$row['skype']. '</a>';
 			echo '</div>';
 		}

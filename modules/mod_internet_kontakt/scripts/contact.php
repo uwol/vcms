@@ -118,8 +118,8 @@ if($libConfig->verbindungZusatz != ''){
 echo '<span class="p-street-address">' .$libConfig->verbindungStrasse. '</span><br />';
 echo '<span class="p-postal-code">' .$libConfig->verbindungPlz. '</span> <span class="p-locality">' .$libConfig->verbindungOrt. '</span><br />';
 echo '<span class="p-country-name">' .$libConfig->verbindungLand. '</span><br />';
-echo '<span class="p-tel">' .$libConfig->verbindungTelefon. '</span><br />';
-echo '<span class="u-email">' .$libConfig->emailInfo. '</span><br />';
+echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span class="p-tel">' .$libConfig->verbindungTelefon. '</span><br />';
+echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span class="u-email">' .$libConfig->emailInfo. '</span><br />';
 
 echo '</address>';
 echo '</div>';

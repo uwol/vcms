@@ -57,7 +57,7 @@ echo '<fieldset>';
 
 $libForm->printTextInput('intranet_login_username', 'E-Mail-Adresse', '', 'email');
 $libForm->printTextInput('intranet_login_password', 'Passwort', '', 'password');
-$libForm->printSubmitButton('Anmelden');
+$libForm->printSubmitButton('<i class="fa fa-sign-in" aria-hidden="true"></i> Anmelden');
 
 echo '</fieldset>';
 echo '</form>';

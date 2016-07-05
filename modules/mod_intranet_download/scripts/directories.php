@@ -165,7 +165,7 @@ if(count($libAuth->getAemter()) > 0){
 
 	echo '<div class="form-group">';
 	echo '<div class="col-sm-offset-2 col-sm-2">';
-	echo '<label class="btn btn-default btn-file">Datei hochladen';
+	echo '<label class="btn btn-default btn-file"><i class="fa fa-upload" aria-hidden="true"></i> Datei hochladen';
 	echo '<input type="file" name="datei" onchange="this.form.submit()" style="display:none">';
 	echo '</label>';
 	echo '</div>';
