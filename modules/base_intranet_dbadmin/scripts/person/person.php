@@ -272,7 +272,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printRegionDropDownBox('region2', 'Region 2', $mgarray['region2']);
 
 	$libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $mgarray['mobiltelefon'], 'tel');
-	$libForm->printTextInput('email', 'E-Mail', $mgarray['email'], 'email');
+	$libForm->printTextInput('email', 'E-Mail-Adresse', $mgarray['email'], 'email');
 	$libForm->printTextInput('skype', 'Skype', $mgarray['skype']);
 	$libForm->printTextInput('jabber', 'XMPP', $mgarray['jabber']);
 	$libForm->printTextInput('webseite', 'Webseite', $mgarray['webseite']);

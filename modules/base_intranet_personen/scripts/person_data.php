@@ -302,7 +302,7 @@ if($ownprofile){
 	echo '<hr />';
 
 	$libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $row2['mobiltelefon']);
-	$libForm->printTextInput('email', 'E-Mail', $row2['email']);
+	$libForm->printTextInput('email', 'E-Mail-Adresse', $row2['email']);
 	$libForm->printTextInput('jabber', 'XMPP', $row2['jabber']);
 	$libForm->printTextInput('skype', 'Skype', $row2['skype']);
 	$libForm->printTextInput('webseite', 'Webseite', $row2['webseite']);
@@ -706,7 +706,7 @@ function printCommunication($row){
 		echo '<div>';
 
 		if($row['email'] != ''){
-			echo '<div>E-Mail: <a class="u-email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
+			echo '<div>E-Mail-Adresse: <a class="u-email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
 		}
 
 		if($row['mobiltelefon'] != ''){
