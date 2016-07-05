@@ -41,7 +41,7 @@ if($libAuth->isLoggedin()){
 	//Ist der Bearbeiter ein Internetwart?
 	if(in_array("internetwart", $libAuth->getAemter())){
 		//dann auch die sensiblen Felder bearbeiten
-		$felder = array_merge($felder, array("gruppe", "username", "password_hash"));
+		$felder = array_merge($felder, array("gruppe", "password_hash"));
 	}
 
 	/**
@@ -66,7 +66,6 @@ if($libAuth->isLoggedin()){
 		$mgarray['datum_adresse2_stand'] = '';
 		$mgarray['gruppe'] = '';
 		$mgarray['datum_gruppe_stand'] = '';
-		$mgarray['username'] = '';
 		$mgarray['password_hash'] = '';
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert: INSERT
@@ -118,10 +117,10 @@ if($libAuth->isLoggedin()){
 				}
 			}
 
-			//soll der Username modifiziert werden? => Drohende Eintragung eines leeren Usernamen
-			$usernameIstLeer = false;
-			if(in_array("username", $felder) && $_REQUEST['username'] == ""){
-				$usernameIstLeer = true;
+			//soll die E-Mail-Adresse modifiziert werden? => Drohende Eintragung einer leeren Adresse
+			$emailIstLeer = false;
+			if(in_array("email", $felder) && $_REQUEST['email'] == ""){
+				$emailIstLeer = true;
 			}
 
 			//soll der password_hash modifiziert werden? => Drohende Eintragung eines leeren password_hash
@@ -131,7 +130,7 @@ if($libAuth->isLoggedin()){
 			}
 
 			//sollen kritische Daten modifiziert werden?
-			if($gruppeWirdKritischModifiziert || $usernameIstLeer || $password_hashIstLeer){
+			if($gruppeWirdKritischModifiziert || $emailIstLeer || $password_hashIstLeer){
 				//ist das Mitglied ein valider Intranetwart?
 				if($libMitglied->couldBeValidInternetWart($mgarray['id'])){
 					//dann ist das Ändern evtl ein Problem, wenn nämlich damit der letzte valide Internetwart gekillt wird
@@ -312,33 +311,28 @@ if($libAuth->isLoggedin()){
 
 	$libForm->printMitgliederDropDownBox('vita_letzterautor', 'Vita letzter Autor', $mgarray['vita_letzterautor']);
 
-
 	//nur Internetwart darf an sensible Daten
-	if(in_array("internetwart",$libAuth->getAemter())){
+	if(in_array('internetwart', $libAuth->getAemter())){
 		//ist das zu bearbeitende Mitglied jemals Internetwart gewesen
-		if($mgarray['id'] != "" && $libMitglied->hasBeenInternetWartAnyTime($mgarray['id'])){
-			echo '<p>!!! VORSICHT BEI DER MODIFIKATION DER FOLGENDEN DATEN !!!</p>';
-			echo '<p>Diese Person ist ein Internetwart.</p>';
+		if($mgarray['id'] != '' && $libMitglied->hasBeenInternetWartAnyTime($mgarray['id'])){
+			echo '<p>Diese Person ist ein Internetwart. Es existieren folgende Internetwarte: </p>';
 
 			$valideInternetWarte = $libVerein->getValideInternetWarte();
-			echo 'Die folgenden Internetwarte haben Intranetzugang und sind nicht verstorben oder ausgetreten: ';
 
 			foreach($valideInternetWarte as $key => $value){
-				echo $libMitglied->getMitgliedNameString($key,5). ", ";
+				echo $libMitglied->getMitgliedNameString($key,5). ', ';
 			}
 
-			echo '<p>Falls dies der Datensatz des einzigen Internetwartes ist, so sollte eine zweite Person mit Intranetzugang zur Sicherheit auch zu einem Internetwart gemacht werden. Andernfalls kann es passieren, dass der Internetwart durch die Modifikation der folgenden Daten aus dem System ausgesperrt wird. In diesem Fall muss mit dem Installationsscript ein neuer Intranetwart angelegt werden. Dies wird in der Installationsanleitung erklärt.</p>';
+			echo '<p>';
+			echo 'Falls dies der Datensatz des einzigen Internetwartes ist, sollte zur Sicherheit eine zweite Person ebenfalls zu einem Internetwart gemacht werden. ';
+			echo 'Andernfalls kann es passieren, dass der Internetwart durch die Modifikation der folgenden Daten aus dem System ausgesperrt wird. ';
+			echo 'In diesem Fall muss mit dem Installationsscript ein neuer Intranetwart angelegt werden. Dies wird in der Installationsanleitung erklärt.';
+			echo '</p>';
 		}
 
 		$libForm->printGruppeDropDownBox('gruppe', 'Gruppe', $mgarray['gruppe'], false);
 		$libForm->printTextInput('datum_gruppe_stand', 'Stand', $mgarray['datum_gruppe_stand'], 'date', true);
-
-		//Credentials
-		echo '<p>Achtung</p>';
-		echo '<p>Durch Eingabe von Benutzername und Passwort wird Zugang zum Intranet gewährt. Dies geschieht meistens aufgrund einer Registrierungsanfrage. Es ist vor einer Freischaltung unbedingt die Person zu kontaktieren, die sich registriert hat. Falls dies telefonisch erfolgt, sollte die TelefonNr. dem Verein bekannt sein, und nicht auf die TelefonNr. aus der Registrierungsmail vertraut werden. Ein einziger falsch vergebener Intranetaccount genügt, um das Intranet zu kompromittieren!</p>';
-
-		$libForm->printTextInput('username', 'Benutzername', $mgarray['username']);
-		$libForm->printTextInput('password_hash', 'Password-Hash', $mgarray['password_hash']);
+		$libForm->printTextInput('password_hash', 'Passwort-Hash', $mgarray['password_hash']);
 	}
 
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';

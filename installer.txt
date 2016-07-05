@@ -89,20 +89,20 @@ if(isset($_REQUEST['aktion'])){
 	* generate an internetwart
 	*/
 	elseif($_REQUEST['aktion'] == 'createInternetWart'){
-		if(isset($_REQUEST['benutzername']) && trim($_REQUEST['benutzername']) != '' && isset($_REQUEST['pwd1']) && trim($_REQUEST['pwd1']) != ''){
+		if(isset($_REQUEST['email']) && trim($_REQUEST['email']) != '' && isset($_REQUEST['pwd1']) && trim($_REQUEST['pwd1']) != ''){
 			if($_REQUEST['pwd1'] == $_REQUEST['pwd2']){
 				if($libAuth->isValidPassword($_REQUEST['pwd1'])){
 					echo '<p class="alert alert-info">Datensatz für neuen Benutzer wird angelegt</p>';
 
-					$stmt = $libDb->prepare('INSERT INTO base_person (name, vorname, username, gruppe) VALUES (:name, :vorname, :username, :gruppe)');
+					$stmt = $libDb->prepare('INSERT INTO base_person (name, vorname, email, gruppe) VALUES (:name, :vorname, :email, :gruppe)');
 					$stmt->bindValue(':name', trim($_REQUEST['name']));
 					$stmt->bindValue(':vorname', trim($_REQUEST['vorname']));
-					$stmt->bindValue(':username', trim($_REQUEST['benutzername']));
+					$stmt->bindValue(':email', trim($_REQUEST['email']));
 					$stmt->bindValue(':gruppe', 'B');
 					$stmt->execute();
 
-					$stmt = $libDb->prepare('SELECT id FROM base_person WHERE username = :username');
-					$stmt->bindValue(':username', trim($_REQUEST['benutzername']));
+					$stmt = $libDb->prepare('SELECT id FROM base_person WHERE email = :email');
+					$stmt->bindValue(':email', trim($_REQUEST['email']));
 					$stmt->execute();
 					$stmt->bindColumn('id', $id);
 					$stmt->fetch();
@@ -137,7 +137,7 @@ if(isset($_REQUEST['aktion'])){
 				echo '<p class="alert alert-danger">Fehler: Die Passwörter stimmen nicht überein.</p>';
 			}
 		} else {
-			echo '<p class="alert alert-danger">Fehler: Benutzername oder Passwort wurden nicht angegeben.</p>';
+			echo '<p class="alert alert-danger">Fehler: E-Mail-Adresse oder Passwort wurden nicht angegeben.</p>';
 		}
 	}
 }
@@ -155,7 +155,7 @@ if(isset($_REQUEST['aktion'])){
 					<input type="hidden" name="aktion" value="createInternetWart" />
 					<input type="text" name="vorname" size="20" /> Vorname<br />
 					<input type="text" name="name" size="20" /> Nachname<br />
-					<input type="text" name="benutzername" size="20" /> Benutzername<br />
+					<input type="text" name="email" size="20" /> E-Mail-Adresse<br />
 					<input type="password" name="pwd1" size="20" /> Passwort<br />
 					<input type="password" name="pwd2" size="20" /> Wiederholung des Passworts<br />
 					<input type="submit" value="Internetwart anlegen" />

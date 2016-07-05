@@ -55,7 +55,7 @@ if($libConfig->sitePath != ""){
 echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-$libForm->printTextInput('intranet_login_username', 'Benutzername', '');
+$libForm->printTextInput('intranet_login_username', 'E-Mail-Adresse', '');
 $libForm->printTextInput('intranet_login_password', 'Passwort', '', 'password');
 $libForm->printSubmitButton('Anmelden');
 

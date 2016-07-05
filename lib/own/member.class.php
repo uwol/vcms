@@ -214,17 +214,17 @@ class LibMember{
 	function couldBeValidInternetWart($mitgliedid){
 		// ein valider Internetwart
 		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
-		// 2. muss einen Benutzernamen, Passworthash und Passwortsalt haben
+		// 2. muss E-Mail-Adresse und Passworthash haben
 		// 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
 
 		// hier wird geprüft, ob ein Mitglied Kondition 2 und 3 erfüllt, ob er also Internetwart werden darf
-		$stmt = $this->libDb->prepare('SELECT username, password_hash, gruppe FROM base_person WHERE id = :id');
+		$stmt = $this->libDb->prepare('SELECT email, password_hash, gruppe FROM base_person WHERE id = :id');
 		$stmt->bindValue(':id', $mitgliedid, PDO::PARAM_INT);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		// hier wird geprüft, ob ein Mitglied Kondition 2 und 3 erfüllt, ob er also Internetwart werden darf
-		return $row['username'] != '' && $row['password_hash'] != '' && $row['gruppe'] != 'X' && $row['gruppe'] != 'T';
+		return $row['email'] != '' && $row['password_hash'] != '' && $row['gruppe'] != 'X' && $row['gruppe'] != 'T';
 	}
 
 	function getChargenString($id){

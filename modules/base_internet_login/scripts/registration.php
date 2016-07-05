@@ -30,7 +30,6 @@ $formError = false;
 
 if(isset($_POST['registrierung_name']) || isset($_POST['registrierung_telnr']) ||
 	isset($_POST['registrierung_mail']) || isset($_POST['registrierung_geburtsdatum']) ||
-	isset($_POST['registrierung_loginname']) ||
 	isset($_POST['registrierung_pwd1']) || isset($_POST['registrierung_pwd2'])){
 
 	$formSent = true;
@@ -50,11 +49,6 @@ if(isset($_POST['registrierung_name']) || isset($_POST['registrierung_telnr']) |
 		$formError = true;
 	} elseif(isset($_POST['registrierung_emailadresse']) && !$libString->isValidEmail($_POST['registrierung_emailadresse'])){
 		$libGlobal->errorTexts[] = "Die E-Mail-Adresse ist nicht gültig.";
-		$formError = true;
-	}
-
-	if(!isset($_POST['registrierung_loginname']) || $_POST['registrierung_loginname'] == ""){
-		$libGlobal->errorTexts[] = "Bitte geben Sie einen Loginnamen an.";
 		$formError = true;
 	}
 
@@ -88,21 +82,19 @@ if($formSent && !$formError){
 
 	$password_hash = $libAuth->encryptPassword($_POST['registrierung_pwd1']);
 
-	$text = "Eine Person hat die folgende Registrierung für das Intranet abgeschickt. Falls die Person durch persönliche Ansprache als das Mitglied ".$libString->protectXSS($_POST['registrierung_name'])." identifiziert werden kann, können in den Datensatz von ".$libString->protectXSS($_POST['registrierung_name'])." in der Mitgliedertabelle folgende Daten eingetragen werden:
+	$text = "Eine Person hat die folgende Registrierung für das Intranet abgeschickt. Falls die Person durch persönliche Ansprache als das Mitglied " .$libString->protectXSS($_POST['registrierung_name']). " identifiziert werden kann, können in den Datensatz von " .$libString->protectXSS($_POST['registrierung_name']). " folgende Daten eingetragen werden:
 
-username: ".$libString->protectXSS($_POST['registrierung_loginname'])."
-password_hash: ".$password_hash."
+E-Mail-Adresse: " .$libString->protectXSS($_POST['registrierung_emailadresse']). "
+Password-Hash: " .$password_hash. "
 Geburtsdatum: " .$libString->protectXSS($_POST['registrierung_geburtsdatum']). "
 
-Die Person hat zur Identifizierung die Telefonnummer ".$libString->protectXSS($_POST['registrierung_telnr'])." und die E-Mail-Adresse ".$libString->protectXSS($_POST['registrierung_emailadresse'])." angegeben. Vor einer Kontaktierung sind die Kontaktdaten und das Geburtsdatum auf Plausibilität zu prüfen. Im Fall einer Freischaltung lautet die Antwortmail:
+Die Person hat zur Identifizierung die Telefonnummer ".$libString->protectXSS($_POST['registrierung_telnr'])." angegeben. Vor einer Kontaktierung sind die Kontaktdaten und das Geburtsdatum auf Plausibilität zu prüfen. Im Fall einer Freischaltung lautet die Antwortmail:
 
 ------------------------
 
-Lieber Bb ".$libString->protectXSS($_POST['registrierung_name']).",
+Lieber Bb " .$libString->protectXSS($_POST['registrierung_name']). ",
 
-Du wurdest mit dem Benutzernamen
-".$libString->protectXSS($_POST['registrierung_loginname'])."
-für das Intranet freigeschaltet.
+Du wurdest mit der E-Mail-Adresse" .$libString->protectXSS($_POST['registrierung_emailadresse']) ." für das Intranet freigeschaltet.
 
 MBuH, ";
 
@@ -125,9 +117,11 @@ MBuH, ";
 	}
 
 	if($mail->Send()){
-		echo "<h1>E-Mail verschickt</h1><p class=text>Die Daten wurden weitergeleitet. Der Webmaster wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Webmaster.</p>";
+		echo '<h1>E-Mail verschickt</h1>';
+		echo '<p>Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
 	} else {
-		echo "<h1>Fehler</h1>Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ". $libConfig->emailWebmaster;
+		echo '<h1>Fehler</h1>';
+		echo '<p>Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
 	}
 } else {
 	echo '<h1>Registrierung</h1>';
@@ -135,8 +129,7 @@ MBuH, ";
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p>Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Webmaster weitergeleitet wird.</p>';
-
+	echo '<p>Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Internetwart weitergeleitet wird.</p>';
 	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
 
 	$registrierung_name = '';
@@ -159,12 +152,6 @@ MBuH, ";
 		$registrierung_geburtsdatum = $_POST['registrierung_geburtsdatum'];
 	}
 
-	$registrierung_loginname = '';
-	if(isset($_POST['registrierung_loginname'])){
-		$registrierung_loginname = $_POST['registrierung_loginname'];
-	}
-
-
 	$urlPrefix = '';
 
 	if($libConfig->sitePath != ''){
@@ -186,7 +173,6 @@ MBuH, ";
 	$libForm->printTextInput('registrierung_telnr', 'Telefonnummer', $libString->protectXSS($registrierung_telnr));
 	$libForm->printTextInput('registrierung_emailadresse', 'E-Mail-Adresse', $libString->protectXSS($registrierung_emailadresse), 'email');
 	$libForm->printTextInput('registrierung_geburtsdatum', 'Geburtsdatum', $libString->protectXSS($registrierung_geburtsdatum), 'date');
-	$libForm->printTextInput('registrierung_loginname', 'Benutzername', $libString->protectXSS($registrierung_loginname));
 	$libForm->printTextInput('registrierung_pwd1', 'Passwort', '', 'password');
 	$libForm->printTextInput('registrierung_pwd2', 'Passwort-Wiederholung', '', 'password');
 	$libForm->printSubmitButton('Abschicken');

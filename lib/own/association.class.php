@@ -154,7 +154,7 @@ class LibAssociation{
 
 		$internetwarte = array();
 
-		$stmt = $this->libDb->prepare('SELECT COUNT(*) AS anzahlsemester, base_person.id FROM base_person, base_semester WHERE base_semester.internetwart = base_person.id AND gruppe != "X" AND gruppe != "T" AND gruppe != "C" AND gruppe != "W" AND gruppe != "G" AND username IS NOT NULL AND username != "" AND password_hash IS NOT NULL AND password_hash != "" GROUP BY id');
+		$stmt = $this->libDb->prepare('SELECT COUNT(*) AS anzahlsemester, base_person.id FROM base_person, base_semester WHERE base_semester.internetwart = base_person.id AND gruppe != "X" AND gruppe != "T" AND gruppe != "C" AND gruppe != "W" AND gruppe != "G" AND email IS NOT NULL AND email != "" AND password_hash IS NOT NULL AND password_hash != "" GROUP BY id');
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

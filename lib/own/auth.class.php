@@ -33,12 +33,12 @@ class LibAuth{
 	var $isLoggedIn = false;
 
 	/*
-	* tries to login with username and password
+	* tries to login with email and password
 	*/
-	function login($username, $password){
+	function login($email, $password){
 		global $libGlobal, $libDb, $libMitglied, $libTime, $libSecurityManager, $libString;
 
-		$username = trim($username);
+		$email = trim($email);
 		$password = trim($password);
 
 		//clean memory
@@ -70,39 +70,39 @@ class LibAuth{
 		* check for problem cases
 		*/
 
-		//1. no username given
-		if($username == ''){
-			$libGlobal->errorTexts[] = 'Fehler: Der Benutzername fehlt.';
+		//1. no email given
+		if($email == ''){
+			$libGlobal->errorTexts[] = 'Die E-Mail-Adresse fehlt.';
 			return false;
 		}
 
 		//2. no password given
 		if($password == ''){
-			$libGlobal->errorTexts[] = 'Fehler: Das Passwort fehlt.';
+			$libGlobal->errorTexts[] = 'Das Passwort fehlt.';
 			return false;
 		}
 
-		$stmt = $libDb->prepare("SELECT id, anrede, titel, praefix, vorname, suffix, gruppe, name, username, password_hash FROM base_person WHERE username = :username");
-		$stmt->bindValue(':username', $username);
+		$stmt = $libDb->prepare("SELECT id, anrede, titel, praefix, vorname, suffix, gruppe, name, email, password_hash FROM base_person WHERE email=:email OR username=:email");
+		$stmt->bindValue(':email', $email);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		//3. no username given
+		//3. no user with that email address given
 		if(!is_array($row) || !isset($row['id']) || !is_numeric($row['id']) || !($row['id'] > 0)){
 			//error message has to be imprecise
-			$libGlobal->errorTexts[] = 'Fehler: Benutzername oder Passwort falsch.';
+			$libGlobal->errorTexts[] = 'E-Mail-Adresse oder Passwort falsch.';
 			return false;
 		}
 
 		//4. user is in an invalid group
 		if(!in_array($row['gruppe'], $this->possibleGruppen)){
-			$libGlobal->errorTexts[] = 'Fehler: Benutzername oder Passwort falsch.';
+			$libGlobal->errorTexts[] = 'Gruppe falsch.';
 			return false;
 		}
 
 		//5. deformed password hash
 		if(trim($row['password_hash'] == '')){
-			$libGlobal->errorTexts[] = 'Fehler: In der Datenbank ist kein Passwort-Hash vorhanden.';
+			$libGlobal->errorTexts[] = 'In der Datenbank ist kein Passwort-Hash vorhanden.';
 			return false;
 		}
 
@@ -125,10 +125,10 @@ class LibAuth{
 
 			if($secondsToNextPossibleLogin > 0){
 				if($secondsToNextPossibleLogin < 120){
-					$libGlobal->errorTexts[] = 'Achtung: Dieses Konto ist für die nächsten ' .$secondsToNextPossibleLogin. ' Sekunden gesperrt, da zu viele erfolglose Loginversuche unternommen wurden.';
+					$libGlobal->errorTexts[] = 'Dieses Konto ist für die nächsten ' .$secondsToNextPossibleLogin. ' Sekunden gesperrt, da zu viele erfolglose Anmeldeversuche unternommen wurden.';
 				} else {
 					$minutesToNextPossibleLogin = floor($secondsToNextPossibleLogin / 60);
-					$libGlobal->errorTexts[] = 'Achtung: Dieses Konto ist für die nächsten ' .$minutesToNextPossibleLogin. ' Minuten gesperrt, da zu viele erfolglose Loginversuche unternommen wurden.';
+					$libGlobal->errorTexts[] = 'Dieses Konto ist für die nächsten ' .$minutesToNextPossibleLogin. ' Minuten gesperrt, da zu viele erfolglose Anmeldeversuche unternommen wurden.';
 				}
 
 				return false;
@@ -150,7 +150,7 @@ class LibAuth{
 			$this->gruppe = $row['gruppe'];
 
 			//b. determine functions
-			$stmt = $libDb->prepare("SELECT * FROM base_semester WHERE semester = :semester_aktuell OR semester = :semester_naechst OR semester = :semester_vorherig");
+			$stmt = $libDb->prepare("SELECT * FROM base_semester WHERE semester=:semester_aktuell OR semester=:semester_naechst OR semester=:semester_vorherig");
 			$stmt->bindValue(':semester_aktuell', $libTime->getSemesterName());
 			$stmt->bindValue(':semester_naechst', $libTime->getFollowingSemesterName());
 			$stmt->bindValue(':semester_vorherig', $libTime->getPreviousSemesterName());
@@ -172,7 +172,7 @@ class LibAuth{
 
 			// special case internetwart: if the member has been internetwart in any semester,
 			// add function internetwart; cause: past internetwarts should keep their rights
-			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart = :id');
+			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:id');
 			$stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
 			$stmt->execute();
 			$stmt->bindColumn('number', $anzahl);
@@ -195,11 +195,6 @@ class LibAuth{
 
 			$libMitglied->setMitgliedIntranetActivity($row['id'], 1, 1);
 
-			//d. inform about weak password
-			if(!$this->isValidPassword($password)){
-				$libGlobal->errorTexts[] = 'Bitte ändere Dein Passwort in ein komplexeres ab. Dies ist im Intranet unter dem Menüpunkt "Mein Profil" möglich.';
-			}
-
 			return true;
 		}
 
@@ -212,7 +207,7 @@ class LibAuth{
 		$stmt->execute();
 
 		//error message has to be imprecise
-		$libGlobal->errorTexts[] = 'Fehler: Benutzername oder Passwort falsch.';
+		$libGlobal->errorTexts[] = 'E-Mail-Adresse oder Passwort falsch.';
 		return false;
 	}
 
@@ -262,7 +257,7 @@ class LibAuth{
 		$stmt->execute();
 
 		if(!$quiet){
-			$libGlobal->notificationTexts[] = "Das Passwort wurde gespeichert.";
+			$libGlobal->notificationTexts[] = 'Das Passwort wurde gespeichert.';
 		}
 
 		return true;

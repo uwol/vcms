@@ -29,7 +29,7 @@ if(isset($_POST['email']) && $_POST['email'] != "" &&
 	if(!$libString->isValidEmail($_POST['email'])){
 		$libGlobal->errorTexts[] = 'Fehler: Die angegebene Adresse ist keine E-Mail-Adresse.';
 	} else {
-		$stmt = $libDb->prepare("SELECT id, username, email, datum_geburtstag FROM base_person WHERE email=:email AND gruppe != 'T' AND gruppe != 'X' AND gruppe != 'V' AND gruppe != '' AND username != '' AND username IS NOT NULL LIMIT 0,1");
+		$stmt = $libDb->prepare("SELECT id, email, datum_geburtstag FROM base_person WHERE email=:email AND gruppe != 'T' AND gruppe != 'X' AND gruppe != 'V' AND gruppe != '' LIMIT 0,1");
 		$stmt->bindValue(':email', $_POST['email']);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -38,24 +38,26 @@ if(isset($_POST['email']) && $_POST['email'] != "" &&
 			//burn CPU-cycles
 			$libAuth->encryptPassword('dummyPassword');
 		} elseif($row['datum_geburtstag'] != '' && $row['datum_geburtstag'] != '0000-00-00' &&
-				$row['datum_geburtstag'] != $libTime->assureMysqlDate($_POST['geburtsdatum'])){ //angegebener Geburtstag nicht korrekt
+				$row['datum_geburtstag'] != $libTime->assureMysqlDate($_POST['geburtsdatum'])){
 			//burn CPU-cycles
 			$libAuth->encryptPassword('dummyPassword');
 		} elseif($row['id'] != '' && is_numeric($row['id']) &&
 				($row['datum_geburtstag'] == '' || $row['datum_geburtstag'] == '0000-00-00' ||
-				$row['datum_geburtstag'] == $libTime->assureMysqlDate($_POST['geburtsdatum']))){ //alles korrekt
+				$row['datum_geburtstag'] == $libTime->assureMysqlDate($_POST['geburtsdatum']))){
 
 			//generate new password
 			$newPassword = $libString->randomAlphaNumericString(20);
-			while(!$libAuth->isValidPassword($newPassword))
+
+			while(!$libAuth->isValidPassword($newPassword)){
 				$newPassword = $libString->randomAlphaNumericString(20);
+			}
 
 			//save new password
 			$libAuth->savePassword($row['id'], $newPassword, true);
 
 			//send reset password
-			$text = "Auf ".$libConfig->sitePath." wurde Dein Passwort für den Benutzernamen ".$row['username']." mit der E-Mail-Adresse " .$row['email']. " zurückgesetzt. Das neue Passwort lautet
-".$newPassword."
+			$text = "Auf " .$libConfig->sitePath. " wurde das Passwort für den Benutzer mit der E-Mail-Adresse " .$row['email']. " zurückgesetzt. Das neue Passwort lautet
+" .$newPassword. "
 und kann im Intranet auf der Seite \"Mein Profil\" geändert werden.";
 			$mail = new PHPMailer();
 			$mail->AddAddress($row['email']);
