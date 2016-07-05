@@ -29,21 +29,20 @@ Modulkatalog
 Das VCMS setzt sich aus Modulen zusammen, die individuell kombiniert werden können:
 
 * Module für den öffentlichen Teil der Webseite
+  * Modul _Semesterprogramm_: Kalender mit Anmeldesystem; Mitglieder können Fotos hochladen, verwaltet durch einen Fotowart; Fotos können öffentlich oder intern sein; Export des Kalenders als iCalendar-Datei.
   * Modul _Verein_: Beschreibung des Vereins.
   * Modul _Dachverband_: Beschreibung des Dachverbands.
-  * Modul _Semesterprogramm_: Kalender mit Anmeldesystem; Mitglieder können Fotos hochladen, verwaltet durch einen Fotowart; Fotos können öffentlich oder intern sein; Export des Kalenders als iCalendar-Datei.
 * Module für das Intranet
-  * Modul _Mitglied_: Mitglieder können ihre Daten selbstständig pflegen. Darstellung der Altersstruktur der Aktivitas. Visualisierung der Leibverhältnisse.
-  * Modul _News_: Mitglieder können Nachrichten im Intranet veröffentlichen.
-  * Modul _Rundbrief_: Per E-Mail-Verteiler lassen sich sämtliche Mitglieder erreichen. Dabei könnnen E-Mails an Gruppen wie Aktive, AHAH etc. adressiert werden.
+  * Modul _Portal_: Zeitleiste mit den Veranstaltungen, Nachrichten, Fotos und Ereignissen des Semesters.
+  * Modul _Mitglied_: Mitglieder können ihre Daten selbstständig pflegen. Darstellung der Altersstruktur. Visualisierung des Leibverhältnis-Stammbaums.
+  * Modul _Neues_: Mitglieder können Nachrichten im Intranet veröffentlichen.
+  * Modul _Rundbrief_: Per E-Mail-Verteiler lassen sich sämtliche Mitglieder erreichen. Dabei könnnen E-Mails an Gruppen wie Aktive, AHAH, Regionalzirkel etc. adressiert werden.
   * Modul _Reservierungen_: Reservierungen von Kneipe, Bootshaus etc.
   * Modul _Chargierkalender_: Organisation der Chargierpräsenz und Teilnahmebestätigung durch Mitglieder.
-  * Modul _Downloadbereich_: Bereitstellung von Downloads durch Vorstand und Warte.
-  * Modul _Semesterhistorie_: Die Geschichte der Korporation in Semesterform.
-  * Modul _Verwaltung_: Datenverwaltung, Adressexport (runde Geburtstage für Glückwunschanschreiben etc.).
+  * Modul _Downloadbereich_: Bereitstellung von Dateien durch Vorstand und Warte.
+  * Modul _Daten_: Datenverwaltung, Adressexport (runde Geburtstage für Glückwunschanschreiben etc.).
 
 Die Module lassen sich aus einem zentralen Repository installieren und aktualisieren. Manuelles Einspielen per FTP entfällt.
-
 
 
 Technische Anforderungen
