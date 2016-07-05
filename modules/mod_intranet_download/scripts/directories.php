@@ -282,7 +282,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 					echo '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
 					break;
 				case 'txt':
-					echo '<i class="fa fa-file-text" aria-hidden="true"></i>';
+					echo '<i class="fa fa-file-text-o" aria-hidden="true"></i>';
 					break;
 				case 'aac':
 				case 'mp3':
