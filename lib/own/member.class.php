@@ -199,7 +199,7 @@ class LibMember{
 	function getAnzahlInternetWartsSemester($mitgliedid){
 		// ein valider Internetwart
 		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
-		// 2. muss einen Benutzernamen, Passworthash und Passwortsalt haben
+		// 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
 		// 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
 
 		$stmt = $this->libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
@@ -214,7 +214,7 @@ class LibMember{
 	function couldBeValidInternetWart($mitgliedid){
 		// ein valider Internetwart
 		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
-		// 2. muss E-Mail-Adresse und Passworthash haben
+		// 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
 		// 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
 
 		// hier wird geprüft, ob ein Mitglied Kondition 2 und 3 erfüllt, ob er also Internetwart werden darf

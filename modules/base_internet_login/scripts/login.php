@@ -35,7 +35,7 @@ echo '<h1>Intranet-Login</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Bitte zum Anmelden den Benutzernamen und das Passwort eingeben.</p>';
+echo '<p>Bitte zum Anmelden die E-Mail-Adresse und das Passwort eingeben.</p>';
 
 $urlPrefix = '';
 

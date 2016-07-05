@@ -149,7 +149,7 @@ class LibAssociation{
 	function getValideInternetWarte(){
 		// ein valider Internetwart
 		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
-		// 2. muss einen Benutzernamen und Passworthash haben
+		// 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
 		// 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
 
 		$internetwarte = array();
