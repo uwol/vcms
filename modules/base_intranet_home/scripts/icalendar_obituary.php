@@ -20,14 +20,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
+
 $calendarId = $libConfig->sitePath.'_todestage_';
 
 if(isset($_GET['user']) &&
-		$_GET['user'] == $libGenericStorage->loadValueInCurrentModule("userNameICalendar") &&
+		$_GET['user'] == $libGenericStorage->loadValueInCurrentModule('userNameICalendar') &&
 		isset($_GET['pass']) &&
-		$_GET['pass'] == $libGenericStorage->loadValueInCurrentModule("passwordICalendar") &&
-		$libGenericStorage->loadValueInCurrentModule("userNameICalendar") != "" &&
-		$libGenericStorage->loadValueInCurrentModule("passwordICalendar") != ""){
+		$_GET['pass'] == $libGenericStorage->loadValueInCurrentModule('passwordICalendar') &&
+		$libGenericStorage->loadValueInCurrentModule('userNameICalendar') != '' &&
+		$libGenericStorage->loadValueInCurrentModule('passwordICalendar') != ''){
 
 	$calendar = new LibICalendar();
 
@@ -35,12 +36,12 @@ if(isset($_GET['user']) &&
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$name = $libMitglied->getMitgliedNameString($row["id"], 0);
+		$name = $libMitglied->getMitgliedNameString($row['id'], 0);
 
 		$e = new LibICalendarEvent();
 		$e->summary = $name;
 		$e->setStartAndEndDateTime($row['tod_datum'], '');
-	 	$e->description = $name ." - ". $row["tod_datum"];
+	 	$e->description = $name. ' - ' .$row['tod_datum'];
 		$e->uid = $calendarId.$row['id'];
 		$e->rrule = 'FREQ=YEARLY';
 		$calendar->addEvent($e);
