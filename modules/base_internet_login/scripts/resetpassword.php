@@ -23,14 +23,14 @@ if(!is_object($libGlobal))
 
 require_once('lib/thirdparty/class.phpmailer.php');
 
-if(isset($_POST['email']) && $_POST['email'] != "" &&
-		isset($_POST['geburtsdatum']) && $_POST['geburtsdatum'] != ""){
+if(isset($_POST['email']) && $_POST['email'] != '' &&
+		isset($_POST['geburtsdatum']) && $_POST['geburtsdatum'] != ''){
 
 	if(!$libString->isValidEmail($_POST['email'])){
 		$libGlobal->errorTexts[] = 'Fehler: Die angegebene Adresse ist keine E-Mail-Adresse.';
 	} else {
 		$stmt = $libDb->prepare("SELECT id, email, datum_geburtstag FROM base_person WHERE email=:email AND gruppe != 'T' AND gruppe != 'X' AND gruppe != 'V' AND gruppe != '' LIMIT 0,1");
-		$stmt->bindValue(':email', $_POST['email']);
+		$stmt->bindValue(':email', strtolower($_POST['email']));
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -56,15 +56,15 @@ if(isset($_POST['email']) && $_POST['email'] != "" &&
 			$libAuth->savePassword($row['id'], $newPassword, true);
 
 			//send reset password
-			$text = "Auf " .$libConfig->sitePath. " wurde das Passwort für den Benutzer mit der E-Mail-Adresse " .$row['email']. " zurückgesetzt. Das neue Passwort lautet
-" .$newPassword. "
-und kann im Intranet auf der Seite \"Mein Profil\" geändert werden.";
+			$text = 'Auf ' .$libConfig->sitePath. ' wurde das Passwort für den Benutzer mit der E-Mail-Adresse ' .$row['email']. ' zurückgesetzt. Das neue Passwort lautet
+' .$newPassword. '
+und kann im Intranet auf der Seite "Mein Profil" geändert werden.';
 			$mail = new PHPMailer();
 			$mail->AddAddress($row['email']);
-			$mail->Subject = "[".$libConfig->verbindungName."] Passwortänderung";
+			$mail->Subject = '[' .$libConfig->verbindungName. '] Passwortänderung';
 			$mail->Body = $text;
 			$mail->AddReplyTo($libConfig->emailWebmaster);
-			$mail->CharSet = "UTF-8";
+			$mail->CharSet = 'UTF-8';
 
 			/*
 			* SMTP mode
@@ -81,7 +81,7 @@ und kann im Intranet auf der Seite \"Mein Profil\" geändert werden.";
 		}
 
 		//in any case, even if if not changed!
-		$libGlobal->notificationTexts[] =  "Falls das Geburtsdatum korrekt und die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist, wurde eine E-Mail mit einem neuen Passwort an die E-Mail-Adresse verschickt.";
+		$libGlobal->notificationTexts[] =  'Falls das Geburtsdatum korrekt und die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist, wurde eine E-Mail mit einem neuen Passwort an die E-Mail-Adresse verschickt.';
 	}
 }
 

@@ -34,37 +34,37 @@ if(isset($_POST['registrierung_name']) || isset($_POST['registrierung_telnr']) |
 
 	$formSent = true;
 
-	if(!isset($_POST['registrierung_name']) || $_POST['registrierung_name'] == ""){
-		$libGlobal->errorTexts[] = "Bitte geben Sie einen Namen an.";
+	if(!isset($_POST['registrierung_name']) || $_POST['registrierung_name'] == ''){
+		$libGlobal->errorTexts[] = 'Bitte geben Sie einen Namen an.';
 		$formError = true;
 	}
 
-	if(!isset($_POST['registrierung_telnr']) || $_POST['registrierung_telnr'] == ""){
-		$libGlobal->errorTexts[] = "Bitte geben Sie eine Telefonnummer an.";
+	if(!isset($_POST['registrierung_telnr']) || $_POST['registrierung_telnr'] == ''){
+		$libGlobal->errorTexts[] = 'Bitte geben Sie eine Telefonnummer an.';
 		$formError = true;
 	}
 
-	if(!isset($_POST['registrierung_emailadresse']) || $_POST['registrierung_emailadresse'] == ""){
-		$libGlobal->errorTexts[] = "Bitte geben Sie eine E-Mail-Adresse an.";
+	if(!isset($_POST['registrierung_emailadresse']) || $_POST['registrierung_emailadresse'] == ''){
+		$libGlobal->errorTexts[] = 'Bitte geben Sie eine E-Mail-Adresse an.';
 		$formError = true;
 	} elseif(isset($_POST['registrierung_emailadresse']) && !$libString->isValidEmail($_POST['registrierung_emailadresse'])){
-		$libGlobal->errorTexts[] = "Die E-Mail-Adresse ist nicht gültig.";
+		$libGlobal->errorTexts[] = 'Die E-Mail-Adresse ist nicht gültig.';
 		$formError = true;
 	}
 
-	if(!isset($_POST['registrierung_pwd1']) || trim($_POST['registrierung_pwd1']) == ""){
-		$libGlobal->errorTexts[] = "Bitte geben Sie ein Passwort ein.";
+	if(!isset($_POST['registrierung_pwd1']) || trim($_POST['registrierung_pwd1']) == ''){
+		$libGlobal->errorTexts[] = 'Bitte geben Sie ein Passwort ein.';
 		$formError = true;
 	} elseif(!$libAuth->isValidPassword($_POST['registrierung_pwd1'])){
-		$libGlobal->errorTexts[] = "Das Passwort ist nicht komplex genug. ". $libAuth->getPasswordRequirements();
+		$libGlobal->errorTexts[] = 'Das Passwort ist nicht komplex genug. ' .$libAuth->getPasswordRequirements();
 		$formError = true;
 	} else {
-		if(!isset($_POST['registrierung_pwd2']) || trim($_POST['registrierung_pwd2']) == ""){
-			$libGlobal->errorTexts[] = "Bitte geben Sie das Passwort ein zweites Mal ein.";
+		if(!isset($_POST['registrierung_pwd2']) || trim($_POST['registrierung_pwd2']) == ''){
+			$libGlobal->errorTexts[] = 'Bitte geben Sie das Passwort ein zweites Mal ein.';
 			$formError = true;
 		} else {
 			if($_POST['registrierung_pwd1'] != $_POST['registrierung_pwd2']){
-				$libGlobal->errorTexts[] = "Die beiden Passwörter stimmen nicht überein.";
+				$libGlobal->errorTexts[] = 'Die beiden Passwörter stimmen nicht überein.';
 				$formError = true;
 			}
 		}
@@ -82,28 +82,28 @@ if($formSent && !$formError){
 
 	$password_hash = $libAuth->encryptPassword($_POST['registrierung_pwd1']);
 
-	$text = "Eine Person hat die folgende Registrierung für das Intranet abgeschickt. Falls die Person durch persönliche Ansprache als das Mitglied " .$libString->protectXSS($_POST['registrierung_name']). " identifiziert werden kann, können in den Datensatz von " .$libString->protectXSS($_POST['registrierung_name']). " folgende Daten eingetragen werden:
+	$text = 'Eine Person hat die folgende Registrierung für das Intranet abgeschickt. Falls die Person durch persönliche Ansprache als das Mitglied ' .$libString->protectXSS($_POST['registrierung_name']). ' identifiziert werden kann, können in den Datensatz von ' .$libString->protectXSS($_POST['registrierung_name']). ' folgende Daten eingetragen werden:
 
-E-Mail-Adresse: " .$libString->protectXSS($_POST['registrierung_emailadresse']). "
-Password-Hash: " .$password_hash. "
-Geburtsdatum: " .$libString->protectXSS($_POST['registrierung_geburtsdatum']). "
+E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrierung_emailadresse'])). '
+Passwort-Hash: ' .$password_hash. '
+Geburtsdatum: ' .$libString->protectXSS($_POST['registrierung_geburtsdatum']). '
 
-Die Person hat zur Identifizierung die Telefonnummer ".$libString->protectXSS($_POST['registrierung_telnr'])." angegeben. Vor einer Kontaktierung sind die Kontaktdaten und das Geburtsdatum auf Plausibilität zu prüfen. Im Fall einer Freischaltung lautet die Antwortmail:
+Die Person hat zur Identifizierung die Telefonnummer ' .$libString->protectXSS($_POST['registrierung_telnr']). ' angegeben. Vor einer Kontaktierung sind die Kontaktdaten und das Geburtsdatum auf Plausibilität zu prüfen. Im Fall einer Freischaltung lautet die Antwortmail:
 
 ------------------------
 
-Lieber Bb " .$libString->protectXSS($_POST['registrierung_name']). ",
+Lieber Bb ' .$libString->protectXSS($_POST['registrierung_name']). ',
 
-Du wurdest mit der E-Mail-Adresse" .$libString->protectXSS($_POST['registrierung_emailadresse']) ." für das Intranet freigeschaltet.
+Du wurdest mit der E-Mail-Adresse' .$libString->protectXSS($_POST['registrierung_emailadresse']). ' für das Intranet freigeschaltet.
 
-MBuH, ";
+MBuH, ';
 
 	$mail = new PHPMailer();
 	$mail->AddAddress($libConfig->emailWebmaster);
-	$mail->Subject = "[".$libConfig->verbindungName."] Intranet-Registrierung";
+	$mail->Subject = '[' .$libConfig->verbindungName. '] Intranet-Registrierung';
 	$mail->Body = $text;
 	$mail->AddReplyTo($_POST['registrierung_emailadresse']);
-	$mail->CharSet = "UTF-8";
+	$mail->CharSet = 'UTF-8';
 
 	/*
 	* SMTP mode
@@ -159,9 +159,9 @@ MBuH, ";
 			$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
 
 			if($sslProxyUrl != ''){
-				$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
+				$urlPrefix = 'https://' .$sslProxyUrl. '/' .$libConfig->sitePath. '/';
 			} else {
-				$urlPrefix = 'https://' . $libConfig->sitePath . '/';
+				$urlPrefix = 'https://' .$libConfig->sitePath. '/';
 			}
 		}
 	}
