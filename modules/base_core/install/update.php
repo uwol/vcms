@@ -109,7 +109,8 @@ if(!in_array('vopxxxx', $columnsBaseSemester)){
 function getColumns($table){
 	global $libDb;
 
-	$stmt = $libDb->prepare('SHOW COLUMNS FROM base_veranstaltung');
+	$stmt = $libDb->prepare('SHOW COLUMNS FROM :table');
+	$stmt->bindValue(':table', $table);
 	$stmt->execute();
 
 	$result = array();
@@ -124,7 +125,8 @@ function getColumns($table){
 function getIndexes($table){
 	global $libDb;
 
-	$stmt = $libDb->prepare('SHOW INDEX FROM base_veranstaltung');
+	$stmt = $libDb->prepare('SHOW INDEX FROM :table');
+	$stmt->bindValue(':table', $table);
 	$stmt->execute();
 
 	$result = array();
