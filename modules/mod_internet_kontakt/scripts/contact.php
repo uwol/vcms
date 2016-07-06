@@ -76,15 +76,28 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 	if(!$error_emailaddress && !$error_message) {
 		require_once('lib/thirdparty/class.phpmailer.php');
 
-		$nachricht = $_POST['name'] .' mit der Telefonnummer '.$_POST['telefon'].' und der E-Mail-Adresse '.$_POST['emailaddress']." hat über das Kontaktformular folgende Nachricht geschrieben\n\r".$_POST['nachricht'];
+		$nachricht = $_POST['name'] .' mit der Telefonnummer '.$_POST['telefon'].' und der E-Mail-Adresse ' .$_POST['emailaddress']. ' hat über das Kontaktformular folgende Nachricht geschrieben:' . PHP_EOL;
+		$nachricht .= PHP_EOL;
+		$nachricht .= $_POST['nachricht'];
 
 		$mail = new PHPMailer();
+		$mail->From = $libConfig->emailWebmaster;
 		$mail->AddAddress($libConfig->emailInfo);
-		$mail->FromName = $libConfig->verbindungName .' Mailer';
-		$mail->Subject = 'Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libConfig->sitePath;
+		$mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libConfig->sitePath;
 		$mail->Body = $libString->protectXSS($nachricht);
 		$mail->AddReplyTo($_POST['emailaddress']);
 		$mail->CharSet = 'UTF-8';
+
+		/*
+		* SMTP mode
+		*/
+		if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
+			$mail->IsSMTP();
+			$mail->SMTPAuth = true;
+			$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
+			$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
+			$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
+		}
 
 		if($mail->Send()){
 			$mailsent = true;

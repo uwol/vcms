@@ -82,23 +82,26 @@ if($formSent && !$formError){
 
 	$password_hash = $libAuth->encryptPassword($_POST['registrierung_pwd1']);
 
-	$text = 'Eine Person hat die folgende Registrierung für das Intranet abgeschickt. Falls die Person durch persönliche Ansprache als das Mitglied ' .$libString->protectXSS($_POST['registrierung_name']). ' identifiziert werden kann, können in den Datensatz von ' .$libString->protectXSS($_POST['registrierung_name']). ' folgende Daten eingetragen werden:
-
-E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrierung_emailadresse'])). '
-Passwort-Hash: ' .$password_hash. '
-Geburtsdatum: ' .$libString->protectXSS($_POST['registrierung_geburtsdatum']). '
-
-Die Person hat zur Identifizierung die Telefonnummer ' .$libString->protectXSS($_POST['registrierung_telnr']). ' angegeben. Vor einer Kontaktierung sind die Kontaktdaten und das Geburtsdatum auf Plausibilität zu prüfen. Im Fall einer Freischaltung lautet die Antwortmail:
-
-------------------------
-
-Lieber Bb ' .$libString->protectXSS($_POST['registrierung_name']). ',
-
-Du wurdest mit der E-Mail-Adresse' .$libString->protectXSS($_POST['registrierung_emailadresse']). ' für das Intranet freigeschaltet.
-
-MBuH, ';
+	$text = 'Auf ' .$libConfig->sitePath. ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
+	$text .= PHP_EOL;
+	$text .= 'Name: ' .$libString->protectXSS($_POST['registrierung_name']) . PHP_EOL;
+	$text .= 'E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrierung_emailadresse'])) . PHP_EOL;
+	$text .= 'Telefonnummer: ' .$libString->protectXSS($_POST['registrierung_telnr']) . PHP_EOL;
+	$text .= 'Geburtsdatum: ' .$libString->protectXSS($_POST['registrierung_geburtsdatum']) . PHP_EOL;
+	$text .= 'Passwort-Hash: ' .$password_hash. PHP_EOL;
+	$text .= PHP_EOL;
+	$text .= 'Die Freischaltung für das Intranet erfolgt, indem der Internetwart die Daten nach einer Plausibilitätsprüfung im Personenprofil speichert.' . PHP_EOL;
+	$text .= 'Im Fall einer Freischaltung lautet die Antwortmail:' . PHP_EOL;
+	$text .= PHP_EOL;
+	$text .= PHP_EOL;
+	$text .= 'Lieber Bb ' .$libString->protectXSS($_POST['registrierung_name']). ',' . PHP_EOL;
+	$text .= PHP_EOL;
+	$text .= 'Du wurdest mit der E-Mail-Adresse ' .$libString->protectXSS($_POST['registrierung_emailadresse']). ' für das Intranet freigeschaltet.' . PHP_EOL;
+	$text .= PHP_EOL;
+	$text .= 'MBuH,';
 
 	$mail = new PHPMailer();
+	$mail->From = $libConfig->emailWebmaster;
 	$mail->AddAddress($libConfig->emailWebmaster);
 	$mail->Subject = '[' .$libConfig->verbindungName. '] Intranet-Registrierung';
 	$mail->Body = $text;
@@ -170,7 +173,7 @@ MBuH, ';
 	echo '<fieldset>';
 
 	$libForm->printTextInput('registrierung_name', 'Vorname und Nachname', $libString->protectXSS($registrierung_name));
-	$libForm->printTextInput('registrierung_telnr', 'Telefonnummer', $libString->protectXSS($registrierung_telnr));
+	$libForm->printTextInput('registrierung_telnr', 'Telefonnummer', $libString->protectXSS($registrierung_telnr), 'tel');
 	$libForm->printTextInput('registrierung_emailadresse', 'E-Mail-Adresse', $libString->protectXSS($registrierung_emailadresse), 'email');
 	$libForm->printTextInput('registrierung_geburtsdatum', 'Geburtsdatum', $libString->protectXSS($registrierung_geburtsdatum), 'date');
 	$libForm->printTextInput('registrierung_pwd1', 'Passwort', '', 'password');

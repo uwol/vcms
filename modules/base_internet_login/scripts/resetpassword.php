@@ -56,10 +56,10 @@ if(isset($_POST['email']) && $_POST['email'] != '' &&
 			$libAuth->savePassword($row['id'], $newPassword, true);
 
 			//send reset password
-			$text = 'Auf ' .$libConfig->sitePath. ' wurde das Passwort für den Benutzer mit der E-Mail-Adresse ' .$row['email']. ' zurückgesetzt. Das neue Passwort lautet
-' .$newPassword. '
-und kann im Intranet auf der Seite "Mein Profil" geändert werden.';
+			$text = 'Auf ' .$libConfig->sitePath. ' wurde das Passwort für den Benutzer mit der E-Mail-Adresse ' .$row['email']. ' zurückgesetzt. Das neue Passwort lautet ' .$newPassword. ' und kann im Intranet auf der Seite "Mein Profil" geändert werden.';
+
 			$mail = new PHPMailer();
+			$mail->From = $libConfig->emailWebmaster;
 			$mail->AddAddress($row['email']);
 			$mail->Subject = '[' .$libConfig->verbindungName. '] Passwortänderung';
 			$mail->Body = $text;
