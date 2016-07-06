@@ -70,7 +70,7 @@ if(in_array('vita_letzterautor', $columnsBasePerson)){
 
 if(!in_array('email', $indexesBasePerson)){
 	echo 'Aktualisiere Tabelle: base_person<br />';
-	$libDb->query('UNIQUE KEY email (email)');
+	$libDb->query('ALTER TABLE base_person ADD UNIQUE email (email)');
 }
 
 
@@ -109,8 +109,7 @@ if(!in_array('vopxxxx', $columnsBaseSemester)){
 function getColumns($table){
 	global $libDb;
 
-	$stmt = $libDb->prepare('SHOW COLUMNS FROM :table');
-	$stmt->bindValue(':table', $table);
+	$stmt = $libDb->prepare('SHOW COLUMNS FROM ' .$table);
 	$stmt->execute();
 
 	$result = array();
@@ -125,8 +124,7 @@ function getColumns($table){
 function getIndexes($table){
 	global $libDb;
 
-	$stmt = $libDb->prepare('SHOW INDEX FROM :table');
-	$stmt->bindValue(':table', $table);
+	$stmt = $libDb->prepare('SHOW INDEX FROM ' .$table);
 	$stmt->execute();
 
 	$result = array();
