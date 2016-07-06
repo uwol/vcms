@@ -22,10 +22,6 @@ if(!is_object($libGlobal))
 
 
 /**
-* Datenbankstrukturen aktualisieren
-*/
-
-/**
 * Tabelle base_veranstaltung aktualisieren
 */
 $fieldExists_datumEnde = false;
@@ -46,16 +42,12 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 if(!$fieldExists_datumEnde){
 	echo 'Aktualisiere Tabelle: base_veranstaltung<br />';
-
-	$sql = "ALTER TABLE base_veranstaltung ADD datum_ende DATETIME NULL AFTER datum";
-	$libDb->query($sql);
+	$libDb->query('ALTER TABLE base_veranstaltung ADD datum_ende DATETIME NULL AFTER datum');
 }
 
 if(!$fieldExists_fbEventId){
 	echo 'Aktualisiere Tabelle: base_veranstaltung<br />';
-
-	$sql = "ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255) NULL";
-	$libDb->query($sql);
+	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255) NULL');
 }
 
 
@@ -66,6 +58,7 @@ $fieldExists_austritt_grund = false;
 $fieldExists_password_salt = false;
 $fieldExists_icq = false;
 $fieldExists_msn = false;
+$fieldExists_vita_letzterautor = false;
 
 $stmt = $libDb->prepare('SHOW COLUMNS FROM base_person');
 $stmt->execute();
@@ -86,30 +79,35 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($row['Field'] == 'msn'){
 		$fieldExists_msn = true;
 	}
+
+	if($row['Field'] == 'vita_letzterautor'){
+		$fieldExists_vita_letzterautor = true;
+	}
 }
 
 if($fieldExists_austritt_grund){
 	echo 'Aktualisiere Tabelle: base_person<br />';
-
-	$libDb->query("ALTER TABLE base_person DROP austritt_grund");
+	$libDb->query('ALTER TABLE base_person DROP austritt_grund');
 }
 
 if($fieldExists_password_salt){
 	echo 'Aktualisiere Tabelle: base_person<br />';
-
-	$libDb->query("ALTER TABLE base_person DROP password_salt");
+	$libDb->query('ALTER TABLE base_person DROP password_salt');
 }
 
 if($fieldExists_icq){
 	echo 'Aktualisiere Tabelle: base_person<br />';
-
-	$libDb->query("ALTER TABLE base_person DROP icq");
+	$libDb->query('ALTER TABLE base_person DROP icq');
 }
 
 if($fieldExists_msn){
 	echo 'Aktualisiere Tabelle: base_person<br />';
+	$libDb->query('ALTER TABLE base_person DROP msn');
+}
 
-	$libDb->query("ALTER TABLE base_person DROP msn");
+if($fieldExists_vita_letzterautor){
+	echo 'Aktualisiere Tabelle: base_person<br />';
+	$libDb->query('ALTER TABLE base_person DROP vita_letzterautor');
 }
 
 
@@ -149,36 +147,26 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 if(!$fieldExists_vop){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
-
-	$sql = "ALTER TABLE base_semester ADD vop int(11) default NULL";
-	$libDb->query($sql);
+	$libDb->query('ALTER TABLE base_semester ADD vop int(11) default NULL');
 }
 
 if(!$fieldExists_vvop){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
-
-	$sql = "ALTER TABLE base_semester ADD vvop int(11) default NULL";
-	$libDb->query($sql);
+	$libDb->query('ALTER TABLE base_semester ADD vvop int(11) default NULL');
 }
 
 if(!$fieldExists_vopxx){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
-
-	$sql = "ALTER TABLE base_semester ADD vopxx int(11) default NULL";
-	$libDb->query($sql);
+	$libDb->query('ALTER TABLE base_semester ADD vopxx int(11) default NULL');
 }
 
 if(!$fieldExists_vopxxx){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
-
-	$sql = "ALTER TABLE base_semester ADD vopxxx int(11) default NULL";
-	$libDb->query($sql);
+	$libDb->query('ALTER TABLE base_semester ADD vopxxx int(11) default NULL');
 }
 
 if(!$fieldExists_vopxxxx){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
-
-	$sql = "ALTER TABLE base_semester ADD vopxxxx int(11) default NULL";
-	$libDb->query($sql);
+	$libDb->query('ALTER TABLE base_semester ADD vopxxxx int(11) default NULL');
 }
 ?>

@@ -22,23 +22,41 @@ class LibForm{
 	var $colLabel = 2;
 	var $colInput = 10;
 
-	function printTextInput($name, $label, $value, $type = 'text', $disabled = false){
+	function printTextInput($name, $label, $value, $type = 'text', $disabled = false, $required = false){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
+		echo '<div class="col-sm-' .$this->colInput. '">';
+		echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
 
 		if($disabled){
 			echo ' disabled';
 		}
 
-		echo ' class="form-control" /></div>';
+		if($required){
+			echo ' required';
+		}
+
+		echo ' class="form-control" />';
+		echo '</div>';
 		echo '</div>';
 	}
 
-	function printTextarea($name, $label, $value){
+	function printTextarea($name, $label, $value, $disabled = false, $required = false){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><textarea id="' .$name. '" name="' .$name. '" rows="10" class="form-control">' .$value. '</textarea></div>';
+		echo '<div class="col-sm-' .$this->colInput. '">';
+		echo '<textarea id="' .$name. '" name="' .$name. '" rows="10"';
+
+		if($disabled){
+			echo ' disabled';
+		}
+
+		if($required){
+			echo ' required';
+		}
+
+		echo ' class="form-control">' .$value. '</textarea>';
+		echo '</div>';
 		echo '</div>';
 	}
 
@@ -64,9 +82,12 @@ class LibForm{
 	function printStaticText($label, $value){
 		echo '<div class="form-group">';
 		echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><p class="form-control-static">';
+		echo '<div class="col-sm-' .$this->colInput. '">';
+		echo '<p class="form-control-static">';
 		echo $value;
-		echo '</p></div></div>';
+		echo '</p>';
+		echo '</div>';
+		echo '</div>';
 	}
 
 	function printSubmitButton($label){
@@ -78,7 +99,7 @@ class LibForm{
 	}
 
 	function printSubmitButtonInline($label){
-		echo '<button type="submit" class="btn btn-default btn-sm">' .$label. '</button>';
+		echo '<button type="submit" class="btn btn-default">' .$label. '</button>';
 	}
 
 	function printMitgliederDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){

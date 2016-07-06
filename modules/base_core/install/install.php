@@ -100,7 +100,6 @@ $sql = "CREATE TABLE base_person (
   anschreiben_zusenden tinyint(1) NOT NULL default '1',
   spendenquittung_zusenden tinyint(1) NOT NULL default '1',
   vita text,
-  vita_letzterautor int(11) default NULL,
   bemerkung varchar(255) default NULL,
   username varchar(255) default NULL,
   password_hash varchar(255) default NULL,

@@ -21,6 +21,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
+require('lib/mitglieder.php');
+
 /*
 * determine person id
 */
@@ -36,6 +38,7 @@ if(isset($_GET['personid']) && $_GET['personid'] != '' &&
 * own profile?
 */
 $ownprofile = false;
+
 if($libAuth->getId() == $personid){
 	$ownprofile = true;
 }
@@ -49,141 +52,118 @@ $stmt->bindValue(':id', $personid, PDO::PARAM_INT);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
 /*
 * actions
 */
-if($libAuth->isLoggedin()){
-	//member data?
-	if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'personendaten'){
-		//own profile?
-		if($ownprofile){
-			$leibMitglied = '';
-			if(isset($_POST['leibmitglied'])){
-				$leibMitglied = $_POST['leibmitglied'];
-			}
 
-			if($leibMitglied == $personid) {
-				$libGlobal->errorTexts[] = 'Das Mitglied darf nicht von sich selbst der Leibbursch sein.';
-			} else {
-				$stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
-					telefon1=:telefon1, zusatz2=:zusatz2, strasse2=:strasse2, ort2=:ort2, plz2=:plz2, land2=:land2,telefon2=:telefon2, mobiltelefon=:mobiltelefon,
-					email=:email, skype=:skype, jabber=:jabber, webseite=:webseite, spitzname=:spitzname, beruf=:beruf, leibmitglied=:leibmitglied, region1=:region1 ,region2=:region2 WHERE id=:id');
-				$stmt->bindValue(':anrede', $libString->protectXss(trim($_POST['anrede'])));
-				$stmt->bindValue(':titel', $libString->protectXss(trim($_POST['titel'])));
-				$stmt->bindValue(':rang', $libString->protectXss(trim($_POST['rang'])));
-				$stmt->bindValue(':zusatz1', $libString->protectXss(trim($_POST['zusatz1'])));
-				$stmt->bindValue(':strasse1', $libString->protectXss(trim($_POST['strasse1'])));
-				$stmt->bindValue(':ort1', $libString->protectXss(trim($_POST['ort1'])));
-				$stmt->bindValue(':plz1', $libString->protectXss(trim($_POST['plz1'])));
-				$stmt->bindValue(':land1', $libString->protectXss(trim($_POST['land1'])));
-				$stmt->bindValue(':telefon1', $libString->protectXss(trim($_POST['telefon1'])));
-				$stmt->bindValue(':zusatz2', $libString->protectXss(trim($_POST['zusatz2'])));
-				$stmt->bindValue(':strasse2', $libString->protectXss(trim($_POST['strasse2'])));
-				$stmt->bindValue(':ort2', $libString->protectXss(trim($_POST['ort2'])));
-				$stmt->bindValue(':plz2', $libString->protectXss(trim($_POST['plz2'])));
-				$stmt->bindValue(':land2', $libString->protectXss(trim($_POST['land2'])));
-				$stmt->bindValue(':telefon2', $libString->protectXss(trim($_POST['telefon2'])));
-				$stmt->bindValue(':mobiltelefon', $libString->protectXss(trim($_POST['mobiltelefon'])));
-				$stmt->bindValue(':email', $libString->protectXss(strtolower(trim($_POST['email']))));
-				$stmt->bindValue(':skype', $libString->protectXss(trim($_POST['skype'])));
-				$stmt->bindValue(':jabber', $libString->protectXss(strtolower(trim($_POST['jabber']))));
-				$stmt->bindValue(':webseite', $libString->protectXss(strtolower(trim($_POST['webseite']))));
-				$stmt->bindValue(':spitzname', $libString->protectXss(trim($_POST['spitzname'])));
-				$stmt->bindValue(':beruf', $libString->protectXss(trim($_POST['beruf'])));
-				$stmt->bindValue(':leibmitglied', $leibMitglied, PDO::PARAM_INT);
-				$stmt->bindValue(':region1', $_POST['region1'], PDO::PARAM_INT);
-				$stmt->bindValue(':region2', $_POST['region2'], PDO::PARAM_INT);
-				$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
-				$stmt->execute();
-			}
+if($ownprofile){
+	if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'person_data'){
+		$leibMitglied = '';
 
-  			//if the mailing module is installed
-  			if($libModuleHandler->moduleIsAvailable('mod_intranet_rundbrief')){
-  				//synchronize tables
-  				$stmt = $libDb->prepare('INSERT INTO mod_rundbrief_empfaenger (id, empfaenger) SELECT id, 1 FROM base_person WHERE (SELECT COUNT(*) FROM mod_rundbrief_empfaenger WHERE id = base_person.id) = 0');
-				$stmt->execute();
-
-				if(isset($_POST['empfaenger'])){
-					$stmt = $libDb->prepare('UPDATE mod_rundbrief_empfaenger SET empfaenger=:empfaenger WHERE id = :id');
-					$stmt->bindValue(':empfaenger', $_POST['empfaenger'], PDO::PARAM_BOOL);
-					$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
-					$stmt->execute();
-				}
-
-				if(isset($_POST['interessiert'])){
-					$stmt = $libDb->prepare('UPDATE mod_rundbrief_empfaenger SET interessiert=:interessiert WHERE id = :id');
-					$stmt->bindValue(':interessiert', $_POST['interessiert'], PDO::PARAM_BOOL);
-					$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
-					$stmt->execute();
-				}
-  			}
-
-  			if($libModuleHandler->moduleIsAvailable('mod_intranet_zipfelranking')){
-  				//synchronize tables
-  				$stmt = $libDb->prepare('INSERT INTO mod_zipfelranking_anzahl (id, anzahlzipfel) SELECT id, 0 FROM base_person WHERE (SELECT COUNT(*) FROM mod_zipfelranking_anzahl WHERE id = base_person.id) = 0');
-				$stmt->execute();
-
-				if(isset($_POST['anzahlzipfel'])){
-					$stmt = $libDb->prepare('UPDATE mod_zipfelranking_anzahl SET anzahlzipfel=:anzahlzipfel WHERE id = :id');
-					$stmt->bindValue(':anzahlzipfel', $_POST['anzahlzipfel'], PDO::PARAM_INT);
-					$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
-					$stmt->execute();
-				}
-  			}
-
-			if($_POST['strasse1'] != $row['strasse1'] || $_POST['ort1'] != $row['ort1'] || $_POST['plz1'] != $row['plz1'] || $_POST['land1'] != $row['land1'] || $_POST['telefon1'] != $row['telefon1']){
-				$stmt = $libDb->prepare('UPDATE base_person SET datum_adresse1_stand=NOW() WHERE id = :id');
-				$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
-				$stmt->execute();
-			}
-
-			if($_POST['strasse2'] != $row['strasse2'] || $_POST['ort2'] != $row['ort2'] || $_POST['plz2'] != $row['plz2'] || $_POST['land2'] != $row['land2'] || $_POST['telefon2'] != $row['telefon2']){
-				$stmt = $libDb->prepare('UPDATE base_person SET datum_adresse2_stand=NOW() WHERE id = :id');
-				$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
-				$stmt->execute();
-  			}
+		if(isset($_POST['leibmitglied'])){
+			$leibMitglied = $_POST['leibmitglied'];
 		}
 
-		//if the curriculum vitae has been modified
-		if(isset($_POST['vita']) && $_POST['vita'] != '' && $_POST['vita'] != $row['vita']){
-			$altevita = $row['vita'];
-
-			$stmt = $libDb->prepare('UPDATE base_person SET vita=:vita WHERE id=:id');
+		if($leibMitglied == $personid) {
+			$libGlobal->errorTexts[] = 'Das Mitglied darf nicht von sich selbst der Leibbursch sein.';
+		} else {
+			$stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
+				telefon1=:telefon1, zusatz2=:zusatz2, strasse2=:strasse2, ort2=:ort2, plz2=:plz2, land2=:land2,telefon2=:telefon2, mobiltelefon=:mobiltelefon,
+				email=:email, skype=:skype, jabber=:jabber, webseite=:webseite, spitzname=:spitzname, beruf=:beruf, leibmitglied=:leibmitglied, region1=:region1, region2=:region2, vita=:vita WHERE id=:id');
+			$stmt->bindValue(':anrede', $libString->protectXss(trim($_POST['anrede'])));
+			$stmt->bindValue(':titel', $libString->protectXss(trim($_POST['titel'])));
+			$stmt->bindValue(':rang', $libString->protectXss(trim($_POST['rang'])));
+			$stmt->bindValue(':zusatz1', $libString->protectXss(trim($_POST['zusatz1'])));
+			$stmt->bindValue(':strasse1', $libString->protectXss(trim($_POST['strasse1'])));
+			$stmt->bindValue(':ort1', $libString->protectXss(trim($_POST['ort1'])));
+			$stmt->bindValue(':plz1', $libString->protectXss(trim($_POST['plz1'])));
+			$stmt->bindValue(':land1', $libString->protectXss(trim($_POST['land1'])));
+			$stmt->bindValue(':telefon1', $libString->protectXss(trim($_POST['telefon1'])));
+			$stmt->bindValue(':zusatz2', $libString->protectXss(trim($_POST['zusatz2'])));
+			$stmt->bindValue(':strasse2', $libString->protectXss(trim($_POST['strasse2'])));
+			$stmt->bindValue(':ort2', $libString->protectXss(trim($_POST['ort2'])));
+			$stmt->bindValue(':plz2', $libString->protectXss(trim($_POST['plz2'])));
+			$stmt->bindValue(':land2', $libString->protectXss(trim($_POST['land2'])));
+			$stmt->bindValue(':telefon2', $libString->protectXss(trim($_POST['telefon2'])));
+			$stmt->bindValue(':mobiltelefon', $libString->protectXss(trim($_POST['mobiltelefon'])));
+			$stmt->bindValue(':email', $libString->protectXss(strtolower(trim($_POST['email']))));
+			$stmt->bindValue(':skype', $libString->protectXss(trim($_POST['skype'])));
+			$stmt->bindValue(':jabber', $libString->protectXss(strtolower(trim($_POST['jabber']))));
+			$stmt->bindValue(':webseite', $libString->protectXss(strtolower(trim($_POST['webseite']))));
+			$stmt->bindValue(':spitzname', $libString->protectXss(trim($_POST['spitzname'])));
+			$stmt->bindValue(':beruf', $libString->protectXss(trim($_POST['beruf'])));
+			$stmt->bindValue(':leibmitglied', $leibMitglied, PDO::PARAM_INT);
+			$stmt->bindValue(':region1', $_POST['region1'], PDO::PARAM_INT);
+			$stmt->bindValue(':region2', $_POST['region2'], PDO::PARAM_INT);
 			$stmt->bindValue(':vita', $libString->protectXss(trim($_POST['vita'])));
-			$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
+			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
+			$stmt->execute();
+		}
+
+		//if the mailing module is installed
+		if($libModuleHandler->moduleIsAvailable('mod_intranet_rundbrief')){
+			//synchronize tables
+			$stmt = $libDb->prepare('INSERT INTO mod_rundbrief_empfaenger (id, empfaenger) SELECT id, 1 FROM base_person WHERE (SELECT COUNT(*) FROM mod_rundbrief_empfaenger WHERE id = base_person.id) = 0');
 			$stmt->execute();
 
-			$stmt = $libDb->prepare('UPDATE base_person SET vita_letzterautor=:vita_letzterautor WHERE id=:id');
-			$stmt->bindValue(':vita_letzterautor', $libAuth->getId(), PDO::PARAM_INT);
-			$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
+			if(isset($_POST['empfaenger'])){
+				$stmt = $libDb->prepare('UPDATE mod_rundbrief_empfaenger SET empfaenger=:empfaenger WHERE id = :id');
+				$stmt->bindValue(':empfaenger', $_POST['empfaenger'], PDO::PARAM_BOOL);
+				$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
+				$stmt->execute();
+			}
+
+			if(isset($_POST['interessiert'])){
+				$stmt = $libDb->prepare('UPDATE mod_rundbrief_empfaenger SET interessiert=:interessiert WHERE id = :id');
+				$stmt->bindValue(':interessiert', $_POST['interessiert'], PDO::PARAM_BOOL);
+				$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
+				$stmt->execute();
+			}
+		}
+
+		if($libModuleHandler->moduleIsAvailable('mod_intranet_zipfelranking')){
+			//synchronize tables
+			$stmt = $libDb->prepare('INSERT INTO mod_zipfelranking_anzahl (id, anzahlzipfel) SELECT id, 0 FROM base_person WHERE (SELECT COUNT(*) FROM mod_zipfelranking_anzahl WHERE id = base_person.id) = 0');
 			$stmt->execute();
 
-			$libGlobal->notificationTexts[] = 'Die Vita wurde gespeichert.';
+			if(isset($_POST['anzahlzipfel'])){
+				$stmt = $libDb->prepare('UPDATE mod_zipfelranking_anzahl SET anzahlzipfel=:anzahlzipfel WHERE id = :id');
+				$stmt->bindValue(':anzahlzipfel', $_POST['anzahlzipfel'], PDO::PARAM_INT);
+				$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
+				$stmt->execute();
+			}
+		}
+
+		if($_POST['strasse1'] != $row['strasse1'] || $_POST['ort1'] != $row['ort1'] || $_POST['plz1'] != $row['plz1'] || $_POST['land1'] != $row['land1'] || $_POST['telefon1'] != $row['telefon1']){
+			$stmt = $libDb->prepare('UPDATE base_person SET datum_adresse1_stand=NOW() WHERE id = :id');
+			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
+			$stmt->execute();
+		}
+
+		if($_POST['strasse2'] != $row['strasse2'] || $_POST['ort2'] != $row['ort2'] || $_POST['plz2'] != $row['plz2'] || $_POST['land2'] != $row['land2'] || $_POST['telefon2'] != $row['telefon2']){
+			$stmt = $libDb->prepare('UPDATE base_person SET datum_adresse2_stand=NOW() WHERE id = :id');
+			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
+			$stmt->execute();
 		}
 	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'fotodatenupload'){
-		if($ownprofile){
-			if($_FILES['bilddatei']['tmp_name'] != ''){
-				$libImage = new LibImage($libTime, $libGenericStorage);
-				$libImage->savePersonFotoByFilesArray($libAuth->getId(), 'bilddatei');
-			}
+		if($_FILES['bilddatei']['tmp_name'] != ''){
+			$libImage = new LibImage($libTime, $libGenericStorage);
+			$libImage->savePersonFotoByFilesArray($libAuth->getId(), 'bilddatei');
 		}
 	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'personpasswort'){
-		if($ownprofile){
-			if(!$libAuth->checkPasswordForPerson($libAuth->getId(), $_POST['oldpwd'])){
-				$libGlobal->errorTexts[] = 'Fehler: Das alte Passwort ist nicht korrekt.';
-			} elseif(trim($_POST['newpwd1']) == ''){
-				$libGlobal->errorTexts[] = 'Fehler: Es wurde kein neues Passwort angegeben.';
-			} elseif($_POST['newpwd2'] != $_POST['newpwd1']){
-				$libGlobal->errorTexts[] = 'Fehler: Das neue Passwort und die Passwortwiederholung stimmen nicht überein.';
-			} else {
-				$libAuth->savePassword($libAuth->getId(), $_POST['newpwd1']);
-			}
+		if(!$libAuth->checkPasswordForPerson($libAuth->getId(), $_POST['oldpwd'])){
+			$libGlobal->errorTexts[] = 'Fehler: Das alte Passwort ist nicht korrekt.';
+		} elseif(trim($_POST['newpwd1']) == ''){
+			$libGlobal->errorTexts[] = 'Fehler: Es wurde kein neues Passwort angegeben.';
+		} elseif($_POST['newpwd2'] != $_POST['newpwd1']){
+			$libGlobal->errorTexts[] = 'Fehler: Das neue Passwort und die Passwortwiederholung stimmen nicht überein.';
+		} else {
+			$libAuth->savePassword($libAuth->getId(), $_POST['newpwd1']);
 		}
 	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'fotodelete'){
-		if($ownprofile){
-			$libImage = new LibImage($libTime, $libGenericStorage);
-			$libImage->deletePersonFoto($libAuth->getId());
-		}
+		$libImage = new LibImage($libTime, $libGenericStorage);
+		$libImage->deletePersonFoto($libAuth->getId());
 	}
 }
 
@@ -236,32 +216,26 @@ echo '</div>';
 */
 if($ownprofile){
 	echo '<h2>Passwort ändern</h2>';
-
 	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
 
 	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
 
-	$libForm->printTextInput('oldpwd', 'Altes Passwort', '', 'password');
-	$libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password');
-	$libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password');
+	$libForm->printTextInput('oldpwd', 'Altes Passwort', '', 'password', false, true);
+	$libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password', false, true);
+	$libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password', false, true);
 	$libForm->printSubmitButton('Neues Passwort speichern');
 
 	echo '</fieldset>';
 	echo '</form>';
-}
 
-if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
+
 	echo '<h2>Stammdaten ändern</h2>';
-
 	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
+	echo '<input type="hidden" name="formtyp" value="person_data" />';
 
-	echo '<input type="hidden" name="formtyp" value="personendaten" />';
-}
-
-if($ownprofile){
 	$stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 	$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt->execute();
@@ -302,7 +276,7 @@ if($ownprofile){
 	echo '<hr />';
 
 	$libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $row2['mobiltelefon']);
-	$libForm->printTextInput('email', 'E-Mail-Adresse', $row2['email']);
+	$libForm->printTextInput('email', 'E-Mail-Adresse', $row2['email'], 'email', false, true);
 	$libForm->printTextInput('jabber', 'XMPP', $row2['jabber']);
 	$libForm->printTextInput('skype', 'Skype', $row2['skype']);
 	$libForm->printTextInput('webseite', 'Webseite', $row2['webseite']);
@@ -341,16 +315,8 @@ if($ownprofile){
 
 		$libForm->printTextInput('anzahlzipfel', 'Zipfelanzahl', $anzahlzipfel);
 	}
-}
 
-if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
-	$stmt = $libDb->prepare("SELECT vita FROM base_person WHERE id=:id");
-	$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
-	$stmt->execute();
-	$stmt->bindColumn('vita', $vita);
-	$stmt->fetch();
-
-	$libForm->printTextarea('vita', 'Vita', $vita);
+	$libForm->printTextarea('vita', 'Vita', $row['vita']);
 	$libForm->printSubmitButton('Speichern');
 
 	echo '</fieldset>';
@@ -358,12 +324,6 @@ if($ownprofile || (isset($_GET['modifyvita']) && $_GET['modifyvita'] == 1)){
 }
 
 
-
-/*
-* relationships
-*/
-
-require('lib/mitglieder.php');
 
 /*
 * Leibbursche
@@ -451,49 +411,27 @@ if($anzahl > 0){
 
 	$stmt = $libDb->prepare("
 SELECT senior.id, senior.anrede, senior.titel, senior.rang, senior.vorname, senior.praefix, senior.name, senior.suffix, senior.status, senior.beruf, senior.ort1, senior.tod_datum, senior.datum_geburtstag, senior.gruppe, senior.leibmitglied FROM base_person AS senior, base_semester WHERE senior.id = base_semester.senior AND base_semester.senior != :id AND (base_semester.senior = :id OR base_semester.consenior = :id OR base_semester.fuchsmajor = :id OR base_semester.fuchsmajor2 = :id OR base_semester.scriptor = :id OR base_semester.quaestor = :id OR base_semester.jubelsenior = :id)
-
 UNION DISTINCT
-
 SELECT consenior.id, consenior.anrede, consenior.titel, consenior.rang, consenior.vorname, consenior.praefix, consenior.name, consenior.suffix, consenior.status, consenior.beruf, consenior.ort1, consenior.tod_datum, consenior.datum_geburtstag, consenior.gruppe, consenior.leibmitglied FROM base_person AS consenior, base_semester WHERE consenior.id = base_semester.consenior AND base_semester.consenior != :id AND (base_semester.senior = :id OR base_semester.consenior = :id OR base_semester.fuchsmajor = :id OR base_semester.fuchsmajor2 = :id OR base_semester.scriptor = :id OR base_semester.quaestor = :id OR base_semester.jubelsenior = :id)
-
 UNION DISTINCT
-
 SELECT fuchsmajor.id, fuchsmajor.anrede, fuchsmajor.titel, fuchsmajor.rang, fuchsmajor.vorname, fuchsmajor.praefix, fuchsmajor.name, fuchsmajor.suffix, fuchsmajor.status, fuchsmajor.beruf, fuchsmajor.ort1, fuchsmajor.tod_datum, fuchsmajor.datum_geburtstag, fuchsmajor.gruppe, fuchsmajor.leibmitglied FROM base_person AS fuchsmajor, base_semester WHERE fuchsmajor.id = base_semester.fuchsmajor AND base_semester.fuchsmajor != :id AND (base_semester.senior = :id OR base_semester.consenior = :id OR base_semester.fuchsmajor = :id OR base_semester.fuchsmajor2 = :id OR base_semester.scriptor = :id OR base_semester.quaestor = :id OR base_semester.jubelsenior = :id)
-
 UNION DISTINCT
-
 SELECT fuchsmajor2.id, fuchsmajor2.anrede, fuchsmajor2.titel, fuchsmajor2.rang, fuchsmajor2.vorname, fuchsmajor2.praefix, fuchsmajor2.name, fuchsmajor2.suffix, fuchsmajor2.status, fuchsmajor2.beruf, fuchsmajor2.ort1, fuchsmajor2.tod_datum, fuchsmajor2.datum_geburtstag, fuchsmajor2.gruppe, fuchsmajor2.leibmitglied FROM base_person AS fuchsmajor2, base_semester WHERE fuchsmajor2.id = base_semester.fuchsmajor2 AND base_semester.fuchsmajor2 != :id AND (base_semester.senior = :id OR base_semester.consenior = :id OR base_semester.fuchsmajor = :id OR base_semester.fuchsmajor2 = :id OR base_semester.scriptor = :id OR base_semester.quaestor = :id OR base_semester.jubelsenior = :id)
-
 UNION DISTINCT
-
 SELECT scriptor.id, scriptor.anrede, scriptor.titel, scriptor.rang, scriptor.vorname, scriptor.praefix, scriptor.name, scriptor.suffix, scriptor.status, scriptor.beruf, scriptor.ort1, scriptor.tod_datum, scriptor.datum_geburtstag, scriptor.gruppe, scriptor.leibmitglied FROM base_person AS scriptor, base_semester WHERE scriptor.id = base_semester.scriptor AND base_semester.scriptor != :id AND (base_semester.senior = :id OR base_semester.consenior = :id OR base_semester.fuchsmajor = :id OR base_semester.fuchsmajor2 = :id OR base_semester.scriptor = :id OR base_semester.quaestor = :id OR base_semester.jubelsenior = :id)
-
 UNION DISTINCT
-
 SELECT quaestor.id, quaestor.anrede, quaestor.titel, quaestor.rang, quaestor.vorname, quaestor.praefix, quaestor.name, quaestor.suffix, quaestor.status, quaestor.beruf, quaestor.ort1, quaestor.tod_datum, quaestor.datum_geburtstag, quaestor.gruppe, quaestor.leibmitglied FROM base_person AS quaestor, base_semester WHERE quaestor.id = base_semester.quaestor AND base_semester.quaestor != :id AND (base_semester.senior = :id OR base_semester.consenior = :id OR base_semester.fuchsmajor = :id OR base_semester.fuchsmajor2 = :id OR base_semester.scriptor = :id OR base_semester.quaestor = :id OR base_semester.jubelsenior = :id)
-
 UNION DISTINCT
-
 SELECT jubelsenior.id, jubelsenior.anrede, jubelsenior.titel, jubelsenior.rang, jubelsenior.vorname, jubelsenior.praefix, jubelsenior.name, jubelsenior.suffix, jubelsenior.status, jubelsenior.beruf, jubelsenior.ort1, jubelsenior.tod_datum, jubelsenior.datum_geburtstag, jubelsenior.gruppe, jubelsenior.leibmitglied FROM base_person AS jubelsenior, base_semester WHERE jubelsenior.id = base_semester.jubelsenior AND base_semester.jubelsenior != :id AND (base_semester.senior = :id OR base_semester.consenior = :id OR base_semester.fuchsmajor = :id OR base_semester.fuchsmajor2 = :id OR base_semester.scriptor = :id OR base_semester.quaestor = :id OR base_semester.jubelsenior = :id)
-
 UNION DISTINCT
-
 SELECT vop.id, vop.anrede, vop.titel, vop.rang, vop.vorname, vop.praefix, vop.name, vop.suffix, vop.status, vop.beruf, vop.ort1, vop.tod_datum, vop.datum_geburtstag, vop.gruppe, vop.leibmitglied FROM base_person AS vop, base_semester WHERE vop.id = base_semester.vop AND base_semester.vop != :id AND (base_semester.vvop = :id OR base_semester.vopxx = :id OR base_semester.vopxxx = :id OR base_semester.vopxxxx = :id)
-
 UNION DISTINCT
-
 SELECT vvop.id, vvop.anrede, vvop.titel, vvop.rang, vvop.vorname, vvop.praefix, vvop.name, vvop.suffix, vvop.status, vvop.beruf, vvop.ort1, vvop.tod_datum, vvop.datum_geburtstag, vvop.gruppe, vvop.leibmitglied FROM base_person AS vvop, base_semester WHERE vvop.id = base_semester.vvop AND base_semester.vvop != :id AND (base_semester.vop = :id OR base_semester.vopxx = :id OR base_semester.vopxxx = :id OR base_semester.vopxxxx = :id)
-
 UNION DISTINCT
-
 SELECT vopxx.id, vopxx.anrede, vopxx.titel, vopxx.rang, vopxx.vorname, vopxx.praefix, vopxx.name, vopxx.suffix, vopxx.status, vopxx.beruf, vopxx.ort1, vopxx.tod_datum, vopxx.datum_geburtstag, vopxx.gruppe, vopxx.leibmitglied FROM base_person AS vopxx, base_semester WHERE vopxx.id = base_semester.vopxx AND base_semester.vopxx != :id AND (base_semester.vop = :id OR base_semester.vvop = :id OR base_semester.vopxxx = :id OR base_semester.vopxxxx = :id)
-
 UNION DISTINCT
-
 SELECT vopxxx.id, vopxxx.anrede, vopxxx.titel, vopxxx.rang, vopxxx.vorname, vopxxx.praefix, vopxxx.name, vopxxx.suffix, vopxxx.status, vopxxx.beruf, vopxxx.ort1, vopxxx.tod_datum, vopxxx.datum_geburtstag, vopxxx.gruppe, vopxxx.leibmitglied FROM base_person AS vopxxx, base_semester WHERE vopxxx.id = base_semester.vopxxx AND base_semester.vopxxx != :id AND (base_semester.vop = :id OR base_semester.vvop = :id OR base_semester.vopxx = :id OR base_semester.vopxxxx = :id)
-
 UNION DISTINCT
-
 SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname, vopxxxx.praefix, vopxxxx.name, vopxxxx.suffix, vopxxxx.status, vopxxxx.beruf, vopxxxx.ort1, vopxxxx.tod_datum, vopxxxx.datum_geburtstag, vopxxxx.gruppe, vopxxxx.leibmitglied FROM base_person AS vopxxxx, base_semester WHERE vopxxxx.id = base_semester.vopxxxx AND base_semester.vopxxxx != :id AND (base_semester.vop = :id OR base_semester.vvop = :id OR base_semester.vopxx = :id OR base_semester.vopxxx = :id)
 ");
 	$stmt->bindValue(':id', $personid, PDO::PARAM_INT);

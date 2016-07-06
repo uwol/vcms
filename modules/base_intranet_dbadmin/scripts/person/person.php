@@ -36,12 +36,12 @@ if($libAuth->isLoggedin()){
 	$mgarray = array();
 	$mgarray['id'] = '';
 	//Felder in der Personentabelle angeben -> Metadaten
-	$felder = array("anrede", "titel", "rang", "vorname", "praefix", "name", "suffix", "zusatz1", "strasse1", "ort1", "plz1", "land1", "zusatz2", "strasse2", "ort2", "plz2", "land2", "region1", "region2", "telefon1", "telefon2", "mobiltelefon", "email", "skype", "jabber", "webseite", "datum_geburtstag", "beruf", "heirat_datum", "heirat_partner", "tod_datum", "tod_ort", "status", "semester_reception", "semester_promotion", "semester_philistrierung", "semester_aufnahme", "semester_fusion", "austritt_datum", "spitzname", "leibmitglied", "anschreiben_zusenden", "spendenquittung_zusenden", "bemerkung", "vita", "vita_letzterautor");
+	$felder = array('anrede', 'titel', 'rang', 'vorname', 'praefix', 'name', 'suffix', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'zusatz2', 'strasse2', 'ort2', 'plz2', 'land2', 'region1', 'region2', 'telefon1', 'telefon2', 'mobiltelefon', 'email', 'skype', 'jabber', 'webseite', 'datum_geburtstag', 'beruf', 'heirat_datum', 'heirat_partner', 'tod_datum', 'tod_ort', 'status', 'semester_reception', 'semester_promotion', 'semester_philistrierung', 'semester_aufnahme', 'semester_fusion', 'austritt_datum', 'spitzname', 'leibmitglied', 'anschreiben_zusenden', 'spendenquittung_zusenden', 'bemerkung', 'vita');
 
 	//Ist der Bearbeiter ein Internetwart?
-	if(in_array("internetwart", $libAuth->getAemter())){
+	if(in_array('internetwart', $libAuth->getAemter())){
 		//dann auch die sensiblen Felder bearbeiten
-		$felder = array_merge($felder, array("gruppe", "password_hash"));
+		$felder = array_merge($felder, array('gruppe', 'password_hash'));
 	}
 
 	/**
@@ -52,16 +52,16 @@ if($libAuth->isLoggedin()){
 	*/
 
 	//neue Person, leerer Datensatz
-	if($aktion == "blank"){
+	if($aktion == 'blank'){
 		foreach($felder as $feld){
 			$mgarray[$feld] = '';
 		}
 
-		$mgarray['anrede'] = "Anrede angeben!";
-		$mgarray['vorname'] = "Vornamen angeben!";
-		$mgarray['name'] = "Namen angeben!";
-		$mgarray['anschreiben_zusenden'] = "1";
-		$mgarray['spendenquittung_zusenden'] = "1";
+		$mgarray['anrede'] = 'Anrede angeben!';
+		$mgarray['vorname'] = 'Vornamen angeben!';
+		$mgarray['name'] = 'Namen angeben!';
+		$mgarray['anschreiben_zusenden'] = '1';
+		$mgarray['spendenquittung_zusenden'] = '1';
 		$mgarray['datum_adresse1_stand'] = '';
 		$mgarray['datum_adresse2_stand'] = '';
 		$mgarray['gruppe'] = '';
@@ -69,14 +69,14 @@ if($libAuth->isLoggedin()){
 		$mgarray['password_hash'] = '';
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert: INSERT
-	elseif($aktion == "insert"){
+	elseif($aktion == 'insert'){
 		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
 		//Ist der Bearbeiter kein Internetwart?
-		if(!in_array("internetwart",$libAuth->getAemter())){
-			die("Fehler: Diese Aktion darf nur von einem Internetwart ausgeführt werden.");
+		if(!in_array('internetwart', $libAuth->getAemter())){
+			die('Fehler: Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
 		}
 
 		$valueArray = $_REQUEST;
@@ -87,48 +87,48 @@ if($libAuth->isLoggedin()){
 		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
 		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);
 		$valueArray['austritt_datum'] = $libTime->assureMysqlDate($valueArray['austritt_datum']);
-		$mgarray = $libDb->insertRow($felder, $valueArray, "base_person", array('id' => ''));
+		$mgarray = $libDb->insertRow($felder, $valueArray, 'base_person', array('id' => ''));
 
-		updateAdresseStand("base_person", "datum_adresse1_stand", $mgarray['id']);
-		updateAdresseStand("base_person", "datum_adresse2_stand", $mgarray['id']);
+		updateAdresseStand('base_person', 'datum_adresse1_stand', $mgarray['id']);
+		updateAdresseStand('base_person', 'datum_adresse2_stand', $mgarray['id']);
 		updateGruppeStand($mgarray['id']);
 
 		//wenn ein Ehepartner angegeben wird, muss bei diesem dieses Mitglied auch als Ehepartner eingetragen werden
 		updateCorrespondingEhepartner($_REQUEST['heirat_partner'], $mgarray['id']);
 	}
 	//bestehende Mitgliedsdaten werden modifiziert: UPDATE
-	elseif($aktion == "update"){
+	elseif($aktion == 'update'){
 		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
 		//aktuelle Daten holen
-		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE id=:id");
+		$stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$mgarray = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		//ist das zu bearbeitende Mitglied jemals Internetwart gewesen?
-		if($mgarray['id'] != "" && $libMitglied->hasBeenInternetWartAnyTime($mgarray['id'])){
+		if($mgarray['id'] != '' && $libMitglied->hasBeenInternetWartAnyTime($mgarray['id'])){
 			//soll die Gruppe modifiziert werden? => Drohende Eintragung als tot oder entlassen
 			$gruppeWirdKritischModifiziert = false;
 
-			if(in_array("gruppe", $felder) && $_REQUEST['gruppe'] != $mgarray['gruppe']){
+			if(in_array('gruppe', $felder) && $_REQUEST['gruppe'] != $mgarray['gruppe']){
 				//ist eine kritische Gruppe angeben?
-				if($_REQUEST['gruppe'] == "X" || $_REQUEST['gruppe'] == "T"){
+				if($_REQUEST['gruppe'] == 'X' || $_REQUEST['gruppe'] == 'T'){
 					$gruppeWirdKritischModifiziert = true;
 				}
 			}
 
 			//soll die E-Mail-Adresse modifiziert werden? => Drohende Eintragung einer leeren Adresse
 			$emailIstLeer = false;
-			if(in_array("email", $felder) && $_REQUEST['email'] == ""){
+			if(in_array('email', $felder) && $_REQUEST['email'] == ''){
 				$emailIstLeer = true;
 			}
 
 			//soll der password_hash modifiziert werden? => Drohende Eintragung eines leeren password_hash
 			$password_hashIstLeer = false;
-			if(in_array("password_hash", $felder) && $_REQUEST['password_hash'] == ""){
+			if(in_array('password_hash', $felder) && $_REQUEST['password_hash'] == ''){
 				$password_hashIstLeer = true;
 			}
 
@@ -151,11 +151,11 @@ if($libAuth->isLoggedin()){
 
 		//Adressänderungen prüfen und vermerken im Stand
 		if($_REQUEST['strasse1'] != $mgarray['strasse1'] || $_REQUEST['ort1'] != $mgarray['ort1'] || $_REQUEST['plz1'] != $mgarray['plz1'] || $_REQUEST['land1'] != $mgarray['land1'] || $_REQUEST['telefon1'] != $mgarray['telefon1']){
-			updateAdresseStand("base_person", "datum_adresse1_stand", $mgarray['id']);
+			updateAdresseStand('base_person', 'datum_adresse1_stand', $mgarray['id']);
 		}
 
 		if($_REQUEST['strasse2'] != $mgarray['strasse2'] || $_REQUEST['ort2'] != $mgarray['ort2'] || $_REQUEST['plz2'] != $mgarray['plz2'] || $_REQUEST['land2'] != $mgarray['land2'] || $_REQUEST['telefon2'] != $mgarray['telefon2']){
-			updateAdresseStand("base_person", "datum_adresse2_stand", $mgarray['id']);
+			updateAdresseStand('base_person', 'datum_adresse2_stand', $mgarray['id']);
 		}
 
 		if(isset($_REQUEST['gruppe']) && $_REQUEST['gruppe'] != $mgarray['gruppe']){
@@ -175,9 +175,9 @@ if($libAuth->isLoggedin()){
 		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
 		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);
 		$valueArray['austritt_datum'] = $libTime->assureMysqlDate($valueArray['austritt_datum']);
-		$mgarray = $libDb->updateRow($felder, $valueArray, "base_person", array('id' => $id));
+		$mgarray = $libDb->updateRow($felder, $valueArray, 'base_person', array('id' => $id));
 	} else {
-		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE id=:id");
+		$stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$mgarray = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -185,15 +185,15 @@ if($libAuth->isLoggedin()){
 
 	//Bildupload durchführen
 	//wurde eine Datei hochgeladen?
-	if(isset($_POST['formtyp']) && $_POST['formtyp'] == "fotoupload"){
+	if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'fotoupload'){
 		//wurde eine Datei hochgeladen?
-		if($_FILES['bilddatei']['tmp_name'] != ""){
-			if($mgarray['id'] != ""){
+		if($_FILES['bilddatei']['tmp_name'] != ''){
+			if($mgarray['id'] != ''){
 				$libImage = new LibImage($libTime, $libGenericStorage);
-				$libImage->savePersonFotoByFilesArray($mgarray['id'], "bilddatei");
+				$libImage->savePersonFotoByFilesArray($mgarray['id'], 'bilddatei');
 			}
 		}
-	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == "fotodelete"){
+	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'fotodelete'){
 		if($mgarray['id'] != ''){
 			$libImage = new LibImage($libTime, $libGenericStorage);
 			$libImage->deletePersonFoto($mgarray['id']);
@@ -222,7 +222,7 @@ if($libAuth->isLoggedin()){
 	*/
 
 	//Ist der Bearbeiter ein Internetwart?
-	if(in_array("internetwart", $libAuth->getAemter())){
+	if(in_array('internetwart', $libAuth->getAemter())){
 		if($mgarray['id'] != ''){
 			echo '<p><a href="index.php?pid=intranet_admin_db_personenliste&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 		}
@@ -238,10 +238,10 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 
-	if($aktion == "blank"){
-		$extraActionParam = "&amp;aktion=insert";
+	if($aktion == 'blank'){
+		$extraActionParam = '&amp;aktion=insert';
 	} else {
-		$extraActionParam = "&amp;aktion=update";
+		$extraActionParam = '&amp;aktion=update';
 	}
 
 	echo '<form action="index.php?pid=intranet_admin_db_person' .$extraActionParam. '" method="post" class="form-horizontal">';
@@ -315,8 +315,6 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('bemerkung', 'Bemerkung', $mgarray['bemerkung']);
 	$libForm->printTextarea('vita', 'Vita', $mgarray['vita']);
 
-	$libForm->printMitgliederDropDownBox('vita_letzterautor', 'Vita letzter Autor', $mgarray['vita_letzterautor']);
-
 	//nur Internetwart darf an sensible Daten
 	if(in_array('internetwart', $libAuth->getAemter())){
 		//ist das zu bearbeitende Mitglied jemals Internetwart gewesen
@@ -379,7 +377,7 @@ if($libAuth->isLoggedin()){
 function updateGruppeStand($id){
 	global $libDb;
 
-	$stmt = $libDb->prepare("UPDATE base_person SET datum_gruppe_stand=NOW() WHERE id=:id");
+	$stmt = $libDb->prepare('UPDATE base_person SET datum_gruppe_stand=NOW() WHERE id=:id');
 	$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();
 }
@@ -387,7 +385,7 @@ function updateGruppeStand($id){
 function updateAdresseStand($table, $field, $id){
 	global $libDb;
 
-	$stmt = $libDb->prepare("UPDATE ".$table." SET " .$field. "=NOW() WHERE id=:id");
+	$stmt = $libDb->prepare('UPDATE '.$table.' SET ' .$field. '=NOW() WHERE id=:id');
 	$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();
 }
@@ -396,7 +394,7 @@ function updateCorrespondingEhepartner($ehepartnerId, $mitgliedId){
 	global $libDb;
 
 	if(is_numeric($mitgliedId) && is_numeric($ehepartnerId)){
-		$stmt = $libDb->prepare("UPDATE base_person SET heirat_partner=:heirat_partner WHERE id=:id");
+		$stmt = $libDb->prepare('UPDATE base_person SET heirat_partner=:heirat_partner WHERE id=:id');
 		$stmt->bindValue(':heirat_partner', $mitgliedId, PDO::PARAM_INT);
 		$stmt->bindValue(':id', $ehepartnerId, PDO::PARAM_INT);
 		$stmt->execute();
