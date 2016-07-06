@@ -30,19 +30,23 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="col-sm-6">';
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
-
 	echo '<div class="row">';
 
-	echo '<div class="col-xs-12 col-sm-6">';
-	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$row['id']. '.jpg';
+	$image = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$row['id']. '.jpg';
+	$imageExists = is_file($image);
 
-	if(is_file($posssibleImage)){
-		echo '<p><img src="' .$posssibleImage. '" class="img-responsive center-block" alt="" /></p>';
+	if($imageExists){
+		echo '<div class="col-xs-12 col-sm-6">';
+		echo '<p><img src="' .$image. '" class="img-responsive center-block" alt="" /></p>';
+		echo '</div>';
 	}
 
-	echo '</div>';
+	if($imageExists){
+		echo '<div class="col-xs-12 col-sm-6">';
+	} else {
+		echo '<div class="col-xs-12">';
+	}
 
-	echo '<div class="col-xs-12 col-sm-6">';
 	echo '<p>' .$libString->parseBBCode(nl2br(trim($row['text']))). '</p>';
 	echo '</div>';
 
