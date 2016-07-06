@@ -24,28 +24,14 @@ if(!is_object($libGlobal))
 /**
 * Tabelle base_veranstaltung aktualisieren
 */
-$fieldExists_datumEnde = false;
-$fieldExists_fbEventId = false;
+$columnsBaseVeranstaltung = getColumns('base_veranstaltung');
 
-$stmt = $libDb->prepare('SHOW COLUMNS FROM base_veranstaltung');
-$stmt->execute();
-
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	if($row['Field'] == 'datum_ende'){
-		$fieldExists_datumEnde = true;
-	}
-
-	if($row['Field'] == 'fb_eventid'){
-		$fieldExists_fbEventId = true;
-	}
-}
-
-if(!$fieldExists_datumEnde){
+if(!in_array('datum_ende', $columnsBaseVeranstaltung)){
 	echo 'Aktualisiere Tabelle: base_veranstaltung<br />';
 	$libDb->query('ALTER TABLE base_veranstaltung ADD datum_ende DATETIME NULL AFTER datum');
 }
 
-if(!$fieldExists_fbEventId){
+if(!in_array('fb_eventid', $columnsBaseVeranstaltung)){
 	echo 'Aktualisiere Tabelle: base_veranstaltung<br />';
 	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255) NULL');
 }
@@ -54,119 +40,99 @@ if(!$fieldExists_fbEventId){
 /**
 * Tabelle base_person aktualisieren
 */
-$fieldExists_austritt_grund = false;
-$fieldExists_password_salt = false;
-$fieldExists_icq = false;
-$fieldExists_msn = false;
-$fieldExists_vita_letzterautor = false;
+$columnsBasePerson = getColumns('base_person');
+$indexesBasePerson = getIndexes('base_person');
 
-$stmt = $libDb->prepare('SHOW COLUMNS FROM base_person');
-$stmt->execute();
-
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	if($row['Field'] == 'austritt_grund'){
-		$fieldExists_austritt_grund = true;
-	}
-
-	if($row['Field'] == 'password_salt'){
-		$fieldExists_password_salt = true;
-	}
-
-	if($row['Field'] == 'icq'){
-		$fieldExists_icq = true;
-	}
-
-	if($row['Field'] == 'msn'){
-		$fieldExists_msn = true;
-	}
-
-	if($row['Field'] == 'vita_letzterautor'){
-		$fieldExists_vita_letzterautor = true;
-	}
-}
-
-if($fieldExists_austritt_grund){
+if(in_array('austritt_grund', $columnsBasePerson)){
 	echo 'Aktualisiere Tabelle: base_person<br />';
 	$libDb->query('ALTER TABLE base_person DROP austritt_grund');
 }
 
-if($fieldExists_password_salt){
+if(in_array('password_salt', $columnsBasePerson)){
 	echo 'Aktualisiere Tabelle: base_person<br />';
 	$libDb->query('ALTER TABLE base_person DROP password_salt');
 }
 
-if($fieldExists_icq){
+if(in_array('icq', $columnsBasePerson)){
 	echo 'Aktualisiere Tabelle: base_person<br />';
 	$libDb->query('ALTER TABLE base_person DROP icq');
 }
 
-if($fieldExists_msn){
+if(in_array('msn', $columnsBasePerson)){
 	echo 'Aktualisiere Tabelle: base_person<br />';
 	$libDb->query('ALTER TABLE base_person DROP msn');
 }
 
-if($fieldExists_vita_letzterautor){
+if(in_array('vita_letzterautor', $columnsBasePerson)){
 	echo 'Aktualisiere Tabelle: base_person<br />';
 	$libDb->query('ALTER TABLE base_person DROP vita_letzterautor');
+}
+
+if(!in_array('email', $indexesBasePerson)){
+	echo 'Aktualisiere Tabelle: base_person<br />';
+	$libDb->query('UNIQUE KEY email (email)');
 }
 
 
 /**
 * Tabelle base_semester aktualisieren
 */
-$fieldExists_vop = false;
-$fieldExists_vvop = false;
-$fieldExists_vopxx = false;
-$fieldExists_vopxxx = false;
-$fieldExists_vopxxxx = false;
+$columnsBaseSemester = getColumns('base_semester');
 
-$stmt = $libDb->prepare('SHOW COLUMNS FROM base_semester');
-$stmt->execute();
-
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	if($row['Field'] == 'vop'){
-		$fieldExists_vop = true;
-	}
-
-	if($row['Field'] == 'vvop'){
-		$fieldExists_vvop = true;
-	}
-
-	if($row['Field'] == 'vopxx'){
-		$fieldExists_vopxx = true;
-	}
-
-	if($row['Field'] == 'vopxxx'){
-		$fieldExists_vopxxx = true;
-	}
-
-	if($row['Field'] == 'vopxxxx'){
-		$fieldExists_vopxxxx = true;
-	}
-}
-
-if(!$fieldExists_vop){
+if(!in_array('vop', $columnsBaseSemester)){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
 	$libDb->query('ALTER TABLE base_semester ADD vop int(11) default NULL');
 }
 
-if(!$fieldExists_vvop){
+if(!in_array('vvop', $columnsBaseSemester)){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
 	$libDb->query('ALTER TABLE base_semester ADD vvop int(11) default NULL');
 }
 
-if(!$fieldExists_vopxx){
+if(!in_array('vopxx', $columnsBaseSemester)){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
 	$libDb->query('ALTER TABLE base_semester ADD vopxx int(11) default NULL');
 }
 
-if(!$fieldExists_vopxxx){
+if(!in_array('vopxxx', $columnsBaseSemester)){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
 	$libDb->query('ALTER TABLE base_semester ADD vopxxx int(11) default NULL');
 }
 
-if(!$fieldExists_vopxxxx){
+if(!in_array('vopxxxx', $columnsBaseSemester)){
 	echo 'Aktualisiere Tabelle: base_semester<br />';
 	$libDb->query('ALTER TABLE base_semester ADD vopxxxx int(11) default NULL');
+}
+
+
+
+function getColumns($table){
+	global $libDb;
+
+	$stmt = $libDb->prepare('SHOW COLUMNS FROM base_veranstaltung');
+	$stmt->execute();
+
+	$result = array();
+
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		$result[] = $row['Field'];
+	}
+
+	return $result;
+}
+
+function getIndexes($table){
+	global $libDb;
+
+	$stmt = $libDb->prepare('SHOW INDEX FROM base_veranstaltung');
+	$stmt->execute();
+
+	$result = array();
+
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		$result[] = $row['Key_name'];
+	}
+
+	return $result;
 }
 ?>

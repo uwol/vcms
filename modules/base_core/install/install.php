@@ -25,7 +25,7 @@ echo 'Erstelle Tabelle base_gruppe<br />';
 $sql = "CREATE TABLE base_gruppe (
   bezeichnung char(1) NOT NULL default '',
   beschreibung varchar(30) NOT NULL default '',
-  PRIMARY KEY  (bezeichnung)
+  PRIMARY KEY (bezeichnung)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
@@ -34,7 +34,7 @@ echo 'Erstelle Tabelle base_status<br />';
 $sql = "CREATE TABLE base_status (
   bezeichnung varchar(20) NOT NULL default '',
   beschreibung varchar(255) NOT NULL default '',
-  PRIMARY KEY  (bezeichnung)
+  PRIMARY KEY (bezeichnung)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
@@ -43,7 +43,7 @@ echo 'Erstelle Tabelle base_region<br />';
 $sql = "CREATE TABLE base_region (
   id int(11) NOT NULL  auto_increment,
   bezeichnung varchar(30) NOT NULL default '',
-  PRIMARY KEY  (id),
+  PRIMARY KEY (id),
   UNIQUE KEY bezeichnung (bezeichnung)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
@@ -104,8 +104,9 @@ $sql = "CREATE TABLE base_person (
   username varchar(255) default NULL,
   password_hash varchar(255) default NULL,
   validationkey varchar(255) default NULL,
-  PRIMARY KEY  (id),
+  PRIMARY KEY (id),
   UNIQUE KEY username (username),
+  UNIQUE KEY email (email),
   KEY gruppe (gruppe),
   KEY status (status)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
@@ -166,7 +167,7 @@ $sql = "CREATE TABLE base_semester (
   vopxx int(11) default NULL,
   vopxxx int(11) default NULL,
   vopxxxx int(11) default NULL,
-  PRIMARY KEY  (semester)
+  PRIMARY KEY (semester)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
@@ -182,7 +183,7 @@ $sql = "CREATE TABLE base_veranstaltung (
   status varchar(2) default NULL,
   ort varchar(255) default NULL,
   fb_eventid VARCHAR(255) NULL,
-  PRIMARY KEY  (id),
+  PRIMARY KEY (id),
   KEY datum (datum)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
@@ -221,7 +222,7 @@ $sql = "CREATE TABLE base_verein (
   farbe3 varchar(255) default NULL,
   farbe4 varchar(255) default NULL,
   beschreibung text,
-  PRIMARY KEY  (id)
+  PRIMARY KEY (id)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
@@ -246,7 +247,7 @@ $sql = "CREATE TABLE base_vip (
   status varchar(255) default NULL,
   grund varchar(255) default NULL,
   bemerkung varchar(255) default NULL,
-  PRIMARY KEY  (id)
+  PRIMARY KEY (id)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
@@ -258,7 +259,7 @@ $sql = "CREATE TABLE base_verein_mitgliedschaft (
   ehrenmitglied tinyint(1) default NULL,
   semester_reception varchar(10) default NULL,
   semester_philistrierung varchar(10) default NULL,
-  PRIMARY KEY  (mitglied,verein),
+  PRIMARY KEY (mitglied,verein),
   KEY verein (verein)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
@@ -268,7 +269,7 @@ echo 'Erstelle Tabelle base_veranstaltung_teilnahme<br />';
 $sql = "CREATE TABLE base_veranstaltung_teilnahme (
   veranstaltung int(11) NOT NULL default '0',
   person int(11) NOT NULL default '0',
-  PRIMARY KEY  (veranstaltung,person),
+  PRIMARY KEY (veranstaltung,person),
   KEY person (person)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
@@ -280,7 +281,7 @@ $sql = "CREATE TABLE sys_genericstorage (
   array_name varchar(30) NOT NULL default '',
   position int(11) NOT NULL default '0',
   value text NOT NULL,
-  PRIMARY KEY  (moduleid,array_name,position)
+  PRIMARY KEY (moduleid,array_name,position)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
@@ -293,7 +294,7 @@ $sql = "CREATE TABLE sys_log_intranet (
   datum datetime NOT NULL default '0000-00-00 00:00:00',
   punkte smallint(4) NOT NULL default '0',
   ipadresse varchar(39) default NULL,
-  PRIMARY KEY  (id),
+  PRIMARY KEY (id),
   KEY mitglied (mitglied),
   KEY datum (datum),
   KEY aktion (aktion)
