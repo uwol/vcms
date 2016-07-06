@@ -82,7 +82,7 @@ class LibAuth{
 			return false;
 		}
 
-		$stmt = $libDb->prepare("SELECT id, anrede, titel, praefix, vorname, suffix, gruppe, name, email, password_hash FROM base_person WHERE email=:email OR username=:email");
+		$stmt = $libDb->prepare("SELECT id, anrede, titel, praefix, vorname, suffix, gruppe, name, email, password_hash FROM base_person WHERE email=:email");
 		$stmt->bindValue(':email', $email);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);

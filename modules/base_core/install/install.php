@@ -101,11 +101,9 @@ $sql = "CREATE TABLE base_person (
   spendenquittung_zusenden tinyint(1) NOT NULL default '1',
   vita text,
   bemerkung varchar(255) default NULL,
-  username varchar(255) default NULL,
   password_hash varchar(255) default NULL,
   validationkey varchar(255) default NULL,
   PRIMARY KEY (id),
-  UNIQUE KEY username (username),
   UNIQUE KEY email (email),
   KEY gruppe (gruppe),
   KEY status (status)
