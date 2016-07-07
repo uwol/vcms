@@ -247,8 +247,8 @@ if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'updateEngine'){
 				&& is_dir($tempEngineAbsoluteDirectoryPath. '/vendor')){
 			$libCronJobs->deleteFiles();
 
-			@unlink($libFileSystem->getAbsolutePath('inc.php'));
-			@unlink($libFileSystem->getAbsolutePath('index.php'));
+			unlink($libFilesystem->getAbsolutePath('inc.php'));
+			unlink($libFilesystem->getAbsolutePath('index.php'));
 
 			$libFilesystem->deleteDirectory('styles');
 			$libFilesystem->deleteDirectory('vendor');
