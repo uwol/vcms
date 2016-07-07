@@ -22,13 +22,13 @@ if(!is_object($libGlobal))
 
 $calendarId = $libConfig->sitePath.'_semesterprogramm_';
 
-$calendar = new LibICalendar();
+$calendar = new vcms\LibICalendar();
 
 $stmt = $libDb->prepare("SELECT id, datum, datum_ende, titel, beschreibung, status, ort FROM base_veranstaltung WHERE datum >= CURDATE() ORDER BY datum DESC");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$e = new LibICalendarEvent();
+	$e = new vcms\LibICalendarEvent();
 	$e->summary = $row['titel'];
 	$e->setStartAndEndDateTime($row['datum'], $row['datum_ende']);
  	$e->description = $row['beschreibung'];
