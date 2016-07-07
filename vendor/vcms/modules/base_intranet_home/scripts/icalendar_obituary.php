@@ -30,7 +30,7 @@ if(isset($_GET['user']) &&
 		$libGenericStorage->loadValueInCurrentModule('userNameICalendar') != '' &&
 		$libGenericStorage->loadValueInCurrentModule('passwordICalendar') != ''){
 
-	$calendar = new LibICalendar();
+	$calendar = new vcms\LibICalendar();
 
 	$stmt = $libDb->prepare("SELECT id,tod_datum FROM base_person WHERE gruppe = 'T' AND tod_datum != '' AND tod_datum != '0000-00-00' AND tod_datum IS NOT NULL");
 	$stmt->execute();
@@ -38,7 +38,7 @@ if(isset($_GET['user']) &&
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$name = $libMitglied->getMitgliedNameString($row['id'], 0);
 
-		$e = new LibICalendarEvent();
+		$e = new vcms\LibICalendarEvent();
 		$e->summary = $name;
 		$e->setStartAndEndDateTime($row['tod_datum'], '');
 	 	$e->description = $name. ' - ' .$row['tod_datum'];
