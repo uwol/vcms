@@ -53,15 +53,6 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	}
 
 	/*
-	* safe_mode
-	*/
-	if(ini_get('safe_mode')){ //ist safe_mode in der php.ini aktiviert?
-		$errors[] = 'In der PHP-Version auf diesem Server ist safe_mode=On konfiguriert.';
-	} else {
-		$oks[] = 'safe_mode=Off ist konfiguriert.';
-	}
-
-	/*
 	* system config
 	*/
 	if($libConfig->sitePath == ''){
@@ -82,59 +73,31 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	/*
 	* missing folders
 	*/
-	$dirs = array('custom', 'custom/intranet', 'custom/styles', 'custom/intranet/downloads',
-			'custom/intranet/mitgliederfotos', 'custom/semestercover', 'custom/veranstaltungsfotos',
-			'temp');
+	$directoriesToCreate = $libCronJobs->getDirectoriesToCreate();
 
-	foreach($dirs as $dir){
-		if(!is_dir($dir)){
-			$errors[] = 'Ordner ' .$dir. ' fehlt.';
+	foreach($directoriesToCreate as $directoryRelativePath){
+		$directoryAbsolutePath = $libFilesystem->getAbsolutePath($directoryRelativePath);
+
+		if(!is_dir($directoryAbsolutePath)){
+			$errors[] = 'Ordner ' .$directoryRelativePath. ' fehlt.';
 		} else {
-			$oks[] = 'Ordner ' .$dir. ' vorhanden.';
+			$oks[] = 'Ordner ' .$directoryRelativePath. ' vorhanden.';
 		}
 	}
 
 	/*
 	* missing htaccess deny files
 	*/
-	$htaccessDirs = array('lib', 'custom/intranet', 'custom/veranstaltungsfotos', 'temp');
+	$directoriesWithHtaccessFile = $libCronJobs->getDirectoriesWithHtaccessFile();
 
-	foreach($htaccessDirs as $dir){
-		if(is_dir($dir)){
-			if(hasHtaccessDenyFile($dir)){
-				$securedFolders[] = $dir;
+	foreach($directoriesWithHtaccessFile as $directoryRelativePath){
+		$directoryAbsolutePath = $libFilesystem->getAbsolutePath($directoryRelativePath);
+
+		if(is_dir($directoryAbsolutePath)){
+			if($libCronJobs->hasHtaccessDenyFile($directoryAbsolutePath)){
+				$securedFolders[] = $directoryRelativePath;
 			} else {
-				$unsecuredFolders[] = $dir;
-			}
-		}
-	}
-
-
-	$modulesDir = 'modules';
-
-	$files = array_diff(scandir($modulesDir), array('..', '.'));
-	$folders = array();
-
-	foreach ($files as $file){
-		//module folder
-		if (is_dir($modulesDir. '/' .$file)){
-			$modulePath = $modulesDir. '/' .$file;
-
-			//deny access to folder by htaccess
-			if(is_dir($modulePath. '/scripts')){
-				if(hasHtaccessDenyFile($modulePath. '/scripts')){
-					$securedFolders[] = $modulePath. '/scripts';
-				} else {
-					$unsecuredFolders[] = $modulePath. '/scripts';
-				}
-			}
-
-			if(is_dir($modulePath. '/install')){
-				if(hasHtaccessDenyFile($modulePath. '/install')){
-					$securedFolders[] = $modulePath. '/install';
-				} else {
-					$unsecuredFolders[] = $modulePath. '/install';
-				}
+				$unsecuredFolders[] = $directoryRelativePath;
 			}
 		}
 	}
@@ -170,24 +133,6 @@ if(in_array('internetwart', $libAuth->getAemter())){
 			$libGlobal->errorTexts[] = $notReadableFilesText;
 		}
 	}
-}
-
-function hasHtaccessDenyFile($directory){
-	$filename = $directory. '/.htaccess';
-
-   	if(!is_file($filename)){
-   		return false;
-   	}
-
-	$handle = @fopen($filename, 'r');
-	$content = @fread($handle, @filesize($filename));
-	@fclose($handle);
-
-	if($content == 'deny from all'){
-   		return true;
-   	} else {
-   		return false;
-   	}
 }
 
 function searchNotReadAbleFiles($dir){

@@ -28,17 +28,17 @@ class LibCronJobs{
 		'LICENSE', 'LICENSE.txt', 'README.md', '.gitignore');
 
 	var $directoriesToDelete = array('design', 'js', 'lib',
-			'modules/base_core', 'modules/base_internet_login',
-			'modules/base_internet_vereine', 'modules/base_intranet_administration_dbverwaltung',
-			'modules/base_intranet_dbadmin', 'modules/base_intranet_home', 'modules/base_intranet_personen',
-			'modules/base_updatemanager', 'modules/mod_intranet_administration_export');
+		'modules/base_core', 'modules/base_internet_login',
+		'modules/base_internet_vereine', 'modules/base_intranet_administration_dbverwaltung',
+		'modules/base_intranet_dbadmin', 'modules/base_intranet_home', 'modules/base_intranet_personen',
+		'modules/base_updatemanager', 'modules/mod_intranet_administration_export');
 
-	var $relativeDirectoriesToCreate = array('temp', 'custom/styles', 'custom/intranet',
+	var $directoriesToCreate = array('temp', 'custom/styles', 'custom/intranet',
 		'custom/intranet/downloads', 'custom/intranet/mitgliederfotos',
 		'custom/semestercover', 'custom/veranstaltungsfotos');
 
-	var $relativeDirectoriesWithHtaccessFile = array('vendor/vcms/lib', 'custom/intranet',
-		'custom/veranstaltungsfotos', 'temp');
+	var $directoriesWithHtaccessFile = array('custom/intranet',
+		'custom/veranstaltungsfotos', 'vendor', 'temp');
 
 	function __construct(){
 		global $libDb;
@@ -53,13 +53,21 @@ class LibCronJobs{
 		}
 	}
 
+	function getDirectoriesToCreate(){
+		return $this->directoriesToCreate;
+	}
+
+	function getDirectoriesWithHtaccessFile(){
+		return $this->directoriesWithHtaccessFile;
+	}
+
 	function executeJobs(){
 		global $libGenericStorage, $libDb;
 
 		$this->deleteFiles();
 		$this->deleteDirectories();
 		$this->createMissingDirectories();
-		$this->repairHtaccessFiles();
+		$this->createHtaccessFiles();
 		$this->cleanSysLogIntranet();
 		$this->initConfiguration();
 
@@ -78,10 +86,10 @@ class LibCronJobs{
 		global $libFilesystem;
 
 		foreach($this->filesToDelete as $fileToDelete){
-			$filePath = $libFilesystem->getAbsolutePath($fileToDelete);
+			$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileToDelete);
 
-			if(is_file($filePath)){
-				unlink($filePath);
+			if(is_file($fileAbsolutePath)){
+				unlink($fileAbsolutePath);
 			}
 		}
 	}
@@ -98,56 +106,54 @@ class LibCronJobs{
 		}
 	}
 
-	// @Deprecated
-	function deleteInstaller(){
-		$this->deleteFiles();
-	}
-
 	function createMissingDirectories(){
 		global $libFilesystem;
 
-		foreach($this->relativeDirectoriesToCreate as $relativeDirectoryToCreate){
-			$absoluteDirectoryPath = $libFilesystem->getAbsolutePath($relativeDirectoryToCreate);
+		foreach($this->directoriesToCreate as $relativeDirectoryToCreate){
+			$directoryAbsolutePath = $libFilesystem->getAbsolutePath($relativeDirectoryToCreate);
 
-			if(!is_dir($absoluteDirectoryPath)){
-				@mkdir($absoluteDirectoryPath);
+			if(!is_dir($directoryAbsolutePath)){
+				@mkdir($directoryAbsolutePath);
 			}
 		}
 	}
 
-	function repairHtaccessFiles(){
-		foreach($this->relativeDirectoriesWithHtaccessFile as $relativeDirectoryWithHtaccessFile){
-			$this->repairHtaccessFile($relativeDirectoryWithHtaccessFile);
+	function createHtaccessFiles(){
+		global $libFilesystem;
+
+		foreach($this->directoriesWithHtaccessFile as $directoryRelativePath){
+			$this->createHtaccessFile($directoryRelativePath);
 		}
 
 		$files = array_diff(scandir('modules'), array('..', '.'));
 
 		foreach ($files as $file){
 			if(is_dir('modules/' .$file)){
-				$modulePath = 'modules/' .$file;
+				$moduleRelativePath = 'modules/' .$file;
+				$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
 
-				if(is_dir($modulePath. '/scripts')){
-					if(!$this->hasHtaccessDenyFile($modulePath. '/scripts')){
-						$this->generateHtaccessDenyFile($modulePath. '/scripts');
+				if(is_dir($moduleAbsolutePath. '/scripts')){
+					if(!$this->hasHtaccessDenyFile($moduleAbsolutePath. '/scripts')){
+						$this->generateHtaccessDenyFile($moduleAbsolutePath. '/scripts');
 					}
 				}
 
-				if(is_dir($modulePath. '/install')){
-					if(!$this->hasHtaccessDenyFile($modulePath. '/install')){
-						$this->generateHtaccessDenyFile($modulePath. '/install');
+				if(is_dir($moduleAbsolutePath. '/install')){
+					if(!$this->hasHtaccessDenyFile($moduleAbsolutePath. '/install')){
+						$this->generateHtaccessDenyFile($moduleAbsolutePath. '/install');
 					}
 				}
 			}
 		}
 	}
 
-	function repairHtaccessFile($directory){
+	function createHtaccessFile($directoryRelativePath){
 		global $libFilesystem;
 
-		$absoluteDirectoryPath = $libFilesystem->getAbsolutePath($directory);
+		$directoryAbsolutePath = $libFilesystem->getAbsolutePath($directoryRelativePath);
 
-		if(!$this->hasHtaccessDenyFile($absoluteDirectoryPath)){
-			$this->generateHtaccessDenyFile($absoluteDirectoryPath);
+		if(!$this->hasHtaccessDenyFile($directoryAbsolutePath)){
+			$this->generateHtaccessDenyFile($directoryAbsolutePath);
 		}
 	}
 
@@ -197,32 +203,36 @@ class LibCronJobs{
 
 	//------------------------------------------------------
 
-	function generateHtaccessAllowFile($directoryPath){
+	function generateHtaccessAllowFile($directoryAbsolutePath){
 		$content = 'allow from all';
-		$this->generateHtaccessFile($directoryPath, $content);
+		$this->generateHtaccessFile($directoryAbsolutePath, $content);
 	}
 
-	function generateHtaccessDenyFile($directoryPath){
+	function generateHtaccessDenyFile($directoryAbsolutePath){
 		$content = 'deny from all';
-		$this->generateHtaccessFile($directoryPath, $content);
+		$this->generateHtaccessFile($directoryAbsolutePath, $content);
     }
 
-    function generateHtaccessFile($directoryPath, $content){
-    	$filePath = $directoryPath. '/.htaccess';
-	    $handle = @fopen($filePath, 'w');
+    function generateHtaccessFile($directoryAbsolutePath, $content){
+		global $libFilesystem;
+
+    	$fileAbsolutePath = $directoryAbsolutePath. '/.htaccess';
+	    $handle = @fopen($fileAbsolutePath, 'w');
     	@fwrite($handle, $content);
     	@fclose($handle);
     }
 
-    function hasHtaccessDenyFile($directoryPath){
-    	$filePath = $directoryPath. '/.htaccess';
+    function hasHtaccessDenyFile($directoryAbsolutePath){
+    	global $libFilesystem;
 
-    	if(!is_file($filePath)){
+    	$fileAbsolutePath = $directoryAbsolutePath. '/.htaccess';
+
+    	if(!is_file($fileAbsolutePath)){
     		return false;
     	}
 
-    	$handle = @fopen($filePath, 'r');
-    	$content = @fread($handle, @filesize($filePath));
+    	$handle = @fopen($fileAbsolutePath, 'r');
+    	$content = @fread($handle, @filesize($fileAbsolutePath));
     	@fclose($handle);
 
     	if($content == 'deny from all'){
