@@ -29,6 +29,7 @@ require_once(__DIR__ . '/../pear/autoload.php');
 /*
 * deprecated
 */
+class LibAuth extends vcms\LibAuth{}
 class LibInclude extends vcms\module\LibInclude{}
 class LibPage extends vcms\module\LibPage{}
 class LibAccessRestriction extends vcms\module\LibAccessRestriction{}
