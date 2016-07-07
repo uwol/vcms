@@ -28,7 +28,7 @@ class LibFilesystem{
 	}
 
 	function getAbsolutePath($relativePath){
-		return realpath($this->baseDir. '/' .$relativePath);
+		return $this->baseDir. '/' .$relativePath;
 	}
 
 	function deleteDirectory($relativeDirectoryPath){
