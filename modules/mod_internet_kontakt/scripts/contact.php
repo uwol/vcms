@@ -74,8 +74,6 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 	}
 
 	if(!$error_emailaddress && !$error_message) {
-		require_once('lib/thirdparty/class.phpmailer.php');
-
 		$nachricht = $_POST['name'] .' mit der Telefonnummer '.$_POST['telefon'].' und der E-Mail-Adresse ' .$_POST['emailaddress']. ' hat über das Kontaktformular folgende Nachricht geschrieben:' . PHP_EOL;
 		$nachricht .= PHP_EOL;
 		$nachricht .= $_POST['nachricht'];
@@ -87,6 +85,14 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 		$mail->Body = $libString->protectXSS($nachricht);
 		$mail->AddReplyTo($_POST['emailaddress']);
 		$mail->CharSet = 'UTF-8';
+
+		$mail->SMTPOptions = array(
+			'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+				'allow_self_signed' => true
+			)
+		);
 
 		/*
 		* SMTP mode

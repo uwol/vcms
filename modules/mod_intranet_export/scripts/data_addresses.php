@@ -48,7 +48,7 @@ if($libAuth->isLoggedin()){
 	if($sql != '' && is_array($header)){
 		$stmt = $libDb->prepare($sql);
 
-		$table = new LibTable($libDb);
+		$table = new vcms\LibTable($libDb);
 		$table->addHeader($header);
 		$table->addTableByStatement($stmt);
 

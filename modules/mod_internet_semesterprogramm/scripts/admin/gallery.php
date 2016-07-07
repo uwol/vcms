@@ -32,9 +32,6 @@ if(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])){
 }
 
 
-$libImage = new LibImage($libTime, $libGenericStorage);
-
-
 if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 	//delete image
 	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'deleteFoto'){

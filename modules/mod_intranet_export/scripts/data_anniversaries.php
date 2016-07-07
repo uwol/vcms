@@ -30,7 +30,7 @@ if($libAuth->isLoggedin()){
 	$stmt->bindValue(':semester', $_GET['semester']);
 	$stmt->execute();
 
-	$table = new LibTable($libDb);
+	$table = new vcms\LibTable($libDb);
 	$table->addHeader(array('semester_reception', 'anrede', 'rang', 'titel', 'vorname', 'praefix', 'name', 'suffix', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'telefon1', 'email', 'status', 'gruppe'));
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

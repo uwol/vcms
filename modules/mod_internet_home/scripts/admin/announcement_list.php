@@ -30,7 +30,6 @@ if(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
 		$stmt->execute();
 
 		$libGlobal->notificationTexts[] = 'Ankündigung gelöscht.';
-		$libImage = new LibImage($libTime, $libGenericStorage);
 		$libImage->deleteStartseitenBild($_REQUEST['id']);
 	} else {
 		$libGlobal->errorTexts[] = 'Keine Ankündigung angegeben.';

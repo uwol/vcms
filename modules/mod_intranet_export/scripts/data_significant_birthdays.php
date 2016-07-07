@@ -28,7 +28,7 @@ if($libAuth->isLoggedin()){
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'P' OR gruppe = 'W' OR gruppe = 'G' AND datum_geburtstag != '' AND datum_geburtstag IS NOT NULL ORDER BY DATE_FORMAT(datum_geburtstag, '%m%d')");
 	$stmt->execute();
 
-	$table = new LibTable($libDb);
+	$table = new vcms\LibTable($libDb);
 	$table->addHeader(array('datum_geburtstag', 'alter', 'anrede', 'rang', 'titel', 'vorname', 'praefix', 'name', 'suffix', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'telefon1', 'email', 'status', 'gruppe'));
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

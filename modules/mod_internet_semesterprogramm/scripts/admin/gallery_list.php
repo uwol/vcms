@@ -21,8 +21,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-$libImage = new LibImage($libTime, $libGenericStorage);
-
 //deletion
 if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'delete'){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
@@ -38,8 +36,6 @@ if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'delete'){
 	}
 }
 
-//new gallery form
-$libForm = new LibForm();
 
 echo '<h1>Foto-Verwaltung</h1>';
 

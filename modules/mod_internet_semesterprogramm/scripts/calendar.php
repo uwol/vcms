@@ -46,7 +46,7 @@ if($libAuth->isLoggedin()){
 }
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
-$calendar = new LibCalendar($zeitraum[0], $zeitraum[1]);
+$calendar = new \vcms\calendar\LibCalendar($zeitraum[0], $zeitraum[1]);
 
 $stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE (DATEDIFF(datum, :startdatum1) >= 0 AND DATEDIFF(datum, :startdatum2) <= 0) OR (DATEDIFF(datum_ende, :enddatum1) >= 0 AND DATEDIFF(datum_ende, :enddatum2) <= 0) ORDER BY datum");
 $stmt->bindValue(':startdatum1', $zeitraum[0]);
@@ -57,7 +57,7 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	//build event
-	$event = new LibCalendarEvent($row['datum']);
+	$event = new \vcms\calendar\LibCalendarEvent($row['datum']);
 	$event->setId($row['id']);
 	$event->setLocation($row['ort']);
 	$event->setSummary($row['titel']);
@@ -96,5 +96,5 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo $calendar->toString();
+echo '</div>';
 ?>
-</div>

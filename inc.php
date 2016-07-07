@@ -18,7 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
 require_once('custom/systemconfig.php');
-require_once('lib/masterinclude.php');
+require_once('vendor/vcms/initialize.php');
+
 
 if(isset($_REQUEST['iid'])){
 	$libGlobal->iid = $_REQUEST['iid'];

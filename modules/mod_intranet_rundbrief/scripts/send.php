@@ -21,10 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-require_once('lib/thirdparty/class.phpmailer.php');
-
 echo '<h1>Versand der Nachricht</h1>';
-
 
 $stmt = $libDb->prepare('SELECT email FROM base_person WHERE id=:id');
 $stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
@@ -258,6 +255,14 @@ function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaenger
 	if(is_file($attachementFile)){
 		$mail->AddAttachment($attachementFile, $attachementName);
 	}
+
+	$mail->SMTPOptions = array(
+		'ssl' => array(
+			'verify_peer' => false,
+			'verify_peer_name' => false,
+			'allow_self_signed' => true
+		)
+	);
 
 	/*
 	* SMTP mode

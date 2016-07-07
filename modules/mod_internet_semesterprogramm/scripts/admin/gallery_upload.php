@@ -26,10 +26,7 @@ if($libAuth->isLoggedin() &&
 		preg_match("/^[0-9]+$/", $_REQUEST['veranstaltungId']) &&
 		isset($_REQUEST['qqfile'])){
 
-	$libImage = new LibImage($libTime, $libGenericStorage);
-
 	$allowedExtensions = array('jpg', 'jpeg');
-
 	$result = handleUpload($allowedExtensions);
 
 	// to pass data through iframe you will need to encode all html tags

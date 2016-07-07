@@ -17,16 +17,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
-//security checks
 if(is_file('installer.php')){
 	die('Um das VCMS zu nutzen, muss nach der Installation die Datei installer.php entfernt werden.');
 }
 
 require_once('custom/systemconfig.php');
-require_once('lib/masterinclude.php');
+require_once('vendor/vcms/initialize.php');
 
-$libCronJobs = new LibCronJobs($libDb);
 
+$libCronJobs = new \vcms\LibCronJobs();
 $libMenuInternet = $libModuleHandler->getMenuInternet();
 $libMenuIntranet = $libModuleHandler->getMenuIntranet();
 $libMenuAdministration = $libModuleHandler->getMenuAdministration();
@@ -50,7 +49,7 @@ $libGlobal->page = $libModuleHandler->getPage($libGlobal->pid);
 $libGlobal->module = $libModuleHandler->getModuleByPageid($libGlobal->pid);
 
 //load page header
-require_once('lib/frame/header.php');
+require_once('vendor/vcms/frame/header.php');
 
 //security check
 if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->page, $libAuth)){
@@ -66,5 +65,5 @@ if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->pag
 }
 
 //load footer
-require_once('lib/frame/footer.php');
+require_once('vendor/vcms/frame/footer.php');
 ?>

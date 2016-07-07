@@ -57,7 +57,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
-$calendar = new LibCalendar($zeitraum[0], $zeitraum[1]);
+$calendar = new \vcms\calendar\LibCalendar($zeitraum[0], $zeitraum[1]);
 
 $stmt = $libDb->prepare("SELECT * FROM mod_chargierkalender_veranstaltung WHERE DATEDIFF(datum, :semester_start) > 0 AND DATEDIFF(datum, :semester_ende) < 0 ORDER BY datum");
 $stmt->bindValue(':semester_start', $zeitraum[0]);

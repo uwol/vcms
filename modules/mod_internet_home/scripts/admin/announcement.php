@@ -87,11 +87,9 @@ else{
 //images
 if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'bildupload'){
 	if($_FILES['bilddatei']['tmp_name'] != ''){
-		$libImage = new LibImage($libTime, $libGenericStorage);
 		$libImage->saveStartseitenBildByFilesArray($_REQUEST['id'], 'bilddatei');
 	}
 } elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'bilddelete'){
-	$libImage = new LibImage($libTime, $libGenericStorage);
 	$libImage->deleteStartseitenBild($_REQUEST['id']);
 }
 

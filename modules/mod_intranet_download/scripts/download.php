@@ -22,7 +22,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin() && isset($_GET['hash']) && $_GET['hash'] != ''){
-	require_once("lib/own/mime.class.php");
 	require_once("lib/lib.php");
 
 	$rootFolderPathString = 'custom/intranet/downloads';
@@ -36,7 +35,7 @@ if($libAuth->isLoggedin() && isset($_GET['hash']) && $_GET['hash'] != ''){
 		$outputFilePathString = $file->getFileSystemPath();
 
 		if(in_array($libAuth->getGruppe(), $file->readGroups)){
-			$libMime = new LibMime();
+			$libMime = new vcms\LibMime();
 			$mime = $libMime->detectMime($outputFileName);
 
 			/*
