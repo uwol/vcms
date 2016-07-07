@@ -24,11 +24,11 @@ class LibFilesystem{
 	var $baseDir;
 
 	function __construct($baseDir){
-		$this->baseDir = $baseDir;
+		$this->baseDir = realpath($baseDir);
 	}
 
 	function getAbsolutePath($relativePath){
-		return $this->baseDir. '/' .$relativePath;
+		return realpath($this->baseDir. '/' .$relativePath);
 	}
 
 	function deleteDirectory($relativeDirectoryPath){
