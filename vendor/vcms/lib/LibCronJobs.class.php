@@ -27,17 +27,17 @@ class LibCronJobs{
 		'installer.txt', 'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt',
 		'LICENSE', 'LICENSE.txt', 'README.md', '.gitignore');
 
-	var $directoriesToDelete = array('design', 'js', 'lib', 
+	var $directoriesToDelete = array('design', 'js', 'lib',
 			'modules/base_core', 'modules/base_internet_login',
 			'modules/base_internet_vereine', 'modules/base_intranet_administration_dbverwaltung',
-			'modules/base_intranet_dbadmin', 'modules/base_intranet_home', 'modules/base_intranet_personen', 
+			'modules/base_intranet_dbadmin', 'modules/base_intranet_home', 'modules/base_intranet_personen',
 			'modules/base_updatemanager', 'modules/mod_intranet_administration_export');
 
-	var $relativeDirectoriesToCreate = array('temp', 'custom/styles', 'custom/intranet', 
-		'custom/intranet/downloads', 'custom/intranet/mitgliederfotos', 
+	var $relativeDirectoriesToCreate = array('temp', 'custom/styles', 'custom/intranet',
+		'custom/intranet/downloads', 'custom/intranet/mitgliederfotos',
 		'custom/semestercover', 'custom/veranstaltungsfotos');
 
-	var $relativeDirectoriesWithHtaccessFile = array('vendor/vcms/lib', 'custom/intranet', 
+	var $relativeDirectoriesWithHtaccessFile = array('vendor/vcms/lib', 'custom/intranet',
 		'custom/veranstaltungsfotos', 'temp');
 
 	function __construct(){
@@ -79,19 +79,19 @@ class LibCronJobs{
 
 		foreach($this->filesToDelete as $fileToDelete){
 			$filePath = $libFilesystem->getAbsolutePath($fileToDelete);
-		
+
 			if(is_file($filePath)){
 				unlink($filePath);
 			}
 		}
 	}
-	
+
 	function deleteDirectories(){
 		global $libFilesystem;
 
 		foreach($this->directoriesToDelete as $directoryRelativePath){
 			$directoryAbsolutePath = $libFilesystem->getAbsolutePath($directoryRelativePath);
-		
+
 			if(is_dir($directoryAbsolutePath)){
 				$libFilesystem->deleteDirectory($directoryRelativePath);
 			}
@@ -115,7 +115,7 @@ class LibCronJobs{
 		}
 	}
 
-	function repairHtaccessFiles(){	
+	function repairHtaccessFiles(){
 		foreach($this->relativeDirectoriesWithHtaccessFile as $relativeDirectoryWithHtaccessFile){
 			$this->repairHtaccessFile($relativeDirectoryWithHtaccessFile);
 		}
@@ -145,7 +145,7 @@ class LibCronJobs{
 		global $libFilesystem;
 
 		$absoluteDirectoryPath = $libFilesystem->getAbsolutePath($directory);
-	
+
 		if(!$this->hasHtaccessDenyFile($absoluteDirectoryPath)){
 			$this->generateHtaccessDenyFile($absoluteDirectoryPath);
 		}

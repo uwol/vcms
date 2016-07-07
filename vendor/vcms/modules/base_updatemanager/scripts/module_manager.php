@@ -48,7 +48,7 @@ $libFilesystem->deleteDirectory($tempRelativeDirectoryPath);
 */
 if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] != 'engine'){
 	$module = $_REQUEST['modul'];
-	
+
 	$tarRelativeFilePath = $tempRelativeDirectoryPath. '/' .$module. '.tar';
 	$tarAbsoluteFilePath = $libFilesystem->getAbsolutePath($tarRelativeFilePath);
 
@@ -132,7 +132,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 		$libFilesystem->deleteDirectory($moduleRelativeDirectoryPath);
 
 		//refresh module handler
-		$libModuleHandler = new vcms\LibModuleHandler(); 
+		$libModuleHandler = new vcms\LibModuleHandler();
 	}
 
 	/*
@@ -242,8 +242,8 @@ if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'updateEngine'){
 	$tar->extract($tempRelativeDirectoryPath. '/');
 
 	if(is_dir($tempEngineAbsoluteDirectoryPath)){
-		if(is_file($tempEngineAbsoluteDirectoryPath. '/index.php') 
-				&& is_file($tempEngineAbsoluteDirectoryPath. '/inc.php') 
+		if(is_file($tempEngineAbsoluteDirectoryPath. '/index.php')
+				&& is_file($tempEngineAbsoluteDirectoryPath. '/inc.php')
 				&& is_dir($tempEngineAbsoluteDirectoryPath. '/vendor')){
 			$libCronJobs->deleteFiles();
 
@@ -307,8 +307,12 @@ foreach($manifestArray as $row){
 $installedModules = array();
 
 foreach($libModuleHandler->getModules() as $module){
-	if(!array_key_exists($module->getId(), $modules)){
-		$modules[$module->getId()] = '';
+	$isBaseModule = substr($module->getId(), 0, 5) == 'base_';
+
+	if(!$isBaseModule){
+		if(!array_key_exists($module->getId(), $modules)){
+			$modules[$module->getId()] = '';
+		}
 	}
 }
 
