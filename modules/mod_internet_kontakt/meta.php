@@ -1,6 +1,6 @@
 <?php
 $moduleName = 'Kontakt';
-$version = '2.23';
+$version = '2.24';
 $installScript = '';
 $uninstallScript = '';
 $updateScript = '';

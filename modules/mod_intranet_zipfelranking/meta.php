@@ -1,6 +1,6 @@
 <?php
 $moduleName = 'Intranet Zipfelranking';
-$version = '2.10';
+$version = '2.11';
 $installScript = 'install/install.php';
 $uninstallScript = '';
 $updateScript = '';

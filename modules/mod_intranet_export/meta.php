@@ -1,6 +1,6 @@
 <?php
 $moduleName = 'Intranet Administration für Export';
-$version = '2.12';
+$version = '2.13';
 $installScript = '';
 $uninstallScript = '';
 $updateScript = '';
