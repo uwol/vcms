@@ -76,6 +76,9 @@ if(isset($_REQUEST['aktion'])){
 	* install all modules
 	*/
 	if($_REQUEST['aktion'] == 'installAllModules'){
+		echo '<p class="alert alert-info">Der Installer für die Engine wird gestartet.</p>';
+		include('vendor/vcms/install/install.php');
+
 		foreach($libModuleHandler->getModules() as $module){
 			if($module->getInstallScript() != ''){
 				echo '<p class="alert alert-info">Der Installer ' .$module->getPath().'/'.$module->getInstallScript(). ' wird gestartet.</p>';
