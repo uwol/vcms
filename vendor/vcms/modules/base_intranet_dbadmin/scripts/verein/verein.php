@@ -21,8 +21,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 if($libAuth->isLoggedin()){
-	$libForm = new LibForm();
-
 	$id = '';
 	if(isset($_REQUEST['id'])){
 		$id = $_REQUEST['id'];
