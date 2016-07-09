@@ -468,9 +468,9 @@ function downloadContent($url, $destinationFile = false){
 		}
 	} else {
 		if(!$destinationFile){
-			return httpclient\HttpClient::quickGet($url);
+			return \httpclient\HttpClient::quickGet($url);
 		} else{
-			$contents = httpclient\HttpClient::quickGet($url);
+			$contents = \httpclient\HttpClient::quickGet($url);
 			file_put_contents($destinationFile, $contents);
 		}
 	}

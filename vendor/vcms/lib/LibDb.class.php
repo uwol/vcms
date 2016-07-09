@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 namespace vcms;
 
 use PDO;
+use PDOException;
 
 class LibDb{
 	var $connection;
@@ -50,7 +51,6 @@ class LibDb{
 			$this->connection = new PDO($dsn, $libConfig->mysqlUser, $libConfig->mysqlPass, $options);
 		} catch (PDOException $e) {
 			die('Error: the connection to the MySQL database could not be established. Probably the MySQL parameters in custom/systemconfig.php are invalid.');
-			// 'The error message is: ' . $e->getMessage()
 		}
 	}
 
