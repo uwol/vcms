@@ -342,11 +342,29 @@ $stmt->bindValue(':name', 'Bursche');
 $stmt->bindValue(':gruppe', 'B');
 $stmt->execute();
 
-$stmt = $libDb->prepare('INSERT IGNORE INTO base_person (id, titel, vorname, name, gruppe, datum_geburtstag) VALUES (3, :titel, :vorname, :name, :gruppe, DATE_SUB(CURDATE(), INTERVAL 50 YEAR))');
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_person (id, titel, vorname, name, gruppe, datum_geburtstag, heirat_partner, heirat_datum) VALUES (3, :titel, :vorname, :name, :gruppe, DATE_SUB(CURDATE(), INTERVAL 50 YEAR), 4, DATE_SUB(CURDATE(), INTERVAL 2 DAY))');
 $stmt->bindValue(':titel', 'Dr.');
 $stmt->bindValue(':vorname', 'Peter');
 $stmt->bindValue(':name', 'Philister');
 $stmt->bindValue(':gruppe', 'P');
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_person (id, vorname, name, gruppe, heirat_partner) VALUES (4, :vorname, :name, :gruppe, 3)');
+$stmt->bindValue(':vorname', 'Gabriele');
+$stmt->bindValue(':name', 'Gattin');
+$stmt->bindValue(':gruppe', 'G');
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_person (id, vorname, name, gruppe) VALUES (5, :vorname, :name, :gruppe)');
+$stmt->bindValue(':vorname', 'Claudia');
+$stmt->bindValue(':name', 'Couleurdame');
+$stmt->bindValue(':gruppe', 'C');
+$stmt->execute();
+
+$stmt = $libDb->prepare('INSERT IGNORE INTO base_person (id, vorname, name, gruppe, tod_datum, datum_geburtstag) VALUES (6, :vorname, :name, :gruppe, DATE_SUB(CURDATE(), INTERVAL 3 DAY), DATE_SUB(CURDATE(), INTERVAL 80 YEAR))');
+$stmt->bindValue(':vorname', 'Valdemar');
+$stmt->bindValue(':name', 'Verstorbener');
+$stmt->bindValue(':gruppe', 'T');
 $stmt->execute();
 
 $stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung (id, datum, titel, beschreibung) VALUES (1, DATE_ADD(CURDATE(), INTERVAL 1 DAY), :titel, :beschreibung)');

@@ -80,6 +80,10 @@
     background-color: #222 !important;
 }
 
+.timeline > .timeline-body > .timeline-event > .timeline-badge.wedding {
+    background-color: #984FD8 !important;
+}
+
 .timeline > .timeline-body > .timeline-event > .timeline-panel {
 	position: relative;
 	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.176);
