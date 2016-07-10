@@ -201,7 +201,6 @@ printPrimaryAddress($row);
 printSecondaryAddress($row);
 printCommunication($row);
 printAssociationDetails($row);
-echo '<hr />';
 printVita($row);
 echo '</div>';
 echo '</div>';
@@ -704,7 +703,7 @@ function printAssociationDetails($row){
 	/*
 	* others
 	*/
-	if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'K' && $row['gruppe'] != 'Y'){
+	if($row['semester_reception'] != '' || $row['semester_promotion'] != '' || $row['semester_philistrierung'] != '' || $row['semester_aufnahme'] != '' || $row['semester_fusion'] != ''){
 		echo '<hr />';
 		echo '<div>';
 
@@ -821,6 +820,7 @@ function getClassForChargierAnzahl($chargierAnzahl){
 }
 
 function printVita($row){
+	echo '<hr />';
 	echo '<article>';
 
 	$vita = trim($row['vita']);
