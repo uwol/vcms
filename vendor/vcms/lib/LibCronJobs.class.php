@@ -23,9 +23,10 @@ use PDO;
 
 class LibCronJobs{
 
-	var $filesToDelete = array('installer.php', 'installer2.php', 'installer3.php',
-		'installer.txt', 'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt',
-		'LICENSE', 'LICENSE.txt', 'README.md', '.gitignore');
+	var $filesToDelete = array('.gitignore', 'composer.json', 
+		'installer.php', 'installer2.php', 'installer3.php', 'installer.txt', 
+		'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt',
+		'LICENSE', 'LICENSE.txt', 'README.md');
 
 	var $directoriesToDelete = array('design', 'js', 'lib',
 		'modules/base_core', 'modules/base_internet_login',
