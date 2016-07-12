@@ -42,7 +42,7 @@ class LibGallery{
 	}
 
 	function getPictures($eventid, $level){
-		if($eventid != "" && !is_numeric($eventid)){
+		if($eventid != '' && !is_numeric($eventid)){
 			exit();
 		}
 
@@ -56,16 +56,13 @@ class LibGallery{
 	    $pictures = array();
 
 		if(is_dir($path)){
-			$files = array_diff(scandir($path), array('..', '.'));
+			$files = array_diff(scandir($path), array('..', '.', 'thumbs'));
 
 			foreach ($files as $file){
-				if($file != "thumbs"){
-					//image?
-					$fileParts = explode(".", $file);
+				$fileParts = explode('.', $file);
 
-					if(strtolower($fileParts[count($fileParts)-1]) == "jpg"){
-						$pictures[] = $file;
-					}
+				if(strtolower($fileParts[count($fileParts)-1]) == 'jpg'){
+					$pictures[] = $file;
 				}
 	    	}
 	    }
@@ -95,15 +92,15 @@ class LibGallery{
 	* 2 - pool
 	*/
 	function getPublicityLevel($filename){
-		$array = explode(".", $filename);
+		$array = explode('.', $filename);
 		$stringbeforeextension = $array[count($array)-2];
 		$accessString = substr($stringbeforeextension, -2);
 
-		if($accessString == "-E"){
+		if($accessString == '-E'){
 			return 0;
-		} elseif($accessString == "-I"){
+		} elseif($accessString == '-I'){
 			return 1;
-		} elseif($accessString == "-P"){
+		} elseif($accessString == '-P'){
 			return 2;
 		} else {
 			return 2;
@@ -111,11 +108,11 @@ class LibGallery{
 	}
 
 	function hasPublicityLevel($filename){
-		$array = explode(".", $filename);
+		$array = explode('.', $filename);
 		$stringbeforeextension = $array[count($array)-2];
 		$accessString = substr($stringbeforeextension, -2);
 
-		if($accessString == "-E" || $accessString == "-I" || $accessString == "-P"){
+		if($accessString == '-E' || $accessString == '-I' || $accessString == '-P'){
 			return true;
 		}
 
@@ -123,19 +120,19 @@ class LibGallery{
 	}
 
 	function changeVisibility($filename, $string){
-		$array = explode(".", $filename);
+		$array = explode('.', $filename);
 		$criticalPart = $array[count($array)-2];
 
 		//is there already a visibility suffix?
-		if(substr($criticalPart, -2, 1) == "-"){
+		if(substr($criticalPart, -2, 1) == '-'){
 			//remove suffix
 			$criticalPart = substr($criticalPart, 0, -2);
 		}
 
-		$criticalPart = $criticalPart ."-".$string;
+		$criticalPart = $criticalPart. '-' .$string;
 
 		$array[count($array)-2] = $criticalPart;
-		return implode(".", $array);
+		return implode('.', $array);
 	}
 
 	function hasFotowartPrivilege($aemterArrayOfUser){

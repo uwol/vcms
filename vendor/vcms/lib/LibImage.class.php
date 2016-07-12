@@ -450,10 +450,6 @@ class LibImage{
 
 		$this->deleteImage('custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName);
 
-		if(count(@scandir('custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs')) == 2){
-			rmdir('custom/veranstaltungsfotos/'.$veranstaltungId.'/thumbs');
-		}
-
 		if(count(@scandir('custom/veranstaltungsfotos/'.$veranstaltungId)) == 2){
 			rmdir('custom/veranstaltungsfotos/'.$veranstaltungId);
 		}

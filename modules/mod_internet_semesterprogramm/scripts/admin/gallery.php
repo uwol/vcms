@@ -58,7 +58,6 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			if(isset($pictures[$_REQUEST['bildnr']])){
 				//rotate
 				$libImage->rotateImage('custom/veranstaltungsfotos/'.$id.'/'.$pictures[$_REQUEST['bildnr']], $degree);
-				$libImage->rotateImage('custom/veranstaltungsfotos/'.$id.'/thumbs/thumb_'.$pictures[$_REQUEST['bildnr']], $degree);
 			}
 		}
 	}
@@ -70,7 +69,6 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
 			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'E'));
-			rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'E'));
 		}
 	}
 	//publish image in intranet
@@ -81,7 +79,6 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
 			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'I'));
-			rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'I'));
 		}
 	}
 	//put image back in pool
@@ -92,7 +89,6 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
 			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'P'));
-			rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'P'));
 		}
 	}
 	//publish all images in internet
@@ -105,7 +101,6 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 				$thumbfilename = 'thumb_'.$pictures[$key];
 
 				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'E'));
-				rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'E'));
 			}
 		}
 	}
@@ -119,7 +114,6 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 				$thumbfilename = 'thumb_'.$pictures[$key];
 
 				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'I'));
-				rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'I'));
 			}
 		}
 	}
@@ -133,7 +127,6 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 				$thumbfilename = 'thumb_'.$pictures[$key];
 
 				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'P'));
-				rename('custom/veranstaltungsfotos/'.$id.'/thumbs/'.$thumbfilename, 'custom/veranstaltungsfotos/'.$id.'/thumbs/'.$libGallery->changeVisibility($thumbfilename, 'P'));
 			}
 		}
 	}
