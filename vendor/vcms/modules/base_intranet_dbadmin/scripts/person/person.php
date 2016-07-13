@@ -364,7 +364,7 @@ if($libAuth->isLoggedin()){
 		//image upload form
 		echo '<form action="index.php?pid=intranet_admin_db_person&amp;id='. $mgarray['id'] .'" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
 		echo '<input type="hidden" name="formtyp" value="fotoupload" />';
-		$libForm->printFileUpload('bilddatei', 'Foto hochladen');
+		$libForm->printFileUpload('bilddatei', 'Foto (4x3) hochladen');
 		echo '</form>';
 	}
 

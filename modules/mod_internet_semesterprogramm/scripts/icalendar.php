@@ -20,11 +20,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 if(!is_object($libGlobal))
 	exit();
 
-$calendarId = $libConfig->sitePath.'_semesterprogramm_';
+$calendarId = $libConfig->sitePath. '_semesterprogramm_';
 
 $calendar = new vcms\LibICalendar();
 
-$stmt = $libDb->prepare("SELECT id, datum, datum_ende, titel, beschreibung, status, ort FROM base_veranstaltung WHERE datum >= CURDATE() ORDER BY datum DESC");
+$stmt = $libDb->prepare('SELECT id, datum, datum_ende, titel, beschreibung, status, ort FROM base_veranstaltung WHERE datum >= CURDATE() ORDER BY datum DESC');
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -33,7 +33,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$e->setStartAndEndDateTime($row['datum'], $row['datum_ende']);
  	$e->description = $row['beschreibung'];
 	$e->location = $row['ort'];
-	$e->url = "http://" .$libConfig->sitePath. "/index.php?pid=semesterprogramm_event&eventid=". $row['id'];
+	$e->url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&eventid='. $row['id'];
 	$e->uid = $calendarId.$row['id'];
 	$calendar->addEvent($e);
 }

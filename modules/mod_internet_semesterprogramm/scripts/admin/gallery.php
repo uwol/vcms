@@ -57,7 +57,7 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 
 			if(isset($pictures[$_REQUEST['bildnr']])){
 				//rotate
-				$libImage->rotateImage('custom/veranstaltungsfotos/'.$id.'/'.$pictures[$_REQUEST['bildnr']], $degree);
+				$libImage->rotateImage('custom/veranstaltungsfotos/' .$id. '/' .$pictures[$_REQUEST['bildnr']], $degree);
 			}
 		}
 	}
@@ -66,9 +66,8 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 			$filename = $pictures[$_REQUEST['bildnr']];
-			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
-			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'E'));
+			rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'E'));
 		}
 	}
 	//publish image in intranet
@@ -76,9 +75,8 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 			$filename = $pictures[$_REQUEST['bildnr']];
-			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
-			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'I'));
+			rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'I'));
 		}
 	}
 	//put image back in pool
@@ -86,9 +84,8 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 			$filename = $pictures[$_REQUEST['bildnr']];
-			$thumbfilename = 'thumb_'.$pictures[$_REQUEST['bildnr']];
 
-			rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'P'));
+			rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'P'));
 		}
 	}
 	//publish all images in internet
@@ -98,9 +95,8 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 
 			foreach($pictures as $key => $value){
 				$filename = $pictures[$key];
-				$thumbfilename = 'thumb_'.$pictures[$key];
 
-				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'E'));
+				rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'E'));
 			}
 		}
 	}
@@ -111,22 +107,20 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 
 			foreach($pictures as $key => $value){
 				$filename = $pictures[$key];
-				$thumbfilename = 'thumb_'.$pictures[$key];
 
-				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'I'));
+				rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'I'));
 			}
 		}
 	}
-	//put all images back in pool
+	//put all images back into pool
 	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'poolalle'){
 		if(is_numeric($id)){
 			$pictures = $libGallery->getPictures($id, 2);
 
 			foreach($pictures as $key => $value){
 				$filename = $pictures[$key];
-				$thumbfilename = 'thumb_'.$pictures[$key];
 
-				rename('custom/veranstaltungsfotos/'.$id.'/'.$filename, 'custom/veranstaltungsfotos/'.$id.'/'.$libGallery->changeVisibility($filename, 'P'));
+				rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/'.$libGallery->changeVisibility($filename, 'P'));
 			}
 		}
 	}
@@ -166,7 +160,7 @@ echo '<script>
 echo '<p>Nach dem Hochladen von Bildern sind diese durch eine <a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
 
 
-if(is_dir("custom/veranstaltungsfotos/" .$id)){
+if(is_dir('custom/veranstaltungsfotos/' .$id)){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		echo '<hr />';
 
