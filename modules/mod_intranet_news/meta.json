@@ -1,0 +1,33 @@
+{
+	"moduleName": "Neuigkeiten",
+	"version": 2.29,
+	"installScript": "install/install.php",
+	"pages": [
+		{
+			"pid": "intranet_news_news",
+			"file": "list.php",
+			"directory": "scripts",
+			"title": "Neuigkeiten",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		},
+		{
+			"pid": "intranet_news_schreiben",
+			"file": "write.php",
+			"directory": "scripts",
+			"title": "Beitrag schreiben",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		}
+	],
+	"menuElementsIntranet": [
+		{
+			"pid": "intranet_news_news",
+			"name": "Neues",
+			"type": "menu_entry",
+			"position": 500
+		}
+	]
+}

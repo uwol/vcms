@@ -1,0 +1,50 @@
+{
+	"moduleName": "Chargierkalender",
+	"version": 2.32,
+	"installScript": "install/install.php",
+	"pages": [
+		{
+			"pid": "intranet_chargierkalender_kalender",
+			"file": "calendar.php",
+			"directory": "scripts",
+			"title": "Chargierkalender",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P"]
+			}
+		},
+		{
+			"pid": "intranet_chargierkalender_adminliste",
+			"file": "list.php",
+			"directory": "scripts/admin",
+			"title": "Chargierveranstaltungen",
+			"accessRestriction": {
+				"aemter": ["senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior", "internetwart"]
+			}
+		},
+		{
+			"pid": "intranet_chargierkalender_adminveranstaltung",
+			"file": "event.php",
+			"directory": "scripts/admin",
+			"title": "Chargierveranstaltung",
+			"accessRestriction": {
+				"aemter": ["senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior", "internetwart"]
+			}
+		}
+	],
+	"menuElementsIntranet": [
+		{
+			"pid": "intranet_chargierkalender_kalender",
+			"name": "Chargieren",
+			"type": "menu_entry",
+			"position": 10525
+		}
+	],
+	"menuElementsAdministration": [
+		{
+			"pid": "intranet_chargierkalender_adminliste",
+			"name": "Chargiereintrag",
+			"type": "menu_entry",
+			"position": 205
+		}
+	]
+}

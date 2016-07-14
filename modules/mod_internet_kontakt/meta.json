@@ -1,0 +1,23 @@
+{
+	"moduleName": "Kontakt",
+	"version": 2.25,
+	"pages": [
+		{
+			"pid": "kontakt_kontakt",
+			"file": "contact.php",
+			"directory": "scripts",
+			"title": "Kontakt"
+		}
+	],
+	"menuElementsInternet": [
+		{
+			"pid": "kontakt_kontakt",
+			"name": "Kontakt",
+			"type": "menu_entry",
+			"position": 30000
+		}
+	],
+	"headerStrings": [
+		"<meta name='robots' content='noindex' />"
+	]
+}

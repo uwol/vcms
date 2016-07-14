@@ -1,0 +1,33 @@
+{
+	"moduleName": "Reservierungen",
+	"version": 2.32,
+	"installScript": "install/install.php",
+	"pages": [
+		{
+			"pid": "intranet_reservierung_liste",
+			"file": "list.php",
+			"directory": "scripts",
+			"title": "Reservierungen",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		},
+		{
+			"pid": "intranet_reservierung_buchen",
+			"file": "booking.php",
+			"directory": "scripts",
+			"title": "Reservierung",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		}
+	],
+	"menuElementsIntranet": [
+		{
+			"pid": "intranet_reservierung_liste",
+			"name": "Reservierung",
+			"type": "menu_entry",
+			"position": 4000
+		}
+	]
+}

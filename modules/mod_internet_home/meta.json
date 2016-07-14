@@ -1,0 +1,47 @@
+{
+	"moduleName": "Home",
+	"version": 2.90,
+	"installScript": "install/install.php",
+	"pages": [
+		{
+			"pid": "home",
+			"file": "home.php",
+			"directory": "scripts",
+			"title": "Startseite"
+		},
+		{
+			"pid": "intranet_internethome_nachricht_adminliste",
+			"file": "announcement_list.php",
+			"directory": "scripts/admin",
+			"title": "Ankündigungen",
+			"accessRestriction": {
+				"aemter": ["senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior", "internetwart"]
+			}
+		},
+		{
+			"pid": "intranet_internethome_nachricht_adminankuendigung",
+			"file": "announcement.php",
+			"directory": "scripts/admin",
+			"title": "Ankündigung",
+			"accessRestriction": {
+				"aemter": ["senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior", "internetwart"]
+			}
+		}
+	],
+	"menuElementsInternet": [
+		{
+			"pid": "home",
+			"name": "Home",
+			"type": "menu_entry",
+			"position": 100
+		}
+	],
+	"menuElementsAdministration": [
+		{
+			"pid": "intranet_internethome_nachricht_adminliste",
+			"name": "Start",
+			"type": "menu_entry",
+			"position": 200
+		}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"moduleName": "Zipfelranking",
+	"version": 2.12,
+	"installScript": "install/install.php",
+	"pages": [
+		{
+			"pid": "intranet_zipfelranking",
+			"file": "zipfelranking.php",
+			"directory": "scripts",
+			"title": "Zipfelranking",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		}
+	],
+	"menuElementsIntranet": [
+		{
+			"pid": "intranet_zipfelranking",
+			"name": "Zipfel",
+			"type": "menu_entry",
+			"position": 10600
+		}
+	]
+}

@@ -1,0 +1,67 @@
+{
+	"moduleName": "Export",
+	"version": 2.14,
+	"pages": [
+		{
+			"pid": "intranet_admin_export",
+			"file": "export.php",
+			"directory": "scripts",
+			"title": "Export",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
+			}
+		}
+	],
+	"includes": [
+		{
+			"iid": "intranet_admin_export_daten_adressen",
+			"file": "data_addresses.php",
+			"directory": "scripts",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
+			}
+		},
+		{
+			"iid": "intranet_admin_export_daten_geburtstage",
+			"file": "data_birthdays.php",
+			"directory": "scripts",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
+			}
+		},
+		{
+			"iid": "intranet_admin_export_daten_rundegeburtstage",
+			"file": "data_significant_birthdays.php",
+			"directory": "scripts",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
+			}
+		},
+		{
+			"iid": "intranet_admin_export_daten_jubilaeen",
+			"file": "data_anniversaries.php",
+			"directory": "scripts",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
+			}
+		}
+	],
+	"menuElementsAdministration": [
+		{
+			"pid": "intranet_admin_export",
+			"name": "Export",
+			"type": "menu_entry",
+			"position": 210
+		}
+	]
+}

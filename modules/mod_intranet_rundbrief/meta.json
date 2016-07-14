@@ -1,0 +1,34 @@
+{
+	"moduleName": "Rundbrief",
+	"version": 2.25,
+	"installScript": "install/install.php",
+	"updateScript": "install/update.php",
+	"pages": [
+		{
+			"pid": "intranet_rundbrief_schreiben",
+			"file": "write.php",
+			"directory": "scripts",
+			"title": "Rundbrief",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		},
+		{
+			"pid": "intranet_rundbrief_senden",
+			"file": "send.php",
+			"directory": "scripts",
+			"title": "Rundbrief",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		}
+	],
+	"menuElementsIntranet": [
+		{
+			"pid": "intranet_rundbrief_schreiben",
+			"name": "Rundbrief",
+			"type": "menu_entry",
+			"position": 3333
+		}
+	]
+}

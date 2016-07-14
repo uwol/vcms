@@ -74,7 +74,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 			$tar->extract($tempRelativeDirectoryPath. '/');
 
 			if(is_dir($tempModuleAbsoluteDirectoryPath)){
-				if(is_file($tempModuleAbsoluteDirectoryPath. '/meta.php')){
+				if(is_file($tempModuleAbsoluteDirectoryPath. '/meta.json')){
 					if(!is_dir($moduleAbsoluteDirectoryPath)){
 						//copy temporary module folder
 						$libFilesystem->copyDirectory($tempModuleRelativeDirectoryPath, $moduleRelativeDirectoryPath);
@@ -94,7 +94,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 						echo '<p>Fehler: Das Modul ist bereits installiert.</p>';
 					}
 				} else {
-					echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.php</p>';
+					echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.json</p>';
 				}
 			} else {
 				echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
@@ -150,7 +150,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 		$tar->extract($tempRelativeDirectoryPath. '/');
 
 		if(is_dir($tempModuleAbsoluteDirectoryPath)){
-			if(is_file($tempModuleAbsoluteDirectoryPath. '/meta.php')){
+			if(is_file($tempModuleAbsoluteDirectoryPath. '/meta.json')){
 				if(is_dir($moduleAbsoluteDirectoryPath)){
 
 					if(is_dir($tempModuleAbsoluteDirectoryPath. '/custom')){
@@ -204,7 +204,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 					echo '<p>Fehler: Das zu aktualisierende Modul ist nicht installiert.</p>';
 				}
 			} else {
-				echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.php.</p>';
+				echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.json.</p>';
 			}
 		} else {
 			echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
