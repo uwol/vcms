@@ -81,6 +81,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 						//refresh module handler
 						$libModuleHandler = new vcms\LibModuleHandler();
+						$libModuleHandler->initModules();
 
 						//run installation script
 						$moduleObject = $libModuleHandler->getModuleByModuleid($module);
@@ -133,6 +134,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 		//refresh module handler
 		$libModuleHandler = new vcms\LibModuleHandler();
+		$libModuleHandler->initModules();
 	}
 
 	/*
@@ -191,6 +193,7 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 
 					//refresh module handler
 					$libModuleHandler = new vcms\LibModuleHandler();
+					$libModuleHandler->initModules();
 
 					//run update script
 					$moduleObject = $libModuleHandler->getModuleByModuleid($module);
