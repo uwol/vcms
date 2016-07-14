@@ -70,6 +70,8 @@ $libString = new vcms\LibString();
 $libFilesystem = new vcms\LibFilesystem(__DIR__ . '/../..');
 $libForm = new vcms\LibForm();
 $libGallery = new vcms\LibGallery();
+$libModuleHandler = new vcms\LibModuleHandler();
+$libModuleParser = new vcms\LibModuleParser();
 $libSecurityManager = new vcms\LibSecurityManager();
 $libTime = new vcms\LibTime();
 $libEvent = new vcms\LibEvent();
@@ -79,7 +81,12 @@ $libGenericStorage = new vcms\LibGenericStorage($libDb, $libString);
 $libImage = new vcms\LibImage($libTime, $libGenericStorage);
 $libVerein = new vcms\LibAssociation($libDb, $libTime);
 $libMitglied = new vcms\LibMember($libTime, $libDb, $libConfig);
-$libModuleHandler = new vcms\LibModuleHandler();
+
+
+/*
+* init modules
+*/
+$libModuleHandler->initModules();
 
 
 /*

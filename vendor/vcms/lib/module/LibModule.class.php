@@ -30,8 +30,13 @@ class LibModule{
 	var $installScript;
 	var $uninstallScript;
 	var $updateScript;
+	var $menuElementsInternet;
+	var $menuElementsIntranet;
+	var $menuElementsAdministration;
 
-	function __construct($id, $name, $version, $path, &$pages, &$includes, $headerStrings, $installScript, $uninstallScript, $updateScript){
+	function __construct($id, $name, $version, $path, $pages, $includes, $headerStrings,
+			$installScript, $uninstallScript, $updateScript,
+			$menuElementsInternet, $menuElementsIntranet, $menuElementsAdministration){
 		if($id == ''){
 			echo('Fehler: Fehlende Module-Id<br />');
 		}
@@ -61,10 +66,16 @@ class LibModule{
 		$this->name = $name;
 		$this->path = $path;
 		$this->pages = $pages;
+		$this->includes = $includes;
+
 		$this->installScript = $installScript;
 		$this->uninstallScript = $uninstallScript;
 		$this->updateScript = $updateScript;
-		$this->includes = $includes;
+
+		$this->menuElementsInternet = $menuElementsInternet;
+		$this->menuElementsIntranet = $menuElementsIntranet;
+		$this->menuElementsAdministration = $menuElementsAdministration;
+
 		$this->headerStrings = $headerStrings;
 	}
 
@@ -88,6 +99,10 @@ class LibModule{
 		return $this->pages;
 	}
 
+	function getIncludes(){
+		return $this->includes;
+	}
+
 	function getInstallScript(){
 		return $this->installScript;
 	}
@@ -100,8 +115,16 @@ class LibModule{
 		return $this->updateScript;
 	}
 
-	function getIncludes(){
-		return $this->includes;
+	function getMenuElementsInternet(){
+		return $this->menuElementsInternet;
+	}
+
+	function getMenuElementsIntranet(){
+		return $this->menuElementsIntranet;
+	}
+
+	function getMenuElementsAdministration(){
+		return $this->menuElementsAdministration;
 	}
 
 	function getHeaderStrings(){

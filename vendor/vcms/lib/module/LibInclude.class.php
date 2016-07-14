@@ -27,6 +27,7 @@ class LibInclude extends LibRestrictableElement{
 
 	function __construct($iid, $directory, $file, $accessRestriction){
 		parent::__construct($accessRestriction);
+
 		$this->iid = $iid;
 		$this->directory = $directory;
 		$this->file = $file;
@@ -45,7 +46,7 @@ class LibInclude extends LibRestrictableElement{
 	}
 
 	function getPath(){
-		return $this->directory . $this->file;
+		return $this->directory. '/' .$this->file;
 	}
 
 	function getDirectory(){

@@ -52,7 +52,7 @@ class LibPage extends LibRestrictableElement{
 	}
 
 	function getPath(){
-		return $this->directory . $this->file;
+		return $this->directory. '/' .$this->file;
 	}
 
 	function getDirectory(){

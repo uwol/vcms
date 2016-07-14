@@ -35,8 +35,6 @@ class LibModuleHandler{
 		$this->menuInternet = new \vcms\menu\LibMenu();
 		$this->menuIntranet = new \vcms\menu\LibMenu();
 		$this->menuAdministration = new \vcms\menu\LibMenu();
-
-		$this->initModules();
 	}
 
 	function getModModuleFiles(){
@@ -78,65 +76,31 @@ class LibModuleHandler{
 	}
 
 	function initModule($moduleDirectory, $moduleRelativePath){
-		global $libConfig, $libGlobal, $libFilesystem, $libString, $libTime, $libVerein, $libDb, $libMitglied, $libGenericStorage, $libSecurityManager, $libAuth;
+		global $libFilesystem, $libModuleParser;
 
 		$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
+		$module = null;
 
-		//read meta.php of module
-		if(file_exists($moduleAbsolutePath. '/meta.php')){
-			require($moduleAbsolutePath. '/meta.php');
+		if(file_exists($moduleAbsolutePath. '/meta.json')){
+			$module = $libModuleParser->parseMetaJson($moduleDirectory, $moduleRelativePath);
+			$this->modules[$moduleDirectory] = $module;
+		} elseif(file_exists($moduleAbsolutePath. '/meta.php')) {
+			$module = $libModuleParser->parseMetaPhp($moduleDirectory, $moduleRelativePath);
+			$this->modules[$moduleDirectory] = $module;
 		} else {
 			echo('Fehler: Die Modulinformationsdatei ' .$moduleRelativePath. '/meta.php konnte nicht gefunden werden.<br />');
 		}
 
-		if($version != '' && !is_numeric($version)){
-			echo('Fehler: Versionsangabe nicht numerisch in Modul ' .$moduleRelativePath. '<br />');
+		if(!is_null($module)){
+			$this->validateModule($module);
+			$this->registerModule($module, $moduleRelativePath);
 		}
+	}
 
-		if($moduleName == ''){
-			echo('Fehler: Keine Variable moduleName in Modul ' .$moduleRelativePath. '<br />');
-		}
+	function validateModule($module){
+		global $libSecurityManager;
 
-		if(!isset($installScript)){
-			echo('Fehler: Keine Variable installScript in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		if(!isset($uninstallScript)){
-			echo('Fehler: Keine Variable uninstallScript in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		if(!isset($updateScript)){
-			echo('Fehler: Keine Variable updateScript in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		if(!is_array($pages)){
-			echo('Fehler: Kein Array pages in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		if(!is_array($includes)){
-			echo('Fehler: Kein Array includes in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		if(!is_array($headerStrings)){
-			echo('Fehler: Kein Array headerStrings in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		if(!is_array($menuElementsInternet)){
-			echo('Fehler: Kein Array menuElementsInternet in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		if(!is_array($menuElementsIntranet)){
-			echo('Fehler: Kein Array menuElementsIntranet in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		if(!is_array($menuElementsAdministration)){
-			echo('Fehler: Kein Array menuElementsAdministration in Modul ' .$moduleRelativePath. '<br />');
-		}
-
-		//regenerate page array
-		$pagesarray = array();
-
-		foreach($pages as $page){
+		foreach($module->pages as $page){
 			// does the page have a restriction?
 			if($page->hasAccessRestriction()){
 				$accessRestriction = $page->getAccessRestriction();
@@ -147,28 +111,13 @@ class LibModuleHandler{
 						$libSecurityManager->getPossibleAemter());
 
 					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
-						echo('Fehler: Seite ' .$page->getPid(). ' in Modul ' .$moduleRelativePath. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter). '<br />');
+						echo('Fehler: Seite ' .$page->getPid(). ' in Modul ' .$module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter). '<br />');
 					}
 				}
 			}
-
-			$pagedir = $page->getDirectory();
-
-			if($pagedir != '' && substr($pagedir, strlen($pagedir)-1, 1) != '/'){
-				echo('In Modul ' .$moduleRelativePath. ' endet der Pfad ' .$pagedir. ' der Seite '.$page->getPid().' nicht mit einem / <br />');
-			}
-
-			$page->setDirectory($moduleRelativePath. '/' .$page->getDirectory());
-			$pagesarray[$page->getPid()] = $page;
 		}
 
-		//from now on only pagesarray
-		unset($pages);
-
-		//regenerate includes array
-		$includesarray = array();
-
-		foreach($includes as $include){
+		foreach($module->includes as $include){
 			//does the include have a restriction?
 			if($include->hasAccessRestriction()){
 				$accessRestriction = $include->getAccessRestriction();
@@ -178,77 +127,75 @@ class LibModuleHandler{
 					$impossibleAemter = array_diff($accessRestriction->getAemter(),
 						$libSecurityManager->getPossibleAemter());
 
-					if(is_array($impossibleAemter) && count($impossibleAemter) >0){
-						echo('Fehler: Include ' .$include->getPid(). ' in Modul ' . $moduleRelativePath. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter). '<br />');
+					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
+						echo('Fehler: Include ' .$include->getPid(). ' in Modul ' . $module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter). '<br />');
 					}
 				}
 			}
-
-			$includeDir = $include->getDirectory();
-
-			if($includeDir != '' && substr($includeDir,strlen($includeDir)-1,1) != '/'){
-				echo('In Modul '. $moduleRelativePath. ' endet der Pfad ' .$includeDir. ' des Include '.$include->getIid().' nicht mit einem / <br />');
-			}
-
-			$include->setDirectory($moduleRelativePath .'/'. $include->getDirectory());
-			$includesarray[$include->getIid()] = $include;
 		}
 
-		//from now on only includesarray
-		unset($includes);
-
-		//instantiate module object
-		$module = new \vcms\module\LibModule($moduleDirectory, $moduleName,
-			$version, $moduleRelativePath, $pagesarray, $includesarray, $headerStrings, $installScript, $uninstallScript, $updateScript);
-		$this->modules[$moduleDirectory] = $module;
-
-		//reference pages
-		foreach($pagesarray as $page){
+		foreach($module->pages as $page){
 			//check for colliding pid
 			if(array_key_exists($page->getPid(), $this->pidToModulePointer)){
 				echo('Fehler: Die Seiten-Id ' .$page->getPid(). ' existiert bereits für eine Seite. Doppelte Seiten-Id-Vergabe ist nicht erlaubt.<br />');
 			}
+		}
 
+		foreach($module->includes as $include){
+			//check for colliding pid
+			if(array_key_exists($include->getIid(), $this->iidToModulePointer)){
+				echo('Fehler: Die Include-Id ' .$include->getIid(). ' existiert bereits für einen Include. Doppelte Include-Id-Vergabe ist nicht erlaubt.<br />');
+			}
+		}
+
+		foreach($module->menuElementsInternet as $menuElement){
+			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
+				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
+			}
+		}
+
+		foreach($module->menuElementsIntranet as $menuElement){
+			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
+				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
+			}
+		}
+
+		foreach($module->menuElementsAdministration as $menuElement){
+			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
+				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
+			}
+		}
+	}
+
+	function registerModule($module, $moduleRelativePath){
+		foreach($module->pages as $page){
+			$page->setDirectory($moduleRelativePath. '/' .$page->getDirectory());
+		}
+
+		foreach($module->includes as $include){
+			$include->setDirectory($moduleRelativePath .'/'. $include->getDirectory());
+		}
+
+		foreach($module->pages as $page){
 			$this->pidToModulePointer[$page->getPid()] = $module;
 		}
 
-		//reference includes
-		foreach($includesarray as $include){
-			//check for colliding pid
-			if(array_key_exists($include->getIid(), $this->iidToModulePointer)){
-				echo('Fehler: Die Include-Id ' .$include->getIid(). ' existiert bereits für ein Include. Doppelte Include-Id-Vergabe ist nicht erlaubt.<br />');
-			}
-
+		foreach($module->includes as $include){
 			$this->iidToModulePointer[$include->getIid()] = $module;
 		}
 
-		//read internet menu elements
-		foreach($menuElementsInternet as $menuElement){
-			if(!$this->menuElementHasValidPid($menuElement, $pagesarray)){
-				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$moduleRelativePath. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
-			}
-
-			$this->menuElementAddAccessRestriction($menuElement, $pagesarray);
+		foreach($module->menuElementsInternet as $menuElement){
+			$this->menuElementAddAccessRestriction($menuElement, $module->pages);
 			$this->menuInternet->addMenuElement($menuElement);
 		}
 
-		//read intranet menu element
-		foreach($menuElementsIntranet as $menuElement){
-			if(!$this->menuElementHasValidPid($menuElement, $pagesarray)){
-				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$moduleRelativePath. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
-			}
-
-			$this->menuElementAddAccessRestriction($menuElement, $pagesarray);
+		foreach($module->menuElementsIntranet as $menuElement){
+			$this->menuElementAddAccessRestriction($menuElement, $module->pages);
 			$this->menuIntranet->addMenuElement($menuElement);
 		}
 
-		//read administration menu elements
-		foreach($menuElementsAdministration as $menuElement){
-			if(!$this->menuElementHasValidPid($menuElement, $pagesarray)){
-				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$moduleRelativePath. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
-			}
-
-			$this->menuElementAddAccessRestriction($menuElement, $pagesarray);
+		foreach($module->menuElementsAdministration as $menuElement){
+			$this->menuElementAddAccessRestriction($menuElement, $module->pages);
 			$this->menuAdministration->addMenuElement($menuElement);
 		}
 	}
@@ -420,5 +367,4 @@ class LibModuleHandler{
 
 		return $menu;
 	}
-
 }
