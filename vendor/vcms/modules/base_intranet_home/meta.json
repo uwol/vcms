@@ -1,0 +1,34 @@
+{
+	"moduleName": "Intranet-Portal",
+	"pages": [
+		{
+			"pid": "intranet_home",
+			"file": "home.php",
+			"directory": "scripts",
+			"title": "Portal",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		}
+	],
+	"includes": [
+		{
+			"iid": "intranet_kalender_geburtstageaktivitas",
+			"file": "icalendar_birthdays_aktivitas.php",
+			"directory": "scripts"
+		},
+		{
+			"iid": "intranet_kalender_todestage",
+			"file": "icalendar_obituary.php",
+			"directory": "scripts"
+		}
+	],
+	"menuElementsIntranet": [
+		{
+			"pid": "intranet_home",
+			"name": "Portal",
+			"type": "menu_entry",
+			"position": 50
+		}
+	]
+}

@@ -1,0 +1,203 @@
+{
+	"moduleName": "DB-Admin",
+	"pages": [
+		{
+			"pid": "intranet_admin_db_personenliste",
+			"file": "personen.php",
+			"directory": "scripts/person",
+			"title": "Personen",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_person",
+			"file": "person.php",
+			"directory": "scripts/person",
+			"title": "Person",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_semesterliste",
+			"file": "semesters.php",
+			"directory": "scripts/semester",
+			"title": "Semester",
+			"accessRestriction": {
+				"aemter": ["internetwart"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_semester",
+			"file": "semester.php",
+			"directory": "scripts/semester",
+			"title": "Semester",
+			"accessRestriction": {
+				"aemter": ["internetwart"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_veranstaltungsliste",
+			"file": "veranstaltungen.php",
+			"directory": "scripts/veranstaltung",
+			"title": "Veranstaltungen",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_veranstaltung",
+			"file": "veranstaltung.php",
+			"directory": "scripts/veranstaltung",
+			"title": "Veranstaltung",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_vereinsliste",
+			"file": "vereine.php",
+			"directory": "scripts/verein",
+			"title": "Vereine",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_verein",
+			"file": "verein.php",
+			"directory": "scripts/verein",
+			"title": "Verein",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_vipliste",
+			"file": "vips.php",
+			"directory": "scripts/vip",
+			"title": "Vips",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_vip",
+			"file": "vip.php",
+			"directory": "scripts/vip",
+			"title": "Vip",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_vereinsmitgliedschaftenliste",
+			"file": "vereinsmitgliedschaften.php",
+			"directory": "scripts/vereinsmitgliedschaft",
+			"title": "Vereinsmitgliedschaften",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_vereinsmitgliedschaft",
+			"file": "vereinsmitgliedschaft.php",
+			"directory": "scripts/vereinsmitgliedschaft",
+			"title": "Vereinsmitgliedschaft",
+			"accessRestriction": {
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_gruppen",
+			"file": "gruppen.php",
+			"directory": "scripts",
+			"title": "Gruppen",
+			"accessRestriction": {
+				"aemter": ["internetwart"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_status",
+			"file": "status.php",
+			"directory": "scripts",
+			"title": "Status",
+			"accessRestriction": {
+				"aemter": ["internetwart"]
+			}
+		},
+		{
+			"pid": "intranet_admin_db_region",
+			"file": "regionen.php",
+			"directory": "scripts",
+			"title": "Regionen",
+			"accessRestriction": {
+				"aemter": ["internetwart"]
+			}
+		}
+	],
+	"menuElementsAdministration": [
+		{
+			"name": "Daten",
+			"type": "menu_folder",
+			"position": 50, 
+			"elements": [
+				{
+					"pid": "intranet_admin_db_personenliste",
+					"name": "Personen",
+					"type": "menu_entry",
+					"position": 200
+				},
+				{
+					"pid": "intranet_admin_db_semesterliste",
+					"name": "Semester",
+					"type": "menu_entry",
+					"position": 300
+				},
+				{
+					"pid": "intranet_admin_db_veranstaltungsliste",
+					"name": "Veranstaltungen",
+					"type": "menu_entry",
+					"position": 400
+				},
+				{
+					"pid": "intranet_admin_db_vereinsliste",
+					"name": "Vereine",
+					"type": "menu_entry",
+					"position": 500
+				},
+				{
+					"pid": "intranet_admin_db_vipliste",
+					"name": "Vips",
+					"type": "menu_entry",
+					"position": 550
+				},
+				{
+					"pid": "intranet_admin_db_vereinsmitgliedschaftenliste",
+					"name": "Mitgliedschaften",
+					"type": "menu_entry",
+					"position": 501
+				},
+				{
+					"pid": "intranet_admin_db_gruppen",
+					"name": "Gruppen",
+					"type": "menu_entry",
+					"position": 800
+				},
+				{
+					"pid": "intranet_admin_db_status",
+					"name": "Status",
+					"type": "menu_entry",
+					"position": 900
+				},
+				{
+					"pid": "intranet_admin_db_region",
+					"name": "Regionen",
+					"type": "menu_entry",
+					"position": 1000
+				}
+			]
+		}
+	]
+}

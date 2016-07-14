@@ -1,0 +1,22 @@
+{
+	"moduleName": "Modul-Manager",
+	"pages": [
+		{
+			"pid": "updater_liste",
+			"file": "module_manager.php",
+			"directory": "scripts",
+			"title": "Module",
+			"accessRestriction": {
+				"aemter": ["internetwart"]
+			}
+		}
+	],
+	"menuElementsAdministration": [
+		{
+			"pid": "updater_liste",
+			"name": "Module",
+			"type": "menu_entry",
+			"position": 2
+		}
+	]
+}

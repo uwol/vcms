@@ -52,33 +52,33 @@ class LibModuleParser{
 		$menuElementsIntranet = array();
 		$menuElementsAdministration = array();
 
-		if(isset($json['pages'])){
+		if(isset($json['pages']) && is_array($json['pages'])){
 			foreach($json['pages'] as $pageJson) {
 				$page = $this->parsePageJson($pageJson);
 				$pages[$page->getPid()] = $page;
 			}
 		}
 
-		if(isset($json['includes'])){
+		if(isset($json['includes']) && is_array($json['includes'])){
 			foreach($json['includes'] as $includeJson) {
 				$include = $this->parseIncludeJson($includeJson);
 				$includes[$include->getIid()] = $include;
 			}
 		}
 
-		if(isset($json['menuElementsInternet'])){
+		if(isset($json['menuElementsInternet']) && is_array($json['menuElementsInternet'])){
 			foreach($json['menuElementsInternet'] as $menuElementInternetJson) {
 				$menuElementsInternet[] = $this->parseMenuElement($menuElementInternetJson);
 			}
 		}
 
-		if(isset($json['menuElementsIntranet'])){
+		if(isset($json['menuElementsIntranet']) && is_array($json['menuElementsIntranet'])){
 			foreach($json['menuElementsIntranet'] as $menuElementsIntranetJson) {
 				$menuElementsIntranet[] = $this->parseMenuElement($menuElementsIntranetJson);
 			}
 		}
 
-		if(isset($json['menuElementsAdministration'])){
+		if(isset($json['menuElementsAdministration']) && is_array($json['menuElementsAdministration'])){
 			foreach($json['menuElementsAdministration'] as $menuElementsAdministrationJson) {
 				$menuElementsAdministration[] = $this->parseMenuElement($menuElementsAdministrationJson);
 			}
@@ -122,28 +122,69 @@ class LibModuleParser{
 	}
 
 	function parseMenuElement($menuElementJson){
-		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
-		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
 		$type = isset($menuElementJson['type']) ? $menuElementJson['type'] : '';
-		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : '';
 
 		switch($type){
 			case 'menu_entry':
-				$menuElement = new \vcms\menu\LibMenuEntry($pid, $name, $position);
+				$menuElement = $this->parseMenuEntry($menuElementJson);
+				break;
+			case 'menu_entry_login':
+				$menuElement = $this->parseMenuEntryLogin($menuElementJson);
+				break;
+			case 'menu_entry_external_link':
+				$menuElement = $this->parseMenuEntryExternalLink($menuElementJson);
 				break;
 			case 'menu_folder':
-				$menuElement = new \vcms\menu\LibMenuFolder($pid, $name, $position);
-				break;
-			case 'menu_entry_login':
-				$nameLogout = isset($menuElementJson['nameLogout']) ? $menuElementJson['nameLogout'] : '';
-				$menuElement = new \vcms\menu\LibMenuEntryLogin($pid, $name, $nameLogout, $position);
-				break;
-			case 'menu_entry_login':
-				$menuElement = new \vcms\menu\LibMenuEntryExternalLink($pid, $name, $position);
+				$menuElement = $this->parseMenuFolder($menuElementJson);
 				break;
 		}
 
 		return $menuElement;
+	}
+
+	function parseMenuEntry($menuElementJson){
+		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
+		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
+		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : '';
+
+		$menuEntry = new \vcms\menu\LibMenuEntry($pid, $name, $position);
+		return $menuEntry;
+	}
+
+	function parseMenuEntryLogin($menuElementJson){
+		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
+		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
+		$nameLogout = isset($menuElementJson['nameLogout']) ? $menuElementJson['nameLogout'] : '';
+		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : '';
+
+		$menuEntry = new \vcms\menu\LibMenuEntryLogin($pid, $name, $nameLogout, $position);
+		return $menuEntry;
+	}
+
+	function parseMenuEntryExternalLink($menuElementJson){
+		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
+		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
+		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : '';
+
+		$menuEntry = new \vcms\menu\LibMenuEntryExternalLink($pid, $name, $position);
+		return $menuEntry;
+	}
+
+	function parseMenuFolder($menuFolderJson){
+		$pid = isset($menuFolderJson['pid']) ? $menuFolderJson['pid'] : '';
+		$name = isset($menuFolderJson['name']) ? $menuFolderJson['name'] : '';
+		$position = isset($menuFolderJson['position']) ? $menuFolderJson['position'] : '';
+
+		$menuFolder = new \vcms\menu\LibMenuFolder($pid, $name, $position);
+
+		if(isset($menuFolderJson['elements']) && is_array($menuFolderJson['elements'])){
+			foreach($menuFolderJson['elements'] as $menuElementJson) {
+				$menuElement = $this->parseMenuElement($menuElementJson);
+				$menuFolder->addElement($menuElement);
+			}
+		}
+
+		return $menuFolder;
 	}
 
 	// @Deprecated

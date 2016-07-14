@@ -1,0 +1,11 @@
+{
+	"moduleName": "Vereine",
+	"pages": [
+		{
+			"pid": "vereindetail",
+			"file": "association.php",
+			"directory": "scripts",
+			"title": "Verein"
+		}
+	]
+}

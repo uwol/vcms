@@ -1,0 +1,116 @@
+{
+	"moduleName": "Personen",
+	"pages": [
+		{
+			"pid": "intranet_mitglied_listelebende",
+			"file": "member_list.php",
+			"directory": "scripts",
+			"title": "Lebende Mitglieder",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		},
+		{
+			"pid": "intranet_mitglied_regionalzirkel",
+			"file": "regional_groups.php",
+			"directory": "scripts",
+			"title": "Regionalzirkel",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		},
+		{
+			"pid": "intranet_mitglied_listeverstorbene",
+			"file": "member_list_deceased.php",
+			"directory": "scripts",
+			"title": "Verstorbene",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		},
+		{
+			"pid": "intranet_person_daten",
+			"file": "person_data.php",
+			"directory": "scripts",
+			"title": "Personenprofil",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		},
+		{
+			"pid": "intranet_person_listedamenflor",
+			"file": "damenflor.php",
+			"directory": "scripts",
+			"title": "Damenflor",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W"]
+			}
+		},
+		{
+			"pid": "intranet_person_statistics",
+			"file": "statistics.php",
+			"directory": "scripts",
+			"title": "Statistik",
+			"accessRestriction": {
+				"gruppen": ["B", "P"]
+			}
+		},
+		{
+			"pid": "intranet_person_stammbaum",
+			"file": "genealogy.php",
+			"directory": "scripts",
+			"title": "Stammbaum",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
+		}
+	],
+	"menuElementsIntranet": [
+		{
+			"name": "Personen",
+			"type": "menu_folder",
+			"position": 3000, 
+			"elements": [
+				{
+					"pid": "intranet_person_daten",
+					"name": "Mein Profil",
+					"type": "menu_entry",
+					"position": 3001
+				},
+				{
+					"pid": "intranet_mitglied_listelebende",
+					"name": "Lebende Mitglieder",
+					"type": "menu_entry",
+					"position": 3002
+				},
+				{
+					"pid": "intranet_mitglied_listeverstorbene",
+					"name": "Verstorbene Mitglieder",
+					"type": "menu_entry",
+					"position": 3003
+				},
+				{
+					"pid": "intranet_person_listedamenflor",
+					"name": "Damenflor",
+					"type": "menu_entry",
+					"position": 3004
+				},
+				{
+					"pid": "intranet_mitglied_regionalzirkel",
+					"name": "Regionalzirkel",
+					"type": "menu_entry",
+					"position": 3005
+				},
+				{
+					"pid": "intranet_person_statistics",
+					"name": "Statistik",
+					"type": "menu_entry",
+					"position": 3006
+				}
+			]
+		}
+	],
+	"headerStrings": [
+		"<script src='styles/chart/Chart.min.js'></script>"
+	]
+}

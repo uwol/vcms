@@ -1,0 +1,29 @@
+{
+	"moduleName": "Basisdaten",
+	"pages": [
+		{
+			"pid": "configuration",
+			"file": "configuration.php",
+			"directory": "scripts",
+			"title": "Konfiguration",
+			"accessRestriction": {
+				"aemter": ["internetwart"]
+			}
+		}
+	],
+	"includes": [
+		{
+			"iid": "base_intranet_personenbild",
+			"file": "person_image.php",
+			"directory": "scripts"
+		}
+	],
+	"menuElementsAdministration": [
+		{
+			"pid": "configuration",
+			"name": "Konfiguration",
+			"type": "menu_entry",
+			"position": 3
+		}
+	]
+}
