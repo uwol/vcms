@@ -32,7 +32,13 @@ $libMenuAdministration = $libModuleHandler->getMenuAdministration();
 
 //initialize page id
 if(!isset($_GET['pid']) || $_GET['pid'] == ''){
-	$libGlobal->pid = $libConfig->defaultHome;
+	$defaultHomeExists = $libModuleHandler->pageExists($libConfig->defaultHome);
+
+	if($defaultHomeExists){
+		$libGlobal->pid = $libConfig->defaultHome;
+	} else {
+		$libGlobal->pid = 'login_login';
+	}
 } else {
 	$libGlobal->pid = $_GET['pid'];
 }
