@@ -23,8 +23,8 @@ use PDO;
 
 class LibCronJobs{
 
-	var $filesToDelete = array('.gitignore', 'composer.json', 
-		'installer.php', 'installer2.php', 'installer3.php', 'installer.txt', 
+	var $filesToDelete = array('.gitignore', 'composer.json',
+		'installer.php', 'installer2.php', 'installer3.php', 'installer.txt',
 		'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt',
 		'LICENSE', 'LICENSE.txt', 'README.md');
 
