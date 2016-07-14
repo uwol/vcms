@@ -22,13 +22,6 @@ namespace vcms;
 use PDO;
 
 class LibAssociation{
-	var $libTime;
-	var $libDb;
-
-	function __construct(LibDb $libDb, LibTime $libTime){
-		$this->libTime = $libTime;
-		$this->libDb = $libDb;
-	}
 
 	function getFarbe($farbe){
 		$farben['blau']          = '0000ff';
@@ -92,7 +85,9 @@ class LibAssociation{
 	}
 
 	function getVereinNameString($vereinid){
-		$stmt = $this->libDb->prepare("SELECT titel, name FROM base_verein WHERE id = :id");
+		global $libDb;
+
+		$stmt = $libDb->prepare("SELECT titel, name FROM base_verein WHERE id = :id");
 		$stmt->bindValue(':id', $vereinid, PDO::PARAM_INT);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -101,8 +96,10 @@ class LibAssociation{
 	}
 
 	function getToechterString($vereinid){
+		global $libDb;
+
 		$retstr = '';
-		$stmt = $this->libDb->prepare("SELECT tochter.id, tochter.titel, tochter.name FROM base_verein AS mutter, base_verein AS tochter WHERE mutter.id = tochter.mutterverein AND mutter.id = :id");
+		$stmt = $libDb->prepare("SELECT tochter.id, tochter.titel, tochter.name FROM base_verein AS mutter, base_verein AS tochter WHERE mutter.id = tochter.mutterverein AND mutter.id = :id");
 		$stmt->bindValue(':id', $vereinid, PDO::PARAM_INT);
 		$stmt->execute();
 
@@ -118,8 +115,10 @@ class LibAssociation{
 	}
 
 	function getFusionertString($vereinid){
+		global $libDb;
+
 		$retstr = '';
-		$stmt = $this->libDb->prepare("SELECT fusionierend.id, fusionierend.titel, fusionierend.name FROM base_verein AS fusionierend, base_verein AS fusioniert WHERE fusioniert.id = fusionierend.fusioniertin AND fusioniert.id = :id");
+		$stmt = $libDb->prepare("SELECT fusionierend.id, fusionierend.titel, fusionierend.name FROM base_verein AS fusionierend, base_verein AS fusioniert WHERE fusioniert.id = fusionierend.fusioniertin AND fusioniert.id = :id");
 		$stmt->bindValue(':id', $vereinid, PDO::PARAM_INT);
 		$stmt->execute();
 
@@ -135,15 +134,17 @@ class LibAssociation{
 	}
 
 	function getAnsprechbarerAktivenVorstandIds(){
+		global $libDb, $libTime;
+
 		$aktuellermonat = @date('m');
 
 		if($aktuellermonat == 2 || $aktuellermonat == 3 || $aktuellermonat == 8 || $aktuellermonat == 9){
-			$vorstandssemester = $this->libTime->getFollowingSemesterName();
+			$vorstandssemester = $libTime->getFollowingSemesterName();
 		} else {
-			$vorstandssemester = $this->libTime->getSemesterName();
+			$vorstandssemester = $libTime->getSemesterName();
 		}
 
-		$stmt = $this->libDb->prepare("SELECT senior, jubelsenior, consenior, fuchsmajor, fuchsmajor2, scriptor, quaestor FROM base_semester WHERE semester = :semester");
+		$stmt = $libDb->prepare("SELECT senior, jubelsenior, consenior, fuchsmajor, fuchsmajor2, scriptor, quaestor FROM base_semester WHERE semester = :semester");
 		$stmt->bindValue(':semester', $vorstandssemester);
 		$stmt->execute();
 
@@ -151,6 +152,8 @@ class LibAssociation{
 	}
 
 	function getValideInternetWarte(){
+		global $libDb;
+
 		// ein valider Internetwart
 		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
 		// 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
@@ -158,7 +161,7 @@ class LibAssociation{
 
 		$internetwarte = array();
 
-		$stmt = $this->libDb->prepare('SELECT COUNT(*) AS anzahlsemester, base_person.id FROM base_person, base_semester WHERE base_semester.internetwart = base_person.id AND gruppe != "X" AND gruppe != "T" AND gruppe != "C" AND gruppe != "W" AND gruppe != "G" AND email IS NOT NULL AND email != "" AND password_hash IS NOT NULL AND password_hash != "" GROUP BY id');
+		$stmt = $libDb->prepare('SELECT COUNT(*) AS anzahlsemester, base_person.id FROM base_person, base_semester WHERE base_semester.internetwart = base_person.id AND gruppe != "X" AND gruppe != "T" AND gruppe != "C" AND gruppe != "W" AND gruppe != "G" AND email IS NOT NULL AND email != "" AND password_hash IS NOT NULL AND password_hash != "" GROUP BY id');
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

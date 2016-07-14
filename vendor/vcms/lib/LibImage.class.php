@@ -33,19 +33,6 @@ class LibImage{
 	var $semesterCoverHeight = 300;
 
 	var $GDlib_colorBits = 5;
-	var $libTime;
-	var $libGenericStorage;
-
-	function __construct(LibTime $libTime, LibGenericStorage $libGenericStorage){
-		global $libGenericStorage;
-
-		$this->libTime = $libTime;
-		$this->libGenericStorage = $libGenericStorage;
-
-		if(!$libGenericStorage->attributeExists('base_core', 'imagemanipulator')){
-			$libGenericStorage->saveValue('base_core', 'imagemanipulator', '1');
-		}
-	}
 
 	//Checks--------------------------------------------------------------------
 
@@ -85,7 +72,9 @@ class LibImage{
 	}
 
 	function determineImageManipulator(){
-		$method = $this->libGenericStorage->loadValue('base_core', 'imagemanipulator');
+		global $libGenericStorage;
+
+		$method = $libGenericStorage->loadValue('base_core', 'imagemanipulator');
 
 		if($method == 1 || $method == 2){
 			return $method;
@@ -342,8 +331,10 @@ class LibImage{
 	//specific functions for image types-----------------------
 
 	function saveSemesterCoverByFilesArray($semesterString, $tmpFileVarName){
+		global $libTime;
+
 		//parameter check
-		if(!$this->libTime->isValidSemesterString($semesterString)){
+		if(!$libTime->isValidSemesterString($semesterString)){
 			return;
 		}
 
@@ -356,8 +347,10 @@ class LibImage{
 	}
 
 	function deleteSemesterCover($semesterString){
+		global $libTime;
+
 		//parameter check
-		if(!$this->libTime->isValidSemesterString($semesterString)){
+		if(!$libTime->isValidSemesterString($semesterString)){
 			return;
 		}
 

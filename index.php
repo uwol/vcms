@@ -25,10 +25,12 @@ require_once('custom/systemconfig.php');
 require_once('vendor/vcms/initialize.php');
 
 
-$libCronJobs = new \vcms\LibCronJobs();
+$libCronJobs->executeDueJobs();
+
 $libMenuInternet = $libModuleHandler->getMenuInternet();
 $libMenuIntranet = $libModuleHandler->getMenuIntranet();
 $libMenuAdministration = $libModuleHandler->getMenuAdministration();
+
 
 //initialize page id
 if(!isset($_GET['pid']) || $_GET['pid'] == ''){
@@ -50,12 +52,15 @@ if(!$libModuleHandler->pageExists($libGlobal->pid)){
 	header('HTTP/1.0 404 Not Found');
 }
 
+
 //load page object
 $libGlobal->page = $libModuleHandler->getPage($libGlobal->pid);
 $libGlobal->module = $libModuleHandler->getModuleByPageid($libGlobal->pid);
 
+
 //load page header
 require_once('vendor/vcms/frame/header.php');
+
 
 //security check
 if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->page, $libAuth)){
@@ -69,6 +74,7 @@ if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->pag
 	echo $libString->getNotificationBoxText();
 	echo '<p>Für diese Seite ist eine <a href="index.php?pid=login_login">Anmeldung im Intranet</a> nötig.</p>';
 }
+
 
 //load footer
 require_once('vendor/vcms/frame/footer.php');

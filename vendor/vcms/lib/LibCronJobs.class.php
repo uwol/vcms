@@ -41,7 +41,7 @@ class LibCronJobs{
 	var $directoriesWithHtaccessFile = array('custom/intranet',
 		'custom/veranstaltungsfotos', 'vendor', 'temp');
 
-	function __construct(){
+	function executeDueJobs(){
 		global $libDb;
 
 		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_log_intranet WHERE aktion = 10 AND DATEDIFF(NOW(), datum) < 1');
@@ -52,14 +52,6 @@ class LibCronJobs{
 		if($numberOfCronJobExecutionsToday == 0){
 			$this->executeJobs();
 		}
-	}
-
-	function getDirectoriesToCreate(){
-		return $this->directoriesToCreate;
-	}
-
-	function getDirectoriesWithHtaccessFile(){
-		return $this->directoriesWithHtaccessFile;
 	}
 
 	function executeJobs(){
@@ -81,6 +73,14 @@ class LibCronJobs{
 		}
 
 		$libDb->query("INSERT INTO sys_log_intranet (aktion, datum) VALUES (10, NOW())");
+	}
+
+	function getDirectoriesToCreate(){
+		return $this->directoriesToCreate;
+	}
+
+	function getDirectoriesWithHtaccessFile(){
+		return $this->directoriesWithHtaccessFile;
 	}
 
 	function deleteFiles(){
@@ -199,6 +199,10 @@ class LibCronJobs{
 
 		if(!$libGenericStorage->attributeExists('base_core', 'fbSecretKey')){
 			$libGenericStorage->saveValue('base_core', 'fbSecretKey', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'imagemanipulator')){
+			$libGenericStorage->saveValue('base_core', 'imagemanipulator', '1');
 		}
 	}
 

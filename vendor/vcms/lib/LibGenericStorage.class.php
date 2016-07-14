@@ -22,13 +22,6 @@ namespace vcms;
 use PDO;
 
 class LibGenericStorage{
-	var $libDb;
-	var $libString;
-
-	function __construct(LibDb $libDb, LibString $libString){
-		$this->libDb = $libDb;
-		$this->libString = $libString;
-	}
 
 	/*
 	* scalar attributes/values
@@ -67,7 +60,9 @@ class LibGenericStorage{
 
 	//list
 	function listAllArrayValues(){
-		$result = $this->libDb->query('SELECT moduleid, array_name, value, position FROM sys_genericstorage');
+		global $libDb;
+
+		$result = $libDb->query('SELECT moduleid, array_name, value, position FROM sys_genericstorage');
 
 		$array = array();
 
@@ -84,7 +79,9 @@ class LibGenericStorage{
 	}
 
 	function attributeExists($moduleId, $arrayName){
-		$stmt = $this->libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
+		global $libDb;
+
+		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
 		$stmt->bindValue(':moduleid', $moduleId);
 		$stmt->bindValue(':array_name', $arrayName);
 		$stmt->execute();
@@ -104,7 +101,9 @@ class LibGenericStorage{
 
 	//load
 	function loadArrayValue($moduleId, $arrayName, $position){
-		$stmt = $this->libDb->prepare('SELECT value FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
+		global $libDb;
+
+		$stmt = $libDb->prepare('SELECT value FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
 		$stmt->bindValue(':moduleid', $moduleId);
 		$stmt->bindValue(':array_name', $arrayName);
 		$stmt->bindValue(':position', $position, PDO::PARAM_INT);
@@ -120,7 +119,9 @@ class LibGenericStorage{
 	}
 
 	function loadArray($moduleId, $arrayName){
-		$stmt = $this->libDb->prepare('SELECT value, position FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
+		global $libDb;
+
+		$stmt = $libDb->prepare('SELECT value, position FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
 		$stmt->bindValue(':moduleid', $moduleId);
 		$stmt->bindValue(':array_name', $arrayName);
 		$stmt->execute();
@@ -142,7 +143,9 @@ class LibGenericStorage{
 	}
 
 	function loadArraysOfModule($moduleId){
-		$stmt = $this->libDb->prepare('SELECT array_name, position, value FROM sys_genericstorage WHERE moduleid=:moduleid');
+		global $libDb;
+
+		$stmt = $libDb->prepare('SELECT array_name, position, value FROM sys_genericstorage WHERE moduleid=:moduleid');
 		$stmt->bindValue(':moduleid', $moduleId);
 		$stmt->execute();
 		$result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -164,7 +167,9 @@ class LibGenericStorage{
 
 	//save
 	function saveArrayValue($moduleId, $arrayName, $position, $value){
-		$stmt = $this->libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
+		global $libDb, $libString;
+
+		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
 		$stmt->bindValue(':moduleid', $moduleId);
 		$stmt->bindValue(':array_name', $arrayName);
 		$stmt->bindValue(':position', $position, PDO::PARAM_INT);
@@ -173,18 +178,18 @@ class LibGenericStorage{
 		$stmt->fetch();
 
 		if($anzahl > 0){
-			$stmt = $this->libDb->prepare('UPDATE sys_genericstorage SET value = :value WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
-			$stmt->bindValue(':value', $this->libString->protectXss($value));
+			$stmt = $libDb->prepare('UPDATE sys_genericstorage SET value = :value WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
+			$stmt->bindValue(':value', $libString->protectXss($value));
 			$stmt->bindValue(':moduleid', $moduleId);
 			$stmt->bindValue(':array_name', $arrayName);
 			$stmt->bindValue(':position', $position, PDO::PARAM_INT);
 			$stmt->execute();
 		} else {
-			$stmt = $this->libDb->prepare('INSERT INTO sys_genericstorage (moduleid, array_name, position, value) VALUES (:moduleid, :array_name, :position, :value)');
-			$stmt->bindValue(':value', $this->libString->protectXss($value));
-			$stmt->bindValue(':moduleid', $this->libString->protectXss($moduleId));
-			$stmt->bindValue(':array_name', $this->libString->protectXss($arrayName));
-			$stmt->bindValue(':position', $this->libString->protectXss($position), PDO::PARAM_INT);
+			$stmt = $libDb->prepare('INSERT INTO sys_genericstorage (moduleid, array_name, position, value) VALUES (:moduleid, :array_name, :position, :value)');
+			$stmt->bindValue(':value', $libString->protectXss($value));
+			$stmt->bindValue(':moduleid', $libString->protectXss($moduleId));
+			$stmt->bindValue(':array_name', $libString->protectXss($arrayName));
+			$stmt->bindValue(':position', $libString->protectXss($position), PDO::PARAM_INT);
 			$stmt->execute();
 		}
 	}
@@ -195,7 +200,9 @@ class LibGenericStorage{
 
 	//delete
 	function deleteArrayValue($moduleId, $arrayName, $position){
-		$stmt = $this->libDb->prepare('DELETE FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
+		global $libDb;
+
+		$stmt = $libDb->prepare('DELETE FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
 		$stmt->bindValue(':moduleid', $moduleId);
 		$stmt->bindValue(':array_name', $arrayName);
 		$stmt->bindValue(':position', $position, PDO::PARAM_INT);
@@ -207,7 +214,9 @@ class LibGenericStorage{
 	}
 
 	function deleteArray($moduleId, $arrayName){
-		$stmt = $this->libDb->prepare('DELETE FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
+		global $libDb;
+
+		$stmt = $libDb->prepare('DELETE FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
 		$stmt->bindValue(':moduleid', $moduleId);
 		$stmt->bindValue(':array_name', $arrayName);
 		$stmt->execute();

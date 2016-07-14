@@ -24,10 +24,9 @@ use PDOException;
 
 class LibDb{
 	var $connection;
-	var $libString;
 
-	function __construct(\LibConfig $libConfig, LibString $libString){
-		$this->libString = $libString;
+	function connect(){
+		global $libConfig;
 
 		$mysqlPort = 3306;
 
@@ -67,6 +66,8 @@ class LibDb{
 	}
 
 	function updateRow($fieldsArray, $valueArray, $table, $idArray){
+		global $libString;
+
 		$setString = '';
 
 		// build string of values to set
@@ -97,7 +98,7 @@ class LibDb{
 			if(!isset($valueArray[$feld]) || $valueArray[$feld] == ''){
 				$value = null;
 			} else {
-				$value = $this->libString->protectXSS($valueArray[$feld]);
+				$value = $libString->protectXSS($valueArray[$feld]);
 			}
 
 			$stmt->bindValue(':'.$feld, $value, $this->determinePdoType($value));
@@ -124,6 +125,8 @@ class LibDb{
 	}
 
 	function insertRow($fieldsArray, $valueArray, $table, $idArray){
+		global $libString;
+
 		$felderString = implode(',', $fieldsArray);
 
 		$werteString = '';
@@ -145,7 +148,7 @@ class LibDb{
 			if(!isset($valueArray[$feld]) || $valueArray[$feld] == ''){
 				$value = null;
 			} else {
-				$value = $this->libString->protectXSS($valueArray[$feld]);
+				$value = $libString->protectXSS($valueArray[$feld]);
 			}
 
 			$stmt->bindValue(':'.$feld, $value, $this->determinePdoType($value));

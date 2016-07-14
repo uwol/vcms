@@ -22,18 +22,11 @@ namespace vcms;
 use PDO;
 
 class LibMember{
-	var $libTime;
-	var $libDb;
-	var $libConfig;
-
-	function __construct(LibTime $libTime, LibDb $libDb, \LibConfig $libConfig){
-		$this->libTime = $libTime;
-		$this->libDb = $libDb;
-		$this->libConfig = $libConfig;
-	}
 
 	function getMitgliedNameString($id, $mode){
-		$stmt = $this->libDb->prepare("SELECT anrede, titel, rang, vorname, praefix, name, suffix FROM base_person WHERE id=:id");
+		global $libDb;
+
+		$stmt = $libDb->prepare("SELECT anrede, titel, rang, vorname, praefix, name, suffix FROM base_person WHERE id=:id");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$mitgliedarray = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -80,6 +73,8 @@ class LibMember{
 	}
 
 	function getMitgliedIntranetActivity($id){
+		global $libDb;
+
 		/*
 		* define constants
 		*/
@@ -89,7 +84,7 @@ class LibMember{
 		/*
 		* sum points
 		*/
-		$stmt = $this->libDb->prepare("SELECT SUM(punkte) AS summe FROM sys_log_intranet WHERE mitglied = :mitglied AND DATE_SUB(CURDATE(),INTERVAL :interval DAY) <= datum");
+		$stmt = $libDb->prepare("SELECT SUM(punkte) AS summe FROM sys_log_intranet WHERE mitglied = :mitglied AND DATE_SUB(CURDATE(),INTERVAL :interval DAY) <= datum");
 		$stmt->bindValue(':mitglied', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':interval', $durchschnittszeitraum, PDO::PARAM_INT);
 		$stmt->execute();
@@ -109,8 +104,10 @@ class LibMember{
 	}
 
 	function getMitgliedIntranetActivityBox($id){
+		global $libDb;
+
 		// determine group
-		$stmt = $this->libDb->prepare("SELECT gruppe FROM base_person WHERE id=:id");
+		$stmt = $libDb->prepare("SELECT gruppe FROM base_person WHERE id=:id");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$stmt->bindColumn('gruppe', $gruppe);
@@ -174,21 +171,23 @@ class LibMember{
 	}
 
 	function setMitgliedIntranetActivity($id, $punkte, $enablelimit){
+		global $libDb;
+
 		if($enablelimit){
-			$stmt = $this->libDb->prepare("SELECT COUNT(*) AS number FROM sys_log_intranet WHERE mitglied=:mitglied AND DATE_SUB(CURDATE(),INTERVAL 0 DAY) <= datum");
+			$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM sys_log_intranet WHERE mitglied=:mitglied AND DATE_SUB(CURDATE(),INTERVAL 0 DAY) <= datum");
 			$stmt->bindValue(':mitglied', $id, PDO::PARAM_INT);
 			$stmt->execute();
 			$stmt->bindColumn('number', $punkteadditionheute);
 			$stmt->fetch();
 
 			if($punkteadditionheute < 2){
-				$stmt = $this->libDb->prepare("INSERT INTO sys_log_intranet (mitglied, datum, punkte) VALUES (:mitglied, NOW(), :punkte)");
+				$stmt = $libDb->prepare("INSERT INTO sys_log_intranet (mitglied, datum, punkte) VALUES (:mitglied, NOW(), :punkte)");
 				$stmt->bindValue(':mitglied', $id, PDO::PARAM_INT);
 				$stmt->bindValue(':punkte', $punkte, PDO::PARAM_INT);
 				$stmt->execute();
 			}
 		} else {
-			$stmt = $this->libDb->prepare("INSERT INTO sys_log_intranet (mitglied, datum, punkte) VALUES (:mitglied, NOW(), :punkte)");
+			$stmt = $libDb->prepare("INSERT INTO sys_log_intranet (mitglied, datum, punkte) VALUES (:mitglied, NOW(), :punkte)");
 			$stmt->bindValue(':mitglied', $id, PDO::PARAM_INT);
 			$stmt->bindValue(':punkte', $punkte, PDO::PARAM_INT);
 			$stmt->execute();
@@ -201,12 +200,14 @@ class LibMember{
 	}
 
 	function getAnzahlInternetWartsSemester($mitgliedid){
+		global $libDb;
+
 		// ein valider Internetwart
 		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
 		// 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
 		// 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
 
-		$stmt = $this->libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
+		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
 		$stmt->bindValue(':internetwart', $mitgliedid, PDO::PARAM_INT);
 		$stmt->execute();
 		$stmt->bindColumn('number', $anzahlSemester);
@@ -216,13 +217,15 @@ class LibMember{
 	}
 
 	function couldBeValidInternetWart($mitgliedid){
+		global $libDb;
+
 		// ein valider Internetwart
 		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
 		// 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
 		// 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
 
 		// hier wird geprüft, ob ein Mitglied Kondition 2 und 3 erfüllt, ob er also Internetwart werden darf
-		$stmt = $this->libDb->prepare('SELECT email, password_hash, gruppe FROM base_person WHERE id = :id');
+		$stmt = $libDb->prepare('SELECT email, password_hash, gruppe FROM base_person WHERE id = :id');
 		$stmt->bindValue(':id', $mitgliedid, PDO::PARAM_INT);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -232,10 +235,12 @@ class LibMember{
 	}
 
 	function getChargenString($id){
+		global $libDb, $libTime, $libConfig;
+
 		/*
 		* aktuelle Chargen, ist das Mitglied aktuell in einem Vorstand?
 		*/
-		$stmt = $this->libDb->prepare("
+		$stmt = $libDb->prepare("
 			SELECT *
 			FROM base_semester
 			WHERE ((base_semester.senior = :senior AND sen_dech = 0)
@@ -281,59 +286,59 @@ class LibMember{
 		$stmt->bindValue(':vopxx', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':vopxxx', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':vopxxxx', $id, PDO::PARAM_INT);
-		$stmt->bindValue(':semester', $this->libTime->getSemesterName());
+		$stmt->bindValue(':semester', $libTime->getSemesterName());
 		$stmt->execute();
 
 		$chargenAktuell = array();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($row['senior'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenSenior;
+				$chargenAktuell[] = $libConfig->chargenSenior;
 			if($row['jubelsenior'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenJubelSenior;
+				$chargenAktuell[] = $libConfig->chargenJubelSenior;
 			if($row['consenior'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenConsenior;
+				$chargenAktuell[] = $libConfig->chargenConsenior;
 			if($row['fuchsmajor'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenFuchsmajor;
+				$chargenAktuell[] = $libConfig->chargenFuchsmajor;
 			if($row['fuchsmajor2'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenFuchsmajor2;
+				$chargenAktuell[] = $libConfig->chargenFuchsmajor2;
 			if($row['scriptor'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenScriptor;
+				$chargenAktuell[] = $libConfig->chargenScriptor;
 			if($row['quaestor'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenQuaestor;
+				$chargenAktuell[] = $libConfig->chargenQuaestor;
 			if($row['ahv_senior'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenAHVSenior;
+				$chargenAktuell[] = $libConfig->chargenAHVSenior;
 			if($row['ahv_consenior'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenAHVConsenior;
+				$chargenAktuell[] = $libConfig->chargenAHVConsenior;
 			if($row['ahv_keilbeauftragter'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenAHVKeilbeauftragter;
+				$chargenAktuell[] = $libConfig->chargenAHVKeilbeauftragter;
 			if($row['ahv_scriptor'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenAHVScriptor;
+				$chargenAktuell[] = $libConfig->chargenAHVScriptor;
 			if($row['ahv_quaestor'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenAHVQuaestor;
+				$chargenAktuell[] = $libConfig->chargenAHVQuaestor;
 			if($row['hv_vorsitzender'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenHVVorsitzender;
+				$chargenAktuell[] = $libConfig->chargenHVVorsitzender;
 			if($row['hv_kassierer'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenHVKassierer;
+				$chargenAktuell[] = $libConfig->chargenHVKassierer;
 			if($row['archivar'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenArchivar;
+				$chargenAktuell[] = $libConfig->chargenArchivar;
 			if($row['redaktionswart'] == $id)
-				$chargenAktuell[] = $this->libConfig->chargenRedaktionswart;
+				$chargenAktuell[] = $libConfig->chargenRedaktionswart;
 			if($row['vop'] == $id)
-				if(isset($this->libConfig->chargenVOP))
-					$chargenAktuell[] = $this->libConfig->chargenVOP;
+				if(isset($libConfig->chargenVOP))
+					$chargenAktuell[] = $libConfig->chargenVOP;
 			if($row['vvop'] == $id)
-				if(isset($this->libConfig->chargenVVOP))
-					$chargenAktuell[] = $this->libConfig->chargenVVOP;
+				if(isset($libConfig->chargenVVOP))
+					$chargenAktuell[] = $libConfig->chargenVVOP;
 			if($row['vopxx'] == $id)
-				if(isset($this->libConfig->chargenVOPxx))
-					$chargenAktuell[] = $this->libConfig->chargenVOPxx;
+				if(isset($libConfig->chargenVOPxx))
+					$chargenAktuell[] = $libConfig->chargenVOPxx;
 			if($row['vopxxx'] == $id)
-				if(isset($this->libConfig->chargenVOPxxx))
-					$chargenAktuell[] = $this->libConfig->chargenVOPxxx;
+				if(isset($libConfig->chargenVOPxxx))
+					$chargenAktuell[] = $libConfig->chargenVOPxxx;
 			if($row['vopxxxx'] == $id)
-				if(isset($this->libConfig->chargenVOPxxxx))
-					$chargenAktuell[] = $this->libConfig->chargenVOPxxxx;
+				if(isset($libConfig->chargenVOPxxxx))
+					$chargenAktuell[] = $libConfig->chargenVOPxxxx;
 		}
 
 		$chargenAktuellNeu = array();
@@ -349,7 +354,7 @@ class LibMember{
 		/*
 		* dechargierte Chargen
 		*/
-		$stmt = $this->libDb->prepare("
+		$stmt = $libDb->prepare("
 			SELECT *
 			FROM base_semester
 			WHERE (base_semester.senior = :senior AND sen_dech = 1)
@@ -396,87 +401,87 @@ class LibMember{
 		$stmt->bindValue(':vopxx', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':vopxxx', $id, PDO::PARAM_INT);
 		$stmt->bindValue(':vopxxxx', $id, PDO::PARAM_INT);
-		$stmt->bindValue(':semester', $this->libTime->getSemesterName());
+		$stmt->bindValue(':semester', $libTime->getSemesterName());
 		$stmt->execute();
 
 		$chargen = array();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($row['senior'] == $id)
-				$chargen[] = $this->libConfig->chargenSenior;
+				$chargen[] = $libConfig->chargenSenior;
 			if($row['jubelsenior'] == $id)
-				$chargen[] = $this->libConfig->chargenJubelSenior;
+				$chargen[] = $libConfig->chargenJubelSenior;
 			if($row['consenior'] == $id)
-				$chargen[] = $this->libConfig->chargenConsenior;
+				$chargen[] = $libConfig->chargenConsenior;
 			if($row['fuchsmajor'] == $id)
-				$chargen[] = $this->libConfig->chargenFuchsmajor;
+				$chargen[] = $libConfig->chargenFuchsmajor;
 			if($row['fuchsmajor2'] == $id)
-				$chargen[] = $this->libConfig->chargenFuchsmajor2;
+				$chargen[] = $libConfig->chargenFuchsmajor2;
 			if($row['scriptor'] == $id)
-				$chargen[] = $this->libConfig->chargenScriptor;
+				$chargen[] = $libConfig->chargenScriptor;
 			if($row['quaestor'] == $id)
-				$chargen[] = $this->libConfig->chargenQuaestor;
+				$chargen[] = $libConfig->chargenQuaestor;
 			if($row['ahv_senior'] == $id)
-				if(!in_array($this->libConfig->chargenAHVSenior, $chargen) &&
-					!in_array($this->libConfig->chargenAHVSenior, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenAHVSenior;
+				if(!in_array($libConfig->chargenAHVSenior, $chargen) &&
+					!in_array($libConfig->chargenAHVSenior, $chargenAktuell))
+					$chargen[] = $libConfig->chargenAHVSenior;
 			if($row['ahv_consenior'] == $id)
-				if(!in_array($this->libConfig->chargenAHVConsenior, $chargen) &&
-					!in_array($this->libConfig->chargenAHVConsenior, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenAHVConsenior;
+				if(!in_array($libConfig->chargenAHVConsenior, $chargen) &&
+					!in_array($libConfig->chargenAHVConsenior, $chargenAktuell))
+					$chargen[] = $libConfig->chargenAHVConsenior;
 			if($row['ahv_keilbeauftragter'] == $id)
-				if(!in_array($this->libConfig->chargenAHVKeilbeauftragter, $chargen) &&
-					!in_array($this->libConfig->chargenAHVKeilbeauftragter, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenAHVKeilbeauftragter;
+				if(!in_array($libConfig->chargenAHVKeilbeauftragter, $chargen) &&
+					!in_array($libConfig->chargenAHVKeilbeauftragter, $chargenAktuell))
+					$chargen[] = $libConfig->chargenAHVKeilbeauftragter;
 			if($row['ahv_scriptor'] == $id)
-				if(!in_array($this->libConfig->chargenAHVScriptor, $chargen) &&
-					!in_array($this->libConfig->chargenAHVScriptor, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenAHVScriptor;
+				if(!in_array($libConfig->chargenAHVScriptor, $chargen) &&
+					!in_array($libConfig->chargenAHVScriptor, $chargenAktuell))
+					$chargen[] = $libConfig->chargenAHVScriptor;
 			if($row['ahv_quaestor'] == $id)
-				if(!in_array($this->libConfig->chargenAHVQuaestor, $chargen) &&
-					!in_array($this->libConfig->chargenAHVQuaestor, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenAHVQuaestor;
+				if(!in_array($libConfig->chargenAHVQuaestor, $chargen) &&
+					!in_array($libConfig->chargenAHVQuaestor, $chargenAktuell))
+					$chargen[] = $libConfig->chargenAHVQuaestor;
 			if($row['hv_vorsitzender'] == $id)
-				if(!in_array($this->libConfig->chargenHVVorsitzender, $chargen) &&
-					!in_array($this->libConfig->chargenHVVorsitzender, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenHVVorsitzender;
+				if(!in_array($libConfig->chargenHVVorsitzender, $chargen) &&
+					!in_array($libConfig->chargenHVVorsitzender, $chargenAktuell))
+					$chargen[] = $libConfig->chargenHVVorsitzender;
 			if($row['hv_kassierer'] == $id)
-				if(!in_array($this->libConfig->chargenHVKassierer, $chargen) &&
-					!in_array($this->libConfig->chargenHVKassierer, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenHVKassierer;
+				if(!in_array($libConfig->chargenHVKassierer, $chargen) &&
+					!in_array($libConfig->chargenHVKassierer, $chargenAktuell))
+					$chargen[] = $libConfig->chargenHVKassierer;
 			if($row['archivar'] == $id)
-				if(!in_array($this->libConfig->chargenArchivar, $chargen) &&
-					!in_array($this->libConfig->chargenArchivar, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenArchivar;
+				if(!in_array($libConfig->chargenArchivar, $chargen) &&
+					!in_array($libConfig->chargenArchivar, $chargenAktuell))
+					$chargen[] = $libConfig->chargenArchivar;
 			if($row['redaktionswart'] == $id)
-				if(!in_array($this->libConfig->chargenRedaktionswart, $chargen) &&
-					!in_array($this->libConfig->chargenRedaktionswart, $chargenAktuell))
-					$chargen[] = $this->libConfig->chargenRedaktionswart;
+				if(!in_array($libConfig->chargenRedaktionswart, $chargen) &&
+					!in_array($libConfig->chargenRedaktionswart, $chargenAktuell))
+					$chargen[] = $libConfig->chargenRedaktionswart;
 			if($row['vop'] == $id)
-				if(!in_array($this->libConfig->chargenVOP, $chargen) &&
-					!in_array($this->libConfig->chargenVOP, $chargenAktuell))
-						if(isset($this->libConfig->chargenVOP))
-							$chargen[] = $this->libConfig->chargenVOP;
+				if(!in_array($libConfig->chargenVOP, $chargen) &&
+					!in_array($libConfig->chargenVOP, $chargenAktuell))
+						if(isset($libConfig->chargenVOP))
+							$chargen[] = $libConfig->chargenVOP;
 			if($row['vvop'] == $id)
-				if(!in_array($this->libConfig->chargenVVOP, $chargen) &&
-					!in_array($this->libConfig->chargenVVOP, $chargenAktuell))
-						if(isset($this->libConfig->chargenVVOP))
-							$chargen[] = $this->libConfig->chargenVVOP;
+				if(!in_array($libConfig->chargenVVOP, $chargen) &&
+					!in_array($libConfig->chargenVVOP, $chargenAktuell))
+						if(isset($libConfig->chargenVVOP))
+							$chargen[] = $libConfig->chargenVVOP;
 			if($row['vopxx'] == $id)
-				if(!in_array($this->libConfig->chargenVOPxx, $chargen) &&
-					!in_array($this->libConfig->chargenVOPxx, $chargenAktuell))
-						if(isset($this->libConfig->chargenVOPxx))
-							$chargen[] = $this->libConfig->chargenVOPxx;
+				if(!in_array($libConfig->chargenVOPxx, $chargen) &&
+					!in_array($libConfig->chargenVOPxx, $chargenAktuell))
+						if(isset($libConfig->chargenVOPxx))
+							$chargen[] = $libConfig->chargenVOPxx;
 			if($row['vopxxx'] == $id)
-				if(!in_array($this->libConfig->chargenVOPxxx, $chargen) &&
-					!in_array($this->libConfig->chargenVOPxxx, $chargenAktuell))
-						if(isset($this->libConfig->chargenVOPxxx))
-							$chargen[] = $this->libConfig->chargenVOPxxx;
+				if(!in_array($libConfig->chargenVOPxxx, $chargen) &&
+					!in_array($libConfig->chargenVOPxxx, $chargenAktuell))
+						if(isset($libConfig->chargenVOPxxx))
+							$chargen[] = $libConfig->chargenVOPxxx;
 			if($row['vopxxxx'] == $id)
-				if(!in_array($this->libConfig->chargenVOPxxxx, $chargen) &&
-					!in_array($this->libConfig->chargenVOPxxxx, $chargenAktuell))
-						if(isset($this->libConfig->chargenVOPxxxx))
-							$chargen[] = $this->libConfig->chargenVOPxxxx;
+				if(!in_array($libConfig->chargenVOPxxxx, $chargen) &&
+					!in_array($libConfig->chargenVOPxxxx, $chargenAktuell))
+						if(isset($libConfig->chargenVOPxxxx))
+							$chargen[] = $libConfig->chargenVOPxxxx;
 		}
 
 		$chargenNeu = array();
@@ -502,7 +507,9 @@ class LibMember{
 	}
 
 	function getVereineString($id){
-		$stmt = $this->libDb->prepare("SELECT base_verein.id, base_verein.kuerzel, base_verein_mitgliedschaft.ehrenmitglied
+		global $libDb;
+
+		$stmt = $libDb->prepare("SELECT base_verein.id, base_verein.kuerzel, base_verein_mitgliedschaft.ehrenmitglied
 			FROM base_verein, base_verein_mitgliedschaft
 			WHERE base_verein_mitgliedschaft.mitglied = :mitglied
 			AND base_verein_mitgliedschaft.verein = base_verein.id");

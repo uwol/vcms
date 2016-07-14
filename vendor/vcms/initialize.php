@@ -65,27 +65,29 @@ $_SESSION['session_timeout_timestamp'] = time() + 14400;
 * instantiate libraries
 */
 $libConfig = new LibConfig();
-$libGlobal = new vcms\LibGlobal();
-$libString = new vcms\LibString();
-$libFilesystem = new vcms\LibFilesystem(__DIR__ . '/../..');
-$libForm = new vcms\LibForm();
-$libGallery = new vcms\LibGallery();
-$libModuleHandler = new vcms\LibModuleHandler();
-$libModuleParser = new vcms\LibModuleParser();
-$libSecurityManager = new vcms\LibSecurityManager();
-$libTime = new vcms\LibTime();
-$libEvent = new vcms\LibEvent();
 
-$libDb = new vcms\LibDb($libConfig, $libString);
-$libGenericStorage = new vcms\LibGenericStorage($libDb, $libString);
-$libImage = new vcms\LibImage($libTime, $libGenericStorage);
-$libVerein = new vcms\LibAssociation($libDb, $libTime);
-$libMitglied = new vcms\LibMember($libTime, $libDb, $libConfig);
+$libVerein = new \vcms\LibAssociation();
+$libCronJobs = new \vcms\LibCronJobs();
+$libDb = new \vcms\LibDb();
+$libEvent = new \vcms\LibEvent();
+$libFilesystem = new \vcms\LibFilesystem(__DIR__ . '/../..');
+$libForm = new \vcms\LibForm();
+$libGallery = new \vcms\LibGallery();
+$libGenericStorage = new \vcms\LibGenericStorage();
+$libGlobal = new \vcms\LibGlobal();
+$libImage = new \vcms\LibImage();
+$libMitglied = new \vcms\LibMember();
+$libModuleHandler = new \vcms\LibModuleHandler();
+$libModuleParser = new \vcms\LibModuleParser();
+$libSecurityManager = new \vcms\LibSecurityManager();
+$libString = new \vcms\LibString();
+$libTime = new \vcms\LibTime();
 
 
 /*
 * init modules
 */
+$libDb->connect();
 $libModuleHandler->initModules();
 
 
