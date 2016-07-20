@@ -82,7 +82,7 @@ echo '<th class="toolColumn"></th>';
 echo '</tr>';
 
 
-$manifestUrl = 'http://' .$repoHostname. '/manifest.php?id=' .$libConfig->sitePath. '&version=' .$libGlobal->version;
+$manifestUrl = 'http://' .$repoHostname. '/manifest.json?id=' .$libConfig->sitePath. '&version=' .$libGlobal->version;
 $modules = getModules($manifestUrl);
 
 $actualEngineVersion = (double) $libGlobal->version;
@@ -239,18 +239,7 @@ function getModules($manifestUrl){
 	global $libModuleHandler;
 
 	$manifestContent = downloadContent($manifestUrl);
-	$manifestArray = explode("\n", $manifestContent);
-	$modules = array();
-
-	foreach($manifestArray as $row){
-		$rowArray = explode(' ', $row);
-
-		if(is_array($rowArray) && isset($rowArray[0]) && isset($rowArray[1])){
-			$modules[trim($rowArray[0])] = trim($rowArray[1]);
-		}
-	}
-
-	$installedModules = array();
+	$modules = json_decode($manifestContent, true);
 
 	foreach($libModuleHandler->getModules() as $module){
 		$isBaseModule = substr($module->getId(), 0, 5) == 'base_';
