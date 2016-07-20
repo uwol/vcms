@@ -7,7 +7,7 @@ Das VCMS ist ein freies und kostenloses CMS zur Vereinsverwaltung, das speziell 
 Fähigkeiten
 -----------
 
-* Mitglieder mit Gruppen (Aktive, AHAH, Ehepartner, VIPs), Status (A/B-Phil, ex loco)
+* Mitglieder mit Gruppen (Aktive, AHAH, Ehepartner etc.), Status (A/B-Phil, ex loco)
 * Leibverhältnisse
 * Vereine und Mitgliedschaften der Mitglieder in diesen
 * Semester mit Veranstaltungen, Vorständen und Wartsposten, Rezeptionen, Promotionen, Philistrierungen etc.
@@ -19,8 +19,6 @@ Fähigkeiten
 * Export von Adressen für Jubiläen, Serienbriefe und Semesteranschreiben
 * Abbildung von Vereinsfusionen
 * Die komplette Vereinshistorie kann erfasst werden. Wer hat welche Consemester, ist wann rezipiert worden, hat wann welche Chargen absolviert etc.?
-* Viele dieser Daten können durch die Mitglieder selbst gepflegt werden
-* Das Intranet unterscheidet in der Zugangskontrolle zwischen Aktiven, AHAH, Vorständen, Ämtern etc.
 
 
 Modulkatalog
@@ -32,6 +30,7 @@ Das VCMS setzt sich aus Modulen zusammen, die individuell kombiniert werden kön
   * Modul _Semesterprogramm_: Kalender mit Anmeldesystem; Mitglieder können Fotos hochladen, verwaltet durch einen Fotowart; Fotos können öffentlich oder intern sein; Export des Kalenders als iCalendar-Datei.
   * Modul _Verein_: Beschreibung des Vereins.
   * Modul _Dachverband_: Beschreibung des Dachverbands.
+
 * Module für das Intranet
   * Modul _Portal_: Zeitleiste mit den Veranstaltungen, Nachrichten, Fotos und Ereignissen des Semesters.
   * Modul _Mitglied_: Mitglieder können ihre Daten selbstständig pflegen. Darstellung der Altersstruktur. Visualisierung des Leibverhältnis-Stammbaums.
@@ -39,10 +38,8 @@ Das VCMS setzt sich aus Modulen zusammen, die individuell kombiniert werden kön
   * Modul _Rundbrief_: Per E-Mail-Verteiler lassen sich sämtliche Mitglieder erreichen. Dabei könnnen E-Mails an Gruppen wie Aktive, AHAH, Regionalzirkel etc. adressiert werden.
   * Modul _Reservierungen_: Reservierungen von Kneipe, Bootshaus etc.
   * Modul _Chargierkalender_: Organisation der Chargierpräsenz und Teilnahmebestätigung durch Mitglieder.
-  * Modul _Downloadbereich_: Bereitstellung von Dateien durch Vorstand und Warte.
-  * Modul _Daten_: Datenverwaltung, Adressexport (runde Geburtstage für Glückwunschanschreiben etc.).
-
-Die Module lassen sich aus einem zentralen Repository installieren und aktualisieren. Manuelles Einspielen per FTP entfällt.
+  * Modul _Downloads_: Bereitstellung von Dateien durch Vorstand und Warte.
+  * Modul _Daten_: Stammdaten, Adressexport (runde Geburtstage für Glückwunschanschreiben etc.).
 
 
 Technische Anforderungen
@@ -51,3 +48,15 @@ Technische Anforderungen
 * PHP ab Version 5.5
 * MySQL ab Version 4.1
 * ImageMagick oder GDlib für Fotogalerien
+
+
+Screenshots
+-----------
+
+* Internet
+
+<img src="http://uwol.github.io/img/vcms/internet.png" alt="Internet" style="width:100%"/>
+
+* Intranet
+
+<img src="http://uwol.github.io/img/vcms/intranet.png" alt="Intranet" style="width:100%"/>
