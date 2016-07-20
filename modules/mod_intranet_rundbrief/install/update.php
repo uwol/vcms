@@ -32,6 +32,7 @@ $tableExists = false;
 
 $stmt = $libDb->prepare('SHOW TABLES');
 $stmt->execute();
+
 while($row = $stmt->fetch(PDO::FETCH_NUM)){
 	if($row[0] == 'mod_rundbrief_brief'){
 		$tableExists = true;

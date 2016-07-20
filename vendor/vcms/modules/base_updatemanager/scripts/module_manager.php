@@ -38,239 +38,26 @@ echo '<h1>Module</h1>';
 echo '<div class="alert alert-info" role="alert">';
 
 /*
-* clean up
+* actions
 */
 $libFilesystem->deleteDirectory($tempRelativeDirectoryPath);
 @mkdir($tempAbsoluteDirectoryPath);
 
-/*
-* actions
-*/
+
 if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] != 'engine'){
 	$module = $_REQUEST['modul'];
 
-	$tarRelativeFilePath = $tempRelativeDirectoryPath. '/' .$module. '.tar';
-	$tarAbsoluteFilePath = $libFilesystem->getAbsolutePath($tarRelativeFilePath);
-
-	$tempModuleRelativeDirectoryPath = $tempRelativeDirectoryPath. '/' .$module;
-	$tempModuleAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($tempModuleRelativeDirectoryPath);
-
-	$moduleRelativeDirectoryPath = $modulesRelativeDirectoryPath. '/' .$module;
-	$moduleAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($moduleRelativeDirectoryPath);
-
-	/*
-	* install module
-	*/
 	if($_REQUEST['aktion'] == 'installModule' && $module != ''){
-		//module not installed, yet?
-		if(!$libModuleHandler->moduleIsAvailable($module)){
-			//download module package
-			echo '<p>Lade Modulpaket aus dem Repository.</p>';
-			downloadContent('http://' .$repoHostname. '/packages/'. $module. '.tar', $tarAbsoluteFilePath);
-
-			//untar module package
-			$tar = new pear\Archive\Archive_Tar($tarAbsoluteFilePath);
-			echo '<p>Entpacke das Paket in den temp-Ordner.</p>';
-			$tar->extract($tempRelativeDirectoryPath. '/');
-
-			if(is_dir($tempModuleAbsoluteDirectoryPath)){
-				if(is_file($tempModuleAbsoluteDirectoryPath. '/meta.json')){
-					if(!is_dir($moduleAbsoluteDirectoryPath)){
-						//copy temporary module folder
-						$libFilesystem->copyDirectory($tempModuleRelativeDirectoryPath, $moduleRelativeDirectoryPath);
-
-						//refresh module handler
-						$libModuleHandler = new vcms\LibModuleHandler();
-						$libModuleHandler->initModules();
-
-						//run installation script
-						$moduleObject = $libModuleHandler->getModuleByModuleid($module);
-
-						if($moduleObject->getInstallScript() != ''){
-							echo '<p>Führe Installationsskript des Moduls aus.</p>';
-							$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/'. $moduleObject->getInstallScript());
-							include($scriptAbsolutePath);
-						}
-					} else {
-						echo '<p>Fehler: Das Modul ist bereits installiert.</p>';
-					}
-				} else {
-					echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.json</p>';
-				}
-			} else {
-				echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
-			}
-
-			//delete temporary module folder
-			echo '<p>Lösche das temporäre Modulpaket ' .$tarRelativeFilePath. '.</p>';
-			@unlink($tarAbsoluteFilePath);
-
-			echo '<p>Lösche den temporären Modulordner ' .$tempModuleRelativeDirectoryPath. '.</p>';
-
-			if(is_dir($tempModuleAbsoluteDirectoryPath)){
-				$libFilesystem->deleteDirectory($tempModuleRelativeDirectoryPath);
-			}
-		} else {
-			echo '<p>Fehler: Das Modul ist bereits installiert.</p>';
-		}
-	}
-
-	/*
-	* uninstall module
-	*/
-	elseif($_REQUEST['aktion'] == 'uninstallModule' && $module != ''){
-		//run uninstall script
-		$moduleObject = $libModuleHandler->getModuleByModuleid($module);
-
-		if(is_object($moduleObject) && $moduleObject->getUninstallScript() != ''){
-			echo '<p>Führe Deinstallationsskript des Moduls aus.</p>';
-			$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/'. $moduleObject->getUninstallScript());
-			include($scriptAbsolutePath);
-		}
-
-		//delete module directory
-		echo '<p>Lösche den Modulordner ' .$moduleRelativeDirectoryPath. '.</p>';
-		$libFilesystem->deleteDirectory($moduleRelativeDirectoryPath);
-
-		//refresh module handler
-		$libModuleHandler = new vcms\LibModuleHandler();
-		$libModuleHandler->initModules();
-	}
-
-	/*
-	* update module
-	*/
-	elseif($_REQUEST['aktion'] == 'updateModule' && $module != ''){
-		//download module package
-		echo '<p>Lade Modulpaket aus dem Repository.</p>';
-		downloadContent('http://' .$repoHostname. '/packages/'. $module. '.tar',
-			$tarAbsoluteFilePath);
-
-		//untar module package
-		$tar = new pear\Archive\Archive_Tar($tarRelativeFilePath);
-		echo '<p>Entpacke das Paket in den temp-Ordner.</p>';
-		$tar->extract($tempRelativeDirectoryPath. '/');
-
-		if(is_dir($tempModuleAbsoluteDirectoryPath)){
-			if(is_file($tempModuleAbsoluteDirectoryPath. '/meta.json')){
-				if(is_dir($moduleAbsoluteDirectoryPath)){
-
-					if(is_dir($tempModuleAbsoluteDirectoryPath. '/custom')){
-						$libFilesystem->deleteDirectory($tempModuleAbsoluteDirectoryPath. '/custom');
-					}
-
-					//clean module folder except custom
-					$files = array_diff(scandir($moduleAbsoluteDirectoryPath), array('..', '.', 'custom'));
-
-					foreach ($files as $file){
-						$fileRelativePath = $moduleRelativeDirectoryPath. '/' .$file;
-						$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileRelativePath);
-
-						if(is_dir($fileAbsolutePath)){
-							echo 'Lösche ' .$fileRelativePath. '<br />';
-							$libFilesystem->deleteDirectory($fileRelativePath);
-						} elseif(is_file($fileAbsolutePath)){
-							echo 'Lösche ' .$fileRelativePath. '<br />';
-							unlink($fileAbsolutePath);
-						}
-					}
-
-					//copy all temporary files except the custom directory
-					echo '<p>Kopiere aktualisiertes Modul in den Modulordner ' .$moduleRelativeDirectoryPath. '</p>';
-
-					$files = array_diff(scandir($tempModuleAbsoluteDirectoryPath), array('..', '.', 'custom'));
-
-					foreach ($files as $file){
-						$fileRelativePath = $tempModuleRelativeDirectoryPath. '/' .$file;
-						$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileRelativePath);
-
-						if(is_dir($fileAbsolutePath)){
-							$libFilesystem->copyDirectory($fileRelativePath, $moduleRelativeDirectoryPath. '/' .$file);
-						} elseif(is_file($fileAbsolutePath)){
-							copy($fileRelativePath, $moduleRelativeDirectoryPath. '/' .$file);
-						}
-					}
-
-					//refresh module handler
-					$libModuleHandler = new vcms\LibModuleHandler();
-					$libModuleHandler->initModules();
-
-					//run update script
-					$moduleObject = $libModuleHandler->getModuleByModuleid($module);
-
-					if($moduleObject->getUpdateScript() != ''){
-						echo '<p>Führe Aktualisierungsscript des Moduls aus.</p>';
-						$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/'. $moduleObject->getUpdateScript());
-						include($scriptAbsolutePath);
-					}
-				} else {
-					echo '<p>Fehler: Das zu aktualisierende Modul ist nicht installiert.</p>';
-				}
-			} else {
-				echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.json.</p>';
-			}
-		} else {
-			echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
-		}
-
-		echo '<p>Lösche das temporäre Modulpaket ' .$tarRelativeFilePath. '.</p>';
-		@unlink($tarAbsoluteFilePath);
-
-		echo '<p>Lösche den temporären Modulordner ' .$tempModuleRelativeDirectoryPath. '.</p>';
-
-		if(is_dir($tempModuleAbsoluteDirectoryPath)){
-			$libFilesystem->deleteDirectory($tempModuleRelativeDirectoryPath);
-		}
+		installModule($module);
+	} elseif($_REQUEST['aktion'] == 'uninstallModule' && $module != ''){
+		uninstallModule($module);
 	}
 }
 
-
-/*
-* update engine
-*/
 if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'updateEngine'){
-	$tarRelativeFilePath = $tempRelativeDirectoryPath. '/engine.tar';
-	$tarAbsoluteFilePath = $libFilesystem->getAbsolutePath($tarRelativeFilePath);
-
-	$tempEngineRelativeDirectoryPath = $tempRelativeDirectoryPath. '/engine';
-	$tempEngineAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($tempEngineRelativeDirectoryPath);
-
-	//download engine package
-	echo '<p>Lade Enginepaket aus dem Repository.</p>';
-	downloadContent('http://' .$repoHostname. '/packages/engine.tar', $tarAbsoluteFilePath);
-
-	//untar engine package
-	$tar = new pear\Archive\Archive_Tar($tarRelativeFilePath);
-	echo '<p>Entpacke das Enginepaket in den temp-Ordner.</p>';
-	$tar->extract($tempRelativeDirectoryPath. '/');
-
-	if(is_dir($tempEngineAbsoluteDirectoryPath)){
-		if(is_file($tempEngineAbsoluteDirectoryPath. '/index.php')
-				&& is_file($tempEngineAbsoluteDirectoryPath. '/inc.php')
-				&& is_dir($tempEngineAbsoluteDirectoryPath. '/vendor')){
-			$libCronJobs->deleteFiles();
-
-			unlink($libFilesystem->getAbsolutePath('inc.php'));
-			unlink($libFilesystem->getAbsolutePath('index.php'));
-
-			$libFilesystem->deleteDirectory('styles');
-			$libFilesystem->deleteDirectory('vendor');
-
-			echo '<p>Installiere die neue Engine.</p>';
-			$libFilesystem->copyDirectory($tempEngineRelativeDirectoryPath, '.');
-
-			echo '<p>Führe Aktualisierungsscript der Engine aus.</p>';
-			$scriptAbsolutePath = $libFilesystem->getAbsolutePath($engineUpdateScript);
-			include($scriptAbsolutePath);
-		} else {
-			echo '<p>Fehler: Das Enginepaket ist fehlerhaft.</p>';
-		}
-	} else {
-		echo '<p>Fehler: Das heruntergeladene Enginepaket konnte nicht entpackt werden.</p>';
-	}
-
-	die('</div><a href="index.php?pid=updater_liste">Klicke hier</a>, um die Modulliste anzuzeigen.');
+	updateEngine();
 }
+
 
 echo 'Lade Paketinformationen aus dem Repository.';
 echo '</div>';
@@ -294,32 +81,9 @@ echo '<th class="toolColumn"></th>';
 echo '<th class="toolColumn"></th>';
 echo '</tr>';
 
-$manifestString = downloadContent('http://' .$repoHostname. '/manifest.php?id=' .$libConfig->sitePath);
-$manifestArray = explode("\n", $manifestString);
 
-$modules = array();
-
-foreach($manifestArray as $row){
-	$array = explode(' ', $row);
-
-	if(is_array($array) && isset($array[0]) && isset($array[1])){
-		$modules[trim($array[0])] = trim($array[1]);
-	}
-}
-
-$installedModules = array();
-
-foreach($libModuleHandler->getModules() as $module){
-	$isBaseModule = substr($module->getId(), 0, 5) == 'base_';
-
-	if(!$isBaseModule){
-		if(!array_key_exists($module->getId(), $modules)){
-			$modules[$module->getId()] = '';
-		}
-	}
-}
-
-ksort($modules);
+$manifestUrl = 'http://' .$repoHostname. '/manifest.php?id=' .$libConfig->sitePath. '&version=' .$libGlobal->version;
+$modules = getModules($manifestUrl);
 
 $actualEngineVersion = (double) $libGlobal->version;
 $newEngineVersion = (double) $modules['engine'];
@@ -398,12 +162,10 @@ foreach($modules as $key => $value){
 	echo '<td class="toolColumn">';
 
 	if($key != 'engine'){
-		if(!$libModuleHandler->moduleIsAvailable($key)){
-			if(!$engineIsOld){
-				echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
-				echo '<i class="fa fa-plus-circle" aria-hidden="true"></i>';
-				echo '</a>';
-			}
+		if(!$engineIsOld && !$libModuleHandler->moduleIsAvailable($key)){
+			echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
+			echo '<i class="fa fa-plus-circle" aria-hidden="true"></i>';
+			echo '</a>';
 		}
 	}
 
@@ -413,24 +175,20 @@ foreach($modules as $key => $value){
 	// update action
 	echo '<td class="toolColumn">';
 
-	if($key == 'engine'){
-		if($engineIsOld){
-			echo '<a href="index.php?pid=updater_liste&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
-			echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
-			echo '</a>';
-		}
+	if($engineIsOld && $key == 'engine'){
+		echo '<a href="index.php?pid=updater_liste&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
+		echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
+		echo '</a>';
 	} else {
 		if($libModuleHandler->moduleIsAvailable($key)){
 			$module = $libModuleHandler->getModuleByModuleid($key);
 			$actualversion = (double) $module->getVersion();
 			$newversion = (double) $value;
 
-			if($newversion > $actualversion){
-				if(!$engineIsOld){
-					echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=updateModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
-					echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
-					echo '</a>';
-				}
+			if(!$engineIsOld && $newversion > $actualversion){
+				echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
+				echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
+				echo '</a>';
 			}
 		}
 	}
@@ -442,16 +200,14 @@ foreach($modules as $key => $value){
 	echo '<td class="toolColumn">';
 
 	if($key != 'engine'){
-		if($libModuleHandler->moduleIsAvailable($key)){
-			if(!$engineIsOld){
-				$module = $libModuleHandler->getModuleByModuleid($key);
-				$actualversion = (double) $module->getVersion();
-				$newversion = (double) $value;
+		if(!$engineIsOld && $libModuleHandler->moduleIsAvailable($key)){
+			$module = $libModuleHandler->getModuleByModuleid($key);
+			$actualversion = (double) $module->getVersion();
+			$newversion = (double) $value;
 
-				echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
-				echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-				echo '</a>';
-			}
+			echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
+			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
+			echo '</a>';
 		}
 	}
 
@@ -477,5 +233,206 @@ function downloadContent($url, $destinationFile = false){
 			file_put_contents($destinationFile, $contents);
 		}
 	}
+}
+
+function getModules($manifestUrl){
+	global $libModuleHandler;
+
+	$manifestContent = downloadContent($manifestUrl);
+	$manifestArray = explode("\n", $manifestContent);
+	$modules = array();
+
+	foreach($manifestArray as $row){
+		$rowArray = explode(' ', $row);
+
+		if(is_array($rowArray) && isset($rowArray[0]) && isset($rowArray[1])){
+			$modules[trim($rowArray[0])] = trim($rowArray[1]);
+		}
+	}
+
+	$installedModules = array();
+
+	foreach($libModuleHandler->getModules() as $module){
+		$isBaseModule = substr($module->getId(), 0, 5) == 'base_';
+
+		if(!$isBaseModule){
+			if(!array_key_exists($module->getId(), $modules)){
+				$modules[$module->getId()] = '';
+			}
+		}
+	}
+
+	ksort($modules);
+
+	return $modules;
+}
+
+function installModule($module){
+	global $libModuleHandler, $libFilesystem, $repoHostname, 
+		$tempRelativeDirectoryPath, $modulesRelativeDirectoryPath;
+	
+	// globals required for install/update scripts
+	global $libGlobal, $libDb;
+
+	$tarRelativeFilePath = $tempRelativeDirectoryPath. '/' .$module. '.tar';
+	$tarAbsoluteFilePath = $libFilesystem->getAbsolutePath($tarRelativeFilePath);
+
+	$tempModuleRelativeDirectoryPath = $tempRelativeDirectoryPath. '/' .$module;
+	$tempModuleAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($tempModuleRelativeDirectoryPath);
+
+	$moduleRelativeDirectoryPath = $modulesRelativeDirectoryPath. '/' .$module;
+	$moduleAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($moduleRelativeDirectoryPath);
+
+	$isUpdate = is_dir($moduleAbsoluteDirectoryPath);
+
+	echo '<p>Lade Modulpaket aus dem Repository.</p>';
+	downloadContent('http://' .$repoHostname. '/packages/'. $module. '.tar', $tarAbsoluteFilePath);
+
+	//untar module package
+	$tar = new \pear\Archive\Archive_Tar($tarAbsoluteFilePath);
+	echo '<p>Entpacke das Paket in den temp-Ordner.</p>';
+	$tar->extract($tempRelativeDirectoryPath. '/');
+
+	if(is_dir($tempModuleAbsoluteDirectoryPath)){
+		if(is_file($tempModuleAbsoluteDirectoryPath. '/meta.json')){
+			if(!$isUpdate){
+				$libFilesystem->copyDirectory($tempModuleRelativeDirectoryPath, $moduleRelativeDirectoryPath);
+			} else {
+				$files = array_diff(scandir($moduleAbsoluteDirectoryPath), array('..', '.', 'custom'));
+
+				foreach ($files as $file){
+					$fileRelativePath = $moduleRelativeDirectoryPath. '/' .$file;
+					$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileRelativePath);
+
+					if(is_dir($fileAbsolutePath)){
+						echo 'Lösche ' .$fileRelativePath. '<br />';
+						$libFilesystem->deleteDirectory($fileRelativePath);
+					} elseif(is_file($fileAbsolutePath)){
+						echo 'Lösche ' .$fileRelativePath. '<br />';
+						unlink($fileAbsolutePath);
+					}
+				}
+
+				echo '<p>Kopiere aktualisiertes Modul in den Modulordner ' .$moduleRelativeDirectoryPath. '</p>';
+
+				$files = array_diff(scandir($tempModuleAbsoluteDirectoryPath), array('..', '.', 'custom'));
+
+				foreach ($files as $file){
+					$fileRelativePath = $tempModuleRelativeDirectoryPath. '/' .$file;
+					$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileRelativePath);
+
+					if(is_dir($fileAbsolutePath)){
+						$libFilesystem->copyDirectory($fileRelativePath, $moduleRelativeDirectoryPath. '/' .$file);
+					} elseif(is_file($fileAbsolutePath)){
+						copy($fileRelativePath, $moduleRelativeDirectoryPath. '/' .$file);
+					}
+				}	
+			}
+
+			refreshModuleHandler();
+
+			$moduleObject = $libModuleHandler->getModuleByModuleid($module);
+
+			if(!$isUpdate && $moduleObject->getInstallScript() != ''){
+				echo '<p>Führe Installationsskript des Moduls aus.</p>';
+				$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/' .$moduleObject->getInstallScript());
+				include($scriptAbsolutePath);
+			} elseif($isUpdate && $moduleObject->getUpdateScript() != ''){
+				echo '<p>Führe Aktualisierungsscript des Moduls aus.</p>';
+				$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/' .$moduleObject->getUpdateScript());
+				include($scriptAbsolutePath);			
+			}
+		} else {
+			echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.json</p>';
+		}
+	} else {
+		echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
+	}
+
+	//delete temporary module folder
+	echo '<p>Lösche das temporäre Modulpaket ' .$tarRelativeFilePath. '.</p>';
+	@unlink($tarAbsoluteFilePath);
+
+	echo '<p>Lösche den temporären Modulordner ' .$tempModuleRelativeDirectoryPath. '.</p>';
+
+	if(is_dir($tempModuleAbsoluteDirectoryPath)){
+		$libFilesystem->deleteDirectory($tempModuleRelativeDirectoryPath);
+	}
+}
+
+function uninstallModule($module){
+	global $libModuleHandler, $libFilesystem, $modulesRelativeDirectoryPath;
+
+	// globals required for install/update scripts
+	global $libGlobal, $libDb;
+
+	$moduleRelativeDirectoryPath = $modulesRelativeDirectoryPath. '/' .$module;
+	$moduleObject = $libModuleHandler->getModuleByModuleid($module);
+
+	if(is_object($moduleObject) && $moduleObject->getUninstallScript() != ''){
+		echo '<p>Führe Deinstallationsskript des Moduls aus.</p>';
+		$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/'. $moduleObject->getUninstallScript());
+		include($scriptAbsolutePath);
+	}
+
+	//delete module directory
+	echo '<p>Lösche den Modulordner ' .$moduleRelativeDirectoryPath. '.</p>';
+	$libFilesystem->deleteDirectory($moduleRelativeDirectoryPath);
+
+	refreshModuleHandler();
+}
+
+function updateEngine(){
+	global $libFilesystem, $libCronJobs, $repoHostname, $engineUpdateScript, $tempRelativeDirectoryPath;
+
+	// globals required for install/update scripts
+	global $libGlobal, $libDb;
+
+	$tarRelativeFilePath = $tempRelativeDirectoryPath. '/engine.tar';
+	$tarAbsoluteFilePath = $libFilesystem->getAbsolutePath($tarRelativeFilePath);
+
+	$tempEngineRelativeDirectoryPath = $tempRelativeDirectoryPath. '/engine';
+	$tempEngineAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($tempEngineRelativeDirectoryPath);
+
+	//download engine package
+	echo '<p>Lade Enginepaket aus dem Repository.</p>';
+	downloadContent('http://' .$repoHostname. '/packages/engine.tar', $tarAbsoluteFilePath);
+
+	//untar engine package
+	$tar = new \pear\Archive\Archive_Tar($tarRelativeFilePath);
+	echo '<p>Entpacke Enginepaket in den temp-Ordner.</p>';
+	$tar->extract($tempRelativeDirectoryPath. '/');
+
+	if(!is_dir($tempEngineAbsoluteDirectoryPath)){
+		echo '<p>Fehler: Das heruntergeladene Enginepaket konnte nicht entpackt werden.</p>';
+	} elseif(!is_file($tempEngineAbsoluteDirectoryPath. '/index.php')
+			|| !is_file($tempEngineAbsoluteDirectoryPath. '/inc.php')
+			|| !is_dir($tempEngineAbsoluteDirectoryPath. '/vendor')) {
+		echo '<p>Fehler: Das Enginepaket ist fehlerhaft.</p>';
+	} else {
+		$libCronJobs->deleteFiles();
+
+		unlink($libFilesystem->getAbsolutePath('inc.php'));
+		unlink($libFilesystem->getAbsolutePath('index.php'));
+
+		$libFilesystem->deleteDirectory('styles');
+		$libFilesystem->deleteDirectory('vendor');
+
+		echo '<p>Installiere neue Engine.</p>';
+		$libFilesystem->copyDirectory($tempEngineRelativeDirectoryPath, '.');
+
+		echo '<p>Führe Aktualisierungsscript der Engine aus.</p>';
+		$scriptAbsolutePath = $libFilesystem->getAbsolutePath($engineUpdateScript);
+		include($scriptAbsolutePath);
+	}
+
+	die('</div><a href="index.php?pid=updater_liste">Klicke hier</a>, um die Modulliste anzuzeigen.');
+}
+
+function refreshModuleHandler(){
+	global $libModuleHandler;
+
+	$libModuleHandler = new \vcms\LibModuleHandler();
+	$libModuleHandler->initModules();
 }
 ?>
