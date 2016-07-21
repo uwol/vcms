@@ -59,7 +59,7 @@ $libGlobal->module = $libModuleHandler->getModuleByPageid($libGlobal->pid);
 
 
 //load page header
-require_once('vendor/vcms/frame/header.php');
+require_once('vendor/vcms/layout/header.php');
 
 
 //security check
@@ -77,5 +77,5 @@ if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->pag
 
 
 //load footer
-require_once('vendor/vcms/frame/footer.php');
+require_once('vendor/vcms/layout/footer.php');
 ?>
