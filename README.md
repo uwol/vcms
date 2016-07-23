@@ -7,8 +7,7 @@ Das VCMS ist ein freies und kostenloses CMS zur Vereinsverwaltung, das speziell 
 Fähigkeiten
 -----------
 
-* Mitglieder mit Gruppen (Aktive, AHAH, Ehepartner etc.), Status (A/B-Phil, ex loco)
-* Leibverhältnisse
+* Mitglieder mit Gruppen (Aktive, AHAH, Ehepartner etc.), Status (A/B-Phil, ex loco) und Leibverhältnissen
 * Vereine und Mitgliedschaften der Mitglieder in diesen
 * Semester mit Veranstaltungen, Vorständen und Wartsposten, Rezeptionen, Promotionen, Philistrierungen etc.
 * Veranstaltungsanmeldungen
@@ -24,7 +23,7 @@ Fähigkeiten
 Modulkatalog
 ------------
 
-Das VCMS setzt sich aus Modulen zusammen, die individuell kombiniert werden können:
+Das VCMS setzt sich aus Modulen zusammen, die individuell kombiniert werden können. Falls das VCMS als reine Intranet-Lösung betrieben werden soll, können sämtliche Internet-Module gelöscht werden. Dies ermöglicht den Parallelbetrieb zu einer bereits bestehenden Website.
 
 * Module für den öffentlichen Teil der Webseite
   * Modul _Semesterprogramm_: Kalender mit Anmeldesystem; Mitglieder können Fotos hochladen, verwaltet durch einen Fotowart; Fotos können öffentlich oder intern sein; Export des Kalenders als iCalendar-Datei.

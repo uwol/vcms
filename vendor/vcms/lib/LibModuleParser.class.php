@@ -22,18 +22,18 @@ namespace vcms;
 class LibModuleParser{
 
 	function parseMetaJson($moduleDirectory, $moduleRelativePath){
-		global $libFilesystem;
+		global $libGlobal, $libFilesystem;
 
 		$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
 		$jsonFileContents = file_get_contents($moduleAbsolutePath. '/meta.json');
 		$json = json_decode($jsonFileContents, true);
 
 		if(isset($json['version']) && !is_numeric($json['version'])){
-			echo('Fehler: Versionsangabe nicht numerisch in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Versionsangabe nicht numerisch in Modul ' .$moduleRelativePath;
 		}
 
 		if(!isset($json['moduleName']) || $json['moduleName'] == ''){
-			echo('Fehler: Kein moduleName in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Kein moduleName in Modul ' .$moduleRelativePath;
 		}
 
 		/*
@@ -189,53 +189,53 @@ class LibModuleParser{
 
 	// @Deprecated
 	function parseMetaPhp($moduleDirectory, $moduleRelativePath){
-		global $libFilesystem;
+		global $libGlobal, $libFilesystem;
 
 		$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
 		require($moduleAbsolutePath. '/meta.php');
 
 		if($version != '' && !is_numeric($version)){
-			echo('Fehler: Versionsangabe nicht numerisch in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Versionsangabe nicht numerisch in Modul ' .$moduleRelativePath;
 		}
 
 		if($moduleName == ''){
-			echo('Fehler: Keine Variable moduleName in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Keine Variable moduleName in Modul ' .$moduleRelativePath;
 		}
 
 		if(!isset($installScript)){
-			echo('Fehler: Keine Variable installScript in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Keine Variable installScript in Modul ' .$moduleRelativePath;
 		}
 
 		if(!isset($uninstallScript)){
-			echo('Fehler: Keine Variable uninstallScript in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Keine Variable uninstallScript in Modul ' .$moduleRelativePath;
 		}
 
 		if(!isset($updateScript)){
-			echo('Fehler: Keine Variable updateScript in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Keine Variable updateScript in Modul ' .$moduleRelativePath;
 		}
 
 		if(!is_array($pages)){
-			echo('Fehler: Kein Array pages in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Kein Array pages in Modul ' .$moduleRelativePath;
 		}
 
 		if(!is_array($includes)){
-			echo('Fehler: Kein Array includes in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Kein Array includes in Modul ' .$moduleRelativePath;
 		}
 
 		if(!is_array($headerStrings)){
-			echo('Fehler: Kein Array headerStrings in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Kein Array headerStrings in Modul ' .$moduleRelativePath;
 		}
 
 		if(!is_array($menuElementsInternet)){
-			echo('Fehler: Kein Array menuElementsInternet in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Kein Array menuElementsInternet in Modul ' .$moduleRelativePath;
 		}
 
 		if(!is_array($menuElementsIntranet)){
-			echo('Fehler: Kein Array menuElementsIntranet in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Kein Array menuElementsIntranet in Modul ' .$moduleRelativePath;
 		}
 
 		if(!is_array($menuElementsAdministration)){
-			echo('Fehler: Kein Array menuElementsAdministration in Modul ' .$moduleRelativePath. '<br />');
+			$libGlobal->errorTexts[] = 'Kein Array menuElementsAdministration in Modul ' .$moduleRelativePath;
 		}
 
 		/*

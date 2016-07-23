@@ -21,63 +21,61 @@ if(!is_object($libGlobal))
 	exit();
 
 
-if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
-	$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
-	$stmt->execute();
+$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
+$stmt->execute();
 
-	$maxNumberOfThumbnails = 4;
-	$i = 0;
+$maxNumberOfThumbnails = 4;
+$i = 0;
 
-	$eventIds = array();
+$eventIds = array();
 
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		if($libGallery->hasPictures($row['id'], 0)){
-			$eventIds[] = $row['id'];
-			$i++;
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+	if($libGallery->hasPictures($row['id'], 0)){
+		$eventIds[] = $row['id'];
+		$i++;
 
-			if($i > $maxNumberOfThumbnails - 1){
-				break;
-			}
+		if($i > $maxNumberOfThumbnails - 1){
+			break;
 		}
 	}
+}
 
-	if(count($eventIds) > 0){
-		echo '<div class="row">';
+if(count($eventIds) > 0){
+	echo '<div class="row">';
 
-		foreach($eventIds as $eventId){
-			$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE id = :id');
-			$stmt->bindValue(':id', $eventId);
-			$stmt->execute();
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+	foreach($eventIds as $eventId){
+		$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE id = :id');
+		$stmt->bindValue(':id', $eventId);
+		$stmt->execute();
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			$pictures = $libGallery->getPictures($eventId, 0);
+		$pictures = $libGallery->getPictures($eventId, 0);
 
-			//determine random image
-			srand(microtime() * 1000000);
-			$randomNumber = rand(0, count($pictures)-1);
-			$keys = array_keys($pictures);
-			$pictureid = $keys[$randomNumber];
+		//determine random image
+		srand(microtime() * 1000000);
+		$randomNumber = rand(0, count($pictures)-1);
+		$keys = array_keys($pictures);
+		$pictureid = $keys[$randomNumber];
 
-			echo '<div class="col-sm-6 col-md-3">';
+		echo '<div class="col-sm-6 col-md-3">';
 
-			echo '<div class="thumbnail">';
-			echo '<div class="thumbnailOverflow">';
-			echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$eventId. '">';
-			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$eventId. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block" />';
-			echo '</a>';
-			echo '</div>';
-			echo '<div class="caption">';
+		echo '<div class="thumbnail">';
+		echo '<div class="thumbnailOverflow">';
+		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$eventId. '">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$eventId. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block" />';
+		echo '</a>';
+		echo '</div>';
+		echo '<div class="caption">';
 
-			printVeranstaltungTitle($row);
-			printVeranstaltungDateTime($row);
+		printVeranstaltungTitle($row);
+		printVeranstaltungDateTime($row);
 
-			echo '</div>';
-			echo '</div>';
-
-			echo '</div>';
-		}
+		echo '</div>';
+		echo '</div>';
 
 		echo '</div>';
 	}
+
+	echo '</div>';
 }
 ?>

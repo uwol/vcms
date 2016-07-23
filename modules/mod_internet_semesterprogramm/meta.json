@@ -1,6 +1,6 @@
 {
 	"moduleName": "Semesterprogramm",
-	"version": 3.00,
+	"version": 3.01,
 	"pages": [
 		{
 			"pid": "semesterprogramm_calendar",
@@ -13,7 +13,7 @@
 		{
 			"iid": "semesterprogramm_icalendar",
 			"file": "icalendar.php",
-			"directory": "scripts/"
+			"directory": "scripts"
 		}
 	],
 	"menuElementsInternet": [

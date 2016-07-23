@@ -30,12 +30,12 @@
 		{
 			"iid": "semesterprogramm_picture",
 			"file": "picture.php",
-			"directory": "scripts/"
+			"directory": "scripts"
 		},
 		{
 			"iid": "semesterprogramm_admin_galerie_upload",
 			"file": "gallery_upload.php",
-			"directory": "scripts/admin/",
+			"directory": "scripts/admin",
 			"accessRestriction": {
 				"gruppen": ["F", "B", "P"]
 			}
@@ -43,7 +43,7 @@
 		{
 			"iid": "fb_event",
 			"file": "fbevent.php",
-			"directory": "scripts/"
+			"directory": "scripts"
 		}
 	],
 	"menuElementsIntranet": [

@@ -3,7 +3,9 @@ VCMS Installationsanleitung
 
 Einleitung
 ----------
-Im Folgenden wird die Installationsprozedur für das VCMS beschrieben. Das VCMS besteht aus Modulen, welche in Ordnern im Ordner modules gespeichert sind. Durch das Löschen eines Modulordners kann die Funktionalität des Moduls aus dem VCMS entfernt werden.
+Im Folgenden wird die Installationsprozedur für das VCMS beschrieben. Das VCMS besteht aus einer Engine und Modulen. Die Engine ist im Ordner vendor gespeichert, die Module im Ordner modules. 
+
+Die Module sind in Internet- und Intranet-Module unterteilt, und können nach Bedarf zusammengestellt werden. Falls das VCMS als reine Intranet-Lösung betrieben werden soll, sind sämtliche Internet-Module zu löschen. Dies ermöglicht den Parallelbetrieb zu einer bereits bestehenden Website.
 
 
 Installationsschritte
@@ -15,7 +17,7 @@ Nach dem Download befindet sich das VCMS in einer Zipdatei, die z. B. mit Winzip
 
 ### Systemkonfiguration
 
-Die Datei custom/systemconfig.php ist die zentrale Konfigurationsdatei. Diese sollte mit einem UTF-8-fähigen Texteditor wie z. B. Notepad++ für Windows oder TextWrangler für Mac OS angepasst werden. Bei der Datenbankkonfiguration unter $mysqlServer, $mysqlUser, $mysqlPass und $mysqlDb sind die Angaben des Hosters einzutragen, die normalerweise dem Konfigurationsmenü des Hosters entnommen werden können. Es ist darauf zu achten, dass die Anführungszeichen nicht entfernt werden.
+Die Datei custom/systemconfig.php ist die zentrale Konfigurationsdatei. Diese muss mit einem UTF-8-fähigen Texteditor wie z. B. Notepad++ für Windows oder TextWrangler für Mac OS angepasst werden. Bei der Datenbankkonfiguration unter $mysqlServer, $mysqlUser, $mysqlPass und $mysqlDb sind die Angaben des Hosters einzutragen, die normalerweise dem Konfigurationsmenü des Hosters entnommen werden können. Es ist darauf zu achten, dass die Anführungszeichen nicht entfernt werden.
 
 ### Hochladen
 
@@ -23,15 +25,15 @@ Das VCMS muss per FTP im Binary-Modus (nicht ASCII-Modus) in den Hauptordner des
 
 ### Installation der Datenbank und eines initialen Internetwartes
 
-Die Datenbank kann mit der Datei installer.php installiert werden. Dazu muss die installer.txt in installer.php umbenannt werden. Anschließend ist diese per http://&lt;Hostname der Seite&gt;/installer.php aufzurufen und den dortigen Angaben zu folgen. Nach der Installation der Datenbank muss in der Datenbank ein Intranetaccount für einen Internetwart generiert werden. Auch dies wird mit der installer.php durchgeführt. Abschließend ist die installer.php zu löschen!
+Die Datenbank wird mit der Datei installer.php installiert. Dazu muss die installer.txt in installer.php umbenannt werden. Anschließend ist diese im Webbrowser aufzurufen und den dortigen Angaben zu folgen. Nach der Installation der Datenbank muss in der Datenbank ein Intranetaccount für einen Internetwart generiert werden. Auch dies wird mit der installer.php durchgeführt. Abschließend ist die installer.php zu löschen.
 
 ### Test
 
-Nun sollte man sich im Intranet mit dem generierten Internetwart anmelden können. Der Internetwart kann im Intranet die Datenbank pflegen. Wenn ein Mitglied sich für das Intranet registriert, wird eine Anfrage an die Emailadresse des Webmasters geschickt, die in der systemconfig.php unter $emailWebmaster angegeben ist. Die Email enthält den Benutzernamen und Passwortangaben, die durch den Internetwart im Intranetverwaltungsbereich in die Basisdatenbank eingegeben werden müssen.
+Nun sollte man sich im Intranet mit dem generierten Internetwart anmelden können. Der Internetwart kann im Intranet die Datenbank pflegen. Wenn ein Mitglied sich für das Intranet registriert, wird eine Anfrage an die Emailadresse des Webmasters geschickt, die in der systemconfig.php unter $emailWebmaster angegeben ist.
 
 ### Design
 
-Im Ordner custom/styles kann das Design und die Farbgebung angepasst werden.
+Im Ordner custom/styles kann das Layout und die Farbgebung angepasst werden.
 
 ### Entfernen nicht benötigter Module
 
@@ -39,4 +41,4 @@ Module können im Intranet mit dem Modul-Manager deinstalliert oder einfach aus 
 
 ### Einpflegen bestehender Seiten
 
-Falls bereits eine Vereinswebseite existiert, deren Inhalte übernommern werden sollen, können die Module mod_internet_vereinsseiten und mod_internet_dachverbandsseiten als Vorlagen bearbeitet werden oder ein neues Modul angelegt werden. Dazu können z. B. in der Datei modules/mod_internet_vereinsseiten/meta.json die Seiten registriert werden und als HTML-Seiten im Ordner modules/mod_internet_vereinsseiten/custom gespeichert werden.
+Falls bereits eine Vereinswebseite existiert, deren Inhalte übernommern werden sollen, können die Module mod_internet_vereinsseiten und mod_internet_dachverbandsseiten als Vorlagen bearbeitet werden oder ein neues Modul angelegt werden. In der Datei modules/mod_internet_vereinsseiten/meta.json können Seiten registriert werden.

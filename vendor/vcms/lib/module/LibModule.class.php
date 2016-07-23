@@ -37,28 +37,30 @@ class LibModule{
 	function __construct($id, $name, $version, $path, $pages, $includes, $headerStrings,
 			$installScript, $uninstallScript, $updateScript,
 			$menuElementsInternet, $menuElementsIntranet, $menuElementsAdministration){
+		global $libGlobal;
+
 		if($id == ''){
-			echo('Fehler: Fehlende Module-Id<br />');
+			$libGlobal->errorTexts[] = 'Fehlende Module-Id';
 		}
 
 		if($version != '' && !is_numeric($version)){
-			echo('Fehler: Versionsangabe nicht numerisch. Korrekt wäre zum Beispiel 1.6<br />');
+			$libGlobal->errorTexts[] = 'Versionsangabe nicht numerisch';
 		}
 
 		if($name == ''){
-			echo('Fehler: Fehlende Namensangabe<br />');
+			$libGlobal->errorTexts[] = 'Fehlende Namensangabe';
 		}
 
 		if($path == ''){
-			echo('Fehler: Fehlender Modulpfad<br />');
+			$libGlobal->errorTexts[] = 'Fehlender Modulpfad';
 		}
 
 		if(!is_array($pages)){
-			echo('Fehler: Fehlendes Array pages<br />');
+			$libGlobal->errorTexts[] = 'Fehlendes Array pages';
 		}
 
 		if(!is_array($includes)){
-			echo('Fehler: Fehlendes Array includes<br />');
+			$libGlobal->errorTexts[] = 'Fehlendes Array includes';
 		}
 
 		$this->id = $id;
