@@ -21,10 +21,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 * configuration
 */
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('useHttps')){
-	$libGenericStorage->saveValueInCurrentModule('useHttps', 0);
-}
-
 if(!$libGenericStorage->attributeExistsInCurrentModule('sslProxyUrl')){
 	$libGenericStorage->saveValueInCurrentModule('sslProxyUrl', '');
 }
@@ -40,14 +36,12 @@ echo '<p>Bitte zum Anmelden die E-Mail-Adresse und das Passwort eingeben.</p>';
 $urlPrefix = '';
 
 if($libConfig->sitePath != ""){
-	if($libGenericStorage->loadValueInCurrentModule('useHttps') == '1'){
-		$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
+	$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
 
-		if($sslProxyUrl != ''){
-			$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
-		} else {
-			$urlPrefix = 'https://' . $libConfig->sitePath . '/';
-		}
+	if($sslProxyUrl != ''){
+		$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
+	} else {
+		$urlPrefix = 'https://' . $libConfig->sitePath . '/';
 	}
 }
 

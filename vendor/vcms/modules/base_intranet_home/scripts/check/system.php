@@ -62,15 +62,6 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	}
 
 	/*
-	* HTTPS check
-	*/
-	if($libGenericStorage->loadValue('base_internet_login', 'useHttps') != '1'){
-		$errors[] = 'HTTPS ist in der Konfiguration für das Intranet nicht aktiviert.';
-	} else {
-		$oks[] = 'HTTPS ist für das Intranet aktiviert.';
-	}
-
-	/*
 	* missing folders
 	*/
 	$directoriesToCreate = $libCronJobs->getDirectoriesToCreate();

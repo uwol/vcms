@@ -164,14 +164,12 @@ if($formSent && !$formError){
 	$urlPrefix = '';
 
 	if($libConfig->sitePath != ''){
-		if($libGenericStorage->loadValueInCurrentModule('useHttps') == '1'){
-			$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
+		$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
 
-			if($sslProxyUrl != ''){
-				$urlPrefix = 'https://' .$sslProxyUrl. '/' .$libConfig->sitePath. '/';
-			} else {
-				$urlPrefix = 'https://' .$libConfig->sitePath. '/';
-			}
+		if($sslProxyUrl != ''){
+			$urlPrefix = 'https://' .$sslProxyUrl. '/' .$libConfig->sitePath. '/';
+		} else {
+			$urlPrefix = 'https://' .$libConfig->sitePath. '/';
 		}
 	}
 
