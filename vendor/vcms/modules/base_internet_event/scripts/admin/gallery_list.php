@@ -21,7 +21,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-//deletion
+/*
+* deletion
+*/
 if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'delete'){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		if(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])){
@@ -108,6 +110,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		if($libGallery->hasPictures($row['id'], 2)){
 			echo '<div class="thumbnail">';
 			echo '<div class="thumbnailOverflow">';
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$row['id']. '">';
 			echo '<img class="img-responsive center-block';
 
 			//are there pooled images?
@@ -116,6 +119,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     		}
 
     		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
+    		echo '</a>';
     		echo '</div>';
     		echo '</div>';
 		}
