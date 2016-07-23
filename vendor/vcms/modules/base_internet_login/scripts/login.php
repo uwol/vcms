@@ -40,8 +40,6 @@ if($libConfig->sitePath != ""){
 
 	if($sslProxyUrl != ''){
 		$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
-	} else {
-		$urlPrefix = 'https://' . $libConfig->sitePath . '/';
 	}
 }
 

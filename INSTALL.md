@@ -3,7 +3,7 @@ VCMS Installationsanleitung
 
 Einleitung
 ----------
-Im Folgenden wird die Installationsprozedur für das VCMS beschrieben. Das VCMS besteht aus einer Engine und Modulen. Die Engine ist im Ordner vendor gespeichert, die Module im Ordner modules. 
+Im Folgenden wird die Installationsprozedur für das VCMS beschrieben. Das VCMS besteht aus einer Engine und Modulen. Die Engine ist im Ordner vendor gespeichert, die Module im Ordner modules.
 
 Die Module sind in Internet- und Intranet-Module unterteilt, und können nach Bedarf zusammengestellt werden. Falls das VCMS als reine Intranet-Lösung betrieben werden soll, sind sämtliche Internet-Module zu löschen. Dies ermöglicht den Parallelbetrieb zu einer bereits bestehenden Website.
 

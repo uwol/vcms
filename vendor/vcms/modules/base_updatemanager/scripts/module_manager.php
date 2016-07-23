@@ -257,9 +257,9 @@ function getModules($manifestUrl){
 }
 
 function installModule($module){
-	global $libModuleHandler, $libFilesystem, $repoHostname, 
+	global $libModuleHandler, $libFilesystem, $repoHostname,
 		$tempRelativeDirectoryPath, $modulesRelativeDirectoryPath;
-	
+
 	// globals required for install/update scripts
 	global $libGlobal, $libDb;
 
@@ -315,7 +315,7 @@ function installModule($module){
 					} elseif(is_file($fileAbsolutePath)){
 						copy($fileRelativePath, $moduleRelativeDirectoryPath. '/' .$file);
 					}
-				}	
+				}
 			}
 
 			refreshModuleHandler();
@@ -329,7 +329,7 @@ function installModule($module){
 			} elseif($isUpdate && $moduleObject->getUpdateScript() != ''){
 				echo '<p>Führe Aktualisierungsscript des Moduls aus.</p>';
 				$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/' .$moduleObject->getUpdateScript());
-				include($scriptAbsolutePath);			
+				include($scriptAbsolutePath);
 			}
 		} else {
 			echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.json</p>';
