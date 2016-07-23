@@ -25,7 +25,7 @@ Fähigkeiten
 Modulkatalog
 ------------
 
-### Module für den öffentlichen Teil der Webseite
+### Internet-Module für den öffentlichen Bereich
 
 * Modul _Home_: Startseite.
 * Modul _Semesterprogramm_: Kalender mit Anmeldesystem; Mitglieder können Fotos hochladen, verwaltet durch einen Fotowart; Fotos können öffentlich oder intern sein; Export des Kalenders als iCalendar-Datei.
@@ -33,7 +33,7 @@ Modulkatalog
 * Modul _Verein_: Beschreibung des Vereins.
 * Modul _Dachverband_: Beschreibung des Dachverbands.
 
-### Module für das Intranet
+### Intranet-Module für den internen Bereich
 
 * Modul _Portal_: Zeitleiste mit den Veranstaltungen, Nachrichten, Fotos und Ereignissen des Semesters.
 * Modul _Mitglied_: Mitglieder können ihre Daten selbstständig pflegen. Darstellung der Altersstruktur. Visualisierung des Leibverhältnis-Stammbaums.
@@ -46,18 +46,14 @@ Modulkatalog
 * Modul _Export_: Adressexport (runde Geburtstage, Jubiläen).
 
 
-Technische Anforderungen
-------------------------
+Installation
+------------
+
+Die Installationsanleitung ist in der Datei INSTALL.md gespeichert. Die technischen Anforderungen sind
 
 * PHP ab Version 5.5
 * MySQL ab Version 4.1
 * ImageMagick oder GDlib für Fotogalerien
-
-
-Installation
-------------
-
-Die Installationsanleitung findet sich in der Datei INSTALL.md
 
 
 Screenshots
