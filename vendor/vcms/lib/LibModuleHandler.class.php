@@ -76,7 +76,7 @@ class LibModuleHandler{
 	}
 
 	function initModule($moduleDirectory, $moduleRelativePath){
-		global $libFilesystem, $libModuleParser;
+		global $libGlobal, $libFilesystem, $libModuleParser;
 
 		$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
 		$module = null;
@@ -88,7 +88,7 @@ class LibModuleHandler{
 			$module = $libModuleParser->parseMetaPhp($moduleDirectory, $moduleRelativePath);
 			$this->modules[$moduleDirectory] = $module;
 		} else {
-			echo('Fehler: Die Modulinformationsdatei ' .$moduleRelativePath. '/meta.php konnte nicht gefunden werden.<br />');
+			$libGlobal->errorTexts[] = 'Die Modulinformationsdatei ' .$moduleRelativePath. '/meta.php konnte nicht gefunden werden.';
 		}
 
 		if(!is_null($module)){
@@ -98,7 +98,7 @@ class LibModuleHandler{
 	}
 
 	function validateModule($module){
-		global $libSecurityManager;
+		global $libGlobal, $libSecurityManager;
 
 		foreach($module->pages as $page){
 			// does the page have a restriction?
@@ -111,7 +111,7 @@ class LibModuleHandler{
 						$libSecurityManager->getPossibleAemter());
 
 					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
-						echo('Fehler: Seite ' .$page->getPid(). ' in Modul ' .$module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter). '<br />');
+						$libGlobal->errorTexts[] = 'Seite ' .$page->getPid(). ' in Modul ' .$module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter);
 					}
 				}
 			}
@@ -128,7 +128,7 @@ class LibModuleHandler{
 						$libSecurityManager->getPossibleAemter());
 
 					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
-						echo('Fehler: Include ' .$include->getPid(). ' in Modul ' . $module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter). '<br />');
+						$libGlobal->errorTexts[] = 'Include ' .$include->getPid(). ' in Modul ' . $module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter);
 					}
 				}
 			}
@@ -137,32 +137,32 @@ class LibModuleHandler{
 		foreach($module->pages as $page){
 			//check for colliding pid
 			if(array_key_exists($page->getPid(), $this->pidToModulePointer)){
-				echo('Fehler: Die Seiten-Id ' .$page->getPid(). ' existiert bereits für eine Seite. Doppelte Seiten-Id-Vergabe ist nicht erlaubt.<br />');
+				$libGlobal->errorTexts[] = 'Die Seiten-Id ' .$page->getPid(). ' existiert bereits für eine Seite. Doppelte Seiten-Id-Vergabe ist nicht erlaubt.';
 			}
 		}
 
 		foreach($module->includes as $include){
 			//check for colliding pid
 			if(array_key_exists($include->getIid(), $this->iidToModulePointer)){
-				echo('Fehler: Die Include-Id ' .$include->getIid(). ' existiert bereits für einen Include. Doppelte Include-Id-Vergabe ist nicht erlaubt.<br />');
+				$libGlobal->errorTexts[] = 'Die Include-Id ' .$include->getIid(). ' existiert bereits für einen Include. Doppelte Include-Id-Vergabe ist nicht erlaubt.';
 			}
 		}
 
 		foreach($module->menuElementsInternet as $menuElement){
 			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
-				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
+				$libGlobal->errorTexts[] = 'Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.';
 			}
 		}
 
 		foreach($module->menuElementsIntranet as $menuElement){
 			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
-				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
+				$libGlobal->errorTexts[] = 'Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.';
 			}
 		}
 
 		foreach($module->menuElementsAdministration as $menuElement){
 			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
-				echo('Fehler: Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.<br />');
+				$libGlobal->errorTexts[] = 'Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.';
 			}
 		}
 	}
@@ -217,6 +217,8 @@ class LibModuleHandler{
 	}
 
 	function menuElementAddAccessRestriction($menuElement, $pages){
+		global $libGlobal;
+
 		//for all menu entries except external links
 		if($menuElement->getType() != 3){
 			if($menuElement->getPid() != ''){
@@ -231,7 +233,7 @@ class LibModuleHandler{
 				}
 
 				if(!$pageFound){
-					echo('Fehler in menuElementAddAccessRestriction(): Seite des Menüelementes ' .$menuElement->getPid(). ' nicht gefunden.<br />');
+					$libGlobal->errorTexts[] = 'Für das Menüelement ' .$menuElement->getPid(). ' existiert keine Seite.';
 				}
 			}
 		}
@@ -248,8 +250,10 @@ class LibModuleHandler{
 	}
 
 	function getPage($pid){
+		global $libGlobal;
+
 		if(!array_key_exists($pid, $this->pidToModulePointer)){
-			echo('Fehler in getPage(): Kann Seiteneintrag nicht laden. Die Seiten-Id ' .$pid. ' existiert nicht. Evtl. hat das entsprechende Modul die Seiten-Id nicht registriert.<br />');
+			$libGlobal->errorTexts[] = 'Angeforderte Page-Id ' .$pid. ' unbekannt.';
 		} else {
 			$pages = $this->pidToModulePointer[$pid]->getPages();
 			return $pages[$pid];
@@ -261,8 +265,10 @@ class LibModuleHandler{
 	}
 
 	function getInclude($iid){
+		global $libGlobal;
+
 		if(!array_key_exists($iid, $this->iidToModulePointer)){
-			echo('Fehler in getInclude(): Kann Includeeintrag nicht laden. Die Include-Id ' .$iid. ' existiert nicht. Evtl. hat das entsprechende Modul die Include-Id nicht registriert.<br />');
+			$libGlobal->errorTexts[] = 'Angeforderte Include-Id ' .$iid. ' unbekannt.';
 		} else {
 			$includes = $this->iidToModulePointer[$iid]->getIncludes();
 			return $includes[$iid];
@@ -274,24 +280,30 @@ class LibModuleHandler{
 	}
 
 	function getModuleByPageid($pid){
+		global $libGlobal;
+
 		if(!array_key_exists($pid, $this->pidToModulePointer)){
-			echo('Fehler in getPage(): Kann Seiteneintrag nicht laden. Die Seiten-Id ' .$pid. ' existiert nicht. Evtl. hat das entsprechende Modul die Seiten-Id nicht registriert.<br />');
+			$libGlobal->errorTexts[] = 'Angeforderte Page-Id ' .$pid. ' unbekannt.';
 		} else {
 			return $this->pidToModulePointer[$pid];
 		}
 	}
 
 	function getModuleByIncludeid($iid){
+		global $libGlobal;
+
 		if(!array_key_exists($iid, $this->iidToModulePointer)){
-			echo('Fehler in getModuleByIncludeid(): Kann Includeeintrag nicht laden. Die Include-Id ' .$iid. ' existiert nicht. Evtl. hat das entsprechende Modul die Include-Id nicht registriert.<br />');
+			$libGlobal->errorTexts[] = 'Angeforderte Include-Id ' .$iid. ' unbekannt.';
 		} else {
 			return $this->iidToModulePointer[$iid];
 		}
 	}
 
 	function getModuleByModuleid($moduleid){
+		global $libGlobal;
+
 		if(!array_key_exists($moduleid, $this->modules)){
-			echo('Fehler in getModuleByModuleid(): Kann Module nicht finden. Die Module-Id ' .$moduleid. ' existiert nicht im Modularray.<br />');
+			$libGlobal->errorTexts[] = 'Angeforderte Modul-Id ' .$moduleid. ' unbekannt.';
 		} else {
 			return $this->modules[$moduleid];
 		}
@@ -305,7 +317,7 @@ class LibModuleHandler{
 		} elseif($libGlobal->iid != ''){
 			return $this->getModuleByIncludeid($libGlobal->iid);
 		} else {
-			echo('Fehler: Weder $libGlobal->pid noch $libGlobal->iid sind mit einem Wert belegt<br />');
+			$libGlobal->errorTexts[] = 'Weder $libGlobal->pid noch $libGlobal->iid sind mit einem Wert belegt';
 		}
 	}
 
@@ -332,7 +344,7 @@ class LibModuleHandler{
 		} elseif($libGlobal->iid != ''){
 			return $this->getModuleDirectoryByIncludeid($libGlobal->iid);
 		} else {
-			echo('Fehler: Weder $libGlobal->pid noch $libGlobal->iid sind mit einem Wert belegt<br />');
+			$libGlobal->errorTexts[] = 'Weder $libGlobal->pid noch $libGlobal->iid sind mit einem Wert belegt';
 		}
 	}
 

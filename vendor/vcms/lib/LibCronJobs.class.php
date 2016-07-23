@@ -25,7 +25,7 @@ class LibCronJobs{
 
 	var $filesToDelete = array('.gitignore', 'composer.json',
 		'installer.php', 'installer2.php', 'installer3.php', 'installer.txt',
-		'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt',
+		'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt', 'INSTALL.md',
 		'LICENSE', 'LICENSE.txt', 'README.md');
 
 	var $directoriesToDelete = array('design', 'js', 'lib',

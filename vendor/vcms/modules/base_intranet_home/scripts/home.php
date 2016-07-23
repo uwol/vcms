@@ -73,10 +73,7 @@ require_once('timeline/semester.php');
 require_once('timeline/birthdays.php');
 require_once('timeline/deceased.php');
 require_once('timeline/wedding.php');
-
-if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
-	require_once('timeline/events.php');
-}
+require_once('timeline/events.php');
 
 if($libModuleHandler->moduleIsAvailable('mod_intranet_news')){
 	require_once('timeline/news.php');

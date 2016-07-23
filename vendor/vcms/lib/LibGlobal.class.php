@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 namespace vcms;
 
 class LibGlobal{
-	var $version = '6.18';
+	var $version = '6.19';
 
 	var $semester;
 	var $module;

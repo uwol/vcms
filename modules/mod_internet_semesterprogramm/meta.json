@@ -1,60 +1,18 @@
 {
 	"moduleName": "Semesterprogramm",
-	"version": 2.99,
+	"version": 3.00,
 	"pages": [
 		{
 			"pid": "semesterprogramm_calendar",
 			"file": "calendar.php",
 			"directory": "scripts",
 			"title": "Semesterprogramm"
-		},
-		{
-			"pid": "semesterprogramm_event",
-			"file": "event.php",
-			"directory": "scripts",
-			"title": "Veranstaltung"
-		},
-		{
-			"pid": "semesterprogramm_admin_galerienliste",
-			"file": "gallery_list.php",
-			"directory": "scripts/admin",
-			"title": "Foto-Verwaltung",
-			"accessRestriction": {
-				"gruppen": ["F", "B", "P"]
-			}
-		},
-		{
-			"pid": "semesterprogramm_admin_galerie",
-			"file": "gallery.php",
-			"directory": "scripts/admin",
-			"title": "Galerie",
-			"accessRestriction": {
-				"gruppen": ["F", "B", "P"]
-			}
 		}
 	],
 	"includes": [
 		{
 			"iid": "semesterprogramm_icalendar",
 			"file": "icalendar.php",
-			"directory": "scripts/"
-		},
-		{
-			"iid": "semesterprogramm_picture",
-			"file": "picture.php",
-			"directory": "scripts/"
-		},
-		{
-			"iid": "semesterprogramm_admin_galerie_upload",
-			"file": "gallery_upload.php",
-			"directory": "scripts/admin/",
-			"accessRestriction": {
-				"gruppen": ["F", "B", "P"]
-			}
-		},
-		{
-			"iid": "fb_event",
-			"file": "fbevent.php",
 			"directory": "scripts/"
 		}
 	],
@@ -65,16 +23,5 @@
 			"type": "menu_entry",
 			"position": 200
 		}
-	],
-	"menuElementsIntranet": [
-		{
-			"pid": "semesterprogramm_admin_galerienliste",
-			"name": "Fotos",
-			"type": "menu_entry",
-			"position": 30000
-		}
-	],
-	"headerStrings": [
-		"<link rel='stylesheet' href='styles/fileuploader/fileuploader.css' />"
 	]
 }
