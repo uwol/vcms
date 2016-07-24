@@ -42,13 +42,21 @@ echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '"
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
 
 /*
+* scripts
+*/
+echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
+echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
+echo '    <script src="styles/gallery/modal.js"></script>' . PHP_EOL;
+echo '    <script src="styles/screen.js"></script>' . PHP_EOL;
+
+/*
 * stylesheets
 */
-echo '    <link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/bootstrap-override.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/screen.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/timeline/timeline.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="styles/font-awesome/css/font-awesome.min.css">' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
 
 if($libGenericStorage->loadValue('base_core', 'showTrauerflor')){
@@ -68,13 +76,6 @@ if(is_array($libGlobal->module->getHeaderStrings())){
 	}
 }
 
-/*
-* jquery
-*/
-echo '    <script src="styles/jquery-2.2.3.min.js"></script>' . PHP_EOL;
-echo '    <script src="styles/bootstrap/bootstrap.min.js"></script>' . PHP_EOL;
-echo '    <script src="styles/gallery/modal.js"></script>' . PHP_EOL;
-echo '    <script src="styles/screen.js"></script>' . PHP_EOL;
 
 /*
 * robots

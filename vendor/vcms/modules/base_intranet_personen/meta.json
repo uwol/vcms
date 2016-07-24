@@ -111,6 +111,6 @@
 		}
 	],
 	"headerStrings": [
-		"<script src='styles/chart/Chart.min.js'></script>"
+		"<script src='vendor/chart/Chart.min.js'></script>"
 	]
 }
