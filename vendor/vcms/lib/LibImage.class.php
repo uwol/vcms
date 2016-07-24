@@ -277,21 +277,21 @@ class LibImage{
 		}
 
 		//does a file with this name already exist?
-		if(is_file($targetDirectory.'/'.$targetFilename)){
+		if(is_file($targetDirectory. '/' .$targetFilename)){
 			$libGlobal->errorTexts[] = 'Fehler: Unter diesem Dateinamen existiert bereits ein Bild.';
 			return;
 		}
 
 		//create dir
 		if(!is_dir($targetDirectory)){
-			mkdir($targetDirectory);
+			mkdir($targetDirectory, 0777, true);
 		}
 
 		//copy or move image to destination
 		if($copy){
-			copy($tmpFilename, $targetDirectory.'/'.$targetFilename);
+			copy($tmpFilename, $targetDirectory. '/' .$targetFilename);
 		} else {
-			move_uploaded_file($tmpFilename, $targetDirectory.'/'.$targetFilename);
+			move_uploaded_file($tmpFilename, $targetDirectory. '/' .$targetFilename);
 		}
 
 		//adjust width and height
@@ -311,7 +311,7 @@ class LibImage{
 			$newWidth = round($newHeight * $ratio);
 		}
 
-		$this->resizeImage($targetDirectory.'/'.$targetFilename, $newWidth, $newHeight);
+		$this->resizeImage($targetDirectory. '/' .$targetFilename, $newWidth, $newHeight);
 
 		$libGlobal->notificationTexts[] = 'Das Bild wurde gespeichert.';
 	}
@@ -325,8 +325,8 @@ class LibImage{
 			return;
 		}
 
-		if(is_file($directory.'/'.$filename)){
-			if(unlink($directory.'/'.$filename)){
+		if(is_file($directory. '/' .$filename)){
+			if(unlink($directory. '/' .$filename)){
 				$libGlobal->notificationTexts[] = 'Das Bild wurde gelöscht.';
 			}
 		}
@@ -342,7 +342,7 @@ class LibImage{
 			return;
 		}
 
-		$semesterCoverFilename = strtolower($semesterString).'.jpg';
+		$semesterCoverFilename = strtolower($semesterString). '.jpg';
 
 		//delete old image
 		$this->deleteSemesterCover($semesterString);
@@ -358,7 +358,7 @@ class LibImage{
 			return;
 		}
 
-		$semesterCoverFilename = strtolower($semesterString).'.jpg';
+		$semesterCoverFilename = strtolower($semesterString). '.jpg';
 		$this->deleteImage('custom/semestercover', $semesterCoverFilename);
 	}
 
@@ -368,7 +368,7 @@ class LibImage{
 			return;
 		}
 
-		$personFotoFilename = $personId.'.jpg';
+		$personFotoFilename = $personId. '.jpg';
 
 		//delete old image
 		$this->deletePersonFoto($personId);
@@ -392,7 +392,7 @@ class LibImage{
 			return;
 		}
 
-		$nachrichtFotoFilename = $nachrichtId.'.jpg';
+		$nachrichtFotoFilename = $nachrichtId. '.jpg';
 
 		//delete old image
 		$this->deleteStartseitenBild($nachrichtId);
@@ -421,7 +421,7 @@ class LibImage{
 
 		$fotoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $_FILES[$tmpFileVarName]['name']);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
+		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/' .$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
 	}
 
 	function saveVeranstaltungsFotoByAjax($veranstaltungId, $targetFilename, $tmpFilename){
@@ -434,7 +434,7 @@ class LibImage{
 
 		$fotoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $targetFilename);
 
-		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
+		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/' .$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
 	}
 
 
@@ -445,12 +445,12 @@ class LibImage{
 			return;
 		}
 
-		$this->deleteImage('custom/veranstaltungsfotos/'.$veranstaltungId, $fotoFileName);
+		$this->deleteImage('custom/veranstaltungsfotos/' .$veranstaltungId, $fotoFileName);
 
-		$fotos = array_diff(scandir('custom/veranstaltungsfotos/'.$veranstaltungId), array('..', '.'));
+		$fotos = array_diff(scandir('custom/veranstaltungsfotos/' .$veranstaltungId), array('..', '.'));
 
 		if(empty($fotos)){
-			rmdir('custom/veranstaltungsfotos/'.$veranstaltungId);
+			rmdir('custom/veranstaltungsfotos/' .$veranstaltungId);
 		}
 	}
 }
