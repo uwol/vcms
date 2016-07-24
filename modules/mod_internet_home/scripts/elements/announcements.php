@@ -31,7 +31,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="panel-body">';
 	echo '<div class="row">';
 
-	$image = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$row['id']. '.jpg';
+	$image = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
 	$imageExists = is_file($image);
 
 	if($imageExists){

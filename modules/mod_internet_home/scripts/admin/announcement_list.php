@@ -22,9 +22,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 /*
 * actions
 */
-if(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
-	if(isset($_GET['id']) && $_GET['id'] != ""){
-		$stmt = $libDb->prepare("DELETE FROM mod_internethome_nachricht WHERE id=:id");
+if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
+	if(isset($_GET['id']) && $_GET['id'] != ''){
+		$stmt = $libDb->prepare('DELETE FROM mod_internethome_nachricht WHERE id=:id');
 		$stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
@@ -69,7 +69,7 @@ echo '<tr><th>Bild</th><th>Zeitraum</th><th>Text</th><th></th></tr>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
-$stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum = :startdatum_equal OR (DATEDIFF(startdatum, :startdatum) >= 0 AND DATEDIFF(startdatum , :enddatum) < 0) ORDER BY startdatum DESC");
+$stmt = $libDb->prepare('SELECT * FROM mod_internethome_nachricht WHERE startdatum = :startdatum_equal OR (DATEDIFF(startdatum, :startdatum) >= 0 AND DATEDIFF(startdatum , :enddatum) < 0) ORDER BY startdatum DESC');
 $stmt->bindValue(':startdatum_equal', $zeitraum[0]);
 $stmt->bindValue(':startdatum', $zeitraum[0]);
 $stmt->bindValue(':enddatum', $zeitraum[1]);
@@ -78,7 +78,8 @@ $stmt->execute();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
 	echo '<td class="imgColumn">';
-	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/bilder/' .$row['id']. '.jpg';
+
+	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
 
  	if(is_file($posssibleImage)){
  		echo '<img src="'.$posssibleImage.'" class="img-responsive center-block" alt="" />';
@@ -92,8 +93,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 	echo '</a>';
 	echo '</td>';
-	echo "</tr>";
+	echo '</tr>';
 }
 
-echo "</table>";
+echo '</table>';
 ?>

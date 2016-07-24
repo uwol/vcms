@@ -99,8 +99,12 @@ class LibImage{
 
 		if($this->imageRatioIsOk($imageWidth, $imageHeight, $newWidth, $newHeight)){
 			switch($this->determineImageManipulator()){
-				case 1: $this->resizeImage_GDlib($imagePath, $newWidth, $newHeight); break;
-				case 2: $this->resizeImage_ImageMagick($imagePath, $newWidth, $newHeight); break;
+				case 1:
+					$this->resizeImage_GDlib($imagePath, $newWidth, $newHeight);
+					break;
+				case 2:
+					$this->resizeImage_ImageMagick($imagePath, $newWidth, $newHeight);
+					break;
 			}
 		} else {
 			return -1;
@@ -181,31 +185,32 @@ class LibImage{
 		$newImage=imagecreatetruecolor($newWidth, $newHeight);
 
 		switch($degree){
-       		case 90:
-       		for ($x = 0; $x < ($imageWidth); $x++) {
-            	for ($y = 0; $y < ($imageHeight); $y++) {
-                    $color = imagecolorat($image, $x, $y);
-                    imagesetpixel($newImage, $newWidth - $y - 1, $x, $color);
-                }
-            }
-            break;
-        	case 270:
-       		for ($x = 0; $x < ($imageWidth); $x++) {
-            	for ($y = 0; $y < ($imageHeight); $y++) {
-                    $color = imagecolorat($image, $x, $y);
-                    imagesetpixel($newImage, $y, $newHeight - $x - 1, $color);
-                }
-            }
-            break;
-        	case 180:
-       		for ($x = 0; $x < ($imageWidth); $x++) {
-            	for ($y = 0; $y < ($imageHeight); $y++) {
-                    $color = imagecolorat($image, $x, $y);
-                    imagesetpixel($newImage, $newWidth - $x - 1, $newHeight - $y - 1, $color);
-                }
-            }
-            break;
-        	default: $newImage = $image;
+			case 90:
+				for ($x = 0; $x < ($imageWidth); $x++) {
+					for ($y = 0; $y < ($imageHeight); $y++) {
+						$color = imagecolorat($image, $x, $y);
+						imagesetpixel($newImage, $newWidth - $y - 1, $x, $color);
+					}
+				}
+				break;
+			case 270:
+				for ($x = 0; $x < ($imageWidth); $x++) {
+					for ($y = 0; $y < ($imageHeight); $y++) {
+						$color = imagecolorat($image, $x, $y);
+						imagesetpixel($newImage, $y, $newHeight - $x - 1, $color);
+					}
+				}
+				break;
+			case 180:
+				for ($x = 0; $x < ($imageWidth); $x++) {
+					for ($y = 0; $y < ($imageHeight); $y++) {
+						$color = imagecolorat($image, $x, $y);
+						imagesetpixel($newImage, $newWidth - $x - 1, $newHeight - $y - 1, $color);
+					}
+				}
+				break;
+			default:
+				$newImage = $image;
 		}
 
 		imagejpeg($newImage, $imagePath, 80);
@@ -392,7 +397,7 @@ class LibImage{
 		//delete old image
 		$this->deleteStartseitenBild($nachrichtId);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'modules/mod_internet_home/custom/bilder', $nachrichtFotoFilename, $this->startseiteFotoWidth, $this->startseiteFotoHeight);
+		$this->saveImageByFilesArray($tmpFileVarName, 'modules/mod_internet_home/custom/img', $nachrichtFotoFilename, $this->startseiteFotoWidth, $this->startseiteFotoHeight);
 	}
 
 	function deleteStartseitenBild($nachrichtId){
@@ -402,7 +407,7 @@ class LibImage{
 		}
 
 		$nachrichtFotoFilename = $nachrichtId.'.jpg';
-		$this->deleteImage('modules/mod_internet_home/custom/bilder', $nachrichtFotoFilename);
+		$this->deleteImage('modules/mod_internet_home/custom/img', $nachrichtFotoFilename);
 	}
 
 
