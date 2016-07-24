@@ -55,6 +55,7 @@
 		}
 	],
 	"headerStrings": [
-		"<link rel='stylesheet' href='vendor/fileuploader/fileuploader.css' />"
+		"<link rel='stylesheet' href='vendor/fileuploader/fileuploader.css' />",
+		"<script src='vendor/fileuploader/fileuploader.js'></script>"
 	]
 }
