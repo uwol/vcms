@@ -2,19 +2,18 @@
 /*
 This file is part of VCMS.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+VCMS is free software: you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or 
+(at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+VCMS is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+You should have received a copy of the GNU General Public License 
+along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace vcms;
@@ -185,81 +184,5 @@ class LibModuleParser{
 		}
 
 		return $menuFolder;
-	}
-
-	// @Deprecated
-	function parseMetaPhp($moduleDirectory, $moduleRelativePath){
-		global $libGlobal, $libFilesystem;
-
-		$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
-		require($moduleAbsolutePath. '/meta.php');
-
-		if($version != '' && !is_numeric($version)){
-			$libGlobal->errorTexts[] = 'Versionsangabe nicht numerisch in Modul ' .$moduleRelativePath;
-		}
-
-		if($moduleName == ''){
-			$libGlobal->errorTexts[] = 'Keine Variable moduleName in Modul ' .$moduleRelativePath;
-		}
-
-		if(!isset($installScript)){
-			$libGlobal->errorTexts[] = 'Keine Variable installScript in Modul ' .$moduleRelativePath;
-		}
-
-		if(!isset($uninstallScript)){
-			$libGlobal->errorTexts[] = 'Keine Variable uninstallScript in Modul ' .$moduleRelativePath;
-		}
-
-		if(!isset($updateScript)){
-			$libGlobal->errorTexts[] = 'Keine Variable updateScript in Modul ' .$moduleRelativePath;
-		}
-
-		if(!is_array($pages)){
-			$libGlobal->errorTexts[] = 'Kein Array pages in Modul ' .$moduleRelativePath;
-		}
-
-		if(!is_array($includes)){
-			$libGlobal->errorTexts[] = 'Kein Array includes in Modul ' .$moduleRelativePath;
-		}
-
-		if(!is_array($headerStrings)){
-			$libGlobal->errorTexts[] = 'Kein Array headerStrings in Modul ' .$moduleRelativePath;
-		}
-
-		if(!is_array($menuElementsInternet)){
-			$libGlobal->errorTexts[] = 'Kein Array menuElementsInternet in Modul ' .$moduleRelativePath;
-		}
-
-		if(!is_array($menuElementsIntranet)){
-			$libGlobal->errorTexts[] = 'Kein Array menuElementsIntranet in Modul ' .$moduleRelativePath;
-		}
-
-		if(!is_array($menuElementsAdministration)){
-			$libGlobal->errorTexts[] = 'Kein Array menuElementsAdministration in Modul ' .$moduleRelativePath;
-		}
-
-		/*
-		* determine module parameters
-		*/
-		$pagesarray = array();
-		$includesarray = array();
-
-		foreach($pages as $page){
-			$pagesarray[$page->getPid()] = $page;
-		}
-
-		foreach($includes as $include){
-			$includesarray[$include->getIid()] = $include;
-		}
-
-		unset($pages);
-		unset($includes);
-
-		// instantiate new module
-		$module = new \vcms\module\LibModule($moduleDirectory, $moduleName,	$version,
-			$moduleRelativePath, $pagesarray, $includesarray, $headerStrings,
-			$installScript, $uninstallScript, $updateScript,
-			$menuElementsInternet, $menuElementsIntranet, $menuElementsAdministration);
-		return $module;
 	}
 }

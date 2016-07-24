@@ -2,19 +2,18 @@
 /*
 This file is part of VCMS.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+VCMS is free software: you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or 
+(at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+VCMS is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+You should have received a copy of the GNU General Public License 
+along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
@@ -38,7 +37,7 @@ if($libAuth->isLoggedin()){
 
 	$vmarray = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array("mitglied","verein","ehrenmitglied","semester_reception","semester_philistrierung");
+	$felder = array('mitglied', 'verein', 'ehrenmitglied', 'semester_reception', 'semester_philistrierung');
 
 	/**
 	*
@@ -48,60 +47,60 @@ if($libAuth->isLoggedin()){
 	*/
 
 	//neues Mitglied, leerer Datensatz
-	if($aktion == "blank"){
+	if($aktion == 'blank'){
 		foreach($felder as $feld){
 			$vmarray[$feld] = '';
 		}
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
-	elseif($aktion == "insert"){
+	elseif($aktion == 'insert'){
 		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
 		$error = false;
 
-		if($_REQUEST['semester_reception'] != "" && !$libTime->isValidSemesterString($_REQUEST['semester_reception'])){
-			$libGlobal->errorTexts[] = "Das Receptionssemester ist falsch formatiert.";
+		if($_REQUEST['semester_reception'] != '' && !$libTime->isValidSemesterString($_REQUEST['semester_reception'])){
+			$libGlobal->errorTexts[] = 'Das Receptionssemester ist falsch formatiert.';
 			$error = true;
 		}
 
-		if($_REQUEST['semester_philistrierung'] != "" && !$libTime->isValidSemesterString($_REQUEST['semester_philistrierung'])){
-			$libGlobal->errorTexts[] = "Das Philistrierungssemester ist falsch formatiert.";
+		if($_REQUEST['semester_philistrierung'] != '' && !$libTime->isValidSemesterString($_REQUEST['semester_philistrierung'])){
+			$libGlobal->errorTexts[] = 'Das Philistrierungssemester ist falsch formatiert.';
 			$error = true;
 		}
 
 		if($error){
 			$vmarray = $_REQUEST;
 		} else {
-			$vmarray = $libDb->insertRow($felder,$_REQUEST, "base_verein_mitgliedschaft", array('verein' => $verein, 'mitglied' => $mitglied));
+			$vmarray = $libDb->insertRow($felder,$_REQUEST, 'base_verein_mitgliedschaft', array('verein' => $verein, 'mitglied' => $mitglied));
 		}
 	}
 	//bestehende Daten werden modifiziert
-	elseif($aktion == "update"){
+	elseif($aktion == 'update'){
 		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
 		$error = false;
 
-		if($_REQUEST['semester_reception'] != "" && !$libTime->isValidSemesterString($_REQUEST['semester_reception'])){
-			$libGlobal->errorTexts[] = "Das Receptionssemester ist falsch formatiert.";
+		if($_REQUEST['semester_reception'] != '' && !$libTime->isValidSemesterString($_REQUEST['semester_reception'])){
+			$libGlobal->errorTexts[] = 'Das Receptionssemester ist falsch formatiert.';
 			$error = true;
 		}
 
-		if($_REQUEST['semester_philistrierung'] != "" && !$libTime->isValidSemesterString($_REQUEST['semester_philistrierung'])){
-			$libGlobal->errorTexts[] = "Das Philistrierungssemester ist falsch formatiert.";
+		if($_REQUEST['semester_philistrierung'] != '' && !$libTime->isValidSemesterString($_REQUEST['semester_philistrierung'])){
+			$libGlobal->errorTexts[] = 'Das Philistrierungssemester ist falsch formatiert.';
 			$error = true;
 		}
 
 		if($error){
 			$vmarray = $_REQUEST;
 		} else {
-			$vmarray = $libDb->updateRow($felder,$_REQUEST, "base_verein_mitgliedschaft", array('verein' => $verein, 'mitglied' => $mitglied));
+			$vmarray = $libDb->updateRow($felder,$_REQUEST, 'base_verein_mitgliedschaft', array('verein' => $verein, 'mitglied' => $mitglied));
 		}
 	} else {
-		$stmt = $libDb->prepare("SELECT * FROM base_verein_mitgliedschaft WHERE verein=:verein AND mitglied=:mitglied");
+		$stmt = $libDb->prepare('SELECT * FROM base_verein_mitgliedschaft WHERE verein=:verein AND mitglied=:mitglied');
 		$stmt->bindValue(':verein', $verein, PDO::PARAM_INT);
 		$stmt->bindValue(':mitglied', $mitglied, PDO::PARAM_INT);
 		$stmt->execute();
@@ -133,10 +132,10 @@ if($libAuth->isLoggedin()){
 	* Ausgabe des Forms starten
 	*
 	*/
-	if($aktion == "blank"){
-		$extraActionParam = "&amp;aktion=insert";
+	if($aktion == 'blank'){
+		$extraActionParam = '&amp;aktion=insert';
 	} else {
-		$extraActionParam = "&amp;aktion=update";
+		$extraActionParam = '&amp;aktion=update';
 	}
 
 	echo '<form action="index.php?pid=intranet_admin_db_vereinsmitgliedschaft' .$extraActionParam. '" method="post" class="form-horizontal">';
@@ -145,14 +144,14 @@ if($libAuth->isLoggedin()){
 	echo '<input type="hidden" name="mitglied" value="' .$vmarray['mitglied']. '" />';
 
 	if($aktion == 'blank'){
-		$libForm->printMitgliederDropDownBox("mitglied", "Mitglied", $vmarray['mitglied'], false, false);
-		$libForm->printVereineDropDownBox("verein", "Verein", $vmarray['verein'], false, false);
+		$libForm->printMitgliederDropDownBox('mitglied', 'Mitglied', $vmarray['mitglied'], false, false);
+		$libForm->printVereineDropDownBox('verein', 'Verein', $vmarray['verein'], false, false);
 	} else {
-		$libForm->printMitgliederDropDownBox("mitglied", "Mitglied", $vmarray['mitglied'], false, true);
-		$libForm->printVereineDropDownBox("verein", "Verein", $vmarray['verein'], false, true);
+		$libForm->printMitgliederDropDownBox('mitglied', 'Mitglied', $vmarray['mitglied'], false, true);
+		$libForm->printVereineDropDownBox('verein', 'Verein', $vmarray['verein'], false, true);
 	}
 
-	$libForm->printBoolSelectBox("ehrenmitglied", "Ehrenmitglied", $vmarray['ehrenmitglied']);
+	$libForm->printBoolSelectBox('ehrenmitglied', 'Ehrenmitglied', $vmarray['ehrenmitglied']);
 
 	$libForm->printTextInput('semester_reception', 'Semester Reception', $vmarray['semester_reception']);
 	$libForm->printTextInput('semester_philistrierung', 'Semester Philistrierung', $vmarray['semester_philistrierung']);

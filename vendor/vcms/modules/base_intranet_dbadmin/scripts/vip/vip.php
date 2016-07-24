@@ -2,19 +2,18 @@
 /*
 This file is part of VCMS.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+VCMS is free software: you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or 
+(at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+VCMS is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+You should have received a copy of the GNU General Public License 
+along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
@@ -33,7 +32,7 @@ if($libAuth->isLoggedin()){
 
 	$array = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array("praefix","name","suffix","vorname","anrede","titel","rang","zusatz1","strasse1","plz1","ort1","land1","telefon1","status","grund","bemerkung");
+	$felder = array('praefix', 'name', 'suffix', 'vorname', 'anrede', 'titel', 'rang', 'zusatz1', 'strasse1', 'plz1', 'ort1', 'land1', 'telefon1', 'status', 'grund', 'bemerkung');
 
 	/**
 	*
@@ -43,43 +42,43 @@ if($libAuth->isLoggedin()){
 	*/
 
 	//neue, leerer Datensatz
-	if($aktion == "blank"){
+	if($aktion == 'blank'){
 		foreach($felder as $feld){
 			$array[$feld] = '';
 		}
 
 		$array['id'] = '';
-		$array['name'] = "Namen angeben!";
+		$array['name'] = 'Namen angeben!';
 		$array['datum_adresse1_stand'] = '';
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
-	elseif($aktion == "insert"){
+	elseif($aktion == 'insert'){
 		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
-		$array = $libDb->insertRow($felder,$_REQUEST, "base_vip", array("id"=>''));
-		updateAdresseStand("base_vip", "datum_adresse1_stand", $array['id']);
+		$array = $libDb->insertRow($felder,$_REQUEST, 'base_vip', array('id' => ''));
+		updateAdresseStand('base_vip', 'datum_adresse1_stand', $array['id']);
 	}
 	//bestehende Daten werden modifiziert
-	elseif($aktion == "update"){
+	elseif($aktion == 'update'){
 		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
-		$stmt = $libDb->prepare("SELECT * FROM base_vip WHERE id=:id");
+		$stmt = $libDb->prepare('SELECT * FROM base_vip WHERE id=:id');
 		$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
 		$stmt->execute();
 		$array = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		//Adressänderungen prüfen und vermerken im Stand
 		if($_REQUEST['strasse1'] != $array['strasse1'] || $_REQUEST['ort1'] != $array['ort1'] || $_REQUEST['plz1'] != $array['plz1']){
-			updateAdresseStand("base_vip", "datum_adresse1_stand", $array['id']);
+			updateAdresseStand('base_vip', 'datum_adresse1_stand', $array['id']);
 		}
 
-		$array = $libDb->updateRow($felder,$_REQUEST, "base_vip", array("id" => $id));
+		$array = $libDb->updateRow($felder,$_REQUEST, 'base_vip', array('id' => $id));
 	} else {
-		$stmt = $libDb->prepare("SELECT * FROM base_vip WHERE id=:id");
+		$stmt = $libDb->prepare('SELECT * FROM base_vip WHERE id=:id');
 		$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
 		$stmt->execute();
 		$array = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -107,10 +106,10 @@ if($libAuth->isLoggedin()){
 	* Ausgabe des Forms starten
 	*
 	*/
-	if($aktion == "blank"){
-		$extraActionParam = "&amp;aktion=insert";
+	if($aktion == 'blank'){
+		$extraActionParam = '&amp;aktion=insert';
 	} else {
-		$extraActionParam = "&amp;aktion=update";
+		$extraActionParam = '&amp;aktion=update';
 	}
 
 	echo '<form action="index.php?pid=intranet_admin_db_vip' .$extraActionParam. '" method="post" class="form-horizontal">';
@@ -148,7 +147,7 @@ if($libAuth->isLoggedin()){
 function updateAdresseStand($table, $field, $id){
 	global $libDb;
 
-	$stmt = $libDb->prepare("UPDATE ".$table." SET " .$field. "=NOW() WHERE id=:id");
+	$stmt = $libDb->prepare('UPDATE ' .$table. ' SET ' .$field. '=NOW() WHERE id=:id');
 	$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();
 }

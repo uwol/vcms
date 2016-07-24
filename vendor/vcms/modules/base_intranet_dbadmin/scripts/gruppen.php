@@ -2,19 +2,18 @@
 /*
 This file is part of VCMS.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+VCMS is free software: you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or 
+(at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+VCMS is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+You should have received a copy of the GNU General Public License 
+along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
@@ -22,18 +21,18 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "create"){
-		if(isset($_REQUEST['bezeichnung']) && $_REQUEST['bezeichnung'] != ""){
-			$stmt = $libDb->prepare("INSERT INTO base_gruppe (bezeichnung, beschreibung) VALUES (:bezeichnung, :beschreibung)");
+	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'create'){
+		if(isset($_REQUEST['bezeichnung']) && $_REQUEST['bezeichnung'] != ''){
+			$stmt = $libDb->prepare('INSERT INTO base_gruppe (bezeichnung, beschreibung) VALUES (:bezeichnung, :beschreibung)');
 			$stmt->bindValue(':bezeichnung', $libString->protectXss($_REQUEST['bezeichnung']));
 			$stmt->bindValue(':beschreibung', $libString->protectXss($_REQUEST['beschreibung']));
 			$stmt->execute();
 		} else {
-			$libGlobal->errorTexts[] = "Keine Gruppe angegeben.";
+			$libGlobal->errorTexts[] = 'Keine Gruppe angegeben.';
 		}
-	} elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "delete"){
-		if($_REQUEST['bezeichnung'] != "" && $_REQUEST['bezeichnung'] != "F" && $_REQUEST['bezeichnung'] != "B" && $_REQUEST['bezeichnung'] != "P" && $_REQUEST['bezeichnung'] != "C" && $_REQUEST['bezeichnung'] != "X" && $_REQUEST['bezeichnung'] != "T" && $_REQUEST['bezeichnung'] != "G" && $_REQUEST['bezeichnung'] != "W" && $_REQUEST['bezeichnung'] != "V" && $_REQUEST['bezeichnung'] != "Y"){
-			$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = :gruppe");
+	} elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'delete'){
+		if($_REQUEST['bezeichnung'] != '' && $_REQUEST['bezeichnung'] != 'F' && $_REQUEST['bezeichnung'] != 'B' && $_REQUEST['bezeichnung'] != 'P' && $_REQUEST['bezeichnung'] != 'C' && $_REQUEST['bezeichnung'] != 'X' && $_REQUEST['bezeichnung'] != 'T' && $_REQUEST['bezeichnung'] != 'G' && $_REQUEST['bezeichnung'] != 'W' && $_REQUEST['bezeichnung'] != 'V' && $_REQUEST['bezeichnung'] != 'Y'){
+			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE gruppe = :gruppe');
 			$stmt->bindValue(':gruppe', $libString->protectXss($_REQUEST['bezeichnung']));
 			$stmt->execute();
 			$stmt->bindColumn('number', $anzahl);
@@ -41,16 +40,16 @@ if($libAuth->isLoggedin()){
 
 			//wird diese Gruppe noch in base_person benutzt?
 			if($anzahl > 0){
-				$libGlobal->errorTexts[] = "Diese Gruppe wird von Mitgliedern verwendet.";
+				$libGlobal->errorTexts[] = 'Diese Gruppe wird von Mitgliedern verwendet.';
 			} else {
-				$stmt = $libDb->prepare("DELETE FROM base_gruppe WHERE bezeichnung = :bezeichnung");
+				$stmt = $libDb->prepare('DELETE FROM base_gruppe WHERE bezeichnung = :bezeichnung');
 				$stmt->bindValue(':bezeichnung', $_REQUEST['bezeichnung']);
 				$stmt->execute();
 
 				$libGlobal->notificationTexts[] = 'Gruppe gelöscht.';
 			}
 		} else {
-			$libGlobal->errorTexts[] = "Keine Gruppe angegeben.";
+			$libGlobal->errorTexts[] = 'Keine Gruppe angegeben.';
 		}
 	}
 
@@ -66,7 +65,7 @@ if($libAuth->isLoggedin()){
 	echo '<table class="table table-condensed">';
 	echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';
 
-	$stmt = $libDb->prepare("SELECT * FROM base_gruppe");
+	$stmt = $libDb->prepare('SELECT * FROM base_gruppe');
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -74,7 +73,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['bezeichnung']. '</td>';
 		echo '<td>' .$row['beschreibung']. '</td>';
 
-		if($row['bezeichnung'] != "F" && $row['bezeichnung'] != "B" && $row['bezeichnung'] != "P" && $row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "C" && $row['bezeichnung'] != "G" && $row['bezeichnung'] != "W" && $row['bezeichnung'] != "V" && $row['bezeichnung'] != "Y"){
+		if($row['bezeichnung'] != 'F' && $row['bezeichnung'] != 'B' && $row['bezeichnung'] != 'P' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'C' && $row['bezeichnung'] != 'G' && $row['bezeichnung'] != 'W' && $row['bezeichnung'] != 'V' && $row['bezeichnung'] != 'Y'){
 			echo '<td class="toolColumn">';
 			echo '<a href="index.php?pid=intranet_admin_db_gruppen&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
@@ -82,10 +81,10 @@ if($libAuth->isLoggedin()){
 			echo '</td>';
 		}
 
-		echo "</tr>";
+		echo '</tr>';
 	}
 
-	echo "</table>";
+	echo '</table>';
 
 	echo '<h2>Neue Gruppe anlegen</h2>';
 

@@ -2,30 +2,30 @@
 /*
 This file is part of VCMS.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+VCMS is free software: you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or 
+(at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+VCMS is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+You should have received a copy of the GNU General Public License 
+along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
 	/**
 	* Löschvorgang durchführen
 	*/
-	if(isset($_GET['aktion']) && $_GET['aktion'] == "delete"){
-		if(isset($_GET['semester']) && $_GET['semester'] != ""){
+	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
+		if(isset($_GET['semester']) && $_GET['semester'] != ''){
 			$stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester');
 			$stmt->bindValue(':semester', $_REQUEST['semester']);
 			$stmt->execute();
@@ -33,13 +33,13 @@ if($libAuth->isLoggedin()){
 			$stmt->fetch();
 
 			//ist im zu löschenden Semester kein Internetwart angegeben?
-			if($internetwart == "" || $internetwart == 0){
+			if($internetwart == '' || $internetwart == 0){
 				//aus Datenbank löschen
-				$stmt = $libDb->prepare("DELETE FROM base_semester WHERE semester=:semester");
+				$stmt = $libDb->prepare('DELETE FROM base_semester WHERE semester=:semester');
 				$stmt->bindValue(':semester', $_REQUEST['semester']);
 				$stmt->execute();
 
-				$libGlobal->notificationTexts[] = "Datensatz gelöscht";
+				$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 
 				//Semestercover löschen
 				$libImage->deleteSemesterCover($_REQUEST['semester']);
@@ -59,7 +59,7 @@ if($libAuth->isLoggedin()){
 	echo '<table class="table table-condensed">';
 	echo '<tr><th>Semester</th><th>Senior</th><th>Fuchsmajor</th><th>Internetwart</th><th></th></tr>';
 
-	$stmt = $libDb->prepare("SELECT * FROM base_semester ORDER BY SUBSTRING(semester,3) DESC");
+	$stmt = $libDb->prepare('SELECT * FROM base_semester ORDER BY SUBSTRING(semester,3) DESC');
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -76,6 +76,6 @@ if($libAuth->isLoggedin()){
 		echo '</tr>';
 	}
 
-	echo "</table>";
+	echo '</table>';
 }
 ?>

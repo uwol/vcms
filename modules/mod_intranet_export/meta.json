@@ -1,6 +1,6 @@
 {
 	"moduleName": "Export",
-	"version": 2.14,
+	"version": 2.15,
 	"pages": [
 		{
 			"pid": "intranet_admin_export",

@@ -2,39 +2,41 @@
 /*
 This file is part of VCMS.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+VCMS is free software: you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or 
+(at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+VCMS is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+You should have received a copy of the GNU General Public License 
+along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
 
 	$id = '';
+
 	if(isset($_REQUEST['id'])){
 		$id = $_REQUEST['id'];
 	}
 
 	$aktion = '';
+
 	if(isset($_REQUEST['aktion'])){
 		$aktion = $_REQUEST['aktion'];
 	}
 
 	$varray = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array("titel", "datum", "datum_ende", "spruch", "beschreibung", "status", "ort", 'fb_eventid');
+	$felder = array('titel', 'datum', 'datum_ende', 'spruch', 'beschreibung', 'status', 'ort', 'fb_eventid');
 
 	/**
 	*
@@ -44,11 +46,11 @@ if($libAuth->isLoggedin()){
 	*/
 
 	//neue Veranstaltung, leerer Datensatz
-	if($aktion == "blank"){
+	if($aktion == 'blank'){
 		$varray['id'] = '';
-		$varray['datum'] = @date("Y-m-d H:i:s");
+		$varray['datum'] = @date('Y-m-d H:i:s');
 		$varray['datum_ende'] = '';
-		$varray['titel'] = "Titel angeben!";
+		$varray['titel'] = 'Titel angeben!';
 		$varray['spruch'] = '';
 		$varray['beschreibung'] = '';
 		$varray['status'] = '';
@@ -56,9 +58,9 @@ if($libAuth->isLoggedin()){
 		$varray['fb_eventid'] = '';
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
-	elseif($aktion == "insert"){
+	elseif($aktion == 'insert'){
 		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
-			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
 		$valueArray = $_REQUEST;
@@ -72,12 +74,12 @@ if($libAuth->isLoggedin()){
 			$libGlobal->errorTexts[] = 'Das Enddatum liegt vor dem Startdatum.';
 		}
 
-		$varray = $libDb->insertRow($felder, $valueArray, "base_veranstaltung", array("id"=>''));
+		$varray = $libDb->insertRow($felder, $valueArray, 'base_veranstaltung', array('id' => ''));
 	}
 	//bestehende Daten werden modifiziert
-	elseif($aktion == "update"){
+	elseif($aktion == 'update'){
 		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
-			die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
+			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 
 		$valueArray = $_REQUEST;
 		$valueArray['datum'] = $libTime->assureMysqlDateTime($valueArray['datum']);
@@ -90,9 +92,9 @@ if($libAuth->isLoggedin()){
 			$libGlobal->errorTexts[] = 'Das Enddatum liegt vor dem Startdatum.';
 		}
 
-		$varray = $libDb->updateRow($felder, $valueArray, "base_veranstaltung", array("id" => $id));
+		$varray = $libDb->updateRow($felder, $valueArray, 'base_veranstaltung', array('id' => $id));
 	} else {
-		$stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE id=:id");
+		$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE id=:id');
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$varray = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -129,10 +131,10 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 
-	if($aktion == "blank"){
-		$extraActionParam = "&amp;aktion=insert";
+	if($aktion == 'blank'){
+		$extraActionParam = '&amp;aktion=insert';
 	} else {
-		$extraActionParam = "&amp;aktion=update";
+		$extraActionParam = '&amp;aktion=update';
 	}
 
 	echo '<form action="index.php?pid=intranet_admin_db_veranstaltung' .$extraActionParam. '" method="post" class="form-horizontal">';
