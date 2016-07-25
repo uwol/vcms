@@ -1,0 +1,30 @@
+nav.navbar {
+	margin-bottom: 0;
+}
+
+nav.navbar-default {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+nav.navbar-default .navbar-nav li a,
+nav.navbar-default .navbar-nav li.active a,
+nav.navbar-default .navbar-nav .open .dropdown-menu li a {
+	color: #333;
+}
+
+nav .navbar-internet li a {
+	padding: 10px;
+}
+
+nav .navbar-intranet {
+	font-size: 0.8em;
+}
+
+nav .navbar-intranet .dropdown-menu {
+	font-size: 1em;
+}
+
+nav .navbar-intranet li a {
+	padding: 5px;
+}

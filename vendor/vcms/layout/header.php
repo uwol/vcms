@@ -58,6 +58,7 @@ echo '    <link rel="stylesheet" href="styles/bootstrap-override.css" />' . PHP_
 echo '    <link rel="stylesheet" href="styles/screen.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/calendar/calendar.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/gallery/gallery.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="styles/navigation/navigation.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/person/person.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;

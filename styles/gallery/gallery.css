@@ -2,6 +2,16 @@ main .thumbnailControls {
 	text-align: center;
 }
 
+main .thumbnail {
+	padding: 0;
+	border-radius: 0;
+}
+
+main .thumbnail .caption h3 {
+	margin-top: 0;
+	font-weight: normal;
+}
+
 main .thumbnail .thumbnailOverflow {
 	max-width: 400px; /* corresponding to semester cover */
 	width: 100%;
@@ -15,18 +25,6 @@ main .thumbnail .thumbnailOverflow img {
 	width: 100%;
 }
 
-main .fa.public {
-	color: green;
-}
-
-main .fa.internal {
-	color: orange;
-}
-
-main .fa.private {
-	color: red;
-}
-
 main .thumbnail .public {
 	border: 2px solid green;
 }
@@ -37,4 +35,20 @@ main .thumbnail .internal {
 
 main .thumbnail .private {
 	border: 2px solid red;
+}
+
+main .carousel-control.left, main .carousel-control.right {
+	background-image: none;
+}
+
+main .fa.public {
+	color: green;
+}
+
+main .fa.internal {
+	color: orange;
+}
+
+main .fa.private {
+	color: red;
 }
