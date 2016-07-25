@@ -10,7 +10,7 @@ if($libGlobal->pid == $libConfig->defaultHome){
 	$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/';
 	$pageOgUrl = 'http://' .$libConfig->sitePath. '/';
 } else {
-	$pageTitle = $libConfig->verbindungName. ' - ' . $libGlobal->page->getTitle();
+	$pageTitle = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
 	$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/index.php?pid=' .$libGlobal->pid;
 	$pageOgUrl = 'http://' .$libConfig->sitePath. '/';
 
@@ -25,7 +25,7 @@ if($libGlobal->pid == $libConfig->defaultHome){
 		$event = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if($event['titel'] != ''){
-			$pageTitle = $libConfig->verbindungName . ' - ' . $event['titel'] . ' am ' . $libTime->formatDateString($event['datum']);
+			$pageTitle = $libConfig->verbindungName. ' - ' .$event['titel']. ' am ' .$libTime->formatDateString($event['datum']);
 		}
 
 		unset($event);
@@ -56,6 +56,9 @@ echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" /
 echo '    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/bootstrap-override.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/screen.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="styles/calendar/calendar.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="styles/gallery/gallery.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="styles/person/person.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
 
@@ -118,7 +121,7 @@ echo '          <h1><a href="index.php">' .$libConfig->verbindungName. '</a></h1
 echo '          <h2><a href="index.php">';
 
 if(isset($libConfig->verbindungDachverband) && $libConfig->verbindungDachverband != ''){
-	echo 'im ' .$libConfig->verbindungDachverband . ' ';
+	echo 'im ' .$libConfig->verbindungDachverband. ' ';
 }
 
 if($libConfig->verbindungOrt != ''){

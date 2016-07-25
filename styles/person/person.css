@@ -1,0 +1,43 @@
+main .personSignatureBox {
+	position: relative;
+	width: 100px;
+	margin-bottom: 0.5em;
+}
+
+main .personSignatureBoxLarge {
+	width: 150px;
+}
+
+main .personSignatureBox .imgBox {
+	background-color: white;
+	border: 1px solid #333;
+}
+
+main .personSignatureBox .imgBox .personImg {
+	width: 100px;
+	height: 133px;
+}
+
+main .personSignatureBox .imgBox .personImgLarge {
+	width: 150px;
+	height: 200px;
+}
+
+main .personSignatureBox .personActivityBox {
+	width: 100%;
+	line-height: 0;
+}
+
+main .personSignatureBox .personActivityBox .personActivityBar {
+	display: inline-block;
+	height: .2em;
+	margin: .2em 0 0 0;
+}
+
+main .personSignatureBox .personActivityBox .personActivityBarActive {
+	background-color: black;
+}
+
+main .personSignatureBox .personActivityBox .personActivityBarInactive {
+	background-color: white;
+}
