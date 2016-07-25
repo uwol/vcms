@@ -1,30 +1,81 @@
-nav.navbar {
-	margin-bottom: 0;
+.navbar-default {
+	background-color: white;
+	border-color: rgba(34, 34, 34, 0.05);
+	-webkit-transition: all 0.35s;
+	-moz-transition: all 0.35s;
+	transition: all 0.35s;
 }
 
-nav.navbar-default {
-    background-color: transparent;
-    border-color: transparent;
+.navbar-default a {
+	-webkit-transition: all 0.35s;
+	-moz-transition: all 0.35s;
+	transition: all 0.35s;
 }
 
-nav.navbar-default .navbar-nav li a,
-nav.navbar-default .navbar-nav li.active a,
-nav.navbar-default .navbar-nav .open .dropdown-menu li a {
-	color: #333;
+.navbar-default #logo {
+	height: 75px;
 }
 
-nav .navbar-internet li a {
-	padding: 10px;
+.navbar-default.affix #logo {
+	height: 50px;
+	width: 50px;
+	float: left;
 }
 
-nav .navbar-intranet {
-	font-size: 0.8em;
+.navbar-default .navbar-header .navbar-brand {
+	color: inherit;
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
-nav .navbar-intranet .dropdown-menu {
-	font-size: 1em;
+.navbar-default .navbar-header .navbar-brand:hover,
+.navbar-default .navbar-header .navbar-brand:focus {
+	color: #111;
 }
 
-nav .navbar-intranet li a {
+.navbar-default .navbar-header .navbar-toggle {
+	font-weight: 700;
+	color: inherit;
+	text-transform: uppercase;
+}
+
+.navbar-default .nav > li > a,
+.navbar-default .nav > li > a:focus {
+	text-transform: uppercase;
+	font-weight: 700;
+	color: inherit;
+}
+
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus:hover {
+	color: #111;
+}
+
+.navbar-default .nav > li.active > a,
+.navbar-default .nav > li.active > a:focus {
+	color: #111;
+	background-color: transparent;
+}
+
+.navbar-default .nav > li.active > a:hover,
+.navbar-default .nav > li.active > a:focus:hover {
+	background-color: transparent;
+}
+
+@media(min-width: 768px) {
+	.navbar-default.affix .navbar-header .navbar-brand {
+		font-size: 1.1em;
+	}
+}
+
+.navbar-default .navbar-intranet .nav {
+	font-size: 0.7em;
+}
+
+.navbar-default .navbar-intranet .navbar-right {
+	margin-right: 0;
+}
+
+.navbar-default .navbar-intranet .nav li a {
 	padding: 5px;
 }

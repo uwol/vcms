@@ -71,6 +71,16 @@ function loadFacebookEventPlugins(){
 	});
 }
 
+/* configure navigation */
+
+function configureNavigation(){
+    $('nav').affix({
+        offset: {
+            top: 50
+        }
+    })
+}
+
 
 // --------------------
 
@@ -79,6 +89,7 @@ $(document).ready(function() {
 	adjustThumbnailImgsOnLoad();
 	adjustFacebookPagePluginsSrc();
 	loadFacebookEventPlugins();
+	configureNavigation();
 });
 
 var resizeDebounce;

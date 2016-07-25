@@ -13,30 +13,8 @@ fieldset {
 }
 
 #container {
+	padding-top: 160px;
 	min-height: 100%;
-}
-
-#logo {
-	height: 100px;
-}
-
-#header h1 a, #header h2 a {
-	text-decoration: none;
-	color: inherit;
-}
-
-#header h1 {
-	margin-bottom: 0;
-	line-height: 0.8;
-	font-size: 3.5em;
-	font-family: serif;
-}
-
-#header h2 {
-	margin-top: 0;
-	margin-bottom: 0;
-	font-size: 2.2em;
-	font-family: serif;
 }
 
 main, footer {
@@ -45,8 +23,6 @@ main, footer {
 }
 
 main {
-	border-top: 1px solid #333;
-	/* hyphenate */
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	-webkit-hyphens: auto;

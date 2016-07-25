@@ -115,32 +115,10 @@ echo '    <meta property="business:contact_data:country_name" content="' .$libCo
 echo '  </head>' . PHP_EOL;
 echo '  <body>' . PHP_EOL;
 echo '    <div id="container" class="container">' . PHP_EOL;
-echo '      <div class="row">' . PHP_EOL;
-echo '        <div id="logo" class="col-md-1 hidden-xs"></div>' . PHP_EOL;
-echo '        <header id="header" class="col-md-11">' . PHP_EOL;
-echo '          <h1><a href="index.php">' .$libConfig->verbindungName. '</a></h1>' . PHP_EOL;
-echo '          <h2><a href="index.php">';
-
-if(isset($libConfig->verbindungDachverband) && $libConfig->verbindungDachverband != ''){
-	echo 'im ' .$libConfig->verbindungDachverband. ' ';
-}
-
-if($libConfig->verbindungOrt != ''){
-	echo 'zu ' .$libConfig->verbindungOrt;
-}
-
-echo '</a></h2>' . PHP_EOL;
-
-echo '        </header>' . PHP_EOL;
-echo '      </div>' . PHP_EOL;
-echo '      <div class="row">' . PHP_EOL;
-echo '        <div class="col-md-12">' . PHP_EOL;
 
 $libMenuRenderer = new \vcms\LibMenuRenderer($libAuth);
 echo $libMenuRenderer->getMenuHtml($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
 
-echo '        </div>' . PHP_EOL;
-echo '      </div>' . PHP_EOL;
 echo '      <div class="row">' . PHP_EOL;
 echo '        <div class="col-md-12">' . PHP_EOL;
 echo '          <main id="content">' . PHP_EOL;

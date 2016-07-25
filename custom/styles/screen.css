@@ -15,18 +15,17 @@ body {
 	background-position: center;
 }
 
-header h1 {
+#brand:hover, #brand:focus {
 	color: #961419;
 }
 
-header h2 {
+#nav li > a:hover, #nav li > a:focus:hover {
 	color: #961419;
 }
 
-header #signout a {
+#nav li.active > a, #nav li.active > a:focus {
 	color: #961419;
 }
-
 
 main a:link, main a:visited {
 	color: #961419;
