@@ -170,15 +170,6 @@ class LibMenuRenderer{
 
 		$retstr .= '            <a href="index.php" id="brand" class="navbar-brand">';
 		$retstr .= $libConfig->verbindungName;
-
-		if(isset($libConfig->verbindungDachverband) && $libConfig->verbindungDachverband != ''){
-			$retstr .= ' im ' .$libConfig->verbindungDachverband;
-		}
-
-		if($libConfig->verbindungOrt != ''){
-			$retstr .= ' zu ' .$libConfig->verbindungOrt;
-		}
-
 		$retstr .= '</a>' . PHP_EOL;
 		$retstr .= '          </div>' . PHP_EOL;
 

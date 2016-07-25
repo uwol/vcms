@@ -44,6 +44,8 @@
 	text-transform: uppercase;
 	font-weight: 700;
 	color: inherit;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .navbar-default .nav > li > a:hover,
