@@ -52,6 +52,7 @@ class LibMenuFolder extends LibMenuElement{
 		foreach($this->elements as $element){
 			$name = $element->getName();
 			$type = $element->getType();
+			$position = $element->getPosition();
 
 			// in case of a folder
 			if($type == 2){
@@ -60,6 +61,8 @@ class LibMenuFolder extends LibMenuElement{
 				} else {
 					$collidingElement = $result[$name];
 					$collidingElement->addElements($element->getElements());
+					$newPosition = min($collidingElement->getPosition(), $position);
+					$collidingElement->setPosition($newPosition);
 				}
 			} else {
 				$result[] = $element;

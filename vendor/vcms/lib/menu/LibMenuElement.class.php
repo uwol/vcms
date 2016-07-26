@@ -69,4 +69,8 @@ class LibMenuElement{
 	function getAccessRestriction(){
 		return $this->accessRestriction;
 	}
+
+	function setPosition($position){
+		$this->position = $position;
+	}
 }

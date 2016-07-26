@@ -1,6 +1,6 @@
 {
 	"moduleName": "Chargierkalender",
-	"version": 2.34,
+	"version": 2.35,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -43,7 +43,6 @@
 		{
 			"name": "Daten",
 			"type": "menu_folder",
-			"position": 100, 
 			"elements": [
 				{
 					"pid": "intranet_chargierkalender_adminliste",

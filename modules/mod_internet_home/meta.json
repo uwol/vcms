@@ -1,6 +1,6 @@
 {
 	"moduleName": "Home",
-	"version": 2.95,
+	"version": 2.96,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -40,7 +40,6 @@
 		{
 			"name": "Daten",
 			"type": "menu_folder",
-			"position": 100, 
 			"elements": [
 				{
 					"pid": "intranet_internethome_nachricht_adminliste",

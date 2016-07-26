@@ -20,6 +20,8 @@ namespace vcms;
 
 class LibModuleParser{
 
+	var defaultPosition = 65535;
+
 	function parseMetaJson($moduleDirectory, $moduleRelativePath){
 		global $libGlobal, $libFilesystem;
 
@@ -144,7 +146,7 @@ class LibModuleParser{
 	function parseMenuEntry($menuElementJson){
 		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
 		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
-		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : '';
+		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultPosition;
 
 		$menuEntry = new \vcms\menu\LibMenuEntry($pid, $name, $position);
 		return $menuEntry;
@@ -154,7 +156,7 @@ class LibModuleParser{
 		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
 		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
 		$nameLogout = isset($menuElementJson['nameLogout']) ? $menuElementJson['nameLogout'] : '';
-		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : '';
+		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultPosition;
 
 		$menuEntry = new \vcms\menu\LibMenuEntryLogin($pid, $name, $nameLogout, $position);
 		return $menuEntry;
@@ -163,7 +165,7 @@ class LibModuleParser{
 	function parseMenuEntryExternalLink($menuElementJson){
 		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
 		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
-		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : '';
+		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultPosition;
 
 		$menuEntry = new \vcms\menu\LibMenuEntryExternalLink($pid, $name, $position);
 		return $menuEntry;
@@ -172,7 +174,7 @@ class LibModuleParser{
 	function parseMenuFolder($menuFolderJson){
 		$pid = isset($menuFolderJson['pid']) ? $menuFolderJson['pid'] : '';
 		$name = isset($menuFolderJson['name']) ? $menuFolderJson['name'] : '';
-		$position = isset($menuFolderJson['position']) ? $menuFolderJson['position'] : '';
+		$position = isset($menuFolderJson['position']) ? $menuFolderJson['position'] : $this->defaultPosition;
 
 		$menuFolder = new \vcms\menu\LibMenuFolder($pid, $name, $position);
 

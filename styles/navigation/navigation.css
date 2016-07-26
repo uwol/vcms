@@ -64,6 +64,12 @@
 	background-color: transparent;
 }
 
+.navbar-default .nav .dropdown-menu > .active > a,
+.navbar-default .nav .dropdown-menu > .active > a:focus, 
+.navbar-default .nav .dropdown-menu > .active > a:hover {
+	background-color: transparent;
+}
+
 @media(min-width: 768px) {
 	.navbar-default.affix .navbar-header .navbar-brand {
 		font-size: 1.1em;

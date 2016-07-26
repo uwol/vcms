@@ -1,6 +1,6 @@
 {
 	"moduleName": "Export",
-	"version": 2.16,
+	"version": 2.18,
 	"pages": [
 		{
 			"pid": "intranet_admin_export",
@@ -60,13 +60,12 @@
 		{
 			"name": "Daten",
 			"type": "menu_folder",
-			"position": 100, 
 			"elements": [
 				{
 					"pid": "intranet_admin_export",
 					"name": "Export",
 					"type": "menu_entry",
-					"position": 210
+					"position": 3000
 				}
 			]
 		}
