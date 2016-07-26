@@ -20,10 +20,17 @@
 	],
 	"menuElementsAdministration": [
 		{
-			"pid": "configuration",
-			"name": "Konfiguration",
-			"type": "menu_entry",
-			"position": 3
+			"name": "System",
+			"type": "menu_folder",
+			"position": 1, 
+			"elements": [
+				{
+					"pid": "configuration",
+					"name": "Konfiguration",
+					"type": "menu_entry",
+					"position": 3
+				}
+			]
 		}
 	]
 }

@@ -44,8 +44,6 @@
 	text-transform: uppercase;
 	font-weight: 700;
 	color: inherit;
-	padding-left: 10px;
-	padding-right: 10px;
 }
 
 .navbar-default .nav > li > a:hover,
@@ -78,12 +76,4 @@
 
 .navbar-default .navbar-intranet .nav {
 	font-size: 0.7em;
-}
-
-.navbar-default .navbar-intranet .navbar-right {
-	margin-right: 0;
-}
-
-.navbar-default .navbar-intranet .nav li a {
-	padding: 5px;
 }

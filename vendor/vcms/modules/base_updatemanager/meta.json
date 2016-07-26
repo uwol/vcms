@@ -13,10 +13,16 @@
 	],
 	"menuElementsAdministration": [
 		{
-			"pid": "updater_liste",
-			"name": "Module",
-			"type": "menu_entry",
-			"position": 2
+			"name": "System",
+			"type": "menu_folder",
+			"elements": [
+				{
+					"pid": "updater_liste",
+					"name": "Module",
+					"type": "menu_entry",
+					"position": 2
+				}
+			]
 		}
 	]
 }
