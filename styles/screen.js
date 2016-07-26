@@ -77,7 +77,8 @@ function adjustFacebookPagePluginsSrc(){
 
 function configureNavigation(){
 	var navbarHeight = $(".navbar-fixed-top").height();
-	var paddingTop = navbarHeight + 25;
+	var gap = 15;
+	var paddingTop = navbarHeight + gap;
 
     $('nav').affix({
         offset: {

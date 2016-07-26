@@ -41,7 +41,6 @@
 
 .navbar-default .nav > li > a,
 .navbar-default .nav > li > a:focus {
-	text-transform: uppercase;
 	font-weight: 700;
 	color: inherit;
 }
@@ -74,6 +73,10 @@
 	}
 }
 
+.navbar-default .navbar-internet .nav > li > a {
+	text-transform: uppercase;
+}
+
 .navbar-default .navbar-intranet .nav {
-	font-size: 0.7em;
+	font-size: 0.8em;
 }
