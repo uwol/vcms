@@ -133,6 +133,7 @@ class LibMenuRenderer{
 			elseif($folderElement->getType() == 3){
 				$retstr .= $this->getLiTag($folderElement, $depth, $pid);
 				$retstr .= '<a href="' .$folderElement->getPid(). '">';
+				$retstr .= '<i class="fa fa-external-link" aria-hidden="true"></i> ';
 				$retstr .= $folderElement->getName();
 				$retstr .= '</a></li>' . PHP_EOL;
 			}
