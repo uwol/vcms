@@ -20,7 +20,7 @@ namespace vcms;
 
 class LibModuleParser{
 
-	var defaultPosition = 65535;
+	var $defaultPosition = 65535;
 
 	function parseMetaJson($moduleDirectory, $moduleRelativePath){
 		global $libGlobal, $libFilesystem;
