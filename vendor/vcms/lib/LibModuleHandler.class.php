@@ -58,11 +58,11 @@ class LibModuleHandler{
 		$moduleAbsolutePaths = array();
 
 		foreach($modModuleFiles as $moduleFile){
-			$moduleRelativePaths[$moduleFile] = $this->modModulesRelativePath. '/'. $moduleFile;
+			$moduleRelativePaths[$moduleFile] = $this->modModulesRelativePath. '/' .$moduleFile;
 		}
 
 		foreach($baseModuleFiles as $moduleFile){
-			$moduleRelativePaths[$moduleFile] = $this->baseModulesRelativePath. '/'. $moduleFile;
+			$moduleRelativePaths[$moduleFile] = $this->baseModulesRelativePath. '/' .$moduleFile;
 		}
 
 		foreach($moduleRelativePaths as $moduleFile => $moduleRelativePath){
@@ -354,6 +354,8 @@ class LibModuleHandler{
 
 	function getMenuInternet(){
 		$menu = $this->menuInternet;
+
+		$menu->canonizeElements();
 		$menu->sortElementsByPosition();
 		$menu->applyMinAccessRestriction();
 
@@ -362,6 +364,8 @@ class LibModuleHandler{
 
 	function getMenuIntranet(){
 		$menu = $this->menuIntranet;
+
+		$menu->canonizeElements();
 		$menu->sortElementsByPosition();
 		$menu->applyMinAccessRestriction();
 
@@ -370,6 +374,8 @@ class LibModuleHandler{
 
 	function getMenuAdministration(){
 		$menu = $this->menuAdministration;
+
+		$menu->canonizeElements();
 		$menu->sortElementsByPosition();
 		$menu->applyMinAccessRestriction();
 

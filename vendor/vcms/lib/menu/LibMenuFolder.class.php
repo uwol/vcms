@@ -30,16 +30,44 @@ class LibMenuFolder extends LibMenuElement{
 		$this->id = substr(sha1($element->getId().$this->id), 0, 8);
 	}
 
+	function addElements($elements){
+		$this->elements = array_merge($this->elements, $elements);
+	}
+
 	function setElements($menuElements){
 		$this->elements = $menuElements;
 	}
 
-	function &getElements(){
+	function getElements(){
 		return $this->elements;
 	}
 
 	function hasElements(){
-		return count($this->elements) > 0;
+		return !empty($this->elements);
+	}
+
+	function canonizeElements(){
+		$result = array();
+
+		foreach($this->elements as $element){
+			$name = $element->getName();
+			$type = $element->getType();
+
+			// in case of a folder
+			if($type == 2){
+				if(!isset($result[$name])){
+					$result[$name] = $element;
+				} else {
+					$collidingElement = $result[$name];
+					$collidingElement->addElements($element->getElements());
+				}
+			} else {
+				$result[] = $element;
+			}
+		}
+
+		$result = array_values($result);
+		$this->setElements($result);
 	}
 
 	function sortElementsByPosition(){

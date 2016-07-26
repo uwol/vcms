@@ -35,10 +35,14 @@ class LibMenu{
 		$this->rootMenuFolder->setAccessRestriction('');
 	}
 
-	function &copy(){
+	function copy(){
 		$menu = new LibMenu();
 		$menu->setRootMenuFolder($this->rootMenuFolder->copy());
 		return $menu;
+	}
+
+	function canonizeElements(){
+		$this->rootMenuFolder->canonizeElements();
 	}
 
 	function reduceByAccessRestriction($gruppe, $aemter){

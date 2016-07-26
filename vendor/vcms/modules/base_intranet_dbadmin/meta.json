@@ -141,7 +141,7 @@
 		{
 			"name": "Daten",
 			"type": "menu_folder",
-			"position": 50, 
+			"position": 100, 
 			"elements": [
 				{
 					"pid": "intranet_admin_db_personenliste",
