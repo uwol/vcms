@@ -42,14 +42,6 @@ echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '"
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
 
 /*
-* scripts
-*/
-echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
-echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
-echo '    <script src="styles/gallery/modal.js"></script>' . PHP_EOL;
-echo '    <script src="styles/screen.js"></script>' . PHP_EOL;
-
-/*
 * stylesheets
 */
 echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
@@ -63,6 +55,20 @@ echo '    <link rel="stylesheet" href="styles/person/person.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
 
+/*
+* scripts
+*/
+echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
+echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
+echo '    <script src="styles/gallery/modal.js"></script>' . PHP_EOL;
+echo '    <script src="styles/screen.js"></script>' . PHP_EOL;
+
+if(is_array($libGlobal->module->getHeaderStrings())){
+	foreach($libGlobal->module->getHeaderStrings() as $headerString){
+		echo '    ' .$headerString. PHP_EOL;
+	}
+}
+
 if($libGenericStorage->loadValue('base_core', 'showTrauerflor')){
 	echo '    <style type="text/css">' . PHP_EOL;
 	echo '      #container:before {' . PHP_EOL;
@@ -73,13 +79,6 @@ if($libGenericStorage->loadValue('base_core', 'showTrauerflor')){
 	echo '      }' . PHP_EOL;
 	echo '    </style>' . PHP_EOL;
 }
-
-if(is_array($libGlobal->module->getHeaderStrings())){
-	foreach($libGlobal->module->getHeaderStrings() as $headerString){
-		echo '    ' .$headerString. PHP_EOL;
-	}
-}
-
 
 /*
 * robots

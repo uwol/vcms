@@ -1,10 +1,27 @@
-/* animate inserted elements */
+/* inserted elements */
 
 function animateLasteInsertId(){
 	$(".lastInsertId").slideDown(1000);
 }
 
-/* adjust thumbnails */
+/* facebook event plugin */
+
+function loadFacebookEventPlugins(){
+	$(".facebookEventPlugin").each(function() {
+		var div = $(this);
+		var eventid = div.attr('data-eventid');
+
+		$.ajax({
+			url: "inc.php?iid=fb_event&eventid=" + eventid,
+			context: document.body
+		}).done(function(html) {
+			div.replaceWith(html);
+			adjustThumbnailImgsOnLoad();
+		});
+	});
+}
+
+/* thumbnails */
 
 function adjustThumbnailImgsOnLoad(){
 	$(".thumbnail .thumbnailOverflow img").load(function() {
@@ -43,7 +60,7 @@ function adjustThumbnailImgMarginTop(thumbnailImg){
 	}
 }
 
-/* adjust facebook plugins */
+/* facebook plugins */
 
 function adjustFacebookPagePluginsSrc(){
 	$("iframe.facebookPagePlugin").each(function() {
@@ -56,40 +73,39 @@ function adjustFacebookPagePluginsSrc(){
 	});
 }
 
-function loadFacebookEventPlugins(){
-	$(".facebookEventPlugin").each(function() {
-		var div = $(this);
-		var eventid = div.attr('data-eventid');
-
-		$.ajax({
-			url: "inc.php?iid=fb_event&eventid=" + eventid,
-			context: document.body
-		}).done(function(html) {
-			div.replaceWith(html);
-			adjustThumbnailImgsOnLoad();
-		});
-	});
-}
-
-/* configure navigation */
+/* navigation */
 
 function configureNavigation(){
+	var navbarHeight = $(".navbar-fixed-top").height();
+	var paddingTop = navbarHeight + 25;
+
     $('nav').affix({
         offset: {
-            top: 50
+            top: paddingTop
         }
-    })
-}
+    });
 
+    $("#container").css("padding-top", paddingTop);
+}
 
 // --------------------
 
+function adjustElementDimensions(){
+	adjustThumbnailImgs();
+	adjustFacebookPagePluginsSrc();
+	configureNavigation();
+}
+
 $(document).ready(function() {
 	animateLasteInsertId();
-	adjustThumbnailImgsOnLoad();
-	adjustFacebookPagePluginsSrc();
 	loadFacebookEventPlugins();
-	configureNavigation();
+	adjustThumbnailImgsOnLoad();
+
+	adjustElementDimensions();
+});
+
+$(document).load(function() {
+	adjustElementDimensions();
 });
 
 var resizeDebounce;
@@ -97,7 +113,6 @@ var resizeDebounce;
 $(window).resize(function() {
 	clearTimeout(resizeDebounce);
 	resizeDebounce = setTimeout(function(){
-		adjustThumbnailImgs();
-		adjustFacebookPagePluginsSrc();
+		adjustElementDimensions();
 	}, 200);
 });
