@@ -78,16 +78,11 @@ class LibModuleHandler{
 		global $libGlobal, $libFilesystem, $libModuleParser;
 
 		$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
-		$module = null;
 
 		if(file_exists($moduleAbsolutePath. '/meta.json')){
 			$module = $libModuleParser->parseMetaJson($moduleDirectory, $moduleRelativePath);
-			$this->modules[$moduleDirectory] = $module;
-		} else {
-			$libGlobal->errorTexts[] = 'Die Modulinformationsdatei ' .$moduleRelativePath. '/meta.json konnte nicht gefunden werden.';
-		}
 
-		if(!is_null($module)){
+			$this->modules[$moduleDirectory] = $module;
 			$this->validateModule($module);
 			$this->registerModule($module, $moduleRelativePath);
 		}
