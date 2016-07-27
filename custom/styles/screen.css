@@ -21,30 +21,26 @@ body {
 	color: #961419;
 }
 
-main a:link, main a:visited {
+a:link, a:visited {
 	color: #961419;
 }
 
-main a:hover, main a:active, main a:focus {
+a:hover, a:active, a:focus {
 	color: #000080;
 }
 
-main h1, main h2 {
-	color: #961419;
-}
-
-main th {
+th {
 	background-color: #E8CAA2;
 }
 
-main .calendar .calendarMonthName, main .calendar .calendarDayName {
+.calendar .calendarMonthName, .calendar .calendarDayName {
 	background-color: #E8CAA2;
 }
 
-main .calendar .calendarDay {
+.calendar .calendarDay {
 	border: thin solid #E8CAA2;
 }
 
-main .calendar .today {
+.calendar .today {
 	border: thin solid #961419;
 }

@@ -1,56 +1,62 @@
-main h1 {
+.no-padding {
+	padding: 0;
+}
+
+h1 {
 	font-size: 1.7em;
 	text-align: center;
 }
 
-main h2 {
+h2 {
 	font-size: 1.4em;
 	text-align: center;
 }
 
-main h3 {
+h3 {
 	font-size: 1.1em;
 }
 
-main a:link, main a:hover {
+a:link, main a:hover {
 	text-decoration: none;
 }
 
-main hr {
+hr {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
 
-main p {
+p {
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 }
 
-main address {
+address {
 	margin-bottom: 0;
 }
 
-main dt {
+dt {
 	font-weight: normal;
 }
 
-main dd {
+dd {
 	margin-left: 2em;
 }
 
-main .panel, main .thumbnail {
+.panel {
 	margin-bottom: 10px;
-}
-
-main .panel {
 	border-radius: 0;
 }
 
-main .panel .panel-title {
+.thumbnail {
+	border: 0;
+	margin-bottom: 0;
+}
+
+.panel .panel-title {
 	font-weight: normal;
 }
 
-main .panel .panel-heading {
+.panel .panel-heading {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }

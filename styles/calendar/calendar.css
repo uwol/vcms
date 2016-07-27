@@ -1,61 +1,61 @@
-main .calendar {
+.calendar {
 	width: 100%;
 }
 
-main .calendar .calendarMonthName {
+.calendar .calendarMonthName {
 	width: 100%;
 	margin-top: 1px;
 }
 
-main .calendar .calendarMonthName h2 {
+.calendar .calendarMonthName h2 {
 	text-align: center;
 	margin: 0;
 	padding: 0.5em;
 }
 
-main .calendar .calendarCellContainer {
+.calendar .calendarCellContainer {
     display: flex;
 	flex-wrap: wrap;
 	flex: none;
 	justify-content: space-around;
 }
 
-main .calendar .calendarCell {
+.calendar .calendarCell {
 	margin-top: 1px;
 	padding: 0.5em;
 }
 
 @media (max-width: 768px){
-	main .calendar .calendarCell {
+	.calendar .calendarCell {
 		width: 100%;
 	}
 }
 
 @media (min-width: 768px){
-	main .calendar .calendarCell {
+	.calendar .calendarCell {
 		/* (100% / 7) - 0.1% */
 		width: 14.185714285714285714285714285714%;
 	}
 }
 
-main .calendar .calendarDayName {
+.calendar .calendarDayName {
 	text-align: center;
 }
 
-main .calendar .calendarDay {
+.calendar .calendarDay {
 	border: thin solid #000000;
 	text-align: left;
 }
 
-main .calendar .calendarDay .calendarEvent {
+.calendar .calendarDay .calendarEvent {
 	text-align: center;
 	margin-top: 1em;
 }
 
-main .calendar .calendarDay .calendarEvent time {
+.calendar .calendarDay .calendarEvent time {
 	font-weight: bold;
 }
 
-main .calendar .calendarDay .calendarEvent .thumbnail {
+.calendar .calendarDay .calendarEvent .thumbnail {
 	margin-bottom: 0;
 }

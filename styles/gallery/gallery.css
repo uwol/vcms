@@ -1,54 +1,58 @@
-main .thumbnailControls {
+.gallery .thumbnail {
+	margin-bottom: 10px;
+}
+
+.thumbnailControls {
 	text-align: center;
 }
 
-main .thumbnail {
+.thumbnail {
 	padding: 0;
 	border-radius: 0;
 }
 
-main .thumbnail .caption h3 {
+.thumbnail .caption h3 {
 	margin-top: 0;
 	font-weight: normal;
 }
 
-main .thumbnail .thumbnailOverflow {
-	max-width: 400px; /* corresponding to semester cover */
+.thumbnail .thumbnailOverflow {
+	max-width: 600px; /* corresponding to semester cover */
 	width: 100%;
 	margin: 0 auto;
 	overflow: hidden;
 	height: 0; /* is adjusted by screen.js */
 }
 
-main .thumbnail .thumbnailOverflow img {
+.thumbnail .thumbnailOverflow img {
 	margin-top: 0; /* is adjusted by screen.js */
 	width: 100%;
 }
 
-main .thumbnail .public {
+.thumbnail .public {
 	border: 2px solid green;
 }
 
-main .thumbnail .internal {
+.thumbnail .internal {
 	border: 2px solid orange;
 }
 
-main .thumbnail .private {
+.thumbnail .private {
 	border: 2px solid red;
 }
 
-main .carousel-control.left, main .carousel-control.right {
+.carousel-control.left, .carousel-control.right {
 	background-image: none;
 }
 
-main .fa.public {
+.fa.public {
 	color: green;
 }
 
-main .fa.internal {
+.fa.internal {
 	color: orange;
 }
 
-main .fa.private {
+.fa.private {
 	color: red;
 }

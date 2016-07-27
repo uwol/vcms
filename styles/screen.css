@@ -4,6 +4,13 @@ html, body {
 
 body {
 	padding: 0;
+	/* hyphenation */
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-webkit-hyphens: auto;
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
 }
 
 fieldset {
@@ -25,34 +32,25 @@ main, footer {
 	padding: 0.6em;
 }
 
-main {
-	overflow-wrap: break-word;
-	word-wrap: break-word;
-	-webkit-hyphens: auto;
-	-ms-hyphens: auto;
-	-moz-hyphens: auto;
-	hyphens: auto;
-}
-
-main hr {
+hr {
 	clear: both;
 }
 
-main td.imgColumn {
+td.imgColumn {
 	max-width: 100px;
 }
 
-main td.toolColumn {
+td.toolColumn {
 	text-align: center;
 }
 
-main a .fa {
+a .fa {
 	color: #333;
 }
 
 /* image delete icon */
 
-main .imgBox .deleteIconBox {
+.imgBox .deleteIconBox {
 	position: absolute;
 	padding: 1px;
 	background-color: white;
@@ -60,13 +58,13 @@ main .imgBox .deleteIconBox {
 
 /* semester cover */
 
-main .semestercoverBox {
+.semestercoverBox {
 	max-width: 400px; /* corresponding to thumbnail overflow */
 }
 
 /* last inserted element */
 
-main .lastInsertId {
+.lastInsertId {
 	display: none;
 }
 
