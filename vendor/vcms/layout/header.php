@@ -113,11 +113,11 @@ echo '    <meta property="business:contact_data:postal_code" content="' .$libCon
 echo '    <meta property="business:contact_data:country_name" content="' .$libConfig->verbindungLand. '"/>' . PHP_EOL;
 echo '  </head>' . PHP_EOL;
 echo '  <body>' . PHP_EOL;
-echo '    <div id="container" class="container">' . PHP_EOL;
 
 $libMenuRenderer = new \vcms\LibMenuRenderer($libAuth);
 echo $libMenuRenderer->getMenuHtml($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
 
-echo '      <div class="row">' . PHP_EOL;
-echo '        <div class="col-md-12">' . PHP_EOL;
-echo '          <main id="content">' . PHP_EOL;
+if($libGlobal->page->isContainerEnabled()){
+	echo '    <main id="content">' . PHP_EOL;
+	echo '      <div id="container" class="container">' . PHP_EOL;
+}

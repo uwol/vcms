@@ -13,8 +13,11 @@ fieldset {
 }
 
 #container {
-	padding-top: 140px;
 	min-height: 100%;
+}
+
+#content {
+	padding-top: 140px;
 }
 
 main, footer {

@@ -82,11 +82,11 @@ function configureNavigation(){
 
     $('nav').affix({
         offset: {
-            top: paddingTop
+            top: 5
         }
     });
 
-    $("#container").css("padding-top", paddingTop);
+    $("#content").css("padding-top", paddingTop);
 }
 
 // --------------------

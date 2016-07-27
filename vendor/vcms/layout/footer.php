@@ -17,42 +17,35 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
 echo PHP_EOL;
-echo '          </main>' . PHP_EOL;
-echo '        </div>' . PHP_EOL;
-echo '      </div>' . PHP_EOL;
-echo '      <div class="row">' . PHP_EOL;
-echo '        <div class="col-md-12">' . PHP_EOL;
-echo '          <footer>' . PHP_EOL;
-echo '            <div class="social-buttons text-right">' . PHP_EOL;
 
-$title = $libConfig->verbindungName;
-$description = $libConfig->seiteBeschreibung;
+if($libGlobal->page->isContainerEnabled()){
+	echo '      </div>' . PHP_EOL;
+	echo '    </main>' . PHP_EOL;
+}
 
+echo '    <footer>' . PHP_EOL;
+echo '      <div class="social-buttons text-right container">' . PHP_EOL;
 
 //wikipedia
 $wp_url = $libGenericStorage->loadValue('mod_internet_home', 'wp_url');
 
 if($wp_url != ''){
-	echo '              <a href="' .$wp_url. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '        <a href="' .$wp_url. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
-
 
 //facebook
 $fb_url = $libGenericStorage->loadValue('mod_internet_home', 'fb_url');
 
 if($fb_url != ''){
-	echo '              <a href="' .$fb_url. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '        <a href="' .$fb_url. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 //twitter
 $twitter_url = 'http://' .$libConfig->sitePath;
-echo '              <a href="http://twitter.com/share?url=' .urlencode($twitter_url). '&amp;text=' .urlencode($title). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+echo '        <a href="http://twitter.com/share?url=' .urlencode($twitter_url). '&amp;text=' .urlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 
-echo '            </div>' . PHP_EOL;
-echo '          </footer>' . PHP_EOL;
-echo '        </div>' . PHP_EOL;
 echo '      </div>' . PHP_EOL;
-echo '    </div>' . PHP_EOL;
+echo '    </footer>' . PHP_EOL;
 echo '  </body>' . PHP_EOL;
 echo '</html>' . PHP_EOL;
 ?>

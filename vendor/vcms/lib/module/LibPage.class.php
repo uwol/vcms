@@ -19,31 +19,28 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 namespace vcms\module;
 
 class LibPage extends LibRestrictableElement{
-	var $pid;
-	var $file;
 	var $directory;
+	var $containerEnabled;
+	var $file;
+	var $pid;
 	var $title;
 
-	function __construct($pid, $directory, $file, $accessRestriction, $title = ''){
+	function __construct($pid, $directory, $file, $accessRestriction, $title, $containerEnabled){
 		parent::__construct($accessRestriction);
 
-		$this->pid = $pid;
+		$this->containerEnabled = $containerEnabled;
 		$this->directory = $directory;
 		$this->file = $file;
-
-		if($title != ''){
-			$this->title = $title;
-		} else {
-			$this->title = $pid;
-		}
+		$this->pid = $pid;
+		$this->title = $title;
 	}
 
-	function setDirectory($directory){
-		$this->directory = $directory;
+	function isContainerEnabled(){
+		return $this->containerEnabled;
 	}
 
-	function getPid(){
-		return $this->pid;
+	function getDirectory(){
+		return $this->directory;
 	}
 
 	function getFile(){
@@ -54,11 +51,15 @@ class LibPage extends LibRestrictableElement{
 		return $this->directory. '/' .$this->file;
 	}
 
-	function getDirectory(){
-		return $this->directory;
+	function getPid(){
+		return $this->pid;
 	}
 
 	function getTitle(){
 		return $this->title;
+	}
+
+	function setDirectory($directory){
+		$this->directory = $directory;
 	}
 }

@@ -20,7 +20,7 @@ namespace vcms;
 
 class LibMenuRenderer{
 
-	var $defaultIndent = '              ';
+	var $defaultIndent = '            ';
 	var $libAuth;
 
 	function __construct(LibAuth $libAuth){
@@ -40,17 +40,17 @@ class LibMenuRenderer{
 		$menuAdministration->reduceByAccessRestriction($gruppe, $aemter);
 
 		$retstr = '';
-		$retstr .= '      <nav id="nav" class="navbar navbar-default navbar-fixed-top">' . PHP_EOL;
-        $retstr .= '        <div class="container">' . PHP_EOL;
-		$retstr .= '          <div class="hidden-xs" id="logo"></div>' . PHP_EOL;
+		$retstr .= '    <nav id="nav" class="navbar navbar-default navbar-fixed-top">' . PHP_EOL;
+        $retstr .= '      <div class="container">' . PHP_EOL;
+		$retstr .= '        <div class="hidden-xs" id="logo"></div>' . PHP_EOL;
 
         $retstr .= $this->getNavbarCollapsed();
 
         $retstr .= $this->getNavbarInternet($menuInternet, $aktivesPid);
         $retstr .= $this->getNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid);
 
-		$retstr .= '        </div>' . PHP_EOL;
-		$retstr .= '      </nav>' . PHP_EOL;
+		$retstr .= '      </div>' . PHP_EOL;
+		$retstr .= '    </nav>' . PHP_EOL;
 
 		return $retstr;
 	}
@@ -61,11 +61,11 @@ class LibMenuRenderer{
 		$rootMenuFolderInternet = $menuInternet->getRootMenuFolder();
 
 		if($rootMenuFolderInternet->hasElements()){
-			$retstr .= '          <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
-			$retstr .= '            <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
+			$retstr .= '        <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
+			$retstr .= '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
 			$retstr .= $this->getMenuLevel($rootMenuFolderInternet, 0, $aktivesPid);
-			$retstr .= '            </ul>' . PHP_EOL;
-			$retstr .= '          </div>' . PHP_EOL;
+			$retstr .= '          </ul>' . PHP_EOL;
+			$retstr .= '        </div>' . PHP_EOL;
 		}
 
 		return $retstr;
@@ -78,12 +78,12 @@ class LibMenuRenderer{
 		$rootMenuFolderAdministration = $menuAdministration->getRootMenuFolder();
 
 		if($rootMenuFolderIntranet->hasElements()){
-			$retstr .= '          <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . PHP_EOL;
-			$retstr .= '            <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
+			$retstr .= '        <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . PHP_EOL;
+			$retstr .= '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
 			$retstr .= $this->getMenuLevel($rootMenuFolderIntranet, 0, $aktivesPid);
 			$retstr .= $this->getMenuLevel($rootMenuFolderAdministration, 0, $aktivesPid);
-			$retstr .= '            </ul>' . PHP_EOL;
-			$retstr .= '          </div>' . PHP_EOL;
+			$retstr .= '          </ul>' . PHP_EOL;
+			$retstr .= '        </div>' . PHP_EOL;
 		}
 
 		return $retstr;
@@ -161,18 +161,18 @@ class LibMenuRenderer{
 
 		$retstr = '';
 
-		$retstr .= '          <div class="navbar-header">' . PHP_EOL;
-		$retstr .= '            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . PHP_EOL;
+		$retstr .= '        <div class="navbar-header">' . PHP_EOL;
+		$retstr .= '          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . PHP_EOL;
         $retstr .= $this->defaultIndent . '<span class="sr-only">Navigation</span>' . PHP_EOL;
         $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
         $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
 		$retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
-		$retstr .= '            </button>' . PHP_EOL;
+		$retstr .= '          </button>' . PHP_EOL;
 
-		$retstr .= '            <a href="index.php" id="brand" class="navbar-brand">';
+		$retstr .= '          <a href="index.php" id="brand" class="navbar-brand">';
 		$retstr .= $libConfig->verbindungName;
 		$retstr .= '</a>' . PHP_EOL;
-		$retstr .= '          </div>' . PHP_EOL;
+		$retstr .= '        </div>' . PHP_EOL;
 
 		return $retstr;
 	}

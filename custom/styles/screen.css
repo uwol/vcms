@@ -2,12 +2,6 @@ body {
 	background-color: #FAF8F8;
 }
 
-#container {
-	background-image: url('zirkel.svg');
-	background-repeat: repeat-y;
-	background-size: 100% auto;
-}
-
 #logo {
 	background-image: url('panier.svg');
 	background-repeat: no-repeat;
