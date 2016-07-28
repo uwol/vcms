@@ -9,23 +9,29 @@ body {
 	background-position: center;
 }
 
-#brand:hover, #brand:focus {
+#brand:hover,
+#brand:focus {
 	color: #961419;
 }
 
-#nav li > a:hover, #nav li > a:focus:hover {
+#nav li > a:hover,
+#nav li > a:focus:hover {
 	color: #961419;
 }
 
-#nav li.active > a, #nav li.active > a:focus {
+#nav li.active > a,
+#nav li.active > a:focus {
 	color: #961419;
 }
 
-a:link, a:visited {
+a:link,
+a:visited {
 	color: #961419;
 }
 
-a:hover, a:active, a:focus {
+a:hover,
+a:active,
+a:focus {
 	color: #000080;
 }
 
@@ -33,7 +39,8 @@ th {
 	background-color: #E8CAA2;
 }
 
-.calendar .calendarMonthName, .calendar .calendarDayName {
+.calendar .calendarMonthName,
+.calendar .calendarDayName {
 	background-color: #E8CAA2;
 }
 
