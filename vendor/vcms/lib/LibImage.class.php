@@ -25,8 +25,8 @@ class LibImage{
 	var $personFotoWidth = 200;
 	var $personFotoHeight = 266;
 
-	var $startseiteFotoWidth = 400;
-	var $startseiteFotoHeight = 300;
+	var $startseiteFotoWidth = 600;
+	var $startseiteFotoHeight = 400;
 
 	var $semesterCoverWidth = 400;
 	var $semesterCoverHeight = 300;

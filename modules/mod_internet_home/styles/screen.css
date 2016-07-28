@@ -12,7 +12,7 @@ header {
 	width: 100%;
 	min-height: auto;
 	background-position: center;
-	background-image: url('../custom/img/header.jpg');
+	background-image: url('../custom/header.jpg');
 	background-size: cover;
 	-moz-background-size: cover;
 	-webkit-background-size: cover;
@@ -85,7 +85,7 @@ header .header-content .header-content-inner p {
 }
 
 
-.announcement-box:nth-child(odd) {
+.announcement-box:nth-child(even) {
 	background-color: rgba(0, 0, 0, 0.9);
 	color: white;
 }
