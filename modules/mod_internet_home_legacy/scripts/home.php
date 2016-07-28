@@ -20,8 +20,21 @@ if(!is_object($libGlobal))
 	exit();
 
 
+if(!$libGenericStorage->attributeExists('mod_internet_home', 'fb_url')){
+	$libGenericStorage->saveValue('mod_internet_home', 'fb_url', '');
+}
+
+if(!$libGenericStorage->attributeExists('mod_internet_home', 'wp_url')){
+	$libGenericStorage->saveValue('mod_internet_home', 'wp_url', '');
+}
+
+if(!$libGenericStorage->attributeExists('mod_internet_home', 'showFbPagePlugin')){
+	$libGenericStorage->saveValue('mod_internet_home', 'showFbPagePlugin', 1);
+}
+
+
 function printVeranstaltungTitle($row){
-	echo $row['titel'];
+	echo '<h3><a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a></h3>';
 }
 
 function printVeranstaltungDateTime($row){
@@ -33,10 +46,8 @@ function printVeranstaltungDateTime($row){
 }
 
 
-require_once('elements/header.php');
-require_once('elements/announcements.php');
-require_once('elements/pastevents.php');
-//require_once('elements/nextevents.php');
-//require_once('elements/principles.php');
-require_once('elements/contact.php');
-?>
+echo '<h1>Willkommen</h1>';
+
+include("elements/announcements.php");
+include("elements/pastevents.php");
+include("elements/nextevents.php");

@@ -25,8 +25,8 @@ $stmtCount->execute();
 $stmtCount->bindColumn('number', $numberOfNextEvents);
 $stmtCount->fetch();
 
-$fb_url = $libGenericStorage->loadValueInCurrentModule('fb_url');
-$showFbPagePlugin = $libGenericStorage->loadValueInCurrentModule('showFbPagePlugin');
+$fb_url = $libGenericStorage->loadValue('mod_internet_home', 'fb_url');
+$showFbPagePlugin = $libGenericStorage->loadValue('mod_internet_home', 'showFbPagePlugin');
 $fbPagePluginEnabled = $showFbPagePlugin && $fb_url != '';
 
 $semesterCoverAvailable = false;
@@ -37,8 +37,6 @@ if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 }
 
 if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbPagePluginEnabled){
-	echo '<section id="services">';
-	echo '<div class="container">';
 	echo '<div class="row">';
 
 	if($numberOfNextEvents > 0){
@@ -100,7 +98,5 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0 || $fbPagePluginEnabled){
 	}
 
 	echo '</div>';
-	echo '</div>';
-	echo '</section>';
 }
 ?>

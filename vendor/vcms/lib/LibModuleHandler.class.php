@@ -40,14 +40,18 @@ class LibModuleHandler{
 		global $libFilesystem;
 
 		$modModulesAbsolutePath = $libFilesystem->getAbsolutePath($this->modModulesRelativePath);
-		return array_diff(scandir($modModulesAbsolutePath), array('..', '.'));
+		$result = array_diff(scandir($modModulesAbsolutePath), array('..', '.'));
+		sort($result);
+		return $result;
 	}
 
 	function getBaseModuleFiles(){
 		global $libFilesystem;
 
 		$baseModulesAbsolutePath = $libFilesystem->getAbsolutePath($this->baseModulesRelativePath);
-		return array_diff(scandir($baseModulesAbsolutePath), array('..', '.'));
+		$result = array_diff(scandir($baseModulesAbsolutePath), array('..', '.'));
+		sort($result);
+		return $result; 
 	}
 
 	function initModules(){

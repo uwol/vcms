@@ -1,14 +1,13 @@
 {
 	"moduleName": "Home",
-	"version": 1.00,
+	"version": 3.00,
 	"installScript": "install/install.php",
 	"pages": [
 		{
 			"pid": "home",
 			"file": "home.php",
 			"directory": "scripts",
-			"title": "Startseite",
-			"containerEnabled": false
+			"title": "Startseite"
 		},
 		{
 			"pid": "intranet_internethome_nachricht_adminliste",
@@ -50,9 +49,5 @@
 				}
 			]
 		}
-	],
-	"headerStrings": [
-		"<link rel='stylesheet' href='styles/navigation/navigation_transparent.css' />",
-		"<link rel='stylesheet' href='modules/mod_internet_home_beta/styles/screen.css' />"
 	]
 }

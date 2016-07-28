@@ -34,7 +34,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('showFbPagePlugin')){
 
 
 function printVeranstaltungTitle($row){
-	echo '<h3><a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">' .$row['titel']. '</a></h3>';
+	echo $row['titel'];
 }
 
 function printVeranstaltungDateTime($row){
@@ -46,8 +46,10 @@ function printVeranstaltungDateTime($row){
 }
 
 
-echo '<h1>Willkommen</h1>';
-
-include("elements/announcements.php");
-include("elements/pastevents.php");
-include("elements/nextevents.php");
+require_once('elements/header.php');
+require_once('elements/announcements.php');
+require_once('elements/pastevents.php');
+require_once('elements/nextevents.php');
+require_once('elements/contact.php');
+require_once('elements/facebook.php');
+?>

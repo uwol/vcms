@@ -54,18 +54,13 @@ class LibMenuFolder extends LibMenuElement{
 			$type = $element->getType();
 			$position = $element->getPosition();
 
-			// in case of a folder
-			if($type == 2){
-				if(!isset($result[$name])){
-					$result[$name] = $element;
-				} else {
-					$collidingElement = $result[$name];
-					$collidingElement->addElements($element->getElements());
-					$newPosition = min($collidingElement->getPosition(), $position);
-					$collidingElement->setPosition($newPosition);
-				}
-			} else {
-				$result[] = $element;
+			if(!isset($result[$name])){
+				$result[$name] = $element;
+			} elseif($type == 2) {
+				$collidingElement = $result[$name];
+				$collidingElement->addElements($element->getElements());
+				$newPosition = min($collidingElement->getPosition(), $position);
+				$collidingElement->setPosition($newPosition);
 			}
 		}
 

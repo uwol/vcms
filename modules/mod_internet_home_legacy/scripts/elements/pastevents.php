@@ -23,7 +23,7 @@ if(!is_object($libGlobal))
 $stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
 $stmt->execute();
 
-$maxNumberOfThumbnails = 6;
+$maxNumberOfThumbnails = 4;
 $i = 0;
 
 $eventIds = array();
@@ -40,9 +40,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 if(count($eventIds) > 0){
-	echo '<section class="pastevents-box no-padding">';
-	echo '<div class="container-fluid">';
-	echo '<div class="row no-gutter">';
+	echo '<div class="row">';
 
 	foreach($eventIds as $eventId){
 		$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE id = :id');
@@ -58,32 +56,25 @@ if(count($eventIds) > 0){
 		$keys = array_keys($pictures);
 		$pictureid = $keys[$randomNumber];
 
-		echo '<div class="col-lg-4 col-sm-6">';
+		echo '<div class="col-sm-6 col-md-3">';
 
 		echo '<div class="thumbnail">';
 		echo '<div class="thumbnailOverflow">';
-		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$eventId. '" class="event-box">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$eventId. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive" />';
-
-		echo '<div class="event-box-caption">';
-		echo '<div class="event-box-caption-content">';
-		echo '<div class="event-name text-faded">';
-		printVeranstaltungTitle($row);
+		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$eventId. '">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$eventId. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive center-block" />';
+		echo '</a>';
 		echo '</div>';
-        echo '<div class="event-time">';
-        printVeranstaltungDateTime($row);
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
+		echo '<div class="caption">';
 
-        echo '</a>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
+		printVeranstaltungTitle($row);
+		printVeranstaltungDateTime($row);
+
+		echo '</div>';
+		echo '</div>';
+
+		echo '</div>';
 	}
 
 	echo '</div>';
-	echo '</div>';
-    echo '</section>';
 }
 ?>

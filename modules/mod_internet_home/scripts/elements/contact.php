@@ -20,7 +20,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<section>';
+echo '<section class="contact-box">';
 echo '<div class="container">';
 echo '<div class="row">';
 echo '<div class="col-lg-8 col-lg-offset-2 text-center">';

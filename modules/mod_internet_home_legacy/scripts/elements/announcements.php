@@ -20,27 +20,40 @@ if(!is_object($libGlobal))
 	exit();
 
 
+echo '<div class="row">';
+
 $stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum = '0000-00-00 00:00:00') ORDER BY startdatum DESC LIMIT 0,2");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<section class="announcement-box">';
-	echo '<div class="container">';
+	echo '<div class="col-sm-6">';
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
 	echo '<div class="row">';
-	echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
 
 	$image = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
 	$imageExists = is_file($image);
 
 	if($imageExists){
-		echo '<img src="' .$image. '" class="media-object center-block" alt="" />';
-		echo '<hr />';
+		echo '<div class="col-xs-12 col-sm-6">';
+		echo '<p><img src="' .$image. '" class="img-responsive center-block" alt="" /></p>';
+		echo '</div>';
+	}
+
+	if($imageExists){
+		echo '<div class="col-xs-12 col-sm-6">';
+	} else {
+		echo '<div class="col-xs-12">';
 	}
 
 	echo '<p>' .$libString->parseBBCode(nl2br(trim($row['text']))). '</p>';
 	echo '</div>';
-    echo '</div>';
-    echo '</div>';
-    echo '</section>';
+
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
 }
+
+echo '</div>';
 ?>

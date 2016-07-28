@@ -91,35 +91,6 @@ header .header-content .header-content-inner p {
 }
 
 
-.principle-box {
-	max-width: 400px;
-	margin: 50px auto 0;
-}
-
-@media (min-width: 992px) {
-	.principle-box {
-		margin: 20px auto 0;
-	}
-}
-
-.principle-box p {
-	margin-bottom: 0;
-}
-
-.principle-box.religio {
-	color: white;
-	background-color: #000;
-}
-
-.principle-box.scientia {
-	background-color: #ffd700;
-}
-
-.principle-box.amicitia {
-	background-color: #ff0000;
-}
-
-
 .event-box {
 	position: relative;
 	display: block;
@@ -180,6 +151,17 @@ header .header-content .header-content-inner p {
 	.event-box .event-box-caption .event-box-caption-content .event-name {
 		font-size: 22px;
 	}
+}
+
+
+.contact-box {
+	background-color: rgba(0, 0, 0, 0.9);
+	color: white;
+}
+
+
+.facebook-box {
+	background-color: #365899;
 }
 
 

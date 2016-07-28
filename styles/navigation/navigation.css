@@ -80,3 +80,8 @@
 .navbar-default .navbar-intranet .nav {
 	font-size: 0.8em;
 }
+
+.navbar-default .navbar-intranet .nav > li > a {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
