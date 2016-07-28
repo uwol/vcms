@@ -23,14 +23,14 @@ require_once('vendor/vcms/initialize.php');
 	<head>
 		<meta charset="utf-8" />
 		<title>VCMS-Installer</title>
-    	<link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />
+    	<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />
     	<link rel="stylesheet" href="styles/bootstrap-override.css" />
     	<link rel="stylesheet" href="styles/screen.css" />
 		<meta name="robots" content="noindex, nofollow, noarchive" />
 	</head>
 	<body>
-		<div id="container" class="container">
-			<main id="content">
+		<main id="content">
+			<div id="container" class="container">	
 <?php
 
 /*
@@ -148,10 +148,10 @@ if(isset($_REQUEST['aktion'])){
 * output
 */
 ?>
-				<h2>Schritt 1: Installation des Gesamtsystems</h3>
+				<h2>Schritt 1: Installation des Gesamtsystems</h2>
 				<p>Mit dem Aufruf der <a href="installer.php?aktion=installAllModules">Gesamtinstallation</a> wird die Installation für das Basissystem und alle Module gestartet. Dies ist einmalig bei der Erstinstallation des VCMS notwendig.</p>
 
-				<h2>Schritt 2: Einfügen eines Internetwarts</h3>
+				<h2>Schritt 2: Einfügen eines Internetwarts</h2>
 				<p>Nach der Grundinstallation muss ein Internetwart angelegt werden, um sich initial im Intranet anmelden zu können.</p>
 				<form action="installer.php" method="post">
 					<input type="hidden" name="aktion" value="createInternetWart" />
@@ -164,7 +164,7 @@ if(isset($_REQUEST['aktion'])){
 				</form>
 
 				<p><?php echo $libAuth->getPasswordRequirements(); ?></p>
-			</main>
-		</div>
+			</div>
+		</main>
 	</body>
 </html>
