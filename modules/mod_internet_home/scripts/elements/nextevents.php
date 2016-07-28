@@ -51,7 +51,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			$maxNumberOfEvents = 3;
 		}
 
-		$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfEvents);
+		$stmt = $libDb->prepare('SELECT id, titel, datum, status, ort, fb_eventid FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfEvents);
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -65,6 +65,21 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			echo '</a></h3>';
 
 			printVeranstaltungDateTime($row);
+
+			if ($row['ort'] != ''){
+				echo '<address>' .$row['ort']. '</address>';
+			}
+
+			echo '<p>Status: ' .$libEvent->getStatusString($row['status']). '</p>';
+			echo '<hr />';
+			echo '<p>';
+
+			if(!$libEvent->isFacebookEvent($row)){
+				$libEvent->printFacebookShareButton($row['id']);
+			}
+
+			$libEvent->printTwitterShareButton($row['id']);
+			echo '</p>';
 
 			echo '</div>';
 			echo '</div>';

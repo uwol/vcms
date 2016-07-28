@@ -25,6 +25,7 @@ if(!is_object($libGlobal))
 */
 
 $id = '';
+
 if(isset($_REQUEST['eventid'])){
 	$id = $_REQUEST['eventid'];
 }
@@ -114,7 +115,7 @@ echo '</div>';
 // -----------------------------------------------------------
 
 function printEventDetails($row){
-	global $libTime;
+	global $libTime, $libEvent;
 
 	/*
 	* date and time
@@ -140,16 +141,7 @@ function printEventDetails($row){
 	/*
 	* status
 	*/
-	if ($row['status'] == 'o'){
-		$status = 'offiziell';
-	} elseif ($row['status'] == 'ho'){
-		$status = 'hochoffiziell';
-	} elseif($row['status'] == ''){
-		$status = 'inoffiziell';
-	} else {
-		$status = $row['status'];
-	}
-
+	$status = $libEvent->getStatusString($row['status']);
 	echo '<p>Status: <span class="p-category">' .$status. '</span></p>';
 
 	/*
@@ -221,25 +213,15 @@ function printSemesterCover($row){
 }
 
 function printSocialButtons($row){
-	global $libConfig, $libTime, $libEvent;
+	global $libEvent;
 
 	echo '<p>';
 
-	$semester = $libTime->getSemesterNameAtDate($row['datum']);
-	$url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
-	$title = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateString($row['datum']);
-
 	if(!$libEvent->isFacebookEvent($row)){
-		//facebook
-		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
-		echo '<i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>';
-		echo '</a> ';
+		$libEvent->printFacebookShareButton($row['id']);
 	}
 
-	//twitter
-	echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
-	echo '<i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>';
-	echo '</a> ';
+	$libEvent->printTwitterShareButton($row['id']);
 
 	echo '</p>';
 }

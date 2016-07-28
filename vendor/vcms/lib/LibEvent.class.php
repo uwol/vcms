@@ -22,6 +22,53 @@ use PDO;
 
 class LibEvent{
 
+	function getUrl($id){
+		global $libConfig, $libDb, $libTime;
+
+		$stmt = $libDb->prepare('SELECT id, datum FROM base_veranstaltung WHERE id=:id');
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		$semester = $libTime->getSemesterNameAtDate($row['datum']);
+		$result = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
+		return $result;
+	}
+
+	function getStatusString($status){
+		$result = '';
+
+		switch($status){
+			case 'o':
+				$result = 'offiziell';
+				break;
+			case 'ho':
+				$result = 'hochoffiziell';
+				break;
+			case '':
+				$result = 'inoffiziell';
+				break;
+			default:
+				$result = $status;
+		}
+
+		return $result;
+	}
+
+	function getTitle($id){
+		global $libConfig, $libDb, $libTime;
+
+		$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE id=:id');
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		$result = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateString($row['datum']);
+		return $result;
+	}
+
 	function isFacebookEvent($row){
 		global $libGenericStorage;
 
@@ -31,5 +78,23 @@ class LibEvent{
 		$result = isset($row['fb_eventid']) && is_numeric($row['fb_eventid'])
 			&& ini_get('allow_url_fopen') && $fbAppId != '' && $fbSecretKey != '';
 		return $result;
+	}
+
+	function printFacebookShareButton($id){
+		$url = $this->getUrl($id);
+		$title = $this->getTitle($id);
+
+		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
+		echo '<i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>';
+		echo '</a> ';
+	}
+
+	function printTwitterShareButton($id){
+		$url = $this->getUrl($id);
+		$title = $this->getTitle($id);
+
+		echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
+		echo '<i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>';
+		echo '</a> ';
 	}
 }

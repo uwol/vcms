@@ -4,6 +4,7 @@ html, body {
 
 body {
 	padding: 0;
+	color: #333;
 	/* hyphenation */
 	overflow-wrap: break-word;
 	word-wrap: break-word;
@@ -11,6 +12,10 @@ body {
 	-ms-hyphens: auto;
 	-moz-hyphens: auto;
 	hyphens: auto;
+}
+
+h1, h2, h3 {
+	color: #333;
 }
 
 fieldset {
