@@ -62,7 +62,7 @@
 }
 
 .navbar-default .nav .dropdown-menu > .active > a,
-.navbar-default .nav .dropdown-menu > .active > a:focus, 
+.navbar-default .nav .dropdown-menu > .active > a:focus,
 .navbar-default .nav .dropdown-menu > .active > a:hover {
 	background-color: transparent;
 }

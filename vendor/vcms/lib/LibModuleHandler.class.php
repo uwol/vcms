@@ -2,17 +2,17 @@
 /*
 This file is part of VCMS.
 
-VCMS is free software: you can redistribute it and/or modify 
-it under the terms of the GNU General Public License as published by 
-the Free Software Foundation, either version 3 of the License, or 
+VCMS is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-VCMS is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+VCMS is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License 
+You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
@@ -51,7 +51,7 @@ class LibModuleHandler{
 		$baseModulesAbsolutePath = $libFilesystem->getAbsolutePath($this->baseModulesRelativePath);
 		$result = array_diff(scandir($baseModulesAbsolutePath), array('..', '.'));
 		sort($result);
-		return $result; 
+		return $result;
 	}
 
 	function initModules(){
@@ -87,13 +87,18 @@ class LibModuleHandler{
 			$module = $libModuleParser->parseMetaJson($moduleDirectory, $moduleRelativePath);
 
 			$this->modules[$moduleDirectory] = $module;
-			$this->validateModule($module);
-			$this->registerModule($module, $moduleRelativePath);
+			$valid = $this->validateModule($module);
+
+			if($valid){
+				$this->registerModule($module, $moduleRelativePath);
+			}
 		}
 	}
 
 	function validateModule($module){
 		global $libGlobal, $libSecurityManager;
+
+		$result = true;
 
 		foreach($module->pages as $page){
 			// does the page have a restriction?
@@ -107,6 +112,7 @@ class LibModuleHandler{
 
 					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
 						$libGlobal->errorTexts[] = 'Seite ' .$page->getPid(). ' in Modul ' .$module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter);
+						$result = false;
 					}
 				}
 			}
@@ -124,6 +130,7 @@ class LibModuleHandler{
 
 					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
 						$libGlobal->errorTexts[] = 'Include ' .$include->getPid(). ' in Modul ' . $module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter);
+						$result = false;
 					}
 				}
 			}
@@ -132,34 +139,39 @@ class LibModuleHandler{
 		foreach($module->pages as $page){
 			//check for colliding pid
 			if(array_key_exists($page->getPid(), $this->pidToModulePointer)){
-				$libGlobal->errorTexts[] = 'Die Seiten-Id ' .$page->getPid(). ' existiert bereits für eine Seite. Doppelte Seiten-Id-Vergabe ist nicht erlaubt.';
+				$result = false;
 			}
 		}
 
 		foreach($module->includes as $include){
 			//check for colliding pid
 			if(array_key_exists($include->getIid(), $this->iidToModulePointer)){
-				$libGlobal->errorTexts[] = 'Die Include-Id ' .$include->getIid(). ' existiert bereits für einen Include. Doppelte Include-Id-Vergabe ist nicht erlaubt.';
+				$result = false;
 			}
 		}
 
 		foreach($module->menuElementsInternet as $menuElement){
 			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
 				$libGlobal->errorTexts[] = 'Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.';
+				$result = false;
 			}
 		}
 
 		foreach($module->menuElementsIntranet as $menuElement){
 			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
 				$libGlobal->errorTexts[] = 'Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.';
+				$result = false;
 			}
 		}
 
 		foreach($module->menuElementsAdministration as $menuElement){
 			if(!$this->menuElementHasValidPid($menuElement, $module->pages)){
 				$libGlobal->errorTexts[] = 'Die Seiten-Id ' .$menuElement->getPid(). ' in Modul ' .$module->name. ' existiert nicht für eine Seite, ist aber in einem Menüeintrag angegeben.';
+				$result = false;
 			}
 		}
+
+		return $result;
 	}
 
 	function registerModule($module, $moduleRelativePath){
