@@ -31,7 +31,8 @@ class LibReservationTimelineEvent extends LibTimelineEvent{
 }
 
 
-$stmt = $libDb->prepare("SELECT id, person, datum, beschreibung FROM mod_reservierung_reservierung WHERE DATEDIFF(NOW(), datum) <= 0 AND DATEDIFF(datum, NOW()) <= :zeitraumlimit AND DATEDIFF(datum, :semesterende) <= 0 ORDER BY datum");
+$stmt = $libDb->prepare("SELECT id, person, datum, beschreibung FROM mod_reservierung_reservierung WHERE DATEDIFF(NOW(), datum) <= 0 AND DATEDIFF(datum, NOW()) <= :zeitraumlimit AND DATEDIFF(datum, :semesterstart) >= 0 AND DATEDIFF(datum, :semesterende) <= 0 ORDER BY datum");
+$stmt->bindValue(':semesterstart', $zeitraum[0]);
 $stmt->bindValue(':semesterende', $zeitraum[1]);
 $stmt->bindValue(':zeitraumlimit', $zeitraumLimit, PDO::PARAM_INT);
 $stmt->execute();
