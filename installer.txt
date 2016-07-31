@@ -30,7 +30,7 @@ require_once('vendor/vcms/initialize.php');
 	</head>
 	<body>
 		<main id="content">
-			<div id="container" class="container">	
+			<div id="container" class="container">
 <?php
 
 /*

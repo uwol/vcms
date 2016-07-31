@@ -145,7 +145,7 @@ echo '<hr />';
 $libForm->printTextInput('subject', 'Betreff', '');
 $libForm->printTextarea('nachricht', 'Nachricht', '');
 $libForm->printFileInput('anhang', 'Anhang');
-$libForm->printSubmitButton('Nachricht verschicken');
+$libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i> Nachricht verschicken');
 
 echo '</fieldset>';
 echo '</form>';

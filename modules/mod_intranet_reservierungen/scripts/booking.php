@@ -28,7 +28,7 @@ echo '<fieldset>';
 
 $libForm->printTextInput('datum', 'Datum', date("Y-m-d"), 'date');
 $libForm->printTextarea('beschreibung', 'Beschreibung', 'Bitte Räumlichkeit, Tageszeit und Art der Nutzung angeben. Bei einem Filmabend Filmtitel nennen.');
-$libForm->printSubmitButton('Reservierung vornehmen');
+$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Reservierung speichern');
 
 echo '</fieldset>';
 echo '</form>';

@@ -179,7 +179,7 @@ if($formSent && !$formError){
 	$libForm->printTextInput('registrierung_geburtsdatum', 'Geburtsdatum', $libString->protectXSS($registrierung_geburtsdatum), 'date');
 	$libForm->printTextInput('registrierung_pwd1', 'Passwort', '', 'password');
 	$libForm->printTextInput('registrierung_pwd2', 'Passwort-Wiederholung', '', 'password');
-	$libForm->printSubmitButton('Abschicken');
+	$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Abschicken');
 
 	echo '</fieldset>';
 	echo '</form>';

@@ -49,7 +49,7 @@ echo '</div>';
 $libForm->printMitgliederDropDownBox('betroffenesmitglied', 'Betroffenes Mitglied', '');
 echo '<p class="col-sm-offset-2 col-sm-10">Bei einer Nachricht mit Bezug zu einem Mitglied wie z. B. einer Hochzeit oder einem Todesfall kann das betroffene Mitglied angeben werden.</p>';
 
-$libForm->printSubmitButton('Beitrag abschicken');
+$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Beitrag speichern');
 
 echo '</fieldset>';
 echo '</form>';
