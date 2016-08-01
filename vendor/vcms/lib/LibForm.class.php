@@ -32,7 +32,7 @@ class LibForm{
 	}
 
 	function printRequiredString($required){
-		if($disabled){
+		if($required){
 			echo ' required';
 		}
 	}
