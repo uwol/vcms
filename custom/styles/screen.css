@@ -25,12 +25,6 @@ a:visited {
 	color: #961419;
 }
 
-a:hover,
-a:active,
-a:focus {
-	color: #000080;
-}
-
 .calendar .today {
 	border: thin solid #961419;
 }

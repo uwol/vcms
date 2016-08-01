@@ -5,17 +5,14 @@
 .calendar .calendarMonthName {
 	width: 100%;
 	margin-top: 1px;
+	background-color: rgba(0, 0, 0, 0.65);
+	color: white;
 }
 
 .calendar .calendarMonthName h2 {
 	text-align: center;
 	margin: 0;
 	padding: 0.5em;
-}
-
-.calendar .calendarMonthName, .calendar .calendarDayName {
-	background-color: rgba(0, 0, 0, 0.65);
-	color: white;
 }
 
 .calendar .calendarCellContainer {
