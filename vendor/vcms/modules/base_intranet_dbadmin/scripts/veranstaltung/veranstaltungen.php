@@ -61,11 +61,12 @@ if($libAuth->isLoggedin()){
 	}
 
 	echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten),$libGlobal->semester);
-	echo '<br />';
 
 	//Datenausgeben
-	echo '<table class="table table-condensed">';
+	echo '<table class="table table-condensed table-striped table-hover">';
+	echo '<thead>';
 	echo '<tr><th>Id</th><th>Datum</th><th>Titel</th><th>Status</th><th></th></tr>';
+	echo '</thead>';
 
 	$zeitraum = $libTime->getZeitraum($libGlobal->semester);
 

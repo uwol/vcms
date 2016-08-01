@@ -20,11 +20,11 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 if($libAuth->isLoggedin()){
-	$orderby = '';
-	if(isset($_GET['orderby'])){
-		$orderby = $_GET['orderby'];
-	}
+	$orderby = 0;
 
+	if(isset($_POST['orderby'])){
+		$orderby = $_POST['orderby'];
+	}
 
 	/**
 	* Löschvorgang durchführen
@@ -95,25 +95,17 @@ if($libAuth->isLoggedin()){
 	}
 
 	switch($orderby){
-		case 'name':
+		case 0:
+			$order = 'SUBSTRING(semester_reception, 3) DESC';
+			break;
+		case 1:
 			$order = 'name, vorname, datum_geburtstag ASC';
-			$orderid = 1;
 			break;
-		case 'reception':
-			$order = 'SUBSTRING(semester_reception,3) DESC';
-			$orderid = 2;
-			break;
-		case 'gruppe':
+		case 2:
 			$order = 'gruppe, name, vorname ASC';
-			$orderid = 3;
-			break;
-		case 'id':
-			$order = 'id ASC';
-			$orderid = 4;
 			break;
 		default:
-			$order = 'SUBSTRING(semester_reception,3) DESC';
-			$orderid = 2;
+			$order = 'SUBSTRING(semester_reception, 3) DESC';
 	}
 
 	echo '<h1>Personen</h1>';
@@ -127,58 +119,47 @@ if($libAuth->isLoggedin()){
 		echo '<p><a href="index.php?pid=intranet_admin_db_person&amp;aktion=blank">Eine neue Person anlegen</a></p>';
 	}
 
- 	echo '<p>Anordnen nach: ';
 
-	if($orderid == 1){
-		echo '<b>';
+	echo '<form action="index.php?pid=intranet_admin_db_personenliste" method="post" class="form-inline">';
+	echo '<fieldset>';
+	echo '<div class="form-group">';
+
+	echo '<label class="sr-only" for="sortierung">Sortierung</label>';
+	echo '<select id="orderby" name="orderby" class="form-control" onchange="this.form.submit()">';
+	echo '<option value="0" ';
+
+	if (isset($_POST['orderby']) && $_POST['orderby'] == 0){
+		echo 'selected="selected"';
 	}
 
-	echo '<a href="index.php?pid=intranet_admin_db_personenliste&amp;orderby=name">Name</a>';
+	echo '>Receptionssemester</option>';
+	echo '<option value="1" ';
 
-	if($orderid == 1){
-		echo "</b>";
+	if (isset($_POST['orderby']) && $_POST['orderby'] == 1){
+		echo 'selected="selected"';
 	}
 
-	echo ' - ';
+	echo '>Name</option>';
+	echo '<option value="2" ';
 
-	if($orderid == 2){
-		echo '<b>';
+	if (isset($_POST['orderby']) && $_POST['orderby'] == 2){
+		echo 'selected="selected"';
 	}
 
-	echo '<a href="index.php?pid=intranet_admin_db_personenliste&amp;orderby=reception">Receptionssemester</a>';
+	echo '>Gruppe</option>';
+	echo '</select> ';
 
-	if($orderid == 2){
-		echo '</b>';
-	}
+	$libForm->printSubmitButtonInline('Sortieren');
 
-	echo ' - ';
+	echo '</div>';
+	echo '</fieldset>';
+	echo '</form>';
 
-	if($orderid == 3){
-		echo '<b>';
-	}
 
-	echo '<a href="index.php?pid=intranet_admin_db_personenliste&amp;orderby=gruppe">Gruppe</a>';
-
-	if($orderid == 3){
-		echo '</b>';
-	}
-
-	echo ' - ';
-
-	if($orderid == 4){
-		echo '<b>';
-	}
-
-	echo '<a href="index.php?pid=intranet_admin_db_personenliste&amp;orderby=id">Id</a>';
-
-	if($orderid == 4){
-		echo '</b>';
-	}
-
-	echo '</p>';
-
-	echo '<table class="table table-condensed">';
+	echo '<table class="table table-condensed table-striped table-hover">';
+	echo '<thead>';
 	echo '<tr><th>Id</th><th>Präfix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th>Gruppe</th><th>Status</th><th>Reception</th><th></th></tr>';
+	echo '</thead>';
 
 	$stmt = $libDb->prepare('SELECT * FROM base_person ORDER BY ' .$order);
 	$stmt->execute();

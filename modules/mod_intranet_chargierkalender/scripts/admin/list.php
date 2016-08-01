@@ -61,10 +61,12 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
-echo '<br />';
 
-echo '<table class="table table-condensed">';
+
+echo '<table class="table table-condensed table-striped table-hover">';
+echo '<thead>';
 echo '<tr><th>Id</th><th>Verein</th><th>Beschreibung</th><th>Datum</th><th></th></tr>';
+echo '</thead>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 

@@ -62,8 +62,10 @@ if($libAuth->isLoggedin()){
 
 	echo '<p>Eine Einteilung der Mitglieder in Vorstandsmitglieder, Warte etc. wird nicht über Gruppen, sondern über die Semestertabelle vorgenommen.</p>';
 
-	echo '<table class="table table-condensed">';
+	echo '<table class="table table-condensed table-striped table-hover">';
+	echo '<thead>';
 	echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';
+	echo '</thead>';
 
 	$stmt = $libDb->prepare('SELECT * FROM base_gruppe');
 	$stmt->execute();
