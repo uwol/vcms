@@ -70,8 +70,9 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<p>Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen.</p>';
-echo '<table class="table table-condensed">';
+echo '<table class="table table-condensed table-striped table-hover">';
 
+echo '<thead>';
 echo '<tr>';
 echo '<th>Modulname</th><th>Status</th>';
 echo '<th>Version<br />(installiert)</th>';
@@ -80,6 +81,7 @@ echo '<th class="toolColumn"></th>';
 echo '<th class="toolColumn"></th>';
 echo '<th class="toolColumn"></th>';
 echo '</tr>';
+echo '</thead>';
 
 
 $manifestUrl = 'http://' .$repoHostname. '/manifest.json?id=' .$libConfig->sitePath. '&version=' .$libGlobal->version;

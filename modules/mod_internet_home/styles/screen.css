@@ -68,7 +68,7 @@ header .header-content .header-content-inner h1 {
 
 
 .announcement-box:nth-child(even) {
-	background-color: rgba(0, 0, 0, 0.9);
+	background-color: rgba(0, 0, 0, 0.65);
 	color: white;
 }
 
@@ -84,7 +84,7 @@ header .header-content .header-content-inner h1 {
 	color: white;
 	opacity: 0;
 	display: block;
-	background: rgba(0, 0, 0, 0.6);
+	background: rgba(0, 0, 0, 0.65);
 	position: absolute;
 	bottom: 0;
 	text-align: center;
@@ -128,7 +128,7 @@ header .header-content .header-content-inner h1 {
 
 
 .contact-box {
-	background-color: rgba(0, 0, 0, 0.9);
+	background-color: rgba(0, 0, 0, 0.65);
 	color: white;
 }
 

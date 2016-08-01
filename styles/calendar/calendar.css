@@ -13,6 +13,11 @@
 	padding: 0.5em;
 }
 
+.calendar .calendarMonthName, .calendar .calendarDayName {
+	background-color: rgba(0, 0, 0, 0.65);
+	color: white;
+}
+
 .calendar .calendarCellContainer {
     display: flex;
 	flex-wrap: wrap;
@@ -43,7 +48,7 @@
 }
 
 .calendar .calendarDay {
-	border: thin solid #000000;
+	border: thin solid #999;
 	text-align: left;
 }
 

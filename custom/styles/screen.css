@@ -31,15 +31,6 @@ a:focus {
 	color: #000080;
 }
 
-.calendar .calendarMonthName,
-.calendar .calendarDayName {
-	background-color: #E8CAA2;
-}
-
-.calendar .calendarDay {
-	border: thin solid #E8CAA2;
-}
-
 .calendar .today {
 	border: thin solid #961419;
 }
