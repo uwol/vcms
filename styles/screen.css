@@ -4,7 +4,9 @@ html, body {
 
 body {
 	padding: 0;
+	background-color: #f8f8f8;
 	color: #333;
+
 	/* hyphenation */
 	overflow-wrap: break-word;
 	word-wrap: break-word;

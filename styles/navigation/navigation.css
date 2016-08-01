@@ -67,6 +67,10 @@
 	background-color: transparent;
 }
 
+.navbar-default .nav .open .dropdown-menu > li > a {
+	color: inherit;
+}
+
 @media(min-width: 768px) {
 	.navbar-default.affix .navbar-header .navbar-brand {
 		font-size: 1.1em;
@@ -82,6 +86,7 @@
 }
 
 .navbar-default .navbar-intranet .nav > li > a {
+	font-weight: 500;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
