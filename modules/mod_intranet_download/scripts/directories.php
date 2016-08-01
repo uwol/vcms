@@ -203,7 +203,7 @@ if(count($libAuth->getAemter()) > 0){
 
 	echo '<div class="form-group">';
 	echo '<div class="col-sm-offset-2 col-sm-2">';
-	echo '<button type="submit" class="btn btn-default">anlegen</button>';
+	echo '<button type="submit" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
 	echo '</div>';
 	echo '</div>';
 

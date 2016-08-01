@@ -25,84 +25,130 @@ class LibForm{
 	var $colLabel = 2;
 	var $colInput = 10;
 
-	function printTextInput($name, $label, $value, $type = 'text', $disabled = false, $required = false){
+	function printDisabledString($disabled){
+		if($disabled){
+			echo ' disabled';
+		}
+	}
+
+	function printRequiredString($required){
+		if($disabled){
+			echo ' required';
+		}
+	}
+
+	function printClassesString($classes){
+		if(!empty($classes)){
+			echo ' ' .implode(' ', $classes);
+		}
+	}
+
+	function printTextInput($name, $label, $value, $type = 'text', $disabled = false, $required = false, $classes = array()){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '">';
 		echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
+		$this->printRequiredString($required);
 
-		if($required){
-			echo ' required';
-		}
-
-		echo ' class="form-control" />';
+		echo ' class="form-control';
+		
+		$this->printClassesString($classes);
+		
+		echo '" />';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	function printTextarea($name, $label, $value, $disabled = false, $required = false){
+	function printTextarea($name, $label, $value, $disabled = false, $required = false, $classes = array()){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '">';
 		echo '<textarea id="' .$name. '" name="' .$name. '" rows="10"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
+		$this->printRequiredString($required);
 
-		if($required){
-			echo ' required';
-		}
+		echo ' class="form-control';
 
-		echo ' class="form-control">' .$value. '</textarea>';
+		$this->printClassesString($classes);
+
+		echo '">' .$value. '</textarea>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	function printFileInput($name, $label){
+	function printFileInput($name, $label, $disabled = false, $required = false, $classes = array()){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-10">';
-		echo '<label class="btn btn-default btn-file">Datei wählen';
-		echo '<input type="file" name="' .$name. '" style="display:none">';
+		echo '<label class="btn btn-default btn-file';
+
+		$this->printClassesString($classes);
+
+		echo '">Datei wählen';
+		echo '<input type="file" name="' .$name. '"';
+
+		$this->printDisabledString($disabled);
+		$this->printRequiredString($required);
+
+		echo ' style="display:none">';
 		echo '</label>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	function printFileUpload($name, $label){
+	function printFileUpload($name, $label, $disabled = false, $required = false, $classes = array()){
 		echo '<div class="form-group">';
-		echo '<label class="btn btn-default btn-file">' .$label;
-		echo '<input type="file" name="' .$name. '" onchange="this.form.submit()" style="display:none">';
+		echo '<label class="btn btn-default btn-file';
+
+		$this->printClassesString($classes);
+
+		echo '">' .$label;
+		echo '<input type="file" name="' .$name. '" onchange="this.form.submit()"';
+
+		$this->printDisabledString($disabled);
+		$this->printRequiredString($required);
+
+		echo ' style="display:none">';
 		echo '</label>';
 		echo '</div>';
 	}
 
-	function printStaticText($label, $value){
+	function printStaticText($label, $value, $disabled = false, $required = false, $classes = array()){
 		echo '<div class="form-group">';
 		echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<p class="form-control-static">';
+		echo '<p class="form-control-static';
+
+		$this->printClassesString($classes);
+
+		echo '">';
 		echo $value;
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	function printSubmitButton($label){
+	function printSubmitButton($label, $classes = array()){
 		echo '<div class="form-group">';
 		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
-		echo '<button type="submit" class="btn btn-default">' .$label. '</button>';
+		echo '<button type="submit" class="btn btn-default';
+
+		$this->printClassesString($classes);
+
+		echo '">' .$label. '</button>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	function printSubmitButtonInline($label){
-		echo '<button type="submit" class="btn btn-default">' .$label. '</button>';
+	function printSubmitButtonInline($label, $classes = array()){
+		echo '<button type="submit" class="btn btn-default';
+
+		$this->printClassesString($classes);
+
+		echo '">' .$label. '</button>';
 	}
 
 	function printMitgliederDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
@@ -112,9 +158,7 @@ class LibForm{
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
 
 		echo ' class="form-control">';
 
@@ -146,9 +190,7 @@ class LibForm{
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
 
 		echo ' class="form-control">';
 
@@ -180,9 +222,7 @@ class LibForm{
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
 
 		echo ' class="form-control">';
 
@@ -214,9 +254,7 @@ class LibForm{
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
 
 		echo ' class="form-control">';
 
@@ -248,9 +286,7 @@ class LibForm{
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
 
 		echo ' class="form-control">';
 
@@ -282,9 +318,7 @@ class LibForm{
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
 
 		echo ' class="form-control">';
 
@@ -323,9 +357,7 @@ class LibForm{
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		if($disabled){
-			echo ' disabled';
-		}
+		$this->printDisabledString($disabled);
 
 		echo ' class="form-control">';
 

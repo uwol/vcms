@@ -221,7 +221,7 @@ if($ownprofile){
 	$libForm->printTextInput('oldpwd', 'Altes Passwort', '', 'password', false, true);
 	$libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password', false, true);
 	$libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password', false, true);
-	$libForm->printSubmitButton('Neues Passwort speichern');
+	$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Passwort speichern');
 
 	echo '</fieldset>';
 	echo '</form>';
@@ -313,7 +313,7 @@ if($ownprofile){
 	}
 
 	$libForm->printTextarea('vita', 'Vita', $row['vita']);
-	$libForm->printSubmitButton('Speichern');
+	$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Speichern');
 
 	echo '</fieldset>';
 	echo '</form>';
