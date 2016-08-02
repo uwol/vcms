@@ -19,7 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 namespace vcms;
 
 class LibGlobal{
-	var $version = '6.53';
+	var $version = '6.54';
 
 	var $semester;
 	var $module;
