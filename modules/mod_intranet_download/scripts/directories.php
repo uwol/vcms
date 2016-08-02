@@ -20,9 +20,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-require_once('lib/lib.php');
-
-
 if(!$libGenericStorage->attributeExistsInCurrentModule('rightsPreselection')){
 	$libGenericStorage->saveValueInCurrentModule('rightsPreselection', 1);
 }
@@ -33,13 +30,14 @@ if(!isset($_SESSION['openFolders']) || !is_array($_SESSION['openFolders'])){
 }
 
 $rootFolderPathString = 'custom/intranet/downloads';
+$rootFolderAbsolutePathString = $libFilesystem->getAbsolutePath($rootFolderPathString);
 
 /*
 * pre scan actions
 */
 foreach($libAuth->getAemter() as $amt){
-	if(!is_dir($rootFolderPathString. '/' .$amt)){
-		mkdir($rootFolderPathString. '/' .$amt);
+	if(!is_dir($rootFolderAbsolutePathString. '/' .$amt)){
+		mkdir($rootFolderAbsolutePathString. '/' .$amt);
 	}
 }
 
@@ -50,9 +48,8 @@ if(isset($_GET['aktion']) && $_GET['aktion'] == 'open'){
 }
 
 
-$rootFolderObject = new Folder('', '/', $rootFolderPathString);
+$rootFolderObject = new \vcms\filesystem\Folder('', '/', $rootFolderAbsolutePathString);
 $hashes = $rootFolderObject->getHashMap();
-
 
 /*
 * actions
@@ -64,7 +61,7 @@ if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete' && isset($_GET['hash'])
 
 	if(in_array($element->owningAmt, $libAuth->getAemter())){
 		$element->delete();
-		$libGlobal->notificationTexts[] = 'Das Element ist gelöscht worden.';
+		$libGlobal->notificationTexts[] = 'Das Element wurde gelöscht.';
 	} else {
 		$libGlobal->errorTexts[] = 'Du hast keine Löschberechtigung.';
 	}
@@ -115,7 +112,7 @@ listFolderContentRec($rootFolderObject, true);
 
 
 
-if(count($libAuth->getAemter()) > 0){
+if(!empty($libAuth->getAemter())){
 	/*
 	* upload form
 	*/
@@ -131,7 +128,7 @@ if(count($libAuth->getAemter()) > 0){
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-			echo '<option value="' .$folderElement->getHash(). '">'.$folderElement->name.'</option>';
+			echo '<option value="' .$folderElement->getHash(). '">' .$folderElement->name. '</option>';
 		}
 	}
 
@@ -155,7 +152,7 @@ if(count($libAuth->getAemter()) > 0){
 			}
 
 			echo '/>';
-			echo $row['bezeichnung'].' - ' .$row['beschreibung'];
+			echo $row['bezeichnung']. ' - ' .$row['beschreibung'];
 			echo '</label></div>';
 		}
 	}
@@ -194,7 +191,7 @@ if(count($libAuth->getAemter()) > 0){
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-			echo '<option value="' .$folderElement->getHash(). '">'.$folderElement->name.'</option>';
+			echo '<option value="' .$folderElement->getHash(). '">' .$folderElement->name. '</option>';
 		}
 	}
 
@@ -238,7 +235,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				$size = $folderElement->getSize();
 
 				if($size > 0){
-					echo ' - ' . getSizeString($folderElement->getSize());
+					echo ' - ' .getSizeString($folderElement->getSize());
 				}
 
 				if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
@@ -303,9 +300,9 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 
 			$fileName = $folderElement->getFilename();
 
-			echo ' <a href="inc.php?iid=intranet_downloads_download&amp;hash=' .$folderElement->getHash(). '">'. $fileName .'</a>';
-			echo ' - ' . implode('', $folderElement->readGroups);
-			echo ' - ' . getSizeString($folderElement->getSize());
+			echo ' <a href="inc.php?iid=intranet_downloads_download&amp;hash=' .$folderElement->getHash(). '">' .$fileName. '</a>';
+			echo ' - ' .implode('', $folderElement->readGroups);
+			echo ' - ' .getSizeString($folderElement->getSize());
 
 			if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
 				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
@@ -320,9 +317,9 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 
 function getSizeString($size){
 	if($size > 1000000){
-		return round($size / 1000000, 1) . ' MB';
+		return round($size / 1000000, 1). ' MB';
 	} else {
-		return round($size / 1000, 0) . ' KB';
+		return round($size / 1000, 0). ' KB';
 	}
 }
 ?>

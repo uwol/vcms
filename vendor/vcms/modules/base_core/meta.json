@@ -11,13 +11,6 @@
 			}
 		}
 	],
-	"includes": [
-		{
-			"iid": "base_intranet_personenbild",
-			"file": "person_image.php",
-			"directory": "scripts"
-		}
-	],
 	"menuElementsAdministration": [
 		{
 			"name": "System",

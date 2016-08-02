@@ -16,87 +16,15 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class FolderElement{
-	var $name;
-	var $nestingFolder;
-	var $owningAmt;
-	var $type;
-	var $fileSystemFileName;
-
-	function FolderElement($nestingFolder, $name, $fileSystemFileName){
-		$this->name = $name;
-		$this->fileSystemFileName = $fileSystemFileName;
-		$this->nestingFolder = $nestingFolder;
-
-		if(is_object($nestingFolder)){
-			$nestingFolder->friend_addFolderElement($this);
-		}
-	}
-
-	function getFileSystemPath(){
-		if(is_object($this->nestingFolder)){
-			return $this->nestingFolder->getFileSystemPath(). '/' .$this->fileSystemFileName;
-		} else {
-			return $this->fileSystemFileName;
-		}
-	}
-
-	function getHash(){
-		return sha1($this->getFileSystemPath());
-	}
-
-	function getFileMetaInfos($fileSystemFileName){
-		$retArray = array();
-
-		$parts = explode('-', $fileSystemFileName);
-
-		//group prefix
-		if(count($parts) > 1){
-			$groupPrefix = $parts[0];
-		} else {
-			$groupPrefix = '';
-		}
-
-		$retArray['readgroups'] = array();
-
-		for($i=0; $i<strlen($groupPrefix); $i++){
-			$group = $groupPrefix[$i];
-			$retArray['readgroups'][] = $group;
-		}
-
-		sort($retArray['readgroups']);
-
-		//filename
-		$fileNameParts = array();
-
-		for($i=1; $i<count($parts); $i++){
-			$fileNameParts[] = $parts[$i];
-		}
-
-		$retArray['name'] = implode('-', $fileNameParts);
-
-		return $retArray;
-	}
-
-	function getMetaFileSystemName($name, $groupArray){
-		$securityPrefix = implode('', array_unique($groupArray));
-
-		$stringArray = array();
-		$stringArray[] = $securityPrefix;
-		$stringArray[] = $name;
-		return implode('-', $stringArray);
-	}
-}
-
-
+namespace vcms\filesystem;
 
 class Folder extends FolderElement{
 	var $isAmtsRootFolder = false;
 	var $isOpen = false;
 	var $nestedFolderElements = array();
 
-	function Folder($nestingFolder, $name, $fileSystemFileName){
-		parent::FolderElement($nestingFolder, $name, $fileSystemFileName);
+	function __construct($nestingFolder, $name, $fileSystemFileName){
+		parent::__construct($nestingFolder, $name, $fileSystemFileName);
 
 		$this->type = 1;
 
@@ -265,51 +193,3 @@ class Folder extends FolderElement{
 		}
 	}
 }
-
-
-
-class File extends FolderElement{
-	var $size;
-	var $readGroups = array();
-
-	function File($nestingFolder, $fileSystemFileName){
-		$metaInfos = $this->getFileMetaInfos($fileSystemFileName);
-		$name = $metaInfos['name'];
-		$this->readGroups = $metaInfos['readgroups'];
-
-		parent::FolderElement($nestingFolder, $name, $fileSystemFileName);
-
-		$this->type = 2;
-		$this->size = filesize($this->getFileSystemPath());
-
-		$this->owningAmt = $nestingFolder->owningAmt;
-	}
-
-	function getExtension(){
-		$path_parts = pathinfo($this->name);
-
-		if(isset($path_parts['extension'])){
-			return strtolower($path_parts['extension']);
-		}
-	}
-
-	function getFilename(){
-		$path_parts = pathinfo($this->name);
-
-		if(isset($path_parts['filename'])){
-			return $path_parts['filename'];
-		}
-	}
-
-	function delete(){
-		unlink($this->getFileSystemPath());
-
-		$this->nestingFolder->friend_removeFolderElement($this);
-		$this->nestingFolder = '';
-	}
-
-	function getSize(){
-		return $this->size;
-	}
-}
-?>

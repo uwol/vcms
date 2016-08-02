@@ -21,11 +21,10 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin() && isset($_GET['hash']) && $_GET['hash'] != ''){
-	require_once("lib/lib.php");
-
 	$rootFolderPathString = 'custom/intranet/downloads';
+	$rootFolderAbsolutePathString = $libFilesystem->getAbsolutePath($rootFolderPathString);
 
-	$rootFolderObject = new Folder('', '/', $rootFolderPathString);
+	$rootFolderObject = new \vcms\filesystem\Folder('', '/', $rootFolderAbsolutePathString);
 	$hashes = $rootFolderObject->getHashMap();
 	$file = $hashes[$_GET['hash']];
 
@@ -34,7 +33,7 @@ if($libAuth->isLoggedin() && isset($_GET['hash']) && $_GET['hash'] != ''){
 		$outputFilePathString = $file->getFileSystemPath();
 
 		if(in_array($libAuth->getGruppe(), $file->readGroups)){
-			$libMime = new vcms\LibMime();
+			$libMime = new \vcms\LibMime();
 			$mime = $libMime->detectMime($outputFileName);
 
 			/*
@@ -45,9 +44,9 @@ if($libAuth->isLoggedin() && isset($_GET['hash']) && $_GET['hash'] != ''){
 			header('Expires: 0');
 
 			// mime
-			header("Content-Type: " . $mime);
-			header('Content-Disposition: attachment; filename="' . $outputFileName . '"');
-			header("Content-Length: " . $file->size);
+			header("Content-Type: " .$mime);
+			header('Content-Disposition: attachment; filename="' .$outputFileName. '"');
+			header("Content-Length: " .$file->size);
 
 			if(is_file($outputFilePathString)){
 				readfile($outputFilePathString);
