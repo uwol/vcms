@@ -3,16 +3,16 @@ class LibConfig{
 	/**
 	* MySQL-Datenbank
 	*/
-	var $mysqlServer = 'datenbankservername'; //häufig localhost
+	var $mysqlServer = 'localhost';
 	var $mysqlUser = 'username';
 	var $mysqlPass = 'password';
 	var $mysqlDb = 'datenbankname';
 	var $mysqlPort = ''; //optional
 
 	/**
-	* Verbindungsdaten
+	* Daten zur Verbindung
 	*/
-	var $verbindungName = 'K.St.V. Example'; //Name des Vereins
+	var $verbindungName = 'K.St.V. Example';
 	var $verbindungDachverband = 'KV';
 
 	var $verbindungZusatz = '';
@@ -27,7 +27,7 @@ class LibConfig{
 	var $emailInfo = 'info@example.net';
 	var $emailWebmaster = 'webmaster@example.net';
 
-	var $chargenSenior = 'x'; //Chargenkürzel des Seniors
+	var $chargenSenior = 'x';
 	var $emailSenior = 'senior@example.net';
 	var $chargenJubelSenior = 'x';
 	var $emailJubelSenior = 'jubelsenior@example.net';
