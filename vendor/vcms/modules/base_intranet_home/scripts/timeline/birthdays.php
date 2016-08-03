@@ -68,7 +68,7 @@ function addBirthdayTimelineEvents($year, $zeitraum){
 }
 
 function addBirthdayTimelineEvent($row, $date, $age){
-	global $libConfig, $libMitglied, $libGenericStorage, $timelineEventSet;
+	global $libGlobal, $libMitglied, $libGenericStorage, $timelineEventSet;
 
 	$title = 'Geburtstag von ' .$libMitglied->getMitgliedNameString($row['id'], 0);
 	$description = $age. ' Jahre';
