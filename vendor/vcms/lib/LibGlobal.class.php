@@ -19,7 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 namespace vcms;
 
 class LibGlobal{
-	var $version = '6.57';
+	var $version = '6.58';
 
 	var $semester;
 	var $module;
@@ -47,6 +47,12 @@ class LibGlobal{
 	function getSiteUrlAuthority(){
 		$siteUrl = $this->getSiteUrl();
 		$result = preg_replace('/https?:\/\//', '', $siteUrl);
+		return $result;
+	}
+
+	function getSiteUrlHost(){
+		$siteUrl = $this->getSiteUrl();
+		$result = parse_url($siteUrl, PHP_URL_HOST);
 		return $result;
 	}
 }

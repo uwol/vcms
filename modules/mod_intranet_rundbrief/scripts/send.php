@@ -99,7 +99,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	/*
 	* build and send mail
 	*/
-	$domain = $libGlobal->getSiteUrlAuthority();
+	$domain = $libGlobal->getSiteUrlHost();
 
 	//evaluate group cheboxes
 	$sqlgruppen_string = '';
