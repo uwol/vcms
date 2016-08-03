@@ -41,7 +41,7 @@ if($fb_url != ''){
 }
 
 //twitter
-$twitter_url = 'http://' .$libConfig->sitePath;
+$twitter_url = $libGlobal->getSiteUrl();
 echo '        <a href="http://twitter.com/share?url=' .urlencode($twitter_url). '&amp;text=' .urlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 
 echo '      </div>' . PHP_EOL;

@@ -19,16 +19,10 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 namespace vcms;
 
 class LibString{
-	/*
-	* remove XML entities
-	*/
 	function xmlentities($string){
 		return str_replace(array('&', '"', "'", '<', '>'), array('&amp;' , '&quot;', '&apos;' , '&lt;' , '&gt;'), $string);
 	}
 
-	/*
-	* protect parameter from cross-site-scripting
-	*/
 	function protectXSS($value){
 		return htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
 	}
@@ -70,9 +64,6 @@ class LibString{
 		}
 	}
 
-	/*
-	* convert BBCode to HTML
-	*/
 	function parseBBCode($text){
 		$text = preg_replace('/\[b\](.*?)\[\/b\]/', '<b>$1</b>', $text);
 		$text = preg_replace('/\[i\](.*?)\[\/i\]/', '<i>$1</i>', $text);
@@ -81,9 +72,6 @@ class LibString{
 		return $text;
 	}
 
-	/*
-	* remove BBCode from string
-	*/
 	function deleteBBCode($text){
 		$text = preg_replace('/\[b\](.*?)\[\/b\]/', '$1', $text);
 		$text = preg_replace('/\[i\](.*?)\[\/i\]/', '$1', $text);
@@ -92,9 +80,6 @@ class LibString{
 		return $text;
 	}
 
-	/*
-	* truncate string
-	*/
 	function truncate($string, $start = 50, $replacement = ' ...') {
 		if(strlen($string) <= $start){
 			return $string;

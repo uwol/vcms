@@ -19,7 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 if(!is_object($libGlobal))
 	exit();
 
-$calendarId = $libConfig->sitePath. '_semesterprogramm_';
+$calendarId = $libGlobal->getSiteUrlAuthority(). '_semesterprogramm_';
 
 $calendar = new vcms\LibICalendar();
 
@@ -32,7 +32,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$e->setStartAndEndDateTime($row['datum'], $row['datum_ende']);
  	$e->description = $row['beschreibung'];
 	$e->location = $row['ort'];
-	$e->url = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&eventid='. $row['id'];
+	$e->url = $libGlobal->getSiteUrl(). '/index.php?pid=semesterprogramm_event&eventid='. $row['id'];
 	$e->uid = $calendarId.$row['id'];
 	$calendar->addEvent($e);
 }

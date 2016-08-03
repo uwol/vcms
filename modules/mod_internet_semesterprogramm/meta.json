@@ -1,6 +1,6 @@
 {
 	"moduleName": "Semesterprogramm",
-	"version": 3.03,
+	"version": 3.04,
 	"pages": [
 		{
 			"pid": "semesterprogramm_calendar",

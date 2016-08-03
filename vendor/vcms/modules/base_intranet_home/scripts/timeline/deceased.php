@@ -53,7 +53,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$description = 'Verstorben mit ' .$age. ' Jahren ';
 	}
 
-	$description .= '<a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=intranet_kalender_todestage&amp;user=' .$libGenericStorage->loadValueInCurrentModule('userNameICalendar'). '&amp;pass=' .$libGenericStorage->loadValueInCurrentModule('passwordICalendar'). '">';
+	$description .= '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/inc.php?iid=intranet_kalender_todestage&amp;user=' .$libGenericStorage->loadValueInCurrentModule('userNameICalendar'). '&amp;pass=' .$libGenericStorage->loadValueInCurrentModule('passwordICalendar'). '">';
 	$description .= '<i class="fa fa-calendar" aria-hidden="true"></i>';
 	$description .= '</a>';
 

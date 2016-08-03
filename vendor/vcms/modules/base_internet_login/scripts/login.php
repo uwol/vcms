@@ -34,11 +34,11 @@ echo '<p>Bitte zum Anmelden die E-Mail-Adresse und das Passwort eingeben.</p>';
 
 $urlPrefix = '';
 
-if($libConfig->sitePath != ""){
+if($libGlobal->getSiteUrlAuthority() != ""){
 	$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
 
 	if($sslProxyUrl != ''){
-		$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libConfig->sitePath . '/';
+		$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libGlobal->getSiteUrlAuthority() . '/';
 	}
 }
 

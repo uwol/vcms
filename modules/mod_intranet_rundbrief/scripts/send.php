@@ -99,11 +99,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	/*
 	* build and send mail
 	*/
-	$domain = $libConfig->sitePath;
-
-	if(substr($domain, 0, 4) == 'www.'){
-		$domain = substr($domain, 4);
-	}
+	$domain = $libGlobal->getSiteUrlAuthority();
 
 	//evaluate group cheboxes
 	$sqlgruppen_string = '';

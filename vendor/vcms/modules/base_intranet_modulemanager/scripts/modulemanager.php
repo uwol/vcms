@@ -84,7 +84,7 @@ echo '</tr>';
 echo '</thead>';
 
 
-$manifestUrl = 'http://' .$repoHostname. '/manifest.json?id=' .$libConfig->sitePath. '&version=' .$libGlobal->version;
+$manifestUrl = 'http://' .$repoHostname. '/manifest.json?id=' .$libGlobal->getSiteUrlAuthority(). '&version=' .$libGlobal->version;
 $modules = getModules($manifestUrl);
 
 $actualEngineVersion = (double) $libGlobal->version;

@@ -10,11 +10,6 @@ class LibConfig{
 	var $mysqlPort = ''; //optional
 
 	/**
-	* Dateisystem und Domains
-	*/
-	var $sitePath = 'www.example.net'; //Domainname
-
-	/**
 	* Verbindungsdaten
 	*/
 	var $verbindungName = 'K.St.V. Example'; //Name des Vereins

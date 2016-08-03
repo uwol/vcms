@@ -79,7 +79,7 @@ if(isset($_POST['registrierung_name']) || isset($_POST['registrierung_telnr']) |
 if($formSent && !$formError){
 	$password_hash = $libAuth->encryptPassword($_POST['registrierung_pwd1']);
 
-	$text = 'Auf ' .$libConfig->sitePath. ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
+	$text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
 	$text .= PHP_EOL;
 	$text .= 'Name: ' .$libString->protectXSS($_POST['registrierung_name']) . PHP_EOL;
 	$text .= 'E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrierung_emailadresse'])) . PHP_EOL;
@@ -162,11 +162,11 @@ if($formSent && !$formError){
 
 	$urlPrefix = '';
 
-	if($libConfig->sitePath != ''){
+	if($libGlobal->getSiteUrlAuthority() != ''){
 		$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
 
 		if($sslProxyUrl != ''){
-			$urlPrefix = 'https://' .$sslProxyUrl. '/' .$libConfig->sitePath. '/';
+			$urlPrefix = 'https://' .$sslProxyUrl. '/' .$libGlobal->getSiteUrlAuthority(). '/';
 		}
 	}
 

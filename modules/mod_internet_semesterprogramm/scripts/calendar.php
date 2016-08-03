@@ -34,7 +34,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
 
-echo '<p>Das aktuelle Semesterprogramm kann als <a href="webcal://' .$libConfig->sitePath. '/inc.php?iid=semesterprogramm_icalendar"><i class="fa fa-calendar" aria-hidden="true"></i> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>';
+echo '<p>Das aktuelle Semesterprogramm kann als <a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/inc.php?iid=semesterprogramm_icalendar"><i class="fa fa-calendar" aria-hidden="true"></i> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>';
 echo '<div class="vcalendar">';
 
 //access level for galleries

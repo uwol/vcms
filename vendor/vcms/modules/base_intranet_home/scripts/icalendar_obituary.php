@@ -20,7 +20,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-$calendarId = $libConfig->sitePath.'_todestage_';
+$calendarId = $libGlobal->getSiteUrlAuthority().'_todestage_';
 
 if(isset($_GET['user']) &&
 		$_GET['user'] == $libGenericStorage->loadValueInCurrentModule('userNameICalendar') &&

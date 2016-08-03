@@ -174,6 +174,10 @@ class LibCronJobs{
 	function initConfiguration(){
 		global $libGenericStorage;
 
+		if($libGenericStorage->loadValue('base_core', 'siteUrl') == ''){
+			$libGenericStorage->saveValue('base_core', 'siteUrl', $this->getCurrentSiteUrl());
+		}
+
 		if(!$libGenericStorage->attributeExists('base_core', 'showTrauerflor')){
 			$libGenericStorage->saveValue('base_core', 'showTrauerflor', 0);
 		}
@@ -247,4 +251,17 @@ class LibCronJobs{
     		return false;
     	}
     }
+
+	//------------------------------------------------------
+
+	function getCurrentSiteUrl(){
+		$result = (@$_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
+		$result .= $_SERVER['SERVER_NAME'];
+ 
+		if($_SERVER['SERVER_PORT'] != '80' && $_SERVER['SERVER_PORT'] != '443'){
+			$result .= ':' .$_SERVER['SERVER_PORT'];
+		} 
+ 
+		return $result;
+	}
 }

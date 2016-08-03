@@ -23,7 +23,7 @@ use PDO;
 class LibEvent{
 
 	function getUrl($id){
-		global $libConfig, $libDb, $libTime;
+		global $libConfig, $libGlobal, $libDb, $libTime;
 
 		$stmt = $libDb->prepare('SELECT id, datum FROM base_veranstaltung WHERE id=:id');
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -32,7 +32,7 @@ class LibEvent{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		$semester = $libTime->getSemesterNameAtDate($row['datum']);
-		$result = 'http://' .$libConfig->sitePath. '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
+		$result = $libGlobal->getSiteUrl(). '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
 		return $result;
 	}
 

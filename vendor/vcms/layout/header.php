@@ -7,12 +7,12 @@ $pageOgUrl = '';
 
 if($libGlobal->pid == $libConfig->defaultHome){
 	$pageTitle = $libConfig->verbindungName;
-	$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/';
-	$pageOgUrl = 'http://' .$libConfig->sitePath. '/';
+	$pageCanonicalUrl = $libGlobal->getSiteUrl(). '/';
+	$pageOgUrl = $libGlobal->getSiteUrl(). '/';
 } else {
 	$pageTitle = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
-	$pageCanonicalUrl = 'http://' .$libConfig->sitePath. '/index.php?pid=' .$libGlobal->pid;
-	$pageOgUrl = 'http://' .$libConfig->sitePath. '/';
+	$pageCanonicalUrl = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid;
+	$pageOgUrl = $libGlobal->getSiteUrl(). '/';
 
 	if($libGlobal->page->getPid() == 'semesterprogramm_event'
 			&& isset($_REQUEST['eventid']) && is_numeric($_REQUEST['eventid'])){
@@ -92,11 +92,11 @@ if($libGenericStorage->loadValue('base_core', 'fbAppId')){
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
 echo '    <meta property="og:url" content="' .$pageOgUrl. '"/>' . PHP_EOL;
 echo '    <meta property="og:title" content="' .$pageTitle. '"/>' . PHP_EOL;
-echo '    <meta property="og:image" content="http://' .$libConfig->sitePath. '/custom/styles/og_image.jpg"/>' . PHP_EOL;
+echo '    <meta property="og:image" content="' .$libGlobal->getSiteUrl(). '/custom/styles/og_image.jpg"/>' . PHP_EOL;
 echo '    <meta property="og:image:type" content="image/jpeg" />' . PHP_EOL;
 echo '    <meta property="og:image:height" content="265"/>' . PHP_EOL;
 echo '    <meta property="og:image:width" content="265"/>' . PHP_EOL;
-echo '    <meta property="og:site_name" content="' .$libConfig->sitePath. '"/>' . PHP_EOL;
+echo '    <meta property="og:site_name" content="' .$libGlobal->getSiteUrlAuthority(). '"/>' . PHP_EOL;
 echo '    <meta property="og:description" content="' .$libConfig->seiteBeschreibung. '"/>' . PHP_EOL;
 echo '    <meta property="business:contact_data:street_address" content="' .$libConfig->verbindungStrasse. '"/>' . PHP_EOL;
 echo '    <meta property="business:contact_data:locality" content="' .$libConfig->verbindungOrt. '"/>' . PHP_EOL;

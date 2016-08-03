@@ -52,15 +52,6 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	}
 
 	/*
-	* system config
-	*/
-	if($libConfig->sitePath == ''){
-		$errors[] = 'In der Systemkonfiguration ist kein sitepath konfiguriert.';
-	} else {
-		$oks[] = 'In der Systemkonfiguration ist ein sitepath konfiguriert.';
-	}
-
-	/*
 	* missing folders
 	*/
 	$directoriesToCreate = $libCronJobs->getDirectoriesToCreate();

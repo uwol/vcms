@@ -80,7 +80,7 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 		$mail = new PHPMailer();
 		$mail->From = $libConfig->emailWebmaster;
 		$mail->AddAddress($libConfig->emailInfo);
-		$mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libConfig->sitePath;
+		$mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libGlobal->getSiteUrl();
 		$mail->Body = $libString->protectXSS($nachricht);
 		$mail->AddReplyTo($_POST['emailaddress']);
 		$mail->CharSet = 'UTF-8';
