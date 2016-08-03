@@ -3,7 +3,7 @@
 	"pages": [
 		{
 			"pid": "updater_liste",
-			"file": "module_manager.php",
+			"file": "modulemanager.php",
 			"directory": "scripts",
 			"title": "Module",
 			"accessRestriction": {

@@ -27,7 +27,7 @@ class LibCronJobs{
 		'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt', 'INSTALL.md',
 		'LICENSE', 'LICENSE.txt', 'README.md');
 
-	var $directoriesToDelete = array('design', 'js', 'lib',
+	var $directoriesToDelete = array('design', 'js', 'lib', 'styles', 
 		'modules/base_core', 'modules/base_internet_login',
 		'modules/base_internet_vereine', 'modules/base_intranet_administration_dbverwaltung',
 		'modules/base_intranet_dbadmin', 'modules/base_intranet_home', 'modules/base_intranet_personen',
@@ -39,7 +39,8 @@ class LibCronJobs{
 
 	var $directoriesWithHtaccessFile = array('custom/intranet',
 		'custom/veranstaltungsfotos', 'temp', 'vendor/httpclient', 'vendor/pear',
-		'vendor/phpass', 'vendor/phpmailer', 'vendor/vcms');
+		'vendor/phpass', 'vendor/phpmailer', 'vendor/vcms/install', 'vendor/vcms/layout', 
+		'vendor/vcms/lib', 'vendor/vcms/modules');
 
 	function executeDueJobs(){
 		global $libDb;

@@ -40,28 +40,21 @@ echo '    <meta name="viewport" content="width=device-width, initial-scale=1, ma
 echo '    <title>' .$pageTitle. '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
-
-/*
-* stylesheets
-*/
 echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">' . PHP_EOL;
-echo '    <link rel="stylesheet" href="styles/bootstrap-override.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="styles/screen.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="styles/calendar/calendar.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="styles/gallery/gallery.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="styles/navigation/navigation.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="styles/person/person.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="styles/timeline/timeline.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/vcms/styles/screen.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/vcms/styles/calendar/calendar.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/vcms/styles/gallery/gallery.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/vcms/styles/navigation/navigation.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/vcms/styles/person/person.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/vcms/styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
-
-/*
-* scripts
-*/
+echo '    <link rel="canonical" href="' .$pageCanonicalUrl. '"/>' . PHP_EOL;
 echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
-echo '    <script src="styles/gallery/modal.js"></script>' . PHP_EOL;
-echo '    <script src="styles/screen.js"></script>' . PHP_EOL;
+echo '    <script src="vendor/vcms/styles/gallery/modal.js"></script>' . PHP_EOL;
+echo '    <script src="vendor/vcms/styles/screen.js"></script>' . PHP_EOL;
 
 if(is_array($libGlobal->module->getHeaderStrings())){
 	foreach($libGlobal->module->getHeaderStrings() as $headerString){
@@ -88,8 +81,6 @@ if($libGlobal->page->hasAccessRestriction()){
 } else {
 	echo '    <meta name="robots" content="index, follow, noarchive" />' . PHP_EOL;
 }
-
-echo '    <link rel="canonical" href="' .$pageCanonicalUrl. '"/>' . PHP_EOL;
 
 /*
 * Opengraph / Facebook meta data

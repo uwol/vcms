@@ -406,7 +406,6 @@ function updateEngine(){
 		unlink($libFilesystem->getAbsolutePath('inc.php'));
 		unlink($libFilesystem->getAbsolutePath('index.php'));
 
-		$libFilesystem->deleteDirectory('styles');
 		$libFilesystem->deleteDirectory('vendor');
 
 		echo '<p>Installiere neue Engine.</p>';

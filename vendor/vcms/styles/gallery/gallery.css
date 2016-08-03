@@ -17,7 +17,7 @@
 }
 
 .thumbnail .thumbnailOverflow {
-	max-width: 800px; /* corresponding to semester cover */
+	max-width: 800px;
 	width: 100%;
 	margin: 0 auto;
 	overflow: hidden;

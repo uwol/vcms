@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$.get("styles/gallery/modal.html", function(data) {
+	$.get("vendor/vcms/styles/gallery/modal.html", function(data) {
 		$('#content').append(data);
 		$('#modalCarousel').carousel({interval:false});
 	});
