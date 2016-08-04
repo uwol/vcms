@@ -62,6 +62,7 @@ $libGallery = new \vcms\LibGallery();
 $libGenericStorage = new \vcms\LibGenericStorage();
 $libGlobal = new \vcms\LibGlobal();
 $libImage = new \vcms\LibImage();
+$libMail = new \vcms\LibMail();
 $libMitglied = new \vcms\LibMember();
 $libModuleHandler = new \vcms\LibModuleHandler();
 $libModuleParser = new \vcms\LibModuleParser();

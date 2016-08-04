@@ -78,31 +78,12 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 		$nachricht .= $_POST['nachricht'];
 
 		$mail = new PHPMailer();
-		$mail->From = $libConfig->emailWebmaster;
+		$libMail->configurePHPMailer($mail);
+
 		$mail->AddAddress($libConfig->emailInfo);
 		$mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libGlobal->getSiteUrl();
 		$mail->Body = $libString->protectXSS($nachricht);
 		$mail->AddReplyTo($_POST['emailaddress']);
-		$mail->CharSet = 'UTF-8';
-
-		$mail->SMTPOptions = array(
-			'ssl' => array(
-				'verify_peer' => false,
-				'verify_peer_name' => false,
-				'allow_self_signed' => true
-			)
-		);
-
-		/*
-		* SMTP mode
-		*/
-		if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
-			$mail->IsSMTP();
-			$mail->SMTPAuth = true;
-			$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
-			$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
-			$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
-		}
 
 		if($mail->Send()){
 			$mailsent = true;

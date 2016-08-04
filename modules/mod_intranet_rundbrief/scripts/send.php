@@ -99,9 +99,6 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	/*
 	* build and send mail
 	*/
-	$domain = $libGlobal->getSiteUrlHost();
-
-	//evaluate group cheboxes
 	$sqlgruppen_string = '';
 	$sqlgruppen = array();
 
@@ -215,7 +212,6 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		echo '</p>';
 
 		sendMail(
-			'rundbrief@' .$domain,
 			$libMitglied->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4),
 			$subject, $email, $_POST['nachricht'], $subEmpfaengerArray, $attachementFile, $attachementName);
 	}
@@ -225,23 +221,22 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaengerArray, $attachementFile, $attachementName){
-	global $libAuth, $libGenericStorage;
+function sendMail($fromName, $subject, $replyEmail, $message, $empfaengerArray, $attachementFile, $attachementName){
+	global $libAuth, $libMail;
 
 	$mail = new PHPMailer();
-	$mail->CharSet = "UTF-8";
-	$mail->From = $from;
+	$libMail->configurePHPMailer($mail);
+
 	$mail->FromName = $fromName;
+	$mail->Subject = $subject;
+	$mail->IsHTML(false);
+	$mail->AddReplyTo($replyEmail);
+	$mail->Body = stripslashes($message);
 
 	if(!istImVorstand($libAuth->getAemter())){
 		// low priority
 		$mail->Priority = 5;
 	}
-
-	$mail->Subject = $subject;
-	$mail->IsHTML(false);
-	$mail->AddReplyTo($replyEmail);
-	$mail->Body = stripslashes($message);
 
 	foreach($empfaengerArray as $empfaenger){
 		$mail->AddBCC($empfaenger[0]);
@@ -249,25 +244,6 @@ function sendMail($from, $fromName, $subject, $replyEmail, $message, $empfaenger
 
 	if(is_file($attachementFile)){
 		$mail->AddAttachment($attachementFile, $attachementName);
-	}
-
-	$mail->SMTPOptions = array(
-		'ssl' => array(
-			'verify_peer' => false,
-			'verify_peer_name' => false,
-			'allow_self_signed' => true
-		)
-	);
-
-	/*
-	* SMTP mode
-	*/
-	if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
-		$mail->IsSMTP();
-		$mail->SMTPAuth = true;
-		$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
-		$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
-		$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
 	}
 
 	if(!$mail->Send()){

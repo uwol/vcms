@@ -98,31 +98,12 @@ if($formSent && !$formError){
 	$text .= 'MBuH,';
 
 	$mail = new PHPMailer();
-	$mail->From = $libConfig->emailWebmaster;
+	$libMail->configurePHPMailer($mail);
+
 	$mail->AddAddress($libConfig->emailWebmaster);
 	$mail->Subject = '[' .$libConfig->verbindungName. '] Intranet-Registrierung';
 	$mail->Body = $text;
 	$mail->AddReplyTo($_POST['registrierung_emailadresse']);
-	$mail->CharSet = 'UTF-8';
-
-	$mail->SMTPOptions = array(
-		'ssl' => array(
-			'verify_peer' => false,
-			'verify_peer_name' => false,
-			'allow_self_signed' => true
-		)
-	);
-
-	/*
-	* SMTP mode
-	*/
-	if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
-		$mail->IsSMTP();
-		$mail->SMTPAuth = true;
-		$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
-		$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
-		$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
-	}
 
 	if($mail->Send()){
 		echo '<h1>E-Mail verschickt</h1>';

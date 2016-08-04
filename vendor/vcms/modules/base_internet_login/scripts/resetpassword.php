@@ -56,31 +56,12 @@ if(isset($_POST['email']) && $_POST['email'] != '' &&
 			$text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde das Passwort für den Benutzer mit der E-Mail-Adresse ' .$row['email']. ' zurückgesetzt. Das neue Passwort lautet ' .$newPassword. ' und kann im Intranet auf der Seite "Mein Profil" geändert werden.';
 
 			$mail = new PHPMailer();
-			$mail->From = $libConfig->emailWebmaster;
+			$libMail->configurePHPMailer($mail);
+
 			$mail->AddAddress($row['email']);
 			$mail->Subject = '[' .$libConfig->verbindungName. '] Passwortänderung';
 			$mail->Body = $text;
 			$mail->AddReplyTo($libConfig->emailWebmaster);
-			$mail->CharSet = 'UTF-8';
-
-			$mail->SMTPOptions = array(
-				'ssl' => array(
-					'verify_peer' => false,
-					'verify_peer_name' => false,
-					'allow_self_signed' => true
-				)
-			);
-
-			/*
-			* SMTP mode
-			*/
-			if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
-				$mail->IsSMTP();
-				$mail->SMTPAuth = true;
-				$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
-				$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
-				$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
-			}
 
 			$mail->Send();
 		}
