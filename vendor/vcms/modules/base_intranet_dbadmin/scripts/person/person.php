@@ -217,8 +217,6 @@ if($libAuth->isLoggedin()){
 	* Löschoption
 	*
 	*/
-
-	//Ist der Bearbeiter ein Internetwart?
 	if(in_array('internetwart', $libAuth->getAemter())){
 		if($mgarray['id'] != ''){
 			echo '<p><a href="index.php?pid=intranet_admin_db_personenliste&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
@@ -290,8 +288,6 @@ if($libAuth->isLoggedin()){
 
 	$libForm->printStatusDropDownBox('status', 'Status', $mgarray['status']);
 
-	echo '<p>Die folgenden Semester stammen aus der Semestertabelle und müssen dort angelegt worden sein, um hier ausgewählt werden zu können:</p>';
-
 	$libForm->printSemesterDropDownBox('semester_reception', 'Semester Reception', $mgarray['semester_reception']);
 	$libForm->printSemesterDropDownBox('semester_promotion', 'Semester Promotion', $mgarray['semester_promotion']);
 	$libForm->printSemesterDropDownBox('semester_philistrierung', 'Semester Philistrierung', $mgarray['semester_philistrierung']);
@@ -314,23 +310,6 @@ if($libAuth->isLoggedin()){
 
 	//nur Internetwart darf an sensible Daten
 	if(in_array('internetwart', $libAuth->getAemter())){
-		//ist das zu bearbeitende Mitglied jemals Internetwart gewesen
-		if($mgarray['id'] != '' && $libMitglied->hasBeenInternetWartAnyTime($mgarray['id'])){
-			echo '<p>Diese Person ist ein Internetwart. Es existieren folgende Internetwarte: </p>';
-
-			$valideInternetWarte = $libVerein->getValideInternetWarte();
-
-			foreach($valideInternetWarte as $key => $value){
-				echo $libMitglied->getMitgliedNameString($key,5). ', ';
-			}
-
-			echo '<p>';
-			echo 'Falls dies der Datensatz des einzigen Internetwartes ist, sollte zur Sicherheit eine zweite Person ebenfalls zu einem Internetwart gemacht werden. ';
-			echo 'Andernfalls kann es passieren, dass der Internetwart durch die Modifikation der folgenden Daten aus dem System ausgesperrt wird. ';
-			echo 'In diesem Fall muss mit dem Installationsscript ein neuer Intranetwart angelegt werden. Dies wird in der Installationsanleitung erklärt.';
-			echo '</p>';
-		}
-
 		$libForm->printGruppeDropDownBox('gruppe', 'Gruppe', $mgarray['gruppe'], false);
 		$libForm->printTextInput('datum_gruppe_stand', 'Stand', $mgarray['datum_gruppe_stand'], 'date', true);
 		$libForm->printTextInput('password_hash', 'Passwort-Hash', $mgarray['password_hash']);
