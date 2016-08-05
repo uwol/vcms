@@ -14,6 +14,9 @@
 
 .navbar-default #logo {
 	height: 75px;
+	-webkit-transition: height 0.35s;
+	-moz-transition: height 0.35s;
+	transition: height 0.35s;
 }
 
 .navbar-default.affix #logo {

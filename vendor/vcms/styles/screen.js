@@ -82,7 +82,7 @@ function configureNavigation(){
 
     $('nav').affix({
         offset: {
-            top: 5
+            top: 25
         }
     });
 
