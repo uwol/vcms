@@ -259,14 +259,14 @@ if(isset($_GET['verein'])){
 			echo '<div class="row">';
 			echo '<div class="col-xs-6">';
 			echo $libMitglied->getMitgliedSignature($row['mitglied'], '');
-
-			if($row['ehrenmitglied'] == 1){
-				echo 'Ehrenmitgl. ';
-			}
-
 			echo '</div>';
 			echo '<div class="col-xs-6">';
 			echo $libMitglied->getMitgliedNameString($row['mitglied'], 0);
+
+			if($row['ehrenmitglied'] == 1){
+				echo '<p>Ehrenmitglied</p>';
+			}
+
 			echo '</div>';
 			echo '</div>';
 
