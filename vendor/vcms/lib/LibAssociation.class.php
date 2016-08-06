@@ -193,12 +193,19 @@ class LibAssociation{
 				$libGlobal->notificationTexts[] = 'Importiere ' .count($json). ' Vereins-Datensätze.';
 
 				foreach($json as $association){
-					if(isset($association['id'])){
+					if($this->isValidKvAssociation($association)){
 						$this->importAssociation($association);
 					}
 				}
 			}
 		}
+	}
+
+	function isValidKvAssociation($association){
+		$result = isset($association['id']) && is_numeric($association['id']) && 
+				isset($association['name']) && !empty($association['name']) &&
+				isset($association['dachverbandnr']) && is_numeric($association['dachverbandnr']);
+		return $result;
 	}
 
 	function importAssociation($association){
