@@ -41,7 +41,15 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p><a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaft&amp;aktion=blank">Eine neue Vereinsmitgliedschaft anlegen</a></p>';
+
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
+	echo '<div class="btn-toolbar">';
+	echo '<a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaft&amp;aktion=blank" class="btn btn-default">Eine neue Vereinsmitgliedschaft anlegen</a>';
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+
 
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';

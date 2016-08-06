@@ -51,6 +51,8 @@ if($libAuth->isLoggedin()){
 
 			$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 		}
+	} else if(isset($_GET['aktion']) && $_GET['aktion'] == 'import'){
+		$libVerein->importAssociations();
 	}
 
 	echo '<h1>Vereine</h1>';
@@ -58,7 +60,16 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p><a href="index.php?pid=intranet_admin_db_verein&amp;aktion=blank">Einen neuen Verein anlegen</a></p>';
+
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
+	echo '<div class="btn-toolbar">';
+	echo '<a href="index.php?pid=intranet_admin_db_vereinsliste&amp;aktion=import" onclick="return confirm(\'Willst den Import wirklich durchführen?\')" class="btn btn-default"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</a>';
+	echo '<a href="index.php?pid=intranet_admin_db_verein&amp;aktion=blank" class="btn btn-default">Einen neuen Verein anlegen</a>';
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+
 
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';

@@ -22,8 +22,8 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 require_once(__DIR__ . '/autoload.php');
 require_once(__DIR__ . '/../phpmailer/PHPMailerAutoload.php');
 require_once(__DIR__ . '/../phpass/autoload.php');
-require_once(__DIR__ . '/../httpclient/autoload.php');
 require_once(__DIR__ . '/../pear/autoload.php');
+require_once(__DIR__ . '/../httpful/bootstrap.php');
 
 
 /*
@@ -61,6 +61,7 @@ $libForm = new \vcms\LibForm();
 $libGallery = new \vcms\LibGallery();
 $libGenericStorage = new \vcms\LibGenericStorage();
 $libGlobal = new \vcms\LibGlobal();
+$libHttp = new \vcms\LibHttp();
 $libImage = new \vcms\LibImage();
 $libMail = new \vcms\LibMail();
 $libMitglied = new \vcms\LibMember();

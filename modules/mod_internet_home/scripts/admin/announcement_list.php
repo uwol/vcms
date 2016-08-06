@@ -45,8 +45,15 @@ echo '<h1>Ankündigungen auf der Startseite</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Die aktuellsten nicht verfallenen Nachrichten werden auf der Startseite angezeigt. Wenn sie verfallen oder neuere Nachrichten existieren, werden sie automatisch archiviert.</p>';
-echo '<p><a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;aktion=blank">Eine neue Ankündigung anlegen</a></p>';
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
+echo '<div class="btn-toolbar">';
+echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;aktion=blank" class="btn btn-default">Eine neue Ankündigung anlegen</a>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
 
 /*
 * semester selection

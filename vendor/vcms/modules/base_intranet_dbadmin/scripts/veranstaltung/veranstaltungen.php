@@ -47,8 +47,15 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	//neue Veranstaltung
-	echo '<p><a href="index.php?pid=intranet_admin_db_veranstaltung&amp;aktion=blank">Eine neue Veranstaltung anlegen</a></p>';
+
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
+	echo '<div class="btn-toolbar">';
+	echo '<a href="index.php?pid=intranet_admin_db_veranstaltung&amp;aktion=blank" class="btn btn-default">Eine neue Veranstaltung anlegen</a>';
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+
 
 	//Semesterauswahl
 	$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");

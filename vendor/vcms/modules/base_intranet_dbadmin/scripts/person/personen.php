@@ -113,10 +113,15 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p>Das Anlegen und Löschen von Personendatensätzen kann nur von einem Internetwart vorgenommen werden.</p>';
 
 	if(in_array('internetwart', $libAuth->getAemter())){
-		echo '<p><a href="index.php?pid=intranet_admin_db_person&amp;aktion=blank">Eine neue Person anlegen</a></p>';
+		echo '<div class="panel panel-default">';
+  		echo '<div class="panel-body">';
+		echo '<div class="btn-toolbar">';
+		echo '<a href="index.php?pid=intranet_admin_db_person&amp;aktion=blank" class="btn btn-default">Eine neue Person anlegen</a>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
 	}
 
 

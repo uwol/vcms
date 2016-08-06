@@ -63,6 +63,10 @@ echo 'Lade Paketinformationen aus dem Repository.';
 echo '</div>';
 
 
+$manifestUrl = 'http://' .$repoHostname. '/manifest.json?id=' .$libGlobal->getSiteUrlAuthority(). '&version=' .$libGlobal->version;
+$modules = getModules($manifestUrl);
+
+
 /*
 * output
 */
@@ -83,9 +87,6 @@ echo '<th class="toolColumn"></th>';
 echo '</tr>';
 echo '</thead>';
 
-
-$manifestUrl = 'http://' .$repoHostname. '/manifest.json?id=' .$libGlobal->getSiteUrlAuthority(). '&version=' .$libGlobal->version;
-$modules = getModules($manifestUrl);
 
 $actualEngineVersion = (double) $libGlobal->version;
 $newEngineVersion = (double) $modules['engine'];
@@ -220,28 +221,15 @@ foreach($modules as $key => $value){
 echo '</table>';
 
 
-function downloadContent($url, $destinationFile = false){
-	if(ini_get('allow_url_fopen')){
-		if(!$destinationFile){
-			return file_get_contents($url);
-		} else {
-			copy($url, $destinationFile);
-		}
-	} else {
-		if(!$destinationFile){
-			return \httpclient\HttpClient::quickGet($url);
-		} else{
-			$contents = \httpclient\HttpClient::quickGet($url);
-			file_put_contents($destinationFile, $contents);
-		}
-	}
-}
 
 function getModules($manifestUrl){
-	global $libModuleHandler;
+	global $libHttp, $libModuleHandler;
 
-	$manifestContent = downloadContent($manifestUrl);
-	$modules = json_decode($manifestContent, true);
+	$modules = $libHttp->get($manifestUrl);
+
+	if(!is_array($modules)){
+		$modules = json_decode($modules, true);
+	}
 
 	foreach($libModuleHandler->getModules() as $module){
 		$isBaseModule = substr($module->getId(), 0, 5) == 'base_';
@@ -259,7 +247,7 @@ function getModules($manifestUrl){
 }
 
 function installModule($module){
-	global $libModuleHandler, $libFilesystem, $repoHostname,
+	global $libHttp, $libModuleHandler, $libFilesystem, $repoHostname,
 		$tempRelativeDirectoryPath, $modulesRelativeDirectoryPath;
 
 	// globals required for install/update scripts
@@ -277,7 +265,7 @@ function installModule($module){
 	$isUpdate = is_dir($moduleAbsoluteDirectoryPath);
 
 	echo '<p>Lade Modulpaket aus dem Repository.</p>';
-	downloadContent('http://' .$repoHostname. '/packages/'. $module. '.tar', $tarAbsoluteFilePath);
+	$libHttp->get('http://' .$repoHostname. '/packages/'. $module. '.tar', $tarAbsoluteFilePath);
 
 	//untar module package
 	$tar = new \pear\Archive\Archive_Tar($tarAbsoluteFilePath);
@@ -374,7 +362,7 @@ function uninstallModule($module){
 }
 
 function updateEngine(){
-	global $libFilesystem, $libCronJobs, $repoHostname, $engineUpdateScript, $tempRelativeDirectoryPath;
+	global $libHttp, $libFilesystem, $libCronJobs, $repoHostname, $engineUpdateScript, $tempRelativeDirectoryPath;
 
 	// globals required for install/update scripts
 	global $libGlobal, $libDb;
@@ -387,7 +375,7 @@ function updateEngine(){
 
 	//download engine package
 	echo '<p>Lade Enginepaket aus dem Repository.</p>';
-	downloadContent('http://' .$repoHostname. '/packages/engine.tar', $tarAbsoluteFilePath);
+	$libHttp->get('http://' .$repoHostname. '/packages/engine.tar', $tarAbsoluteFilePath);
 
 	//untar engine package
 	$tar = new \pear\Archive\Archive_Tar($tarRelativeFilePath);

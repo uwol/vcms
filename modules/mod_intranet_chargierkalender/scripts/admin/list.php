@@ -49,8 +49,15 @@ echo "<h1>Chargierveranstaltungen</h1>";
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-//new event
-echo '<p><a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;aktion=blank">Eine neue Chargierveranstaltung anlegen</a></p>';
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
+echo '<div class="btn-toolbar">';
+echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;aktion=blank" class="btn btn-default">Eine neue Chargierveranstaltung anlegen</a>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM mod_chargierkalender_veranstaltung GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
