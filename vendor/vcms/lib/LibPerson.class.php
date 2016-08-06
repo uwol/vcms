@@ -20,7 +20,7 @@ namespace vcms;
 
 use PDO;
 
-class LibMember{
+class LibPerson{
 
 	function getMitgliedNameString($id, $mode){
 		global $libDb;
