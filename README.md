@@ -1,9 +1,15 @@
 VCMS
 ====
 
-Das VCMS ist ein freies und kostenloses CMS zur Vereinsverwaltung, das speziell für Korporationen entwickelt und von diversen Korporationen genutzt wird.
+Das VCMS ist ein freies CMS zur Vereinsverwaltung, das für Korporationen entwickelt und von diversen Korporationen genutzt wird. Es kann als reine Intranet-Lösung oder als Internet-Auftritt betrieben werden, und modular zusammengestellt werden.
 
-Das VCMS setzt sich aus Modulen zusammen, die individuell kombiniert werden können. Falls das VCMS als reine Intranet-Lösung betrieben werden soll, können sämtliche Internet-Module gelöscht werden. Dies ermöglicht den Parallelbetrieb zu einer bereits bestehenden Website.
+
+Screenshots
+-----------
+
+<img src="http://uwol.github.io/img/vcms/internet.png" alt="Internet" style="width:100%"/>
+
+<img src="http://uwol.github.io/img/vcms/intranet.png" alt="Intranet" style="width:100%"/>
 
 
 Fähigkeiten
@@ -54,15 +60,3 @@ Die Installationsanleitung ist in der Datei INSTALL.md gespeichert. Die technisc
 * PHP ab Version 5.5
 * MySQL ab Version 4.1
 * ImageMagick oder GDlib für Fotogalerien
-
-
-Screenshots
------------
-
-### Internet
-
-<img src="http://uwol.github.io/img/vcms/internet.png" alt="Internet" style="width:100%"/>
-
-### Intranet
-
-<img src="http://uwol.github.io/img/vcms/intranet.png" alt="Intranet" style="width:100%"/>

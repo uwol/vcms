@@ -38,7 +38,7 @@ class LibCronJobs{
 		'custom/semestercover', 'custom/veranstaltungsfotos');
 
 	var $directoriesWithHtaccessFile = array('custom/intranet',
-		'custom/veranstaltungsfotos', 'temp', 'vendor/httpclient', 'vendor/pear',
+		'custom/veranstaltungsfotos', 'temp', 'vendor/httpful', 'vendor/pear',
 		'vendor/phpass', 'vendor/phpmailer', 'vendor/vcms/install', 'vendor/vcms/layout', 
 		'vendor/vcms/lib', 'vendor/vcms/modules');
 
