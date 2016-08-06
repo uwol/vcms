@@ -96,7 +96,7 @@ class LibTimelineEvent {
 	}
 
 	function toString(){
-		global $libMitglied, $libTime;
+		global $libPerson, $libTime;
 
 		$retstr = '<article class="timeline-event">';
 
@@ -140,7 +140,7 @@ class LibTimelineEvent {
 
 		if($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature){
 			$retstr .= '<div class="media-left hidden-xs">';
-			$retstr .= $libMitglied->getMitgliedSignature($this->referencedPersonId);
+			$retstr .= $libPerson->getMitgliedSignature($this->referencedPersonId);
 			$retstr .= '</div>';
 		}
 
@@ -152,7 +152,7 @@ class LibTimelineEvent {
 
 		if($this->authorId != '' && !$this->hideAuthorSignature){
 			$retstr .= '<div class="media-right hidden-xs">';
-			$retstr .= $libMitglied->getMitgliedSignature($this->authorId);
+			$retstr .= $libPerson->getMitgliedSignature($this->authorId);
 			$retstr .= '</div>';
 		}
 

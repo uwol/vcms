@@ -152,7 +152,7 @@ class LibForm{
 	}
 
 	function printMitgliederDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
-		global $libDb, $libMitglied;
+		global $libDb, $libPerson;
 
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -176,7 +176,7 @@ class LibForm{
 				echo ' selected="selected"';
 			}
 
-			echo '>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 7). ' [' .$row['gruppe']. ']</option>';
+			echo '>' .$libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 7). ' [' .$row['gruppe']. ']</option>';
 		}
 
 		echo '</select></div>';

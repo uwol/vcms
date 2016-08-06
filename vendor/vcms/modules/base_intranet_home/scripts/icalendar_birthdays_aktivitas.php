@@ -35,7 +35,7 @@ if(isset($_GET['user']) &&
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$name = $libMitglied->getMitgliedNameString($row['id'], 0);
+		$name = $libPerson->getMitgliedNameString($row['id'], 0);
 
 		$e = new vcms\LibICalendarEvent();
 		$e->summary = $name;

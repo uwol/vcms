@@ -39,7 +39,7 @@ class LibAuth{
 	* tries to login with email and password
 	*/
 	function login($email, $password){
-		global $libGlobal, $libDb, $libMitglied, $libTime, $libSecurityManager, $libString;
+		global $libGlobal, $libDb, $libPerson, $libTime, $libSecurityManager, $libString;
 
 		$email = trim(strtolower($email));
 		$password = trim($password);
@@ -196,7 +196,7 @@ class LibAuth{
 			$stmt->bindValue(':ipadresse', $_SERVER['REMOTE_ADDR']);
 			$stmt->execute();
 
-			$libMitglied->setMitgliedIntranetActivity($row['id'], 1, 1);
+			$libPerson->setMitgliedIntranetActivity($row['id'], 1, 1);
 
 			return true;
 		}

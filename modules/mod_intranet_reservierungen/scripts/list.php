@@ -68,7 +68,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo $libTime->formatDateString($row['datum']);
 	echo ' ';
 	echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['person']. '">';
-	echo $libMitglied->getMitgliedNameString($row['person'], 0);
+	echo $libPerson->getMitgliedNameString($row['person'], 0);
 	echo '</a>';
 
 	if($libAuth->getId() == $row['person']){
@@ -88,7 +88,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</div>';
 
 	echo '<div class="media-right hidden-xs">';
-	echo $libMitglied->getMitgliedSignature($row['person']);
+	echo $libPerson->getMitgliedSignature($row['person']);
 	echo '</div>';
 
 	echo '</div>';

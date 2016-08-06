@@ -159,7 +159,7 @@ function printEventDetails($row){
 }
 
 function printAnmeldungen($row){
-	global $libAuth, $libDb, $libGallery, $libMitglied;
+	global $libAuth, $libDb, $libGallery, $libPerson;
 
 	echo '<h3>Anmeldungen</h3>';
 
@@ -177,7 +177,7 @@ function printAnmeldungen($row){
 				echo ', ';
 			}
 
-			echo '<span class="p-attendee"><a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libMitglied->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
+			echo '<span class="p-attendee"><a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
 			$anmeldungWritten = true;
 		}
 

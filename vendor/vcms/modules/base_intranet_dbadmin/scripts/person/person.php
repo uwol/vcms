@@ -108,7 +108,7 @@ if($libAuth->isLoggedin()){
 		$mgarray = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		//ist das zu bearbeitende Mitglied jemals Internetwart gewesen?
-		if($mgarray['id'] != '' && $libMitglied->hasBeenInternetWartAnyTime($mgarray['id'])){
+		if($mgarray['id'] != '' && $libPerson->hasBeenInternetWartAnyTime($mgarray['id'])){
 			//soll die Gruppe modifiziert werden? => Drohende Eintragung als tot oder entlassen
 			$gruppeWirdKritischModifiziert = false;
 
@@ -134,9 +134,9 @@ if($libAuth->isLoggedin()){
 			//sollen kritische Daten modifiziert werden?
 			if($gruppeWirdKritischModifiziert || $emailIstLeer || $password_hashIstLeer){
 				//ist das Mitglied ein valider Intranetwart?
-				if($libMitglied->couldBeValidInternetWart($mgarray['id'])){
+				if($libPerson->couldBeValidInternetWart($mgarray['id'])){
 					//dann ist das Ändern evtl ein Problem, wenn nämlich damit der letzte valide Internetwart gekillt wird
-					$valideInternetWarte = $libVerein->getValideInternetWarte();
+					$valideInternetWarte = $libAssociation->getValideInternetWarte();
 
 					//ist dies der letzte valide Internetwart?
 					if(count($valideInternetWarte) < 2){
@@ -335,7 +335,7 @@ if($libAuth->isLoggedin()){
 		echo '</a>';
 		echo '</span>';
 
-		echo $libMitglied->getMitgliedImage($mgarray['id'], true);
+		echo $libPerson->getMitgliedImage($mgarray['id'], true);
 		echo '</div>';
 		echo '</div>';
 

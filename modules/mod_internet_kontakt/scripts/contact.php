@@ -125,34 +125,34 @@ echo '</div>';
 
 echo '<p>';
 
-$vorstand = $libVerein->getAnsprechbarerAktivenVorstandIds();
+$vorstand = $libAssociation->getAnsprechbarerAktivenVorstandIds();
 
 if($libGenericStorage->loadValueInCurrentModule('showSenior') && $vorstand['senior']){
-	echo 'Senior: '.$libMitglied->getMitgliedNameString($vorstand['senior'],0).'<br />';
+	echo 'Senior: '.$libPerson->getMitgliedNameString($vorstand['senior'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showJubelsenior') && $vorstand['jubelsenior']){
-	echo 'Jubelsenior: '.$libMitglied->getMitgliedNameString($vorstand['jubelsenior'],0).'<br />';
+	echo 'Jubelsenior: '.$libPerson->getMitgliedNameString($vorstand['jubelsenior'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showConsenior') && $vorstand['consenior']){
-	echo 'Consenior: '.$libMitglied->getMitgliedNameString($vorstand['consenior'],0).'<br />';
+	echo 'Consenior: '.$libPerson->getMitgliedNameString($vorstand['consenior'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor') && $vorstand['fuchsmajor']){
-	echo 'Fuchsmajor: '.$libMitglied->getMitgliedNameString($vorstand['fuchsmajor'],0).'<br />';
+	echo 'Fuchsmajor: '.$libPerson->getMitgliedNameString($vorstand['fuchsmajor'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor2') && $vorstand['fuchsmajor2']){
-	echo 'Fuchsmajor 2: '.$libMitglied->getMitgliedNameString($vorstand['fuchsmajor2'],0).'<br />';
+	echo 'Fuchsmajor 2: '.$libPerson->getMitgliedNameString($vorstand['fuchsmajor2'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showScriptor') && $vorstand['scriptor']){
-	echo 'Scriptor: '.$libMitglied->getMitgliedNameString($vorstand['scriptor'],0).'<br />';
+	echo 'Scriptor: '.$libPerson->getMitgliedNameString($vorstand['scriptor'],0).'<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['quaestor']){
-	echo 'Quaestor: '.$libMitglied->getMitgliedNameString($vorstand['quaestor'],0).'<br />';
+	echo 'Quaestor: '.$libPerson->getMitgliedNameString($vorstand['quaestor'],0).'<br />';
 }
 
 echo '</p>';

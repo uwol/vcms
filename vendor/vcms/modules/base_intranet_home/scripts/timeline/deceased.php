@@ -37,7 +37,7 @@ $stmt->bindValue(':semesterende', $zeitraum[1]);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$title = 'Todesfall ' .$libMitglied->getMitgliedNameString($row['id'], 0);
+	$title = 'Todesfall ' .$libPerson->getMitgliedNameString($row['id'], 0);
 
 	$age = false;
 	$description = '';

@@ -17,7 +17,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
 function printMitglieder($stmt){
-	global $libDb, $libMitglied;
+	global $libDb, $libPerson;
 
 	$stmt->execute();
 
@@ -30,11 +30,11 @@ function printMitglieder($stmt){
 
 		echo '<div class="row">';
 		echo '<div class="col-xs-6">';
-		echo $libMitglied->getMitgliedSignature($row['id']);
+		echo $libPerson->getMitgliedSignature($row['id']);
 		echo '</div>';
 		echo '<div class="col-xs-6">';
-		echo '<b>' .$libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
-		echo $libMitglied->getChargenString($row['id']). ' ' .$libMitglied->getVereineString($row['id']);
+		echo '<b>' .$libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
+		echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getVereineString($row['id']);
 
 		if($row['status'] != ''){
 			echo ' ' .$row['status'];

@@ -132,13 +132,13 @@ if($libAuth->isLoggedin()){
 			//soll der bisherige Internetwart modifiziert werden?
 			if($internetwartWirdModifiziert){
 				//ist das bisherige Mitglied auf dem Intranetwartsposten nur in diesem einem Semester Internetwart?
-				if($libMitglied->getAnzahlInternetWartsSemester($semesterarray['internetwart']) < 2){
+				if($libPerson->getAnzahlInternetWartsSemester($semesterarray['internetwart']) < 2){
 					//ist das Mitglied auf dem Intranetwartsposten ein valider Intranetwart?
-					if($libMitglied->couldBeValidInternetWart($semesterarray['internetwart'])){
+					if($libPerson->couldBeValidInternetWart($semesterarray['internetwart'])){
 						//ist der neue Internetwart nicht valid? (kein Login, ausgetreten tot)
-						if(!$libMitglied->couldBeValidInternetWart($_REQUEST['internetwart'])){
+						if(!$libPerson->couldBeValidInternetWart($_REQUEST['internetwart'])){
 							//dann ist das Löschen evtl ein Problem, wenn nämlich damit der letzte valide Internetwart ausgetragen wird
-							$valideInternetWarte = $libVerein->getValideInternetWarte();
+							$valideInternetWarte = $libAssociation->getValideInternetWarte();
 
 							//ist dies der letzte valide Internetwart?
 							if(count($valideInternetWarte) < 2){
@@ -278,14 +278,14 @@ if($libAuth->isLoggedin()){
 		//wird nicht ein Semester neu angelegt sondern ein bestehendes verwaltet?
 		if($aktion != 'blank'){
 			//ist das Mitglied auf dem Intranetwartsposten nur in diesem einem Semester Internetwart?
-			if($semesterarray['internetwart'] != '' && $semesterarray['internetwart'] != 0 && $libMitglied->getAnzahlInternetWartsSemester($semesterarray['internetwart']) < 2){
+			if($semesterarray['internetwart'] != '' && $semesterarray['internetwart'] != 0 && $libPerson->getAnzahlInternetWartsSemester($semesterarray['internetwart']) < 2){
 				//dann ist das Löschen evtl ein Problem, wenn nämlich damit der letzte Internetwart ausgetragen wird
 				echo '<p><b>!!! ACHTUNG !!!</b></p>';
 				echo 'Dies ist die einzige Eintragung als Intranetwart für das folgende Mitglied. Wenn dieser Eintrag entfernt wird, so ist das Mitglied kein Intranetwart mehr! Die folgenden Internetwarte haben Intranetzugang und sind nicht tot oder ausgetreten: ';
-				$valideInternetWarte = $libVerein->getValideInternetWarte();
+				$valideInternetWarte = $libAssociation->getValideInternetWarte();
 
 				foreach($valideInternetWarte as $key => $value){
-					echo $libMitglied->getMitgliedNameString($key, 5). ', ';
+					echo $libPerson->getMitgliedNameString($key, 5). ', ';
 				}
 
 				echo '<br />';

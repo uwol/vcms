@@ -52,7 +52,7 @@ $_SESSION['session_timeout_timestamp'] = time() + 14400;
 */
 $libConfig = new LibConfig();
 
-$libVerein = new \vcms\LibAssociation();
+$libAssociation = new \vcms\LibAssociation();
 $libCronJobs = new \vcms\LibCronJobs();
 $libDb = new \vcms\LibDb();
 $libEvent = new \vcms\LibEvent();
@@ -64,7 +64,7 @@ $libGlobal = new \vcms\LibGlobal();
 $libHttp = new \vcms\LibHttp();
 $libImage = new \vcms\LibImage();
 $libMail = new \vcms\LibMail();
-$libMitglied = new \vcms\LibMember();
+$libPerson = new \vcms\LibPerson();
 $libModuleHandler = new \vcms\LibModuleHandler();
 $libModuleParser = new \vcms\LibModuleParser();
 $libSecurityManager = new \vcms\LibSecurityManager();

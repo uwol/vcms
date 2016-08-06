@@ -29,7 +29,7 @@ if(isset($_GET['verein'])){
 	$stmt->execute();
 	$vereinarray = $stmt->fetch(PDO::FETCH_ASSOC);
 
-	echo '<h1>' .$libVerein->getVereinNameString($vereinarray['id']). '</h1>';
+	echo '<h1>' .$libAssociation->getVereinNameString($vereinarray['id']). '</h1>';
 
 	echo '<div class="row">';
 
@@ -112,19 +112,19 @@ if(isset($_GET['verein'])){
 		echo '<table style="border:1px solid black;width:50px;border-collapse:collapse">';
 
 	    if($vereinarray['farbe1'] != ''){
-			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe1']). '"></td></tr>';
+			echo '<tr><td style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe1']). '"></td></tr>';
 		}
 
 		if($vereinarray['farbe2'] != ''){
-			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe2']). '"></td></tr>';
+			echo '<tr><td style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe2']). '"></td></tr>';
 		}
 
 		if($vereinarray['farbe3'] != ''){
-			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe3']). '"></td></tr>';
+			echo '<tr><td style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe3']). '"></td></tr>';
 		}
 
 		if($vereinarray['farbe4'] != ''){
-			echo '<tr><td style="height:10px;background-color:' .$libVerein->getFarbe($vereinarray['farbe4']). '"></td></tr>';
+			echo '<tr><td style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe4']). '"></td></tr>';
 		}
 
 		echo '</table>';
@@ -133,7 +133,7 @@ if(isset($_GET['verein'])){
 	echo '<p>';
 	if($vereinarray['datum_gruendung'] != ''){
 		echo 'Gründungsdatum: ';
-		echo $libVerein->getGruendungString($vereinarray['datum_gruendung']);
+		echo $libAssociation->getGruendungString($vereinarray['datum_gruendung']);
 		echo '<br />';
 	}
 
@@ -169,24 +169,24 @@ if(isset($_GET['verein'])){
 	if($vereinarray['mutterverein'] != ''){
 		echo 'Mutter: ';
 		echo '<a href="index.php?pid=vereindetail&amp;verein=' .$vereinarray['mutterverein']. '">';
-		echo $libVerein->getVereinNameString($vereinarray['mutterverein']). '</a>';
+		echo $libAssociation->getVereinNameString($vereinarray['mutterverein']). '</a>';
 		echo '<br />';
 	}
 
 	if($vereinarray['fusioniertin'] != ''){
 		echo 'Fusioniert in: ';
 		echo '<a href="index.php?pid=vereindetail&amp;verein=' .$vereinarray['fusioniertin']. '">';
-		echo $libVerein->getVereinNameString($vereinarray['fusioniertin']). '</a>';
+		echo $libAssociation->getVereinNameString($vereinarray['fusioniertin']). '</a>';
 		echo '<br />';
 	}
 
-	$toechterstr = $libVerein->getToechterString($vereinarray['id']);
+	$toechterstr = $libAssociation->getToechterString($vereinarray['id']);
 
 	if($toechterstr != ''){
 		echo 'Töchter: ' .$toechterstr. '<br />';
 	}
 
-	$fusionersstr = $libVerein->getFusionertString($vereinarray['id']);
+	$fusionersstr = $libAssociation->getFusionertString($vereinarray['id']);
 
 	if($fusionersstr != ''){
 		echo 'Fusioniert aus: ' .$fusionersstr. '<br />';
@@ -258,10 +258,10 @@ if(isset($_GET['verein'])){
 
 			echo '<div class="row">';
 			echo '<div class="col-xs-6">';
-			echo $libMitglied->getMitgliedSignature($row['mitglied'], '');
+			echo $libPerson->getMitgliedSignature($row['mitglied'], '');
 			echo '</div>';
 			echo '<div class="col-xs-6">';
-			echo $libMitglied->getMitgliedNameString($row['mitglied'], 0);
+			echo $libPerson->getMitgliedNameString($row['mitglied'], 0);
 
 			if($row['ehrenmitglied'] == 1){
 				echo '<p>Ehrenmitglied</p>';

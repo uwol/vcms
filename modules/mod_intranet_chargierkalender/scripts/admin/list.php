@@ -86,7 +86,7 @@ $stmt->execute();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
 	echo '<td>' .$row['id']. '</td>';
-	echo '<td>' .$libVerein->getVereinNameString($row['verein']). '</td>';
+	echo '<td>' .$libAssociation->getVereinNameString($row['verein']). '</td>';
 	echo '<td>' .$row['beschreibung']. '</td>';
 	echo '<td>' .$row['datum']. '</td>';
 	echo '<td class="toolColumn">';

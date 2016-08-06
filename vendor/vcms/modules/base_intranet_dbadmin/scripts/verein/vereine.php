@@ -52,7 +52,7 @@ if($libAuth->isLoggedin()){
 			$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 		}
 	} else if(isset($_GET['aktion']) && $_GET['aktion'] == 'import'){
-		$libVerein->importAssociations();
+		$libAssociation->importAssociations();
 	}
 
 	echo '<h1>Vereine</h1>';

@@ -128,7 +128,7 @@ $libForm->printRegionDropDownBox("region", "Region", "");
 
 echo '<hr />';
 
-$formattedMitgliedNameString = $libMitglied->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4);
+$formattedMitgliedNameString = $libPerson->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4);
 
 $stmt = $libDb->prepare("SELECT email FROM base_person WHERE id=:id");
 $stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);

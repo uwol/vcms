@@ -70,7 +70,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if(is_numeric($row['verein'])){
 		$event->setLinkUrl('index.php?pid=vereindetail&amp;verein='.$row['verein']);
-		$event->setSummary($libVerein->getVereinNameString($row['verein']));
+		$event->setSummary($libAssociation->getVereinNameString($row['verein']));
 	}
 
 	if(substr($row['datum'], 11, 8) == "00:00:00"){
@@ -87,7 +87,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     $mitglieder = array();
 
 	while($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-		$mitglieder[$row2['mitglied']] = $libMitglied->getMitgliedNameString($row2['mitglied'], 8);
+		$mitglieder[$row2['mitglied']] = $libPerson->getMitgliedNameString($row2['mitglied'], 8);
 	}
 
 	$event->setAngemeldeteMitglieder($mitglieder);

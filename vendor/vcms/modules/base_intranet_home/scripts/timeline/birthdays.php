@@ -68,9 +68,9 @@ function addBirthdayTimelineEvents($year, $zeitraum){
 }
 
 function addBirthdayTimelineEvent($row, $date, $age){
-	global $libGlobal, $libMitglied, $libGenericStorage, $timelineEventSet;
+	global $libGlobal, $libPerson, $libGenericStorage, $timelineEventSet;
 
-	$title = 'Geburtstag von ' .$libMitglied->getMitgliedNameString($row['id'], 0);
+	$title = 'Geburtstag von ' .$libPerson->getMitgliedNameString($row['id'], 0);
 	$description = $age. ' Jahre';
 	$description .= ' ';
 	$description .= '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/inc.php?iid=intranet_kalender_geburtstageaktivitas&amp;user=' .$libGenericStorage->loadValueInCurrentModule('userNameICalendar'). '&amp;pass='. $libGenericStorage->loadValueInCurrentModule('passwordICalendar'). '">';

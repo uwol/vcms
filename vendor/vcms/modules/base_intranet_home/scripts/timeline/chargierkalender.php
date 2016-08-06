@@ -82,7 +82,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$description = '';
 
 	if(isset($row['verein']) && is_numeric($row['verein'])){
-		$title .= $libVerein->getVereinNameString($row['verein']);
+		$title .= $libAssociation->getVereinNameString($row['verein']);
 	} else {
 		$title .= $row['beschreibung'];
 	}
@@ -121,7 +121,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	while($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)){
 		$attendee = '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$row3['mitglied']. '">';
-		$attendee .= $libMitglied->getMitgliedNameString($row3['mitglied'], 8);
+		$attendee .= $libPerson->getMitgliedNameString($row3['mitglied'], 8);
 		$attendee .= '</a>';
 
 		$attendees[] = $attendee;

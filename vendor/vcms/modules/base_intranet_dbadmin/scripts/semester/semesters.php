@@ -75,9 +75,9 @@ if($libAuth->isLoggedin()){
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<tr>';
 		echo '<td>' .$row['semester']. '</td>';
-		echo '<td>' .$libMitglied->getMitgliedNameString($row['senior'],5). '</td>';
-		echo '<td>' .$libMitglied->getMitgliedNameString($row['fuchsmajor'],5). '</td>';
-		echo '<td>' .$libMitglied->getMitgliedNameString($row['internetwart'],5). '</td>';
+		echo '<td>' .$libPerson->getMitgliedNameString($row['senior'],5). '</td>';
+		echo '<td>' .$libPerson->getMitgliedNameString($row['fuchsmajor'],5). '</td>';
+		echo '<td>' .$libPerson->getMitgliedNameString($row['internetwart'],5). '</td>';
 		echo '<td class="toolColumn">';
 		echo '<a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$row['semester']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';

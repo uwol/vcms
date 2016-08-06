@@ -179,9 +179,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 * header
 */
 echo '<h1>';
-echo $libMitglied->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
+echo $libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 echo ' ';
-echo $libMitglied->getChargenString($personid);
+echo $libPerson->getChargenString($personid);
 echo '</h1>';
 
 echo $libString->getErrorBoxText();
@@ -437,7 +437,7 @@ SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname,
 
 
 function printPersonSignature($row, $ownprofile){
-	global $libMitglied, $libForm;
+	global $libPerson, $libForm;
 
 	echo '<div class="center-block personSignatureBox personSignatureBoxLarge">';
 	echo '<div class="imgBox">';
@@ -450,10 +450,10 @@ function printPersonSignature($row, $ownprofile){
 		echo '</span>';
 	}
 
-	echo $libMitglied->getMitgliedImage($row['id'], true);
+	echo $libPerson->getMitgliedImage($row['id'], true);
 	echo '</div>';
 
-	echo $libMitglied->getMitgliedIntranetActivityBox($row['id']);
+	echo $libPerson->getMitgliedIntranetActivityBox($row['id']);
 	echo '</div>';
 
 	if($ownprofile){
@@ -466,7 +466,7 @@ function printPersonSignature($row, $ownprofile){
 }
 
 function printPersonData($row){
-	global $libDb, $libMitglied;
+	global $libDb, $libPerson;
 
 	echo '<div>';
 	echo '<div class="p-name">';
@@ -540,7 +540,7 @@ function printPersonData($row){
 
 	if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
 		echo '<div>';
-		echo 'Ehepartner: <a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['heirat_partner']. '" />' .$libMitglied->getMitgliedNameString($row['heirat_partner'], 5). '</a>';
+		echo 'Ehepartner: <a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['heirat_partner']. '" />' .$libPerson->getMitgliedNameString($row['heirat_partner'], 5). '</a>';
 		echo '</div>';
 	}
 
@@ -697,7 +697,7 @@ function printCommunication($row){
 }
 
 function printAssociationDetails($row){
-	global $libVerein, $libDb, $libTime, $libModuleHandler;
+	global $libAssociation, $libDb, $libTime, $libModuleHandler;
 
 	/*
 	* others
@@ -789,7 +789,7 @@ function printAssociationDetails($row){
 
 				if(isset($rowEvent['verein']) && is_numeric($rowEvent['verein'])){
 					$chargierEventStr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$rowEvent['verein']. '">';
-					$chargierEventStr .= $libVerein->getVereinNameString($rowEvent['verein']);
+					$chargierEventStr .= $libAssociation->getVereinNameString($rowEvent['verein']);
 					$chargierEventStr .= '</a>';
 				} else {
 					$chargierEventStr .= $rowEvent['beschreibung'];
