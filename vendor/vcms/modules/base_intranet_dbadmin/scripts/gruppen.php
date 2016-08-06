@@ -58,10 +58,6 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p>Die folgenden Gruppen dienen der Einteilung der Personen in Vereinsgruppen wie Füchse und Burschen. Jeder Person kann eine Gruppe auf der Personenverwaltungsseite eingetragen werden. Dabei ist zu beachten, dass die Gruppeneinträge der Personen als Zugangskritrium zu den Intranetseiten etc. genutzt werden. Falls also z. B. eine Seite nur für die Gruppe B (Burschen) freigegeben ist, und die Burschen des Vereins nicht in der Gruppe B sind, so wird der Zugang verwehrt. Deshalb sollten auch Damenverbindungen den Eintrag auf B lassen. In den seltensten Fällen sind zusätzliche Gruppen sinnvoll, sie verkomplizieren nur die Zugangskontrolle und die Konfiguration von Modulen.</p>';
-
-	echo '<p>Eine Einteilung der Mitglieder in Vorstandsmitglieder, Warte etc. wird nicht über Gruppen, sondern über die Semestertabelle vorgenommen.</p>';
-
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';
 	echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';

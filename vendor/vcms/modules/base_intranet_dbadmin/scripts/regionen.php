@@ -57,8 +57,6 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p>Die folgenden Regionen dienen der Einteilung der Mitglieder in Zirkel.</p>';
-
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';
 	echo '<tr><th>Region</th><th>Anzahl Personen</th><th></th></tr>';
