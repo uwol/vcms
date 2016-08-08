@@ -19,6 +19,14 @@
 	transition: height 0.35s;
 }
 
+@media(max-width: 767px){
+	.navbar-default #logo {
+		height: 50px;
+		width: 50px;
+		float: left;
+	}
+}
+
 .navbar-default.affix #logo {
 	height: 50px;
 	width: 50px;
@@ -34,6 +42,18 @@
 .navbar-default .navbar-header .navbar-brand:hover,
 .navbar-default .navbar-header .navbar-brand:focus {
 	color: #111;
+}
+
+@media(min-width: 768px) {
+	.navbar-default.affix .navbar-header .navbar-brand {
+		font-size: 1.1em;
+	}
+}
+
+@media(max-width: 767px){
+	.navbar-default .navbar-header .navbar-brand {
+		padding-left: 5px;
+	}
 }
 
 .navbar-default .navbar-header .navbar-toggle {
@@ -72,12 +92,6 @@
 
 .navbar-default .nav .open .dropdown-menu > li > a {
 	color: inherit;
-}
-
-@media(min-width: 768px) {
-	.navbar-default.affix .navbar-header .navbar-brand {
-		font-size: 1.1em;
-	}
 }
 
 .navbar-default .navbar-internet .nav > li > a {

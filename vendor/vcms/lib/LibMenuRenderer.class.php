@@ -42,7 +42,7 @@ class LibMenuRenderer{
 		$retstr = '';
 		$retstr .= '    <nav id="nav" class="navbar navbar-default navbar-fixed-top">' . PHP_EOL;
         $retstr .= '      <div class="container">' . PHP_EOL;
-		$retstr .= '        <div class="hidden-xs" id="logo"></div>' . PHP_EOL;
+		$retstr .= '        <div id="logo"></div>' . PHP_EOL;
 
         $retstr .= $this->getNavbarCollapsed();
 
