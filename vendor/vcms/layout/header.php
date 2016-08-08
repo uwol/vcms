@@ -30,17 +30,6 @@ if(is_array($libGlobal->module->getHeaderStrings())){
 	}
 }
 
-if($libGenericStorage->loadValue('base_core', 'showTrauerflor')){
-	echo '    <style type="text/css">' . PHP_EOL;
-	echo '      #container:before {' . PHP_EOL;
-	echo '        content:url("data:image/svg+xml;utf8,<svg xmlns:svg=\'http://www.w3.org/2000/svg\' xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' height=\'150\' width=\'150\'><path d=\'M 0,-25 125,100\' style=\'stroke:%23000;stroke-width:25\' /></svg>");' . PHP_EOL;
-	echo '        position:absolute;' . PHP_EOL;
-	echo '        right:0;' . PHP_EOL;
-	echo '        top:0;' . PHP_EOL;
-	echo '      }' . PHP_EOL;
-	echo '    </style>' . PHP_EOL;
-}
-
 /*
 * robots
 */

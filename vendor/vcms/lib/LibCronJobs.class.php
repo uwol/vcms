@@ -178,10 +178,6 @@ class LibCronJobs{
 			$libGenericStorage->saveValue('base_core', 'siteUrl', $this->getCurrentSiteUrl());
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'showTrauerflor')){
-			$libGenericStorage->saveValue('base_core', 'showTrauerflor', 0);
-		}
-
 		if(!$libGenericStorage->attributeExists('base_core', 'smtpEnable')){
 			$libGenericStorage->saveValue('base_core', 'smtpEnable', 0);
 		}
