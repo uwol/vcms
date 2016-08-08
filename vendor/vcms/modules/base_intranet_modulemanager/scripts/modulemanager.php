@@ -24,9 +24,6 @@ if(isset($_REQUEST['modul']) && !preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['modu
 	die();
 
 
-$libCronJobs->executeJobs();
-
-
 $repoHostname = 'repository.' . $libGlobal->vcmsHostname;
 $gitHubRepoUrl = 'https://github.com/uwol/vcms/tree/master';
 
@@ -47,6 +44,7 @@ $libFilesystem->deleteDirectory($tempRelativeDirectoryPath);
 @mkdir($tempAbsoluteDirectoryPath);
 
 
+
 if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] != 'engine'){
 	$module = $_REQUEST['modul'];
 
@@ -60,6 +58,8 @@ if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] !
 if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'updateEngine'){
 	updateEngine();
 }
+
+$libCronJobs->executeJobs();
 
 
 echo 'Lade Paketinformationen aus dem Repository.';
