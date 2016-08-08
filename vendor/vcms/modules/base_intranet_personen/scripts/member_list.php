@@ -24,10 +24,10 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('showGroupY')){
 	$libGenericStorage->saveValueInCurrentModule('showGroupY', 1);
 }
 
-require('lib/mitglieder.php');
+require('lib/persons.php');
 
 
-echo '<h1>' . $libConfig->verbindungName .' - Die Mitglieder</h1>';
+echo '<h1>' .$libConfig->verbindungName. ' - Die Mitglieder</h1>';
 
 echo '<p>Der Balken unter einem Foto zeigt an, wie häufig ein Mitglied das Intranet besucht. Mitglieder können anhand von Schlüsselwörtern gesucht werden.</p>';
 
@@ -85,7 +85,7 @@ if(isset($_POST['searchterm']) && $_POST['searchterm'] != ''){
 	$stmt->bindValue(':semester_fusion', '%'.$_POST['searchterm'].'%');
 	$stmt->bindValue(':spitzname', '%'.$_POST['searchterm'].'%');
 
-	printMitglieder($stmt);
+	printPersons($stmt);
 }
 //no search term
 else {
@@ -100,7 +100,7 @@ else {
 		echo '<p>Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
 
 		$stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "" OR gruppe IS NULL ORDER BY name');
-		printMitglieder($stmt);
+		printPersons($stmt);
 	}
 
 	//Füchse
@@ -113,7 +113,7 @@ else {
 		echo '<h2>Die Fuchsia (' .$anzahl. ')</h2>';
 
 		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'F' ORDER BY name");
-		printMitglieder($stmt);
+		printPersons($stmt);
 	}
 
 	//Burschen
@@ -133,7 +133,7 @@ else {
 
 		if($anzahlAktiv > 0){
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status IS NULL OR (status NOT LIKE '%ex loco%' AND status NOT LIKE '%Inaktiv%')) ORDER BY name");
-			printMitglieder($stmt);
+			printPersons($stmt);
 		}
 
 		//inaktive Burschen
@@ -148,7 +148,7 @@ else {
 
 		if($anzahlInaktivExLoco > 0){
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%') ORDER BY name");
-			printMitglieder($stmt);
+			printPersons($stmt);
 		}
 	}
 
@@ -162,7 +162,7 @@ else {
 		echo '<h2>Die alten Herren (' .$anzahl. ')</h2>';
 
 		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'P' ORDER BY name");
-		printMitglieder($stmt);
+		printPersons($stmt);
 	}
 
 	if($libGenericStorage->loadValueInCurrentModule('showGroupY')){
@@ -176,7 +176,7 @@ else {
 			echo '<h2>Vereinsfreunde (' .$anzahl. ')</h2>';
 
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'Y' ORDER BY name");
-			printMitglieder($stmt);
+			printPersons($stmt);
 		}
 	}
 }

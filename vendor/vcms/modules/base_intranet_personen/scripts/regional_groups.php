@@ -20,7 +20,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-require('lib/mitglieder.php');
+require('lib/persons.php');
 
 echo '<h1>Regionalzirkel</h1>';
 
@@ -43,7 +43,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
 		$stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
 
-		printMitglieder($stmt2);
+		printPersons($stmt2);
 	}
 }
 ?>

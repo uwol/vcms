@@ -16,15 +16,26 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+namespace vcms\genealogy;
 
+class LibGenealogy{
+	var $retstr;
 
-require('lib/persons.php');
+	function __construct($root, $tiefe, $mitgliedid){
+		$retstr = '';
+		$genealogyRoot = new LibGenealogyElement($root, $mitgliedid);
+		$retstr .= $genealogyRoot->getString($tiefe);
+		$leibsoehne = $genealogyRoot->searchLeibSoehne();
 
-echo '<h1>' .$libConfig->verbindungName. ' - Die Verstorbenen</h1>';
+		for($i=0; $i<count($leibsoehne); $i++){
+			$genealogy = new LibGenealogy($leibsoehne[$i], $tiefe + 1, $mitgliedid);
+			$retstr .= $genealogy->getString();
+		}
 
-$stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "T" ORDER BY name');
+		$this->retstr = $retstr;
+	}
 
-printPersons($stmt);
-?>
+	function getString(){
+		return $this->retstr;
+	}
+}

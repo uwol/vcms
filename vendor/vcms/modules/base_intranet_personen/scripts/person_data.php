@@ -20,7 +20,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-require('lib/mitglieder.php');
+require('lib/persons.php');
 
 /*
 * determine person id
@@ -335,7 +335,7 @@ if($anzahl > 0){
 
 	$stmt = $libDb->prepare("SELECT bv.id, bv.anrede, bv.titel, bv.rang, bv.vorname, bv.praefix, bv.name, bv.suffix, bv.status, bv.beruf, bv.ort1, bv.tod_datum, bv.datum_geburtstag, bv.gruppe, bv.leibmitglied FROM base_person AS bs, base_person AS bv WHERE bs.id=:id AND bs.leibmitglied=bv.id");
 	$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
-	printMitglieder($stmt, 0);
+	printPersons($stmt, 0);
 }
 
 
@@ -353,7 +353,7 @@ if($anzahl > 0){
 
 	$stmt = $libDb->prepare("SELECT bs.id, bs.anrede, bs.titel, bs.rang, bs.vorname, bs.praefix, bs.name, bs.suffix, bs.status, bs.beruf, bs.ort1, bs.tod_datum, bs.datum_geburtstag, bs.gruppe, bs.leibmitglied FROM base_person AS bs WHERE bs.leibmitglied=:leibmitglied");
 	$stmt->bindValue(':leibmitglied', $personid, PDO::PARAM_INT);
-	printMitglieder($stmt, 0);
+	printPersons($stmt, 0);
 }
 
 
@@ -373,7 +373,7 @@ if($anzahl > 0){
 	$stmt = $libDb->prepare("SELECT confuchs.id, confuchs.anrede, confuchs.titel, confuchs.rang, confuchs.vorname, confuchs.praefix, confuchs.name, confuchs.suffix, confuchs.status, confuchs.beruf, confuchs.ort1, confuchs.tod_datum, confuchs.datum_geburtstag, confuchs.gruppe, confuchs.leibmitglied FROM base_person AS confuchs, base_person AS ich WHERE confuchs.semester_reception = ich.semester_reception AND ich.id=:id1 AND confuchs.id!=:id2");
 	$stmt->bindValue(':id1', $personid, PDO::PARAM_INT);
 	$stmt->bindValue(':id2', $personid, PDO::PARAM_INT);
-	printMitglieder($stmt, 0);
+	printPersons($stmt, 0);
 }
 
 
@@ -432,7 +432,7 @@ SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname,
 ");
 	$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
 	$stmt->execute();
-	printMitglieder($stmt, 0);
+	printPersons($stmt, 0);
 }
 
 

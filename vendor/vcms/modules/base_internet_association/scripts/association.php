@@ -32,38 +32,6 @@ if(isset($_GET['verein'])){
 	echo '<h1>' .$libAssociation->getVereinNameString($vereinarray['id']). '</h1>';
 
 	echo '<div class="row">';
-
-	/*
-	* images
-	*/
-	echo '<div class="col-sm-3">';
-
-	$filePathZirkelSvg = 'custom/kvvereine/zirkel/' .$vereinarray['id']. '.svg';
-	$filePathZirkelGif = 'custom/kvvereine/zirkel/' .$vereinarray['id']. '.gif';
-
-	if(is_file($filePathZirkelSvg)){
-		echo '<p><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></p>';
-	} else if(is_file($filePathZirkelGif)){
-		echo '<p><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></p>';
-	}
-
-	$filePathWappenSvg = 'custom/kvvereine/wappen/' .$vereinarray['id']. '.svg';
-	$filePathWappenJpg = 'custom/kvvereine/wappen/' .$vereinarray['id']. '.jpg';
-
-	if(is_file($filePathWappenSvg)){
-		echo '<p><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-responsive center-block" /></p>';
-	} else if(is_file($filePathWappenJpg)){
-		echo '<p><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></p>';
-	}
-
-	$filePathHausJpg = 'custom/kvvereine/haus/' .$vereinarray['id']. '.jpg';
-
-	if(is_file($filePathHausJpg)){
-		echo '<p><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></p>';
-	}
-
-	echo '</div>';
-
 	echo '<div class="col-sm-9">';
 
 	/*
@@ -231,6 +199,33 @@ if(isset($_GET['verein'])){
 		echo '<p>';
 		echo nl2br($vereinarray['beschreibung']);
 		echo '</p>';
+	}
+
+	echo '</div>';
+	echo '<div class="col-sm-3">';
+
+	$filePathZirkelSvg = 'custom/vereine/zirkel/' .$vereinarray['id']. '.svg';
+	$filePathZirkelGif = 'custom/vereine/zirkel/' .$vereinarray['id']. '.gif';
+
+	if(is_file($filePathZirkelSvg)){
+		echo '<p><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></p>';
+	} else if(is_file($filePathZirkelGif)){
+		echo '<p><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></p>';
+	}
+
+	$filePathWappenSvg = 'custom/vereine/wappen/' .$vereinarray['id']. '.svg';
+	$filePathWappenJpg = 'custom/vereine/wappen/' .$vereinarray['id']. '.jpg';
+
+	if(is_file($filePathWappenSvg)){
+		echo '<p><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-responsive center-block" /></p>';
+	} else if(is_file($filePathWappenJpg)){
+		echo '<p><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></p>';
+	}
+
+	$filePathHausJpg = 'custom/vereine/haus/' .$vereinarray['id']. '.jpg';
+
+	if(is_file($filePathHausJpg)){
+		echo '<p><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></p>';
 	}
 
 	echo '</div>';

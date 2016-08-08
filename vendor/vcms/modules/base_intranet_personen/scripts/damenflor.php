@@ -19,7 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-require('lib/mitglieder.php');
+require('lib/persons.php');
 
 echo '<h1>Der Damenflor</h1>';
 
@@ -32,7 +32,7 @@ if($anzahl > 0){
 	echo '<h2>Die Couleurdamen (' .$anzahl. ')</h2>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'C' ORDER BY name");
-	printMitglieder($stmt);
+	printPersons($stmt);
 }
 
 
@@ -45,6 +45,6 @@ if($anzahl > 0){
 	echo '<h2>Die Gattinnen (' .$anzahl. ')</h2>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'G' OR gruppe = 'W' ORDER BY name");
-	printMitglieder($stmt);
+	printPersons($stmt);
 }
 ?>

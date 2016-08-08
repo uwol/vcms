@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function printMitglieder($stmt){
+function printPersons($stmt){
 	global $libDb, $libPerson;
 
 	$stmt->execute();
@@ -61,4 +61,3 @@ function printMitglieder($stmt){
 
 	echo '</div>';
 }
-?>
