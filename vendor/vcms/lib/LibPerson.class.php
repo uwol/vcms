@@ -151,22 +151,27 @@ class LibPerson{
 	function getMitgliedImage($id, $large = false){
 		$retstr = '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$id. '">';
 
-		/*
-		* member image
-		*/
-		if(is_numeric($id)){
-			$retstr .= '<img src="inc.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="img-responsive personImg';
+		$classes = 'img-responsive personImg';
 
-			if($large){
-				$retstr .= ' personImgLarge ';
-			}
+		if($large){
+			$classes .= ' personImgLarge ';
+		}
 
-			$retstr .= '" alt="" />';
+		if(is_numeric($id) && is_file($this->getMitgliedImageFilePath($id))){
+			$retstr .= '<img src="inc.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="' .$classes. '" alt="" />';
+		} else {
+			$retstr .= '<div class="' .$classes. '"></div>';
 		}
 
 		$retstr .= '</a>';
 
 		return $retstr;
+	}
+
+	function getMitgliedImageFilePath($id){
+		global $libFilesystem;
+
+		return $libFilesystem->getAbsolutePath('custom/intranet/mitgliederfotos/' .$id. '.jpg');
 	}
 
 	function setMitgliedIntranetActivity($id, $punkte, $enablelimit){

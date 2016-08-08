@@ -202,7 +202,7 @@ class LibAssociation{
 	}
 
 	function isValidKvAssociation($association){
-		$result = isset($association['id']) && is_numeric($association['id']) && 
+		$result = isset($association['id']) && is_numeric($association['id']) &&
 				isset($association['name']) && !empty($association['name']) &&
 				isset($association['dachverbandnr']) && is_numeric($association['dachverbandnr']);
 		return $result;

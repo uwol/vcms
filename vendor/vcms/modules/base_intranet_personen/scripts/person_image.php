@@ -21,9 +21,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin() && isset($_GET['id']) && is_numeric($_GET['id']) &&
-		preg_match("/^[0-9]+$/", $_GET['id'])){
+		preg_match('/^[0-9]+$/', $_GET['id'])){
 
-	$path = "custom/intranet/mitgliederfotos/". $_GET['id'] .".jpg";
+	$path = $libPerson->getMitgliedImageFilePath($id);
 
 	if(is_file($path)){
 		// send headers
@@ -33,13 +33,13 @@ if($libAuth->isLoggedin() && isset($_GET['id']) && is_numeric($_GET['id']) &&
 
 		if($_GET['id'] != $libAuth->getId()){
 			$expires = 60*60*24;
-			header("Pragma: public");
-			header("Cache-Control: maxage=".$expires);
-			header("Cache-Control: private");
+			header('Pragma: public');
+			header('Cache-Control: maxage=' .$expires);
+			header('Cache-Control: private');
 			header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expires) . ' GMT');
 		}
 
-		$fp=fopen($path, "r");
+		$fp = fopen($path, 'r');
 		fpassthru($fp);
 	}
 }

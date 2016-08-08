@@ -53,9 +53,9 @@ class LibForm{
 		$this->printRequiredString($required);
 
 		echo ' class="form-control';
-		
+
 		$this->printClassesString($classes);
-		
+
 		echo '" />';
 		echo '</div>';
 		echo '</div>';
