@@ -27,11 +27,6 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('checkFilePermissions')){
 
 if(in_array('internetwart', $libAuth->getAemter())){
 	/*
-	* actions
-	*/
-	$libCronJobs->executeJobs();
-
-	/*
 	* output
 	*/
 	$oks = array();

@@ -172,7 +172,7 @@ class LibCronJobs{
 	}
 
 	function initConfiguration(){
-		global $libGenericStorage;
+		global $libGenericStorage, $libConfig;
 
 		if($libGenericStorage->loadValue('base_core', 'siteUrl') == ''){
 			$libGenericStorage->saveValue('base_core', 'siteUrl', $this->getCurrentSiteUrl());
@@ -208,6 +208,14 @@ class LibCronJobs{
 
 		if(!$libGenericStorage->attributeExists('base_core', 'imagemanipulator')){
 			$libGenericStorage->saveValue('base_core', 'imagemanipulator', '1');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'brand')){
+			$libGenericStorage->saveValue('base_core', 'brand', $libConfig->verbindungName);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'brandXs')){
+			$libGenericStorage->saveValue('base_core', 'brandXs', $libConfig->verbindungName);
 		}
 	}
 

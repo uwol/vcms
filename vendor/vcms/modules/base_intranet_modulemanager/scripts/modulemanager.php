@@ -24,6 +24,9 @@ if(isset($_REQUEST['modul']) && !preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['modu
 	die();
 
 
+$libCronJobs->executeJobs();
+
+
 $repoHostname = 'repository.' . $libGlobal->vcmsHostname;
 $gitHubRepoUrl = 'https://github.com/uwol/vcms/tree/master';
 

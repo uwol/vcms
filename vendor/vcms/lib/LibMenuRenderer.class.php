@@ -157,7 +157,7 @@ class LibMenuRenderer{
 	}
 
 	function getNavbarCollapsed(){
-		global $libConfig;
+		global $libGenericStorage;
 
 		$retstr = '';
 
@@ -169,9 +169,11 @@ class LibMenuRenderer{
 		$retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
 		$retstr .= '          </button>' . PHP_EOL;
 
-		$retstr .= '          <a href="index.php" id="brand" class="navbar-brand">';
-		$retstr .= $libConfig->verbindungName;
-		$retstr .= '</a>' . PHP_EOL;
+		$brand = $libGenericStorage->loadValue('base_core', 'brand');
+		$brandXs = $libGenericStorage->loadValue('base_core', 'brandXs');
+
+		$retstr .= '          <a href="index.php" class="navbar-brand hidden-xs">' .$brand. '</a>' . PHP_EOL;
+		$retstr .= '          <a href="index.php" class="navbar-brand visible-xs">' .$brandXs. '</a>' . PHP_EOL;
 		$retstr .= '        </div>' . PHP_EOL;
 
 		return $retstr;
