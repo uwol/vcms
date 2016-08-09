@@ -53,7 +53,7 @@ $_SESSION['session_timeout_timestamp'] = time() + 14400;
 $libConfig = new LibConfig();
 
 $libAssociation = new \vcms\LibAssociation();
-$libCronJobs = new \vcms\LibCronJobs();
+$libCronjobs = new \vcms\LibCronjobs();
 $libDb = new \vcms\LibDb();
 $libEvent = new \vcms\LibEvent();
 $libFilesystem = new \vcms\LibFilesystem(__DIR__ . '/../..');

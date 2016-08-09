@@ -59,7 +59,7 @@ if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'updateEngine'){
 	updateEngine();
 }
 
-$libCronJobs->executeJobs();
+$libCronjobs->executeJobs();
 
 
 echo 'Lade Paketinformationen aus dem Repository.';
@@ -365,7 +365,7 @@ function uninstallModule($module){
 }
 
 function updateEngine(){
-	global $libHttp, $libFilesystem, $libCronJobs, $repoHostname, $engineUpdateScript, $tempRelativeDirectoryPath;
+	global $libHttp, $libFilesystem, $libCronjobs, $repoHostname, $engineUpdateScript, $tempRelativeDirectoryPath;
 
 	// globals required for install/update scripts
 	global $libGlobal, $libDb;
@@ -392,7 +392,7 @@ function updateEngine(){
 			|| !is_dir($tempEngineAbsoluteDirectoryPath. '/vendor')) {
 		echo '<p>Fehler: Das Enginepaket ist fehlerhaft.</p>';
 	} else {
-		$libCronJobs->deleteFiles();
+		$libCronjobs->deleteFiles();
 
 		unlink($libFilesystem->getAbsolutePath('inc.php'));
 		unlink($libFilesystem->getAbsolutePath('index.php'));

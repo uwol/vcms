@@ -20,7 +20,7 @@ namespace vcms;
 
 use PDO;
 
-class LibCronJobs{
+class LibCronjobs{
 
 	var $filesToDelete = array('.gitignore', 'composer.json',
 		'installer.php', 'installer2.php', 'installer3.php', 'installer.txt',

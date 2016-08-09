@@ -49,7 +49,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	/*
 	* missing folders
 	*/
-	$directoriesToCreate = $libCronJobs->getDirectoriesToCreate();
+	$directoriesToCreate = $libCronjobs->getDirectoriesToCreate();
 
 	foreach($directoriesToCreate as $directoryRelativePath){
 		$directoryAbsolutePath = $libFilesystem->getAbsolutePath($directoryRelativePath);
@@ -64,13 +64,13 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	/*
 	* missing htaccess deny files
 	*/
-	$directoriesWithHtaccessFile = $libCronJobs->getDirectoriesWithHtaccessFile();
+	$directoriesWithHtaccessFile = $libCronjobs->getDirectoriesWithHtaccessFile();
 
 	foreach($directoriesWithHtaccessFile as $directoryRelativePath){
 		$directoryAbsolutePath = $libFilesystem->getAbsolutePath($directoryRelativePath);
 
 		if(is_dir($directoryAbsolutePath)){
-			if($libCronJobs->hasHtaccessDenyFile($directoryAbsolutePath)){
+			if($libCronjobs->hasHtaccessDenyFile($directoryAbsolutePath)){
 				$securedFolders[] = $directoryRelativePath;
 			} else {
 				$unsecuredFolders[] = $directoryRelativePath;

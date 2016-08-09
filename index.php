@@ -24,7 +24,7 @@ require_once('custom/systemconfig.php');
 require_once('vendor/vcms/initialize.php');
 
 
-$libCronJobs->executeDueJobs();
+$libCronjobs->executeDueJobs();
 
 $libMenuInternet = $libModuleHandler->getMenuInternet();
 $libMenuIntranet = $libModuleHandler->getMenuIntranet();
