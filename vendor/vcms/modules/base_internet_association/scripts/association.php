@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
+if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
@@ -240,7 +240,7 @@ if(isset($_GET['verein'])){
 	$stmt->bindColumn('number', $anzahl);
 	$stmt->fetch();
 
-	if($libAuth->isLoggedin() && $anzahl > 0){
+	if($anzahl > 0){
 		echo '<h2>Mitglieder</h2>';
 		echo '<div class="row">';
 

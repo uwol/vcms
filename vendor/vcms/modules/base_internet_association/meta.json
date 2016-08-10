@@ -5,7 +5,10 @@
 			"pid": "vereindetail",
 			"file": "association.php",
 			"directory": "scripts",
-			"title": "Verein"
+			"title": "Verein",
+			"accessRestriction": {
+				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
+			}
 		}
 	]
 }
