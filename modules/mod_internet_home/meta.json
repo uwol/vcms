@@ -1,6 +1,6 @@
 {
 	"moduleName": "Home",
-	"version": 3.09,
+	"version": 3.10,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -27,14 +27,6 @@
 			"accessRestriction": {
 				"aemter": ["senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior", "internetwart"]
 			}
-		}
-	],
-	"menuElementsInternet": [
-		{
-			"pid": "home",
-			"name": "Home",
-			"type": "menu_entry",
-			"position": 100
 		}
 	],
 	"menuElementsAdministration": [
