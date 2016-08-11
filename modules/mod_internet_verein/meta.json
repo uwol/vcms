@@ -9,34 +9,16 @@
 			"title": "Über uns"
 		},
 		{
-			"pid": "v_aktivitaeten",
-			"file": "aktivitaeten.html",
-			"directory": "custom",
-			"title": "Aktivitäten"
-		},
-		{
 			"pid": "v_haus",
 			"file": "haus.html",
 			"directory": "custom",
 			"title": "Haus"
 		},
 		{
-			"pid": "v_geschichte",
-			"file": "geschichte.html",
-			"directory": "custom",
-			"title": "Geschichte"
-		},
-		{
 			"pid": "v_prinzipien",
 			"file": "prinzipien.html",
 			"directory": "custom",
 			"title": "Prinzipien"
-		},
-		{
-			"pid": "v_symbole",
-			"file": "symbole.html",
-			"directory": "custom",
-			"title": "Symbole"
 		}
 	],
 	"menuElementsInternet": [
@@ -52,34 +34,16 @@
 					"position": 100
 				},
 				{
-					"pid": "v_aktivitaeten",
-					"name": "Aktivitäten",
-					"type": "menu_entry",
-					"position": 200
-				},
-				{
 					"pid": "v_haus",
 					"name": "Haus",
 					"type": "menu_entry",
-					"position": 300
-				},
-				{
-					"pid": "v_geschichte",
-					"name": "Geschichte",
-					"type": "menu_entry",
-					"position": 400
+					"position": 200
 				},
 				{
 					"pid": "v_prinzipien",
 					"name": "Prinzipien",
 					"type": "menu_entry",
-					"position": 500
-				},
-				{
-					"pid": "v_symbole",
-					"name": "Symbole",
-					"type": "menu_entry",
-					"position": 600
+					"position": 300
 				}
 			]
 		}

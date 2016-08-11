@@ -144,7 +144,7 @@ class LibModuleHandler{
 		}
 
 		foreach($module->includes as $include){
-			//check for colliding pid
+			//check for colliding iid
 			if(array_key_exists($include->getIid(), $this->iidToModulePointer)){
 				$result = false;
 			}

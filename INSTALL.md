@@ -41,4 +41,4 @@ Module können im Intranet mit dem Modul-Manager deinstalliert oder einfach aus 
 
 ### Einpflegen bestehender Seiten
 
-Falls bereits eine Vereinswebseite existiert, deren Inhalte übernommern werden sollen, können die Module mod_internet_vereinsseiten und mod_internet_dachverbandsseiten als Vorlagen bearbeitet werden oder ein neues Modul angelegt werden. In der Datei modules/mod_internet_vereinsseiten/meta.json können Seiten registriert werden.
+Falls bereits eine Vereinswebseite existiert, deren Inhalte übernommern werden sollen, kann das Modul mod_internet_verein als Vorlage bearbeitet werden oder ein neues Modul angelegt werden. In der Datei modules/mod_internet_verein/meta.json können Seiten registriert werden.
