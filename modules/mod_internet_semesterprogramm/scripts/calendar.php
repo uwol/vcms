@@ -37,24 +37,21 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlob
 echo '<p>Das aktuelle Semesterprogramm kann als <a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/inc.php?iid=semesterprogramm_icalendar"><i class="fa fa-calendar" aria-hidden="true"></i> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>';
 echo '<div class="vcalendar">';
 
-//access level for galleries
-if($libAuth->isLoggedin()){
-	$level = 1;
-} else {
-	$level = 0;
-}
-
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 $calendar = new \vcms\calendar\LibCalendar($zeitraum[0], $zeitraum[1]);
+$intern = $libAuth->isLoggedin() ? 1 : 0;
 
-$stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE (DATEDIFF(datum, :startdatum1) >= 0 AND DATEDIFF(datum, :startdatum2) <= 0) OR (DATEDIFF(datum_ende, :enddatum1) >= 0 AND DATEDIFF(datum_ende, :enddatum2) <= 0) ORDER BY datum");
+$stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE intern <= :intern AND ((DATEDIFF(datum, :startdatum1) >= 0 AND DATEDIFF(datum, :startdatum2) <= 0) OR (DATEDIFF(datum_ende, :enddatum1) >= 0 AND DATEDIFF(datum_ende, :enddatum2) <= 0)) ORDER BY datum");
 $stmt->bindValue(':startdatum1', $zeitraum[0]);
 $stmt->bindValue(':startdatum2', $zeitraum[1]);
 $stmt->bindValue(':enddatum1', $zeitraum[0]);
 $stmt->bindValue(':enddatum2', $zeitraum[1]);
+$stmt->bindValue(':intern', $intern);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+	$level = $libAuth->isLoggedin() ? 1 : 0;
+
 	//build event
 	$event = new \vcms\calendar\LibCalendarEvent($row['datum']);
 	$event->setId($row['id']);
