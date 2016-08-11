@@ -56,7 +56,7 @@ if($libAuth->isLoggedin()){
 		$varray['status'] = '';
 		$varray['ort'] = '';
 		$varray['fb_eventid'] = '';
-		$varray['intern'] = $libGenericStorage->getValue('base_core', 'eventPreselectIntern');
+		$varray['intern'] = $libGenericStorage->loadValue('base_core', 'eventPreselectIntern');
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
 	elseif($aktion == 'insert'){
