@@ -72,7 +72,7 @@ if($libAuth->isLoggedin()){
 	//Datenausgeben
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';
-	echo '<tr><th>Id</th><th>Datum</th><th>Titel</th><th>Status</th><th></th></tr>';
+	echo '<tr><th>Id</th><th>Datum</th><th>Titel</th><th>Status</th><th>Intern</th><th></th></tr>';
 	echo '</thead>';
 
 	$zeitraum = $libTime->getZeitraum($libGlobal->semester);
@@ -89,6 +89,13 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['datum']. '</td>';
 		echo '<td>' .$row['titel']. '</td>';
 		echo '<td>' .$row['status']. '</td>';
+		echo '<td class="toolColumn">';
+
+		if($row['intern']){
+			echo '<i aria-hidden="true" class="fa fa-check-square-o"></i>';
+		}
+
+		echo '</td>';
 		echo '<td class="toolColumn">';
 		echo '<a href="index.php?pid=intranet_admin_db_veranstaltung&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';

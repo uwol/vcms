@@ -80,12 +80,12 @@ function getPageTitle(){
 	if($libGlobal->pid == $libConfig->defaultHome){
 		$result = $libConfig->verbindungName;
 	} else if(isEventPage()){
-		$stmt = $libDb->prepare("SELECT titel, datum FROM base_veranstaltung WHERE id=:id");
+		$stmt = $libDb->prepare("SELECT titel, datum, intern FROM base_veranstaltung WHERE id=:id");
 		$stmt->bindValue(':id', $_REQUEST['eventid'], PDO::PARAM_INT);
 		$stmt->execute();
 		$event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if($event['titel'] != ''){
+		if($event['titel'] != '' && $event['intern'] == 0){
 			$result = $libConfig->verbindungName. ' - ' .$event['titel']. ' am ' .$libTime->formatDateString($event['datum']);
 		} else {
 			$result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();

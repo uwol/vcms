@@ -20,7 +20,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-$stmtCount = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung WHERE datum > NOW()');
+$stmtCount = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung WHERE intern = 0 AND datum > NOW()');
 $stmtCount->execute();
 $stmtCount->bindColumn('number', $numberOfNextEvents);
 $stmtCount->fetch();
@@ -51,7 +51,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			$maxNumberOfEvents = 3;
 		}
 
-		$stmt = $libDb->prepare('SELECT id, titel, datum, status, ort, fb_eventid FROM base_veranstaltung WHERE datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfEvents);
+		$stmt = $libDb->prepare('SELECT id, titel, datum, status, ort, fb_eventid, intern FROM base_veranstaltung WHERE intern = 0 AND datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfEvents);
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

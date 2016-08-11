@@ -20,7 +20,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
+$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE intern = 0 AND DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
 $stmt->execute();
 
 $maxNumberOfThumbnails = 6;
@@ -45,7 +45,7 @@ if(count($eventIds) > 0){
 	echo '<div class="row no-gutter">';
 
 	foreach($eventIds as $eventId){
-		$stmt = $libDb->prepare('SELECT id, titel, datum FROM base_veranstaltung WHERE id = :id');
+		$stmt = $libDb->prepare('SELECT id, titel, datum, intern FROM base_veranstaltung WHERE id = :id');
 		$stmt->bindValue(':id', $eventId);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
