@@ -180,6 +180,7 @@ $sql = "CREATE TABLE base_veranstaltung (
   status varchar(2) default NULL,
   ort varchar(255) default NULL,
   fb_eventid VARCHAR(255) NULL,
+  intern tinyint(1) NOT NULL default 0,
   PRIMARY KEY (id),
   KEY datum (datum)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";

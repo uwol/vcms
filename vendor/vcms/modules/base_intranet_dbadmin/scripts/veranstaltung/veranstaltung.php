@@ -36,7 +36,7 @@ if($libAuth->isLoggedin()){
 
 	$varray = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array('titel', 'datum', 'datum_ende', 'spruch', 'beschreibung', 'status', 'ort', 'fb_eventid');
+	$felder = array('titel', 'datum', 'datum_ende', 'spruch', 'beschreibung', 'status', 'ort', 'fb_eventid', 'intern');
 
 	/**
 	*
@@ -56,6 +56,7 @@ if($libAuth->isLoggedin()){
 		$varray['status'] = '';
 		$varray['ort'] = '';
 		$varray['fb_eventid'] = '';
+		$varray['intern'] = $libGenericStorage->getValue('base_core', 'eventPreselectIntern');
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
 	elseif($aktion == 'insert'){
@@ -151,6 +152,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('status', 'Status (Maximal 2 Buchstaben, z. B. ho oder o)', $varray['status']);
 	$libForm->printTextInput('ort', 'Ort', $varray['ort']);
 	$libForm->printTextInput('fb_eventid', '<i class="fa fa-facebook-official" aria-hidden="true"></i> Event-Id', $varray['fb_eventid']);
+	$libForm->printBoolSelectBox('intern', 'Intern', $varray['intern']);
 
 	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
 

@@ -65,11 +65,7 @@ class LibCronjobs{
 		$this->cleanSysLogIntranet();
 		$this->initConfiguration();
 
-		if(!$libGenericStorage->attributeExists('base_core', 'cronjobsLeereAusgetretene')){
-			$libGenericStorage->saveValue('base_core', 'cronjobsLeereAusgetretene', 0);
-		}
-
-		if($libGenericStorage->loadValue('base_core', 'cronjobsLeereAusgetretene') == 1){
+		if($libGenericStorage->loadValue('base_core', 'deleteAusgetretene') == 1){
 			$this->cleanBasePerson();
 		}
 
@@ -212,6 +208,14 @@ class LibCronjobs{
 
 		if(!$libGenericStorage->attributeExists('base_core', 'brandXs')){
 			$libGenericStorage->saveValue('base_core', 'brandXs', $libConfig->verbindungName);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'deleteAusgetretene')){
+			$libGenericStorage->saveValue('base_core', 'deleteAusgetretene', 0);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'eventPreselectIntern')){
+			$libGenericStorage->saveValue('base_core', 'eventPreselectIntern', 0);
 		}
 	}
 

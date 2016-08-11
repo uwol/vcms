@@ -388,7 +388,7 @@ class LibForm{
 		echo '<div class="col-sm-' .$this->colInput. '"><select name="' .$name. '" class="form-control">';
 		echo '<option value="1"';
 
-		if($selectedValue == 1){
+		if($selectedValue > 0){
 			echo ' selected="selected"';
 		}
 

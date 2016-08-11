@@ -35,6 +35,11 @@ if(!in_array('fb_eventid', $columnsBaseVeranstaltung)){
 	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255) NULL');
 }
 
+if(!in_array('intern', $columnsBaseVeranstaltung)){
+	echo 'Aktualisiere Tabelle base_veranstaltung<br />';
+	$libDb->query('ALTER TABLE base_veranstaltung ADD intern tinyint(1) NOT NULL default 0');
+}
+
 
 /**
 * Tabelle base_person aktualisieren
