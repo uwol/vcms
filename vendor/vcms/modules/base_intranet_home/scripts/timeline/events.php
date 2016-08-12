@@ -92,6 +92,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$description .= '</a>';
 		$description .= '</div>';
 		$description .= '</div>';
+
+		$description .= '<hr />';
 	}
 
 	/*
