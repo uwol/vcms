@@ -217,6 +217,10 @@ class LibCronjobs{
 		if(!$libGenericStorage->attributeExists('base_core', 'eventPreselectIntern')){
 			$libGenericStorage->saveValue('base_core', 'eventPreselectIntern', 0);
 		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'eventBannedTitles')){
+			$libGenericStorage->saveValue('base_core', 'eventBannedTitles', 'AH-Besuch,Vortrag,Vortragsabend');
+		}
 	}
 
 	//------------------------------------------------------

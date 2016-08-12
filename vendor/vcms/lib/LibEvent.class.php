@@ -23,7 +23,7 @@ use PDO;
 class LibEvent{
 
 	function getUrl($id){
-		global $libConfig, $libGlobal, $libDb, $libTime;
+		global $libGlobal, $libDb, $libTime;
 
 		$stmt = $libDb->prepare('SELECT id, datum FROM base_veranstaltung WHERE id=:id');
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -66,6 +66,29 @@ class LibEvent{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		$result = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateString($row['datum']);
+		return $result;
+	}
+
+	function hasBannedTitle($id){
+		global $libDb, $libGenericStorage;
+
+		$bannedTitlesString = $libGenericStorage->loadValue('base_core', 'eventBannedTitles');
+		$bannedTitles = explode(',', $bannedTitlesString);
+		$bannedTitlesCleaned = array();
+
+		foreach($bannedTitles as $bannedTitle){
+			$bannedTitlesCleaned[] = strtolower(trim($bannedTitle));
+		}
+
+		$stmt = $libDb->prepare('SELECT titel FROM base_veranstaltung WHERE id=:id');
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
+		$stmt->bindColumn('titel', $title);
+		$stmt->fetch();
+
+		$titleCleaned = strtolower(trim($title));
+
+		$result = in_array($titleCleaned, $bannedTitlesCleaned);
 		return $result;
 	}
 

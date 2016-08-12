@@ -23,6 +23,8 @@ class LibModuleHandler{
 	var $baseModulesRelativePath = 'vendor/vcms/modules';
 
 	var $modules = array();
+	var $pages = array();
+	var $includes = array();
 	var $pidToModulePointer = array();
 	var $iidToModulePointer = array();
 
@@ -181,6 +183,14 @@ class LibModuleHandler{
 
 		foreach($module->includes as $include){
 			$include->setDirectory($moduleRelativePath .'/'. $include->getDirectory());
+		}
+
+		foreach($module->pages as $page){
+			$this->pages[$page->getPid()] = $page;
+		}
+
+		foreach($module->includes as $include){
+			$this->includes[$include->getIid()] = $include;
 		}
 
 		foreach($module->pages as $page){
@@ -361,6 +371,14 @@ class LibModuleHandler{
 
 	function getModules(){
 		return $this->modules;
+	}
+
+	function getPages(){
+		return $this->pages;
+	}
+
+	function getIncludes(){
+		return $this->includes;
 	}
 
 	function getMenuInternet(){

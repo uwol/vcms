@@ -101,7 +101,9 @@ if($libAuth->isLoggedin()){
 		$varray = $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
-
+	if($libEvent->hasBannedTitle($id)){
+		$libGlobal->errorTexts[] = 'Der Veranstaltungstitel ist nicht optimal.';	
+	}
 
 	/**
 	*
