@@ -36,6 +36,31 @@ header .header-content .header-content-inner h1 {
 	font-size: 1.5em;
 }
 
+header .header-content .header-content-inner .btn-circle {
+	width: 70px;
+	height: 70px;
+	margin-top: 15px;
+	padding: 7px 16px;
+	border: 2px solid white;
+	border-radius: 100% !important;
+	font-size: 40px;
+	color: white;
+	background: transparent;
+	-webkit-transition: background 0.3s ease-in-out;
+	-moz-transition: background 0.3s ease-in-out;
+	transition: background 0.3s ease-in-out;
+}
+
+header .header-content .header-content-inner .btn-circle:hover,
+header .header-content .header-content-inner .btn-circle:focus {
+	outline: none;
+	background: rgba(255, 255, 255, 0.3);
+}
+
+header .header-content .header-content-inner .btn-circle .fa{
+	color: white;
+}
+
 @media (min-width: 768px) {
 	header {
 		min-height: 100%;

@@ -42,7 +42,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 if(count($eventIds) > 0){
-	echo '<section class="pastevents-box no-padding">';
+	echo '<section id="pastevents" class="pastevents-box no-padding">';
 	echo '<div class="container-fluid">';
 	echo '<div class="row no-gutter">';
 
