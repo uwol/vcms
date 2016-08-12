@@ -69,9 +69,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	$description = "";
+	$pictureId = $libGallery->getMainPictureId($row['id']);
 
-	if($libGallery->hasPictures($row['id'], $level)){
-		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], $level));
+	if($pictureId > -1){
+		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureId);
 	}
 
 	$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");

@@ -46,7 +46,7 @@ if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 			header("Content-length: " .filesize($path). "\n");
 
 			// send content
-			$fp=fopen($path, 'r');
+			$fp = fopen($path, 'r');
 			fpassthru($fp);
 			fclose($fp);
 		}

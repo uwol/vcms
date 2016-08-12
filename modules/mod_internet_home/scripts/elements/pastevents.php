@@ -29,7 +29,9 @@ $i = 0;
 $eventIds = array();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	if($libGallery->hasPictures($row['id'], 0)){
+	$pictureid = $libGallery->getMainPictureId($row['id']);
+
+	if($pictureid > -1){
 		$eventIds[] = $row['id'];
 		$i++;
 
@@ -50,13 +52,7 @@ if(count($eventIds) > 0){
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		$pictures = $libGallery->getPictures($eventId, 0);
-
-		//determine random image
-		srand(microtime() * 1000000);
-		$randomNumber = rand(0, count($pictures)-1);
-		$keys = array_keys($pictures);
-		$pictureid = $keys[$randomNumber];
+		$pictureid = $libGallery->getMainPictureId($eventId);
 
 		echo '<div class="col-lg-4 col-sm-6">';
 

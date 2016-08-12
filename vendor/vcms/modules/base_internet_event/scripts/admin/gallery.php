@@ -60,67 +60,46 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			}
 		}
 	}
+	//set as main image
+	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'main'){
+		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
+			$libGallery->setPublicityLevel($id, $_REQUEST['bildnr'], 'M');
+		}
+	}
 	//publish image in internet
 	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'oeffentlich'){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
-			$pictures = $libGallery->getPictures($id, 2);
-			$filename = $pictures[$_REQUEST['bildnr']];
-
-			rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'E'));
+			$libGallery->setPublicityLevel($id, $_REQUEST['bildnr'], 'E');
 		}
 	}
 	//publish image in intranet
 	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'intranet'){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
-			$pictures = $libGallery->getPictures($id, 2);
-			$filename = $pictures[$_REQUEST['bildnr']];
-
-			rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'I'));
+			$libGallery->setPublicityLevel($id, $_REQUEST['bildnr'], 'I');
 		}
 	}
 	//put image back in pool
 	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'pool'){
 		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
-			$pictures = $libGallery->getPictures($id, 2);
-			$filename = $pictures[$_REQUEST['bildnr']];
-
-			rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'P'));
+			$libGallery->setPublicityLevel($id, $_REQUEST['bildnr'], 'P');
 		}
 	}
 	//publish all images in internet
 	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'oeffentlichalle'){
 		if(is_numeric($id)){
-			$pictures = $libGallery->getPictures($id, 2);
-
-			foreach($pictures as $key => $value){
-				$filename = $pictures[$key];
-
-				rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'E'));
-			}
+			$libGallery->setPublicityLevels($id, 'E');
 		}
 	}
 	// publish all images in intranet
 	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'intranetalle'){
 		if(is_numeric($id)){
-			$pictures = $libGallery->getPictures($id, 2);
-
-			foreach($pictures as $key => $value){
-				$filename = $pictures[$key];
-
-				rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/' .$libGallery->changeVisibility($filename, 'I'));
-			}
+			$libGallery->setPublicityLevels($id, 'I');
 		}
 	}
 	//put all images back into pool
 	elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'poolalle'){
 		if(is_numeric($id)){
-			$pictures = $libGallery->getPictures($id, 2);
-
-			foreach($pictures as $key => $value){
-				$filename = $pictures[$key];
-
-				rename('custom/veranstaltungsfotos/' .$id. '/' .$filename, 'custom/veranstaltungsfotos/' .$id. '/'.$libGallery->changeVisibility($filename, 'P'));
-			}
+			$libGallery->setPublicityLevels($id, 'P');
 		}
 	}
 }
@@ -205,7 +184,24 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 	echo '<hr />';
 
-	$pictures = $libGallery->getPictures($id,2);
+	$pictures = $libGallery->getPictures($id, 2);
+	$mainPictureId = $libGallery->getMainPictureId($id);
+
+	if($mainPictureId != -1){
+		echo '<div class="row gallery">';
+		echo '<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">';
+		echo '<div class="thumbnail">';
+		echo '<div class="thumbnailOverflow">';
+		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$mainPictureId. '">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;pictureid=' .$mainPictureId. '" class="img-responsive center-block">';
+		echo '</a>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+
+		echo '<hr />';
+	}
 
 	echo '<div class="row gallery">';
 
@@ -215,6 +211,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			echo '<div class="thumbnailControls">';
 
+			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=main&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-home public" aria-hidden="true"></i></a> ';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users public" aria-hidden="true"></i></a> ';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users internal" aria-hidden="true"></i></a> ';
 			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users private" aria-hidden="true"></i></a>';
