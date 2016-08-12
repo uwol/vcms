@@ -85,7 +85,7 @@ class LibGallery{
 			$files = array_diff(scandir($path), array('..', '.', 'thumbs'));
 
 			foreach ($files as $file){
-				$extension = pathinfo($file, PATHINFO_EXTENSION);
+				$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
 				if($extension == 'jpg' || $extension == 'jpeg'){
 					$pictures[] = $file;
