@@ -22,55 +22,52 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 if($libAuth->isLoggedin() &&
 		isset($_REQUEST['veranstaltungId']) && is_numeric($_REQUEST['veranstaltungId']) &&
-		preg_match("/^[0-9]+$/", $_REQUEST['veranstaltungId']) &&
-		isset($_REQUEST['qqfile'])){
+		preg_match("/^[0-9]+$/", $_REQUEST['veranstaltungId']) && isset($_FILES[files][name])){
 
 	$allowedExtensions = array('jpg', 'jpeg');
-	$result = handleUpload($allowedExtensions);
+	$numerOfFiles = count($_FILES[files][name]);
+	$filesResult = array();
 
-	// to pass data through iframe you will need to encode all html tags
-	echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+	for($i=0; $i<$numerOfFiles; $i++){
+		$fileResult = handleFileUpload($i, $allowedExtensions);
+		$filesResult[] = $fileResult;
+	}
+
+	$result = array();
+	$result['files'] = $filesResult;
+
+	echo json_encode($result);
 }
 
 
 
-/*
- * Returns array('success'=>true) or array('error'=>'error message')
- */
-function handleUpload($allowedExtensions){
+function handleFileUpload($i, $allowedExtensions){
 	global $libGlobal, $libImage;
 
-	//extract filename and extension
-	$pathinfo = pathinfo($_REQUEST['qqfile']);
+	$name = $_FILES[files][name][$i];
+	$tmp_name = $_FILES[files][tmp_name][$i];
+	$size = $_FILES[files][size][$i];
+
+	$pathinfo = pathinfo($name);
 	$filename = $pathinfo['filename'];
 	$ext = $pathinfo['extension'];
 
-	//check extension
+	$result = array();
+
 	if(is_array($allowedExtensions) && !in_array(strtolower($ext), $allowedExtensions)){
 		$allowedExtensionsString = implode(', ', $allowedExtensions);
-		return array('error' => 'Die Dateiendung ist nicht korrekt. Erlaubt sind '. $allowedExtensionsString . '.');
-	}
-
-	//save stream
-	$tempFilename = tempnam(sys_get_temp_dir(), '');
-
-	$tempHandle = fopen($tempFilename, "w");
-	$inputHandle = fopen("php://input", "r");
-	stream_copy_to_stream($inputHandle, $tempHandle);
-
-	fclose($inputHandle);
-	fclose($tempHandle);
-
-	//save image
-	$libImage->saveVeranstaltungsFotoByAjax($_REQUEST['veranstaltungId'], $filename . '.' . $ext, $tempFilename);
-
-	unlink($tempFilename);
-
-	if(count($libGlobal->errorTexts) > 0){
-		$errorText = implode(' ', $libGlobal->errorTexts);
-		return array('error' => $errorText);
+		$result['error'] = 'Die Dateiendung ist nicht korrekt. Erlaubt sind ' .$allowedExtensionsString. '.';
 	} else {
-		return array('success' => true);
+		$libImage->saveVeranstaltungsFotoByAjax($_REQUEST['veranstaltungId'], $filename. '.' .$ext, $tmp_name);
+
+		if(count($libGlobal->errorTexts) > 0){
+			$result['error'] = implode(' ', $libGlobal->errorTexts);
+		} else {
+			$result['size'] = $size;
+		}
 	}
+
+	$result['name'] = $name;
+	return $result;
 }
 ?>

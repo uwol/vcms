@@ -134,28 +134,58 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-//upload form based on http://valums.com/files/2010/file-uploader
-echo '<div id="file-uploader">';
-echo '<noscript>';
-echo '<p>Für das Hochladen von Bildern aktiviere bitte JavaScript in Deinem Browser.</p>';
-echo '</noscript>';
+echo '<div id="progress" class="progress">';
+echo '<div class="progress-bar progress-bar-success"></div>';
 echo '</div>';
 
-echo '<script>
-		function createUploader(){
-			var uploader = new qq.FileUploader({
-				element: document.getElementById(\'file-uploader\'),
-				action: \'inc.php?iid=semesterprogramm_admin_galerie_upload\',
-				allowedExtensions: [\'jpg\', \'jpeg\'],
-				params: {
-					veranstaltungId: ' .$id. '
-				}
-			});
-		}
-		window.onload = createUploader;
-    </script>';
+echo '<div id="files-success" role="alert" class="alert alert-success" style="display:none"></div>';
+echo '<div id="files-danger" role="alert" class="alert alert-danger" style="display:none"></div>';
 
-echo '<p>Nach dem Hochladen von Bildern sind diese durch eine <a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
+echo '<label class="btn btn-default btn-file">';
+echo '<i aria-hidden="true" class="fa fa-upload"></i> Fotos hochladen';
+echo '<input id="fileupload" type="file" style="display:none" name="files[]" multiple>';
+echo '</label>';
+
+echo '<script src="vendor/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>';
+echo '<script src="vendor/blueimp-file-upload/js/jquery.iframe-transport.js"></script>';
+echo '<script src="vendor/blueimp-file-upload/js/jquery.fileupload.js"></script>';
+echo '<script>
+	$(document).ready(function() {
+		\'use strict\';
+
+		var url = \'inc.php?iid=semesterprogramm_admin_galerie_upload&veranstaltungId=' .$id. '\';
+
+		$(\'#fileupload\').fileupload({
+			url: url,
+			dataType: \'json\',
+			progressall: function (e, data) {
+				var progress = parseInt(data.loaded / data.total * 100, 10);
+
+				$(\'#progress .progress-bar\').css(
+					\'width\',
+					progress + \'%\'
+				);
+			},
+			done: function (e, data) {
+				$.each(data.result.files, function (index, file) {
+					var id = \'#files-success\';
+					var responseText = file.name;
+
+					if(typeof file.error !== "undefined"){
+						id = \'#files-danger\';
+						responseText += \': \' + file.error;
+					}
+
+					var response = $(\'<p/>\').text(responseText).appendTo(id);
+					$(id).removeAttr(\'style\');
+				});
+			}
+		});
+	});
+	</script>';
+
+
+echo '<p>Hochgeladene Fotos sind nach einer <a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
 
 
 if(is_dir('custom/veranstaltungsfotos/' .$id)){
@@ -222,5 +252,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 	}
 
 	echo '</div>';
+} else {
+	echo '<p>Die Fotos ist auf eine qualitativ hochwertige Auswahl zu beschränken. Es geht nicht um Vollständigkeit. Hochwertige Fotos bilden Personengruppen in einer ansprechenden Umgebung ab und sind gut belichtet.</p>';
 }
 ?>
