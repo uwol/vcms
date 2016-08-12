@@ -128,7 +128,7 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 
 //-------------------------------------------------------------------------------------------------
 
-echo '<h1>Galerie ' .$id. '</h1>';
+echo '<h1>Galerie - ' .$libEvent->getTitle($id). '</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
@@ -253,6 +253,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 	echo '</div>';
 } else {
+	echo '<hr />';
 	echo '<p>Die Fotos ist auf eine qualitativ hochwertige Auswahl zu beschränken. Es geht nicht um Vollständigkeit. Hochwertige Fotos bilden Personengruppen in einer ansprechenden Umgebung ab und sind gut belichtet.</p>';
 }
 ?>

@@ -36,6 +36,19 @@ class LibEvent{
 		return $result;
 	}
 
+	function getShareTitle($id){
+		global $libConfig, $libDb, $libTime;
+
+		$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE id=:id');
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		$result = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateString($row['datum']);
+		return $result;
+	}
+
 	function getStatusString($status){
 		$result = '';
 
@@ -57,16 +70,15 @@ class LibEvent{
 	}
 
 	function getTitle($id){
-		global $libConfig, $libDb, $libTime;
+		global $libDb;
 
 		$stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE id=:id');
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
+		$stmt->bindColumn('titel', $title);
+		$stmt->fetch();
 
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-		$result = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateString($row['datum']);
-		return $result;
+		return $title;
 	}
 
 	function hasBannedTitle($id){
@@ -80,14 +92,8 @@ class LibEvent{
 			$bannedTitlesCleaned[] = strtolower(trim($bannedTitle));
 		}
 
-		$stmt = $libDb->prepare('SELECT titel FROM base_veranstaltung WHERE id=:id');
-		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
-		$stmt->execute();
-		$stmt->bindColumn('titel', $title);
-		$stmt->fetch();
-
+		$title = $this->getTitle($id);
 		$titleCleaned = strtolower(trim($title));
-
 		$result = in_array($titleCleaned, $bannedTitlesCleaned);
 		return $result;
 	}
@@ -105,7 +111,7 @@ class LibEvent{
 
 	function printFacebookShareButton($id){
 		$url = $this->getUrl($id);
-		$title = $this->getTitle($id);
+		$title = $this->getShareTitle($id);
 
 		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
 		echo '<i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>';
@@ -114,7 +120,7 @@ class LibEvent{
 
 	function printTwitterShareButton($id){
 		$url = $this->getUrl($id);
-		$title = $this->getTitle($id);
+		$title = $this->getShareTitle($id);
 
 		echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
 		echo '<i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>';
