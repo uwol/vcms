@@ -103,7 +103,7 @@ class LibAuth{
 			return false;
 		}
 
-		//5. deformed password hash
+		//5. missing password hash
 		if(trim($row['password_hash'] == '')){
 			$libGlobal->errorTexts[] = 'In der Datenbank ist kein Passwort-Hash vorhanden.';
 			return false;
