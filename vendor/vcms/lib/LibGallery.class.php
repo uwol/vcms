@@ -187,28 +187,31 @@ class LibGallery{
 
 		$pictures = $this->getPictures($eventId, 2);
 		$filename = $pictures[$pictureId];
-		$publicityFilename = $this->getPublicityFilename($filename, $accessString);
+		$currentAccessString = $this->parseAccessString($filename);
 
-		$notificationText = '';
+		if($currentAccessString != $accessString){
+			$notificationText = '';
 
-		switch($accessString){
-			case 'E':
-				$notificationText = 'Gebe Bild ' .($pictureId + 1). ' für das Internet frei.';
-				break;
-			case 'I':
-				$notificationText = 'Gebe Bild ' .($pictureId + 1). ' für das Intranet frei.';
-				break;
-			case 'P':
-				$notificationText = 'Lege Bild in ' .($pictureId + 1). ' den Pool zurück.';
-				break;
-			case 'M':
-				$notificationText = 'Gebe Bild ' .($pictureId + 1). ' als Hauptbild für das Internet frei.';
-				break;
+			switch($accessString){
+				case 'E':
+					$notificationText = 'Gebe Bild ' .($pictureId + 1). ' für das Internet frei.';
+					break;
+				case 'I':
+					$notificationText = 'Gebe Bild ' .($pictureId + 1). ' für das Intranet frei.';
+					break;
+				case 'P':
+					$notificationText = 'Lege Bild in ' .($pictureId + 1). ' den Pool zurück.';
+					break;
+				case 'M':
+					$notificationText = 'Gebe Bild ' .($pictureId + 1). ' als Hauptbild für das Internet frei.';
+					break;
+			}
+
+			$libGlobal->notificationTexts[] = $notificationText;
+
+			$publicityFilename = $this->getPublicityFilename($filename, $accessString);
+			rename('custom/veranstaltungsfotos/' .$eventId. '/' .$filename, 'custom/veranstaltungsfotos/' .$eventId. '/' .$publicityFilename);
 		}
-
-		$libGlobal->notificationTexts[] = $notificationText;
-
-		rename('custom/veranstaltungsfotos/' .$eventId. '/' .$filename, 'custom/veranstaltungsfotos/' .$eventId. '/' .$publicityFilename);
 	}
 
 	function setPublicityLevels($eventId, $accessString){
@@ -217,6 +220,22 @@ class LibGallery{
 		foreach($pictures as $key => $value){
 			$this->setPublicityLevel($eventId, $key, $accessString);
 		}
+	}
+
+	function setPublicityLevelsUntilSemester($semesterString, $accessString){
+		global $libTime, $libDb, $libGlobal;
+
+		$zeitraum = $libTime->getZeitraum($semesterString);
+
+		$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(datum, :semester_ende) <= 0 ORDER BY datum DESC');
+		$stmt->bindValue(':semester_ende', $zeitraum[1]);
+		$stmt->execute();
+
+		$libGlobal->notificationTexts[] = 'Gebe Bilder aller Veranstaltungen bis ' .$semesterString. ' für das Intranet frei.';
+
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			$this->setPublicityLevels($row['id'], $accessString);
+		}	
 	}
 
 	function resetPublicityLevelMain($eventId){
