@@ -51,6 +51,8 @@ class LibCronjobs{
 		$stmt->fetch();
 
 		if($numberOfCronJobExecutionsToday == 0){
+			$this->setGalleryPublicityLevels();
+
 			$this->executeJobs();
 		}
 	}
@@ -64,7 +66,6 @@ class LibCronjobs{
 		$this->createHtaccessFiles();
 		$this->cleanSysLogIntranet();
 		$this->initConfiguration();
-		$this->setGalleryPublicityLevels();
 
 		if($libGenericStorage->loadValue('base_core', 'deleteAusgetretene') == 1){
 			$this->cleanBasePerson();
