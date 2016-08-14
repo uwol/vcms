@@ -79,34 +79,37 @@ class LibGallery{
 			exit();
 		}
 
-	    $pictures = array();
+		$pictures = array();
 
 		if(is_dir($path)){
 			$files = array_diff(scandir($path), array('..', '.', 'thumbs'));
 
 			foreach ($files as $file){
 				$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+				$basename = pathinfo($file, PATHINFO_BASENAME);
 
-				if($extension == 'jpg' || $extension == 'jpeg'){
-					$pictures[] = $file;
+				if(substr($basename, 0, 1) != '.'){
+					if($extension == 'jpg' || $extension == 'jpeg'){
+						$pictures[] = $file;
+					}
 				}
-	    	}
-	    }
+			}
+		}
 
 		sort($pictures);
-	    reset($pictures);
+		reset($pictures);
 
-	    $visiblePictures = array();
-	    $i = 0;
+		$visiblePictures = array();
+		$i = 0;
 
 	   	foreach($pictures as $picture){
-	    	$levelOfPicture = $this->getPublicityLevel($picture);
+			$levelOfPicture = $this->getPublicityLevel($picture);
 
-	    	if($levelOfPicture <= $level){
-	    		$visiblePictures[$i] = $picture;
-	    	}
+			if($levelOfPicture <= $level){
+				$visiblePictures[$i] = $picture;
+			}
 
-	    	$i++;
+			$i++;
 	   	}
 
 		return $visiblePictures;
@@ -235,7 +238,7 @@ class LibGallery{
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			$this->setPublicityLevels($row['id'], $accessString);
-		}	
+		}
 	}
 
 	function resetPublicityLevelMain($eventId){
