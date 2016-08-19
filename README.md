@@ -1,7 +1,7 @@
 VCMS
 ====
 
-Das VCMS ist ein freies CMS zur Vereinsverwaltung, das für Korporationen entwickelt und von diversen Korporationen genutzt wird. Es kann als reine Intranet-Lösung oder als Internet-Auftritt betrieben werden, und modular zusammengestellt werden.
+Das VCMS ist ein freies Content-Management-System für Korporationen, das von diversen Korporationen unterschiedlicher Dachverbände als Internet-Auftritt oder Intranet-Lösung genutzt wird. Es unterstützt die Semesterplanung mit einem Semesterprogramm, das durch Fotogalerien, ein Anmeldesystem für Veranstaltungen, einen Chargierkalender, Nachrichtenbeiträge und Facebook-Integration angereichert wird. Zur Vereins-Organisation steht eine Mitgliederdatenbank, eine Rundbrieffunktion, ein Reservierungssystem und ein Download-Bereich bereit.
 
 
 Screenshots
