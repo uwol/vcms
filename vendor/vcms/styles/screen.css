@@ -26,8 +26,12 @@ fieldset {
 	min-height: 100%;
 }
 
-#content {
+.navbar-internet-only + #content {
 	padding-top: 140px;
+}
+
+.navbar-internet-intranet + #content {
+	padding-top: 180px;
 }
 
 main, footer {

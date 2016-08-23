@@ -62,8 +62,8 @@ echo '    <meta property="business:contact_data:country_name" content="' .$libCo
 echo '  </head>' . PHP_EOL;
 echo '  <body>' . PHP_EOL;
 
-$libMenuRenderer = new \vcms\LibMenuRenderer($libAuth);
-echo $libMenuRenderer->getMenuHtml($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
+$libMenuRenderer = new \vcms\LibMenuRenderer();
+$libMenuRenderer->printNavbar($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
 
 if($libGlobal->page->isContainerEnabled()){
 	echo '    <main id="content">' . PHP_EOL;

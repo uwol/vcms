@@ -21,13 +21,8 @@ namespace vcms;
 class LibMenuRenderer{
 
 	var $defaultIndent = '            ';
-	var $libAuth;
 
-	function __construct(LibAuth $libAuth){
-		$this->libAuth = $libAuth;
-	}
-
-	function getMenuHtml($menuInternet, $menuIntranet, $menuAdministration, $aktivesPid, $gruppe, $aemter){
+	function printNavbar($menuInternet, $menuIntranet, $menuAdministration, $aktivesPid, $gruppe, $aemter){
 		global $libGlobal;
 
 		$menuInternet = $menuInternet->copy();
@@ -39,165 +34,146 @@ class LibMenuRenderer{
 		$menuAdministration = $menuAdministration->copy();
 		$menuAdministration->reduceByAccessRestriction($gruppe, $aemter);
 
-		$retstr = '';
-		$retstr .= '    <nav id="nav" class="navbar navbar-default navbar-fixed-top">' . PHP_EOL;
-        $retstr .= '      <div class="container">' . PHP_EOL;
-		$retstr .= '        <div id="logo"></div>' . PHP_EOL;
+		$navbarClass = $this->getNavbarClass();
 
-        $retstr .= $this->getNavbarCollapsed();
-
-        $retstr .= $this->getNavbarInternet($menuInternet, $aktivesPid);
-        $retstr .= $this->getNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid);
-
-		$retstr .= '      </div>' . PHP_EOL;
-		$retstr .= '    </nav>' . PHP_EOL;
-
-		return $retstr;
+		echo '    <nav id="nav" class="navbar navbar-default navbar-fixed-top ' .$navbarClass. '">' . PHP_EOL;
+        echo '      <div class="container">' . PHP_EOL;
+		echo '        <div id="logo"></div>' . PHP_EOL;
+        echo $this->printNavbarCollapsed();
+        echo $this->printNavbarInternet($menuInternet, $aktivesPid);
+        echo $this->printNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid);
+		echo '      </div>' . PHP_EOL;
+		echo '    </nav>' . PHP_EOL;
 	}
 
-	function getNavbarInternet($menuInternet, $aktivesPid){
-		$retstr = '';
+	function printNavbarCollapsed(){
+		global $libGenericStorage;
 
+		echo '        <div class="navbar-header">' . PHP_EOL;
+		echo '          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . PHP_EOL;
+        echo $this->defaultIndent . '<span class="sr-only">Navigation</span>' . PHP_EOL;
+        echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
+        echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
+		echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
+		echo '          </button>' . PHP_EOL;
+
+		$brand = $libGenericStorage->loadValue('base_core', 'brand');
+		$brandXs = $libGenericStorage->loadValue('base_core', 'brandXs');
+
+		echo '          <a href="index.php" class="navbar-brand hidden-xs">' .$brand. '</a>' . PHP_EOL;
+		echo '          <a href="index.php" class="navbar-brand visible-xs">' .$brandXs. '</a>' . PHP_EOL;
+		echo '        </div>' . PHP_EOL;
+	}
+
+	function printNavbarInternet($menuInternet, $aktivesPid){
 		$rootMenuFolderInternet = $menuInternet->getRootMenuFolder();
 
 		if($rootMenuFolderInternet->hasElements()){
-			$retstr .= '        <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
-			$retstr .= '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
-			$retstr .= $this->getMenuLevel($rootMenuFolderInternet, 0, $aktivesPid);
-			$retstr .= '          </ul>' . PHP_EOL;
-			$retstr .= '        </div>' . PHP_EOL;
+			echo '        <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
+			echo '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
+			echo $this->printNavbarLevel($rootMenuFolderInternet, 0, $aktivesPid);
+			echo '          </ul>' . PHP_EOL;
+			echo '        </div>' . PHP_EOL;
 		}
-
-		return $retstr;
 	}
 
-	function getNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid){
-		$retstr = '';
-
+	function printNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid){
 		$rootMenuFolderIntranet = $menuIntranet->getRootMenuFolder();
 		$rootMenuFolderAdministration = $menuAdministration->getRootMenuFolder();
 
 		if($rootMenuFolderIntranet->hasElements()){
-			$retstr .= '        <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . PHP_EOL;
-			$retstr .= '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
-			$retstr .= $this->getMenuLevel($rootMenuFolderIntranet, 0, $aktivesPid);
-			$retstr .= $this->getMenuLevel($rootMenuFolderAdministration, 0, $aktivesPid);
-			$retstr .= '          </ul>' . PHP_EOL;
-			$retstr .= '        </div>' . PHP_EOL;
+			echo '        <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . PHP_EOL;
+			echo '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
+			echo $this->printNavbarLevel($rootMenuFolderIntranet, 0, $aktivesPid);
+			echo $this->printNavbarLevel($rootMenuFolderAdministration, 0, $aktivesPid);
+			echo '          </ul>' . PHP_EOL;
+			echo '        </div>' . PHP_EOL;
 		}
-
-		return $retstr;
 	}
 
-	function getMenuLevel($menuFolder, $depth, $pid){
-		$retstr = '';
+	function printNavbarLevel($menuFolder, $depth, $pid){
+		global $libAuth;
 
 		//for all menu elements
 		foreach($menuFolder->getElements() as $folderElement){
 			//internal link?
 			if($folderElement->getType() == 1){
-				$retstr .= $this->getLiTag($folderElement, $depth, $pid);
-				$retstr .= '<a href="index.php?pid=' . $folderElement->getPid() . '">';
-				$retstr .= $folderElement->getName();
-				$retstr .= '</a></li>' . PHP_EOL;
+				$this->printLiTag($folderElement, $depth, $pid);
+
+				echo '<a href="index.php?pid=' . $folderElement->getPid() . '">';
+				echo $folderElement->getName();
+				echo '</a></li>' . PHP_EOL;
 			}
 			//folder?
 			elseif($folderElement->getType() == 2){
-				$retstr .= $this->defaultIndent . $this->indent($depth) . '<li class="dropdown">' . PHP_EOL;
-
-				$retstr .= $this->defaultIndent . $this->indent($depth) . '  <a href="index.php?';
+				echo $this->defaultIndent . $this->indent($depth) . '<li class="dropdown">' . PHP_EOL;
+				echo $this->defaultIndent . $this->indent($depth) . '  <a href="index.php?';
 
 				//does the folder have an associated page?
-				if($folderElement->getPid() != ""){
-					$retstr .= 'pid='.$folderElement->getPid();
+				if($folderElement->getPid() != ''){
+					echo 'pid='.$folderElement->getPid();
 				}
 				//else show current page
 				else {
-					$retstr .= 'pid='.$pid;
+					echo 'pid='.$pid;
 				}
 
-				$retstr .= '" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
-				$retstr .= $folderElement->getName();
-				$retstr .= '<span class="caret"></span></a>' . PHP_EOL;
+				echo '" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
+				echo $folderElement->getName();
+				echo '<span class="caret"></span></a>' . PHP_EOL;
 
 				//menu folder with elements?
 				if($folderElement->hasElements()){
-					$retstr .= $this->defaultIndent . $this->indent($depth) . '  <ul class="dropdown-menu">' . PHP_EOL;
-					$retstr .= $this->getMenuLevel($folderElement, $depth+1, $pid);
-					$retstr .= $this->defaultIndent . $this->indent($depth) . '  </ul>' . PHP_EOL;
+					echo $this->defaultIndent . $this->indent($depth) . '  <ul class="dropdown-menu">' . PHP_EOL;
+					echo $this->printNavbarLevel($folderElement, $depth+1, $pid);
+					echo $this->defaultIndent . $this->indent($depth) . '  </ul>' . PHP_EOL;
 				}
 
-				$retstr .= $this->defaultIndent . $this->indent($depth) . '</li>' . PHP_EOL;
+				echo $this->defaultIndent . $this->indent($depth) . '</li>' . PHP_EOL;
 			}
 			//external link?
 			elseif($folderElement->getType() == 3){
-				$retstr .= $this->getLiTag($folderElement, $depth, $pid);
-				$retstr .= '<a href="' .$folderElement->getPid(). '">';
-				$retstr .= '<i class="fa fa-external-link" aria-hidden="true"></i> ';
-				$retstr .= $folderElement->getName();
-				$retstr .= '</a></li>' . PHP_EOL;
+				$this->printLiTag($folderElement, $depth, $pid);
+
+				echo '<a href="' .$folderElement->getPid(). '">';
+				echo '<i class="fa fa-external-link" aria-hidden="true"></i> ';
+				echo $folderElement->getName();
+				echo '</a></li>' . PHP_EOL;
 			}
 			//login / logout
 			elseif($folderElement->getType() == 4){
-				$retstr .= $this->getLiTag($folderElement, $depth, $pid);
+				$this->printLiTag($folderElement, $depth, $pid);
 
-				if(!$this->libAuth->isLoggedin()){
-					$retstr .= '<a href="index.php?pid=' . $folderElement->getPid() . '">';
-					$retstr .= $folderElement->getName();
-					$retstr .= '</a>';
+				if(!$libAuth->isLoggedin()){
+					echo '<a href="index.php?pid=' . $folderElement->getPid() . '">';
+					echo $folderElement->getName();
+					echo '</a>';
 				} else {
-					$retstr .= '<a href="index.php?session_destroy=1">' .$folderElement->getNameLogout(). '</a>';
+					echo '<a href="index.php?session_destroy=1">' .$folderElement->getNameLogout(). '</a>';
 				}
 
-				$retstr .= '</li>' . PHP_EOL;
+				echo '</li>' . PHP_EOL;
 			}
 		}
-
-		return $retstr;
-	}
-
-	function getNavbarCollapsed(){
-		global $libGenericStorage;
-
-		$retstr = '';
-
-		$retstr .= '        <div class="navbar-header">' . PHP_EOL;
-		$retstr .= '          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . PHP_EOL;
-        $retstr .= $this->defaultIndent . '<span class="sr-only">Navigation</span>' . PHP_EOL;
-        $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
-        $retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
-		$retstr .= $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
-		$retstr .= '          </button>' . PHP_EOL;
-
-		$brand = $libGenericStorage->loadValue('base_core', 'brand');
-		$brandXs = $libGenericStorage->loadValue('base_core', 'brandXs');
-
-		$retstr .= '          <a href="index.php" class="navbar-brand hidden-xs">' .$brand. '</a>' . PHP_EOL;
-		$retstr .= '          <a href="index.php" class="navbar-brand visible-xs">' .$brandXs. '</a>' . PHP_EOL;
-		$retstr .= '        </div>' . PHP_EOL;
-
-		return $retstr;
 	}
 
 	function indent($depth = 0){
-		$str = '';
-
 		for($i=0; $i < $depth; $i++){
-			$str .= '    ';
+			echo '    ';
 		}
-
-		return $str;
 	}
 
-	function getLiTag($folderElement, $depth, $pid){
-		$retstr = '';
-
+	function printLiTag($folderElement, $depth, $pid){
 		if($folderElement->getPid() == $pid){
-			$retstr .= $this->defaultIndent . $this->indent($depth) . '<li class="active">';
+			echo $this->defaultIndent . $this->indent($depth) . '<li class="active">';
 		} else {
-			$retstr .= $this->defaultIndent . $this->indent($depth) . '<li>';
+			echo $this->defaultIndent . $this->indent($depth) . '<li>';
 		}
+	}
 
-		return $retstr;
+	function getNavbarClass(){
+		global $libAuth;
+
+		return !$libAuth->isLoggedin() ? 'navbar-internet-only' : 'navbar-internet-intranet';
 	}
 }
