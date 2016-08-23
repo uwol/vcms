@@ -1,11 +1,9 @@
 .navbar-default {
 	background-color: white;
 	border-color: rgba(34, 34, 34, 0.05);
-	-webkit-transition: all 0.35s;
-	-moz-transition: all 0.35s;
-	transition: all 0.35s;
 }
 
+.navbar-default,
 .navbar-default a {
 	-webkit-transition: all 0.35s;
 	-moz-transition: all 0.35s;
@@ -14,9 +12,12 @@
 
 .navbar-default #logo {
 	height: 75px;
-	-webkit-transition: height 0.35s;
-	-moz-transition: height 0.35s;
-	transition: height 0.35s;
+}
+
+@media(min-width: 768px){
+	.navbar-default.affix-top {
+		position: absolute;
+	}
 }
 
 @media(max-width: 767px){
@@ -44,15 +45,15 @@
 	color: #111;
 }
 
-@media(min-width: 768px) {
-	.navbar-default.affix .navbar-header .navbar-brand {
-		font-size: 1.1em;
-	}
-}
-
 @media(max-width: 767px){
 	.navbar-default .navbar-header .navbar-brand {
 		padding-left: 5px;
+	}
+}
+
+@media(min-width: 768px) {
+	.navbar-default.affix .navbar-header .navbar-brand {
+		font-size: 1.1em;
 	}
 }
 
