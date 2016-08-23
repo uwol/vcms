@@ -15,7 +15,7 @@
 		{
 			"name": "System",
 			"type": "menu_folder",
-			"position": 1, 
+			"position": 200, 
 			"elements": [
 				{
 					"pid": "configuration",
