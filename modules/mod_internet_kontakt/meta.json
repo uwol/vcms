@@ -1,9 +1,9 @@
 {
 	"moduleName": "Kontakt",
-	"version": 2.32,
+	"version": 2.33,
 	"pages": [
 		{
-			"pid": "kontakt_kontakt",
+			"pid": "kontakt",
 			"file": "contact.php",
 			"directory": "scripts",
 			"title": "Kontakt"
@@ -11,7 +11,7 @@
 	],
 	"menuElementsInternet": [
 		{
-			"pid": "kontakt_kontakt",
+			"pid": "kontakt",
 			"name": "Kontakt",
 			"type": "menu_entry",
 			"position": 30000

@@ -1,10 +1,10 @@
 {
 	"moduleName": "Chargierkalender",
-	"version": 2.40,
+	"version": 2.41,
 	"installScript": "install/install.php",
 	"pages": [
 		{
-			"pid": "intranet_chargierkalender_kalender",
+			"pid": "intranet_chargierkalender",
 			"file": "calendar.php",
 			"directory": "scripts",
 			"title": "Chargierkalender",
@@ -33,7 +33,7 @@
 	],
 	"menuElementsIntranet": [
 		{
-			"pid": "intranet_chargierkalender_kalender",
+			"pid": "intranet_chargierkalender",
 			"name": "Chargieren",
 			"type": "menu_entry",
 			"position": 10525

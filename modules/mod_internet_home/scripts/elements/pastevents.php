@@ -20,7 +20,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE intern = 0 AND DATEDIFF(NOW(), datum) < 120 ORDER BY datum DESC');
+$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE intern = 0 AND DATEDIFF(NOW(), datum) < 365 ORDER BY datum DESC');
 $stmt->execute();
 
 $maxNumberOfThumbnails = 6;

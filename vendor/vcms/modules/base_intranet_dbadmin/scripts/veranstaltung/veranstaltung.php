@@ -102,7 +102,7 @@ if($libAuth->isLoggedin()){
 	}
 
 	if($libEvent->hasBannedTitle($id)){
-		$libGlobal->errorTexts[] = 'Der Veranstaltungstitel ist nicht optimal.';	
+		$libGlobal->errorTexts[] = 'Der Veranstaltungstitel ist nicht optimal.';
 	}
 
 	/**

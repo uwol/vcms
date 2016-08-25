@@ -199,7 +199,7 @@ if($mailsent){
 	}
 
 
-	echo '<form action="index.php?pid=kontakt_kontakt" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=kontakt" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 
 	$libForm->printTextInput('name', 'Name', $libString->protectXSS($name));

@@ -130,6 +130,6 @@ function getPageOgUrl(){
 function isEventPage(){
 	global $libGlobal;
 
-	return $libGlobal->page->getPid() == 'semesterprogramm_event' 
+	return $libGlobal->page->getPid() == 'semesterprogramm_event'
 			&& isset($_REQUEST['eventid']) && is_numeric($_REQUEST['eventid']);
 }

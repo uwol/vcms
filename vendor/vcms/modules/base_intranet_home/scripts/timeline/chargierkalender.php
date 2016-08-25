@@ -77,7 +77,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$stmt2->fetch();
 
 	$title = 'Chargieren bei ';
-	$url = 'index.php?pid=intranet_chargierkalender_kalender&amp;semester=' .$libTime->getSemesterNameAtDate($row['datum']). '#t' .$row['id'];
+	$url = 'index.php?pid=intranet_chargierkalender&amp;semester=' .$libTime->getSemesterNameAtDate($row['datum']). '#t' .$row['id'];
 	$form = '';
 	$description = '';
 

@@ -38,7 +38,7 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $title = $libTime->getSemesterString($row['semester']);
-$url = 'index.php?pid=semesterprogramm_calendar&amp;semester=' .$row['semester'];
+$url = 'index.php?pid=semesterprogramm&amp;semester=' .$row['semester'];
 $description = '';
 
 

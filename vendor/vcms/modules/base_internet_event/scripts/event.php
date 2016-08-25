@@ -208,7 +208,7 @@ function printSemesterCover($row){
 
 	if($semesterCoverString != ''){
 		echo '<div class="semestercoverBox center-block">';
-		echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$semester. '">';
+		echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$semester. '">';
 		echo $semesterCoverString;
 		echo '</a>';
 		echo '</div>';

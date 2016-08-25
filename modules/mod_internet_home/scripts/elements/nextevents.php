@@ -92,14 +92,14 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 		echo '<div class="col-sm-4">';
 		echo '<div class="thumbnail">';
 		echo '<div class="semestercoverBox center-block">';
-		echo '<a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">';
+		echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">';
 		echo $semesterCoverString;
 		echo '</a>';
 		echo '</div>';
 
 		echo '<div class="caption">';
-		echo '<h3><i class="fa fa-calendar" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
-		echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm_calendar&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
+		echo '<h3><i class="fa fa-calendar" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
+		echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
 		echo '</div>';
 
 		echo '</div>';

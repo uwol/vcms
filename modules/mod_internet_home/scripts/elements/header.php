@@ -20,6 +20,8 @@ if(!is_object($libGlobal))
 	exit();
 
 
+echo '<h1 class="visible-xs">Willkommen</h1>';
+
 echo '<header class="hidden-xs">';
 echo '<div class="header-content">';
 echo '<div class="header-content-inner">';
