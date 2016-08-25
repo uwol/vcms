@@ -38,7 +38,7 @@ if(!isset($_GET['pid']) || $_GET['pid'] == ''){
 	if($defaultHomeExists){
 		$libGlobal->pid = $libConfig->defaultHome;
 	} else {
-		$libGlobal->pid = 'login_login';
+		$libGlobal->pid = 'login';
 	}
 } else {
 	$libGlobal->pid = $_GET['pid'];
@@ -71,7 +71,7 @@ if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->pag
 	echo '<h1>Zugriffsfehler</h1>';
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
-	echo '<p>Für diese Seite ist eine <a href="index.php?pid=login_login">Anmeldung im Intranet</a> nötig.</p>';
+	echo '<p>Für diese Seite ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 }
 
 

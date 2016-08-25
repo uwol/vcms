@@ -42,7 +42,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 if($row['intern'] && !$libAuth->isLoggedIn()){
-	echo '<p>Für diese Veranstaltung ist eine <a href="index.php?pid=login_login">Anmeldung im Intranet</a> nötig.</p>';
+	echo '<p>Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 } else {
 	if($libAuth->isLoggedIn()){
 		if(isset($_POST['changeanmeldenstate']) && $_POST['changeanmeldenstate'] != ''){
@@ -186,7 +186,7 @@ function printAnmeldungen($row){
 
 		echo '</p>';
 	} else {
-		echo '<p>Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.</p>';
+		echo '<p>Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login">im Intranet anmelden</a>.</p>';
 	}
 
 	/*
@@ -260,7 +260,7 @@ function printAnmeldeStatus($row){
 			}
 		}
 	} else {
-		echo '<p>Für den Anmeldestatus bitte <a href="index.php?pid=login_login">im Intranet anmelden</a>.</p>';
+		echo '<p>Für den Anmeldestatus bitte <a href="index.php?pid=login">im Intranet anmelden</a>.</p>';
 	}
 }
 

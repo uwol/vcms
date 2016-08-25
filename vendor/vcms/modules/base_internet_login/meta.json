@@ -2,7 +2,7 @@
 	"moduleName": "Login",
 	"pages": [
 		{
-			"pid": "login_login",
+			"pid": "login",
 			"file": "login.php",
 			"directory": "scripts",
 			"title": "Login"
@@ -22,7 +22,7 @@
 	],
 	"menuElementsInternet": [
 		{
-			"pid": "login_login",
+			"pid": "login",
 			"name": "Login",
 			"nameLogout": "Logout",
 			"type": "menu_entry_login",

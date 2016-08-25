@@ -11,20 +11,13 @@ header {
 	position: relative;
 	width: 100%;
 	min-height: auto;
-	background-position: center;
-	background-image: url('../custom/header.jpg');
-	background-size: cover;
-	-moz-background-size: cover;
-	-webkit-background-size: cover;
-	-o-background-size: cover;
 	text-align: center;
-	color: white;
 }
 
 header .header-content {
 	position: relative;
 	text-align: center;
-	padding: 100px 15px 100px;
+	padding: 100px 15px 0px;
 	width: 100%;
 }
 
@@ -33,7 +26,6 @@ header .header-content .header-content-inner h1 {
 	text-transform: uppercase;
 	margin-top: 0;
 	margin-bottom: 0;
-	font-size: 1.5em;
 }
 
 header .header-content .header-content-inner .btn-circle {
@@ -64,6 +56,13 @@ header .header-content .header-content-inner .btn-circle .fa{
 @media (min-width: 768px) {
 	header {
 		min-height: 100%;
+		background-position: center;
+		background-image: url('../custom/header.jpg');
+		background-size: cover;
+		-moz-background-size: cover;
+		-webkit-background-size: cover;
+		-o-background-size: cover;
+		color: white;
 	}
 
 	header .header-content {

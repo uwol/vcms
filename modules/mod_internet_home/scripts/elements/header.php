@@ -20,13 +20,11 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<h1 class="visible-xs">Willkommen</h1>';
-
-echo '<header class="hidden-xs">';
+echo '<header>';
 echo '<div class="header-content">';
 echo '<div class="header-content-inner">';
 echo '<h1 id="homeHeading">Willkommen</h1>';
-echo '<a class="btn btn-circle" href="#pastevents">';
+echo '<a class="btn btn-circle hidden-xs" href="#pastevents">';
 echo '<i class="fa fa-angle-double-down"></i>';
 echo '</a>';
 echo '</div>';
