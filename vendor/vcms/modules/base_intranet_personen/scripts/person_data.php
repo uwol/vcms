@@ -746,7 +746,7 @@ function printAssociationDetails($row){
 
 	while($rowVerein = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$vereinStr = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowVerein['id']. '">';
-		$vereinStr .= $rowVerein['titel']. ' ' .$rowVerein['name']. ' im ' .$rowVerein['dachverband']. ' zu ' .$rowVerein['ort1'];
+		$vereinStr .= $rowVerein['titel']. ' ' .$rowVerein['name'];
 		$vereinStr .= '</a>';
 
 		$vereine[] = $vereinStr;
