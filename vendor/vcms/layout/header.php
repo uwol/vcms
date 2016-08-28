@@ -59,6 +59,13 @@ echo '    <meta property="business:contact_data:street_address" content="' .$lib
 echo '    <meta property="business:contact_data:locality" content="' .$libConfig->verbindungOrt. '"/>' . PHP_EOL;
 echo '    <meta property="business:contact_data:postal_code" content="' .$libConfig->verbindungPlz. '"/>' . PHP_EOL;
 echo '    <meta property="business:contact_data:country_name" content="' .$libConfig->verbindungLand. '"/>' . PHP_EOL;
+
+$analyticsFilePath = $libFilesystem->getAbsolutePath('custom/analyticstracking.php');
+
+if(is_file($analyticsFilePath) && !$libAuth->isLoggedIn()){
+	include_once($analyticsFilePath);
+}
+
 echo '  </head>' . PHP_EOL;
 echo '  <body>' . PHP_EOL;
 
