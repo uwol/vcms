@@ -37,7 +37,7 @@ ini_set('arg_separator.output', '&amp;');
 */
 @session_start();
 
-if((isset($_REQUEST['session_destroy']) && $_REQUEST['session_destroy'] == 1) ||
+if((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
 		(isset($_SESSION['session_timeout_timestamp']) &&
 		($_SESSION['session_timeout_timestamp'] == "" || $_SESSION['session_timeout_timestamp'] < time()))){
 	@session_destroy();

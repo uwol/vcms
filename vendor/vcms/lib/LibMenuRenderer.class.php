@@ -60,8 +60,8 @@ class LibMenuRenderer{
 		$brand = $libGenericStorage->loadValue('base_core', 'brand');
 		$brandXs = $libGenericStorage->loadValue('base_core', 'brandXs');
 
-		echo '          <a href="index.php" class="navbar-brand hidden-xs">' .$brand. '</a>' . PHP_EOL;
-		echo '          <a href="index.php" class="navbar-brand visible-xs">' .$brandXs. '</a>' . PHP_EOL;
+		echo '          <a href="/" class="navbar-brand hidden-xs">' .$brand. '</a>' . PHP_EOL;
+		echo '          <a href="/" class="navbar-brand visible-xs">' .$brandXs. '</a>' . PHP_EOL;
 		echo '        </div>' . PHP_EOL;
 	}
 
@@ -149,7 +149,7 @@ class LibMenuRenderer{
 					echo $folderElement->getName();
 					echo '</a>';
 				} else {
-					echo '<a href="index.php?session_destroy=1">' .$folderElement->getNameLogout(). '</a>';
+					echo '<a href="index.php?logout=1">' .$folderElement->getNameLogout(). '</a>';
 				}
 
 				echo '</li>' . PHP_EOL;
