@@ -6,6 +6,7 @@ body {
 	padding: 0;
 	background-color: #f8f8f8;
 	color: #333;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 	/* hyphenation */
 	overflow-wrap: break-word;
