@@ -103,7 +103,7 @@ echo $libString->getNotificationBoxText();
 echo '<h2>Kontaktadresse</h2>';
 
 echo '<div class="row">';
-echo '<div class="col-sm-8">';
+echo '<div class="col-sm-6">';
 
 echo '<div class="h-card">';
 echo '<p class="p-name p-org">' .$libConfig->verbindungName. '</p>';
@@ -158,7 +158,7 @@ if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['qu
 echo '</p>';
 echo '</div>';
 
-echo '<aside class="col-sm-4">';
+echo '<aside class="col-sm-6">';
 echo '<img src="' . $libModuleHandler->getModuleDirectory() . '/custom/img/haus.jpg" alt="" class="img-responsive center-block" />';
 echo '</aside>';
 
@@ -168,7 +168,7 @@ echo '</div>';
 echo '<h2>Kontakt aufnehmen</h2>';
 
 echo '<div class="row">';
-echo '<div class="col-md-12">';
+echo '<div class="col-sm-12">';
 
 
 if($mailsent){
