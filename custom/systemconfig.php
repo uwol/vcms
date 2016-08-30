@@ -1,17 +1,11 @@
 <?php
 class LibConfig{
-	/**
-	* MySQL-Datenbank
-	*/
 	var $mysqlServer = 'localhost';
 	var $mysqlUser = 'username';
 	var $mysqlPass = 'password';
 	var $mysqlDb = 'datenbankname';
-	var $mysqlPort = ''; //optional
+	var $mysqlPort = '';
 
-	/**
-	* Daten zur Verbindung
-	*/
 	var $verbindungName = 'K.St.V. Example';
 	var $verbindungDachverband = 'KV';
 
@@ -28,37 +22,21 @@ class LibConfig{
 	var $emailWebmaster = 'webmaster@example.net';
 
 	var $chargenSenior = 'x';
-	var $emailSenior = 'senior@example.net';
 	var $chargenJubelSenior = 'x';
-	var $emailJubelSenior = 'jubelsenior@example.net';
 	var $chargenConsenior = 'vx';
-	var $emailConsenior = 'consenior@example.net';
 	var $chargenScriptor = 'xx';
-	var $emailScriptor = 'scriptor@example.net';
 	var $chargenQuaestor = 'xxx';
-	var $emailQuaestor = 'quaestor@example.net';
 	var $chargenFuchsmajor = 'FM';
-	var $emailFuchsmajor = 'fuchsmajor@example.net';
 	var $chargenFuchsmajor2 = 'FM 2';
-	var $emailFuchsmajor2 = 'fuchsmajor2@example.net';
 	var $chargenAHVSenior = 'AH-x';
-	var $emailAHVSenior = '';
 	var $chargenAHVConsenior = 'AH-vx';
-	var $emailAHVConsenior = '';
 	var $chargenAHVKeilbeauftragter = 'K';
-	var $emailAHVKeilbeauftragter = '';
 	var $chargenAHVScriptor = 'AH-xx';
-	var $emailAHVScriptor = '';
 	var $chargenAHVQuaestor = 'AH-xxx';
-	var $emailAHVQuaestor = '';
 	var $chargenHVVorsitzender = '';
-	var $emailHVVorsitzender = '';
 	var $chargenHVKassierer = '';
-	var $emailHVKassierer = '';
 	var $chargenArchivar = '';
-	var $emailArchivar = '';
 	var $chargenRedaktionswart = 'Red.';
-	var $emailRedaktionswart = '';
 	var $chargenVOP = 'VOP';
 	var $chargenVVOP = 'VVOP';
 	var $chargenVOPxx = 'VOPxx';
@@ -95,4 +73,3 @@ class LibConfig{
 	//	2008 	=> array('FT', 'FT', 'FT', 'FT', 'FT', 'FT', 'ST', 'ST', 'ST', 'ST', 'ST', 'ST')
 	//);
 }
-?>
