@@ -83,6 +83,25 @@ header .header-content .header-content-inner .btn-circle .fa{
 	header .header-content .header-content-inner h1 {
 		font-size: 3.5em;
 	}
+
+	video.hero {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		z-index: -100;
+		-ms-transform: translateX(-50%) translateY(-50%);
+		-moz-transform: translateX(-50%) translateY(-50%);
+		-webkit-transform: translateX(-50%) translateY(-50%);
+		transform: translateX(-50%) translateY(-50%);
+	}
+
+	section, footer {
+		background-color: inherit;
+	}
 }
 
 
@@ -91,8 +110,8 @@ header .header-content .header-content-inner .btn-circle .fa{
 }
 
 
-.announcement-box:nth-child(even) {
-	background-color: rgba(0, 0, 0, 0.65);
+section.announcement-box:nth-of-type(even) {
+	background-color: #575757;
 	color: white;
 }
 
@@ -152,7 +171,7 @@ header .header-content .header-content-inner .btn-circle .fa{
 
 
 .contact-box {
-	background-color: rgba(0, 0, 0, 0.65);
+	background-color: #575757;
 	color: white;
 }
 
