@@ -20,12 +20,14 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
+$libDb->connect();
+
 if($libAuth->isLoggedin() &&
 		isset($_REQUEST['veranstaltungId']) && is_numeric($_REQUEST['veranstaltungId']) &&
-		preg_match("/^[0-9]+$/", $_REQUEST['veranstaltungId']) && isset($_FILES[files][name])){
+		preg_match("/^[0-9]+$/", $_REQUEST['veranstaltungId']) && isset($_FILES['files']['name'])){
 
 	$allowedExtensions = array('jpg', 'jpeg');
-	$numerOfFiles = count($_FILES[files][name]);
+	$numerOfFiles = count($_FILES['files']['name']);
 	$filesResult = array();
 
 	for($i=0; $i<$numerOfFiles; $i++){
@@ -44,9 +46,9 @@ if($libAuth->isLoggedin() &&
 function handleFileUpload($i, $allowedExtensions){
 	global $libGlobal, $libImage;
 
-	$name = $_FILES[files][name][$i];
-	$tmp_name = $_FILES[files][tmp_name][$i];
-	$size = $_FILES[files][size][$i];
+	$name = $_FILES['files']['name'][$i];
+	$tmp_name = $_FILES['files']['tmp_name'][$i];
+	$size = $_FILES['files']['size'][$i];
 
 	$pathinfo = pathinfo($name);
 	$filename = $pathinfo['filename'];
