@@ -293,4 +293,3 @@ function printGallery($row){
 		echo '</div>';
 	}
 }
-?>

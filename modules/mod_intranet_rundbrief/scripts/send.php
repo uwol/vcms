@@ -265,4 +265,3 @@ function istImVorstand($aemter){
 		return false;
 	}
 }
-?>

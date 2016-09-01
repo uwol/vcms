@@ -22,7 +22,6 @@ if(!is_object($libGlobal))
 
 echo '<h1>Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
 
-
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 
@@ -94,4 +93,3 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 echo $calendar->toString();
 echo '</div>';
-?>

@@ -19,6 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
 
 	$aktion = '';
@@ -359,4 +360,3 @@ if($libAuth->isLoggedin()){
 	echo '</div>';
 	echo '</div>';
 }
-?>

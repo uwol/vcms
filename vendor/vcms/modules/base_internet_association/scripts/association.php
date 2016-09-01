@@ -271,4 +271,3 @@ if(isset($_GET['verein'])){
 		echo '</div>';
 	}
 }
-?>

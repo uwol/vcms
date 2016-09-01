@@ -19,6 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
 	$orderby = 0;
 
@@ -26,9 +27,6 @@ if($libAuth->isLoggedin()){
 		$orderby = $_POST['orderby'];
 	}
 
-	/**
-	* Löschvorgang durchführen
-	*/
 	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
 		if(isset($_GET['id']) && $_GET['id'] != ''){
 			//Ist der Bearbeiter kein Internetwart?
@@ -189,4 +187,3 @@ if($libAuth->isLoggedin()){
 
 	echo '</table>';
 }
-?>

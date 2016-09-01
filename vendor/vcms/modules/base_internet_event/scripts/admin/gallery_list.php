@@ -191,4 +191,3 @@ if(count($foldersWithoutEvent) > 0){
 
 	echo '</table>';
 }
-?>

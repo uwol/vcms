@@ -91,4 +91,3 @@ function addBirthdayTimelineEvent($row, $date, $age){
 
 	$timelineEventSet->addEvent($timelineEvent);
 }
-?>

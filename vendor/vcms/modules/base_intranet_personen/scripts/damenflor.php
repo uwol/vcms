@@ -19,6 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 require('lib/persons.php');
 
 echo '<h1>Der Damenflor</h1>';
@@ -47,4 +48,3 @@ if($anzahl > 0){
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'G' OR gruppe = 'W' ORDER BY name");
 	printPersons($stmt);
 }
-?>

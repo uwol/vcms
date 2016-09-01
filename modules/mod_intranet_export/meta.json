@@ -1,6 +1,6 @@
 {
 	"moduleName": "Export",
-	"version": 2.19,
+	"version": 2.20,
 	"pages": [
 		{
 			"pid": "intranet_admin_export",
@@ -8,8 +8,8 @@
 			"directory": "scripts",
 			"title": "Export",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
-					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor",
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx",
 					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
 			}
 		}
@@ -20,8 +20,8 @@
 			"file": "data_addresses.php",
 			"directory": "scripts",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
-					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor",
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx",
 					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
 			}
 		},
@@ -30,8 +30,8 @@
 			"file": "data_birthdays.php",
 			"directory": "scripts",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
-					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor",
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx",
 					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
 			}
 		},
@@ -40,8 +40,8 @@
 			"file": "data_significant_birthdays.php",
 			"directory": "scripts",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
-					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor",
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx",
 					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
 			}
 		},
@@ -50,8 +50,8 @@
 			"file": "data_anniversaries.php",
 			"directory": "scripts",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", 
-					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx", 
+				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor",
+					"fuchsmajor2", "scriptor", "quaestor", "vop", "vvop", "vopxx", "vopxxx", "vopxxxx",
 					"ahv_senior", "ahv_consenior", "ahv_scriptor", "ahv_quaestor", "hv_vorsitzender", "hv_kassierer"]
 			}
 		}

@@ -53,4 +53,3 @@ $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"
 
 echo '</fieldset>';
 echo '</form>';
-?>

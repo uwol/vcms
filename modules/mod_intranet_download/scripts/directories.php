@@ -322,4 +322,3 @@ function getSizeString($size){
 		return round($size / 1000, 0). ' KB';
 	}
 }
-?>

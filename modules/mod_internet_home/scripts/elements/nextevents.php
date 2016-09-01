@@ -110,4 +110,3 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 	echo '</div>';
 	echo '</section>';
 }
-?>

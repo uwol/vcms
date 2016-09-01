@@ -21,9 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	/**
-	* Löschvorgang durchführen
-	*/
+
 	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
 		if(isset($_GET['verein']) && $_GET['verein'] != '' && isset($_GET['mitglied']) && $_GET['mitglied'] != ''){
 			// Veranstaltung aus Datenbank löschen
@@ -73,4 +71,3 @@ if($libAuth->isLoggedin()){
 
 	echo '</table>';
 }
-?>

@@ -103,4 +103,3 @@ foreach($timelineEvents as $timelineEvent){
 echo '</div>';
 echo '<div class="timeline-footer"></div>';
 echo '</div>';
-?>

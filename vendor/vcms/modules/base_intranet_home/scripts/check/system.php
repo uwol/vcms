@@ -133,4 +133,3 @@ function searchNotReadAbleFiles($dir){
 
 	return $notReadableFiles;
 }
-?>

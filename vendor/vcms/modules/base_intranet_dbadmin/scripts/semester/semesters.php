@@ -88,4 +88,3 @@ if($libAuth->isLoggedin()){
 
 	echo '</table>';
 }
-?>

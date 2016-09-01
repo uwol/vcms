@@ -19,8 +19,8 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
-echo '<h1>Statistik</h1>';
 
+echo '<h1>Statistik</h1>';
 
 $personsPerRow = 4;
 
@@ -239,4 +239,3 @@ function calculateAgeClasses($ageArray, $classWidth){
 
 	return $ageClasses;
 }
-?>

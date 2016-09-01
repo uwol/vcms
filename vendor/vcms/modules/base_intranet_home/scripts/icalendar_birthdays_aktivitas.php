@@ -20,6 +20,8 @@ if(!is_object($libGlobal))
 	exit();
 
 
+$libDb->connect();
+
 $calendarId = $libGlobal->getSiteUrlAuthority().'_geburtstage_aktivitas_';
 
 if(isset($_GET['user']) &&
@@ -48,4 +50,3 @@ if(isset($_GET['user']) &&
 
 	$calendar->printCalendar();
 }
-?>

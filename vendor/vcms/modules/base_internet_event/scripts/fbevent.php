@@ -20,11 +20,10 @@ if(!is_object($libGlobal))
 	exit();
 
 
-/*
-* actions
-*/
+$libDb->connect();
 
 $id = '';
+
 if(isset($_GET['eventid'])){
 	$id = $_GET['eventid'];
 }
@@ -107,4 +106,3 @@ if($libEvent->isFacebookEvent($row)){
 		echo '</div>';
 	}
 }
-?>

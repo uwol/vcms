@@ -20,6 +20,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
+$libDb->connect();
+
 if($libAuth->isLoggedin()){
 	if(!$libTime->isValidSemesterString($_GET['semester'])){
 		die('Das angegebene Semester ist nicht valide.');
@@ -42,4 +44,3 @@ if($libAuth->isLoggedin()){
 		$table->writeContentAsHtmlTable('jubilaeen_' .$_GET['semester']. '.html');
 	}
 }
-?>

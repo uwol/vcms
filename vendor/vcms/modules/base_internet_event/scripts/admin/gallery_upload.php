@@ -70,4 +70,3 @@ function handleFileUpload($i, $allowedExtensions){
 	$result['name'] = $name;
 	return $result;
 }
-?>

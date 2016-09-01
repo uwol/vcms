@@ -80,6 +80,5 @@ if(count($eventIds) > 0){
 
 	echo '</div>';
 	echo '</div>';
-    echo '</section>';
+	echo '</section>';
 }
-?>

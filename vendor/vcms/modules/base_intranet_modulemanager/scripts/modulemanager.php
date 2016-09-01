@@ -416,4 +416,3 @@ function refreshModuleHandler(){
 	$libModuleHandler = new \vcms\LibModuleHandler();
 	$libModuleHandler->initModules();
 }
-?>

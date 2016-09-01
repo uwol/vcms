@@ -30,4 +30,3 @@ if(isset($_GET['mitgliedid']) && is_numeric($_GET['mitgliedid'])){
 
 	echo $genealogy->getString();
 }
-?>

@@ -37,4 +37,3 @@ if($fbPagePluginEnabled){
 	echo '</div>';
 	echo '</section>';
 }
-?>

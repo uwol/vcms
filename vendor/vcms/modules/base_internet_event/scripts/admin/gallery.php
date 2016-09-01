@@ -253,4 +253,3 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 	echo '<hr />';
 	echo '<p>Die Fotos sind auf eine qualitativ hochwertige Auswahl zu beschränken. Es geht nicht um Vollständigkeit. Hochwertige Fotos bilden Personengruppen in einer ansprechenden Umgebung ab und sind gut belichtet.</p>';
 }
-?>

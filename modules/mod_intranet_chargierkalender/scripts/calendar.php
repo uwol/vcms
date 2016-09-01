@@ -276,4 +276,3 @@ class LibChargierKalenderEvent{
 		return $retstr;
 	}
 }
-?>

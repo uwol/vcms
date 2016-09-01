@@ -27,4 +27,3 @@ echo '<h1>' .$libConfig->verbindungName. ' - Die Verstorbenen</h1>';
 $stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "T" ORDER BY name');
 
 printPersons($stmt);
-?>

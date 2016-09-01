@@ -257,4 +257,3 @@ function getAmt($amtsname, $id){
 
 	return $retstr;
 }
-?>

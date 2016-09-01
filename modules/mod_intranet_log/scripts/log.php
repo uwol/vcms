@@ -20,6 +20,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
+$libDb->connect();
+
 echo '<h1>System-Log</h1>';
 
 echo '<table class="table table-condensed table-striped table-hover">';
@@ -55,4 +57,3 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo '</table>';
-?>

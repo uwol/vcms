@@ -75,7 +75,6 @@ $libTime = new \vcms\LibTime();
 /*
 * init modules
 */
-$libDb->connect();
 $libModuleHandler->initModules();
 
 
@@ -106,13 +105,4 @@ if(isset($_SESSION['libAuth'])){
 	$libAuth = $_SESSION['libAuth'];
 } else {
 	$libAuth = new \vcms\LibAuth();
-}
-
-/*
-* authenticate, if credentials are provided
-*/
-if(isset($_POST['intranet_login_email']) && isset($_POST['intranet_login_password'])){
-	$_SESSION['libAuth'] = new \vcms\LibAuth();
-	$libAuth = $_SESSION['libAuth'];
-	$libAuth->login($_POST['intranet_login_email'], $_POST['intranet_login_password']);
 }

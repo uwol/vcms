@@ -52,4 +52,3 @@ require_once('elements/pastevents.php');
 require_once('elements/nextevents.php');
 require_once('elements/contact.php');
 require_once('elements/facebook.php');
-?>

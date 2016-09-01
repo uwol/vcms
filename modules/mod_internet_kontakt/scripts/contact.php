@@ -225,5 +225,4 @@ if($libGenericStorage->loadValueInCurrentModule('showHaftungshinweis') == 1){
 }
 
 echo '<h2>VCMS</h2>';
-echo 'Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU GPL Lizenz)';
-?>
+echo 'Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU GPL-Lizenz)';

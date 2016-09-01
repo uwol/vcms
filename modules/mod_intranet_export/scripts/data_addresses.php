@@ -20,6 +20,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
+$libDb->connect();
+
 if($libAuth->isLoggedin()){
 	$sql = '';
 	$header = '';
@@ -58,4 +60,3 @@ if($libAuth->isLoggedin()){
 		}
 	}
 }
-?>

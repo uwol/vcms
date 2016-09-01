@@ -20,6 +20,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
+$libDb->connect();
+
 if($libAuth->isLoggedin()){
 	if(!is_numeric($_GET['jahr'])){
 		die('Das angegebene Jahr ist keine Zahl.');
@@ -42,4 +44,3 @@ if($libAuth->isLoggedin()){
 		$table->writeContentAsHtmlTable('geburtstage' .$_GET['jahr']. '.html');
 	}
 }
-?>

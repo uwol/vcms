@@ -137,4 +137,3 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$timelineEvent->setForm($form);
 	$timelineEventSet->addEvent($timelineEvent);
 }
-?>

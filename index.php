@@ -24,14 +24,22 @@ require_once('custom/systemconfig.php');
 require_once('vendor/vcms/initialize.php');
 
 
+$libDb->connect();
 $libCronjobs->executeDueJobs();
+
+
+if(isset($_POST['intranet_login_email']) && isset($_POST['intranet_login_password'])){
+	$_SESSION['libAuth'] = new \vcms\LibAuth();
+	$libAuth = $_SESSION['libAuth'];
+	$libAuth->login($_POST['intranet_login_email'], $_POST['intranet_login_password']);
+}
+
 
 $libMenuInternet = $libModuleHandler->getMenuInternet();
 $libMenuIntranet = $libModuleHandler->getMenuIntranet();
 $libMenuAdministration = $libModuleHandler->getMenuAdministration();
 
 
-//initialize page id
 if(!isset($_GET['pid']) || $_GET['pid'] == ''){
 	$defaultHomeExists = $libModuleHandler->pageExists($libConfig->defaultHome);
 
@@ -44,6 +52,7 @@ if(!isset($_GET['pid']) || $_GET['pid'] == ''){
 	$libGlobal->pid = $_GET['pid'];
 }
 
+
 if(!$libModuleHandler->pageExists($libGlobal->pid)){
 	header('HTTP/1.0 404 Not Found');
 	die('HTTP-Fehler 404: Seite nicht gefunden.');
@@ -52,19 +61,14 @@ if(!$libModuleHandler->pageExists($libGlobal->pid)){
 }
 
 
-//load page object
 $libGlobal->page = $libModuleHandler->getPage($libGlobal->pid);
 $libGlobal->module = $libModuleHandler->getModuleByPageid($libGlobal->pid);
 
 
-//load page header
 require_once('vendor/vcms/layout/header.php');
 
-
-//security check
 if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->page, $libAuth)){
 	if(is_file($libGlobal->page->getPath())){
-		//load page
 		require_once($libGlobal->page->getPath());
 	}
 } else {
@@ -74,7 +78,4 @@ if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->pag
 	echo '<p>Für diese Seite ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 }
 
-
-//load footer
 require_once('vendor/vcms/layout/footer.php');
-?>

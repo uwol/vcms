@@ -376,4 +376,3 @@ function updateCorrespondingEhepartner($ehepartnerId, $mitgliedId){
 		$stmt->execute();
 	}
 }
-?>

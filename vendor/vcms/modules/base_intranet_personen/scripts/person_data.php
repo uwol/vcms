@@ -832,4 +832,3 @@ function printVita($row){
 
 	echo '</article>';
 }
-?>

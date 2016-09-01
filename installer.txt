@@ -18,6 +18,9 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 require_once('custom/systemconfig.php');
 require_once('vendor/vcms/initialize.php');
+
+$libDb->connect();
+
 ?><!DOCTYPE html>
 <html lang="de">
 	<head>

@@ -45,4 +45,3 @@ if(in_array('internetwart', $libAuth->getAemter())){
 		$libGlobal->errorTexts[] = $logText;
 	}
 }
-?>

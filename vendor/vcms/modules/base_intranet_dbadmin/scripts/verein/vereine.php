@@ -21,9 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	/**
-	* Löschvorgang durchführen
-	*/
+
 	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
 		if(isset($_GET['id']) && $_GET['id'] != ''){
 			// Verwendung der Veranstaltung in anderen Tabellen prüfen
@@ -95,4 +93,3 @@ if($libAuth->isLoggedin()){
 
 	echo '</table>';
 }
-?>

@@ -54,4 +54,3 @@ if($libAuth->isLoggedin() && isset($_GET['hash']) && $_GET['hash'] != ''){
 		}
 	}
 }
-?>

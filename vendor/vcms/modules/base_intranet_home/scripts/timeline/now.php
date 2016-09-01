@@ -41,4 +41,3 @@ if($zeitraum[0] <= $now && $now <= $zeitraum[1]){
 	$timelineEvent->setDatetime(date('Y-m-d H:i:s'));
 	$timelineEventSet->addEvent($timelineEvent);
 }
-?>

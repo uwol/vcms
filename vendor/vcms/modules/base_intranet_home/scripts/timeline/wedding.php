@@ -65,4 +65,3 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	$timelineEventSet->addEvent($timelineEvent);
 }
-?>

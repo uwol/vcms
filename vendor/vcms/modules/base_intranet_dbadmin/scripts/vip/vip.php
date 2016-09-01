@@ -19,6 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
+
 if($libAuth->isLoggedin()){
 	$id = '';
 	if(isset($_REQUEST['id'])){
@@ -151,4 +152,3 @@ function updateAdresseStand($table, $field, $id){
 	$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 	$stmt->execute();
 }
-?>

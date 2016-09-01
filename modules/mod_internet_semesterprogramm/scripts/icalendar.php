@@ -19,6 +19,9 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 if(!is_object($libGlobal))
 	exit();
 
+
+$libDb->connect();
+
 $calendarId = $libGlobal->getSiteUrlAuthority(). '_semesterprogramm_';
 
 $calendar = new vcms\LibICalendar();
@@ -46,4 +49,3 @@ $calendar->addEvent($e);
 */
 
 $calendar->printCalendar();
-?>

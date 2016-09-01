@@ -52,4 +52,3 @@ if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 		}
 	}
 }
-?>

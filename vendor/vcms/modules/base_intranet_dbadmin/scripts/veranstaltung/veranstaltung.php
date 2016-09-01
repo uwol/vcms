@@ -163,4 +163,3 @@ if($libAuth->isLoggedin()){
 	echo '</fieldset>';
 	echo '</form>';
 }
-?>
