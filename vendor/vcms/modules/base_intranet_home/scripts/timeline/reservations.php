@@ -20,7 +20,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-class LibReservationTimelineEvent extends LibTimelineEvent{
+class LibReservationTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 	function getBadgeClass(){
 		return 'reservation';
 	}

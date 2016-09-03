@@ -16,24 +16,7 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class LibTimelineEventSet {
-	var $events = array();
-
-	function addEvent($event){
-		$this->events[] = $event;
-	}
-
-	function sortEvents(){
-		usort($this->events, function($a, $b){
-    		return strcmp($b->datetime, $a->datetime);
-		});
-	}
-
-	function getEvents(){
-		return $this->events;
-	}
-}
-
+namespace vcms\timeline;
 
 class LibTimelineEvent {
 	var $title;

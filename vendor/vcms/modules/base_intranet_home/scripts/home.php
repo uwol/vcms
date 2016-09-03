@@ -20,9 +20,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-require_once('lib/LibTimeline.class.php');
-
-
 if(!$libGenericStorage->attributeExistsInCurrentModule('userNameICalendar') || !$libGenericStorage->attributeExistsInCurrentModule('passwordICalendar')){
 	$libGenericStorage->saveValueInCurrentModule('userNameICalendar', $libString->randomAlphaNumericString(40));
 	$libGenericStorage->saveValueInCurrentModule('passwordICalendar', $libString->randomAlphaNumericString(40));
@@ -65,7 +62,7 @@ $zeitraumLimit = 14;
 * timeline
 */
 
-$timelineEventSet = new LibTimelineEventSet();
+$timelineEventSet = new \vcms\timeline\LibTimelineEventSet();
 
 require_once('timeline/now.php');
 require_once('timeline/semester.php');

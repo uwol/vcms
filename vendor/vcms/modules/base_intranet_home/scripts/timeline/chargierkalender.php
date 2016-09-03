@@ -51,7 +51,7 @@ if(isset($_REQUEST["chargierkalenderchangeanmeldenstate"]) && $_REQUEST["chargie
 * output
 */
 
-class LibChargiereventTimelineEvent extends LibTimelineEvent{
+class LibChargiereventTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 	function getBadgeClass(){
 		return 'chargierevent';
 	}

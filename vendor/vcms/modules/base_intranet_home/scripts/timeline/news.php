@@ -20,7 +20,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-class LibNewsTimelineEvent extends LibTimelineEvent{
+class LibNewsTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 	function getBadgeClass(){
 		return 'news';
 	}

@@ -51,7 +51,7 @@ if(isset($_REQUEST['veranstaltungenchangeanmeldenstate']) && $_REQUEST['veransta
 * output
 */
 
-class LibEventTimelineEvent extends LibTimelineEvent{
+class LibEventTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 	function getBadgeClass(){
 		return 'event';
 	}

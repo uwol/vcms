@@ -16,28 +16,22 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+namespace vcms\timeline;
 
+class LibTimelineEventSet {
+	var $events = array();
 
-class LibNowTimelineEvent extends \vcms\timeline\LibTimelineEvent{
-	function getBadgeClass(){
-		return '';
+	function addEvent($event){
+		$this->events[] = $event;
 	}
 
-	function isFullWidth(){
-		return true;
+	function sortEvents(){
+		usort($this->events, function($a, $b){
+    		return strcmp($b->datetime, $a->datetime);
+		});
 	}
 
-	function toString(){
-		return '<hr />';
+	function getEvents(){
+		return $this->events;
 	}
-}
-
-$now = date('Y-m-d H:i:s');
-
-if($zeitraum[0] <= $now && $now <= $zeitraum[1]){
-	$timelineEvent = new LibNowTimelineEvent();
-	$timelineEvent->setDatetime(date('Y-m-d H:i:s'));
-	$timelineEventSet->addEvent($timelineEvent);
 }
