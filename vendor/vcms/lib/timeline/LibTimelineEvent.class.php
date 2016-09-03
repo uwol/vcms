@@ -96,9 +96,11 @@ class LibTimelineEvent {
 		$retstr .= '<div class="panel-heading">';
 		$retstr .= '<h3 class="panel-title">';
 
-		$retstr .= '<time class="text-muted" datetime="' .$libTime->formatUtcString($this->datetime). '">';
-		$retstr .= $libTime->formatDateString($this->datetime);
-		$retstr .= '</time> ';
+		if($this->datetime != ''){
+			$retstr .= '<time class="text-muted" datetime="' .$libTime->formatUtcString($this->datetime). '">';
+			$retstr .= $libTime->formatDateString($this->datetime);
+			$retstr .= '</time> ';
+		}
 
 		if($this->url != ''){
 			$retstr .= '<a href="' .$this->url. '">';
