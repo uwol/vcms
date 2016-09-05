@@ -108,7 +108,15 @@ class LibAssociation{
 				$retstr .= ', ';
 			}
 
-			$retstr .= '<a href="index.php?pid=' .$pid. '&amp;id=' .$row['id']. '">' .$row['titel']. ' ' .$row['name']. '</a>';
+			if($pid != ''){
+				$retstr .= '<a href="index.php?pid=verein&amp;id=' .$row['id']. '">';
+			}
+
+			$retstr .= $row['titel']. ' ' .$row['name'];
+
+			if($pid != ''){
+				$retstr .= '</a>';
+			}
 		}
 
 		return $retstr;
@@ -128,7 +136,15 @@ class LibAssociation{
 				$retstr .= ', ';
 			}
 
-			$retstr .= '<a href="index.php?pid=' .$pid. '&amp;id=' .$row['id']. '">' .$row['titel']. ' ' .$row['name']. '</a>';
+			if($pid != ''){
+				$retstr .= '<a href="index.php?pid=verein&amp;id=' .$row['id']. '">';
+			}
+
+			$retstr .= $row['titel']. ' ' .$row['name'];
+
+			if($pid != ''){
+				$retstr .= '</a>';
+			}
 		}
 
 		return $retstr;

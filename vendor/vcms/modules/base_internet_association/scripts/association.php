@@ -20,9 +20,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(isset($_GET['verein'])){
+if(isset($_GET['id'])){
 	$stmt = $libDb->prepare('SELECT * FROM base_verein WHERE id=:id');
-	$stmt->bindValue(':id', $_GET['verein'], PDO::PARAM_INT);
+	$stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
 	$stmt->execute();
 	$vereinarray = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -63,7 +63,6 @@ if(isset($_GET['verein'])){
 
 	echo '</address>';
 
-
 	echo '<h3>Daten zum Verein</h3>';
 
 	/*
@@ -98,7 +97,7 @@ if(isset($_GET['verein'])){
 	echo '<p>';
 
 	if($vereinarray['datum_gruendung'] != ''){
-		echo 'Gründungsdatum: ';
+		echo 'Gründung: ';
 		echo $libAssociation->getGruendungString($vereinarray['datum_gruendung']);
 		echo '<br />';
 	}
@@ -230,42 +229,40 @@ if(isset($_GET['verein'])){
 	echo '</div>';
 	echo '</div>';
 
-	if($libAuth->isLoggedin()){
-		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id');
+	$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id');
+	$stmt->bindValue(':verein', $vereinarray['id'], PDO::PARAM_INT);
+	$stmt->execute();
+	$stmt->bindColumn('number', $anzahl);
+	$stmt->fetch();
+
+	if($anzahl > 0){
+		echo '<h2>Mitglieder</h2>';
+		echo '<div class="row">';
+
+		$stmt = $libDb->prepare('SELECT base_verein_mitgliedschaft.mitglied, base_verein_mitgliedschaft.ehrenmitglied, base_person.gruppe FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id ORDER BY base_verein_mitgliedschaft.ehrenmitglied DESC, base_person.name ASC');
 		$stmt->bindValue(':verein', $vereinarray['id'], PDO::PARAM_INT);
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahl);
-		$stmt->fetch();
 
-		if($anzahl > 0){
-			echo '<h2>Mitglieder</h2>';
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
+
 			echo '<div class="row">';
+			echo '<div class="col-xs-6">';
+			echo $libPerson->getMitgliedSignature($row['mitglied'], '');
+			echo '</div>';
+			echo '<div class="col-xs-6">';
+			echo $libPerson->getMitgliedNameString($row['mitglied'], 0);
 
-			$stmt = $libDb->prepare('SELECT base_verein_mitgliedschaft.mitglied, base_verein_mitgliedschaft.ehrenmitglied, base_person.gruppe FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id ORDER BY base_verein_mitgliedschaft.ehrenmitglied DESC, base_person.name ASC');
-			$stmt->bindValue(':verein', $vereinarray['id'], PDO::PARAM_INT);
-			$stmt->execute();
-
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-				echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-
-				echo '<div class="row">';
-				echo '<div class="col-xs-6">';
-				echo $libPerson->getMitgliedSignature($row['mitglied'], '');
-				echo '</div>';
-				echo '<div class="col-xs-6">';
-				echo $libPerson->getMitgliedNameString($row['mitglied'], 0);
-
-				if($row['ehrenmitglied'] == 1){
-					echo '<p>Ehrenmitglied</p>';
-				}
-
-				echo '</div>';
-				echo '</div>';
-
-				echo '</div>';
+			if($row['ehrenmitglied'] == 1){
+				echo '<p>Ehrenmitglied</p>';
 			}
 
 			echo '</div>';
+			echo '</div>';
+
+			echo '</div>';
 		}
+
+		echo '</div>';
 	}
 }
