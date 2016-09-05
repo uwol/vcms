@@ -77,7 +77,7 @@ function addBirthdayTimelineEvent($row, $date, $age){
 	$description .= '<i class="fa fa-calendar" aria-hidden="true"></i>';
 	$description .= '</a>';
 
-	$url = 'index.php?pid=intranet_person&amp;personid=' .$row['id'];
+	$url = 'index.php?pid=intranet_person&amp;id=' .$row['id'];
 
 	$timelineEvent = new LibBirtdayTimelineEvent();
 

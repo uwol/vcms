@@ -242,7 +242,7 @@ class LibChargierKalenderEvent{
 			$mitgliederLinks = array();
 
 			foreach($this->angemeldeteMitglieder as $key => $value){
-				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person&amp;personid=' .$key. '">' .$value. '</a>';
+				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person&amp;id=' .$key. '">' .$value. '</a>';
 			}
 
 			$retstr .= '<div>';

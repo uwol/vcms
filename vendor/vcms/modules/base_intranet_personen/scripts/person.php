@@ -25,11 +25,11 @@ require('lib/persons.php');
 /*
 * determine person id
 */
-if(isset($_GET['personid']) && $_GET['personid'] != '' &&
-	is_numeric($_GET['personid']) && preg_match("/^[0-9]+$/", $_GET['personid'])){
-	$personid = $_GET['personid'];
+if(isset($_GET['id']) && $_GET['id'] != '' &&	is_numeric($_GET['id'])
+		&& preg_match("/^[0-9]+$/", $_GET['id'])){
+	$personId = $_GET['id'];
 } else {
-	$personid = $libAuth->getId();
+	$personId = $libAuth->getId();
 }
 
 
@@ -38,7 +38,7 @@ if(isset($_GET['personid']) && $_GET['personid'] != '' &&
 */
 $ownprofile = false;
 
-if($libAuth->getId() == $personid){
+if($libAuth->getId() == $personId){
 	$ownprofile = true;
 }
 
@@ -47,7 +47,7 @@ if($libAuth->getId() == $personid){
 * select data from db
 */
 $stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
-$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
+$stmt->bindValue(':id', $personId, PDO::PARAM_INT);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -64,7 +64,7 @@ if($ownprofile){
 			$leibMitglied = $_POST['leibmitglied'];
 		}
 
-		if($leibMitglied == $personid) {
+		if($leibMitglied == $personId) {
 			$libGlobal->errorTexts[] = 'Das Mitglied darf nicht von sich selbst der Leibbursch sein.';
 		} else {
 			$stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
@@ -171,7 +171,7 @@ if($ownprofile){
 */
 
 $stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
-$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
+$stmt->bindValue(':id', $personId, PDO::PARAM_INT);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -181,7 +181,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 echo '<h1>';
 echo $libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 echo ' ';
-echo $libPerson->getChargenString($personid);
+echo $libPerson->getChargenString($personId);
 echo '</h1>';
 
 echo $libString->getErrorBoxText();
@@ -214,7 +214,7 @@ if($ownprofile){
 	echo '<h2>Passwort ändern</h2>';
 	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
 
-	echo '<form action="index.php?pid=intranet_person&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_person&amp;personid=' .$personId. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
 
@@ -228,7 +228,7 @@ if($ownprofile){
 
 
 	echo '<h2>Stammdaten ändern</h2>';
-	echo '<form action="index.php?pid=intranet_person&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_person&amp;personid=' .$personId. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="person_data" />';
 
@@ -325,7 +325,7 @@ if($ownprofile){
 * Leibbursche
 */
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS bs, base_person AS bv WHERE bs.id=:id AND bs.leibmitglied = bv.id");
-$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
+$stmt->bindValue(':id', $personId, PDO::PARAM_INT);
 $stmt->execute();
 $stmt->bindColumn('number', $anzahl);
 $stmt->fetch();
@@ -334,7 +334,7 @@ if($anzahl > 0){
 	echo '<h2>Leibbursche</h2>';
 
 	$stmt = $libDb->prepare("SELECT bv.id, bv.anrede, bv.titel, bv.rang, bv.vorname, bv.praefix, bv.name, bv.suffix, bv.status, bv.beruf, bv.ort1, bv.tod_datum, bv.datum_geburtstag, bv.gruppe, bv.leibmitglied FROM base_person AS bs, base_person AS bv WHERE bs.id=:id AND bs.leibmitglied=bv.id");
-	$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
+	$stmt->bindValue(':id', $personId, PDO::PARAM_INT);
 	printPersons($stmt, 0);
 }
 
@@ -343,7 +343,7 @@ if($anzahl > 0){
 * Biersöhne
 */
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS bs WHERE bs.leibmitglied = :leibmitglied");
-$stmt->bindValue(':leibmitglied', $personid, PDO::PARAM_INT);
+$stmt->bindValue(':leibmitglied', $personId, PDO::PARAM_INT);
 $stmt->execute();
 $stmt->bindColumn('number', $anzahl);
 $stmt->fetch();
@@ -352,7 +352,7 @@ if($anzahl > 0){
 	echo '<h2>Leibverhältnisse</h2>';
 
 	$stmt = $libDb->prepare("SELECT bs.id, bs.anrede, bs.titel, bs.rang, bs.vorname, bs.praefix, bs.name, bs.suffix, bs.status, bs.beruf, bs.ort1, bs.tod_datum, bs.datum_geburtstag, bs.gruppe, bs.leibmitglied FROM base_person AS bs WHERE bs.leibmitglied=:leibmitglied");
-	$stmt->bindValue(':leibmitglied', $personid, PDO::PARAM_INT);
+	$stmt->bindValue(':leibmitglied', $personId, PDO::PARAM_INT);
 	printPersons($stmt, 0);
 }
 
@@ -361,8 +361,8 @@ if($anzahl > 0){
 * Confuchsia
 */
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS confuchs, base_person AS ich WHERE confuchs.semester_reception = ich.semester_reception AND ich.id=:id AND confuchs.id!=:id2");
-$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':id2', $personid, PDO::PARAM_INT);
+$stmt->bindValue(':id', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':id2', $personId, PDO::PARAM_INT);
 $stmt->execute();
 $stmt->bindColumn('number', $anzahl);
 $stmt->fetch();
@@ -371,8 +371,8 @@ if($anzahl > 0){
 	echo '<h2>Confuchsen</h2>';
 
 	$stmt = $libDb->prepare("SELECT confuchs.id, confuchs.anrede, confuchs.titel, confuchs.rang, confuchs.vorname, confuchs.praefix, confuchs.name, confuchs.suffix, confuchs.status, confuchs.beruf, confuchs.ort1, confuchs.tod_datum, confuchs.datum_geburtstag, confuchs.gruppe, confuchs.leibmitglied FROM base_person AS confuchs, base_person AS ich WHERE confuchs.semester_reception = ich.semester_reception AND ich.id=:id1 AND confuchs.id!=:id2");
-	$stmt->bindValue(':id1', $personid, PDO::PARAM_INT);
-	$stmt->bindValue(':id2', $personid, PDO::PARAM_INT);
+	$stmt->bindValue(':id1', $personId, PDO::PARAM_INT);
+	$stmt->bindValue(':id2', $personId, PDO::PARAM_INT);
 	printPersons($stmt, 0);
 }
 
@@ -385,18 +385,18 @@ $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_semester WHERE
 	base_semester.fuchsmajor2=:fuchsmajor2 OR base_semester.scriptor=:scriptor OR base_semester.quaestor=:quaestor OR
 	base_semester.jubelsenior=:jubelsenior OR base_semester.vop=:vop OR base_semester.vvop=:vvop OR
 	base_semester.vopxx=:vopxx OR base_semester.vopxxx=:vopxxx OR base_semester.vopxxxx=:vopxxxx");
-$stmt->bindValue(':senior', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':consenior', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':fuchsmajor', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':fuchsmajor2', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':scriptor', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':quaestor', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':jubelsenior', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':vop', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':vvop', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':vopxx', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':vopxxx', $personid, PDO::PARAM_INT);
-$stmt->bindValue(':vopxxxx', $personid, PDO::PARAM_INT);
+$stmt->bindValue(':senior', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':consenior', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':fuchsmajor', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':fuchsmajor2', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':scriptor', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':quaestor', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':jubelsenior', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':vop', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':vvop', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':vopxx', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':vopxxx', $personId, PDO::PARAM_INT);
+$stmt->bindValue(':vopxxxx', $personId, PDO::PARAM_INT);
 $stmt->execute();
 $stmt->bindColumn('number', $anzahl);
 $stmt->fetch();
@@ -430,7 +430,7 @@ SELECT vopxxx.id, vopxxx.anrede, vopxxx.titel, vopxxx.rang, vopxxx.vorname, vopx
 UNION DISTINCT
 SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname, vopxxxx.praefix, vopxxxx.name, vopxxxx.suffix, vopxxxx.status, vopxxxx.beruf, vopxxxx.ort1, vopxxxx.tod_datum, vopxxxx.datum_geburtstag, vopxxxx.gruppe, vopxxxx.leibmitglied FROM base_person AS vopxxxx, base_semester WHERE vopxxxx.id = base_semester.vopxxxx AND base_semester.vopxxxx != :id AND (base_semester.vop = :id OR base_semester.vvop = :id OR base_semester.vopxx = :id OR base_semester.vopxxx = :id)
 ");
-	$stmt->bindValue(':id', $personid, PDO::PARAM_INT);
+	$stmt->bindValue(':id', $personId, PDO::PARAM_INT);
 	$stmt->execute();
 	printPersons($stmt, 0);
 }

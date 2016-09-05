@@ -149,7 +149,7 @@ class LibPerson{
 	}
 
 	function getMitgliedImage($id, $large = false){
-		$retstr = '<a href="index.php?pid=intranet_person&amp;personid=' .$id. '">';
+		$retstr = '<a href="index.php?pid=intranet_person&amp;id=' .$id. '">';
 
 		$classes = 'img-responsive personImg';
 

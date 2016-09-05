@@ -144,7 +144,7 @@ foreach($tArray as $key1 => $value1){
 			echo 'background-color: #33DD33">';
 		}
 
-		echo '<a href="index.php?pid=intranet_person&amp;personid=' . $key2 . '">';
+		echo '<a href="index.php?pid=intranet_person&amp;id=' . $key2 . '">';
 		echo $value2['vorname'];
 
 		if($value2['praefix'] != ''){

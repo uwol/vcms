@@ -67,7 +67,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<h3 class="panel-title">';
 	echo $libTime->formatDateString($row['datum']);
 	echo ' ';
-	echo '<a href="index.php?pid=intranet_person&amp;personid=' .$row['person']. '">';
+	echo '<a href="index.php?pid=intranet_person&amp;id=' .$row['person']. '">';
 	echo $libPerson->getMitgliedNameString($row['person'], 0);
 	echo '</a>';
 

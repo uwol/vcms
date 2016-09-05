@@ -120,7 +120,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     $attendees = array();
 
 	while($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)){
-		$attendee = '<a href="index.php?pid=intranet_person&amp;personid=' .$row3['mitglied']. '">';
+		$attendee = '<a href="index.php?pid=intranet_person&amp;id=' .$row3['mitglied']. '">';
 		$attendee .= $libPerson->getMitgliedNameString($row3['mitglied'], 8);
 		$attendee .= '</a>';
 
