@@ -1,11 +1,11 @@
 {
 	"moduleName": "Neuigkeiten",
-	"version": 2.35,
+	"version": 2.36,
 	"installScript": "install/install.php",
 	"pages": [
 		{
 			"pid": "intranet_news",
-			"file": "list.php",
+			"file": "news.php",
 			"directory": "scripts",
 			"title": "Neuigkeiten",
 			"accessRestriction": {
