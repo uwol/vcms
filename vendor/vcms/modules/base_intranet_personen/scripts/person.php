@@ -214,7 +214,7 @@ if($ownprofile){
 	echo '<h2>Passwort ändern</h2>';
 	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
 
-	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_person&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
 
@@ -228,7 +228,7 @@ if($ownprofile){
 
 
 	echo '<h2>Stammdaten ändern</h2>';
-	echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_person&amp;personid=' .$personid. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="person_data" />';
 
@@ -444,7 +444,7 @@ function printPersonSignature($row, $ownprofile){
 
 	if($ownprofile){
 		echo '<span class="deleteIconBox">';
-		echo '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['id']. '&amp;aktion=fotodelete">';
+		echo '<a href="index.php?pid=intranet_person&amp;personid=' .$row['id']. '&amp;aktion=fotodelete">';
 		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</span>';
@@ -458,7 +458,7 @@ function printPersonSignature($row, $ownprofile){
 
 	if($ownprofile){
 		//image upload form
-		echo '<form action="index.php?pid=intranet_person_daten&amp;personid=' .$row['id']. '" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
+		echo '<form action="index.php?pid=intranet_person&amp;personid=' .$row['id']. '" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
 		echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
 		$libForm->printFileUpload('bilddatei', 'Foto (4x3) hochladen');
 		echo '</form>';
@@ -540,7 +540,7 @@ function printPersonData($row){
 
 	if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
 		echo '<div>';
-		echo 'Ehepartner: <a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['heirat_partner']. '" />' .$libPerson->getMitgliedNameString($row['heirat_partner'], 5). '</a>';
+		echo 'Ehepartner: <a href="index.php?pid=intranet_person&amp;personid=' .$row['heirat_partner']. '" />' .$libPerson->getMitgliedNameString($row['heirat_partner'], 5). '</a>';
 		echo '</div>';
 	}
 
@@ -745,7 +745,7 @@ function printAssociationDetails($row){
 	$vereine = array();
 
 	while($rowVerein = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$vereinStr = '<a href="index.php?pid=vereindetail&amp;verein=' .$rowVerein['id']. '">';
+		$vereinStr = '<a href="index.php?pid=verein&amp;id=' .$rowVerein['id']. '">';
 		$vereinStr .= $rowVerein['titel']. ' ' .$rowVerein['name'];
 		$vereinStr .= '</a>';
 
@@ -788,7 +788,7 @@ function printAssociationDetails($row){
 				$chargierEventStr = '';
 
 				if(isset($rowEvent['verein']) && is_numeric($rowEvent['verein'])){
-					$chargierEventStr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$rowEvent['verein']. '">';
+					$chargierEventStr .= '<a href="index.php?pid=verein&amp;id=' .$rowEvent['verein']. '">';
 					$chargierEventStr .= $libAssociation->getVereinNameString($rowEvent['verein']);
 					$chargierEventStr .= '</a>';
 				} else {

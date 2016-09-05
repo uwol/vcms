@@ -38,7 +38,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			$logText .= '<span class="badge">' .$row['numberOfLoginErrors']. '</span>';
 			$logText .= ' ';
-			$logText .= '<a href="index.php?pid=intranet_person_daten&personid=' .$row['mitglied']. '">' .$libPerson->getMitgliedNameString($row['mitglied'], 4). '</a>';
+			$logText .= '<a href="index.php?pid=intranet_person&personid=' .$row['mitglied']. '">' .$libPerson->getMitgliedNameString($row['mitglied'], 4). '</a>';
 			$logText .= ' ';
 		}
 

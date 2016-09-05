@@ -45,7 +45,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$description .= '<i class="fa fa-circle-o" aria-hidden="true" style="margin-left:-0.2em"></i>';
 
 	if($row['heirat_partner'] != '' && is_numeric($row['heirat_partner'])){
-		$urlPartner = 'index.php?pid=intranet_person_daten&amp;personid=' .$row['heirat_partner'];
+		$urlPartner = 'index.php?pid=intranet_person&amp;personid=' .$row['heirat_partner'];
 
 		$description .= ' ';
 		$description .= '<a href="' .$urlPartner. '">';
@@ -53,7 +53,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$description .= '</a>';
 	}
 
-	$url = 'index.php?pid=intranet_person_daten&amp;personid=' .$row['id'];
+	$url = 'index.php?pid=intranet_person&amp;personid=' .$row['id'];
 
 	$timelineEvent = new LibWeddingTimelineEvent();
 

@@ -87,7 +87,7 @@ class LibGenealogyElement{
 			$retstr .= '&#124;-';
 		}
 
-		$retstr .= '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$this->id. '">';
+		$retstr .= '<a href="index.php?pid=intranet_person&amp;personid=' .$this->id. '">';
 		$retstr .= '<span style="';
 
 		if($this->id == $this->mitgliedid){

@@ -149,7 +149,7 @@ class LibPerson{
 	}
 
 	function getMitgliedImage($id, $large = false){
-		$retstr = '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$id. '">';
+		$retstr = '<a href="index.php?pid=intranet_person&amp;personid=' .$id. '">';
 
 		$classes = 'img-responsive personImg';
 
@@ -533,7 +533,7 @@ class LibPerson{
 				$ehrenstring = 'E.d. ';
 			}
 
-			$vereinestr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$row['id'] .'">' .$ehrenstring.$row['kuerzel'] .'</a>';
+			$vereinestr .= '<a href="index.php?pid=verein&amp;id=' .$row['id']. '">' .$ehrenstring.$row['kuerzel']. '</a>';
 			unset($ehrenstring);
 		}
 

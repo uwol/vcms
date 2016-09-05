@@ -67,15 +67,15 @@ class LibAssociation{
 		$retstr = '';
 
 		if($date != ''){
-			if(substr($date, 8, 2) != '00' && substr($date, 5, 2) != '00'){ //day
-				$retstr .= substr($date, 8, 2) .'.';
+			if(substr($date, 8, 2) != '00' && substr($date, 5, 2) != '00'){
+				$retstr .= substr($date, 8, 2). '.';
 			}
 
-			if(substr($date, 5, 2) != '00'){ //month
-				$retstr .= substr($date, 5, 2) .'.';
+			if(substr($date, 5, 2) != '00'){
+				$retstr .= substr($date, 5, 2). '.';
 			}
 
-			if(substr($date, 0, 4) != '0000'){ //year
+			if(substr($date, 0, 4) != '0000'){
 				$retstr .= substr($date, 0, 4);
 			}
 		}
@@ -83,22 +83,22 @@ class LibAssociation{
 		return $retstr;
 	}
 
-	function getVereinNameString($vereinid){
+	function getVereinNameString($associationId){
 		global $libDb;
 
 		$stmt = $libDb->prepare("SELECT titel, name FROM base_verein WHERE id = :id");
-		$stmt->bindValue(':id', $vereinid, PDO::PARAM_INT);
+		$stmt->bindValue(':id', $associationId, PDO::PARAM_INT);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		return $row['titel'] .' '. $row['name'];
+		return $row['titel']. ' ' .$row['name'];
 	}
 
-	function getToechterString($vereinid){
+	function getToechterString($associationId, $pid){
 		global $libDb;
 
 		$stmt = $libDb->prepare("SELECT tochter.id, tochter.titel, tochter.name FROM base_verein AS mutter, base_verein AS tochter WHERE mutter.id = tochter.mutterverein AND mutter.id = :id");
-		$stmt->bindValue(':id', $vereinid, PDO::PARAM_INT);
+		$stmt->bindValue(':id', $associationId, PDO::PARAM_INT);
 		$stmt->execute();
 
 		$retstr = '';
@@ -108,17 +108,17 @@ class LibAssociation{
 				$retstr .= ', ';
 			}
 
-			$retstr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$row['id'] .'">' .$row['titel'] .' '. $row['name'] .'</a>';
+			$retstr .= '<a href="index.php?pid=' .$pid. '&amp;id=' .$row['id']. '">' .$row['titel']. ' ' .$row['name']. '</a>';
 		}
 
 		return $retstr;
 	}
 
-	function getFusionertString($vereinid){
+	function getFusionertString($associationId, $pid){
 		global $libDb;
 
 		$stmt = $libDb->prepare("SELECT fusionierend.id, fusionierend.titel, fusionierend.name FROM base_verein AS fusionierend, base_verein AS fusioniert WHERE fusioniert.id = fusionierend.fusioniertin AND fusioniert.id = :id");
-		$stmt->bindValue(':id', $vereinid, PDO::PARAM_INT);
+		$stmt->bindValue(':id', $associationId, PDO::PARAM_INT);
 		$stmt->execute();
 
 		$retstr = '';
@@ -128,7 +128,7 @@ class LibAssociation{
 				$retstr .= ', ';
 			}
 
-			$retstr .= '<a href="index.php?pid=vereindetail&amp;verein=' .$row['id'] .'">' .$row['titel'] .' '. $row['name'] .'</a>';
+			$retstr .= '<a href="index.php?pid=' .$pid. '&amp;id=' .$row['id']. '">' .$row['titel']. ' ' .$row['name']. '</a>';
 		}
 
 		return $retstr;

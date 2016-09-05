@@ -180,7 +180,7 @@ function printAnmeldungen($row){
 				echo ', ';
 			}
 
-			echo '<span class="p-attendee"><a href="index.php?pid=intranet_person_daten&personid=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
+			echo '<span class="p-attendee"><a href="index.php?pid=intranet_person&personid=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
 			$anmeldungWritten = true;
 		}
 

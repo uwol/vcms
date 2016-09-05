@@ -57,7 +57,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$description .= '<i class="fa fa-calendar" aria-hidden="true"></i>';
 	$description .= '</a>';
 
-	$url = 'index.php?pid=intranet_person_daten&amp;personid=' .$row['id'];
+	$url = 'index.php?pid=intranet_person&amp;personid=' .$row['id'];
 
 	$timelineEvent = new LibDeceasedTimelineEvent();
 

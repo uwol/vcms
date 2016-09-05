@@ -29,10 +29,10 @@
 			}
 		},
 		{
-			"pid": "intranet_person_daten",
-			"file": "person_data.php",
+			"pid": "intranet_person",
+			"file": "person.php",
 			"directory": "scripts",
-			"title": "Personenprofil",
+			"title": "Person",
 			"accessRestriction": {
 				"gruppen": ["F", "B", "P", "C", "G", "W", "Y"]
 			}
@@ -76,10 +76,10 @@
 		{
 			"name": "Personen",
 			"type": "menu_folder",
-			"position": 3000, 
+			"position": 3000,
 			"elements": [
 				{
-					"pid": "intranet_person_daten",
+					"pid": "intranet_person",
 					"name": "Mein Profil",
 					"type": "menu_entry",
 					"position": 3001

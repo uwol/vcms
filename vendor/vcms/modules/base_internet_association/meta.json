@@ -2,7 +2,7 @@
 	"moduleName": "Vereine",
 	"pages": [
 		{
-			"pid": "vereindetail",
+			"pid": "verein",
 			"file": "association.php",
 			"directory": "scripts",
 			"title": "Verein",

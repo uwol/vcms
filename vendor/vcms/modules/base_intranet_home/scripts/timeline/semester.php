@@ -229,7 +229,7 @@ function getVereinsGruppe($stmt, $title){
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$namensStrings[] = '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$row['id']. '">' .$libPerson->getMitgliedNameString($row['id'], 0). '</a>';
+		$namensStrings[] = '<a href="index.php?pid=intranet_person&amp;personid=' .$row['id']. '">' .$libPerson->getMitgliedNameString($row['id'], 0). '</a>';
 	}
 
 	$retstr = '';
@@ -251,7 +251,7 @@ function getAmt($amtsname, $id){
 
 	if($id != ''){
 		$retstr .= '<div>';
-		$retstr .= $amtsname. ': <a href="index.php?pid=intranet_person_daten&amp;personid=' .$id. '">' .$libPerson->getMitgliedNameString($id, 0). '</a>';
+		$retstr .= $amtsname. ': <a href="index.php?pid=intranet_person&amp;personid=' .$id. '">' .$libPerson->getMitgliedNameString($id, 0). '</a>';
 		$retstr .= '</div>';
 	}
 

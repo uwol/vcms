@@ -69,7 +69,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$event->setId($row['id']);
 
 	if(is_numeric($row['verein'])){
-		$event->setLinkUrl('index.php?pid=vereindetail&amp;verein='.$row['verein']);
+		$event->setLinkUrl('index.php?pid=verein&amp;id=' .$row['verein']);
 		$event->setSummary($libAssociation->getVereinNameString($row['verein']));
 	}
 
@@ -242,7 +242,7 @@ class LibChargierKalenderEvent{
 			$mitgliederLinks = array();
 
 			foreach($this->angemeldeteMitglieder as $key => $value){
-				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person_daten&amp;personid=' .$key. '">' .$value. '</a>';
+				$mitgliederLinks[] = '<a href="index.php?pid=intranet_person&amp;personid=' .$key. '">' .$value. '</a>';
 			}
 
 			$retstr .= '<div>';
