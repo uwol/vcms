@@ -71,7 +71,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$pictureId = $libGallery->getMainPictureId($row['id']);
 
 	if($pictureId > -1){
-		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;id=' .$pictureId);
+		$event->setImageUrl('inc.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$pictureId);
 	}
 
 	$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");

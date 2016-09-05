@@ -88,7 +88,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$description .= '<div class="thumbnail">';
 		$description .= '<div class="thumbnailOverflow">';
 		$description .= '<a href="index.php?pid=event&amp;id=' .$row['id']. '">';
-		$description .= '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 1). '" alt="" class="img-responsive center-block" />';
+		$description .= '<img src="inc.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 1). '" alt="" class="img-responsive center-block" />';
 		$description .= '</a>';
 		$description .= '</div>';
 		$description .= '</div>';

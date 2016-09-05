@@ -8,7 +8,7 @@
 			"title": "Veranstaltung"
 		},
 		{
-			"pid": "semesterprogramm_admin_galerienliste",
+			"pid": "event_admin_galerien",
 			"file": "galleries.php",
 			"directory": "scripts/admin",
 			"title": "Foto-Verwaltung",
@@ -17,7 +17,7 @@
 			}
 		},
 		{
-			"pid": "semesterprogramm_admin_galerie",
+			"pid": "event_admin_galerie",
 			"file": "gallery.php",
 			"directory": "scripts/admin",
 			"title": "Galerie",
@@ -28,12 +28,12 @@
 	],
 	"includes": [
 		{
-			"iid": "semesterprogramm_picture",
+			"iid": "event_picture",
 			"file": "picture.php",
 			"directory": "scripts"
 		},
 		{
-			"iid": "semesterprogramm_admin_galerie_upload",
+			"iid": "event_admin_galerie_upload",
 			"file": "gallery_upload.php",
 			"directory": "scripts/admin",
 			"accessRestriction": {
@@ -48,7 +48,7 @@
 	],
 	"menuElementsIntranet": [
 		{
-			"pid": "semesterprogramm_admin_galerienliste",
+			"pid": "event_admin_galerien",
 			"name": "Fotos",
 			"type": "menu_entry",
 			"position": 30000

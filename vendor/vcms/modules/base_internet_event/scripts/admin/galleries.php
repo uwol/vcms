@@ -45,7 +45,7 @@ echo $libString->getNotificationBoxText();
 
 echo '<h2>Galerie anlegen</h2>';
 
-echo '<form action="index.php?pid=semesterprogramm_admin_galerie" method="post" class="form-horizontal">';
+echo '<form action="index.php?pid=event_admin_galerie" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
 $libForm->printVeranstaltungDropDownBox('id', 'Veranstaltung', '', false);
@@ -110,7 +110,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		if($libGallery->hasPictures($row['id'], 2)){
 			echo '<div class="thumbnail">';
 			echo '<div class="thumbnailOverflow">';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$row['id']. '">';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
 			echo '<img class="img-responsive center-block';
 
 			//are there pooled images?
@@ -118,7 +118,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     			echo ' private';
     		}
 
-    		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
+    		echo '" src="inc.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
     		echo '</a>';
     		echo '</div>';
     		echo '</div>';
@@ -128,7 +128,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<td>' .$row['titel']. '</td>';
 		echo '<td>' .$row['datum']. '</td>';
 		echo '<td class="toolColumn">';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$row['id']. '">';
+		echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</td>';
 		echo '</tr>';
@@ -176,7 +176,7 @@ if(count($foldersWithoutEvent) > 0){
     			echo ' private';
     		}
 
-    		echo '" src="inc.php?iid=semesterprogramm_picture&amp;eventid='.$folder.'&amp;id=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" />';
+    		echo '" src="inc.php?iid=event_picture&amp;eventid='.$folder.'&amp;id=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" />';
     		echo '</div>';
     		echo '</div>';
 		}
@@ -185,7 +185,7 @@ if(count($foldersWithoutEvent) > 0){
 		echo '<td>'.$folder.'</td>';
 		echo '<td>unbekannt</td>';
 		echo '<td>unbekannt</td>';
-		echo '<td><a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$folder. '">bearbeiten</a></td>';
+		echo '<td><a href="index.php?pid=event_admin_galerie&amp;id=' .$folder. '">bearbeiten</a></td>';
 		echo '</tr>';
 	}
 

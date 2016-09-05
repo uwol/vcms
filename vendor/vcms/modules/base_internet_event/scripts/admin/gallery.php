@@ -132,7 +132,7 @@ echo '<script>
 	$(document).ready(function() {
 		\'use strict\';
 
-		var url = \'inc.php?iid=semesterprogramm_admin_galerie_upload&veranstaltungId=' .$id. '\';
+		var url = \'inc.php?iid=event_admin_galerie_upload&veranstaltungId=' .$id. '\';
 
 		$(\'#fileupload\').fileupload({
 			url: url,
@@ -164,19 +164,19 @@ echo '<script>
 	</script>';
 
 
-echo '<p>Hochgeladene Fotos sind nach einer <a href="index.php?pid=semesterprogramm_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
+echo '<p>Hochgeladene Fotos sind nach einer <a href="index.php?pid=event_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
 
 
 if(is_dir('custom/veranstaltungsfotos/' .$id)){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		echo '<hr />';
 
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerienliste&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Komplette Galerie löschen</a>';
+		echo '<a href="index.php?pid=event_admin_galerien&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Komplette Galerie löschen</a>';
 
 		echo '<p>';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlichalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><i class="fa fa-users public" aria-hidden="true"></i> Sämtliche Bilder veröffentlichen</a><br />';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranetalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><i class="fa fa-users internal" aria-hidden="true"></i> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken</a><br />';
-		echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=poolalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><i class="fa fa-users private" aria-hidden="true"></i> Sämtliche Bilder in Ablage zurücklegen</a>';
+		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=oeffentlichalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><i class="fa fa-users public" aria-hidden="true"></i> Sämtliche Bilder veröffentlichen</a><br />';
+		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=intranetalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><i class="fa fa-users internal" aria-hidden="true"></i> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken</a><br />';
+		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=poolalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><i class="fa fa-users private" aria-hidden="true"></i> Sämtliche Bilder in Ablage zurücklegen</a>';
 		echo '</p>';
 
 		echo '<p>Nach dem Rotieren eines Fotos wird dieses evtl. erst nach einer Aktualisierung der Seite rotiert darstellt.</p>';
@@ -192,8 +192,8 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		echo '<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">';
 		echo '<div class="thumbnail">';
 		echo '<div class="thumbnailOverflow">';
-		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '" class="img-responsive center-block">';
+		echo '<a href="inc.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
+		echo '<img src="inc.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '" class="img-responsive center-block">';
 		echo '</a>';
 		echo '</div>';
 		echo '</div>';
@@ -211,16 +211,16 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 			echo '<div class="thumbnailControls">';
 
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=main&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-home public" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users public" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users internal" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users private" aria-hidden="true"></i></a>';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=main&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-home public" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users public" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users internal" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users private" aria-hidden="true"></i></a>';
 
 			echo '<br />';
 
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-undo" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-repeat" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=semesterprogramm_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a><br />';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-undo" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-repeat" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a><br />';
 
 			echo '</div>';
 		}
@@ -239,8 +239,8 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		}
 
 		echo '<div class="thumbnailOverflow ' .$visibilityClass. '">';
-		echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" class="img-responsive center-block">';
+		echo '<a href="inc.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
+		echo '<img src="inc.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" class="img-responsive center-block">';
 		echo '</a>';
 		echo '</div>';
 
