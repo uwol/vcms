@@ -54,7 +54,7 @@ echo '<h1>Reservierungen</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p><a href="index.php?pid=intranet_reservierung_buchen">Eine Reservierung hinzufügen</a></p>';
+echo '<p><a href="index.php?pid=intranet_reservation_book">Eine Reservierung hinzufügen</a></p>';
 echo '<hr />';
 
 $stmt = $libDb->prepare("SELECT * FROM mod_reservierung_reservierung WHERE datum >= :datum ORDER BY datum");
@@ -73,7 +73,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if($libAuth->getId() == $row['person']){
 		echo ' ';
-		echo '<a href="index.php?pid=intranet_reservierung_liste&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
+		echo '<a href="index.php?pid=intranet_reservations&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
 		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 	}

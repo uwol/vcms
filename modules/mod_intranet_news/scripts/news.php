@@ -71,7 +71,7 @@ echo '<h1>Neuigkeiten im ' .$libTime->getSemesterString($libGlobal->semester). '
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p><a href="index.php?pid=intranet_news_schreiben">Einen Beitrag hinzufügen</a></p>';
+echo '<p><a href="index.php?pid=intranet_news_write">Einen Beitrag hinzufügen</a></p>';
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(eingabedatum,'%Y-%m-01') AS eingabedatum FROM mod_news_news GROUP BY eingabedatum ORDER BY eingabedatum DESC");
 $stmt->execute();
@@ -109,7 +109,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if((in_array('internetwart', $libAuth->getAemter()))
 			|| ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)){
-		echo ' <a href="index.php?pid=intranet_news_news&amp;semester=' .$libGlobal->semester. '&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
+		echo ' <a href="index.php?pid=intranet_news&amp;semester=' .$libGlobal->semester. '&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
 		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 	}

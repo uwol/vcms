@@ -1,9 +1,9 @@
 {
 	"moduleName": "Downloads",
-	"version": 2.29,
+	"version": 2.30,
 	"pages": [
 		{
-			"pid": "intranet_download_directories",
+			"pid": "intranet_directories",
 			"file": "directories.php",
 			"directory": "scripts",
 			"title": "Dateien",
@@ -14,7 +14,7 @@
 	],
 	"includes": [
 		{
-			"iid": "intranet_downloads_download",
+			"iid": "intranet_download",
 			"file": "download.php",
 			"directory": "scripts",
 			"accessRestriction": {
@@ -24,7 +24,7 @@
 	],
 	"menuElementsIntranet": [
 		{
-			"pid": "intranet_download_directories",
+			"pid": "intranet_directories",
 			"name": "Dateien",
 			"type": "menu_entry",
 			"position": 10050

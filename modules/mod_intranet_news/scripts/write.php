@@ -25,7 +25,7 @@ echo '<h1>Neuer Nachrichtenbeitrag</h1>';
 /*
 * input form
 */
-echo '<form action="index.php?pid=intranet_news_news" method="post" class="form-horizontal">';
+echo '<form action="index.php?pid=intranet_news" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
 $libForm->printTextarea('text', 'Nachricht', '');

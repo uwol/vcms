@@ -37,7 +37,7 @@ $stmt->bindValue(':semesterende', $zeitraum[1]);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$url = 'index.php?pid=intranet_news_news&amp;semester=' .$libTime->getSemesterNameAtDate($row['eingabedatum']). '#' .$row['id'];
+	$url = 'index.php?pid=intranet_news&amp;semester=' .$libTime->getSemesterNameAtDate($row['eingabedatum']). '#' .$row['id'];
 
 	$truncateReplacement = ' <a href="' .$url. '">...</a>';
 	$description = $libString->truncate(trim($row['text']), 500, $truncateReplacement);

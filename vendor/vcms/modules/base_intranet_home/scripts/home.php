@@ -79,7 +79,7 @@ if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')){
 	require_once('timeline/chargierkalender.php');
 }
 
-if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')){
+if($libModuleHandler->moduleIsAvailable('mod_intranet_reservations')){
 	require_once('timeline/reservations.php');
 }
 

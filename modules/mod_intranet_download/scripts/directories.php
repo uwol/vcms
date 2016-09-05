@@ -118,7 +118,7 @@ if(!empty($libAuth->getAemter())){
 	*/
 	echo '<h2>Datei hochladen</h2>';
 
-	echo '<form action="index.php?pid=intranet_download_directories" method="post" enctype="multipart/form-data" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_directories" method="post" enctype="multipart/form-data" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="upload" />';
 
@@ -176,7 +176,7 @@ if(!empty($libAuth->getAemter())){
 	*/
 	echo '<h2>Ordner anlegen</h2>';
 
-	echo '<form action="index.php?pid=intranet_download_directories" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_directories" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="newfolder" />';
 
@@ -222,10 +222,10 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 		if($folderElement->type == 1){
 			if(!$folderElement->isAmtsRootFolder() || $folderElement->hasNestedFolderElements()){
 				if($folderElement->isOpen){
-					echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
+					echo '<a href="index.php?pid=intranet_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
 					echo '<i class="fa fa-folder-open" aria-hidden="true"></i> ';
 				} else{
-					echo '<a href="index.php?pid=intranet_download_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
+					echo '<a href="index.php?pid=intranet_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
 					echo '<i class="fa fa-folder" aria-hidden="true"></i> ';
 				}
 
@@ -239,7 +239,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				}
 
 				if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
-					echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+					echo ' <a href="index.php?pid=intranet_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
 				}
 
 				echo '<br />';
@@ -300,12 +300,12 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 
 			$fileName = $folderElement->getFilename();
 
-			echo ' <a href="inc.php?iid=intranet_downloads_download&amp;hash=' .$folderElement->getHash(). '">' .$fileName. '</a>';
+			echo ' <a href="inc.php?iid=intranet_download&amp;hash=' .$folderElement->getHash(). '">' .$fileName. '</a>';
 			echo ' - ' .implode('', $folderElement->readGroups);
 			echo ' - ' .getSizeString($folderElement->getSize());
 
 			if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-				echo ' <a href="index.php?pid=intranet_download_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+				echo ' <a href="index.php?pid=intranet_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
 			}
 
 			echo '<br />';
