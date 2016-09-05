@@ -1,6 +1,6 @@
 {
 	"moduleName": "Chargierkalender",
-	"version": 2.44,
+	"version": 2.45,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -14,7 +14,7 @@
 		},
 		{
 			"pid": "intranet_chargierkalender_adminliste",
-			"file": "list.php",
+			"file": "events.php",
 			"directory": "scripts/admin",
 			"title": "Chargierveranstaltungen",
 			"accessRestriction": {

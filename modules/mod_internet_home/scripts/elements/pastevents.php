@@ -29,9 +29,9 @@ $i = 0;
 $eventIds = array();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$pictureid = $libGallery->getMainPictureId($row['id']);
+	$pictureId = $libGallery->getMainPictureId($row['id']);
 
-	if($pictureid > -1){
+	if($pictureId > -1){
 		$eventIds[] = $row['id'];
 		$i++;
 
@@ -52,14 +52,14 @@ if(count($eventIds) > 0){
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		$pictureid = $libGallery->getMainPictureId($eventId);
+		$pictureId = $libGallery->getMainPictureId($eventId);
 
 		echo '<div class="col-lg-4 col-sm-6">';
 
 		echo '<div class="thumbnail">';
 		echo '<div class="thumbnailOverflow">';
-		echo '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$eventId. '" class="event-box">';
-		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$eventId. '&amp;pictureid=' .$pictureid . '" alt="" class="img-responsive" />';
+		echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box">';
+		echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$eventId. '&amp;id=' .$pictureId . '" alt="" class="img-responsive" />';
 
 		echo '<div class="event-box-caption">';
 		echo '<div class="event-box-caption-content">';

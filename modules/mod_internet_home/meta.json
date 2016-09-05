@@ -1,6 +1,6 @@
 {
 	"moduleName": "Home",
-	"version": 3.17,
+	"version": 3.18,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -12,7 +12,7 @@
 		},
 		{
 			"pid": "intranet_internethome_nachricht_adminliste",
-			"file": "announcement_list.php",
+			"file": "announcements.php",
 			"directory": "scripts/admin",
 			"title": "Ankündigungen",
 			"accessRestriction": {

@@ -3,7 +3,7 @@
 	"pages": [
 		{
 			"pid": "intranet_admin_db_personenliste",
-			"file": "personen.php",
+			"file": "persons.php",
 			"directory": "scripts/person",
 			"title": "Personen",
 			"accessRestriction": {
@@ -39,8 +39,8 @@
 		},
 		{
 			"pid": "intranet_admin_db_veranstaltungsliste",
-			"file": "veranstaltungen.php",
-			"directory": "scripts/veranstaltung",
+			"file": "events.php",
+			"directory": "scripts/event",
 			"title": "Veranstaltungen",
 			"accessRestriction": {
 				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
@@ -48,8 +48,8 @@
 		},
 		{
 			"pid": "intranet_admin_db_veranstaltung",
-			"file": "veranstaltung.php",
-			"directory": "scripts/veranstaltung",
+			"file": "event.php",
+			"directory": "scripts/event",
 			"title": "Veranstaltung",
 			"accessRestriction": {
 				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
@@ -57,8 +57,8 @@
 		},
 		{
 			"pid": "intranet_admin_db_vereinsliste",
-			"file": "vereine.php",
-			"directory": "scripts/verein",
+			"file": "associations.php",
+			"directory": "scripts/association",
 			"title": "Vereine",
 			"accessRestriction": {
 				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
@@ -66,8 +66,8 @@
 		},
 		{
 			"pid": "intranet_admin_db_verein",
-			"file": "verein.php",
-			"directory": "scripts/verein",
+			"file": "association.php",
+			"directory": "scripts/association",
 			"title": "Verein",
 			"accessRestriction": {
 				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
@@ -93,8 +93,8 @@
 		},
 		{
 			"pid": "intranet_admin_db_vereinsmitgliedschaftenliste",
-			"file": "vereinsmitgliedschaften.php",
-			"directory": "scripts/vereinsmitgliedschaft",
+			"file": "memberships.php",
+			"directory": "scripts/membership",
 			"title": "Vereinsmitgliedschaften",
 			"accessRestriction": {
 				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
@@ -102,8 +102,8 @@
 		},
 		{
 			"pid": "intranet_admin_db_vereinsmitgliedschaft",
-			"file": "vereinsmitgliedschaft.php",
-			"directory": "scripts/vereinsmitgliedschaft",
+			"file": "membership.php",
+			"directory": "scripts/membership",
 			"title": "Vereinsmitgliedschaft",
 			"accessRestriction": {
 				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
@@ -111,7 +111,7 @@
 		},
 		{
 			"pid": "intranet_admin_db_gruppen",
-			"file": "gruppen.php",
+			"file": "groups.php",
 			"directory": "scripts",
 			"title": "Gruppen",
 			"accessRestriction": {
@@ -129,7 +129,7 @@
 		},
 		{
 			"pid": "intranet_admin_db_region",
-			"file": "regionen.php",
+			"file": "regions.php",
 			"directory": "scripts",
 			"title": "Regionen",
 			"accessRestriction": {
@@ -141,7 +141,7 @@
 		{
 			"name": "Daten",
 			"type": "menu_folder",
-			"position": 100, 
+			"position": 100,
 			"elements": [
 				{
 					"pid": "intranet_admin_db_personenliste",

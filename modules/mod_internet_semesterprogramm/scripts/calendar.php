@@ -56,7 +56,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$event->setId($row['id']);
 	$event->setLocation($row['ort']);
 	$event->setSummary($row['titel']);
-	$event->setLinkUrl('index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']);
+	$event->setLinkUrl('index.php?pid=event&amp;id=' .$row['id']);
 	$event->setStatus($row['status']);
 
 	if(substr($row['datum'], 11, 8) == "00:00:00"){
@@ -71,7 +71,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$pictureId = $libGallery->getMainPictureId($row['id']);
 
 	if($pictureId > -1){
-		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$pictureId);
+		$event->setImageUrl('inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;id=' .$pictureId);
 	}
 
 	$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");

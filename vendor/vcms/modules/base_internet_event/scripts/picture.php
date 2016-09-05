@@ -21,8 +21,8 @@ if(!is_object($libGlobal))
 
 
 if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
-		isset($_GET['pictureid']) && is_numeric($_GET['pictureid']) &&
-		preg_match("/^[0-9]+$/", $_GET['eventid']) && preg_match("/^[0-9]+$/", $_GET['pictureid'])){
+		isset($_GET['id']) && is_numeric($_GET['id']) &&
+		preg_match("/^[0-9]+$/", $_GET['eventid']) && preg_match("/^[0-9]+$/", $_GET['id'])){
 
 	if($libAuth->isLoggedin()){
 		$level = 2;
@@ -33,8 +33,8 @@ if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 	if($libGallery->hasPictures($_GET['eventid'], $level)){
 		$pictures = $libGallery->getPictures($_GET['eventid'], $level);
 
-		if(isset($pictures[$_GET['pictureid']]) && $pictures[$_GET['pictureid']] != ''){
-			$path = 'custom/veranstaltungsfotos/' .$_GET['eventid']. '/' .$pictures[$_GET['pictureid']];
+		if(isset($pictures[$_GET['id']]) && $pictures[$_GET['id']] != ''){
+			$path = 'custom/veranstaltungsfotos/' .$_GET['eventid']. '/' .$pictures[$_GET['id']];
 
 			if(!is_file($path)){
 				exit();

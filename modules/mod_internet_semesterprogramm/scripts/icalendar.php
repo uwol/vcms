@@ -35,7 +35,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$e->setStartAndEndDateTime($row['datum'], $row['datum_ende']);
  	$e->description = $row['beschreibung'];
 	$e->location = $row['ort'];
-	$e->url = $libGlobal->getSiteUrl(). '/index.php?pid=semesterprogramm_event&eventid='. $row['id'];
+	$e->url = $libGlobal->getSiteUrl(). '/index.php?pid=event&id='. $row['id'];
 	$e->uid = $calendarId.$row['id'];
 	$calendar->addEvent($e);
 }

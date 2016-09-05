@@ -32,7 +32,7 @@ class LibEvent{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		$semester = $libTime->getSemesterNameAtDate($row['datum']);
-		$result = $libGlobal->getSiteUrl(). '/index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '&amp;semester=' .$semester;
+		$result = $libGlobal->getSiteUrl(). '/index.php?pid=event&amp;id=' .$row['id']. '&amp;semester=' .$semester;
 		return $result;
 	}
 

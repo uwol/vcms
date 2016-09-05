@@ -37,12 +37,12 @@ class LibGallery{
 		return false;
 	}
 
-	function getMainPictureId($eventid){
-		return $this->getFirstVisiblePictureId($eventid, 0);
+	function getMainPictureId($eventId){
+		return $this->getFirstVisiblePictureId($eventId, 0);
 	}
 
-	function getFirstVisiblePictureId($eventid, $level){
-		$pictures = $this->getPictures($eventid, $level);
+	function getFirstVisiblePictureId($eventId, $level){
+		$pictures = $this->getPictures($eventId, $level);
 
 		$firstPictureId = -1;
 		$firstMainPictureId = -1;
@@ -67,12 +67,12 @@ class LibGallery{
 		return $firstPictureId;
 	}
 
-	function getPictures($eventid, $level){
-		if($eventid != '' && !is_numeric($eventid)){
+	function getPictures($eventId, $level){
+		if($eventId != '' && !is_numeric($eventId)){
 			exit();
 		}
 
-		$path = 'custom/veranstaltungsfotos/' .$eventid;
+		$path = 'custom/veranstaltungsfotos/' .$eventId;
 
 		//escape prevention
 		if(preg_match("/\.\./", $path)){
@@ -115,8 +115,8 @@ class LibGallery{
 		return $visiblePictures;
 	}
 
-	function getNumberOfPictures($eventid, $level){
-		return count($this->getPictures($eventid, $level));
+	function getNumberOfPictures($eventId, $level){
+		return count($this->getPictures($eventId, $level));
 	}
 
 	function parseAccessString($file){

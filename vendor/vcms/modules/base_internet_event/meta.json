@@ -2,14 +2,14 @@
 	"moduleName": "Event",
 	"pages": [
 		{
-			"pid": "semesterprogramm_event",
+			"pid": "event",
 			"file": "event.php",
 			"directory": "scripts",
 			"title": "Veranstaltung"
 		},
 		{
 			"pid": "semesterprogramm_admin_galerienliste",
-			"file": "gallery_list.php",
+			"file": "galleries.php",
 			"directory": "scripts/admin",
 			"title": "Foto-Verwaltung",
 			"accessRestriction": {

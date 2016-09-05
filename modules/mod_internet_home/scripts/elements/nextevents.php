@@ -59,7 +59,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			echo '<div class="col-sm-4">';
 			echo '<div class="thumbnail">';
 			echo '<div class="caption">';
-			echo '<h3><a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
+			echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 
 			printVeranstaltungTitle($row);
 

@@ -26,8 +26,8 @@ if(!is_object($libGlobal))
 
 $id = '';
 
-if(isset($_REQUEST['eventid'])){
-	$id = $_REQUEST['eventid'];
+if(isset($_REQUEST['id'])){
+	$id = $_REQUEST['id'];
 }
 
 if($id == ''){
@@ -241,7 +241,7 @@ function printAnmeldeStatus($row){
 		$stmt->fetch();
 
 		if(date('Y-m-d H:i:s') < $row['datum']){
-			echo '<form action="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '" method="post" class="form-inline">';
+			echo '<form action="index.php?pid=event&amp;id=' .$row['id']. '" method="post" class="form-inline">';
 
 			if($angemeldet){
 				echo '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
@@ -282,8 +282,8 @@ function printGallery($row){
 			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 			echo '<div class="thumbnail">';
 			echo '<div class="thumbnailOverflow">';
-			echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid='. $key .'">';
-			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$key. '" alt="" class="img-responsive center-block" />';
+			echo '<a href="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;id='. $key .'">';
+			echo '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" class="img-responsive center-block" />';
 			echo '</a>';
 			echo '</div>';
 			echo '</div>';

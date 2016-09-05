@@ -77,7 +77,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$stmt2->fetch();
 
 	$title = $row['titel'];
-	$url = 'index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id'];
+	$url = 'index.php?pid=event&amp;id=' .$row['id'];
 	$form = '';
 	$description = '';
 
@@ -87,8 +87,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($libGallery->hasPictures($row['id'], 1)){
 		$description .= '<div class="thumbnail">';
 		$description .= '<div class="thumbnailOverflow">';
-		$description .= '<a href="index.php?pid=semesterprogramm_event&amp;eventid=' .$row['id']. '">';
-		$description .= '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;pictureid=' .$libGallery->getFirstVisiblePictureId($row['id'], 1). '" alt="" class="img-responsive center-block" />';
+		$description .= '<a href="index.php?pid=event&amp;id=' .$row['id']. '">';
+		$description .= '<img src="inc.php?iid=semesterprogramm_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 1). '" alt="" class="img-responsive center-block" />';
 		$description .= '</a>';
 		$description .= '</div>';
 		$description .= '</div>';

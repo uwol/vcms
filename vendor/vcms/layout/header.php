@@ -89,7 +89,7 @@ function getPageTitle(){
 		$result = $libConfig->verbindungName;
 	} else if(isEventPage()){
 		$stmt = $libDb->prepare("SELECT titel, datum, intern FROM base_veranstaltung WHERE id=:id");
-		$stmt->bindValue(':id', $_REQUEST['eventid'], PDO::PARAM_INT);
+		$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
 		$stmt->execute();
 		$event = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -113,7 +113,7 @@ function getPageCanonicalUrl(){
 	if($libGlobal->pid == $libConfig->defaultHome){
 		$result = $libGlobal->getSiteUrl(). '/';
 	} else if(isEventPage()){
-		$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;eventid=' .$_REQUEST['eventid'];
+		$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;id=' .$_REQUEST['id'];
 	} else {
 		$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid;
 	}
@@ -127,7 +127,7 @@ function getPageOgUrl(){
 	$result = '';
 
 	if(isEventPage()){
-		$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;eventid=' .$_REQUEST['eventid'];
+		$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;id=' .$_REQUEST['id'];
 	} else {
 		$result = $libGlobal->getSiteUrl(). '/';
 	}
@@ -138,6 +138,6 @@ function getPageOgUrl(){
 function isEventPage(){
 	global $libGlobal;
 
-	return $libGlobal->page->getPid() == 'semesterprogramm_event'
-			&& isset($_REQUEST['eventid']) && is_numeric($_REQUEST['eventid']);
+	return $libGlobal->page->getPid() == 'event'
+			&& isset($_REQUEST['id']) && is_numeric($_REQUEST['id']);
 }
