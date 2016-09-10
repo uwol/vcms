@@ -23,14 +23,14 @@ use PDO;
 class LibAssociation{
 
 	function getFarbe($farbe){
-		$farben['blau']          = '0000ff';
+		$farben['blau']          = '0E65A8';
 		$farben['dunkelblau']    = '000033';
 		$farben['dunkelgrün']    = '003300';
 		$farben['flieder']       = '336699';
 		$farben['gelb']          = 'ffff00';
 		$farben['gold']          = 'ffd700';
 		$farben['grün']          = '009900';
-		$farben['hellblau']      = '0066ff';
+		$farben['hellblau']      = '6392bf';
 		$farben['hellgrün']      = '00ff00';
 		$farben['hellrot']       = 'ff0000';
 		$farben['himmelblau']    = '0066ff';
