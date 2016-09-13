@@ -668,6 +668,8 @@ function printCommunication($row){
 				$icon = '<i class="fa fa-wikipedia-w fa-fw" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'instagram')){
 				$icon = '<i class="fa fa-instagram fa-fw" aria-hidden="true"></i>';
+			} elseif(strstr($webseite, 'github')){
+				$icon = '<i class="fa fa-github fa-fw" aria-hidden="true"></i>';
 			}
 
 			echo '<div>';
