@@ -57,7 +57,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('showHaftungshinweis')){
 
 $mailsent = false;
 
-//mail to send?
+
 if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddress']) && isset($_POST['nachricht'])){
 	$error_emailaddress = false;
 	$error_message = false;
@@ -95,6 +95,15 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 /*
 * output
 */
+
+$associationSchema = $libAssociation->getAssociationSchema();
+
+echo '<script type="application/ld+json">';
+echo json_encode($associationSchema);
+echo '</script>';
+
+
+
 echo '<h1>Kontakt und Impressum</h1>';
 
 echo $libString->getErrorBoxText();
@@ -105,22 +114,22 @@ echo '<h2>Kontaktadresse</h2>';
 echo '<div class="row">';
 echo '<div class="col-sm-6">';
 
-echo '<div itemscope itemtype="http://schema.org/Organization">';
-echo '<p itemprop="name">' .$libConfig->verbindungName. '</p>';
 
-echo '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
+echo '<p>' .$libConfig->verbindungName. '</p>';
+
+echo '<address>';
 
 if($libConfig->verbindungZusatz != ''){
 	echo '<span>' .$libConfig->verbindungZusatz. '</span><br />';
 }
 
-echo '<span itemprop="streetAddress">' .$libConfig->verbindungStrasse. '</span><br />';
-echo '<span itemprop="postalCode">' .$libConfig->verbindungPlz. '</span> <span itemprop="addressLocality">' .$libConfig->verbindungOrt. '</span><br />';
-echo '<span itemprop="addressCountry">' .$libConfig->verbindungLand. '</span><br />';
+echo '<span>' .$libConfig->verbindungStrasse. '</span><br />';
+echo '<span>' .$libConfig->verbindungPlz. '</span> <span>' .$libConfig->verbindungOrt. '</span><br />';
+echo '<span>' .$libConfig->verbindungLand. '</span><br />';
 echo '</address>';
-echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span itemprop="telephone">' .$libConfig->verbindungTelefon. '</span><br />';
-echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span itemprop="email">' .$libConfig->emailInfo. '</span><br />';
-echo '</div>';
+
+echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span>' .$libConfig->verbindungTelefon. '</span><br />';
+echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span>' .$libConfig->emailInfo. '</span><br />';
 
 echo '<p>';
 

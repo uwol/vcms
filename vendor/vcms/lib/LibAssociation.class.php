@@ -294,4 +294,33 @@ class LibAssociation{
 			$stmt->execute();
 		}
 	}
+
+	function getAssociationSchema(){
+		global $libConfig, $libGenericStorage, $libGlobal;
+
+		$result = array();
+
+		$result['@context'] = 'http://schema.org';
+		$result['@type'] = 'Organization';
+		$result['name'] = $libConfig->verbindungName;
+		$result['url'] = $libGlobal->getSiteUrl();
+		$result['email'] = $libConfig->emailInfo;
+		$result['telephone'] = $libConfig->verbindungTelefon;
+
+		$address = array();
+		$address['@type'] = 'PostalAddress';
+		$address['streetAddress'] = $libConfig->verbindungStrasse;
+		$address['postalCode'] = $libConfig->verbindungPlz;
+		$address['addressLocality'] = $libConfig->verbindungOrt;
+		$address['addressCountry'] = $libConfig->verbindungLand;
+		$result['address'] = $address;
+
+		$wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wp_url');
+
+		if($wikipediaUrl != ''){
+			$result['sameAs'] = $wikipediaUrl;
+		}
+
+		return $result;
+	}
 }

@@ -20,15 +20,13 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<section class="contact-box" itemscope itemtype="http://schema.org/Organization">';
-echo '<meta itemprop="name" content="' .$libConfig->verbindungName. '" />';
+$associationSchema = $libAssociation->getAssociationSchema();
 
-$wp_url = $libGenericStorage->loadValue('mod_internet_home', 'wp_url');
+echo '<script type="application/ld+json">';
+echo json_encode($associationSchema);
+echo '</script>';
 
-if($wp_url != ''){
-	echo '<meta itemprop="sameAs" content="' .$wp_url. '" />';
-}
-
+echo '<section class="contact-box">';
 echo '<div class="container">';
 echo '<div class="row">';
 echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
@@ -39,11 +37,11 @@ echo '<p>Interesse geweckt? Großartig! Melde Dich bei uns und wir antworten Dir
 echo '</div>';
 echo '<div class="col-lg-4 col-lg-offset-2 text-center">';
 echo '<i class="fa fa-phone fa-3x sr-contact"></i>';
-echo '<p itemprop="telephone">' .$libConfig->verbindungTelefon. '</p>';
+echo '<p>' .$libConfig->verbindungTelefon. '</p>';
 echo '</div>';
 echo '<div class="col-lg-4 text-center">';
 echo '<i class="fa fa-envelope-o fa-3x sr-contact"></i>';
-echo '<p itemprop="email">' .$libConfig->emailInfo. '</p>';
+echo '<p>' .$libConfig->emailInfo. '</p>';
 
 echo '</div>';
 echo '</div>';
