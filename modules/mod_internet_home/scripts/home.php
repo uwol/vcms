@@ -40,7 +40,7 @@ function printVeranstaltungTitle($row){
 function printVeranstaltungDateTime($row){
 	global $libTime;
 
-	echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '" itemprop="startDate" content="' .$libTime->formatUtcString($row['datum']). '">';
+	echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '">';
 	echo $libTime->formatDateTimeString($row['datum']);
 	echo '</time>';
 }

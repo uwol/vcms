@@ -5,7 +5,7 @@ echo '  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# business: h
 echo '    <meta charset="utf-8" />' . PHP_EOL;
 echo '    <meta http-equiv="X-UA-Compatible" content="IE=edge" />' . PHP_EOL;
 echo '    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' . PHP_EOL;
-echo '    <title>' .getPageTitle(). '</title>' . PHP_EOL;
+echo '    <title>' .$libGlobal->getPageTitle(). '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
@@ -19,7 +19,7 @@ echo '    <link rel="stylesheet" href="vendor/vcms/styles/person/person.css" />'
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">' . PHP_EOL;
-echo '    <link rel="canonical" href="' .getPageCanonicalUrl(). '"/>' . PHP_EOL;
+echo '    <link rel="canonical" href="' .$libGlobal->getPageCanonicalUrl(). '"/>' . PHP_EOL;
 echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/vcms/styles/gallery/modal.js"></script>' . PHP_EOL;
@@ -48,8 +48,8 @@ if($libGenericStorage->loadValue('base_core', 'fbAppId')){
 }
 
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
-echo '    <meta property="og:url" content="' .getPageOgUrl(). '"/>' . PHP_EOL;
-echo '    <meta property="og:title" content="' .getPageTitle(). '"/>' . PHP_EOL;
+echo '    <meta property="og:url" content="' .$libGlobal->getPageOgUrl(). '"/>' . PHP_EOL;
+echo '    <meta property="og:title" content="' .$libGlobal->getPageTitle(). '"/>' . PHP_EOL;
 echo '    <meta property="og:image" content="' .$libGlobal->getSiteUrl(). '/custom/styles/og_image.jpg"/>' . PHP_EOL;
 echo '    <meta property="og:image:type" content="image/jpeg" />' . PHP_EOL;
 echo '    <meta property="og:image:height" content="265"/>' . PHP_EOL;
@@ -76,68 +76,4 @@ $libMenuRenderer->printNavbar($libMenuInternet, $libMenuIntranet, $libMenuAdmini
 if($libGlobal->page->isContainerEnabled()){
 	echo '    <main id="content">' . PHP_EOL;
 	echo '      <div id="container" class="container">' . PHP_EOL;
-}
-
-
-
-function getPageTitle(){
-	global $libGlobal, $libConfig, $libTime, $libDb;
-
-	$result = '';
-
-	if($libGlobal->pid == $libConfig->defaultHome){
-		$result = $libConfig->verbindungName;
-	} else if(isEventPage()){
-		$stmt = $libDb->prepare("SELECT titel, datum, intern FROM base_veranstaltung WHERE id=:id");
-		$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
-		$stmt->execute();
-		$event = $stmt->fetch(PDO::FETCH_ASSOC);
-
-		if($event['titel'] != '' && $event['intern'] == 0){
-			$result = $libConfig->verbindungName. ' - ' .$event['titel']. ' am ' .$libTime->formatDateString($event['datum']);
-		} else {
-			$result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
-		}
-	} else {
-		$result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
-	}
-
-	return $result;
-}
-
-function getPageCanonicalUrl(){
-	global $libGlobal, $libConfig;
-
-	$result = '';
-
-	if($libGlobal->pid == $libConfig->defaultHome){
-		$result = $libGlobal->getSiteUrl(). '/';
-	} else if(isEventPage()){
-		$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;id=' .$_REQUEST['id'];
-	} else {
-		$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid;
-	}
-
-	return $result;
-}
-
-function getPageOgUrl(){
-	global $libGlobal;
-
-	$result = '';
-
-	if(isEventPage()){
-		$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;id=' .$_REQUEST['id'];
-	} else {
-		$result = $libGlobal->getSiteUrl(). '/';
-	}
-
-	return $result;
-}
-
-function isEventPage(){
-	global $libGlobal;
-
-	return $libGlobal->page->getPid() == 'event'
-			&& isset($_REQUEST['id']) && is_numeric($_REQUEST['id']);
 }

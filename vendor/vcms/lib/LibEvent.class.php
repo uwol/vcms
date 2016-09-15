@@ -126,4 +126,46 @@ class LibEvent{
 		echo '<i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>';
 		echo '</a> ';
 	}
+
+	function getEventSchema($row){
+		global $libGlobal, $libTime;
+
+		$result = array();
+
+		$result['@context'] = 'http://schema.org';
+		$result['@type'] = 'SocialEvent';
+		$result['name'] = $row['titel'];
+		$result['url'] = $this->getEventUrl($row['id']);
+
+		if($row['description'] != ''){
+			$result['description'] = $row['beschreibung'];
+		}
+
+		$result['startDate'] = $libTime->formatUtcString($row['datum']);
+
+		if($row['datum_ende'] != ''){
+			$result['endDate'] = $libTime->formatUtcString($row['datum_ende']);
+		}
+
+		$address = array();
+		$address['@type'] = 'Place';
+
+		if($row['ort'] != ''){
+			$address['name'] = $row['ort'];
+			$address['address'] = $row['ort'];
+		} else {
+			$address['name'] = 'adH';
+			$address['address'] = 'adH';
+		}
+
+		$result['location'] = $address;
+
+		return $result;
+	}
+
+	function getEventUrl($id){
+		global $libGlobal;
+
+		return $libGlobal->getSiteUrl(). '/index.php?pid=event&amp;id=' .$id;
+	}
 }

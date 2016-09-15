@@ -116,7 +116,7 @@ class LibCalendarEvent{
 		//optionally, $forDate contains the date this event should be printed for
 		//this is relevant for multi-day events, that should not contain time information for
 		//days between startDate and endDate
-		global $libString, $libTime;
+		global $libString, $libTime, $libEvent;
 
 		$retstr = '';
 		$timeString = '';
@@ -131,16 +131,16 @@ class LibCalendarEvent{
 		/*
 		* print event
 		*/
-		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendarEvent" itemscope itemtype="http://schema.org/SocialEvent">';
-		$retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '" itemprop="startDate" content="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
+		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendarEvent">';
+		$retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link
 		if($this->linkUrl != ''){
-			$retstr .= '<a href="' .$this->linkUrl. '" itemprop="sameAs">';
+			$retstr .= '<a href="' .$this->linkUrl. '">';
 		}
 
 		//summary
-		$retstr .= '<div itemprop="name">';
+		$retstr .= '<div>';
 		$retstr .= $this->summary;
 		$retstr .= '</div>';
 
@@ -148,7 +148,7 @@ class LibCalendarEvent{
 		if($this->imageUrl != ''){
 			$retstr .= '<div class="thumbnail">';
 			$retstr .= '<div class="thumbnailOverflow">';
-			$retstr .= '<img class="img-responsive center-block" src="'.$this->imageUrl.'" alt="Foto" itemprop="image" />';
+			$retstr .= '<img class="img-responsive center-block" src="'.$this->imageUrl.'" alt="Foto" />';
 			$retstr .= '</div>';
 			$retstr .= '</div>';
 		}
@@ -159,20 +159,16 @@ class LibCalendarEvent{
 
 		//description
 		if($this->description != ''){
-			$retstr .= '<div itemprop="description">';
+			$retstr .= '<div>';
 			$retstr .= $this->description;
 			$retstr .= '</div>';
 		}
 
 		//location
-		$retstr .= '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
+		$retstr .= '<address>';
 
 		if($this->location != ''){
-			$retstr .= '<span itemprop="name">' .$this->location. '</span>';
-			$retstr .= '<meta itemprop="address" content="' .$this->location. '" />';
-		} else {
-			$retstr .= '<meta itemprop="name" content="adH" />';
-			$retstr .= '<meta itemprop="address" content="adH" />';
+			$retstr .= '<span>' .$this->location. '</span>';
 		}
 
 		$retstr .= '</address>';

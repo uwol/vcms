@@ -18,6 +18,8 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms;
 
+use PDO;
+
 class LibGlobal{
 	var $version = '6.99';
 
@@ -37,6 +39,68 @@ class LibGlobal{
 	function __construct() {
 		$this->vcmsHostname = 'ver' . 'bin' . 'dung' . 'scms' . '.' . 'de';
 		$this->mkHostname = 'www' . '.' . 'mar' . 'kom' . 'ann' . 'ia' . '.' . 'org';
+	}
+
+	function getPageTitle(){
+		global $libGlobal, $libConfig, $libTime, $libDb;
+
+		$result = '';
+
+		if($libGlobal->pid == $libConfig->defaultHome){
+			$result = $libConfig->verbindungName;
+		} else if($this->isEventPage()){
+			$stmt = $libDb->prepare("SELECT titel, datum, intern FROM base_veranstaltung WHERE id=:id");
+			$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->execute();
+			$event = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if($event['titel'] != '' && $event['intern'] == 0){
+				$result = $libConfig->verbindungName. ' - ' .$event['titel']. ' am ' .$libTime->formatDateString($event['datum']);
+			} else {
+				$result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
+			}
+		} else {
+			$result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
+		}
+
+		return $result;
+	}
+
+	function getPageCanonicalUrl(){
+		global $libGlobal, $libConfig, $libEvent;
+
+		$result = '';
+
+		if($libGlobal->pid == $libConfig->defaultHome){
+			$result = $libGlobal->getSiteUrl(). '/';
+		} else if($this->isEventPage()){
+			$result = $libEvent->getEventUrl($_REQUEST['id']);
+		} else {
+			$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid;
+		}
+
+		return $result;
+	}
+
+	function getPageOgUrl(){
+		global $libGlobal;
+
+		$result = '';
+
+		if($this->isEventPage()){
+			$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;id=' .$_REQUEST['id'];
+		} else {
+			$result = $libGlobal->getSiteUrl(). '/';
+		}
+
+		return $result;
+	}
+
+	function isEventPage(){
+		global $libGlobal;
+
+		return $libGlobal->page->getPid() == 'event'
+				&& isset($_REQUEST['id']) && is_numeric($_REQUEST['id']);
 	}
 
 	function getSiteUrl(){

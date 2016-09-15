@@ -67,8 +67,14 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	/*
 	* output
 	*/
-	echo '<div itemscope itemtype="http://schema.org/SocialEvent">';
-	echo '<h1 itemprop="name">' .$row['titel']. '</h1>';
+	$eventSchema = $libEvent->getEventSchema($row);
+
+	echo '<script type="application/ld+json">';
+	echo json_encode($eventSchema);
+	echo '</script>';
+
+
+	echo '<h1>' .$row['titel']. '</h1>';
 	echo '<div class="row">';
 
 	// Caption-Box
@@ -86,7 +92,6 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '</div>';
 
 
-	// Haupttext
 	$colLg = 9;
 	$colMd = 8;
 
@@ -100,8 +105,6 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	printAnmeldungen($row);
 	echo '</div>';
 
-
-	// Facebook
 	if($libEvent->isFacebookEvent($row)){
 		echo '<div class="col-sm-12 col-md-4 col-lg-3">';
 		echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
@@ -111,8 +114,6 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '</div>';
 
 	printGallery($row);
-
-	echo '</div>';
 }
 
 // -----------------------------------------------------------
@@ -123,7 +124,7 @@ function printEventDetails($row){
 	/*
 	* date and time
 	*/
-	echo '<time class="dt-start" datetime="' .$libTime->formatUtcString($row['datum']). '" itemprop="startDate" content="' .$libTime->formatUtcString($row['datum']). '">';
+	echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '">';
 	echo 'Am ' .$libTime->formatDateString($row['datum']);
 
 	$timeString = $libTime->formatTimeString($row['datum']);
@@ -137,15 +138,11 @@ function printEventDetails($row){
 	/*
 	* location
 	*/
-	echo '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
+	echo '<address>';
 
 	if ($row['ort'] != ''){
 		echo 'Ort: ';
-		echo '<span itemprop="name">' .$row['ort']. '</span>';
-		echo '<meta itemprop="address" content="' .$row['ort']. '" />';
-	} else {
-		echo '<meta itemprop="name" content="adH" />';
-		echo '<meta itemprop="address" content="adH" />';
+		echo '<span>' .$row['ort']. '</span>';
 	}
 
 	echo '</address>';
@@ -161,7 +158,7 @@ function printEventDetails($row){
 	*/
 	if($row['beschreibung'] != ''){
 		echo '<h3>Beschreibung</h3>';
-		echo '<p itemprop="description">' .nl2br($row['beschreibung']). '</p>';
+		echo '<p>' .nl2br($row['beschreibung']). '</p>';
 	}
 
 	if($row['spruch'] != ''){
@@ -189,7 +186,7 @@ function printAnmeldungen($row){
 				echo ', ';
 			}
 
-			echo '<span itemprop="attendee"><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
+			echo '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
 			$anmeldungWritten = true;
 		}
 

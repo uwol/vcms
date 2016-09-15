@@ -55,16 +55,15 @@ if(count($eventIds) > 0){
 		$pictureId = $libGallery->getMainPictureId($eventId);
 
 		echo '<div class="col-lg-4 col-sm-6">';
-		echo '<div itemscope itemtype="http://schema.org/SocialEvent">';
 
 		echo '<div class="thumbnail">';
 		echo '<div class="thumbnailOverflow">';
-		echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box" itemprop="sameAs">';
+		echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box">';
 		echo '<img src="inc.php?iid=event_picture&amp;eventid=' .$eventId. '&amp;id=' .$pictureId . '" alt="" class="img-responsive" />';
 
 		echo '<div class="event-box-caption">';
 		echo '<div class="event-box-caption-content">';
-		echo '<div class="event-name text-faded" itemprop="name">';
+		echo '<div class="event-name text-faded">';
 		printVeranstaltungTitle($row);
 		echo '</div>';
     echo '<div class="event-time">';
@@ -76,20 +75,6 @@ if(count($eventIds) > 0){
     echo '</a>';
     echo '</div>';
 		echo '</div>';
-
-		echo '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
-
-		if($row['ort'] != ''){
-			echo '<meta itemprop="name" content="' .$row['ort']. '" />';
-			echo '<meta itemprop="address" content="' .$row['ort']. '" />';
-		} else {
-			echo '<meta itemprop="name" content="adH" />';
-			echo '<meta itemprop="address" content="adH" />';
-		}
-
-		echo '</address>';
-
-    echo '</div>';
     echo '</div>';
 	}
 

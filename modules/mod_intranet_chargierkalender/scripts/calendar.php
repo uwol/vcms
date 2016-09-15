@@ -209,17 +209,17 @@ class LibChargierKalenderEvent{
 		* print event
 		*/
 		//header
-		$retstr .= '<div id="t' .$this->id. '" class="calendarEvent" itemscope itemtype="http://schema.org/SocialEvent">';
-		$retstr .= '<div><time class="dt-start" datetime="' .$libTime->formatUtcString($this->startDateTime). '" itemprop="startDate" content="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
+		$retstr .= '<div id="t' .$this->id. '" class="calendarEvent">';
+		$retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link
 		if($this->linkUrl != ''){
-			$retstr .= '<a href="' .$this->linkUrl. '" itemprop="url">';
+			$retstr .= '<a href="' .$this->linkUrl. '">';
 		}
 
 		//summary
 		if($this->summary != ''){
-			$retstr .= '<div itemprop="name">';
+			$retstr .= '<div>';
 			$retstr .= $this->summary;
 			$retstr .= '</div>';
 		}
@@ -230,20 +230,16 @@ class LibChargierKalenderEvent{
 
 		//description
 		if($this->description != ''){
-			$retstr .= '<div itemprop="description">';
+			$retstr .= '<div>';
 			$retstr .= $this->description;
 			$retstr .= '</div>';
 		}
 
 		//location
-		$retstr .= '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
+		$retstr .= '<address>';
 
 		if($this->location != ''){
-			$retstr .= '<span itemprop="name">' .$this->location. '</span>';
-			$retstr .= '<meta itemprop="address" content="' .$this->location. '" />';
-		} else {
-			$retstr .= '<meta itemprop="name" content="am Veranstaltungsort" />';
-			$retstr .= '<meta itemprop="address" content="Veranstaltungsort" />';
+			$retstr .= '<span>' .$this->location. '</span>';
 		}
 
 		$retstr .= '</address>';
