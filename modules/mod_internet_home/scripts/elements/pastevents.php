@@ -47,7 +47,7 @@ if(count($eventIds) > 0){
 	echo '<div class="row no-gutter">';
 
 	foreach($eventIds as $eventId){
-		$stmt = $libDb->prepare('SELECT id, titel, datum, intern FROM base_veranstaltung WHERE id = :id');
+		$stmt = $libDb->prepare('SELECT id, titel, datum, ort, intern FROM base_veranstaltung WHERE id = :id');
 		$stmt->bindValue(':id', $eventId);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -55,27 +55,42 @@ if(count($eventIds) > 0){
 		$pictureId = $libGallery->getMainPictureId($eventId);
 
 		echo '<div class="col-lg-4 col-sm-6">';
+		echo '<div itemscope itemtype="http://schema.org/SocialEvent">';
 
 		echo '<div class="thumbnail">';
 		echo '<div class="thumbnailOverflow">';
-		echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box">';
+		echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box" itemprop="sameAs">';
 		echo '<img src="inc.php?iid=event_picture&amp;eventid=' .$eventId. '&amp;id=' .$pictureId . '" alt="" class="img-responsive" />';
 
 		echo '<div class="event-box-caption">';
 		echo '<div class="event-box-caption-content">';
-		echo '<div class="event-name text-faded">';
+		echo '<div class="event-name text-faded" itemprop="name">';
 		printVeranstaltungTitle($row);
 		echo '</div>';
-        echo '<div class="event-time">';
-        printVeranstaltungDateTime($row);
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
+    echo '<div class="event-time">';
+    printVeranstaltungDateTime($row);
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
 
-        echo '</a>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
+    echo '</a>';
+    echo '</div>';
+		echo '</div>';
+
+		echo '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
+
+		if($row['ort'] != ''){
+			echo '<meta itemprop="name" content="' .$row['ort']. '" />';
+			echo '<meta itemprop="address" content="' .$row['ort']. '" />';
+		} else {
+			echo '<meta itemprop="name" content="adH" />';
+			echo '<meta itemprop="address" content="adH" />';
+		}
+
+		echo '</address>';
+
+    echo '</div>';
+    echo '</div>';
 	}
 
 	echo '</div>';

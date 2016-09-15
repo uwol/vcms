@@ -73,7 +73,7 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 	}
 
 	if(!$error_emailaddress && !$error_message) {
-		$nachricht = $_POST['name'] .' mit der Telefonnummer '.$_POST['telefon'].' und der E-Mail-Adresse ' .$_POST['emailaddress']. ' hat über das Kontaktformular folgende Nachricht geschrieben:' . PHP_EOL;
+		$nachricht = $_POST['name']. ' mit der Telefonnummer ' .$_POST['telefon']. ' und der E-Mail-Adresse ' .$_POST['emailaddress']. ' hat über das Kontaktformular folgende Nachricht geschrieben:' . PHP_EOL;
 		$nachricht .= PHP_EOL;
 		$nachricht .= $_POST['nachricht'];
 
@@ -105,22 +105,21 @@ echo '<h2>Kontaktadresse</h2>';
 echo '<div class="row">';
 echo '<div class="col-sm-6">';
 
-echo '<div class="h-card">';
-echo '<p class="p-name p-org">' .$libConfig->verbindungName. '</p>';
+echo '<div itemscope itemtype="http://schema.org/Organization">';
+echo '<p itemprop="name">' .$libConfig->verbindungName. '</p>';
 
-echo '<address class="p-adr">';
+echo '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
 
 if($libConfig->verbindungZusatz != ''){
-	echo '<span class="p-extended-address">' .$libConfig->verbindungZusatz. '</span><br />';
+	echo '<span>' .$libConfig->verbindungZusatz. '</span><br />';
 }
 
-echo '<span class="p-street-address">' .$libConfig->verbindungStrasse. '</span><br />';
-echo '<span class="p-postal-code">' .$libConfig->verbindungPlz. '</span> <span class="p-locality">' .$libConfig->verbindungOrt. '</span><br />';
-echo '<span class="p-country-name">' .$libConfig->verbindungLand. '</span><br />';
-echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span class="p-tel">' .$libConfig->verbindungTelefon. '</span><br />';
-echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span class="u-email">' .$libConfig->emailInfo. '</span><br />';
-
+echo '<span itemprop="streetAddress">' .$libConfig->verbindungStrasse. '</span><br />';
+echo '<span itemprop="postalCode">' .$libConfig->verbindungPlz. '</span> <span itemprop="addressLocality">' .$libConfig->verbindungOrt. '</span><br />';
+echo '<span itemprop="addressCountry">' .$libConfig->verbindungLand. '</span><br />';
 echo '</address>';
+echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span itemprop="telephone">' .$libConfig->verbindungTelefon. '</span><br />';
+echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span itemprop="email">' .$libConfig->emailInfo. '</span><br />';
 echo '</div>';
 
 echo '<p>';
@@ -128,38 +127,38 @@ echo '<p>';
 $vorstand = $libAssociation->getAnsprechbarerAktivenVorstandIds();
 
 if($libGenericStorage->loadValueInCurrentModule('showSenior') && $vorstand['senior']){
-	echo 'Senior: '.$libPerson->getMitgliedNameString($vorstand['senior'],0).'<br />';
+	echo 'Senior: ' .$libPerson->getMitgliedNameString($vorstand['senior'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showJubelsenior') && $vorstand['jubelsenior']){
-	echo 'Jubelsenior: '.$libPerson->getMitgliedNameString($vorstand['jubelsenior'],0).'<br />';
+	echo 'Jubelsenior: ' .$libPerson->getMitgliedNameString($vorstand['jubelsenior'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showConsenior') && $vorstand['consenior']){
-	echo 'Consenior: '.$libPerson->getMitgliedNameString($vorstand['consenior'],0).'<br />';
+	echo 'Consenior: ' .$libPerson->getMitgliedNameString($vorstand['consenior'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor') && $vorstand['fuchsmajor']){
-	echo 'Fuchsmajor: '.$libPerson->getMitgliedNameString($vorstand['fuchsmajor'],0).'<br />';
+	echo 'Fuchsmajor: ' .$libPerson->getMitgliedNameString($vorstand['fuchsmajor'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor2') && $vorstand['fuchsmajor2']){
-	echo 'Fuchsmajor 2: '.$libPerson->getMitgliedNameString($vorstand['fuchsmajor2'],0).'<br />';
+	echo 'Fuchsmajor 2: ' .$libPerson->getMitgliedNameString($vorstand['fuchsmajor2'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showScriptor') && $vorstand['scriptor']){
-	echo 'Scriptor: '.$libPerson->getMitgliedNameString($vorstand['scriptor'],0).'<br />';
+	echo 'Scriptor: ' .$libPerson->getMitgliedNameString($vorstand['scriptor'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['quaestor']){
-	echo 'Quaestor: '.$libPerson->getMitgliedNameString($vorstand['quaestor'],0).'<br />';
+	echo 'Quaestor: ' .$libPerson->getMitgliedNameString($vorstand['quaestor'], 0). '<br />';
 }
 
 echo '</p>';
 echo '</div>';
 
 echo '<aside class="col-sm-6">';
-echo '<img src="' . $libModuleHandler->getModuleDirectory() . '/custom/img/haus.jpg" alt="" class="img-responsive center-block" />';
+echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="img-responsive center-block" />';
 echo '</aside>';
 
 echo '</div>';

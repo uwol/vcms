@@ -67,8 +67,8 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	/*
 	* output
 	*/
-	echo '<div class="h-event">';
-	echo '<h1 class="p-name">' .$row['titel']. '</h1>';
+	echo '<div itemscope itemtype="http://schema.org/SocialEvent">';
+	echo '<h1 itemprop="name">' .$row['titel']. '</h1>';
 	echo '<div class="row">';
 
 	// Caption-Box
@@ -123,7 +123,7 @@ function printEventDetails($row){
 	/*
 	* date and time
 	*/
-	echo '<time class="dt-start" datetime="' .$libTime->formatUtcString($row['datum']). '">';
+	echo '<time class="dt-start" datetime="' .$libTime->formatUtcString($row['datum']). '" itemprop="startDate" content="' .$libTime->formatUtcString($row['datum']). '">';
 	echo 'Am ' .$libTime->formatDateString($row['datum']);
 
 	$timeString = $libTime->formatTimeString($row['datum']);
@@ -137,22 +137,31 @@ function printEventDetails($row){
 	/*
 	* location
 	*/
+	echo '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
+
 	if ($row['ort'] != ''){
-		echo '<address>Ort: <span class="p-location">' .$row['ort']. '</span></address>';
+		echo 'Ort: ';
+		echo '<span itemprop="name">' .$row['ort']. '</span>';
+		echo '<meta itemprop="address" content="' .$row['ort']. '" />';
+	} else {
+		echo '<meta itemprop="name" content="adH" />';
+		echo '<meta itemprop="address" content="adH" />';
 	}
+
+	echo '</address>';
 
 	/*
 	* status
 	*/
 	$status = $libEvent->getStatusString($row['status']);
-	echo '<p>Status: <span class="p-category">' .$status. '</span></p>';
+	echo '<p>Status: ' .$status. '</p>';
 
 	/*
 	* description
 	*/
 	if($row['beschreibung'] != ''){
 		echo '<h3>Beschreibung</h3>';
-		echo '<p class="p-description">' .nl2br($row['beschreibung']). '</p>';
+		echo '<p itemprop="description">' .nl2br($row['beschreibung']). '</p>';
 	}
 
 	if($row['spruch'] != ''){
@@ -180,7 +189,7 @@ function printAnmeldungen($row){
 				echo ', ';
 			}
 
-			echo '<span class="p-attendee"><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
+			echo '<span itemprop="attendee"><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
 			$anmeldungWritten = true;
 		}
 

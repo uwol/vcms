@@ -20,21 +20,25 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo '<section class="contact-box">';
+echo '<section class="contact-box" itemscope itemtype="http://schema.org/Organization">';
+echo '<meta itemprop="name" content="' .$libConfig->verbindungName. '" />';
+
 echo '<div class="container">';
 echo '<div class="row">';
 echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
+
 echo '<h1 class="section-heading">Kontakt</h1>';
 echo '<hr>';
 echo '<p>Interesse geweckt? Großartig! Melde Dich bei uns und wir antworten Dir schnellstmöglich.</p>';
 echo '</div>';
 echo '<div class="col-lg-4 col-lg-offset-2 text-center">';
 echo '<i class="fa fa-phone fa-3x sr-contact"></i>';
-echo '<p>' .$libConfig->verbindungTelefon. '</p>';
+echo '<p itemprop="telephone">' .$libConfig->verbindungTelefon. '</p>';
 echo '</div>';
 echo '<div class="col-lg-4 text-center">';
 echo '<i class="fa fa-envelope-o fa-3x sr-contact"></i>';
-echo '<p>' .$libConfig->emailInfo. '</p>';
+echo '<p itemprop="email">' .$libConfig->emailInfo. '</p>';
+
 echo '</div>';
 echo '</div>';
 echo '</div>';

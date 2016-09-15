@@ -194,7 +194,7 @@ printPersonSignature($row, $ownprofile);
 echo '</div>';
 
 echo '<div class="col-sm-9">';
-echo '<div class="h-card">';
+echo '<div itemscope itemtype="http://schema.org/Person">';
 printPersonData($row);
 printPrimaryAddress($row);
 printSecondaryAddress($row);
@@ -466,21 +466,21 @@ function printPersonSignature($row, $ownprofile){
 }
 
 function printPersonData($row){
-	global $libDb, $libPerson;
+	global $libDb, $libPerson, $libTime;
 
 	echo '<div>';
-	echo '<div class="p-name">';
+	echo '<div>';
 
 	if($row['anrede'] != ''){
 		echo $row['anrede']. ' ';
 	}
 
 	if($row['titel'] != ''){
-		echo '<span class="p-honorific-prefix">' .$row['titel']. '</span> ';
+		echo '<span itemprop="honorificPrefix">' .$row['titel']. '</span> ';
 	}
 
-	echo '<span class="p-given-name">' .$row['vorname']. '</span> ';
-	echo '<span class="p-family-name">';
+	echo '<span itemprop="givenName">' .$row['vorname']. '</span> ';
+	echo '<span itemprop="familyName">';
 
 	if($row['praefix'] != ''){
 		echo $row['praefix']. ' ';
@@ -496,27 +496,27 @@ function printPersonData($row){
 	echo '</div>';
 
 	if($row['rang'] != ''){
-		echo '<div>Rang: <span class="p-role">' .$row['rang']. '</span></div>';
+		echo '<div>Rang: <span itemprop="honorificPrefix">' .$row['rang']. '</span></div>';
 	}
 
 	if($row['datum_geburtstag'] != ''){
 		echo '<div>Geburtstag: ';
-		echo '<span class="dt-bday">' .substr($row['datum_geburtstag'], 8, 2). '.' .substr($row['datum_geburtstag'], 5, 2) .'.'. substr($row['datum_geburtstag'], 0, 4). '</span>';
+		echo '<span itemprop="birthDate" content="' .$libTime->formatUtcString($row['datum_geburtstag']). '">' .$libTime->formatDateString($row['datum_geburtstag']). '</span>';
 		echo '</div>';
 	}
 
 	if ($row['tod_datum'] != ''){
 		echo '<div>Todesdatum: ';
-		echo '<span>' .substr($row['tod_datum'], 8, 2). '.' .substr($row['tod_datum'], 5, 2). '.' .substr($row['tod_datum'], 0, 4). '</span>';
+		echo '<span itemprop="deathDate" content="' .$libTime->formatUtcString($row['tod_datum']). '">' .$libTime->formatDateString($row['tod_datum']). '</span>';
 		echo '</div>';
 	}
 
 	if($row['spitzname'] != ''){
-		echo '<div>Spitzname: <span class="p-nickname">' .$row['spitzname']. '</span></div>';
+		echo '<div>Spitzname: <span>' .$row['spitzname']. '</span></div>';
 	}
 
 	if($row['beruf'] != ''){
-		echo '<div>Beruf: <span class="p-job-title">' .$row['beruf']. '</span></div>';
+		echo '<div>Beruf: <span itemprop="jobTitle">' .$row['beruf']. '</span></div>';
 	}
 
 	if($row['gruppe'] != ''){
@@ -555,30 +555,30 @@ function printPrimaryAddress($row){
 	*/
 	if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != ''){
 		echo '<hr />';
-		echo '<address class="p-adr">';
+		echo '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
 
 		if($row['zusatz1'] != ''){
-			echo '<div>Zusatz: <span class="p-extended-address">' .$row['zusatz1']. '</span></div>';
+			echo '<div>Zusatz: <span>' .$row['zusatz1']. '</span></div>';
 		}
 
 		if($row['strasse1'] != ''){
-			echo '<div>Straße: <span class="p-street-address">' .$row['strasse1']. '</span></div>';
+			echo '<div>Straße: <span itemprop="streetAddress">' .$row['strasse1']. '</span></div>';
 		}
 
 		if($row['ort1'] != ''){
-			echo '<div>Ort: <span class="p-locality">' .$row['ort1']. '</span></div>';
+			echo '<div>Ort: <span itemprop="addressLocality">' .$row['ort1']. '</span></div>';
 		}
 
 		if($row['plz1'] != ''){
-			echo '<div>PLZ: <span class="p-postal-code">' .$row['plz1']. '</span></div>';
+			echo '<div>PLZ: <span itemprop="postalCode">' .$row['plz1']. '</span></div>';
 		}
 
 		if($row['land1'] != ''){
-			echo '<div>Land: <span class="p-country-name">' .$row['land1']. '</span></div>';
+			echo '<div>Land: <span itemprop="addressCountry">' .$row['land1']. '</span></div>';
 		}
 
 		if($row['telefon1'] != ''){
-			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: <span class="p-tel">' .$row['telefon1']. '</span></div>';
+			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: <span itemprop="telephone">' .$row['telefon1']. '</span></div>';
 		}
 
 		if($row['datum_adresse1_stand'] != ''){
@@ -597,30 +597,30 @@ function printSecondaryAddress($row){
 	*/
 	if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != ''){
 		echo '<hr />';
-		echo '<address class="p-adr">';
+		echo '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
 
 		if($row['zusatz2'] != ''){
-			echo '<div>Zusatz: <span class="p-extended-address">' .$row['zusatz2']. '</span></div>';
+			echo '<div>Zusatz: <span>' .$row['zusatz2']. '</span></div>';
 		}
 
 		if($row['strasse2'] != ''){
-			echo '<div>Straße: <span class="p-street-address">' .$row['strasse2']. '</span></div>';
+			echo '<div>Straße: <span itemprop="streetAddress">' .$row['strasse2']. '</span></div>';
 		}
 
 		if($row['ort2'] != ''){
-			echo '<div>Ort: <span class="p-locality">' .$row['ort2']. '</span></div>';
+			echo '<div>Ort: <span itemprop="addressLocality">' .$row['ort2']. '</span></div>';
 		}
 
 		if($row['plz2'] != ''){
-			echo '<div>PLZ: <span class="p-postal-code">' .$row['plz2']. '</span></div>';
+			echo '<div>PLZ: <span itemprop="postalCode">' .$row['plz2']. '</span></div>';
 		}
 
 		if($row['land2'] != ''){
-			echo '<div>Land: <span class="p-country-name">' .$row['land2']. '</span></div>';
+			echo '<div>Land: <span itemprop="addressCountry">' .$row['land2']. '</span></div>';
 		}
 
 		if($row['telefon2'] != ''){
-			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: <span class="p-tel">' .$row['telefon2']. '</span></div>';
+			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: <span itemprop="telephone">' .$row['telefon2']. '</span></div>';
 		}
 
 		if($row['datum_adresse2_stand'] != ''){
@@ -640,11 +640,11 @@ function printCommunication($row){
 		echo '<div>';
 
 		if($row['email'] != ''){
-			echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> E-Mail-Adresse: <a class="u-email" href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
+			echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> E-Mail-Adresse: <a href="mailto:' .$row['email']. '" itemprop="email" content="' .$row['email']. '">' .$row['email']. '</a></div>';
 		}
 
 		if($row['mobiltelefon'] != ''){
-			echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> Mobiltelefon: <span class="p-tel">' .$row['mobiltelefon']. '</span></div>';
+			echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> Mobiltelefon: <span itemprop="telephone">' .$row['mobiltelefon']. '</span></div>';
 		}
 
 		if($row['webseite'] != ''){
@@ -679,7 +679,7 @@ function printCommunication($row){
 			}
 
 			echo 'Webseite: ';
-			echo '<a class="u-url" href="' .$webseite. '">' .$webseite. '</a>';
+			echo '<a href="' .$webseite. '" itemprop="url">' .$webseite. '</a>';
 			echo '</div>';
 		}
 

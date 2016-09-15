@@ -209,18 +209,20 @@ class LibChargierKalenderEvent{
 		* print event
 		*/
 		//header
-		$retstr .= '<div id="t' .$this->id. '" class="calendarEvent h-event">';
-		$retstr .= '<div><time class="dt-start" datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
+		$retstr .= '<div id="t' .$this->id. '" class="calendarEvent" itemscope itemtype="http://schema.org/SocialEvent">';
+		$retstr .= '<div><time class="dt-start" datetime="' .$libTime->formatUtcString($this->startDateTime). '" itemprop="startDate" content="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link
 		if($this->linkUrl != ''){
-			$retstr .= '<a href="' .$this->linkUrl. '">';
+			$retstr .= '<a href="' .$this->linkUrl. '" itemprop="url">';
 		}
 
 		//summary
-		$retstr .= '<div class="p-name">';
-		$retstr .= $this->summary;
-		$retstr .= '</div>';
+		if($this->summary != ''){
+			$retstr .= '<div itemprop="name">';
+			$retstr .= $this->summary;
+			$retstr .= '</div>';
+		}
 
 		if($this->linkUrl != ''){
 			$retstr .= '</a>';
@@ -228,15 +230,23 @@ class LibChargierKalenderEvent{
 
 		//description
 		if($this->description != ''){
-			$retstr .= '<div class="p-description">';
+			$retstr .= '<div itemprop="description">';
 			$retstr .= $this->description;
 			$retstr .= '</div>';
 		}
 
 		//location
+		$retstr .= '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
+
 		if($this->location != ''){
-			$retstr .= '<address class="p-location">' .$this->location. '</address>';
+			$retstr .= '<span itemprop="name">' .$this->location. '</span>';
+			$retstr .= '<meta itemprop="address" content="' .$this->location. '" />';
+		} else {
+			$retstr .= '<meta itemprop="name" content="am Veranstaltungsort" />';
+			$retstr .= '<meta itemprop="address" content="Veranstaltungsort" />';
 		}
+
+		$retstr .= '</address>';
 
 		if(count($this->angemeldeteMitglieder) > 0){
 			$mitgliederLinks = array();
@@ -250,7 +260,6 @@ class LibChargierKalenderEvent{
 			$retstr .= '</div>';
 		}
 
-		//registration
 		if($this->anmeldeButtonEnabled){
 			$retstr .= '<form action="index.php?pid=intranet_chargierkalender" method="post" class="form-horizontal">';
 			$retstr .= '<input type="hidden" name="eventid" value="' .$this->id. '" />';
@@ -258,20 +267,19 @@ class LibChargierKalenderEvent{
 
     		if($this->angemeldet){
     			$retstr .= '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
-				$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
-				$retstr .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
-				$retstr .= '</button>';
+					$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
+					$retstr .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
+					$retstr .= '</button>';
    			} else {
     			$retstr .= '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
-				$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
-				$retstr .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
-				$retstr .= '</button>';
+					$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
+					$retstr .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
+					$retstr .= '</button>';
     		}
 
     		$retstr .= '</form>';
 		}
 
-		//footer
 		$retstr .= '</div>';
 		return $retstr;
 	}

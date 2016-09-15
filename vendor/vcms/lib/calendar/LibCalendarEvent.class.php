@@ -131,16 +131,16 @@ class LibCalendarEvent{
 		/*
 		* print event
 		*/
-		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendarEvent h-event">';
-		$retstr .= '<div><time class="dt-start" datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
+		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendarEvent" itemscope itemtype="http://schema.org/SocialEvent">';
+		$retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '" itemprop="startDate" content="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link
 		if($this->linkUrl != ''){
-			$retstr .= '<a href="' .$this->linkUrl. '">';
+			$retstr .= '<a href="' .$this->linkUrl. '" itemprop="sameAs">';
 		}
 
 		//summary
-		$retstr .= '<div class="p-name">';
+		$retstr .= '<div itemprop="name">';
 		$retstr .= $this->summary;
 		$retstr .= '</div>';
 
@@ -148,7 +148,7 @@ class LibCalendarEvent{
 		if($this->imageUrl != ''){
 			$retstr .= '<div class="thumbnail">';
 			$retstr .= '<div class="thumbnailOverflow">';
-			$retstr .= '<img class="img-responsive center-block" src="'.$this->imageUrl.'" alt="Foto" />';
+			$retstr .= '<img class="img-responsive center-block" src="'.$this->imageUrl.'" alt="Foto" itemprop="image" />';
 			$retstr .= '</div>';
 			$retstr .= '</div>';
 		}
@@ -159,15 +159,23 @@ class LibCalendarEvent{
 
 		//description
 		if($this->description != ''){
-			$retstr .= '<div class="p-description">';
+			$retstr .= '<div itemprop="description">';
 			$retstr .= $this->description;
 			$retstr .= '</div>';
 		}
 
 		//location
+		$retstr .= '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
+
 		if($this->location != ''){
-			$retstr .= '<address class="p-location">' .$this->location. '</address>';
+			$retstr .= '<span itemprop="name">' .$this->location. '</span>';
+			$retstr .= '<meta itemprop="address" content="' .$this->location. '" />';
+		} else {
+			$retstr .= '<meta itemprop="name" content="adH" />';
+			$retstr .= '<meta itemprop="address" content="adH" />';
 		}
+
+		$retstr .= '</address>';
 
 		//attended
 		if($this->attended && $this->attendedIcon != ''){

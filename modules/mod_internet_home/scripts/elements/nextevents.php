@@ -57,9 +57,10 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			echo '<div class="col-sm-4">';
+			echo '<div itemscope itemtype="http://schema.org/SocialEvent">';
 			echo '<div class="thumbnail">';
 			echo '<div class="caption">';
-			echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
+			echo '<h3 itemprop="name"><a href="index.php?pid=event&amp;id=' .$row['id']. '" itemprop="sameAs">';
 
 			printVeranstaltungTitle($row);
 
@@ -67,9 +68,18 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 
 			printVeranstaltungDateTime($row);
 
+			echo '<address itemprop="location" itemscope itemtype="http://schema.org/Place">';
+
 			if ($row['ort'] != ''){
-				echo '<address>' .$row['ort']. '</address>';
+				echo 'Ort: ';
+				echo '<span itemprop="name">' .$row['ort']. '</span>';
+				echo '<meta itemprop="address" content="' .$row['ort']. '" />';
+			} else {
+				echo '<meta itemprop="name" content="adH" />';
+				echo '<meta itemprop="address" content="adH" />';
 			}
+
+			echo '</address>';
 
 			echo '<p>Status: ' .$libEvent->getStatusString($row['status']). '</p>';
 			echo '<hr />';
@@ -82,6 +92,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			$libEvent->printTwitterShareButton($row['id']);
 			echo '</p>';
 
+			echo '</div>';
 			echo '</div>';
 			echo '</div>';
 			echo '</div>';
