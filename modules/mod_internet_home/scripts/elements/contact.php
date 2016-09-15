@@ -23,6 +23,12 @@ if(!is_object($libGlobal))
 echo '<section class="contact-box" itemscope itemtype="http://schema.org/Organization">';
 echo '<meta itemprop="name" content="' .$libConfig->verbindungName. '" />';
 
+$wp_url = $libGenericStorage->loadValue('mod_internet_home', 'wp_url');
+
+if($wp_url != ''){
+	echo '<meta itemprop="sameAs" content="' .$wp_url. '" />';
+}
+
 echo '<div class="container">';
 echo '<div class="row">';
 echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
