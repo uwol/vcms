@@ -178,6 +178,14 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 /*
 * header
 */
+
+$personSchema = $libPerson->getPersonSchema($row);
+
+echo '<script type="application/ld+json">';
+echo json_encode($personSchema);
+echo '</script>';
+
+
 echo '<h1>';
 echo $libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 echo ' ';
@@ -194,14 +202,12 @@ printPersonSignature($row, $ownprofile);
 echo '</div>';
 
 echo '<div class="col-sm-9">';
-echo '<div itemscope itemtype="http://schema.org/Person">';
 printPersonData($row);
 printPrimaryAddress($row);
 printSecondaryAddress($row);
 printCommunication($row);
 printAssociationDetails($row);
 printVita($row);
-echo '</div>';
 echo '</div>';
 
 echo '</div>';
@@ -476,11 +482,10 @@ function printPersonData($row){
 	}
 
 	if($row['titel'] != ''){
-		echo '<span itemprop="honorificPrefix">' .$row['titel']. '</span> ';
+		echo $row['titel']. ' ';
 	}
 
-	echo '<span itemprop="givenName">' .$row['vorname']. '</span> ';
-	echo '<span itemprop="familyName">';
+	echo $row['vorname']. ' ';
 
 	if($row['praefix'] != ''){
 		echo $row['praefix']. ' ';
@@ -492,31 +497,30 @@ function printPersonData($row){
 		echo ' ' .$row['suffix'];
 	}
 
-	echo '</span>';
 	echo '</div>';
 
 	if($row['rang'] != ''){
-		echo '<div>Rang: <span itemprop="honorificPrefix">' .$row['rang']. '</span></div>';
+		echo '<div>Rang: ' .$row['rang']. '</div>';
 	}
 
 	if($row['datum_geburtstag'] != ''){
 		echo '<div>Geburtstag: ';
-		echo '<span itemprop="birthDate" content="' .$libTime->formatUtcString($row['datum_geburtstag']). '">' .$libTime->formatDateString($row['datum_geburtstag']). '</span>';
+		echo $libTime->formatDateString($row['datum_geburtstag']);
 		echo '</div>';
 	}
 
 	if ($row['tod_datum'] != ''){
 		echo '<div>Todesdatum: ';
-		echo '<span itemprop="deathDate" content="' .$libTime->formatUtcString($row['tod_datum']). '">' .$libTime->formatDateString($row['tod_datum']). '</span>';
+		echo $libTime->formatDateString($row['tod_datum']);
 		echo '</div>';
 	}
 
 	if($row['spitzname'] != ''){
-		echo '<div>Spitzname: <span>' .$row['spitzname']. '</span></div>';
+		echo '<div>Spitzname: ' .$row['spitzname']. '</div>';
 	}
 
 	if($row['beruf'] != ''){
-		echo '<div>Beruf: <span itemprop="jobTitle">' .$row['beruf']. '</span></div>';
+		echo '<div>Beruf: ' .$row['beruf']. '</div>';
 	}
 
 	if($row['gruppe'] != ''){
@@ -555,30 +559,30 @@ function printPrimaryAddress($row){
 	*/
 	if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != ''){
 		echo '<hr />';
-		echo '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
+		echo '<address>';
 
 		if($row['zusatz1'] != ''){
-			echo '<div>Zusatz: <span>' .$row['zusatz1']. '</span></div>';
+			echo '<div>Zusatz: ' .$row['zusatz1']. '</div>';
 		}
 
 		if($row['strasse1'] != ''){
-			echo '<div>Straße: <span itemprop="streetAddress">' .$row['strasse1']. '</span></div>';
+			echo '<div>Straße: ' .$row['strasse1']. '</div>';
 		}
 
 		if($row['ort1'] != ''){
-			echo '<div>Ort: <span itemprop="addressLocality">' .$row['ort1']. '</span></div>';
+			echo '<div>Ort: ' .$row['ort1']. '</div>';
 		}
 
 		if($row['plz1'] != ''){
-			echo '<div>PLZ: <span itemprop="postalCode">' .$row['plz1']. '</span></div>';
+			echo '<div>PLZ: ' .$row['plz1']. '</div>';
 		}
 
 		if($row['land1'] != ''){
-			echo '<div>Land: <span itemprop="addressCountry">' .$row['land1']. '</span></div>';
+			echo '<div>Land: ' .$row['land1']. '</div>';
 		}
 
 		if($row['telefon1'] != ''){
-			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: <span itemprop="telephone">' .$row['telefon1']. '</span></div>';
+			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: ' .$row['telefon1']. '</div>';
 		}
 
 		if($row['datum_adresse1_stand'] != ''){
@@ -597,30 +601,30 @@ function printSecondaryAddress($row){
 	*/
 	if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != ''){
 		echo '<hr />';
-		echo '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
+		echo '<address>';
 
 		if($row['zusatz2'] != ''){
-			echo '<div>Zusatz: <span>' .$row['zusatz2']. '</span></div>';
+			echo '<div>Zusatz: ' .$row['zusatz2']. '</div>';
 		}
 
 		if($row['strasse2'] != ''){
-			echo '<div>Straße: <span itemprop="streetAddress">' .$row['strasse2']. '</span></div>';
+			echo '<div>Straße: ' .$row['strasse2']. '</div>';
 		}
 
 		if($row['ort2'] != ''){
-			echo '<div>Ort: <span itemprop="addressLocality">' .$row['ort2']. '</span></div>';
+			echo '<div>Ort: ' .$row['ort2']. '</div>';
 		}
 
 		if($row['plz2'] != ''){
-			echo '<div>PLZ: <span itemprop="postalCode">' .$row['plz2']. '</span></div>';
+			echo '<div>PLZ: ' .$row['plz2']. '</div>';
 		}
 
 		if($row['land2'] != ''){
-			echo '<div>Land: <span itemprop="addressCountry">' .$row['land2']. '</span></div>';
+			echo '<div>Land: ' .$row['land2']. '</div>';
 		}
 
 		if($row['telefon2'] != ''){
-			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: <span itemprop="telephone">' .$row['telefon2']. '</span></div>';
+			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: ' .$row['telefon2']. '</div>';
 		}
 
 		if($row['datum_adresse2_stand'] != ''){
@@ -640,11 +644,11 @@ function printCommunication($row){
 		echo '<div>';
 
 		if($row['email'] != ''){
-			echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> E-Mail-Adresse: <a href="mailto:' .$row['email']. '" itemprop="email" content="' .$row['email']. '">' .$row['email']. '</a></div>';
+			echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> E-Mail-Adresse: <a href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
 		}
 
 		if($row['mobiltelefon'] != ''){
-			echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> Mobiltelefon: <span itemprop="telephone">' .$row['mobiltelefon']. '</span></div>';
+			echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> Mobiltelefon: ' .$row['mobiltelefon']. '</div>';
 		}
 
 		if($row['webseite'] != ''){
@@ -679,7 +683,7 @@ function printCommunication($row){
 			}
 
 			echo 'Webseite: ';
-			echo '<a href="' .$webseite. '" itemprop="url">' .$webseite. '</a>';
+			echo '<a href="' .$webseite. '">' .$webseite. '</a>';
 			echo '</div>';
 		}
 

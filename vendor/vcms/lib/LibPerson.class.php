@@ -543,4 +543,48 @@ class LibPerson{
 			return '';
 		}
 	}
+
+	function getPersonSchema($row){
+		global $libTime;
+
+		$result = array();
+
+		$result['@context'] = 'http://schema.org';
+		$result['@type'] = 'Person';
+		$result['honorificPrefix'] = $row['titel'];
+		$result['givenName'] = $row['vorname'];
+		$result['familyName'] = $row['name'];
+		$result['jobTitle'] = $row['beruf'];
+		$result['email'] = $row['email'];
+		$result['telephone'] = $row['mobiltelefon'];
+		$result['url'] = $row['webseite'];
+
+		if($row['datum_geburtstag'] != ''){
+			$result['birthDate'] = $libTime->formatDateString($row['datum_geburtstag']);
+		}
+
+		if($row['tod_datum'] != ''){
+			$result['deathDate'] = $libTime->formatDateString($row['tod_datum']);
+		}
+
+		$address1 = array();
+		$address1['@type'] = 'PostalAddress';
+		$address1['streetAddress'] = $row['strasse1'];
+		$address1['addressLocality'] = $row['ort1'];
+		$address1['postalCode'] = $row['plz1'];
+		$address1['addressCountry'] = $row['land1'];
+		$address1['telephone'] = $row['telefon1'];
+
+		$address2 = array();
+		$address2['@type'] = 'PostalAddress';
+		$address2['streetAddress'] = $row['strasse2'];
+		$address2['addressLocality'] = $row['ort2'];
+		$address2['postalCode'] = $row['plz2'];
+		$address2['addressCountry'] = $row['land2'];
+		$address2['telephone'] = $row['telefon2'];
+
+		$result['contactPoint'] = array($address1, $address2);
+
+		return $result;
+	}
 }
