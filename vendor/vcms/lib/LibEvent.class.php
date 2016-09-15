@@ -137,7 +137,7 @@ class LibEvent{
 		$result['name'] = $row['titel'];
 		$result['url'] = $this->getEventUrl($row['id']);
 
-		if($row['description'] != ''){
+		if($row['beschreibung'] != ''){
 			$result['description'] = $row['beschreibung'];
 		}
 
