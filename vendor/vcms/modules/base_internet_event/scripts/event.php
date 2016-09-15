@@ -77,7 +77,6 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '<h1>' .$row['titel']. '</h1>';
 	echo '<div class="row">';
 
-	// Caption-Box
 	echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 	echo '<div class="thumbnail">';
 	echo '<div class="thumbnailOverflow">';

@@ -154,8 +154,8 @@ class LibEvent{
 			$address['name'] = $row['ort'];
 			$address['address'] = $row['ort'];
 		} else {
-			$address['name'] = 'adH';
-			$address['address'] = 'adH';
+			$address['name'] = 'a.d.H.';
+			$address['address'] = 'a.d.H.';
 		}
 
 		$result['location'] = $address;

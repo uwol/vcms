@@ -306,6 +306,7 @@ class LibAssociation{
 		$result['url'] = $libGlobal->getSiteUrl();
 		$result['email'] = $libConfig->emailInfo;
 		$result['telephone'] = $libConfig->verbindungTelefon;
+		$result['image'] = $libGlobal->getPageOgImageUrl();
 
 		$address = array();
 		$address['@type'] = 'PostalAddress';

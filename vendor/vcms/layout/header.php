@@ -50,7 +50,7 @@ if($libGenericStorage->loadValue('base_core', 'fbAppId')){
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
 echo '    <meta property="og:url" content="' .$libGlobal->getPageOgUrl(). '"/>' . PHP_EOL;
 echo '    <meta property="og:title" content="' .$libGlobal->getPageTitle(). '"/>' . PHP_EOL;
-echo '    <meta property="og:image" content="' .$libGlobal->getSiteUrl(). '/custom/styles/og_image.jpg"/>' . PHP_EOL;
+echo '    <meta property="og:image" content="' .$libGlobal->getPageOgImageUrl(). '"/>' . PHP_EOL;
 echo '    <meta property="og:image:type" content="image/jpeg" />' . PHP_EOL;
 echo '    <meta property="og:image:height" content="265"/>' . PHP_EOL;
 echo '    <meta property="og:image:width" content="265"/>' . PHP_EOL;
