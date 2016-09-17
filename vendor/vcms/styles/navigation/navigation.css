@@ -105,6 +105,6 @@
 
 .navbar-default .navbar-intranet .nav > li > a {
 	font-weight: 500;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
 }

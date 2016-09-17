@@ -14,13 +14,13 @@
 }
 
 .timeline > .timeline-body {
-    list-style: none;
-    padding: 20px 0 20px;
+  list-style: none;
+  padding: 1.5em 0 1.5em;
 }
 
 .timeline > .timeline-body > .timeline-event {
 	position: relative;
-	margin-bottom: 75px;
+	margin-bottom: 5em;
 }
 
 .timeline > .timeline-body > .timeline-event:before,
@@ -150,7 +150,7 @@
 }
 
 .timeline > .timeline-body > .timeline-event > .timeline-panel .panel-body {
-	padding: 0 15px 10px 15px;
+	padding: 0 1em 0.5em 1em;
 }
 
 @media (max-width: 991px) {

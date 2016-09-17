@@ -21,8 +21,8 @@ a:link, main a:hover {
 }
 
 hr {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 p {
@@ -43,7 +43,7 @@ dd {
 }
 
 .panel {
-	margin-bottom: 10px;
+	margin-bottom: 0.5em;
 	border-radius: 0;
 }
 
@@ -59,4 +59,8 @@ dd {
 .panel .panel-heading {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+}
+
+.panel .panel-heading, .panel .panel-body {
+	padding: 1em;
 }

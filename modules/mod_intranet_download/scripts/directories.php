@@ -106,7 +106,7 @@ echo '<h1>Dateien</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>In diesem Bereich können Chargen und Warte Dateien zum Download anbieten. Die Ordner können durch Klicken geöffnet werden. Der Ausdruck hinter einer Datei gibt an, welche Gruppen ein Leserecht für die Datei besitzen. Durch z. B. den Ausdruck BCFGPW wird festgelegt, dass Burschen, Couleurdamen, Füchse, Gattinnen, Philister und Witwen ein Leserecht besitzen.</p>';
+echo '<p>In diesem Bereich können Chargen und Warte Dateien zum Download anbieten. Der Ausdruck hinter einer Datei gibt an, welche Gruppen ein Leserecht für die Datei besitzen.</p>';
 
 listFolderContentRec($rootFolderObject, true);
 
