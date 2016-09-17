@@ -58,6 +58,7 @@ if($libEvent->isFacebookEvent($row)){
 		$eventAttendingCount = $eventObject['attending_count'];
 		$eventInterestedCount = $eventObject['interested_count'];
 
+		echo '<div class="panel panel-default">';
 		echo '<div class="thumbnail">';
 
 		echo '<div class="thumbnailOverflow">';
@@ -102,6 +103,7 @@ if($libEvent->isFacebookEvent($row)){
 		echo '</a>';
 		echo '</p>';
 
+		echo '</div>';
 		echo '</div>';
 		echo '</div>';
 	}

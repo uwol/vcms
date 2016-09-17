@@ -78,7 +78,8 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '<div class="row">';
 
 	echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-	echo '<div class="well">';
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
 	printEventDateTime($row);
 
 	echo '<hr />';
@@ -96,11 +97,10 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	printSocialButtons($row);
 	echo '</div>';
 	echo '</div>';
+	echo '</div>';
 
 	if($libEvent->isFacebookEvent($row)){
-		echo '<div class="col-sm-6 col-md-4 col-md-offset-4 col-lg-3 col-lg-offset-6">';
-		echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
-		echo '</div>';
+		printFacebookEvent($row);
 	} else {
 		printSemesterCover($row);
 	}
@@ -122,7 +122,7 @@ function printEventDateTime($row){
 	* date and time
 	*/
 	echo '<div class="text-center">';
-	echo '<h3>';
+	echo '<h3 class="text-muted">';
 
 	$monatName = $libTime->getMonth($libTime->formatMonthString($row['datum']));
 	$monatNameSubstr = substr($monatName, 0, 3);
@@ -137,31 +137,10 @@ function printEventDateTime($row){
 	$timeString = $libTime->formatTimeString($row['datum']);
 
 	if($timeString != ''){
-		echo '<h3 class="text-muted">' .$timeString. '</h3>';
+		echo '<h3>' .$timeString. '</h3>';
 	}
 
 	echo '</div>';
-}
-
-function printSemesterCover($row){
-	global $libTime;
-
-	$semester = $libTime->getSemesterNameAtDate($row['datum']);
-	$semesterCoverString = $libTime->getSemesterCoverString($semester);
-
-	if($semesterCoverString != ''){
-		echo '<div class="col-sm-6 col-md-4 col-md-offset-4 col-lg-3 col-lg-offset-6">';
-		echo '<div class="thumbnail">';
-		echo '<div class="thumbnailOverflow">';
-		echo '<div class="semestercoverBox center-block">';
-		echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$semester. '">';
-		echo $semesterCoverString;
-		echo '</a>';
-		echo '</div>';
-		echo '</div>';
-		echo '</div>';
-		echo '</div>';
-	}
 }
 
 function printSocialButtons($row){
@@ -212,8 +191,38 @@ function printAnmeldeStatus($row){
 	}
 }
 
+function printSemesterCover($row){
+	global $libTime, $libModuleHandler;
+
+	$semester = $libTime->getSemesterNameAtDate($row['datum']);
+	$semesterCoverString = $libTime->getSemesterCoverString($semester);
+
+	if($semesterCoverString != ''){
+		echo '<div class="col-sm-6 col-md-8 col-lg-offset-3 col-lg-6">';
+		echo '<div class="semestercoverBox center-block">';
+
+		if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
+			echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$semester. '">';
+			echo $semesterCoverString;
+			echo '</a>';
+		} else {
+			echo $semesterCoverString;
+		}
+
+		echo '</div>';
+		echo '</div>';
+	}
+}
+
+function printFacebookEvent($row){
+	echo '<div class="col-sm-6 col-md-4 col-lg-3">';
+	echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
+	echo '</div>';
+}
+
 function printDescription($row){
 	if($row['beschreibung'] != ''){
+		echo '<hr />';
 		echo '<p>' .nl2br($row['beschreibung']). '</p>';
 	}
 }
