@@ -238,7 +238,6 @@ function printAnmeldungen($row){
 
 	if($libAuth->isLoggedin()){
 		echo '<hr />';
-		echo '<h3>Anmeldungen</h3>';
 
 		$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
 		$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
