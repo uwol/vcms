@@ -18,7 +18,7 @@ echo '    <link rel="stylesheet" href="vendor/vcms/styles/navigation/navigation.
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/person/person.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">' . PHP_EOL;
+echo '    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Franklin">' . PHP_EOL;
 echo '    <link rel="canonical" href="' .$libGlobal->getPageCanonicalUrl(). '"/>' . PHP_EOL;
 echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
