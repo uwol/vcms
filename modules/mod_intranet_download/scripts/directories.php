@@ -107,6 +107,7 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<p>In diesem Bereich können Chargen und Warte Dateien zum Download anbieten. Der Ausdruck hinter einer Datei gibt an, welche Gruppen ein Leserecht für die Datei besitzen.</p>';
+echo '<hr />';
 
 listFolderContentRec($rootFolderObject, true);
 
