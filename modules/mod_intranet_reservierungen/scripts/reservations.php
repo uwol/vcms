@@ -54,8 +54,14 @@ echo '<h1>Reservierungen</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p><a href="index.php?pid=intranet_reservation_book">Eine Reservierung hinzufügen</a></p>';
-echo '<hr />';
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
+echo '<div class="btn-toolbar">';
+echo '<a href="index.php?pid=intranet_reservation_book" class="btn btn-default">Eine Reservierung hinzufügen</a>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
 
 $stmt = $libDb->prepare("SELECT * FROM mod_reservierung_reservierung WHERE datum >= :datum ORDER BY datum");
 $stmt->bindValue(':datum', date('Y-m-d'));
