@@ -78,131 +78,69 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '<div class="row">';
 
 	echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-	echo '<div class="thumbnail">';
-	echo '<div class="thumbnailOverflow">';
-	printSemesterCover($row);
-	echo '</div>';
-	echo '<div class="caption">';
-	printAnmeldeStatus($row);
+	echo '<div class="well">';
+	printEventDateTime($row);
+
 	echo '<hr />';
+
+	if ($row['ort'] != ''){
+		echo '<address>';
+		echo 'Ort: ' .$row['ort'];
+		echo '</address>';
+	}
+
+	$status = $libEvent->getStatusString($row['status']);
+	echo '<p>Status: ' .$status. '</p>';
+
+	printAnmeldeStatus($row);
 	printSocialButtons($row);
 	echo '</div>';
 	echo '</div>';
-	echo '</div>';
-
-
-	$colLg = 9;
-	$colMd = 8;
 
 	if($libEvent->isFacebookEvent($row)){
-		$colLg = $colLg - 3;
-		$colMd = $colMd - 4;
-	}
-
-	echo '<div class="col-sm-6 col-md-' .$colMd. ' col-lg-' .$colLg. '">';
-	printEventDetails($row);
-	printAnmeldungen($row);
-	echo '</div>';
-
-	if($libEvent->isFacebookEvent($row)){
-		echo '<div class="col-sm-12 col-md-4 col-lg-3">';
+		echo '<div class="col-sm-6 col-md-4 col-md-offset-4 col-lg-3 col-lg-offset-6">';
 		echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
 		echo '</div>';
+	} else {
+		printSemesterCover($row);
 	}
 
 	echo '</div>';
 
+	printDescription($row);
+	printSpruch($row);
+	printAnmeldungen($row);
 	printGallery($row);
 }
 
 // -----------------------------------------------------------
 
-function printEventDetails($row){
+function printEventDateTime($row){
 	global $libTime, $libEvent;
 
 	/*
 	* date and time
 	*/
-	echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '">';
-	echo 'Am ' .$libTime->formatDateString($row['datum']);
+	echo '<div class="text-center">';
+	echo '<h3>';
+
+	$monatName = $libTime->getMonth($libTime->formatMonthString($row['datum']));
+	$monatNameSubstr = substr($monatName, 0, 3);
+
+ 	echo $monatNameSubstr;
+	echo ' ';
+	echo $libTime->formatYearString($row['datum']);
+	echo '</h3>';
+
+	echo '<h1><time datetime="' .$libTime->formatUtcString($row['datum']). '">' .$libTime->formatDayString($row['datum']). '.</time></h1>';
 
 	$timeString = $libTime->formatTimeString($row['datum']);
 
 	if($timeString != ''){
-		echo ' um ' .$timeString;
+		echo '<h3 class="text-muted">' .$timeString. '</h3>';
 	}
 
-	echo '</time>';
-
-	/*
-	* location
-	*/
-	echo '<address>';
-
-	if ($row['ort'] != ''){
-		echo 'Ort: ';
-		echo '<span>' .$row['ort']. '</span>';
-	}
-
-	echo '</address>';
-
-	/*
-	* status
-	*/
-	$status = $libEvent->getStatusString($row['status']);
-	echo '<p>Status: ' .$status. '</p>';
-
-	/*
-	* description
-	*/
-	if($row['beschreibung'] != ''){
-		echo '<h3>Beschreibung</h3>';
-		echo '<p>' .nl2br($row['beschreibung']). '</p>';
-	}
-
-	if($row['spruch'] != ''){
-		echo '<h3>Spruch</h3>';
-		echo '<p>' .nl2br($row['spruch']). '</p>';
-	}
-}
-
-function printAnmeldungen($row){
-	global $libAuth, $libDb, $libGallery, $libPerson;
-
-	echo '<h3>Anmeldungen</h3>';
-
-	if($libAuth->isLoggedin()){
-		$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
-		$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
-		$stmt->execute();
-
-		$anmeldungWritten = false;
-
-		echo '<p>';
-
-		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
-			if($anmeldungWritten){
-				echo ', ';
-			}
-
-			echo '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
-			$anmeldungWritten = true;
-		}
-
-		echo '</p>';
-	} else {
-		echo '<p>Für eine Liste der angemeldeten Bundesbrüder bitte <a href="index.php?pid=login">im Intranet anmelden</a>.</p>';
-	}
-
-	/*
-	* gallery
-	*/
-	if(!$libAuth->isLoggedin()){
-		// are there images?
-		if(count($libGallery->getPictures($row['id'], 1)) > count($libGallery->getPictures($row['id'], 0))){
-			echo '<p>Teile der Galerie sind ebenfalls erst nach einer Anmeldung im Intranet sichtbar.</p>';
-		}
-	}
+	echo '</div>';
 }
 
 function printSemesterCover($row){
@@ -212,10 +150,16 @@ function printSemesterCover($row){
 	$semesterCoverString = $libTime->getSemesterCoverString($semester);
 
 	if($semesterCoverString != ''){
+		echo '<div class="col-sm-6 col-md-4 col-md-offset-4 col-lg-3 col-lg-offset-6">';
+		echo '<div class="thumbnail">';
+		echo '<div class="thumbnailOverflow">';
 		echo '<div class="semestercoverBox center-block">';
 		echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$semester. '">';
 		echo $semesterCoverString;
 		echo '</a>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
 		echo '</div>';
 	}
 }
@@ -223,6 +167,7 @@ function printSemesterCover($row){
 function printSocialButtons($row){
 	global $libEvent;
 
+	echo '<hr />';
 	echo '<p>';
 
 	if(!$libEvent->isFacebookEvent($row)){
@@ -264,8 +209,46 @@ function printAnmeldeStatus($row){
 				echo '<i class="fa fa-square-o" aria-hidden="true"></i> nicht angemeldet';
 			}
 		}
-	} else {
-		echo '<p>Für den Anmeldestatus bitte <a href="index.php?pid=login">im Intranet anmelden</a>.</p>';
+	}
+}
+
+function printDescription($row){
+	if($row['beschreibung'] != ''){
+		echo '<p>' .nl2br($row['beschreibung']). '</p>';
+	}
+}
+
+function printSpruch($row){
+	if($row['spruch'] != ''){
+		echo '<p>' .nl2br($row['spruch']). '</p>';
+	}
+}
+
+function printAnmeldungen($row){
+	global $libAuth, $libDb, $libGallery, $libPerson;
+
+	if($libAuth->isLoggedin()){
+		echo '<hr />';
+		echo '<h3>Anmeldungen</h3>';
+
+		$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
+		$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
+		$stmt->execute();
+
+		$anmeldungWritten = false;
+
+		echo '<p>';
+
+		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
+			if($anmeldungWritten){
+				echo ', ';
+			}
+
+			echo '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
+			$anmeldungWritten = true;
+		}
+
+		echo '</p>';
 	}
 }
 

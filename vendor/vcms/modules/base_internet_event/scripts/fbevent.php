@@ -70,9 +70,9 @@ if($libEvent->isFacebookEvent($row)){
 		echo '<div class="media">';
 
 		echo '<div class="media-left" style="text-align:center">';
-		echo '<span style="font-size:32px;line-height:32px">' .substr($row['datum'], 8, 2). '</span><br />';
+		echo '<span style="font-size:32px;line-height:32px">' .$libTime->formatDayString($row['datum']). '</span><br />';
 
-		$monatName = $libTime->getMonth((int) substr($row['datum'], 5, 2));
+		$monatName = $libTime->getMonth($libTime->formatMonthString($row['datum']));
 		$monatNameSubstr = substr($monatName, 0, 3);
 		$monatNameUpper = strtoupper($monatNameSubstr);
 

@@ -659,7 +659,15 @@ class LibTime{
 	}
 
 	function formatYearString($dateTime){
-		return substr($dateTime, 0, 4);
+		return (int) substr($dateTime, 0, 4);
+	}
+
+	function formatMonthString($dateTime){
+		return (int) substr($dateTime, 5, 2);
+	}
+
+	function formatDayString($dateTime){
+		return (int) substr($dateTime, 8, 2);
 	}
 
 	function formatUtcString($dateTime){

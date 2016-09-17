@@ -96,7 +96,7 @@ $lastsetmonth = '';
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	//month name
 	if($lastsetmonth != substr($row['eingabedatum'], 0, 7)){
-		echo '<h2>' .$libTime->getMonth((int) substr($row['eingabedatum'], 5, 2)). ' ' .substr($row['eingabedatum'], 0, 4). '</h2>';
+		echo '<h2>' .$libTime->getMonth($libTime->formatMonthString($row['eingabedatum'])). ' ' .substr($row['eingabedatum'], 0, 4). '</h2>';
 		$lastsetmonth = substr($row['eingabedatum'], 0, 7);
 	}
 
