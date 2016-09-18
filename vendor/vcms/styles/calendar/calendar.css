@@ -16,7 +16,7 @@
 }
 
 .calendar .calendarCellContainer {
-    display: flex;
+  display: flex;
 	flex-wrap: wrap;
 	flex: none;
 	justify-content: space-around;
@@ -45,7 +45,7 @@
 }
 
 .calendar .calendarDay {
-	border: thin solid #999;
+	border: thin solid #ddd;
 	text-align: left;
 }
 

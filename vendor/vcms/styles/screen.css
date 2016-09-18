@@ -7,7 +7,6 @@ body {
 	background-color: #f8f8f8;
 	color: #333;
 	font-family: "Libre Franklin", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
 	/* hyphenation */
 	overflow-wrap: break-word;
 	word-wrap: break-word;
@@ -18,7 +17,7 @@ body {
 }
 
 fieldset {
-	border: 1px solid #333;
+	border: 1px solid #ddd;
 	padding: 1em;
 	margin-bottom: 1em;
 }

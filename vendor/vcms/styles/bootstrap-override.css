@@ -52,6 +52,10 @@ dd {
 	margin-bottom: 0;
 }
 
+.thumbnail .caption {
+	padding: 1em;
+}
+
 .panel .panel-title {
 	font-weight: normal;
 }
