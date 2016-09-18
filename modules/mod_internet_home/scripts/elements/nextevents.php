@@ -76,7 +76,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 
 			echo '</address>';
 
-			echo '<p>Status: ' .$libEvent->getStatusString($row['status']). '</p>';
+			echo '<p>' .$libEvent->getStatusString($row['status']). '</p>';
 			echo '<hr />';
 			echo '<p>';
 

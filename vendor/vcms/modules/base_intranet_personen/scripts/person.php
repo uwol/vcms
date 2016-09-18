@@ -203,8 +203,12 @@ echo '</div>';
 
 echo '<div class="col-sm-9">';
 printPersonData($row);
+
+echo '<div class="row">';
 printPrimaryAddress($row);
 printSecondaryAddress($row);
+echo '</div>';
+
 printCommunication($row);
 printAssociationDetails($row);
 printVita($row);
@@ -500,19 +504,7 @@ function printPersonData($row){
 	echo '</div>';
 
 	if($row['rang'] != ''){
-		echo '<div>Rang: ' .$row['rang']. '</div>';
-	}
-
-	if($row['datum_geburtstag'] != ''){
-		echo '<div>Geburtstag: ';
-		echo $libTime->formatDateString($row['datum_geburtstag']);
-		echo '</div>';
-	}
-
-	if ($row['tod_datum'] != ''){
-		echo '<div>Todesdatum: ';
-		echo $libTime->formatDateString($row['tod_datum']);
-		echo '</div>';
+		echo '<div>' .$row['rang']. '</div>';
 	}
 
 	if($row['spitzname'] != ''){
@@ -520,11 +512,11 @@ function printPersonData($row){
 	}
 
 	if($row['beruf'] != ''){
-		echo '<div>Beruf: ' .$row['beruf']. '</div>';
+		echo '<div>' .$row['beruf']. '</div>';
 	}
 
 	if($row['gruppe'] != ''){
-		echo '<div>Gruppe: ';
+		echo '<div>';
 		echo '<span>';
 
 		$stmt = $libDb->prepare('SELECT beschreibung FROM base_gruppe WHERE bezeichnung=:bezeichnung');
@@ -539,12 +531,24 @@ function printPersonData($row){
 	}
 
 	if($row['status'] != ''){
-		echo '<div>Status: ' .$row['status']. '</div>';
+		echo '<div>' .$row['status']. '</div>';
 	}
 
 	if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
 		echo '<div>';
 		echo 'Ehepartner: <a href="index.php?pid=intranet_person&amp;personid=' .$row['heirat_partner']. '" />' .$libPerson->getMitgliedNameString($row['heirat_partner'], 5). '</a>';
+		echo '</div>';
+	}
+
+	if($row['datum_geburtstag'] != ''){
+		echo '<div><i class="fa fa-birthday-cake fa-fw" aria-hidden="true"></i> ';
+		echo $libTime->formatDateString($row['datum_geburtstag']);
+		echo '</div>';
+	}
+
+	if ($row['tod_datum'] != ''){
+		echo '<div><i class="fa fa-fw">&dagger;</i> ';
+		echo $libTime->formatDateString($row['tod_datum']);
 		echo '</div>';
 	}
 
@@ -558,38 +562,36 @@ function printPrimaryAddress($row){
 	* primary address
 	*/
 	if($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != ''){
+		echo '<div class="col-sm-6">';
 		echo '<hr />';
 		echo '<address>';
 
 		if($row['zusatz1'] != ''){
-			echo '<div>Zusatz: ' .$row['zusatz1']. '</div>';
+			echo '<div>' .$row['zusatz1']. '</div>';
 		}
 
 		if($row['strasse1'] != ''){
-			echo '<div>Straße: ' .$row['strasse1']. '</div>';
+			echo '<div>' .$row['strasse1']. '</div>';
 		}
 
-		if($row['ort1'] != ''){
-			echo '<div>Ort: ' .$row['ort1']. '</div>';
-		}
-
-		if($row['plz1'] != ''){
-			echo '<div>PLZ: ' .$row['plz1']. '</div>';
+		if($row['plz1'] != '' || $row['ort1'] != ''){
+			echo '<div>' .$row['plz1']. ' ' .$row['ort1']. '</div>';
 		}
 
 		if($row['land1'] != ''){
-			echo '<div>Land: ' .$row['land1']. '</div>';
+			echo '<div>' .$row['land1']. '</div>';
 		}
 
 		if($row['telefon1'] != ''){
-			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: ' .$row['telefon1']. '</div>';
+			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> ' .$row['telefon1']. '</div>';
 		}
 
 		if($row['datum_adresse1_stand'] != ''){
-			echo '<div>letzte Änderung: ' .$libTime->formatDateString($row['datum_adresse1_stand']). '</div>';
+			echo '<div>Stand: ' .$libTime->formatDateString($row['datum_adresse1_stand']). '</div>';
 		}
 
 		echo '</address>';
+		echo '</div>';
 	}
 }
 
@@ -600,38 +602,36 @@ function printSecondaryAddress($row){
 	* secondary address
 	*/
 	if($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != ''){
+		echo '<div class="col-sm-6">';
 		echo '<hr />';
 		echo '<address>';
 
 		if($row['zusatz2'] != ''){
-			echo '<div>Zusatz: ' .$row['zusatz2']. '</div>';
+			echo '<div>' .$row['zusatz2']. '</div>';
 		}
 
 		if($row['strasse2'] != ''){
-			echo '<div>Straße: ' .$row['strasse2']. '</div>';
+			echo '<div>' .$row['strasse2']. '</div>';
 		}
 
-		if($row['ort2'] != ''){
-			echo '<div>Ort: ' .$row['ort2']. '</div>';
-		}
-
-		if($row['plz2'] != ''){
-			echo '<div>PLZ: ' .$row['plz2']. '</div>';
+		if($row['plz2'] != '' || $row['ort2'] != ''){
+			echo '<div>' .$row['plz2']. ' ' .$row['ort2']. '</div>';
 		}
 
 		if($row['land2'] != ''){
-			echo '<div>Land: ' .$row['land2']. '</div>';
+			echo '<div>' .$row['land2']. '</div>';
 		}
 
 		if($row['telefon2'] != ''){
-			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telefon: ' .$row['telefon2']. '</div>';
+			echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> ' .$row['telefon2']. '</div>';
 		}
 
 		if($row['datum_adresse2_stand'] != ''){
-			echo '<div>letzte Änderung: ' .$libTime->formatDateString($row['datum_adresse2_stand']). '</div>';
+			echo '<div>Stand: ' .$libTime->formatDateString($row['datum_adresse2_stand']). '</div>';
 		}
 
 		echo '</address>';
+		echo '</div>';
 	}
 }
 
@@ -644,11 +644,11 @@ function printCommunication($row){
 		echo '<div>';
 
 		if($row['email'] != ''){
-			echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> E-Mail-Adresse: <a href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
+			echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <a href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
 		}
 
 		if($row['mobiltelefon'] != ''){
-			echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> Mobiltelefon: ' .$row['mobiltelefon']. '</div>';
+			echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> ' .$row['mobiltelefon']. '</div>';
 		}
 
 		if($row['webseite'] != ''){
@@ -674,27 +674,22 @@ function printCommunication($row){
 				$icon = '<i class="fa fa-instagram fa-fw" aria-hidden="true"></i>';
 			} elseif(strstr($webseite, 'github')){
 				$icon = '<i class="fa fa-github fa-fw" aria-hidden="true"></i>';
+			} else {
+				$icon = '<i class="fa fa-globe fa-fw" aria-hidden="true"></i>';
 			}
 
 			echo '<div>';
-
-			if($icon != ''){
-				echo $icon. ' ';
-			}
-
-			echo 'Webseite: ';
-			echo '<a href="' .$webseite. '">' .$webseite. '</a>';
+			echo $icon. ' <a href="' .$webseite. '">' .$webseite. '</a>';
 			echo '</div>';
 		}
 
 		if($row['jabber'] != ''){
-			echo '<div><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i> XMPP: <a href="xmpp:' .$row['jabber']. '">' .$row['jabber']. '</a></div>';
+			echo '<div><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i> <a href="xmpp:' .$row['jabber']. '">' .$row['jabber']. '</a></div>';
 		}
 
 		if($row['skype'] != ''){
 			echo '<div>';
-			echo '<i class="fa fa-skype fa-fw" aria-hidden="true"></i> Skype: ';
-			echo '<a href="skype:' .$row['skype']. '">' .$row['skype']. '</a>';
+			echo '<i class="fa fa-skype fa-fw" aria-hidden="true"></i> <a href="skype:' .$row['skype']. '">' .$row['skype']. '</a>';
 			echo '</div>';
 		}
 

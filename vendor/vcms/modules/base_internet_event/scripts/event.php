@@ -91,7 +91,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	}
 
 	$status = $libEvent->getStatusString($row['status']);
-	echo '<p>Status: ' .$status. '</p>';
+	echo '<p>' .$status. '</p>';
 
 	printAnmeldeStatus($row);
 	printSocialButtons($row);
