@@ -33,7 +33,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
 
-echo '<p>Das aktuelle Semesterprogramm kann als <a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/inc.php?iid=semesterprogramm_icalendar"><i class="fa fa-calendar" aria-hidden="true"></i> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>';
+echo '<p>Das aktuelle Semesterprogramm kann als <a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=semesterprogramm_icalendar"><i class="fa fa-calendar" aria-hidden="true"></i> iCalendar-Datei</a> in ein Kalenderprogramm wie z. B. Outlook oder iCal importiert werden.</p>';
 echo '<div class="vcalendar">';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
@@ -71,7 +71,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$pictureId = $libGallery->getMainPictureId($row['id']);
 
 	if($pictureId > -1){
-		$event->setImageUrl('inc.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$pictureId);
+		$event->setImageUrl('api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$pictureId);
 	}
 
 	$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");

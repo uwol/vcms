@@ -118,7 +118,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     			echo ' private';
     		}
 
-    		echo '" src="inc.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
+    		echo '" src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
     		echo '</a>';
     		echo '</div>';
     		echo '</div>';
@@ -176,13 +176,13 @@ if(count($foldersWithoutEvent) > 0){
     			echo ' private';
     		}
 
-    		echo '" src="inc.php?iid=event_picture&amp;eventid='.$folder.'&amp;id=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" />';
+    		echo '" src="api.php?iid=event_picture&amp;eventid=' .$folder. '&amp;id=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" />';
     		echo '</div>';
     		echo '</div>';
 		}
 
 		echo '</td>';
-		echo '<td>'.$folder.'</td>';
+		echo '<td>' .$folder. '</td>';
 		echo '<td>unbekannt</td>';
 		echo '<td>unbekannt</td>';
 		echo '<td><a href="index.php?pid=event_admin_galerie&amp;id=' .$folder. '">bearbeiten</a></td>';

@@ -12,7 +12,7 @@ function loadFacebookEventPlugins(){
 		var eventid = div.attr('data-eventid');
 
 		$.ajax({
-			url: "inc.php?iid=fb_event&eventid=" + eventid,
+			url: "api.php?iid=fb_event&eventid=" + eventid,
 			context: document.body
 		}).done(function(html) {
 			div.replaceWith(html);

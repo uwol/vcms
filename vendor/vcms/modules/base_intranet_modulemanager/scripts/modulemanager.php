@@ -366,7 +366,6 @@ function uninstallModule($module){
 
 function updateEngine(){
 	global $libHttp, $libFilesystem, $libCronjobs, $repoHostname, $engineUpdateScript, $tempRelativeDirectoryPath;
-
 	// globals required for install/update scripts
 	global $libGlobal, $libDb;
 
@@ -376,25 +375,21 @@ function updateEngine(){
 	$tempEngineRelativeDirectoryPath = $tempRelativeDirectoryPath. '/engine';
 	$tempEngineAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($tempEngineRelativeDirectoryPath);
 
-	//download engine package
 	echo '<p>Lade Enginepaket aus dem Repository.</p>';
 	$libHttp->get('http://' .$repoHostname. '/packages/engine.tar', $tarAbsoluteFilePath);
 
-	//untar engine package
 	$tar = new \pear\Archive\Archive_Tar($tarRelativeFilePath);
 	echo '<p>Entpacke Enginepaket in den temp-Ordner.</p>';
 	$tar->extract($tempRelativeDirectoryPath. '/');
 
 	if(!is_dir($tempEngineAbsoluteDirectoryPath)){
 		echo '<p>Fehler: Das heruntergeladene Enginepaket konnte nicht entpackt werden.</p>';
-	} elseif(!is_file($tempEngineAbsoluteDirectoryPath. '/index.php')
-			|| !is_file($tempEngineAbsoluteDirectoryPath. '/inc.php')
-			|| !is_dir($tempEngineAbsoluteDirectoryPath. '/vendor')) {
+	} elseif(!is_file($tempEngineAbsoluteDirectoryPath. '/index.php')) {
 		echo '<p>Fehler: Das Enginepaket ist fehlerhaft.</p>';
 	} else {
 		$libCronjobs->deleteFiles();
 
-		unlink($libFilesystem->getAbsolutePath('inc.php'));
+		unlink($libFilesystem->getAbsolutePath('api.php'));
 		unlink($libFilesystem->getAbsolutePath('index.php'));
 
 		$libFilesystem->deleteDirectory('vendor');

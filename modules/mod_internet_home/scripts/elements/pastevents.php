@@ -59,7 +59,7 @@ if(count($eventIds) > 0){
 		echo '<div class="thumbnail">';
 		echo '<div class="thumbnailOverflow">';
 		echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box">';
-		echo '<img src="inc.php?iid=event_picture&amp;eventid=' .$eventId. '&amp;id=' .$pictureId . '" alt="" class="img-responsive" />';
+		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$eventId. '&amp;id=' .$pictureId . '" alt="" class="img-responsive" />';
 
 		echo '<div class="event-box-caption">';
 		echo '<div class="event-box-caption-content">';

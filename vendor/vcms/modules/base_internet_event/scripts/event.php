@@ -278,8 +278,8 @@ function printGallery($row){
 			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 			echo '<div class="thumbnail">';
 			echo '<div class="thumbnailOverflow">';
-			echo '<a href="inc.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id='. $key .'">';
-			echo '<img src="inc.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" class="img-responsive center-block" />';
+			echo '<a href="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '">';
+			echo '<img src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" class="img-responsive center-block" />';
 			echo '</a>';
 			echo '</div>';
 			echo '</div>';

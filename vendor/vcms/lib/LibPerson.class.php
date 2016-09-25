@@ -158,7 +158,7 @@ class LibPerson{
 		}
 
 		if(is_numeric($id) && is_file($this->getMitgliedImageFilePath($id))){
-			$retstr .= '<img src="inc.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="' .$classes. '" alt="" />';
+			$retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="' .$classes. '" alt="" />';
 		} else {
 			$retstr .= '<div class="' .$classes. '"></div>';
 		}

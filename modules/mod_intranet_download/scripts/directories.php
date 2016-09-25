@@ -301,7 +301,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 
 			$fileName = $folderElement->getFilename();
 
-			echo ' <a href="inc.php?iid=intranet_download&amp;hash=' .$folderElement->getHash(). '">' .$fileName. '</a>';
+			echo ' <a href="api.php?iid=intranet_download&amp;hash=' .$folderElement->getHash(). '">' .$fileName. '</a>';
 			echo ' - ' .implode('', $folderElement->readGroups);
 			echo ' - ' .getSizeString($folderElement->getSize());
 

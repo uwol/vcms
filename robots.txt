@@ -5,6 +5,6 @@ User-agent: ia_archiver
 Disallow: /
 
 User-agent: *
-Allow: /inc.php?iid=semesterprogramm_icalendar
-Disallow: /inc.php
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
 Disallow: /custom/

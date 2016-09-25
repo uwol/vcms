@@ -132,7 +132,7 @@ echo '<script>
 	$(document).ready(function() {
 		\'use strict\';
 
-		var url = \'inc.php?iid=event_admin_galerie_upload&veranstaltungId=' .$id. '\';
+		var url = \'api.php?iid=event_admin_galerie_upload&veranstaltungId=' .$id. '\';
 
 		$(\'#fileupload\').fileupload({
 			url: url,
@@ -192,8 +192,8 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		echo '<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">';
 		echo '<div class="thumbnail">';
 		echo '<div class="thumbnailOverflow">';
-		echo '<a href="inc.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
-		echo '<img src="inc.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '" class="img-responsive center-block">';
+		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
+		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '" class="img-responsive center-block">';
 		echo '</a>';
 		echo '</div>';
 		echo '</div>';
@@ -239,8 +239,8 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		}
 
 		echo '<div class="thumbnailOverflow ' .$visibilityClass. '">';
-		echo '<a href="inc.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
-		echo '<img src="inc.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" class="img-responsive center-block">';
+		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
+		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" class="img-responsive center-block">';
 		echo '</a>';
 		echo '</div>';
 
