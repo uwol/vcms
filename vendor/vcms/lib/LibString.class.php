@@ -120,4 +120,13 @@ class LibString{
 			return ' lastInsertId ';
 		}
 	}
+
+	function normalizeStreet($street){
+		$street = str_replace('str.', 'str', $street);
+	 	$street = str_replace('straße', 'str', $street);
+		$street = str_replace('Straße', 'str', $street);
+		$street = preg_replace('/[^a-zA-ZäöüÄÖÜß\s]/i', '', $street);
+		$street = trim($street);
+		return $street;
+	}
 }

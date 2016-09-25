@@ -53,6 +53,10 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$betreffgruppen[] = 'AHAH';
 	}
 
+	if(isset($_POST['hausbewohner']) && $_POST['hausbewohner'] == 'on'){
+		$betreffgruppen[] = 'Hausbewohner';
+	}
+
 	if(isset($_POST['couleurdamen']) && $_POST['couleurdamen'] == 'on'){
 		$betreffgruppen[] = 'Couleurdamen';
 	}
@@ -69,8 +73,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$libGlobal->errorTexts[] = 'Es wurde keine Adressatengruppe ausgewählt.';
 	}
 
-	$betreffgruppenstring = '['.implode('-',$betreffgruppen).'] ';
-
+	$betreffgruppenstring = '[' .implode(', ', $betreffgruppen). '] ';
 	$betreffregionstring = '';
 
 	if($_POST['region'] != '' && $_POST['region'] != 'NULL'){
@@ -88,7 +91,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	/*
 	* build subject
 	*/
-	$subject = '['.$libConfig->verbindungName.'] '. $betreffgruppenstring . $betreffregionstring . $_POST['subject'];
+	$subject = '[' .$libConfig->verbindungName. '] ' .$betreffgruppenstring . $betreffregionstring . $_POST['subject'];
 
 	/*
 	* start output
@@ -116,6 +119,10 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 
 	if(isset($_POST['ahah']) && $_POST['ahah'] == 'on'){
 		$sqlgruppen[] = "gruppe='P'";
+	}
+
+	if(isset($_POST['hausbewohner']) && $_POST['hausbewohner'] == 'on'){
+		$sqlgruppen[] = "((gruppe='F' OR gruppe='B') AND plz1=:plz AND strasse1 LIKE :street)";
 	}
 
 	if(isset($_POST['couleurdamen']) && $_POST['couleurdamen'] == 'on'){
@@ -148,6 +155,13 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 
 	if($regionString != ''){
 		$stmt->bindValue(':region', $_POST['region'], PDO::PARAM_INT);
+	}
+
+	if(isset($_POST['hausbewohner']) && $_POST['hausbewohner'] == 'on'){
+		$streetNormalized = $libString->normalizeStreet($libConfig->verbindungStrasse);
+
+		$stmt->bindValue(':plz', $libConfig->verbindungPlz);
+		$stmt->bindValue(':street', '%' .$streetNormalized. '%');
 	}
 
 	$stmt->execute();
@@ -187,7 +201,6 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$attachementName = $_FILES['anhang']['name'];
 	}
 
-	//send mail
 	$empfangerPerMail = 15;
 	$anzahlMails = ceil(count($empfaengerArray) / $empfangerPerMail);
 

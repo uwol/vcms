@@ -26,37 +26,46 @@ $libDb->query("INSERT INTO mod_rundbrief_empfaenger (id, empfaenger) SELECT id, 
 /*
 * receiver counters
 */
-$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe ='F'");
+$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='F'");
 $stmt->execute();
 $stmt->bindColumn('number', $anzahlFuechse);
 $stmt->fetch();
 
-$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe ='B'");
+$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='B'");
 $stmt->execute();
 $stmt->bindColumn('number', $anzahlBurschen);
 $stmt->fetch();
 
-$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe ='P'");
+$streetNormalized = $libString->normalizeStreet($libConfig->verbindungStrasse);
+
+$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND (gruppe='F' OR gruppe='B') AND plz1=:plz AND strasse1 LIKE :street");
+$stmt->bindValue(':plz', $libConfig->verbindungPlz);
+$stmt->bindValue(':street', '%' .$streetNormalized. '%');
+$stmt->execute();
+$stmt->bindColumn('number', $anzahlHausbewohner);
+$stmt->fetch();
+
+$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='P'");
 $stmt->execute();
 $stmt->bindColumn('number', $anzahlAhah);
 $stmt->fetch();
 
-$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe ='P' AND interessiert = 1");
+$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='P' AND interessiert= 1");
 $stmt->execute();
 $stmt->bindColumn('number', $anzahlBesondersInteressierteAhah);
 $stmt->fetch();
 
-$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe ='C'");
+$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='C'");
 $stmt->execute();
 $stmt->bindColumn('number', $anzahlCouleurdamen);
 $stmt->fetch();
 
-$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND (gruppe = 'G' OR gruppe = 'W')");
+$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND (gruppe='G' OR gruppe='W')");
 $stmt->execute();
 $stmt->bindColumn('number', $anzahlGattinnen);
 $stmt->fetch();
 
-$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND (gruppe = 'G' OR gruppe = 'W') AND interessiert = 1");
+$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND (gruppe='G' OR gruppe='W') AND interessiert=1");
 $stmt->execute();
 $stmt->bindColumn('number', $anzahlBesondersInteressierteGattinnen);
 $stmt->fetch();
@@ -84,7 +93,7 @@ echo '<label class="col-sm-2 control-label">Adressaten</label>';
 echo '<div class="col-sm-4">';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="fuchsia" checked="checked">';
-echo $anzahlFuechse. ' Füchse + Fuchsmajor 1 &amp; 2';
+echo $anzahlFuechse. ' Füchse &amp; Fuchsmajor';
 echo '</label></div>';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="burschen" checked="checked">';
@@ -107,6 +116,10 @@ echo '</label></div>';
 
 echo '</div>';
 echo '<div class="col-sm-4">';
+
+echo '<div class="checkbox"><label><input type="checkbox" name="hausbewohner">';
+echo $anzahlHausbewohner. ' Hausbewohner';
+echo '</label></div>';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="couleurdamen">';
 echo $anzahlCouleurdamen. ' Couleurdamen';
