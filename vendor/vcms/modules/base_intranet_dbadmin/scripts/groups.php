@@ -73,7 +73,7 @@ if($libAuth->isLoggedin()){
 		echo '<td class="toolColumn">';
 
 		if($row['bezeichnung'] != 'F' && $row['bezeichnung'] != 'B' && $row['bezeichnung'] != 'P' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'C' && $row['bezeichnung'] != 'G' && $row['bezeichnung'] != 'W' && $row['bezeichnung'] != 'V' && $row['bezeichnung'] != 'Y'){
-			echo '<a href="index.php?pid=intranet_admin_db_gruppen&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<a href="index.php?pid=intranet_admin_groups&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 			echo '</a>';
 		}
@@ -86,7 +86,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<h2>Neue Gruppe anlegen</h2>';
 
-	echo '<form action="index.php?pid=intranet_admin_db_gruppen" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_admin_groups" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
 

@@ -1,11 +1,11 @@
 {
 	"moduleName": "Rundbrief",
-	"version": 2.34,
+	"version": 2.35,
 	"installScript": "install/install.php",
 	"updateScript": "install/update.php",
 	"pages": [
 		{
-			"pid": "intranet_rundbrief_schreiben",
+			"pid": "intranet_rundbrief",
 			"file": "write.php",
 			"directory": "scripts",
 			"title": "Rundbrief",
@@ -25,7 +25,7 @@
 	],
 	"menuElementsIntranet": [
 		{
-			"pid": "intranet_rundbrief_schreiben",
+			"pid": "intranet_rundbrief",
 			"name": "Rundbrief",
 			"type": "menu_entry",
 			"position": 3333

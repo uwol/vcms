@@ -125,7 +125,7 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 	if($vmarray['mitglied'] != '' && $vmarray['verein'] != ''){
-		echo '<p><a href="index.php?pid=intranet_admin_db_vereinsmitgliedschaftenliste&amp;aktion=delete&amp;mitglied='.$vmarray['mitglied'].'&amp;verein='.$vmarray['verein'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+		echo '<p><a href="index.php?pid=intranet_admin_memberships&amp;aktion=delete&amp;mitglied='.$vmarray['mitglied'].'&amp;verein='.$vmarray['verein'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 	}
 
 	/**
@@ -139,7 +139,7 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = '&amp;aktion=update';
 	}
 
-	echo '<form action="index.php?pid=intranet_admin_db_vereinsmitgliedschaft' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_admin_membership' .$extraActionParam. '" method="post" class="form-horizontal">';
 	echo '<fielset>';
 	echo '<input type="hidden" name="verein" value="' .$vmarray['verein']. '" />';
 	echo '<input type="hidden" name="mitglied" value="' .$vmarray['mitglied']. '" />';

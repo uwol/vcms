@@ -99,7 +99,7 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 	if($array['id'] != ''){
-		echo '<p><a href="index.php?pid=intranet_admin_db_vipliste&amp;aktion=delete&amp;id='.$array['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+		echo '<p><a href="index.php?pid=intranet_admin_vips&amp;aktion=delete&amp;id='.$array['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 	}
 
 	/**
@@ -113,7 +113,7 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = '&amp;aktion=update';
 	}
 
-	echo '<form action="index.php?pid=intranet_admin_db_vip' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_admin_vip' .$extraActionParam. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="vipdaten" />';
 	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';

@@ -116,14 +116,14 @@ if($libAuth->isLoggedin()){
 		echo '<div class="panel panel-default">';
   		echo '<div class="panel-body">';
 		echo '<div class="btn-toolbar">';
-		echo '<a href="index.php?pid=intranet_admin_db_person&amp;aktion=blank" class="btn btn-default">Eine neue Person anlegen</a>';
+		echo '<a href="index.php?pid=intranet_admin_person&amp;aktion=blank" class="btn btn-default">Eine neue Person anlegen</a>';
 		echo '</div>';
 		echo '</div>';
 		echo '</div>';
 	}
 
 
-	echo '<form action="index.php?pid=intranet_admin_db_personenliste" method="post" class="form-inline">';
+	echo '<form action="index.php?pid=intranet_admin_persons" method="post" class="form-inline">';
 	echo '<fieldset>';
 	echo '<div class="form-group">';
 
@@ -178,7 +178,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['status']. '</td>';
 		echo '<td>' .$row['semester_reception']. '</td>';
 		echo '<td class="toolColumn">';
-		echo '<a href="index.php?pid=intranet_admin_db_person&amp;id=' .$row['id']. '">';
+		echo '<a href="index.php?pid=intranet_admin_person&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</td>';

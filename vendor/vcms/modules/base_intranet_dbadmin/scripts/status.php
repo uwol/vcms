@@ -73,7 +73,7 @@ if($libAuth->isLoggedin()){
 		echo '<td class="toolColumn">';
 
 		if($row['bezeichnung'] != 'A-Phil' && $row['bezeichnung'] != 'B-Phil' && $row['bezeichnung'] != 'Ehrenmitglied' && $row['bezeichnung'] != 'ex loco' && $row['bezeichnung'] != 'HV-M' && $row['bezeichnung'] != 'Inaktiv ex loco' && $row['bezeichnung'] != 'Inaktiv' && $row['bezeichnung'] != 'VG'){
-			echo '<a href="index.php?pid=intranet_admin_db_status&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<a href="index.php?pid=intranet_admin_status&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 			echo '</a>';
 		}
@@ -86,7 +86,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<h2>Neuen Status anlegen</h2>';
 
-	echo '<form action="index.php?pid=intranet_admin_db_status" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_admin_status" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
 

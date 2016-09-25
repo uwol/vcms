@@ -1,8 +1,8 @@
 {
-	"moduleName": "DB-Admin",
+	"moduleName": "Datenbank-Admin",
 	"pages": [
 		{
-			"pid": "intranet_admin_db_personenliste",
+			"pid": "intranet_admin_persons",
 			"file": "persons.php",
 			"directory": "scripts/person",
 			"title": "Personen",
@@ -11,7 +11,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_person",
+			"pid": "intranet_admin_person",
 			"file": "person.php",
 			"directory": "scripts/person",
 			"title": "Person",
@@ -20,7 +20,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_semesterliste",
+			"pid": "intranet_admin_semesters",
 			"file": "semesters.php",
 			"directory": "scripts/semester",
 			"title": "Semester",
@@ -29,7 +29,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_semester",
+			"pid": "intranet_admin_semester",
 			"file": "semester.php",
 			"directory": "scripts/semester",
 			"title": "Semester",
@@ -38,7 +38,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_veranstaltungsliste",
+			"pid": "intranet_admin_events",
 			"file": "events.php",
 			"directory": "scripts/event",
 			"title": "Veranstaltungen",
@@ -47,7 +47,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_veranstaltung",
+			"pid": "intranet_admin_event",
 			"file": "event.php",
 			"directory": "scripts/event",
 			"title": "Veranstaltung",
@@ -56,7 +56,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_vereinsliste",
+			"pid": "intranet_admin_associations",
 			"file": "associations.php",
 			"directory": "scripts/association",
 			"title": "Vereine",
@@ -65,7 +65,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_verein",
+			"pid": "intranet_admin_association",
 			"file": "association.php",
 			"directory": "scripts/association",
 			"title": "Verein",
@@ -74,7 +74,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_vipliste",
+			"pid": "intranet_admin_vips",
 			"file": "vips.php",
 			"directory": "scripts/vip",
 			"title": "Vips",
@@ -83,7 +83,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_vip",
+			"pid": "intranet_admin_vip",
 			"file": "vip.php",
 			"directory": "scripts/vip",
 			"title": "Vip",
@@ -92,7 +92,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_vereinsmitgliedschaftenliste",
+			"pid": "intranet_admin_memberships",
 			"file": "memberships.php",
 			"directory": "scripts/membership",
 			"title": "Vereinsmitgliedschaften",
@@ -101,7 +101,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_vereinsmitgliedschaft",
+			"pid": "intranet_admin_membership",
 			"file": "membership.php",
 			"directory": "scripts/membership",
 			"title": "Vereinsmitgliedschaft",
@@ -110,7 +110,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_gruppen",
+			"pid": "intranet_admin_groups",
 			"file": "groups.php",
 			"directory": "scripts",
 			"title": "Gruppen",
@@ -119,7 +119,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_status",
+			"pid": "intranet_admin_status",
 			"file": "status.php",
 			"directory": "scripts",
 			"title": "Status",
@@ -128,7 +128,7 @@
 			}
 		},
 		{
-			"pid": "intranet_admin_db_region",
+			"pid": "intranet_admin_regions",
 			"file": "regions.php",
 			"directory": "scripts",
 			"title": "Regionen",
@@ -144,55 +144,55 @@
 			"position": 100,
 			"elements": [
 				{
-					"pid": "intranet_admin_db_personenliste",
+					"pid": "intranet_admin_persons",
 					"name": "Personen",
 					"type": "menu_entry",
 					"position": 200
 				},
 				{
-					"pid": "intranet_admin_db_semesterliste",
+					"pid": "intranet_admin_semesters",
 					"name": "Semester",
 					"type": "menu_entry",
 					"position": 300
 				},
 				{
-					"pid": "intranet_admin_db_veranstaltungsliste",
+					"pid": "intranet_admin_events",
 					"name": "Veranstaltungen",
 					"type": "menu_entry",
 					"position": 400
 				},
 				{
-					"pid": "intranet_admin_db_vereinsliste",
+					"pid": "intranet_admin_associations",
 					"name": "Vereine",
 					"type": "menu_entry",
 					"position": 500
 				},
 				{
-					"pid": "intranet_admin_db_vipliste",
+					"pid": "intranet_admin_vips",
 					"name": "Vips",
 					"type": "menu_entry",
 					"position": 550
 				},
 				{
-					"pid": "intranet_admin_db_vereinsmitgliedschaftenliste",
+					"pid": "intranet_admin_memberships",
 					"name": "Mitgliedschaften",
 					"type": "menu_entry",
 					"position": 501
 				},
 				{
-					"pid": "intranet_admin_db_gruppen",
+					"pid": "intranet_admin_groups",
 					"name": "Gruppen",
 					"type": "menu_entry",
 					"position": 800
 				},
 				{
-					"pid": "intranet_admin_db_status",
+					"pid": "intranet_admin_status",
 					"name": "Status",
 					"type": "menu_entry",
 					"position": 900
 				},
 				{
-					"pid": "intranet_admin_db_region",
+					"pid": "intranet_admin_regions",
 					"name": "Regionen",
 					"type": "menu_entry",
 					"position": 1000

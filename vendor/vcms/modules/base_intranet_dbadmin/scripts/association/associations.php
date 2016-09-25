@@ -62,8 +62,8 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_db_vereinsliste&amp;aktion=import" onclick="return confirm(\'Willst den Import wirklich durchführen?\')" class="btn btn-default"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</a>';
-	echo '<a href="index.php?pid=intranet_admin_db_verein&amp;aktion=blank" class="btn btn-default">Einen neuen Verein anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_associations&amp;aktion=import" onclick="return confirm(\'Willst den Import wirklich durchführen?\')" class="btn btn-default"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</a>';
+	echo '<a href="index.php?pid=intranet_admin_association&amp;aktion=blank" class="btn btn-default">Einen neuen Verein anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
@@ -84,7 +84,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['dachverband']. '</td>';
 		echo '<td>' .$row['ort1']. '</td>';
 		echo '<td class="toolColumn">';
-		echo '<a href="index.php?pid=intranet_admin_db_verein&amp;id=' .$row['id']. '">';
+		echo '<a href="index.php?pid=intranet_admin_association&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</td>';

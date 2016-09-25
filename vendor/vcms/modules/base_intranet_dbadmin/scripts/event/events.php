@@ -50,7 +50,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_db_veranstaltung&amp;aktion=blank" class="btn btn-default">Eine neue Veranstaltung anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_event&amp;aktion=blank" class="btn btn-default">Eine neue Veranstaltung anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
@@ -96,7 +96,7 @@ if($libAuth->isLoggedin()){
 
 		echo '</td>';
 		echo '<td class="toolColumn">';
-		echo '<a href="index.php?pid=intranet_admin_db_veranstaltung&amp;id=' .$row['id']. '">';
+		echo '<a href="index.php?pid=intranet_admin_event&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</td>';

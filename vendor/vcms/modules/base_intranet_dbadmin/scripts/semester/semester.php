@@ -203,7 +203,7 @@ if($libAuth->isLoggedin()){
 	*/
 
 	if($semesterarray['semester'] != ''){
-		echo '<p><a href="index.php?pid=intranet_admin_db_semesterliste&amp;aktion=delete&amp;semester=' .$semesterarray['semester']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+		echo '<p><a href="index.php?pid=intranet_admin_semesters&amp;aktion=delete&amp;semester=' .$semesterarray['semester']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 	}
 
 	echo '<div class="row">';
@@ -221,7 +221,7 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = "&amp;aktion=update";
 	}
 
-	echo '<form action="index.php?pid=intranet_admin_db_semester' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_admin_semester' .$extraActionParam. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="semesterdaten" />';
 	echo '<input type="hidden" name="semester" value="' .$semesterarray['semester']. '" />';
@@ -340,7 +340,7 @@ if($libAuth->isLoggedin()){
 
 		if($hasSemesterCover){
 			echo '<span class="deleteIconBox">';
-			echo '<a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$semesterarray['semester']. '&amp;aktion=semestercoverdelete">';
+			echo '<a href="index.php?pid=intranet_admin_semester&amp;semester=' .$semesterarray['semester']. '&amp;aktion=semestercoverdelete">';
 			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 			echo '</a>';
 			echo '</span>';
@@ -351,7 +351,7 @@ if($libAuth->isLoggedin()){
 		echo '</div>';
 
 		//image upload form
-		echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_db_semester&amp;semester='. $semesterarray['semester'] .'" class="form-horizontal text-center">';
+		echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_semester&amp;semester='. $semesterarray['semester'] .'" class="form-horizontal text-center">';
 		echo '<input type="hidden" name="formtyp" value="semestercoverupload" />';
 		$libForm->printFileUpload('semestercover', 'Semestercover hochladen');
 		echo '</form>';

@@ -4,8 +4,8 @@
 	"installScript": "install/install.php",
 	"pages": [
 		{
-			"pid": "intranet_zipfelranking",
-			"file": "zipfelranking.php",
+			"pid": "intranet_zipfel",
+			"file": "zipfel.php",
 			"directory": "scripts",
 			"title": "Zipfelranking",
 			"accessRestriction": {
@@ -15,7 +15,7 @@
 	],
 	"menuElementsIntranet": [
 		{
-			"pid": "intranet_zipfelranking",
+			"pid": "intranet_zipfel",
 			"name": "Zipfel",
 			"type": "menu_entry",
 			"position": 10600

@@ -76,7 +76,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['bezeichnung']. '</td>';
 		echo '<td>' .$anzahl. ' Personen</td>';
 		echo '<td class="toolColumn">';
-		echo '<a href="index.php?pid=intranet_admin_db_region&amp;aktion=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+		echo '<a href="index.php?pid=intranet_admin_regions&amp;aktion=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</td>';
@@ -87,7 +87,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<h2>Neue Region anlegen</h2>';
 
-	echo '<form action="index.php?pid=intranet_admin_db_region" method="post" class="form-horizontal">';
+	echo '<form action="index.php?pid=intranet_admin_regions" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
 

@@ -41,7 +41,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_db_vip&amp;aktion=blank" class="btn btn-default">Einen neuen Vip anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_vip&amp;aktion=blank" class="btn btn-default">Einen neuen Vip anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
@@ -63,7 +63,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['suffix']. '</td>';
 		echo '<td>' .$row['vorname']. '</td>';
 		echo '<td class="toolColumn">';
-		echo '<a href="index.php?pid=intranet_admin_db_vip&amp;id=' .$row['id']. '">';
+		echo '<a href="index.php?pid=intranet_admin_vip&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</td>';

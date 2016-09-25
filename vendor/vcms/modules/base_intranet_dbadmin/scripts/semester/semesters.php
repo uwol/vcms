@@ -58,7 +58,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_db_semester&amp;aktion=blank" class="btn btn-default">Ein neues Semester anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_semester&amp;aktion=blank" class="btn btn-default">Ein neues Semester anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
@@ -79,7 +79,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$libPerson->getMitgliedNameString($row['fuchsmajor'],5). '</td>';
 		echo '<td>' .$libPerson->getMitgliedNameString($row['internetwart'],5). '</td>';
 		echo '<td class="toolColumn">';
-		echo '<a href="index.php?pid=intranet_admin_db_semester&amp;semester=' .$row['semester']. '">';
+		echo '<a href="index.php?pid=intranet_admin_semester&amp;semester=' .$row['semester']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</td>';
