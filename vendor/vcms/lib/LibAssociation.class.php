@@ -192,7 +192,7 @@ class LibAssociation{
 		global $libGlobal, $libHttp;
 
 		$mkHostname = $libGlobal->mkHostname;
-		$path = '/api.php?iid=dachverband_vereine_jsonfeed';
+		$path = '/api.php?iid=vereine_json';
 		$jsonUrl = 'https://' .$mkHostname.$path;
 		$json = $libHttp->get($jsonUrl);
 
