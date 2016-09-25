@@ -49,7 +49,7 @@ echo $libString->getNotificationBoxText();
 echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;aktion=blank" class="btn btn-default">Eine neue Ankündigung anlegen</a>';
+echo '<a href="index.php?pid=intranet_admin_announcement&amp;aktion=blank" class="btn btn-default">Eine neue Ankündigung anlegen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -97,7 +97,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<td>' .$row['startdatum']. '<br />bis<br /> ' .$row['verfallsdatum']. '<br /><br /></td>';
 	echo '<td>'.$libString->deleteBBCode($row['text']). '<br /><br /></td>';
 	echo '<td class="toolColumn">';
-	echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$row['id']. '">';
+	echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$row['id']. '">';
 	echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 	echo '</a>';
 	echo '</td>';

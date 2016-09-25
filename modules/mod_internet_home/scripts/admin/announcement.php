@@ -111,7 +111,7 @@ echo '<hr />';
 * deletion
 */
 if($array['id'] != ''){
-	echo '<p><a href="index.php?pid=intranet_internethome_nachricht_adminliste&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+	echo '<p><a href="index.php?pid=intranet_admin_announcements&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 }
 
 
@@ -128,7 +128,7 @@ if($aktion == 'blank'){
 	$extraActionParam = '&amp;aktion=update';
 }
 
-echo '<form action="index.php?pid=intranet_internethome_nachricht_adminankuendigung' .$extraActionParam. '" method="post" class="form-horizontal">';
+echo '<form action="index.php?pid=intranet_admin_announcement' .$extraActionParam. '" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
 echo '<input type="hidden" name="formtyp" value="newsdaten" />';
@@ -162,7 +162,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 		echo '<div class="imgBox">';
 
 		echo '<span class="deleteIconBox">';
-		echo '<a href="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$array['id']. '&amp;aktion=bilddelete">';
+		echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$array['id']. '&amp;aktion=bilddelete">';
 		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</span>';
@@ -173,7 +173,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 	}
 
 	//image upload form
-	echo '<form action="index.php?pid=intranet_internethome_nachricht_adminankuendigung&amp;id=' .$array['id']. '" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
+	echo '<form action="index.php?pid=intranet_admin_announcement&amp;id=' .$array['id']. '" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
 	echo '<input type="hidden" name="formtyp" value="bildupload" />';
 	$libForm->printFileUpload('bilddatei', 'Bild hochladen');
 	echo '</form>';

@@ -1,6 +1,6 @@
 {
 	"moduleName": "Home",
-	"version": 3.24,
+	"version": 3.25,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -11,7 +11,7 @@
 			"containerEnabled": false
 		},
 		{
-			"pid": "intranet_internethome_nachricht_adminliste",
+			"pid": "intranet_admin_announcements",
 			"file": "announcements.php",
 			"directory": "scripts/admin",
 			"title": "Ankündigungen",
@@ -20,7 +20,7 @@
 			}
 		},
 		{
-			"pid": "intranet_internethome_nachricht_adminankuendigung",
+			"pid": "intranet_admin_announcement",
 			"file": "announcement.php",
 			"directory": "scripts/admin",
 			"title": "Ankündigung",
@@ -35,7 +35,7 @@
 			"type": "menu_folder",
 			"elements": [
 				{
-					"pid": "intranet_internethome_nachricht_adminliste",
+					"pid": "intranet_admin_announcements",
 					"name": "Startseite",
 					"type": "menu_entry",
 					"position": 2000
