@@ -122,7 +122,7 @@ class LibAssociation{
 		return $retstr;
 	}
 
-	function getFusionertString($associationId, $pid){
+	function getFusioniertString($associationId, $pid){
 		global $libDb;
 
 		$stmt = $libDb->prepare("SELECT fusionierend.id, fusionierend.titel, fusionierend.name FROM base_verein AS fusionierend, base_verein AS fusioniert WHERE fusioniert.id = fusionierend.fusioniertin AND fusioniert.id = :id");

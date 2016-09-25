@@ -152,7 +152,7 @@ if(isset($_GET['id'])){
 		echo 'Töchter: ' .$toechterstr. '<br />';
 	}
 
-	$fusionersstr = $libAssociation->getFusionertString($vereinarray['id'], 'verein');
+	$fusionersstr = $libAssociation->getFusioniertString($vereinarray['id'], 'verein');
 
 	if($fusionersstr != ''){
 		echo 'Fusioniert aus: ' .$fusionersstr. '<br />';
