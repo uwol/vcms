@@ -75,4 +75,3 @@ $stmt->execute();
 $stmt = $libDb->prepare('INSERT IGNORE INTO mod_news_news (id, kategorieid, eingabedatum, text, autor) VALUES (2, 3, DATE_SUB(NOW(), INTERVAL 8 DAY), :text, 1)');
 $stmt->bindValue(':text', $loremIpsum);
 $stmt->execute();
-?>

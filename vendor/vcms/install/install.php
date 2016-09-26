@@ -386,4 +386,3 @@ $stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung (id, datum, titel
 $stmt->bindValue(':titel', 'Festball');
 $stmt->bindValue(':beschreibung', $loremIpsum);
 $stmt->execute();
-?>

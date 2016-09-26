@@ -49,7 +49,3 @@ $stmt->execute();
 
 $stmt = $libDb->prepare('INSERT IGNORE INTO mod_chargierkalender_teilnahme (chargierveranstaltung, mitglied) VALUES (1, 1)');
 $stmt->execute();
-?>
-
-
-

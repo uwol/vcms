@@ -20,9 +20,6 @@ if(!is_object($libGlobal))
 	exit();
 
 
-/**
-* Datenbankstrukturen aktualisieren
-*/
 
 /**
 * Tabelle mod_rundbrief_brief aktualisieren
@@ -92,4 +89,3 @@ if($fieldExists_sollEmpfangen_interessierteahah){
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger ADD interessiert tinyint(1) NOT NULL default '0'";
 	$libDb->query($sql);
 }
-?>

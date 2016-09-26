@@ -21,11 +21,12 @@ if(!is_object($libGlobal))
 
 
 echo 'Erstelle Tabelle mod_rundbrief_empfaenger<br />';
+
 $sql = "CREATE TABLE mod_rundbrief_empfaenger (
 	id int(11) NOT NULL default '0',
 	empfaenger tinyint(1) NOT NULL default '1',
 	interessiert tinyint(1) NOT NULL default '0',
 	PRIMARY KEY id (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+
 $libDb->query($sql);
-?>

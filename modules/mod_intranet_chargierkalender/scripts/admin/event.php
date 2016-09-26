@@ -114,4 +114,3 @@ $libForm->printSubmitButton('Speichern');
 
 echo '</fieldset>';
 echo "</form>";
-?>

@@ -42,4 +42,3 @@ $stmt->execute();
 $stmt = $libDb->prepare('INSERT IGNORE INTO mod_internethome_nachricht (id, startdatum, text) VALUES (2, NOW(), :text)');
 $stmt->bindValue(':text', $loremIpsum);
 $stmt->execute();
-?>

@@ -21,6 +21,7 @@ if(!is_object($libGlobal))
 
 
 echo 'Erstelle Tabelle mod_reservierung_reservierung<br />';
+
 $sql = "CREATE TABLE mod_reservierung_reservierung (
 	id int(11) NOT NULL auto_increment,
 	datum date NOT NULL default '0000-00-00',
@@ -42,4 +43,3 @@ $stmt->execute();
 $stmt = $libDb->prepare('INSERT IGNORE INTO mod_reservierung_reservierung (id, datum, beschreibung, person) VALUES (2, DATE_ADD(NOW(), INTERVAL 10 DAY), :text, 1)');
 $stmt->bindValue(':text', $loremIpsum);
 $stmt->execute();
-?>
