@@ -169,7 +169,7 @@ foreach($modules as $key => $value){
 
 	if($key != 'engine'){
 		if(!$engineIsOld && !$libModuleHandler->moduleIsAvailable($key)){
-			echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
+			echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
 			echo '<i class="fa fa-plus-circle" aria-hidden="true"></i>';
 			echo '</a>';
 		}
@@ -182,7 +182,7 @@ foreach($modules as $key => $value){
 	echo '<td class="toolColumn">';
 
 	if($engineIsOld && $key == 'engine'){
-		echo '<a href="index.php?pid=updater_liste&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
+		echo '<a href="index.php?pid=modules&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
 		echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
 		echo '</a>';
 	} else {
@@ -192,7 +192,7 @@ foreach($modules as $key => $value){
 			$newversion = (double) $value;
 
 			if(!$engineIsOld && $newversion > $actualversion){
-				echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
+				echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
 				echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
 				echo '</a>';
 			}
@@ -211,7 +211,7 @@ foreach($modules as $key => $value){
 			$actualversion = (double) $module->getVersion();
 			$newversion = (double) $value;
 
-			echo '<a href="index.php?pid=updater_liste&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
+			echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
 			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 			echo '</a>';
 		}
