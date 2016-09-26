@@ -400,9 +400,8 @@ function updateEngine(){
 		echo '<p>Führe Aktualisierungsscript der Engine aus.</p>';
 		$scriptAbsolutePath = $libFilesystem->getAbsolutePath($engineUpdateScript);
 		include($scriptAbsolutePath);
+		exit();
 	}
-
-	die('</div><a href="index.php?pid=updater_liste">Klicke hier</a>, um die Modulliste anzuzeigen.');
 }
 
 function refreshModuleHandler(){

@@ -2,7 +2,7 @@
 	"moduleName": "Modul-Manager",
 	"pages": [
 		{
-			"pid": "updater_liste",
+			"pid": "modules",
 			"file": "modulemanager.php",
 			"directory": "scripts",
 			"title": "Module",
@@ -17,7 +17,7 @@
 			"type": "menu_folder",
 			"elements": [
 				{
-					"pid": "updater_liste",
+					"pid": "modules",
 					"name": "Module",
 					"type": "menu_entry",
 					"position": 2

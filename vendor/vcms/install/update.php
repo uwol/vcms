@@ -20,6 +20,37 @@ if(!is_object($libGlobal))
 	exit();
 
 
+function getColumns($table){
+	global $libDb;
+
+	$stmt = $libDb->prepare('SHOW COLUMNS FROM ' .$table);
+	$stmt->execute();
+
+	$result = array();
+
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		$result[] = $row['Field'];
+	}
+
+	return $result;
+}
+
+function getIndexes($table){
+	global $libDb;
+
+	$stmt = $libDb->prepare('SHOW INDEX FROM ' .$table);
+	$stmt->execute();
+
+	$result = array();
+
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		$result[] = $row['Key_name'];
+	}
+
+	return $result;
+}
+
+
 /**
 * Tabelle base_veranstaltung aktualisieren
 */
@@ -119,34 +150,4 @@ if(!in_array('vopxxxx', $columnsBaseSemester)){
 }
 
 
-
-function getColumns($table){
-	global $libDb;
-
-	$stmt = $libDb->prepare('SHOW COLUMNS FROM ' .$table);
-	$stmt->execute();
-
-	$result = array();
-
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$result[] = $row['Field'];
-	}
-
-	return $result;
-}
-
-function getIndexes($table){
-	global $libDb;
-
-	$stmt = $libDb->prepare('SHOW INDEX FROM ' .$table);
-	$stmt->execute();
-
-	$result = array();
-
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$result[] = $row['Key_name'];
-	}
-
-	return $result;
-}
-?>
+die('</div><a href="index.php?pid=modules">Klicke hier</a>, um die Modulliste anzuzeigen.');
