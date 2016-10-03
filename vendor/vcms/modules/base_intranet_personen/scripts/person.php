@@ -43,9 +43,6 @@ if($libAuth->getId() == $id){
 }
 
 
-/*
-* select data from db
-*/
 $stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
@@ -516,7 +513,6 @@ function printPersonData($row){
 
 	if($row['gruppe'] != ''){
 		echo '<div>';
-		echo '<span>';
 
 		$stmt = $libDb->prepare('SELECT beschreibung FROM base_gruppe WHERE bezeichnung=:bezeichnung');
 		$stmt->bindValue(':bezeichnung', $row['gruppe']);
@@ -525,12 +521,12 @@ function printPersonData($row){
 		$stmt->fetch();
 
 		echo $beschreibung;
-		echo '</span>';
-		echo '</div>';
-	}
 
-	if($row['status'] != ''){
-		echo '<div>' .$row['status']. '</div>';
+		if($row['status'] != ''){
+			echo ', ' .$row['status'];
+		}
+
+		echo '</div>';
 	}
 
 	if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
@@ -755,11 +751,11 @@ function printAssociationDetails($row){
 	$vereineAnzahl = count($vereine);
 
 	if($vereineAnzahl > 0){
-		echo '<div>';
+		echo '<p>';
 		echo '<span class="badge">' .$vereineAnzahl. '</span>';
 		echo ' ';
 		echo 'Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $vereine);
-		echo '</div>';
+		echo '</p>';
 	}
 
 	/*
@@ -773,7 +769,7 @@ function printAssociationDetails($row){
 		$stmt->fetch();
 
 		if($chargierAnzahl > 0){
-			echo '<div>';
+			echo '<p>';
 			echo '<span class="label ' .getClassForChargierAnzahl($chargierAnzahl). '">' .$chargierAnzahl. '</span>';
 			echo ' ';
 			echo 'Chargierter: ';
@@ -801,7 +797,7 @@ function printAssociationDetails($row){
 			}
 
 			echo implode(', ', $chargierEvents);
-			echo '</div>';
+			echo '</p>';
 		}
 	}
 }

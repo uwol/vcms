@@ -53,7 +53,7 @@ function adjustThumbnailImgMarginTop(thumbnailImg){
 	var thumbnailOverflow = thumbnailImg.closest('.thumbnailOverflow');
 	var thumbnailOverflowHeight = thumbnailOverflow.height();
 	var thumbnailImgHeight = thumbnailImg.height();
-	
+
 	if(thumbnailImgHeight > 0){
 		var marginTop = (thumbnailOverflowHeight - thumbnailImgHeight) / 2;
 		thumbnailImg.css('margin-top', marginTop + 'px');
@@ -68,7 +68,7 @@ function adjustFacebookPagePluginsSrc(){
 		var width = iframe.width();
 		var src = iframe.attr('src');
 		var newSrc = src.replace(/width=[0-9]+/, 'width=' + width);
-		
+
 		iframe.attr('src', newSrc);
 	});
 }
@@ -77,8 +77,7 @@ function adjustFacebookPagePluginsSrc(){
 
 function configureNavigation(){
 	var navbarHeight = $(".navbar-fixed-top").height();
-	var gap = 15;
-	var paddingTop = navbarHeight + gap;
+	var paddingTop = navbarHeight;
 
     $('nav').affix({
         offset: {

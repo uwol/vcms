@@ -27,11 +27,11 @@ fieldset {
 }
 
 .navbar-internet-only + #content {
-	padding-top: 140px;
+	padding-top: 125px;
 }
 
 .navbar-internet-intranet + #content {
-	padding-top: 173px;
+	padding-top: 158px;
 }
 
 main, footer {
