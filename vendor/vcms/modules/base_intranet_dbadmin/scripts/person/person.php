@@ -284,7 +284,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printMitgliederDropDownBox('heirat_partner', 'Ehepartner', $mgarray['heirat_partner']);
 
 	$libForm->printTextInput('tod_datum', 'Todesdatum', $mgarray['tod_datum'], 'date');
-	$libForm->printTextInput('tod_ort', 'Todesort', $mgarray['tod_ort'], 'date');
+	$libForm->printTextInput('tod_ort', 'Todesort', $mgarray['tod_ort']);
 
 	$libForm->printStatusDropDownBox('status', 'Status', $mgarray['status']);
 
