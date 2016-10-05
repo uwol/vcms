@@ -20,21 +20,11 @@ if(!is_object($libGlobal))
 	exit();
 
 
-$headerVideoPath = $libModuleHandler->getModuleDirectory(). '/custom/header.mp4';
-$headerVideoAbsolutePath = $libFilesystem->getAbsolutePath($headerVideoPath);
-$headerVideoExists = is_file($headerVideoAbsolutePath);
-
-if($headerVideoExists){
-	echo '<video autoplay muted loop class="hero hidden-xs">';
-	echo '<source src="' .$headerVideoPath. '" type="video/mp4"/>';
-	echo '</video>';
-}
-
 echo '<header>';
 echo '<div class="header-content">';
 echo '<div class="header-content-inner">';
 echo '<h1 id="homeHeading">Willkommen</h1>';
-echo '<a class="btn btn-circle hidden-xs" href="#pastevents">';
+echo '<a class="btn btn-circle" href="#pastevents">';
 echo '<i class="fa fa-angle-double-down"></i>';
 echo '</a>';
 echo '</div>';

@@ -1,6 +1,6 @@
 {
 	"moduleName": "Home",
-	"version": 3.26,
+	"version": 3.27,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -45,7 +45,6 @@
 	],
 	"headerStrings": [
 		"<link rel='stylesheet' href='vendor/vcms/styles/navigation/navigation_transparent.css' />",
-		"<link rel='stylesheet' href='modules/mod_internet_home/styles/screen.css' />",
-		"<script src='modules/mod_internet_home/styles/screen.js'></script>"
+		"<link rel='stylesheet' href='modules/mod_internet_home/styles/screen.css' />"
 	]
 }

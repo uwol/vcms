@@ -8,17 +8,28 @@ section {
 }
 
 header {
-	position: relative;
-	width: 100%;
-	min-height: auto;
-	text-align: center;
+	min-height: 100%;
+	background-position: center;
+	background-image: url('../custom/header.jpg');
+	background-size: cover;
+	-moz-background-size: cover;
+	-webkit-background-size: cover;
+	-o-background-size: cover;
+	color: white;
 }
 
 header .header-content {
-	position: relative;
-	text-align: center;
-	padding: 100px 15px 0px;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	padding: 0 50px;
 	width: 100%;
+}
+
+header .header-content .header-content-inner {
+	text-align: center;
 }
 
 header .header-content .header-content-inner h1 {
@@ -54,26 +65,6 @@ header .header-content .header-content-inner .btn-circle .fa{
 }
 
 @media (min-width: 768px) {
-	header {
-		min-height: 100%;
-		background-position: center;
-		background-image: url('../custom/header.jpg');
-		background-size: cover;
-		-moz-background-size: cover;
-		-webkit-background-size: cover;
-		-o-background-size: cover;
-		color: white;
-	}
-
-	header .header-content {
-		position: absolute;
-		top: 50%;
-		-webkit-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-		transform: translateY(-50%);
-		padding: 0 50px;
-	}
-
 	header .header-content .header-content-inner {
 		max-width: 1000px;
 		margin-left: auto;
@@ -82,25 +73,6 @@ header .header-content .header-content-inner .btn-circle .fa{
 
 	header .header-content .header-content-inner h1 {
 		font-size: 3.5em;
-	}
-
-	video.hero {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		min-width: 100%;
-		min-height: 100%;
-		width: auto;
-		height: auto;
-		z-index: -100;
-		-ms-transform: translateX(-50%) translateY(-50%);
-		-moz-transform: translateX(-50%) translateY(-50%);
-		-webkit-transform: translateX(-50%) translateY(-50%);
-		transform: translateX(-50%) translateY(-50%);
-	}
-
-	section, footer {
-		background-color: inherit;
 	}
 }
 
