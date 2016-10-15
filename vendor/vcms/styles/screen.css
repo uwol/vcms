@@ -55,6 +55,18 @@ a .fa {
 	color: #333;
 }
 
+.image-tile {
+	margin-bottom: 2%;
+}
+
+.image-muted {
+	background-color: black;
+}
+
+.image-muted img {
+	opacity: 0.5;
+}
+
 /* image delete icon */
 
 .imgBox .deleteIconBox {
