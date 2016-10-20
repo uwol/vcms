@@ -108,11 +108,13 @@ $(document).load(function() {
 	adjustElementDimensions();
 });
 
-var resizeDebounce;
+$(document).ready(function() {
+	var resizeDebounce;
 
-$(window).resize(function() {
-	clearTimeout(resizeDebounce);
-	resizeDebounce = setTimeout(function(){
-		adjustElementDimensions();
-	}, 200);
+	$(window).on('orientationchange resize', function(event) {
+		clearTimeout(resizeDebounce);
+		resizeDebounce = setTimeout(function(){
+			adjustElementDimensions();
+		}, 20);
+	});
 });
