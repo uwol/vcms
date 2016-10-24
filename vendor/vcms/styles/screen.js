@@ -96,19 +96,15 @@ function adjustElementDimensions(){
 	configureNavigation();
 }
 
+// --------------------
+
 $(document).ready(function() {
 	animateLasteInsertId();
 	loadFacebookEventPlugins();
 	adjustThumbnailImgsOnLoad();
 
 	adjustElementDimensions();
-});
 
-$(document).load(function() {
-	adjustElementDimensions();
-});
-
-$(document).ready(function() {
 	var resizeDebounce;
 
 	$(window).on('orientationchange resize', function(event) {
@@ -117,4 +113,12 @@ $(document).ready(function() {
 			adjustElementDimensions();
 		}, 20);
 	});
+
+	$('.navbar').on('affixed-top.bs.affix', function(event) {
+		configureNavigation();
+	});
+});
+
+$(document).load(function() {
+	adjustElementDimensions();
 });
