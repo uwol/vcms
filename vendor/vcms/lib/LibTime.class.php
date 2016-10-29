@@ -461,7 +461,9 @@ class LibTime{
 	function getMonth($i){
 		$months = array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
 				'August', 'September', 'Oktober', 'November', 'Dezember');
-		return $months[$i-1];
+		$monthIndex = $i-1;
+		$result = isset($months[$monthIndex]) ? $months[$monthIndex] : '';
+		return $result;
 	}
 
 	function getSemestersFromDates($daten){
