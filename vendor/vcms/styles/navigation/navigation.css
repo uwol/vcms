@@ -99,6 +99,11 @@
 	text-transform: uppercase;
 }
 
+.navbar-default .navbar-internet .nav > li > a.personProfileLink {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 .navbar-default .navbar-intranet .nav {
 	font-size: 0.8em;
 }

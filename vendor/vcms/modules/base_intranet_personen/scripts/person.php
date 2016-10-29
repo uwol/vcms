@@ -445,7 +445,7 @@ SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname,
 function printPersonSignature($row, $ownprofile){
 	global $libPerson, $libForm;
 
-	echo '<div class="center-block personSignatureBox personSignatureBoxLarge">';
+	echo '<div class="center-block personSignatureBox personSignatureBoxLg">';
 	echo '<div class="imgBox">';
 
 	if($ownprofile){
@@ -456,7 +456,7 @@ function printPersonSignature($row, $ownprofile){
 		echo '</span>';
 	}
 
-	echo $libPerson->getImage($row['id'], true);
+	echo $libPerson->getImage($row['id'], 'lg');
 	echo '</div>';
 
 	echo $libPerson->getIntranetActivityBox($row['id']);

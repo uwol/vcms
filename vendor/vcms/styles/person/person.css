@@ -4,23 +4,13 @@
 	margin-bottom: 0.5em;
 }
 
-.personSignatureBoxLarge {
+.personSignatureBoxLg {
 	width: 150px;
 }
 
 .personSignatureBox .imgBox {
 	background-color: white;
 	border: 1px solid #333;
-}
-
-.personSignatureBox .imgBox .personImg {
-	width: 100px;
-	height: 133px;
-}
-
-.personSignatureBox .imgBox .personImgLarge {
-	width: 150px;
-	height: 200px;
 }
 
 .personSignatureBox .personActivityBox {
@@ -40,4 +30,19 @@
 
 .personSignatureBox .personActivityBox .personActivityBarInactive {
 	background-color: white;
+}
+
+.personImgXs {
+	width: 30px;
+	height: 40px;
+}
+
+.personImgMd {
+	width: 100px;
+	height: 133px;
+}
+
+.personImgLg {
+	width: 150px;
+	height: 200px;
 }

@@ -326,7 +326,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="col-sm-3">';
 
 	if($mgarray['id'] != ''){
-		echo '<div class="center-block personSignatureBox personSignatureBoxLarge">';
+		echo '<div class="center-block personSignatureBox personSignatureBoxLg">';
 		echo '<div class="imgBox">';
 
 		echo '<span class="deleteIconBox">';
@@ -335,7 +335,7 @@ if($libAuth->isLoggedin()){
 		echo '</a>';
 		echo '</span>';
 
-		echo $libPerson->getImage($mgarray['id'], true);
+		echo $libPerson->getImage($mgarray['id'], 'lg');
 		echo '</div>';
 		echo '</div>';
 

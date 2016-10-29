@@ -37,11 +37,11 @@ class LibMenuRenderer{
 		$navbarClass = $this->getNavbarClass();
 
 		echo '    <nav id="nav" class="navbar navbar-default navbar-fixed-top ' .$navbarClass. '">' . PHP_EOL;
-        echo '      <div class="container">' . PHP_EOL;
+    echo '      <div class="container">' . PHP_EOL;
 		echo '        <div id="logo"></div>' . PHP_EOL;
-        echo $this->printNavbarCollapsed();
-        echo $this->printNavbarInternet($menuInternet, $aktivesPid);
-        echo $this->printNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid);
+    echo $this->printNavbarCollapsed();
+    echo $this->printNavbarInternet($menuInternet, $aktivesPid);
+    echo $this->printNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid);
 		echo '      </div>' . PHP_EOL;
 		echo '    </nav>' . PHP_EOL;
 	}
@@ -51,9 +51,9 @@ class LibMenuRenderer{
 
 		echo '        <div class="navbar-header">' . PHP_EOL;
 		echo '          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . PHP_EOL;
-        echo $this->defaultIndent . '<span class="sr-only">Navigation</span>' . PHP_EOL;
-        echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
-        echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
+    echo $this->defaultIndent . '<span class="sr-only">Navigation</span>' . PHP_EOL;
+    echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
+    echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
 		echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
 		echo '          </button>' . PHP_EOL;
 
@@ -66,12 +66,19 @@ class LibMenuRenderer{
 	}
 
 	function printNavbarInternet($menuInternet, $aktivesPid){
+		global $libAuth, $libPerson;
+
 		$rootMenuFolderInternet = $menuInternet->getRootMenuFolder();
 
 		if($rootMenuFolderInternet->hasElements()){
 			echo '        <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
 			echo '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
 			echo $this->printNavbarLevel($rootMenuFolderInternet, 0, $aktivesPid);
+
+			if($libAuth->isLoggedin() && $libPerson->hasImageFile($libAuth->getId())){
+				echo '            <li>' .$libPerson->getImage($libAuth->getId(), 'xs'). '</li>' . PHP_EOL;
+			}
+
 			echo '          </ul>' . PHP_EOL;
 			echo '        </div>' . PHP_EOL;
 		}

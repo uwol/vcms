@@ -45,25 +45,25 @@ class LibPerson{
 		}
 
 		if($mode == 0){ //voller Name ohne Herr: Dr. Heinz van Husen LLM
-			$string .= $titel.' '.$vorname.' '.$praefix.' '.$name.$suffix;
+			$string .= $titel. ' ' .$vorname. ' ' .$praefix. ' ' .$name.$suffix;
 		} elseif($mode == 1){ //umgedreht: van Husen LLM, Dr. Heinz
-			$string .= $praefix.' '.$name.$suffix.', '.$titel.' '.$vorname;
+			$string .= $praefix. ' ' .$name.$suffix. ', ' .$titel. ' ' .$vorname;
 		} elseif($mode == 2){ //volle Anrede: Herr Dr. Professor Heinz van Husen LLM
-			$string .= $anrede.' '.$titel.' '.$rang.' '.$vorname.' '.$praefix.' '.$name.$suffix;
+			$string .= $anrede. ' ' .$titel. ' ' .$rang. ' ' .$vorname. ' ' .$praefix. ' ' .$name.$suffix;
 		} elseif($mode == 3){ //Vorname: Heinz
 			$string .= $vorname;
 		} elseif($mode == 4){ //titulierter Name, aber nur mit dem ersten Vornamen
 			$vornamen = explode(' ',$vorname);
 			$erstervorname = $vornamen[0];
-			$string .= $titel.' '.$erstervorname.' '.$praefix.' '.$name.$suffix;
+			$string .= $titel. ' ' .$erstervorname. ' ' .$praefix. ' ' .$name.$suffix;
 		} elseif($mode == 5){ //Name ohne Herr und Titel: Heinz van Husen LLM
-			$string .= $vorname.' '.$praefix.' '.$name.$suffix;
+			$string .= $vorname. ' ' .$praefix. ' ' .$name.$suffix;
 		} elseif($mode == 6){ //volle Anrede ohne Herr: Dr. Professor Heinz van Husen LLM
-			$string .= $titel.' '.$rang.' '.$vorname.' '.$praefix.' '.$name.$suffix;
+			$string .= $titel. ' ' .$rang. ' ' .$vorname. ' ' .$praefix. ' ' .$name.$suffix;
 		} elseif($mode == 7){ //umgedreht ohne Titel: van Husen LLM, Heinz
-			$string .= $praefix.' '.$name.$suffix.', '.$vorname;
+			$string .= $praefix. ' ' .$name.$suffix. ', ' .$vorname;
 		} elseif($mode == 8){ //abgekürzt: M. Meyer
-			$string .= substr($vorname, 0, 1).'. '.$name;
+			$string .= substr($vorname, 0, 1). '. ' .$name;
 		}
 
 		$string = str_replace('  ', ' ', str_replace('  ', ' ', trim($string)));
@@ -148,16 +148,26 @@ class LibPerson{
 		return $retstr;
 	}
 
-	function getImage($id, $large = false){
-		$retstr = '<a href="index.php?pid=intranet_person&amp;id=' .$id. '">';
+	function getImage($id, $size = 'md'){
+		$retstr = '<a href="index.php?pid=intranet_person&amp;id=' .$id. '" class="personProfileLink">';
 
-		$classes = 'img-responsive personImg';
+		$classes = 'img-responsive';
 
-		if($large){
-			$classes .= ' personImgLarge ';
+		switch($size){
+			case 'lg':
+				$sizeClass = 'personImgLg';
+				break;
+			case 'xs':
+				$sizeClass = 'personImgXs';
+				break;
+			default:
+				$sizeClass = 'personImgMd';
+				break;
 		}
 
-		if(is_numeric($id) && is_file($this->getImageFilePath($id))){
+		$classes .= ' ' .$sizeClass;
+
+		if($this->hasImageFile($id)){
 			$retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="' .$classes. '" alt="" />';
 		} else {
 			$retstr .= '<div class="' .$classes. '"></div>';
@@ -166,6 +176,10 @@ class LibPerson{
 		$retstr .= '</a>';
 
 		return $retstr;
+	}
+
+	function hasImageFile($id){
+		return is_numeric($id) && is_file($this->getImageFilePath($id));
 	}
 
 	function getImageFilePath($id){
