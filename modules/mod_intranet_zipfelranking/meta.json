@@ -1,6 +1,6 @@
 {
 	"moduleName": "Zipfelranking",
-	"version": 2.19,
+	"version": 2.20,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -15,10 +15,16 @@
 	],
 	"menuElementsIntranet": [
 		{
-			"pid": "intranet_zipfel",
-			"name": "Zipfel",
-			"type": "menu_entry",
-			"position": 10600
+			"name": "Personen",
+			"type": "menu_folder",
+			"elements": [
+				{
+					"pid": "intranet_zipfel",
+					"name": "Zipfel",
+					"type": "menu_entry",
+					"position": 40000
+				}
+			]
 		}
 	]
 }
