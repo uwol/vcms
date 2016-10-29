@@ -51,7 +51,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	echo '</td>';
-	echo '<td>' .$libPerson->getMitgliedNameString($row['mitglied'], $mode = 4). '</td>';
+	echo '<td>' .$libPerson->getNameString($row['mitglied'], $mode = 4). '</td>';
 	echo '<td>' .$row['ipadresse']. '</td>';
 	echo '</tr>';
 }

@@ -248,10 +248,10 @@ if(isset($_GET['id'])){
 
 			echo '<div class="row">';
 			echo '<div class="col-xs-6">';
-			echo $libPerson->getMitgliedSignature($row['mitglied'], '');
+			echo $libPerson->getSignature($row['mitglied'], '');
 			echo '</div>';
 			echo '<div class="col-xs-6">';
-			echo $libPerson->getMitgliedNameString($row['mitglied'], 0);
+			echo $libPerson->getNameString($row['mitglied'], 0);
 
 			if($row['ehrenmitglied'] == 1){
 				echo '<p>Ehrenmitglied</p>';

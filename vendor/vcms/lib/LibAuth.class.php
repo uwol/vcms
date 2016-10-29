@@ -196,7 +196,7 @@ class LibAuth{
 			$stmt->bindValue(':ipadresse', $_SERVER['REMOTE_ADDR']);
 			$stmt->execute();
 
-			$libPerson->setMitgliedIntranetActivity($row['id'], 1, 1);
+			$libPerson->setIntranetActivity($row['id'], 1, 1);
 
 			return true;
 		}

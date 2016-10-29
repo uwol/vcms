@@ -38,7 +38,7 @@ if(isset($_POST['kategorie']) && isset($_POST['betroffenesmitglied']) && isset($
 
 	$lastInsertId = $libDb->lastInsertId();
 
-    $libPerson->setMitgliedIntranetActivity($libAuth->getId(), 2, 0);
+    $libPerson->setIntranetActivity($libAuth->getId(), 2, 0);
 
 	$libGlobal->notificationTexts[] = 'Der Beitrag wurde gespeichert.';
 }
@@ -129,7 +129,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
 		echo '<div class="media-left hidden-xs">';
-		echo $libPerson->getMitgliedSignature($row['betroffenesmitglied']);
+		echo $libPerson->getSignature($row['betroffenesmitglied']);
 		echo '</div>';
 	}
 
@@ -139,7 +139,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if($row['autor'] != '' && $row['autor'] > 0){
 		echo '<div class="media-right hidden-xs">';
-		echo $libPerson->getMitgliedSignature($row['autor']);
+		echo $libPerson->getSignature($row['autor']);
 		echo '</div>';
 	}
 

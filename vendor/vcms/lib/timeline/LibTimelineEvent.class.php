@@ -125,7 +125,7 @@ class LibTimelineEvent {
 
 		if($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature){
 			$retstr .= '<div class="media-left hidden-xs">';
-			$retstr .= $libPerson->getMitgliedSignature($this->referencedPersonId);
+			$retstr .= $libPerson->getSignature($this->referencedPersonId);
 			$retstr .= '</div>';
 		}
 
@@ -137,7 +137,7 @@ class LibTimelineEvent {
 
 		if($this->authorId != '' && !$this->hideAuthorSignature){
 			$retstr .= '<div class="media-right hidden-xs">';
-			$retstr .= $libPerson->getMitgliedSignature($this->authorId);
+			$retstr .= $libPerson->getSignature($this->authorId);
 			$retstr .= '</div>';
 		}
 

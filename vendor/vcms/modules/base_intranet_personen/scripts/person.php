@@ -183,7 +183,7 @@ echo '</script>';
 
 
 echo '<h1>';
-echo $libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
+echo $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 echo ' ';
 echo $libPerson->getChargenString($id);
 echo '</h1>';
@@ -456,10 +456,10 @@ function printPersonSignature($row, $ownprofile){
 		echo '</span>';
 	}
 
-	echo $libPerson->getMitgliedImage($row['id'], true);
+	echo $libPerson->getImage($row['id'], true);
 	echo '</div>';
 
-	echo $libPerson->getMitgliedIntranetActivityBox($row['id']);
+	echo $libPerson->getIntranetActivityBox($row['id']);
 	echo '</div>';
 
 	if($ownprofile){
@@ -531,7 +531,7 @@ function printPersonData($row){
 
 	if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
 		echo '<div>';
-		echo 'Ehepartner: <a href="index.php?pid=intranet_person&amp;id=' .$row['heirat_partner']. '" />' .$libPerson->getMitgliedNameString($row['heirat_partner'], 5). '</a>';
+		echo 'Ehepartner: <a href="index.php?pid=intranet_person&amp;id=' .$row['heirat_partner']. '" />' .$libPerson->getNameString($row['heirat_partner'], 5). '</a>';
 		echo '</div>';
 	}
 

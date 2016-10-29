@@ -23,7 +23,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 if($libAuth->isLoggedin() && isset($_GET['id']) && is_numeric($_GET['id']) &&
 		preg_match('/^[0-9]+$/', $_GET['id'])){
 
-	$path = $libPerson->getMitgliedImageFilePath($_GET['id']);
+	$path = $libPerson->getImageFilePath($_GET['id']);
 
 	if(is_file($path)){
 		// send headers

@@ -335,7 +335,7 @@ if($libAuth->isLoggedin()){
 		echo '</a>';
 		echo '</span>';
 
-		echo $libPerson->getMitgliedImage($mgarray['id'], true);
+		echo $libPerson->getImage($mgarray['id'], true);
 		echo '</div>';
 		echo '</div>';
 

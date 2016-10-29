@@ -38,7 +38,7 @@ $stmt->bindValue(':zeitraumlimit', $zeitraumLimit, PDO::PARAM_INT);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$title = 'Reservierung durch ' .$libPerson->getMitgliedNameString($row['person'], 0);
+	$title = 'Reservierung durch ' .$libPerson->getNameString($row['person'], 0);
 	$url = 'index.php?pid=intranet_reservations#' .$row['id'];
 
 	$timelineEvent = new LibReservationTimelineEvent();

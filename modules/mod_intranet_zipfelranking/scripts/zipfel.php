@@ -30,11 +30,11 @@ $stmt->execute();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="row">';
 	echo '<div class="col-xs-6 col-sm-2">';
-	echo $libPerson->getMitgliedSignature($row['id']);
+	echo $libPerson->getSignature($row['id']);
 	echo '</div>';
 
 	echo '<div class="col-xs-6 col-sm-2">';
-	echo '<b>' .$libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 5). '</b>';
+	echo '<b>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 5). '</b>';
 	echo '<p>' .$row['anzahlzipfel']. ' Zipfel</p>';
 	echo '</div>';
 

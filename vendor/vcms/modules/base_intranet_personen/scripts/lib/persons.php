@@ -30,10 +30,10 @@ function printPersons($stmt){
 
 		echo '<div class="row">';
 		echo '<div class="col-xs-6">';
-		echo $libPerson->getMitgliedSignature($row['id']);
+		echo $libPerson->getSignature($row['id']);
 		echo '</div>';
 		echo '<div class="col-xs-6">';
-		echo '<b>' .$libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
+		echo '<b>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
 		echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getVereineString($row['id']);
 
 		if($row['status'] != ''){

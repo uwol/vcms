@@ -22,7 +22,7 @@ use PDO;
 
 class LibPerson{
 
-	function getMitgliedNameString($id, $mode){
+	function getNameString($id, $mode){
 		global $libDb;
 
 		$stmt = $libDb->prepare("SELECT anrede, titel, rang, vorname, praefix, name, suffix FROM base_person WHERE id=:id");
@@ -30,12 +30,12 @@ class LibPerson{
 		$stmt->execute();
 		$mitgliedarray = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		$mitgliedstring = $this->formatMitgliedNameString($mitgliedarray['anrede'], $mitgliedarray['titel'], $mitgliedarray['rang'], $mitgliedarray['vorname'], $mitgliedarray['praefix'], $mitgliedarray['name'], $mitgliedarray['suffix'], $mode);
+		$mitgliedstring = $this->formatNameString($mitgliedarray['anrede'], $mitgliedarray['titel'], $mitgliedarray['rang'], $mitgliedarray['vorname'], $mitgliedarray['praefix'], $mitgliedarray['name'], $mitgliedarray['suffix'], $mode);
 
 		return $mitgliedstring;
 	}
 
-	function formatMitgliedNameString($anrede, $titel, $rang, $vorname, $praefix, $name, $suffix, $mode = 0){
+	function formatNameString($anrede, $titel, $rang, $vorname, $praefix, $name, $suffix, $mode = 0){
 		$string = '';
 
 		if ($suffix != ''){
@@ -71,7 +71,7 @@ class LibPerson{
 		return $string;
 	}
 
-	function getMitgliedIntranetActivity($id){
+	function getIntranetActivity($id){
 		global $libDb;
 
 		/*
@@ -102,7 +102,7 @@ class LibPerson{
 		return $activity;
 	}
 
-	function getMitgliedIntranetActivityBox($id){
+	function getIntranetActivityBox($id){
 		global $libDb;
 
 		// determine group
@@ -115,7 +115,7 @@ class LibPerson{
 		$retstr = '<div class="personActivityBox">';
 
 		if($gruppe != 'T' && $gruppe != 'V'){
-			$activityPercent = $this->getMitgliedIntranetActivity($id) * 100;
+			$activityPercent = $this->getIntranetActivity($id) * 100;
 			$balkenBreiteActivity = ceil($activityPercent);
 			$balkenBreiteInactivity = 100 - $balkenBreiteActivity;
 
@@ -136,19 +136,19 @@ class LibPerson{
 		return $retstr;
 	}
 
-	function getMitgliedSignature($id){
+	function getSignature($id){
 		$retstr = '<div class="personSignatureBox center-block media-object">';
 		$retstr .= '<div class="imgBox">';
-		$retstr .= $this->getMitgliedImage($id);
+		$retstr .= $this->getImage($id);
 		$retstr .= '</div>';
 
-		$retstr .= $this->getMitgliedIntranetActivityBox($id);
+		$retstr .= $this->getIntranetActivityBox($id);
 		$retstr .= '</div>';
 
 		return $retstr;
 	}
 
-	function getMitgliedImage($id, $large = false){
+	function getImage($id, $large = false){
 		$retstr = '<a href="index.php?pid=intranet_person&amp;id=' .$id. '">';
 
 		$classes = 'img-responsive personImg';
@@ -157,7 +157,7 @@ class LibPerson{
 			$classes .= ' personImgLarge ';
 		}
 
-		if(is_numeric($id) && is_file($this->getMitgliedImageFilePath($id))){
+		if(is_numeric($id) && is_file($this->getImageFilePath($id))){
 			$retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="' .$classes. '" alt="" />';
 		} else {
 			$retstr .= '<div class="' .$classes. '"></div>';
@@ -168,13 +168,13 @@ class LibPerson{
 		return $retstr;
 	}
 
-	function getMitgliedImageFilePath($id){
+	function getImageFilePath($id){
 		global $libFilesystem;
 
 		return $libFilesystem->getAbsolutePath('custom/intranet/mitgliederfotos/' .$id. '.jpg');
 	}
 
-	function setMitgliedIntranetActivity($id, $punkte, $enablelimit){
+	function setIntranetActivity($id, $punkte, $enablelimit){
 		global $libDb;
 
 		if($enablelimit){

@@ -136,31 +136,31 @@ echo '<p>';
 $vorstand = $libAssociation->getAnsprechbarerAktivenVorstandIds();
 
 if($libGenericStorage->loadValueInCurrentModule('showSenior') && $vorstand['senior']){
-	echo 'Senior: ' .$libPerson->getMitgliedNameString($vorstand['senior'], 0). '<br />';
+	echo 'Senior: ' .$libPerson->getNameString($vorstand['senior'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showJubelsenior') && $vorstand['jubelsenior']){
-	echo 'Jubelsenior: ' .$libPerson->getMitgliedNameString($vorstand['jubelsenior'], 0). '<br />';
+	echo 'Jubelsenior: ' .$libPerson->getNameString($vorstand['jubelsenior'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showConsenior') && $vorstand['consenior']){
-	echo 'Consenior: ' .$libPerson->getMitgliedNameString($vorstand['consenior'], 0). '<br />';
+	echo 'Consenior: ' .$libPerson->getNameString($vorstand['consenior'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor') && $vorstand['fuchsmajor']){
-	echo 'Fuchsmajor: ' .$libPerson->getMitgliedNameString($vorstand['fuchsmajor'], 0). '<br />';
+	echo 'Fuchsmajor: ' .$libPerson->getNameString($vorstand['fuchsmajor'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor2') && $vorstand['fuchsmajor2']){
-	echo 'Fuchsmajor 2: ' .$libPerson->getMitgliedNameString($vorstand['fuchsmajor2'], 0). '<br />';
+	echo 'Fuchsmajor 2: ' .$libPerson->getNameString($vorstand['fuchsmajor2'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showScriptor') && $vorstand['scriptor']){
-	echo 'Scriptor: ' .$libPerson->getMitgliedNameString($vorstand['scriptor'], 0). '<br />';
+	echo 'Scriptor: ' .$libPerson->getNameString($vorstand['scriptor'], 0). '<br />';
 }
 
 if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['quaestor']){
-	echo 'Quaestor: ' .$libPerson->getMitgliedNameString($vorstand['quaestor'], 0). '<br />';
+	echo 'Quaestor: ' .$libPerson->getNameString($vorstand['quaestor'], 0). '<br />';
 }
 
 echo '</p>';

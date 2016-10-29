@@ -286,7 +286,7 @@ if($libAuth->isLoggedin()){
 				$valideInternetWarte = $libAssociation->getValideInternetWarte();
 
 				foreach($valideInternetWarte as $key => $value){
-					echo $libPerson->getMitgliedNameString($key, 5). ', ';
+					echo $libPerson->getNameString($key, 5). ', ';
 				}
 
 				echo '<br />';

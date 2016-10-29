@@ -57,40 +57,40 @@ $description .= '<div class="col-sm-1"></div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['senior']){
-	$description .= $libPerson->getMitgliedSignature($row['senior'], '');
-	$description .= '<p>Senior: ' .$libPerson->getMitgliedNameString($row['senior'], 0). '</p>';
+	$description .= $libPerson->getSignature($row['senior'], '');
+	$description .= '<p>Senior: ' .$libPerson->getNameString($row['senior'], 0). '</p>';
 }
 
 $description .= '</div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['consenior']){
-	$description .= $libPerson->getMitgliedSignature($row['consenior'], '');
-	$description .= '<p>Consenior: ' .$libPerson->getMitgliedNameString($row['consenior'], 0). '</p>';
+	$description .= $libPerson->getSignature($row['consenior'], '');
+	$description .= '<p>Consenior: ' .$libPerson->getNameString($row['consenior'], 0). '</p>';
 }
 
 $description .= '</div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['fuchsmajor']){
-	$description .= $libPerson->getMitgliedSignature($row['fuchsmajor'], '');
-	$description .= '<p>Fuchsmajor: ' .$libPerson->getMitgliedNameString($row['fuchsmajor'], 0). '</p>';
+	$description .= $libPerson->getSignature($row['fuchsmajor'], '');
+	$description .= '<p>Fuchsmajor: ' .$libPerson->getNameString($row['fuchsmajor'], 0). '</p>';
 }
 
 $description .= '</div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['scriptor']){
-	$description .= $libPerson->getMitgliedSignature($row['scriptor'], '');
-	$description .= '<p>Scriptor: ' .$libPerson->getMitgliedNameString($row['scriptor'], 0). '</p>';
+	$description .= $libPerson->getSignature($row['scriptor'], '');
+	$description .= '<p>Scriptor: ' .$libPerson->getNameString($row['scriptor'], 0). '</p>';
 }
 
 $description .= '</div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['quaestor']){
-	$description .= $libPerson->getMitgliedSignature($row['quaestor'], '');
-	$description .= '<p>Quaestor: ' .$libPerson->getMitgliedNameString($row['quaestor'], 0). '</p>';
+	$description .= $libPerson->getSignature($row['quaestor'], '');
+	$description .= '<p>Quaestor: ' .$libPerson->getNameString($row['quaestor'], 0). '</p>';
 }
 
 $description .= '</div>';
@@ -229,7 +229,7 @@ function getVereinsGruppe($stmt, $title){
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$namensStrings[] = '<a href="index.php?pid=intranet_person&amp;id=' .$row['id']. '">' .$libPerson->getMitgliedNameString($row['id'], 0). '</a>';
+		$namensStrings[] = '<a href="index.php?pid=intranet_person&amp;id=' .$row['id']. '">' .$libPerson->getNameString($row['id'], 0). '</a>';
 	}
 
 	$retstr = '';
@@ -251,7 +251,7 @@ function getAmt($amtsname, $id){
 
 	if($id != ''){
 		$retstr .= '<div>';
-		$retstr .= $amtsname. ': <a href="index.php?pid=intranet_person&amp;id=' .$id. '">' .$libPerson->getMitgliedNameString($id, 0). '</a>';
+		$retstr .= $amtsname. ': <a href="index.php?pid=intranet_person&amp;id=' .$id. '">' .$libPerson->getNameString($id, 0). '</a>';
 		$retstr .= '</div>';
 	}
 

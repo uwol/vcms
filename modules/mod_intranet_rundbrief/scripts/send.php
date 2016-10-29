@@ -170,7 +170,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$empfaengerArray[$i][0] = $row['email'];
-		$empfaengerArray[$i][1] = $libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
+		$empfaengerArray[$i][1] = $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 		$i++;
 	}
 
@@ -186,7 +186,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($row['email'] != ''){
 				$empfaengerArray[$i][0] = $row['email'];
-				$empfaengerArray[$i][1] = $libPerson->formatMitgliedNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
+				$empfaengerArray[$i][1] = $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 				$i++;
 			}
 		}
@@ -225,7 +225,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		echo '</p>';
 
 		sendMail(
-			$libPerson->formatMitgliedNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4),
+			$libPerson->formatNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4),
 			$subject, $email, $_POST['nachricht'], $subEmpfaengerArray, $attachementFile, $attachementName);
 	}
 }

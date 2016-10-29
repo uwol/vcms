@@ -252,7 +252,7 @@ function printAnmeldungen($row){
 				echo ', ';
 			}
 
-			echo '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getMitgliedNameString($eventrow['person'], 0). '</a></span>';
+			echo '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getNameString($eventrow['person'], 0). '</a></span>';
 			$anmeldungWritten = true;
 		}
 
