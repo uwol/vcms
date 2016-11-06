@@ -36,12 +36,11 @@ Modulkatalog
 * Modul _Semesterprogramm_: Kalender mit Anmeldesystem; Mitglieder können Fotos hochladen, verwaltet durch einen Fotowart; Fotos können öffentlich oder intern sein; Export des Kalenders als iCalendar-Datei.
 * Modul _Kontakt_: Kontaktformular.
 * Modul _Verein_: Beschreibung des Vereins.
-* Modul _Dachverband_: Beschreibung des Dachverbands.
 
 ### Intranet-Module für den internen Bereich
 
 * Modul _Portal_: Zeitleiste mit den Veranstaltungen, Nachrichten, Fotos und Ereignissen des Semesters.
-* Modul _Mitglied_: Mitglieder können ihre Daten selbstständig pflegen. Darstellung der Altersstruktur. Visualisierung des Leibverhältnis-Stammbaums.
+* Modul _Person_: Mitglieder können ihre Daten selbstständig pflegen. Darstellung der Altersstruktur. Visualisierung des Leibverhältnis-Stammbaums.
 * Modul _Neues_: Mitglieder können Nachrichten im Intranet veröffentlichen.
 * Modul _Rundbrief_: Per E-Mail-Verteiler lassen sich sämtliche Mitglieder erreichen. Dabei könnnen E-Mails an Gruppen wie Aktive, AHAH, Regionalzirkel etc. adressiert werden.
 * Modul _Reservierungen_: Reservierungen von Kneipe, Bootshaus etc.
@@ -59,3 +58,13 @@ Die Installationsanleitung ist in der Datei INSTALL.md gespeichert. Die technisc
 * PHP ab Version 5.5
 * MySQL ab Version 4.1
 * ImageMagick oder GDlib für Fotogalerien
+
+
+Lizenz
+------
+
+Lizenziert unter der GNU General Public License (GPL) Version 3. Details in LICENSE.
+
+### Und zum Schluss...
+
+Pull Requests auf GitHub und Anregungen bzw. Feedback per E-Mail sind willkommen!
