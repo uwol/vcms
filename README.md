@@ -32,22 +32,22 @@ Modulkatalog
 
 ### Internet-Module für den öffentlichen Bereich
 
-* Modul _Home_: Startseite.
-* Modul _Semesterprogramm_: Kalender mit Anmeldesystem; Mitglieder können Fotos hochladen, verwaltet durch einen Fotowart; Fotos können öffentlich oder intern sein; Export des Kalenders als iCalendar-Datei.
-* Modul _Kontakt_: Kontaktformular.
+* Modul _Home_: Startseite mit Ankündigungen, letzten Fotos und nächsten Veranstaltungen.
+* Modul _Semesterprogramm_: Kalender mit Anmeldesystem, Fotogalerien und iCalendar-Export. Mitglieder können Fotos hochladen, die durch Fotowart öffentlich oder intern freigeschaltet werden.
+* Modul _Kontakt_: Impressum und Kontaktformular.
 * Modul _Verein_: Beschreibung des Vereins.
 
 ### Intranet-Module für den internen Bereich
 
-* Modul _Portal_: Zeitleiste mit den Veranstaltungen, Nachrichten, Fotos und Ereignissen des Semesters.
-* Modul _Person_: Mitglieder können ihre Daten selbstständig pflegen. Darstellung der Altersstruktur. Visualisierung des Leibverhältnis-Stammbaums.
+* Modul _Portal_: Zeitleiste mit Veranstaltungen, Nachrichten, Fotos und Ereignissen des Semesters.
+* Modul _Person_: Mitglieder können ihre Daten selbstständig pflegen. Darstellung der Altersstruktur und des Leibverhältnis-Stammbaums.
 * Modul _Neues_: Mitglieder können Nachrichten im Intranet veröffentlichen.
-* Modul _Rundbrief_: Per E-Mail-Verteiler lassen sich sämtliche Mitglieder erreichen. Dabei könnnen E-Mails an Gruppen wie Aktive, AHAH, Regionalzirkel etc. adressiert werden.
-* Modul _Reservierungen_: Reservierungen von Kneipe, Bootshaus etc.
+* Modul _Rundbrief_: E-Mail-Verteiler mit Filtermöglichkeit anhand von Gruppen (Aktive, AHAH etc.) und Regionalzirkeln.
 * Modul _Chargierkalender_: Organisation der Chargierpräsenz und Teilnahmebestätigung durch Mitglieder.
+* Modul _Reservierungen_: Reservierung von Kneipe, Bootshaus etc.
 * Modul _Downloads_: Bereitstellung von Dateien durch Vorstand und Warte.
-* Modul _Daten_: Stammdaten zu Personen, Vereinen, Veranstaltungen etc.
-* Modul _Export_: Adressexport (runde Geburtstage, Jubiläen).
+* Modul _Daten_: Stammdaten zu Personen, Veranstaltungen und Vereinen.
+* Modul _Export_: Adress-Export für Semesteranschreiben, runde Geburtstage und Jubiläen.
 
 
 Installation
