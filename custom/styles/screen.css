@@ -26,5 +26,5 @@ a:visited {
 }
 
 .calendar .today {
-	border: thin solid #961419;
+	border-color: #961419;
 }
