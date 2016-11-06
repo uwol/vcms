@@ -175,7 +175,7 @@ class Folder extends FolderElement{
 
 		$fileArray = array();
 
-		foreach ($files as $file){
+		foreach($files as $file){
 			$fileArray[] = $file;
 		}
 

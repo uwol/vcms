@@ -62,7 +62,7 @@ $veranstaltungsFotosDir = 'custom/veranstaltungsfotos';
 $files = array_diff(scandir($veranstaltungsFotosDir), array('.', '..'));
 $folders = array();
 
-foreach ($files as $file){
+foreach($files as $file){
 	if(is_dir($veranstaltungsFotosDir. '/' .$file)){
 		$folders[] = $file;
 	}

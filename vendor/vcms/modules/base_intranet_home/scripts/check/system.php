@@ -117,7 +117,7 @@ function searchNotReadAbleFiles($dir){
 	$files = array_diff(scandir($dir), array('.', '..'));
 	$folders = array();
 
-	foreach ($files as $file){
+	foreach($files as $file){
 		if(is_dir($dir. '/' .$file)){
 			$folders[] = $file;
 
