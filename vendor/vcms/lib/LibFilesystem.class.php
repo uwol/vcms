@@ -30,22 +30,25 @@ class LibFilesystem{
 		return $this->baseDir. '/' .$relativePath;
 	}
 
-	function deleteDirectory($relativeDirectoryPath){
-		$absoluteDirectoryPath = $this->getAbsolutePath($relativeDirectoryPath);
+	function deleteDirectory($relativePath){
+		$absolutePath = $this->getAbsolutePath($relativePath);
 
-		if(is_dir($absoluteDirectoryPath)){
-			$files = array_diff(scandir($absoluteDirectoryPath), array('.', '..'));
+		if(is_dir($absolutePath)){
+			$files = array_diff(scandir($absolutePath), array('.', '..'));
 
-			foreach ($files as $file){
-				if(is_dir($absoluteDirectoryPath. '/' .$file)){
-					$this->deleteDirectory($relativeDirectoryPath. '/' .$file);
-				} elseif(is_file($absoluteDirectoryPath. '/' .$file)){
-					unlink($absoluteDirectoryPath. '/' .$file);
+			foreach($files as $file){
+				$relativeFilePath = $relativePath. '/' .$file;
+				$absoluteFilePath = $absolutePath. '/' .$file;
+
+				if(is_dir($absoluteFilePath)){
+					$this->deleteDirectory($relativeFilePath);
+				} elseif(is_file($absoluteFilePath)){
+					unlink($absoluteFilePath);
 				}
 			}
 
-			if(is_dir($absoluteDirectoryPath)){
-				rmdir($absoluteDirectoryPath);
+			if(is_dir($absolutePath)){
+				rmdir($absolutePath);
 			}
 		}
 	}
@@ -60,11 +63,42 @@ class LibFilesystem{
 
 		$files = array_diff(scandir($absoluteSourcePath), array('.', '..'));
 
-		foreach ($files as $file){
-			if(is_dir($absoluteSourcePath. '/' .$file)){
-				$this->copyDirectory($relativeSourcePath. '/' .$file, $relativeDestPath. '/' .$file);
+		foreach($files as $file){
+			$relativeFileSourcePath = $relativeSourcePath. '/' .$file;
+			$absoluteFileSourcePath = $absoluteSourcePath. '/' .$file;
+
+			$relativeFileDestPath = $relativeDestPath. '/' .$file;
+			$absoluteFileDestPath = $absoluteDestPath. '/' .$file;
+
+			if(is_dir($absoluteFileSourcePath)){
+				$this->copyDirectory($relativeFileSourcePath, $relativeFileDestPath);
 			} else {
-				copy($absoluteSourcePath. '/' .$file, $absoluteDestPath. '/' .$file);
+				copy($absoluteFileSourcePath, $absoluteFileDestPath);
+			}
+		}
+	}
+
+	function mergeDirectory($relativeSourcePath, $relativeDestPath){
+		$absoluteSourcePath = $this->getAbsolutePath($relativeSourcePath);
+		$absoluteDestPath = $this->getAbsolutePath($relativeDestPath);
+
+		if(!is_dir($absoluteDestPath)){
+			mkdir($absoluteDestPath);
+		}
+
+		$files = array_diff(scandir($absoluteSourcePath), array('.', '..'));
+
+		foreach($files as $file){
+			$relativeFileSourcePath = $relativeSourcePath. '/' .$file;
+			$absoluteFileSourcePath = $absoluteSourcePath. '/' .$file;
+
+			$relativeFileDestPath = $relativeDestPath. '/' .$file;
+			$absoluteFileDestPath = $absoluteDestPath. '/' .$file;
+
+			if(is_dir($absoluteFileSourcePath)){
+				$this->mergeDirectory($relativeFileSourcePath, $relativeFileDestPath);
+			} elseif(!file_exists($absoluteFileDestPath)) {
+				copy($absoluteFileSourcePath, $absoluteFileDestPath);
 			}
 		}
 	}

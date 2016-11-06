@@ -282,28 +282,30 @@ function installModule($module){
 			} else {
 				$filesToDelete = array_diff(scandir($moduleAbsoluteDirectoryPath), array('.', '..', 'custom'));
 
-				foreach ($filesToDelete as $file){
+				foreach($filesToDelete as $file){
 					$fileRelativePath = $moduleRelativeDirectoryPath. '/' .$file;
 					$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileRelativePath);
 
 					if(is_dir($fileAbsolutePath)){
-						echo 'Lösche ' .$fileRelativePath. '<br />';
+						echo 'Lösche ' .$fileRelativePath. '.<br />';
 						$libFilesystem->deleteDirectory($fileRelativePath);
 					} elseif(is_file($fileAbsolutePath)){
-						echo 'Lösche ' .$fileRelativePath. '<br />';
+						echo 'Lösche ' .$fileRelativePath. '.<br />';
 						unlink($fileAbsolutePath);
 					}
 				}
 
-				echo '<p>Kopiere aktualisiertes Modul in den Modulordner ' .$moduleRelativeDirectoryPath. '</p>';
+				echo '<p>Kopiere aktualisiertes Modul in den Modulordner ' .$moduleRelativeDirectoryPath. '.</p>';
 
-				$filesToCopy = array_diff(scandir($tempModuleAbsoluteDirectoryPath), array('.', '..', 'custom'));
+				$filesToCopy = array_diff(scandir($tempModuleAbsoluteDirectoryPath), array('.', '..'));
 
-				foreach ($filesToCopy as $file){
+				foreach($filesToCopy as $file){
 					$fileRelativePath = $tempModuleRelativeDirectoryPath. '/' .$file;
 					$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileRelativePath);
 
-					if(is_dir($fileAbsolutePath)){
+					if($file == 'custom'){
+						$libFilesystem->mergeDirectory($fileRelativePath, $moduleRelativeDirectoryPath. '/' .$file);
+					} elseif(is_dir($fileAbsolutePath)){
 						$libFilesystem->copyDirectory($fileRelativePath, $moduleRelativeDirectoryPath. '/' .$file);
 					} elseif(is_file($fileAbsolutePath)){
 						copy($fileRelativePath, $moduleRelativeDirectoryPath. '/' .$file);
@@ -332,10 +334,10 @@ function installModule($module){
 	}
 
 	//delete temporary module folder
-	echo '<p>Lösche das temporäre Modulpaket ' .$tarRelativeFilePath. '.</p>';
+	echo '<p>Lösche temporäres Modulpaket ' .$tarRelativeFilePath. '.</p>';
 	@unlink($tarAbsoluteFilePath);
 
-	echo '<p>Lösche den temporären Modulordner ' .$tempModuleRelativeDirectoryPath. '.</p>';
+	echo '<p>Lösche temporären Modulordner ' .$tempModuleRelativeDirectoryPath. '.</p>';
 
 	if(is_dir($tempModuleAbsoluteDirectoryPath)){
 		$libFilesystem->deleteDirectory($tempModuleRelativeDirectoryPath);
