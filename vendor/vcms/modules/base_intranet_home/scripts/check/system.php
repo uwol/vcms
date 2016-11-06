@@ -114,7 +114,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 function searchNotReadAbleFiles($dir){
 	$notReadableFiles = array();
 
-	$files = array_diff(scandir($dir), array('..', '.'));
+	$files = array_diff(scandir($dir), array('.', '..'));
 	$folders = array();
 
 	foreach ($files as $file){

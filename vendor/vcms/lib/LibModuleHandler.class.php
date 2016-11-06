@@ -42,7 +42,7 @@ class LibModuleHandler{
 		global $libFilesystem;
 
 		$modModulesAbsolutePath = $libFilesystem->getAbsolutePath($this->modModulesRelativePath);
-		$result = array_diff(scandir($modModulesAbsolutePath), array('..', '.'));
+		$result = array_diff(scandir($modModulesAbsolutePath), array('.', '..'));
 		sort($result);
 		return $result;
 	}
@@ -51,7 +51,7 @@ class LibModuleHandler{
 		global $libFilesystem;
 
 		$baseModulesAbsolutePath = $libFilesystem->getAbsolutePath($this->baseModulesRelativePath);
-		$result = array_diff(scandir($baseModulesAbsolutePath), array('..', '.'));
+		$result = array_diff(scandir($baseModulesAbsolutePath), array('.', '..'));
 		sort($result);
 		return $result;
 	}

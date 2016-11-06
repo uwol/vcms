@@ -280,9 +280,9 @@ function installModule($module){
 			if(!$isUpdate){
 				$libFilesystem->copyDirectory($tempModuleRelativeDirectoryPath, $moduleRelativeDirectoryPath);
 			} else {
-				$files = array_diff(scandir($moduleAbsoluteDirectoryPath), array('..', '.', 'custom'));
+				$filesToDelete = array_diff(scandir($moduleAbsoluteDirectoryPath), array('.', '..', 'custom'));
 
-				foreach ($files as $file){
+				foreach ($filesToDelete as $file){
 					$fileRelativePath = $moduleRelativeDirectoryPath. '/' .$file;
 					$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileRelativePath);
 
@@ -297,9 +297,9 @@ function installModule($module){
 
 				echo '<p>Kopiere aktualisiertes Modul in den Modulordner ' .$moduleRelativeDirectoryPath. '</p>';
 
-				$files = array_diff(scandir($tempModuleAbsoluteDirectoryPath), array('..', '.', 'custom'));
+				$filesToCopy = array_diff(scandir($tempModuleAbsoluteDirectoryPath), array('.', '..', 'custom'));
 
-				foreach ($files as $file){
+				foreach ($filesToCopy as $file){
 					$fileRelativePath = $tempModuleRelativeDirectoryPath. '/' .$file;
 					$fileAbsolutePath = $libFilesystem->getAbsolutePath($fileRelativePath);
 
@@ -320,7 +320,7 @@ function installModule($module){
 				$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/' .$moduleObject->getInstallScript());
 				include($scriptAbsolutePath);
 			} elseif($isUpdate && $moduleObject->getUpdateScript() != ''){
-				echo '<p>Führe Aktualisierungsscript des Moduls aus.</p>';
+				echo '<p>Führe Aktualisierungsskript des Moduls aus.</p>';
 				$scriptAbsolutePath = $libFilesystem->getAbsolutePath($moduleObject->getPath(). '/' .$moduleObject->getUpdateScript());
 				include($scriptAbsolutePath);
 			}
@@ -397,7 +397,7 @@ function updateEngine(){
 		echo '<p>Installiere neue Engine.</p>';
 		$libFilesystem->copyDirectory($tempEngineRelativeDirectoryPath, '.');
 
-		echo '<p>Führe Aktualisierungsscript der Engine aus.</p>';
+		echo '<p>Führe Aktualisierungsskript der Engine aus.</p>';
 		$scriptAbsolutePath = $libFilesystem->getAbsolutePath($engineUpdateScript);
 		include($scriptAbsolutePath);
 		exit();

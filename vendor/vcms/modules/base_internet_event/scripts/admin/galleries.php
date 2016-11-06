@@ -59,7 +59,7 @@ echo '<h2>Bestehende Galerien</h2>';
 
 $veranstaltungsFotosDir = 'custom/veranstaltungsfotos';
 
-$files = array_diff(scandir($veranstaltungsFotosDir), array('..', '.'));
+$files = array_diff(scandir($veranstaltungsFotosDir), array('.', '..'));
 $folders = array();
 
 foreach ($files as $file){

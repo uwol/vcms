@@ -82,7 +82,7 @@ class LibGallery{
 		$pictures = array();
 
 		if(is_dir($path)){
-			$files = array_diff(scandir($path), array('..', '.', 'thumbs'));
+			$files = array_diff(scandir($path), array('.', '..', 'thumbs'));
 
 			foreach ($files as $file){
 				$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));

@@ -125,7 +125,7 @@ class LibCronjobs{
 			$this->createHtaccessFile($directoryRelativePath);
 		}
 
-		$files = array_diff(scandir('modules'), array('..', '.'));
+		$files = array_diff(scandir('modules'), array('.', '..'));
 
 		foreach ($files as $file){
 			if(is_dir('modules/' .$file)){

@@ -171,7 +171,7 @@ class Folder extends FolderElement{
 	*/
 
 	function scanFileSystem(){
-		$files = array_diff(scandir($this->getFileSystemPath()), array('..', '.'));
+		$files = array_diff(scandir($this->getFileSystemPath()), array('.', '..'));
 
 		$fileArray = array();
 

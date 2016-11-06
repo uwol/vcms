@@ -34,7 +34,7 @@ class LibFilesystem{
 		$absoluteDirectoryPath = $this->getAbsolutePath($relativeDirectoryPath);
 
 		if(is_dir($absoluteDirectoryPath)){
-			$files = array_diff(scandir($absoluteDirectoryPath), array('..', '.'));
+			$files = array_diff(scandir($absoluteDirectoryPath), array('.', '..'));
 
 			foreach ($files as $file){
 				if(is_dir($absoluteDirectoryPath. '/' .$file)){
@@ -58,7 +58,7 @@ class LibFilesystem{
 			mkdir($absoluteDestPath);
 		}
 
-		$files = array_diff(scandir($absoluteSourcePath), array('..', '.'));
+		$files = array_diff(scandir($absoluteSourcePath), array('.', '..'));
 
 		foreach ($files as $file){
 			if(is_dir($absoluteSourcePath. '/' .$file)){
