@@ -15,17 +15,16 @@ Screenshots
 Fähigkeiten
 -----------
 
-* Mitglieder mit Gruppen (Aktive, AHAH, Ehepartner etc.), Status (A/B-Phil, ex loco) und Leibverhältnissen
-* Vereine und Mitgliedschaften der Mitglieder in diesen
-* Semester mit Veranstaltungen, Vorständen und Wartsposten, Rezeptionen, Promotionen, Philistrierungen etc.
-* Veranstaltungsanmeldungen
-* Anpassbare Semesterstruktur: Semester, Trimester, terms, ...
-* Export des Semesterprogramms in Kalenderverwaltungsprogramme
-* E-Mail-Verteiler
-* Chargierkalender
-* Export von Adressen für Jubiläen, Serienbriefe und Semesteranschreiben
-* Abbildung von Vereinsfusionen
-* Die komplette Vereinshistorie kann erfasst werden. Wer hat welche Consemester, ist wann rezipiert worden, hat wann welche Chargen absolviert etc.?
+* Semesterprogramm mit Fotogalerien und Veranstaltungsanmeldungen
+* Intranet-Portal mit Semester-Zeitleiste, Nachrichten, Reservierungen
+* E-Mail-Rundbrief
+* Datenbank
+  * Mitglieder, Gruppen (Aktive, AHAH, Ehepartner etc.), Status (A/B-Phil, ex loco), Leibverhältnisse
+  * Semesterprogramm, Veranstaltungen, Fotogalerien, Anmeldungen, Chargierkalender
+  * Vorstände, Ämter, Rezeptionen, Promotionen, Philistrierungen, Consemester, Conchargen
+  * Vereine, Mitgliedschaften
+* Adress-Export für Semesteranschreiben, Semesterprogramm-Export als iCalendar
+* Flexible Semesterkonfiguration: Semester, Trimester, terms, ...
 
 
 Modulkatalog
@@ -55,7 +54,7 @@ Modulkatalog
 Installation
 ------------
 
-Die Installationsanleitung ist in der Datei INSTALL.md gespeichert. Die technischen Anforderungen sind
+Die Installationsanleitung ist in der Datei INSTALL.md gespeichert. Die technischen Anforderungen sind:
 
 * PHP ab Version 5.5
 * MySQL ab Version 4.1

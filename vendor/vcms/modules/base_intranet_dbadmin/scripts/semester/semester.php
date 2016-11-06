@@ -143,11 +143,11 @@ if($libAuth->isLoggedin()){
 
 							//ist dies der letzte valide Internetwart?
 							if(count($valideInternetWarte) < 2){
-								//STOPP, DRAMA ahead, dann gibt es keinen validen Intranetwart mehr
-								$dieText = 'Fataler Fehler: Der bisherige Intranetwart ist der einzige valide, wenn er gelöscht wird, so gibt es keinen validen Intranetwart mehr! ';
+								//STOPP, dann gibt es keinen validen Intranetwart mehr
+								$dieText = 'Der bisherige Intranetwart ist der einzige valide. Falls er gelöscht wird, gibt es keinen validen Intranetwart mehr! ';
 
 								if($_REQUEST['internetwart'] != ''){
-									$dieText .= 'Das ausgewählte Mitglied ist kein valides, es hat entweder keine Logindaten oder ist tot, ausgetreten etc.';
+									$dieText .= 'Das ausgewählte Mitglied ist kein valides Mitglied. Es hat entweder keine Logindaten oder ist tot, ausgetreten etc.';
 								}
 
 								die($dieText);

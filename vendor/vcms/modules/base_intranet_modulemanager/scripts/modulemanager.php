@@ -325,10 +325,10 @@ function installModule($module){
 				include($scriptAbsolutePath);
 			}
 		} else {
-			echo '<p>Fehler: Das heruntergeladene Modulpaket enthält keine meta.json</p>';
+			echo '<p>Das heruntergeladene Modulpaket enthält keine meta.json</p>';
 		}
 	} else {
-		echo '<p>Fehler: Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
+		echo '<p>Das heruntergeladene Modulpaket konnte nicht entpackt werden.</p>';
 	}
 
 	//delete temporary module folder
@@ -383,9 +383,9 @@ function updateEngine(){
 	$tar->extract($tempRelativeDirectoryPath. '/');
 
 	if(!is_dir($tempEngineAbsoluteDirectoryPath)){
-		echo '<p>Fehler: Das heruntergeladene Enginepaket konnte nicht entpackt werden.</p>';
+		echo '<p>Das Enginepaket konnte nicht entpackt werden.</p>';
 	} elseif(!is_file($tempEngineAbsoluteDirectoryPath. '/index.php')) {
-		echo '<p>Fehler: Das Enginepaket ist fehlerhaft.</p>';
+		echo '<p>Das Enginepaket ist fehlerhaft.</p>';
 	} else {
 		$libCronjobs->deleteFiles();
 

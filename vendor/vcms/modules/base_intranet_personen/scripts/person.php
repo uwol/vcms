@@ -147,11 +147,11 @@ if($ownprofile){
 		}
 	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'personpasswort'){
 		if(!$libAuth->checkPasswordForPerson($libAuth->getId(), $_POST['oldpwd'])){
-			$libGlobal->errorTexts[] = 'Fehler: Das alte Passwort ist nicht korrekt.';
+			$libGlobal->errorTexts[] = 'Das alte Passwort ist nicht korrekt.';
 		} elseif(trim($_POST['newpwd1']) == ''){
-			$libGlobal->errorTexts[] = 'Fehler: Es wurde kein neues Passwort angegeben.';
+			$libGlobal->errorTexts[] = 'Es wurde kein neues Passwort angegeben.';
 		} elseif($_POST['newpwd2'] != $_POST['newpwd1']){
-			$libGlobal->errorTexts[] = 'Fehler: Das neue Passwort und die Passwortwiederholung stimmen nicht überein.';
+			$libGlobal->errorTexts[] = 'Das neue Passwort und die Passwortwiederholung stimmen nicht überein.';
 		} else {
 			$libAuth->savePassword($libAuth->getId(), $_POST['newpwd1']);
 		}

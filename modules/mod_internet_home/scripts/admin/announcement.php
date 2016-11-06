@@ -56,7 +56,7 @@ elseif($aktion == 'insert'){
 
 	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum']);
 	$array = $libDb->insertRow($felder, $valueArray, 'mod_internethome_nachricht', array('id'=>''));
-	$libGlobal->notificationTexts[] = 'Die Ankündigung ist gespeichert worden.';
+	$libGlobal->notificationTexts[] = 'Die Ankündigung wurde gespeichert.';
 }
 //modification
 elseif($aktion == 'update'){
@@ -73,7 +73,7 @@ elseif($aktion == 'update'){
 
 	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum']);
 	$array = $libDb->updateRow($felder, $valueArray, 'mod_internethome_nachricht', array('id' => $_REQUEST['id']));
-	$libGlobal->notificationTexts[] = 'Die Ankündigung ist gespeichert worden.';
+	$libGlobal->notificationTexts[] = 'Die Ankündigung wurde gespeichert.';
 }
 // select
 else{

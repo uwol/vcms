@@ -75,7 +75,7 @@ if($libAuth->isLoggedin()){
 
 		//Ist der Bearbeiter kein Internetwart?
 		if(!in_array('internetwart', $libAuth->getAemter())){
-			die('Fehler: Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
+			die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
 		}
 
 		$valueArray = $_REQUEST;
@@ -140,8 +140,8 @@ if($libAuth->isLoggedin()){
 
 					//ist dies der letzte valide Internetwart?
 					if(count($valideInternetWarte) < 2){
-						//STOPP, DRAMA ahead, dann gibt es keinen validen Intranetwart mehr
-						die('Fehler: Der bisherige Intranetwart ist der einzige valide, mit der Änderung gibt es keinen validen Intranetwart mehr!');
+						//STOPP, dann gibt es keinen validen Intranetwart mehr
+						die('Der bisherige Intranetwart ist der einzige valide. Mit der Änderung gibt es keinen validen Intranetwart mehr!');
 					}
 				}
 			}

@@ -272,13 +272,13 @@ class LibImage{
 
 		//check image type
 		if($imageType != 2){ //liegt kein JPG vor?
-			$libGlobal->errorTexts[] = 'Fehler: Das Bild ist kein Jpeg.';
+			$libGlobal->errorTexts[] = 'Das Bild ist kein Jpeg.';
 			return;
 		}
 
 		//does a file with this name already exist?
 		if(is_file($targetDirectory. '/' .$targetFilename)){
-			$libGlobal->errorTexts[] = 'Fehler: Unter diesem Dateinamen existiert bereits ein Bild.';
+			$libGlobal->errorTexts[] = 'Unter diesem Dateinamen existiert bereits ein Bild.';
 			return;
 		}
 

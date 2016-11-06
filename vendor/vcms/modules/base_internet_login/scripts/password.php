@@ -24,7 +24,7 @@ if(isset($_POST['email']) && $_POST['email'] != '' &&
 		isset($_POST['geburtsdatum']) && $_POST['geburtsdatum'] != ''){
 
 	if(!$libString->isValidEmail($_POST['email'])){
-		$libGlobal->errorTexts[] = 'Fehler: Die angegebene Adresse ist keine E-Mail-Adresse.';
+		$libGlobal->errorTexts[] = 'Die angegebene Adresse ist keine E-Mail-Adresse.';
 	} else {
 		$stmt = $libDb->prepare("SELECT id, email, datum_geburtstag FROM base_person WHERE email=:email AND gruppe != 'T' AND gruppe != 'X' AND gruppe != 'V' AND gruppe != '' LIMIT 0,1");
 		$stmt->bindValue(':email', strtolower($_POST['email']));
@@ -77,7 +77,7 @@ echo $libString->getNotificationBoxText();
 
 echo '<p>Auf dieser Seite kann ein neues Passwort vergeben werden, falls das alte vergessen wurde. Bitte gib Dein Geburtsdatum und die E-Mail-Adresse an, die in Deinem Intranetkonto angegeben ist. An diese E-Mail-Adresse wird das neue Passwort verschickt.</p>';
 
-echo '<form action="index.php?pid=login_resetpassword" method="post" class="form-horizontal">';
+echo '<form action="index.php?pid=password" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
 $libForm->printTextInput('email', 'E-Mail-Adresse', '', 'email');

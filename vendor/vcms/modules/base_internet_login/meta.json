@@ -8,14 +8,14 @@
 			"title": "Login"
 		},
 		{
-			"pid": "login_registrierung",
+			"pid": "registration",
 			"file": "registration.php",
 			"directory": "scripts",
 			"title": "Registrierung"
 		},
 		{
-			"pid": "login_resetpassword",
-			"file": "resetpassword.php",
+			"pid": "password",
+			"file": "password.php",
 			"directory": "scripts",
 			"title": "Passwort zurücksetzen"
 		}

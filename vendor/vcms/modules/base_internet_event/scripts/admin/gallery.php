@@ -21,7 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if(!isset($_REQUEST['id']) || !is_numeric($_REQUEST['id']) || !preg_match("/^[0-9]+$/", $_REQUEST['id']))
-	die('Fehler: Veranstaltungsid ist keine Zahl');
+	die('Id ist keine Zahl');
 
 
 $id = '';

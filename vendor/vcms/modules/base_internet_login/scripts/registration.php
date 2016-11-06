@@ -151,7 +151,7 @@ if($formSent && !$formError){
 		}
 	}
 
-	echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=login_registrierung" class="form-horizontal">';
+	echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="form-horizontal">';
 	echo '<fieldset>';
 
 	$libForm->printTextInput('registrierung_name', 'Vorname und Nachname', $libString->protectXSS($registrierung_name));

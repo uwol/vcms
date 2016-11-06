@@ -136,13 +136,13 @@ if(isset($_REQUEST['aktion'])){
 
 					echo '<p class="alert alert-info">Fertig. Falls keine Fehlermeldung angezeigt wurde, sollte nun der Login unter dem neuen Benutzer mit Internetwart-Rechten möglich sein.</p>';
 				} else {
-					echo '<p class="alert alert-danger">Fehler: Das Passwort ist nicht komplex genug.</p>';
+					echo '<p class="alert alert-danger">Das Passwort ist nicht komplex genug.</p>';
 				}
 			} else {
-				echo '<p class="alert alert-danger">Fehler: Die Passwörter stimmen nicht überein.</p>';
+				echo '<p class="alert alert-danger">Die Passwörter stimmen nicht überein.</p>';
 			}
 		} else {
-			echo '<p class="alert alert-danger">Fehler: E-Mail-Adresse oder Passwort wurden nicht angegeben.</p>';
+			echo '<p class="alert alert-danger">E-Mail-Adresse oder Passwort wurden nicht angegeben.</p>';
 		}
 	}
 }

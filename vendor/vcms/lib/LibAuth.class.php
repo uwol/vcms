@@ -233,7 +233,7 @@ class LibAuth{
 		//a. empty password
 		if($newPassword == ''){
 			if(!$quiet){
-				$libGlobal->errorTexts[] = "Fehler: Das neue Passwort ist leer.";
+				$libGlobal->errorTexts[] = "Das neue Passwort ist leer.";
 			}
 
 			return false;
@@ -243,7 +243,7 @@ class LibAuth{
 		if($checkIsValidPassword){
 			if(!$this->isValidPassword($newPassword)){
 				if(!$quiet){
-					$libGlobal->errorTexts[] = "Fehler: Das neue Passwort ist nicht komplex genug. ". $this->getPasswordRequirements();
+					$libGlobal->errorTexts[] = "Das neue Passwort ist nicht komplex genug. ". $this->getPasswordRequirements();
 				}
 
 				return false;

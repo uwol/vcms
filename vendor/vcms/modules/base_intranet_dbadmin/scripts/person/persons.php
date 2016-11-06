@@ -31,7 +31,7 @@ if($libAuth->isLoggedin()){
 		if(isset($_GET['id']) && $_GET['id'] != ''){
 			//Ist der Bearbeiter kein Internetwart?
 			if(!in_array('internetwart', $libAuth->getAemter())){
-				die('Fehler: Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
+				die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
 			}
 
 			//Problemfall Internetwart: Dieser darf nie gelöscht werden, um immer einen Admin im System zu haben
