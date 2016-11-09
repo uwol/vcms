@@ -29,7 +29,7 @@
 			"elements": [
 				{
 					"pid": "ueberuns",
-					"name": "Wir über uns",
+					"name": "Über uns",
 					"type": "menu_entry",
 					"position": 100
 				},
