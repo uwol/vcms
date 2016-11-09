@@ -3,19 +3,19 @@
 	"version": 2.0,
 	"pages": [
 		{
-			"pid": "v_ueberuns",
-			"file": "wirueberuns.html",
+			"pid": "ueberuns",
+			"file": "ueberuns.html",
 			"directory": "custom",
 			"title": "Über uns"
 		},
 		{
-			"pid": "v_haus",
+			"pid": "haus",
 			"file": "haus.html",
 			"directory": "custom",
 			"title": "Haus"
 		},
 		{
-			"pid": "v_prinzipien",
+			"pid": "prinzipien",
 			"file": "prinzipien.html",
 			"directory": "custom",
 			"title": "Prinzipien"
@@ -25,22 +25,22 @@
 		{
 			"name": "Verein",
 			"type": "menu_folder",
-			"position": 600, 
+			"position": 600,
 			"elements": [
 				{
-					"pid": "v_ueberuns",
+					"pid": "ueberuns",
 					"name": "Wir über uns",
 					"type": "menu_entry",
 					"position": 100
 				},
 				{
-					"pid": "v_haus",
+					"pid": "haus",
 					"name": "Haus",
 					"type": "menu_entry",
 					"position": 200
 				},
 				{
-					"pid": "v_prinzipien",
+					"pid": "prinzipien",
 					"name": "Prinzipien",
 					"type": "menu_entry",
 					"position": 300
