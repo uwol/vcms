@@ -53,7 +53,9 @@ if(isset($_POST['email']) && $_POST['email'] != '' &&
 			$libAuth->savePassword($row['id'], $newPassword, true);
 
 			//send reset password
-			$text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde das Passwort für den Benutzer mit der E-Mail-Adresse ' .$row['email']. ' zurückgesetzt. Das neue Passwort lautet ' .$newPassword. ' und kann im Intranet auf der Seite "Mein Profil" geändert werden.';
+			$text =
+				'Auf ' .$libGlobal->getSiteUrl(). ' wurde ein neues Passwort für den Benutzer ' .$row['email']. ' erzeugt. ' .PHP_EOL.PHP_EOL.
+				'Das neue Passwort lautet ' .$newPassword. ' und kann im Intranet geändert werden.';
 
 			$mail = new PHPMailer();
 			$libMail->configurePHPMailer($mail);
@@ -66,16 +68,16 @@ if(isset($_POST['email']) && $_POST['email'] != '' &&
 			$mail->Send();
 		}
 
-		$libGlobal->notificationTexts[] =  'Falls das Geburtsdatum korrekt und die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist, wurde eine E-Mail mit einem neuen Passwort an die E-Mail-Adresse verschickt.';
+		$libGlobal->notificationTexts[] =  'Das neue Passwort wurde an Deine E-Mail-Adresse verschickt, falls die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist und das Geburtsdatum korrekt ist.';
 	}
 }
 
-echo '<h1>Neues Passwort setzen</h1>';
+echo '<h1>Neues Passwort erzeugen</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Auf dieser Seite kann ein neues Passwort vergeben werden, falls das alte vergessen wurde. Bitte gib Dein Geburtsdatum und die E-Mail-Adresse an, die in Deinem Intranetkonto angegeben ist. An diese E-Mail-Adresse wird das neue Passwort verschickt.</p>';
+echo '<p>Auf dieser Seite kann ein neues Passwort erzeugt werden. Bitte gib Dein Geburtsdatum und die E-Mail-Adresse Deines Intranet-Kontos an.</p>';
 
 echo '<form action="index.php?pid=password" method="post" class="form-horizontal">';
 echo '<fieldset>';
