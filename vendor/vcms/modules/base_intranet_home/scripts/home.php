@@ -25,6 +25,10 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('userNameICalendar') || !
 	$libGenericStorage->saveValueInCurrentModule('passwordICalendar', $libString->randomAlphaNumericString(40));
 }
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('showReservations')){
+	$libGenericStorage->saveValueInCurrentModule('showReservations', '1');
+}
+
 
 echo '<h1>Intranet-Portal</h1>';
 
@@ -53,7 +57,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 echo $libTime->getSemesterMenu($semesters, $libGlobal->semester);
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
-$zeitraumLimit = 14;
+$zeitraumLimit = 7;
 
 
 // -----------------------------------------------------------------------
@@ -79,7 +83,8 @@ if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')){
 	require_once('timeline/chargierkalender.php');
 }
 
-if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')){
+if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')
+		&& $libGenericStorage->loadValueInCurrentModule('showReservations')){
 	require_once('timeline/reservations.php');
 }
 
