@@ -130,13 +130,10 @@ class LibChargierKalenderEvent{
 
 	var $angemeldet;
 	var $anmeldeButtonEnabled;
-	var $angemeldeteMitglieder;
+	var $angemeldeteMitglieder = array();
 
-	//-------------------------------------------------
-
-	function LibChargierKalenderEvent($startDateTime){
+	function __construct($startDateTime){
 		$this->startDateTime = $startDateTime;
-		$this->angemeldeteMitglieder = array();
 	}
 
 	function isAllDay($allDay){
