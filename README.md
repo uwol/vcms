@@ -1,6 +1,8 @@
 VCMS
 ====
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+
 Das VCMS ist ein freies Content-Management-System für Korporationen, das von diversen Korporationen unterschiedlicher Dachverbände als Internet-Auftritt oder Intranet-Lösung genutzt wird. Es unterstützt die Semesterplanung mit einem Semesterprogramm, das durch Fotogalerien, ein Anmeldesystem für Veranstaltungen, einen Chargierkalender, Nachrichtenbeiträge und Facebook-Integration angereichert wird. Zur Vereins-Organisation steht eine Mitgliederdatenbank, eine Rundbrieffunktion, ein Reservierungssystem und ein Download-Bereich bereit.
 
 
