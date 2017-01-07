@@ -102,6 +102,9 @@ if($libAuth->isLoggedin()){
 		case 2:
 			$order = 'gruppe, name, vorname ASC';
 			break;
+		case 3:
+			$order = 'id ASC';
+			break;
 		default:
 			$order = 'SUBSTRING(semester_reception, 3) DESC';
 	}
@@ -110,7 +113,6 @@ if($libAuth->isLoggedin()){
 
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
-
 
 	if(in_array('internetwart', $libAuth->getAemter())){
 		echo '<div class="panel panel-default">';
@@ -121,7 +123,6 @@ if($libAuth->isLoggedin()){
 		echo '</div>';
 		echo '</div>';
 	}
-
 
 	echo '<form action="index.php?pid=intranet_admin_persons" method="post" class="form-inline">';
 	echo '<fieldset>';
@@ -150,6 +151,13 @@ if($libAuth->isLoggedin()){
 	}
 
 	echo '>Gruppe</option>';
+	echo '<option value="3" ';
+
+	if (isset($_POST['orderby']) && $_POST['orderby'] == 3){
+		echo 'selected="selected"';
+	}
+
+	echo '>Id</option>';
 	echo '</select> ';
 
 	$libForm->printSubmitButtonInline('Sortieren');
@@ -157,7 +165,6 @@ if($libAuth->isLoggedin()){
 	echo '</div>';
 	echo '</fieldset>';
 	echo '</form>';
-
 
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';
