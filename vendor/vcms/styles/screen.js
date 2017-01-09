@@ -4,6 +4,15 @@ function animateLasteInsertId(){
 	$(".lastInsertId").slideDown(1000);
 }
 
+/* smooth scrolling */
+
+function configureScrolling(){
+	$('a[href^="#"]').on('click', function(event){
+	  event.preventDefault();
+	  $('html,body').animate({scrollTop:$(this.hash).offset().top}, 'slow', 'swing');
+	});
+}
+
 /* facebook event plugin */
 
 function loadFacebookEventPlugins(){
@@ -100,6 +109,8 @@ function adjustElementDimensions(){
 
 $(document).ready(function() {
 	animateLasteInsertId();
+	configureScrolling();
+
 	loadFacebookEventPlugins();
 	adjustThumbnailImgsOnLoad();
 
