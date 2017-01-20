@@ -20,12 +20,20 @@ if(!is_object($libGlobal))
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('fb_url')){
-	$libGenericStorage->saveValueInCurrentModule('fb_url', '');
-}
-
 if(!$libGenericStorage->attributeExistsInCurrentModule('wp_url')){
 	$libGenericStorage->saveValueInCurrentModule('wp_url', '');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('twitter_url')){
+	$libGenericStorage->saveValueInCurrentModule('twitter_url', '');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('instagram_url')){
+	$libGenericStorage->saveValueInCurrentModule('instagram_url', '');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('fb_url')){
+	$libGenericStorage->saveValueInCurrentModule('fb_url', '');
 }
 
 if(!$libGenericStorage->attributeExistsInCurrentModule('showFbPagePlugin')){

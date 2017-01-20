@@ -67,28 +67,27 @@ a .fa {
 	opacity: 0.5;
 }
 
-/* image delete icon */
-
 .imgBox .deleteIconBox {
 	position: absolute;
 	padding: 1px;
 	background-color: white;
 }
 
-/* semester cover */
-
 .semestercoverBox {
 	max-width: 400px;
 }
-
-/* last inserted element */
 
 .lastInsertId {
 	display: none;
 }
 
+footer {
+	padding-top: 2.5em;
+	padding-bottom: 2.5em;
+}
+
 footer .social-buttons {
-	word-spacing: .2em;
+	word-spacing: .5em;
 }
 
 footer .social-buttons a {
