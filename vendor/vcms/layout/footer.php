@@ -43,14 +43,14 @@ if($instagram_url != ''){
 	echo '        <a href="' .$instagram_url. '" rel="nofollow"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
-if($wp_url != ''){
-	echo '        <a href="' .$wp_url. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
-}
-
 if($twitter_url != ''){
 	echo '        <a href="' .$twitter_url. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
 	echo '        <a href="http://twitter.com/share?url=' .urlencode($libGlobal->getSiteUrl()). '&amp;text=' .urlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+}
+
+if($wp_url != ''){
+	echo '        <a href="' .$wp_url. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 echo '      </div>' . PHP_EOL;
