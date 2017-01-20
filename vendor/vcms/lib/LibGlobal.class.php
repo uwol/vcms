@@ -21,7 +21,7 @@ namespace vcms;
 use PDO;
 
 class LibGlobal{
-	var $version = '7.26';
+	var $version = '7.27';
 
 	var $semester;
 	var $module;

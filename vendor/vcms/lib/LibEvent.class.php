@@ -113,7 +113,7 @@ class LibEvent{
 		$url = $this->getUrl($id);
 		$title = $this->getShareTitle($id);
 
-		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;t=' .urlencode($title). '" rel="nofollow">';
+		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;title=' .urlencode($title). '" rel="nofollow">';
 		echo '<i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>';
 		echo '</a> ';
 	}
