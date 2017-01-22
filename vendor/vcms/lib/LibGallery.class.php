@@ -102,7 +102,7 @@ class LibGallery{
 		$visiblePictures = array();
 		$i = 0;
 
-	   	foreach($pictures as $picture){
+		foreach($pictures as $picture){
 			$levelOfPicture = $this->getPublicityLevel($picture);
 
 			if($levelOfPicture <= $level){
@@ -110,7 +110,7 @@ class LibGallery{
 			}
 
 			$i++;
-	   	}
+		}
 
 		return $visiblePictures;
 	}
