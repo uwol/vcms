@@ -29,18 +29,22 @@ if($libAuth->isLoggedin() && isset($_GET['id']) && is_numeric($_GET['id']) &&
 		// send headers
 		header("Content-type: image/jpeg\n");
 		header("Content-transfer-encoding: binary\n");
-		header("Content-length: " . filesize($path) . "\n");
+		header("Content-length: " .filesize($path). "\n");
 
-		if($_GET['id'] != $libAuth->getId()){
-			$expires = 60 * 60 * 24;
-
+		if(!isOwnImage()){
+			// send caching headers
 			header('Pragma: public');
-			header('Cache-Control: maxage=' .$expires);
-			header('Cache-Control: private');
-			header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expires) . ' GMT');
+			header('Cache-Control: max-age=600');
+			header('Expires: ' .gmdate('D, d M Y H:i:s \G\M\T', time() + 600));
 		}
 
 		$fp = fopen($path, 'r');
 		fpassthru($fp);
 	}
+}
+
+function isOwnImage(){
+	global $libAuth;
+
+	return $_GET['id'] === $libAuth->getId();
 }

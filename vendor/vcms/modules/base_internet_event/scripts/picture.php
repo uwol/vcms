@@ -45,6 +45,11 @@ if(isset($_GET['eventid']) && is_numeric($_GET['eventid']) &&
 			header("Content-transfer-encoding: binary\n");
 			header("Content-length: " .filesize($path). "\n");
 
+			// send caching headers
+			header('Pragma: public');
+			header('Cache-Control: max-age=600');
+			header('Expires: ' .gmdate('D, d M Y H:i:s \G\M\T', time() + 600));
+
 			// send content
 			$fp = fopen($path, 'r');
 			fpassthru($fp);
