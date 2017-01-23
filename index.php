@@ -54,10 +54,10 @@ if(!isset($_GET['pid']) || $_GET['pid'] == ''){
 
 
 if(!$libModuleHandler->pageExists($libGlobal->pid)){
-	header('HTTP/1.0 404 Not Found');
+	http_response_code(404);
 	die('HTTP-Fehler 404: Seite nicht gefunden.');
 } elseif(!$libSecurityManager->hasAccess($libModuleHandler->getPage($libGlobal->pid), $libAuth)){
-	header('HTTP/1.0 404 Not Found');
+	http_response_code(403);
 }
 
 

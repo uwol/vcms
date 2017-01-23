@@ -178,8 +178,6 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=intranetalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><i class="fa fa-users internal" aria-hidden="true"></i> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken</a><br />';
 		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=poolalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><i class="fa fa-users private" aria-hidden="true"></i> Sämtliche Bilder in Ablage zurücklegen</a>';
 		echo '</p>';
-
-		echo '<p>Nach dem Rotieren eines Fotos wird dieses evtl. erst nach einer Aktualisierung der Seite rotiert darstellt.</p>';
 	}
 
 	echo '<hr />';
@@ -207,24 +205,6 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 	foreach($pictures as $key => $picture){
 		echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-
-		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
-			echo '<div class="thumbnailControls">';
-
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=main&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-home public" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users public" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users internal" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users private" aria-hidden="true"></i></a>';
-
-			echo '<br />';
-
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-undo" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-repeat" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a><br />';
-
-			echo '</div>';
-		}
-
 		echo '<div class="thumbnail">';
 
 		$visibility = $libGallery->getPublicityLevel($picture);
@@ -245,6 +225,23 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		echo '</div>';
 
 		echo '</div>';
+
+		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
+			echo '<div class="thumbnailControls">';
+
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=main&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-home public" aria-hidden="true"></i></a> ';
+			echo '| ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=oeffentlich&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users public" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users internal" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users private" aria-hidden="true"></i></a> ';
+			echo '| ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-undo" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-repeat" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a><br />';
+
+			echo '</div>';
+		}
+
 		echo '</div>';
 	}
 
