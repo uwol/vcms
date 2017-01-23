@@ -16,11 +16,13 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
-
-
-if($libAuth->isLoggedin() && isset($_GET['hash']) && $_GET['hash'] != ''){
+if(!is_object($libGlobal) || !is_object($libAuth)){
+	http_response_code(500);
+} elseif(!$libAuth->isLoggedin()){
+	http_response_code(403);
+} elseif(!isset($_GET['hash']) || $_GET['hash'] == '') {
+	http_response_code(404);
+} else {
 	$rootFolderPathString = 'custom/intranet/downloads';
 	$rootFolderAbsolutePathString = $libFilesystem->getAbsolutePath($rootFolderPathString);
 
@@ -28,27 +30,29 @@ if($libAuth->isLoggedin() && isset($_GET['hash']) && $_GET['hash'] != ''){
 	$hashes = $rootFolderObject->getHashMap();
 	$file = $hashes[$_GET['hash']];
 
-	if(is_object($file)){
+	if(!is_object($file)){
+		http_response_code(404);
+	} else {
 		$outputFileName = $file->name;
 		$outputFilePathString = $file->getFileSystemPath();
 
-		if(in_array($libAuth->getGruppe(), $file->readGroups)){
+		if(!in_array($libAuth->getGruppe(), $file->readGroups)){
+			http_response_code(403);
+		} else {
 			$libMime = new \vcms\LibMime();
 			$mime = $libMime->detectMime($outputFileName);
 
-			/*
-			* disable caching
-			*/
-			header('Cache-Control: no-cache, no-store, must-revalidate');
-			header('Pragma: no-cache');
-			header('Expires: 0');
+			if(!is_file($outputFilePathString)){
+				http_response_code(404);
+			} else {
+				header('Pragma: no-cache');
+				header('Cache-Control: no-cache, no-store, must-revalidate');
+				header('Expires: 0');
 
-			// mime
-			header("Content-Type: " .$mime);
-			header('Content-Disposition: attachment; filename="' .$outputFileName. '"');
-			header("Content-Length: " .$file->size);
+				header('Content-Type: ' .$mime);
+				header('Content-Disposition: attachment; filename="' .$outputFileName. '"');
+				header('Content-Length: ' .$file->size);
 
-			if(is_file($outputFilePathString)){
 				readfile($outputFilePathString);
 			}
 		}
