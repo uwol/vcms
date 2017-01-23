@@ -49,7 +49,7 @@ if(!is_object($libGlobal) || !is_object($libAuth)){
 				header('Pragma: private');
 				header('Last-Modified: ' .gmdate('D, d M Y H:i:s T', filemtime($path)));
 
-				if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && filemtime($path) <= strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+				if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && filemtime($path) < strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
 					http_response_code(304);
 				} else {
 					readfile($path);
