@@ -47,7 +47,6 @@ if(!is_object($libGlobal) || !is_object($libAuth)){
 				header('Content-length: ' .filesize($path));
 
 				header('Pragma: private');
-				header('Cache-Control: max-age=3600');
 				header('Last-Modified: ' .gmdate('D, d M Y H:i:s T', filemtime($path)));
 
 				if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && filemtime($path) <= strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {

@@ -235,8 +235,8 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=intranet&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users internal" aria-hidden="true"></i></a> ';
 			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=pool&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-users private" aria-hidden="true"></i></a> ';
 			echo '| ';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-undo" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich drehen?\')"><i class="fa fa-repeat" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-undo" aria-hidden="true"></i></a> ';
+			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-repeat" aria-hidden="true"></i></a> ';
 			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a><br />';
 
 			echo '</div>';
