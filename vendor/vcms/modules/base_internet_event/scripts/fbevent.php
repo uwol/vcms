@@ -61,9 +61,9 @@ if($libEvent->isFacebookEvent($row)){
 		echo '<div class="panel panel-default">';
 		echo '<div class="thumbnail">';
 
-		echo '<div class="thumbnailOverflow">';
+		echo '<div class="img-frame">';
 		echo '<a href="' .$libString->protectXss($eventUrl). '">';
-		echo '<img src="' .$libString->protectXss($eventCoverSource). '" alt="" class="img-responsive center-block" />';
+		echo '<img data-object-fit="cover" src="' .$libString->protectXss($eventCoverSource). '" alt="" />';
 		echo '</a>';
 		echo '</div>';
 

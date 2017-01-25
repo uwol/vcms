@@ -159,7 +159,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 
 	if(is_file($posssibleImage)){
 		echo '<div class="center-block">';
-		echo '<div class="imgBox">';
+		echo '<div class="img-box">';
 
 		echo '<span class="deleteIconBox">';
 		echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$array['id']. '&amp;aktion=bilddelete">';

@@ -334,7 +334,7 @@ if($libAuth->isLoggedin()){
 	*/
 	if($aktion != 'blank' && $semesterarray['semester'] != ''){
 		echo '<div class="center-block">';
-		echo '<div class="imgBox">';
+		echo '<div class="img-box">';
 
 		$hasSemesterCover = $libTime->hasSemesterCover($semesterarray['semester']);
 

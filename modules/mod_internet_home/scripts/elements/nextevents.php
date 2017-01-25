@@ -96,7 +96,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 	if($semesterCoverAvailable){
 		echo '<div class="col-sm-4">';
 		echo '<div class="thumbnail">';
-		echo '<div class="semestercoverBox center-block">';
+		echo '<div class="semestercover-box center-block">';
 		echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">';
 		echo $semesterCoverString;
 		echo '</a>';

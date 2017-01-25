@@ -109,16 +109,16 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		//are there images?
 		if($libGallery->hasPictures($row['id'], 2)){
 			echo '<div class="thumbnail">';
-			echo '<div class="thumbnailOverflow">';
+			echo '<div class="img-frame">';
 			echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
-			echo '<img class="img-responsive center-block';
+			echo '<img data-object-fit="cover" ';
 
 			//are there pooled images?
     		if($libGallery->getPictures($row['id'], 2) > $libGallery->getPictures($row['id'], 1)){
-    			echo ' private';
+    			echo 'class="private"';
     		}
 
-    		echo '" src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
+    		echo ' src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
     		echo '</a>';
     		echo '</div>';
     		echo '</div>';
@@ -136,58 +136,3 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo '</table>';
-
-
-//galleries without events
-$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung');
-$stmt->execute();
-
-$ids = array();
-
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$ids[] = $row['id'];
-}
-
-$foldersWithoutEvent = array();
-
-foreach($folders as $folder){
-	if(!in_array($folder, $ids)){
-		$foldersWithoutEvent[] = $folder;
-	}
-}
-
-if(count($foldersWithoutEvent) > 0){
-	echo '<h2>Galerien ohne Veranstaltung</h2>';
-	echo '<table>';
-	echo '<tr><th style="width:10%">Bild</th><th style="width:10%">Ordner</th><th style="width:50%">Titel</th><th style="width:20%">Veranstaltungsdatum</th><th style="width:10%">Aktion</th></tr>';
-
-	foreach($foldersWithoutEvent as $folder){
-		echo '<tr>';
-		echo '<td>';
-
-		// are there images in the folder?
-		if($libGallery->hasPictures($folder, 2)){
-			echo '<div class="thumbnail">';
-			echo '<div class="thumbnailOverflow">';
-			echo '<img class="img-responsive center-block img-column';
-
-			//pooled images?
-    		if($libGallery->getPictures($folder, 2) > $libGallery->getPictures($folder, 1)){
-    			echo ' private';
-    		}
-
-    		echo '" src="api.php?iid=event_picture&amp;eventid=' .$folder. '&amp;id=' .$libGallery->getFirstVisiblePictureId($folder, 2). '" alt="Foto" />';
-    		echo '</div>';
-    		echo '</div>';
-		}
-
-		echo '</td>';
-		echo '<td>' .$folder. '</td>';
-		echo '<td>unbekannt</td>';
-		echo '<td>unbekannt</td>';
-		echo '<td><a href="index.php?pid=event_admin_galerie&amp;id=' .$folder. '">bearbeiten</a></td>';
-		echo '</tr>';
-	}
-
-	echo '</table>';
-}

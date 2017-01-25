@@ -445,8 +445,8 @@ SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname,
 function printPersonSignature($row, $ownprofile){
 	global $libPerson, $libForm;
 
-	echo '<div class="center-block personSignatureBox personSignatureBoxLg">';
-	echo '<div class="imgBox">';
+	echo '<div class="center-block person-signature-box person-signature-box-lg">';
+	echo '<div class="img-box">';
 
 	if($ownprofile){
 		echo '<span class="deleteIconBox">';

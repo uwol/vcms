@@ -206,7 +206,7 @@ class LibChargierKalenderEvent{
 		* print event
 		*/
 		//header
-		$retstr .= '<div id="t' .$this->id. '" class="calendarEvent">';
+		$retstr .= '<div id="t' .$this->id. '" class="calendar-event">';
 		$retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link

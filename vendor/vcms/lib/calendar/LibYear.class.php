@@ -63,7 +63,7 @@ class LibYear{
 			$hasEvents = $month->hasEvents($eventSet);
 			$hiddenClass = $hasEvents ? '' : ' hidden-xs';
 
-			$retstr .= '<div class="calendarMonthName' .$hiddenClass. '">';
+			$retstr .= '<div class="calendar-month-name' .$hiddenClass. '">';
 			$retstr .= '<h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2>';
 			$retstr .= '</div>';
 			$retstr .= $month->toString($eventSet);

@@ -131,7 +131,7 @@ class LibCalendarEvent{
 		/*
 		* print event
 		*/
-		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendarEvent">';
+		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendar-event">';
 		$retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
 		//link
@@ -147,8 +147,8 @@ class LibCalendarEvent{
 		//image
 		if($this->imageUrl != ''){
 			$retstr .= '<div class="thumbnail">';
-			$retstr .= '<div class="thumbnailOverflow">';
-			$retstr .= '<img class="img-responsive center-block" src="'.$this->imageUrl.'" alt="Foto" />';
+			$retstr .= '<div class="img-frame">';
+			$retstr .= '<img data-object-fit="cover" src="' .$this->imageUrl. '" alt="Foto" />';
 			$retstr .= '</div>';
 			$retstr .= '</div>';
 		}

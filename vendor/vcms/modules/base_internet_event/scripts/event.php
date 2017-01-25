@@ -199,7 +199,7 @@ function printSemesterCover($row){
 
 	if($semesterCoverString != ''){
 		echo '<div class="col-sm-6 col-md-8 col-lg-offset-3 col-lg-6">';
-		echo '<div class="semestercoverBox center-block">';
+		echo '<div class="semestercover-box center-block">';
 
 		if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$semester. '">';
@@ -277,9 +277,9 @@ function printGallery($row){
 		foreach($pictures as $key => $value){
 			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 			echo '<div class="thumbnail">';
-			echo '<div class="thumbnailOverflow">';
+			echo '<div class="img-frame">';
 			echo '<a href="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '">';
-			echo '<img src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" class="img-responsive center-block" />';
+			echo '<img data-object-fit="cover" src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" />';
 			echo '</a>';
 			echo '</div>';
 			echo '</div>';

@@ -92,7 +92,7 @@ class LibDay{
 
 		//header
 		$retstr = '';
-		$retstr .= '<div class="calendarCell calendarDay' .$todayClass.$hiddenClass. '">';
+		$retstr .= '<div class="calendar-cell calendar-day' .$todayClass.$hiddenClass. '">';
 		$retstr .= $this->number;
 
 		if($hasEvents){

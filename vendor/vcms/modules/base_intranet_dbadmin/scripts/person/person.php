@@ -326,8 +326,8 @@ if($libAuth->isLoggedin()){
 	echo '<div class="col-sm-3">';
 
 	if($mgarray['id'] != ''){
-		echo '<div class="center-block personSignatureBox personSignatureBoxLg">';
-		echo '<div class="imgBox">';
+		echo '<div class="center-block person-signature-box person-signature-box-lg">';
+		echo '<div class="img-box">';
 
 		echo '<span class="deleteIconBox">';
 		echo '<a href="index.php?pid=intranet_admin_person&amp;id=' .$mgarray['id']. '&amp;aktion=fotodelete">';

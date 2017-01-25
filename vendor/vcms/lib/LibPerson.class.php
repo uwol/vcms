@@ -112,7 +112,7 @@ class LibPerson{
 		$stmt->bindColumn('gruppe', $gruppe);
 		$stmt->fetch();
 
-		$retstr = '<div class="personActivityBox">';
+		$retstr = '<div class="person-activity-box">';
 
 		if($gruppe != 'T' && $gruppe != 'V'){
 			$activityPercent = $this->getIntranetActivity($id) * 100;
@@ -120,15 +120,15 @@ class LibPerson{
 			$balkenBreiteInactivity = 100 - $balkenBreiteActivity;
 
 			if($balkenBreiteActivity > 0){
-				$retstr .= '<span class="personActivityBar personActivityBarActive" style="width:' .$balkenBreiteActivity. '%"></span>';
+				$retstr .= '<span class="person-activity-bar person-activity-bar-active" style="width:' .$balkenBreiteActivity. '%"></span>';
 			}
 
 			if($balkenBreiteInactivity > 0){
-				$retstr .= '<span class="personActivityBar personActivityBarInactive" style="width:' .$balkenBreiteInactivity. '%"></span>';
+				$retstr .= '<span class="person-activity-bar person-activity-bar-inactive" style="width:' .$balkenBreiteInactivity. '%"></span>';
 			}
 		} else {
 			// required for correct height of cell in bootstrap row
-			$retstr .= '<span class="personActivityBar"></span>';
+			$retstr .= '<span class="person-activity-bar"></span>';
 		}
 
 		$retstr .= '</div>';
@@ -137,8 +137,8 @@ class LibPerson{
 	}
 
 	function getSignature($id){
-		$retstr = '<div class="personSignatureBox center-block media-object">';
-		$retstr .= '<div class="imgBox">';
+		$retstr = '<div class="person-signature-box center-block media-object">';
+		$retstr .= '<div class="img-box">';
 		$retstr .= $this->getImage($id);
 		$retstr .= '</div>';
 
@@ -155,13 +155,13 @@ class LibPerson{
 
 		switch($size){
 			case 'lg':
-				$sizeClass = 'personImgLg';
+				$sizeClass = 'person-img-lg';
 				break;
 			case 'xs':
-				$sizeClass = 'personImgXs';
+				$sizeClass = 'person-img-xs';
 				break;
 			default:
-				$sizeClass = 'personImgMd';
+				$sizeClass = 'person-img-md';
 				break;
 		}
 

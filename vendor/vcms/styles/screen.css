@@ -34,7 +34,8 @@ fieldset {
 	padding-top: 158px;
 }
 
-main, footer {
+main,
+footer {
 	background: rgba(255, 255, 255, 0.5);
 	padding: 0.6em;
 }
@@ -67,13 +68,13 @@ a .fa {
 	opacity: 0.5;
 }
 
-.imgBox .deleteIconBox {
+.img-box .deleteIconBox {
 	position: absolute;
 	padding: 1px;
 	background-color: white;
 }
 
-.semestercoverBox {
+.semestercover-box {
 	max-width: 400px;
 }
 

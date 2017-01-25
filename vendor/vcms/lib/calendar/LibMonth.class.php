@@ -79,10 +79,10 @@ class LibMonth{
 		$weekShift = $weekShift % 7;
 
 		//heading with day names
-		$retstr .= '<div class="calendarCellContainer">'.PHP_EOL;
+		$retstr .= '<div class="calendar-cell-container">'.PHP_EOL;
 
 		for($i=0+$weekShift; $i<count($dayNames)+$weekShift; $i++){
-			$retstr .= '<div class="calendarCell calendarDayName hidden-xs">';
+			$retstr .= '<div class="calendar-cell calendar-day-name hidden-xs">';
 			$retstr .= $dayNames[$i % 7];
 			$retstr .= '</div>'.PHP_EOL;
 		}
@@ -90,7 +90,7 @@ class LibMonth{
 		$retstr .= '</div>'.PHP_EOL;
 
 		//week
-		$retstr .= '<div class="calendarCellContainer">'.PHP_EOL;
+		$retstr .= '<div class="calendar-cell-container">'.PHP_EOL;
 
 		$dayCounter = 1;
 		$colCounter = 0 + $weekShift;
@@ -104,7 +104,7 @@ class LibMonth{
 				$retstr .= $this->days[$dayCounter]->toString($eventSet);
 				$dayCounter++;
 			} else {
-				$retstr .= '<div class="calendarCell hidden-xs"></div>'.PHP_EOL;
+				$retstr .= '<div class="calendar-cell hidden-xs"></div>'.PHP_EOL;
 			}
 
 			$colCounter = ($colCounter + 1) % 7;

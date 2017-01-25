@@ -1,48 +1,48 @@
-.personSignatureBox {
+.person-signature-box {
 	position: relative;
 	width: 100px;
 	margin-bottom: 0.5em;
 }
 
-.personSignatureBoxLg {
+.person-signature-box-lg {
 	width: 150px;
 }
 
-.personSignatureBox .imgBox {
+.person-signature-box .img-box {
 	background-color: white;
 	border: 1px solid #333;
 }
 
-.personSignatureBox .personActivityBox {
+.person-signature-box .person-activity-box {
 	width: 100%;
 	line-height: 0;
 }
 
-.personSignatureBox .personActivityBox .personActivityBar {
+.person-signature-box .person-activity-box .person-activity-bar {
 	display: inline-block;
 	height: 0.2em;
 	margin: 0.2em 0 0 0;
 }
 
-.personSignatureBox .personActivityBox .personActivityBarActive {
+.person-signature-box .person-activity-box .person-activity-bar-active {
 	background-color: black;
 }
 
-.personSignatureBox .personActivityBox .personActivityBarInactive {
+.person-signature-box .person-activity-box .person-activity-bar-inactive {
 	background-color: white;
 }
 
-.personImgXs {
+.person-img-xs {
 	width: 30px;
 	height: 40px;
 }
 
-.personImgMd {
+.person-img-md {
 	width: 100px;
 	height: 133px;
 }
 
-.personImgLg {
+.person-img-lg {
 	width: 150px;
 	height: 200px;
 }

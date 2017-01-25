@@ -55,6 +55,7 @@ if($wp_url != ''){
 
 echo '      </div>' . PHP_EOL;
 echo '    </footer>' . PHP_EOL;
+echo '    <script src="vendor/object-fit-polyfill/object-fit-polyfill.js"></script>' . PHP_EOL;
 echo '  </body>' . PHP_EOL;
 echo '</html>' . PHP_EOL;
 ?>

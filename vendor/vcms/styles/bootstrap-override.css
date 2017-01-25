@@ -71,6 +71,7 @@ dd {
 	border-top-right-radius: 0;
 }
 
-.panel .panel-heading, .panel .panel-body {
+.panel .panel-heading,
+.panel .panel-body {
 	padding: 1em;
 }

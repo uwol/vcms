@@ -1,33 +1,37 @@
-.gallery .thumbnail {
-	margin-bottom: 0.5em;
-}
-
-.thumbnailControls {
-	text-align: center;
-	margin-bottom: 1.5em;
-}
-
 .thumbnail {
-	padding: 0;
 	border-radius: 0;
+	padding: 0;
+}
+
+.thumbnail .img-frame {
+	width: 100%;
+	padding-bottom: 75%;
+}
+
+.thumbnail .img-frame > * {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.gallery .thumbnail .img-frame > * {
+	top: 0.125em;
+	bottom: 0.125em;
+	left: 0.125em;
+	right: 0.125em;
+}
+
+.thumbnail .img-frame img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .thumbnail .caption h3 {
 	margin-top: 0;
 	font-weight: normal;
-}
-
-.thumbnail .thumbnailOverflow {
-	max-width: 800px;
-	width: 100%;
-	margin: 0 auto;
-	overflow: hidden;
-	height: 0; /* is adjusted by screen.js */
-}
-
-.thumbnail .thumbnailOverflow img {
-	margin-top: 0; /* is adjusted by screen.js */
-	width: 100%;
 }
 
 .thumbnail .public {
@@ -40,6 +44,11 @@
 
 .thumbnail .private {
 	border: 2px solid red;
+}
+
+.thumbnailControls {
+	text-align: center;
+	margin-bottom: 1.5em;
 }
 
 .carousel-control.left, .carousel-control.right {
