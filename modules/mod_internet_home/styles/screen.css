@@ -92,6 +92,13 @@ section.announcement-box:nth-of-type(even) {
 	margin: 0 auto;
 }
 
+.gallery .thumbnail .img-frame .event-box {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 .event-box .event-box-caption {
 	color: white;
 	opacity: 0;

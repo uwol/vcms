@@ -34,7 +34,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
 
 echo '<p>Das Semesterprogramm kann per <a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=semesterprogramm_icalendar"><i class="fa fa-calendar" aria-hidden="true"></i> iCalendar</a> z. B. in iCloud oder Google Calendar abonniert werden.</p>';
-echo '<div class="vcalendar">';
+echo '<div>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 $calendar = new \vcms\calendar\LibCalendar($zeitraum[0], $zeitraum[1]);

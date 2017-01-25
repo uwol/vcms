@@ -5,18 +5,14 @@
 
 .thumbnail .img-frame {
 	width: 100%;
+}
+
+.gallery .thumbnail .img-frame {
 	padding-bottom: 75%;
 }
 
-.thumbnail .img-frame > * {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
-
 .gallery .thumbnail .img-frame > * {
+	position: absolute;
 	top: 0.125em;
 	bottom: 0.125em;
 	left: 0.125em;
@@ -48,10 +44,14 @@
 
 .thumbnailControls {
 	text-align: center;
-	margin-bottom: 1.5em;
+	position: absolute;
+	bottom: 0.25em;
+	padding: 0.25em;
+	background-color: rgba(255, 255, 255, 0.7);
 }
 
-.carousel-control.left, .carousel-control.right {
+.carousel-control.left,
+.carousel-control.right {
 	background-image: none;
 }
 

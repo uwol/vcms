@@ -218,9 +218,9 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 			$visibilityClass = 'private';
 		}
 
-		echo '<div class="img-frame ' .$visibilityClass. '">';
+		echo '<div class="img-frame">';
 		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
-		echo '<img data-object-fit="cover" src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
+		echo '<img data-object-fit="cover" src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" class="' .$visibilityClass. '">';
 		echo '</a>';
 		echo '</div>';
 
