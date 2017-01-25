@@ -13,7 +13,7 @@ echo '    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/screen.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/calendar/calendar.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="vendor/vcms/styles/gallery/gallery.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/vcms/styles/image/image.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/navigation/navigation.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/person/person.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/timeline/timeline.css" />' . PHP_EOL;
