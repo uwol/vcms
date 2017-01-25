@@ -85,7 +85,7 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<tr>';
-	echo '<td class="imgColumn">';
+	echo '<td class="img-column">';
 
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
 

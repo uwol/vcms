@@ -44,7 +44,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 if(count($eventIds) > 0){
 	echo '<section id="pastevents" class="pastevents-box">';
 	echo '<div class="container-fluid">';
-	echo '<div class="row no-gutter gallery">';
+	echo '<div class="row no-gutter">';
 
 	foreach($eventIds as $eventId){
 		$stmt = $libDb->prepare('SELECT id, titel, datum, ort, intern FROM base_veranstaltung WHERE id = :id');

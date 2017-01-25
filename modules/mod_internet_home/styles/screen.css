@@ -89,10 +89,6 @@ section.announcement-box:nth-of-type(even) {
 	padding: 0;
 }
 
-.thumbnail .img-frame {
-	height: 300px;
-}
-
 .event-box {
 	margin: 0 auto;
 }

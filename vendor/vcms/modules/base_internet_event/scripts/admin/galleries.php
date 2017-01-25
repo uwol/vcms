@@ -104,7 +104,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	// is there a gallery for the event?
 	if(in_array($row['id'], $folders)){
 		echo '<tr>';
-		echo '<td class="imgColumn">';
+		echo '<td class="img-column">';
 
 		//are there images?
 		if($libGallery->hasPictures($row['id'], 2)){
