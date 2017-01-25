@@ -85,18 +85,16 @@ section.announcement-box:nth-of-type(even) {
 	color: white;
 }
 
-.event-box {
-	position: relative;
-	display: block;
-	max-width: 650px;
-	margin: 0 auto;
+.thumbnail {
+	padding: 0;
 }
 
-.gallery .thumbnail .img-frame .event-box {
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+.thumbnail .img-frame {
+	height: 300px;
+}
+
+.event-box {
+	margin: 0 auto;
 }
 
 .event-box .event-box-caption {
