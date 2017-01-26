@@ -1,31 +1,30 @@
 $(document).ready(function() {
 	$.get("vendor/vcms/styles/gallery/modal.html", function(data) {
 		$('#content').append(data);
-		$('#modalCarousel').carousel({interval:false});
+		$('#modal-carousel').carousel({interval:false});
 	});
 
-	$('.gallery .thumbnail img').click(function(e){
+	$('.gallery .thumbnail .img-frame a').click(function(e){
 		e.preventDefault();
-		
-		var clickedThumbnailImg = this;
+
+		var clickedA = this;
 
 		$('.carousel-inner').empty();
-		$('.gallery .thumbnail img').each(function() {
-			var currentThumbnailImg = this;
-			var itemDiv = createCarouselItem(currentThumbnailImg);
+		$('.gallery .thumbnail .img-frame a').each(function() {
+			var currentA = this;
+			var itemDiv = createCarouselItem(currentA);
 
-			if(currentThumbnailImg == clickedThumbnailImg){
+			if(currentA == clickedA){
 				itemDiv.addClass('active');
 			}
 		});
 
-		$('#galleryModal').modal('show');
-		$('#modalCarousel').carousel();
+		$('#gallery-modal').modal('show');
+		$('#modal-carousel').carousel();
 	});
 });
 
-function createCarouselItem(thumbnailImg){
-	var a = $(thumbnailImg).parent();
+function createCarouselItem(a){
 	var thumbnailHref = $(a).attr('href');
 
 	var itemDiv = $('<div class="item"></div>');
@@ -36,6 +35,6 @@ function createCarouselItem(thumbnailImg){
 	img.addClass('center-block');
 	img.addClass('img-responsive');
 	img.appendTo(itemDiv);
-	
+
 	return itemDiv;
 }
