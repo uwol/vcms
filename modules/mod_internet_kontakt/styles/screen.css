@@ -1,7 +1,15 @@
+.contact-form-box {
+
+}
+
 #map {
   width: 100%;
   height: 400px;
   margin-top: 3em;
   margin-bottom: 3em;
   background-color: grey;
+}
+
+.disclaimer-box {
+
 }

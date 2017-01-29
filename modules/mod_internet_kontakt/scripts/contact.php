@@ -128,6 +128,7 @@ echo $libString->getNotificationBoxText();
 
 echo '<div class="row">';
 echo '<div class="col-sm-6">';
+echo '<section class="address-box">';
 
 echo '<p>' .$libConfig->verbindungName. '</p>';
 echo '<address>';
@@ -177,6 +178,7 @@ if($libGenericStorage->loadValueInCurrentModule('show_quaestor') && $vorstand['q
 }
 
 echo '</p>';
+echo '</section>';
 echo '</div>';
 
 echo '<aside class="col-sm-6">';
@@ -185,10 +187,12 @@ echo '</aside>';
 
 echo '</div>';
 
+
 echo '<h2>Kontakt aufnehmen</h2>';
 
 echo '<div class="row">';
 echo '<div class="col-sm-12">';
+echo '<section class="contact-form-box">';
 
 if($mailsent){
 	echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
@@ -231,13 +235,12 @@ if($mailsent){
 	echo '</form>';
 }
 
+echo '</section>';
 echo '</div>';
 echo '</div>';
 
 
-$showMap = $libGenericStorage->loadValueInCurrentModule('show_map');
-
-if($showMap){
+if($libGenericStorage->loadValueInCurrentModule('show_map')){
 	$latitude = $libGenericStorage->loadValueInCurrentModule('map_latitude');
 	$longitude = $libGenericStorage->loadValueInCurrentModule('map_longitude');
 	$googleMapsApiKey = $libGenericStorage->loadValueInCurrentModule('google_maps_api_key');
@@ -247,7 +250,6 @@ if($showMap){
 	echo '	function initMap() {' . PHP_EOL;
 	echo '		var center = {lat: 51.968609, lng: 7.624257};' . PHP_EOL;
 	echo '		var map = new google.maps.Map(document.getElementById("map"), {' . PHP_EOL;
-	echo '			backgroundColor: "#ffffff",' . PHP_EOL;
 	echo '			zoom: 15,' . PHP_EOL;
 	echo '			disableDefaultUI: true,' . PHP_EOL;
 	echo '			zoomControl: false,' . PHP_EOL;
@@ -332,14 +334,19 @@ if($showMap){
 	echo '<script async defer src="https://maps.googleapis.com/maps/api/js?key=' .$googleMapsApiKey. '&callback=initMap"></script>' . PHP_EOL;
 }
 
-if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis') == 1){
+if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis')){
 	echo '<h2>Haftungshinweis</h2>';
+
 	echo '<div class="row">';
-	echo '<p class="col-md-12">';
-	echo 'Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.';
-	echo '</p>';
+	echo '<div class="col-md-12">';
+	echo '<section class="disclaimer-box">';
+	echo '<p>Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
+	echo '</section>';
+	echo '</div>';
 	echo '</div>';
 }
 
 echo '<h2>VCMS</h2>';
-echo 'Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)';
+echo '<section class="cms-box">';
+echo '<p>Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)</p>';
+echo '</section>';
