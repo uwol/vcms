@@ -58,7 +58,7 @@ class LibMenuRenderer{
 		echo '          </button>' . PHP_EOL;
 
 		$brand = $libGenericStorage->loadValue('base_core', 'brand');
-		$brandXs = $libGenericStorage->loadValue('base_core', 'brandXs');
+		$brandXs = $libGenericStorage->loadValue('base_core', 'brand_xs');
 
 		echo '          <a href="index.php" class="navbar-brand hidden-xs">' .$brand. '</a>' . PHP_EOL;
 		echo '          <a href="index.php" class="navbar-brand visible-xs">' .$brandXs. '</a>' . PHP_EOL;

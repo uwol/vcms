@@ -84,7 +84,7 @@ class LibEvent{
 	function hasBannedTitle($id){
 		global $libDb, $libGenericStorage;
 
-		$bannedTitlesString = $libGenericStorage->loadValue('base_core', 'eventBannedTitles');
+		$bannedTitlesString = $libGenericStorage->loadValue('base_core', 'event_banned_titles');
 		$bannedTitles = explode(',', $bannedTitlesString);
 		$bannedTitlesCleaned = array();
 
@@ -101,11 +101,11 @@ class LibEvent{
 	function isFacebookEvent($row){
 		global $libGenericStorage;
 
-		$fbAppId = $libGenericStorage->loadValue('base_core', 'fbAppId');
-		$fbSecretKey = $libGenericStorage->loadValue('base_core', 'fbSecretKey');
+		$facebookAppid = $libGenericStorage->loadValue('base_core', 'facebook_appid');
+		$facebookSecretKey = $libGenericStorage->loadValue('base_core', 'facebook_secret_key');
 
 		$result = isset($row['fb_eventid']) && is_numeric($row['fb_eventid'])
-			&& ini_get('allow_url_fopen') && $fbAppId != '' && $fbSecretKey != '';
+			&& ini_get('allow_url_fopen') && $facebookAppid != '' && $facebookSecretKey != '';
 		return $result;
 	}
 

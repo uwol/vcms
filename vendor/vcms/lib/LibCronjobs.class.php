@@ -67,7 +67,7 @@ class LibCronjobs{
 		$this->cleanSysLogIntranet();
 		$this->initConfiguration();
 
-		if($libGenericStorage->loadValue('base_core', 'deleteAusgetretene') == 1){
+		if($libGenericStorage->loadValue('base_core', 'delete_ausgetretene') == 1){
 			$this->cleanBasePerson();
 		}
 
@@ -172,7 +172,7 @@ class LibCronjobs{
 	function setGalleryPublicityLevels(){
 		global $libGenericStorage, $libGallery, $libTime;
 
-		$eventGalleryMaxPublicSemesters = $libGenericStorage->loadValue('base_core', 'eventGalleryMaxPublicSemesters');
+		$eventGalleryMaxPublicSemesters = $libGenericStorage->loadValue('base_core', 'event_gallery_max_public_semesters');
 
 		if($eventGalleryMaxPublicSemesters > 0){
 			$semester = $libTime->getSemesterName();
@@ -208,40 +208,40 @@ class LibCronjobs{
 			$libGenericStorage->saveValue('base_core', 'smtpPassword', '');
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'fbAppId')){
-			$libGenericStorage->saveValue('base_core', 'fbAppId', '');
+		if(!$libGenericStorage->attributeExists('base_core', 'facebook_appid')){
+			$libGenericStorage->saveValue('base_core', 'facebook_appid', '');
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'fbSecretKey')){
-			$libGenericStorage->saveValue('base_core', 'fbSecretKey', '');
+		if(!$libGenericStorage->attributeExists('base_core', 'facebook_secret_key')){
+			$libGenericStorage->saveValue('base_core', 'facebook_secret_key', '');
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'imagemanipulator')){
-			$libGenericStorage->saveValue('base_core', 'imagemanipulator', '1');
+		if(!$libGenericStorage->attributeExists('base_core', 'image_lib')){
+			$libGenericStorage->saveValue('base_core', 'image_lib', '1');
 		}
 
 		if(!$libGenericStorage->attributeExists('base_core', 'brand')){
 			$libGenericStorage->saveValue('base_core', 'brand', $libConfig->verbindungName);
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'brandXs')){
-			$libGenericStorage->saveValue('base_core', 'brandXs', $libConfig->verbindungName);
+		if(!$libGenericStorage->attributeExists('base_core', 'brand_xs')){
+			$libGenericStorage->saveValue('base_core', 'brand_xs', $libConfig->verbindungName);
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'deleteAusgetretene')){
-			$libGenericStorage->saveValue('base_core', 'deleteAusgetretene', 0);
+		if(!$libGenericStorage->attributeExists('base_core', 'delete_ausgetretene')){
+			$libGenericStorage->saveValue('base_core', 'delete_ausgetretene', 0);
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'eventPreselectIntern')){
-			$libGenericStorage->saveValue('base_core', 'eventPreselectIntern', 0);
+		if(!$libGenericStorage->attributeExists('base_core', 'event_preselect_intern')){
+			$libGenericStorage->saveValue('base_core', 'event_preselect_intern', 0);
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'eventBannedTitles')){
-			$libGenericStorage->saveValue('base_core', 'eventBannedTitles', 'AH-Besuch,Vortrag,Vortragsabend');
+		if(!$libGenericStorage->attributeExists('base_core', 'event_banned_titles')){
+			$libGenericStorage->saveValue('base_core', 'event_banned_titles', 'AH-Besuch,Vortrag,Vortragsabend');
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'eventGalleryMaxPublicSemesters')){
-			$libGenericStorage->saveValue('base_core', 'eventGalleryMaxPublicSemesters', 0);
+		if(!$libGenericStorage->attributeExists('base_core', 'event_gallery_max_public_semesters')){
+			$libGenericStorage->saveValue('base_core', 'event_gallery_max_public_semesters', 0);
 		}
 	}
 

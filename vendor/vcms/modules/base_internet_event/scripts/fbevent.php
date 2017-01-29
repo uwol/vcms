@@ -38,9 +38,9 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if($libEvent->isFacebookEvent($row)){
-	$fbAppId = $libGenericStorage->loadValue('base_core', 'fbAppId');
-	$fbSecretKey = $libGenericStorage->loadValue('base_core', 'fbSecretKey');
-	$fbAccessToken = $fbAppId. '|' .$fbSecretKey;
+	$facebookAppid = $libGenericStorage->loadValue('base_core', 'facebook_appid');
+	$facebookSecretKey = $libGenericStorage->loadValue('base_core', 'facebook_secret_key');
+	$fbAccessToken = $facebookAppid. '|' .$facebookSecretKey;
 	$fbUrl = 'https://www.facebook.com';
 	$fbGraphUrl = 'https://graph.facebook.com';
 	$fbAccessTokenQuery = '?access_token=' .$fbAccessToken;

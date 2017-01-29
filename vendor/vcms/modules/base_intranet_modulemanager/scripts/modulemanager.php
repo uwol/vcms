@@ -369,7 +369,7 @@ function uninstallModule($module){
 function updateEngine(){
 	global $libHttp, $libFilesystem, $libCronjobs, $repoHostname, $engineUpdateScript, $tempRelativeDirectoryPath;
 	// globals required for install/update scripts
-	global $libGlobal, $libDb;
+	global $libGlobal, $libDb, $libGenericStorage;
 
 	$tarRelativeFilePath = $tempRelativeDirectoryPath. '/engine.tar';
 	$tarAbsoluteFilePath = $libFilesystem->getAbsolutePath($tarRelativeFilePath);

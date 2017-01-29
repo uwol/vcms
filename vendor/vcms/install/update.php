@@ -50,9 +50,19 @@ function getIndexes($table){
 	return $result;
 }
 
+function renameStorageKey($moduleId, $oldArrayName, $newArrayName){
+	global $libDb;
 
-/**
-* Tabelle base_veranstaltung aktualisieren
+	$stmt = $libDb->prepare('UPDATE sys_genericstorage SET array_name=:new_array_name WHERE moduleid=:moduleid AND array_name=:old_array_name');
+	$stmt->bindValue(':new_array_name', $newArrayName);
+	$stmt->bindValue(':moduleid', $moduleId);
+	$stmt->bindValue(':old_array_name', $oldArrayName);
+	$stmt->execute();
+}
+
+
+/*
+* Update base_veranstaltung
 */
 $columnsBaseVeranstaltung = getColumns('base_veranstaltung');
 
@@ -72,8 +82,8 @@ if(!in_array('intern', $columnsBaseVeranstaltung)){
 }
 
 
-/**
-* Tabelle base_person aktualisieren
+/*
+* Update base_person
 */
 $columnsBasePerson = getColumns('base_person');
 $indexesBasePerson = getIndexes('base_person');
@@ -119,8 +129,8 @@ if(!in_array('email', $indexesBasePerson)){
 }
 
 
-/**
-* Tabelle base_semester aktualisieren
+/*
+* Update base_semester
 */
 $columnsBaseSemester = getColumns('base_semester');
 
@@ -148,6 +158,23 @@ if(!in_array('vopxxxx', $columnsBaseSemester)){
 	echo 'Aktualisiere Tabelle base_semester<br />';
 	$libDb->query('ALTER TABLE base_semester ADD vopxxxx int(11) default NULL');
 }
+
+
+/*
+* Update base_semester
+*/
+echo 'Aktualisiere Tabelle sys_genericstorage<br />';
+
+renameStorageKey('base_core', 'brandXs', 'brand_xs');
+renameStorageKey('base_core', 'deleteAusgetretene', 'delete_ausgetretene');
+renameStorageKey('base_core', 'eventBannedTitles', 'event_banned_titles');
+renameStorageKey('base_core', 'eventGalleryMaxPublicSemesters', 'event_gallery_max_public_semesters');
+renameStorageKey('base_core', 'eventPreselectIntern', 'event_preselect_intern');
+renameStorageKey('base_core', 'fbAppId', 'facebook_appid');
+renameStorageKey('base_core', 'fbSecretKey', 'facebook_secret_key');
+renameStorageKey('base_core', 'imagemanipulator', 'image_lib');
+
+
 
 
 die('</div><a href="index.php?pid=modules">Klicke hier</a>, um die Modulliste anzuzeigen.');

@@ -55,10 +55,6 @@ class LibImage{
 		return $memLimitMByte / $this->GDlib_colorBits;
 	}
 
-	function imageManipulatorIsAvailable(){
-		return $this->GDlibIsAvailable();
-	}
-
 	function imageRatioIsOk($oldWidth, $oldHeight, $newWidth, $newHeight){
 		$ratioOld = $oldWidth / $oldHeight;
 		$ratioNew = $newWidth / $newHeight;
@@ -70,10 +66,10 @@ class LibImage{
 		return false;
 	}
 
-	function determineImageManipulator(){
+	function determineImageLib(){
 		global $libGenericStorage;
 
-		$method = $libGenericStorage->loadValue('base_core', 'imagemanipulator');
+		$method = $libGenericStorage->loadValue('base_core', 'image_lib');
 
 		if($method == 1 || $method == 2){
 			return $method;
@@ -98,7 +94,7 @@ class LibImage{
 		list($imageWidth, $imageHeight) = getimagesize($imagePath);
 
 		if($this->imageRatioIsOk($imageWidth, $imageHeight, $newWidth, $newHeight)){
-			switch($this->determineImageManipulator()){
+			switch($this->determineImageLib()){
 				case 1:
 					$this->resizeImage_GDlib($imagePath, $newWidth, $newHeight);
 					break;
@@ -155,7 +151,7 @@ class LibImage{
 			return;
 		}
 
-		switch($this->determineImageManipulator()){
+		switch($this->determineImageLib()){
 			case 1: $this->rotateImage_GDlib($imagePath, $degree); break;
 			case 2: $this->rotateImage_ImageMagick($imagePath, $degree); break;
 		}

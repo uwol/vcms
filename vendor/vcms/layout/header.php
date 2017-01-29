@@ -43,8 +43,8 @@ if($libGlobal->page->hasAccessRestriction()){
 /*
 * Opengraph / Facebook meta data
 */
-if($libGenericStorage->loadValue('base_core', 'fbAppId')){
-	echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'fbAppId'). '"/>' . PHP_EOL;
+if($libGenericStorage->loadValue('base_core', 'facebook_appid')){
+	echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'facebook_appid'). '"/>' . PHP_EOL;
 }
 
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
