@@ -51,9 +51,28 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('show_quaestor')){
 	$libGenericStorage->saveValueInCurrentModule('show_quaestor', 0);
 }
 
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_map')){
+	$libGenericStorage->saveValueInCurrentModule('show_map', '0');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('map_latitude')){
+	$libGenericStorage->saveValueInCurrentModule('map_latitude', '51.968609');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('map_longitude')){
+	$libGenericStorage->saveValueInCurrentModule('map_longitude', '7.624257');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('google_maps_api_key')){
+	$libGenericStorage->saveValueInCurrentModule('google_maps_api_key', 'AIzaSyD-xBz_srkJR1aa8cQITtPN-7hd2OPfvRI');
+}
+
+
 if(!$libGenericStorage->attributeExistsInCurrentModule('show_haftungshinweis')){
 	$libGenericStorage->saveValueInCurrentModule('show_haftungshinweis', 1);
 }
+
 
 $mailsent = false;
 
@@ -95,7 +114,6 @@ if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddre
 /*
 * output
 */
-
 $associationSchema = $libAssociation->getAssociationSchema();
 
 echo '<script type="application/ld+json">';
@@ -103,20 +121,15 @@ echo json_encode($associationSchema);
 echo '</script>';
 
 
-
 echo '<h1>Kontakt und Impressum</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<h2>Kontaktadresse</h2>';
-
 echo '<div class="row">';
 echo '<div class="col-sm-6">';
 
-
 echo '<p>' .$libConfig->verbindungName. '</p>';
-
 echo '<address>';
 
 if($libConfig->verbindungZusatz != ''){
@@ -172,12 +185,10 @@ echo '</aside>';
 
 echo '</div>';
 
-
 echo '<h2>Kontakt aufnehmen</h2>';
 
 echo '<div class="row">';
 echo '<div class="col-sm-12">';
-
 
 if($mailsent){
 	echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
@@ -223,6 +234,104 @@ if($mailsent){
 echo '</div>';
 echo '</div>';
 
+
+$showMap = $libGenericStorage->loadValueInCurrentModule('show_map');
+
+if($showMap){
+	$latitude = $libGenericStorage->loadValueInCurrentModule('map_latitude');
+	$longitude = $libGenericStorage->loadValueInCurrentModule('map_longitude');
+	$googleMapsApiKey = $libGenericStorage->loadValueInCurrentModule('google_maps_api_key');
+
+	echo '<div id="map"></div>' . PHP_EOL;
+	echo '<script>' . PHP_EOL;
+	echo '	function initMap() {' . PHP_EOL;
+	echo '		var center = {lat: 51.968609, lng: 7.624257};' . PHP_EOL;
+	echo '		var map = new google.maps.Map(document.getElementById("map"), {' . PHP_EOL;
+	echo '			backgroundColor: "#ffffff",' . PHP_EOL;
+	echo '			zoom: 15,' . PHP_EOL;
+	echo '			disableDefaultUI: true,' . PHP_EOL;
+	echo '			zoomControl: false,' . PHP_EOL;
+	echo '			scaleControl: false,' . PHP_EOL;
+	echo '			scrollwheel: false,' . PHP_EOL;
+	echo '			disableDoubleClickZoom: true,' . PHP_EOL;
+	echo '			center: center,' . PHP_EOL;
+	echo '			styles: [{' . PHP_EOL;
+	echo '				"featureType": "landscape.natural",' . PHP_EOL;
+	echo '				"elementType": "geometry.fill",' . PHP_EOL;
+	echo '				"stylers": [{' . PHP_EOL;
+	echo '					"color": "#ffffff"' . PHP_EOL;
+	echo '				}]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "featureType": "landscape.man_made",' . PHP_EOL;
+	echo '				 "stylers": [{' . PHP_EOL;
+	echo '					 "color": "#ffffff"' . PHP_EOL;
+	echo '				 }, {' . PHP_EOL;
+	echo '					 "visibility": "off"' . PHP_EOL;
+	echo '				 }' . PHP_EOL;
+	echo '				]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "featureType": "water",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '					 "color": "#80C8E5"' . PHP_EOL;
+	echo '				 }, {' . PHP_EOL;
+	echo '					 "saturation": 0' . PHP_EOL;
+	echo '				 }' . PHP_EOL;
+	echo '			 ]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "featureType": "road.arterial",' . PHP_EOL;
+	echo '			 "elementType": "geometry",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '				 "color": "#999999"' . PHP_EOL;
+	echo '			 }]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "elementType": "labels.text.stroke",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '				 "visibility": "off"' . PHP_EOL;
+	echo '			 }]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "elementType": "labels.text",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '				 "color": "#333333"' . PHP_EOL;
+	echo '			 }]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "featureType": "road.local",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '				 "color": "#dedede"' . PHP_EOL;
+	echo '			 }]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "featureType": "road.local",' . PHP_EOL;
+	echo '			 "elementType": "labels.text",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '				 "color": "#666666"' . PHP_EOL;
+	echo '			 }]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "featureType": "transit.station.bus",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '				 "saturation": -57' . PHP_EOL;
+	echo '			 }]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "featureType": "road.highway",' . PHP_EOL;
+	echo '			 "elementType": "labels.icon",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '				 "visibility": "off"' . PHP_EOL;
+	echo '			 }]' . PHP_EOL;
+	echo '			}, {' . PHP_EOL;
+	echo '			 "featureType": "poi",' . PHP_EOL;
+	echo '			 "stylers": [{' . PHP_EOL;
+	echo '				 "visibility": "off"' . PHP_EOL;
+	echo '			 }]' . PHP_EOL;
+	echo '			}' . PHP_EOL;
+	echo '			]' . PHP_EOL;
+	echo '		});' . PHP_EOL;
+	echo '		var marker = new google.maps.Marker({' . PHP_EOL;
+	echo '			position: center,' . PHP_EOL;
+	echo '			map: map' . PHP_EOL;
+	echo '		});' . PHP_EOL;
+	echo '	}' . PHP_EOL;
+	echo '</script>' . PHP_EOL;
+	echo '<script async defer src="https://maps.googleapis.com/maps/api/js?key=' .$googleMapsApiKey. '&callback=initMap"></script>' . PHP_EOL;
+}
+
 if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis') == 1){
 	echo '<h2>Haftungshinweis</h2>';
 	echo '<div class="row">';
@@ -233,4 +342,4 @@ if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis') == 1){
 }
 
 echo '<h2>VCMS</h2>';
-echo 'Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU GPL-Lizenz)';
+echo 'Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)';
