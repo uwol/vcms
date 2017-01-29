@@ -316,7 +316,7 @@ class LibAssociation{
 		$address['addressCountry'] = $libConfig->verbindungLand;
 		$result['address'] = $address;
 
-		$wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wp_url');
+		$wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wikipedia_url');
 
 		if($wikipediaUrl != ''){
 			$result['sameAs'] = $wikipediaUrl;

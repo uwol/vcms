@@ -25,11 +25,11 @@ $libDb->connect();
 $calendarId = $libGlobal->getSiteUrlAuthority().'_geburtstage_aktivitas_';
 
 if(isset($_GET['user']) &&
-		$_GET['user'] == $libGenericStorage->loadValueInCurrentModule('userNameICalendar') &&
+		$_GET['user'] == $libGenericStorage->loadValueInCurrentModule('icalendar_username') &&
 		isset($_GET['pass']) &&
-		$_GET['pass'] == $libGenericStorage->loadValueInCurrentModule('passwordICalendar') &&
-		$libGenericStorage->loadValueInCurrentModule('userNameICalendar') != '' &&
-		$libGenericStorage->loadValueInCurrentModule('passwordICalendar') != ''){
+		$_GET['pass'] == $libGenericStorage->loadValueInCurrentModule('icalendar_password') &&
+		$libGenericStorage->loadValueInCurrentModule('icalendar_username') != '' &&
+		$libGenericStorage->loadValueInCurrentModule('icalendar_password') != ''){
 
 	$calendar = new vcms\LibICalendar();
 

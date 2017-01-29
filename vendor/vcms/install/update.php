@@ -179,5 +179,31 @@ renameStorageKey('base_core', 'smtpHost', 'smtp_host');
 renameStorageKey('base_core', 'smtpPassword', 'smtp_password');
 renameStorageKey('base_core', 'smtpUsername', 'smtp_username');
 
+renameStorageKey('base_internet_login', 'sslProxyUrl', 'ssl_proxy_url');
+
+renameStorageKey('base_intranet_home', 'checkFilePermissions', 'check_file_permissions');
+renameStorageKey('base_intranet_home', 'passwordICalendar', 'icalendar_password');
+renameStorageKey('base_intranet_home', 'userNameICalendar', 'icalendar_username');
+renameStorageKey('base_intranet_home', 'showReservations', 'show_reservations');
+
+renameStorageKey('base_intranet_personen', 'showGroupY', 'show_group_y');
+
+renameStorageKey('mod_internet_home', 'fb_url', 'facebook_url');
+renameStorageKey('mod_internet_home', 'wp_url', 'wikipedia_url');
+renameStorageKey('mod_internet_home', 'showFbPagePlugin', 'show_facebook_plugin');
+
+renameStorageKey('mod_internet_kontakt', 'showHaftungshinweis', 'show_haftungshinweis');
+renameStorageKey('mod_internet_kontakt', 'showSenior', 'show_senior');
+renameStorageKey('mod_internet_kontakt', 'showJubelsenior', 'show_jubelsenior');
+renameStorageKey('mod_internet_kontakt', 'showConsenior', 'show_consenior');
+renameStorageKey('mod_internet_kontakt', 'showFuchsmajor', 'show_fuchsmajor');
+renameStorageKey('mod_internet_kontakt', 'showFuchsmajor2', 'show_fuchsmajor2');
+renameStorageKey('mod_internet_kontakt', 'showQuaestor', 'show_quaestor');
+renameStorageKey('mod_internet_kontakt', 'showScriptor', 'show_scriptor');
+
+renameStorageKey('mod_intranet_download', 'rightsPreselection', 'preselect_rights');
+
+renameStorageKey('mod_intranet_rundbrief', 'preselectInteressierteAHAH', 'preselect_int_ahah');
+
 
 die('</div><a href="index.php?pid=modules">Klicke hier</a>, um die Modulliste anzuzeigen.');

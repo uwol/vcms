@@ -20,13 +20,13 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('userNameICalendar') || !$libGenericStorage->attributeExistsInCurrentModule('passwordICalendar')){
-	$libGenericStorage->saveValueInCurrentModule('userNameICalendar', $libString->randomAlphaNumericString(40));
-	$libGenericStorage->saveValueInCurrentModule('passwordICalendar', $libString->randomAlphaNumericString(40));
+if(!$libGenericStorage->attributeExistsInCurrentModule('icalendar_username') || !$libGenericStorage->attributeExistsInCurrentModule('icalendar_password')){
+	$libGenericStorage->saveValueInCurrentModule('icalendar_username', $libString->randomAlphaNumericString(40));
+	$libGenericStorage->saveValueInCurrentModule('icalendar_password', $libString->randomAlphaNumericString(40));
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showReservations')){
-	$libGenericStorage->saveValueInCurrentModule('showReservations', '1');
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_reservations')){
+	$libGenericStorage->saveValueInCurrentModule('show_reservations', '1');
 }
 
 
@@ -84,7 +84,7 @@ if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')){
 }
 
 if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')
-		&& $libGenericStorage->loadValueInCurrentModule('showReservations')){
+		&& $libGenericStorage->loadValueInCurrentModule('show_reservations')){
 	require_once('timeline/reservations.php');
 }
 

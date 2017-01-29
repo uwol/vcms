@@ -23,36 +23,36 @@ if(!is_object($libGlobal))
 /*
 * action
 */
-if(!$libGenericStorage->attributeExistsInCurrentModule('showSenior')){
-	$libGenericStorage->saveValueInCurrentModule('showSenior', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_senior')){
+	$libGenericStorage->saveValueInCurrentModule('show_senior', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showJubelsenior')){
-	$libGenericStorage->saveValueInCurrentModule('showJubelsenior', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_jubelsenior')){
+	$libGenericStorage->saveValueInCurrentModule('show_jubelsenior', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showConsenior')){
-	$libGenericStorage->saveValueInCurrentModule('showConsenior', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_consenior')){
+	$libGenericStorage->saveValueInCurrentModule('show_consenior', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showFuchsmajor')){
-	$libGenericStorage->saveValueInCurrentModule('showFuchsmajor', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_fuchsmajor')){
+	$libGenericStorage->saveValueInCurrentModule('show_fuchsmajor', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showFuchsmajor2')){
-	$libGenericStorage->saveValueInCurrentModule('showFuchsmajor2', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_fuchsmajor2')){
+	$libGenericStorage->saveValueInCurrentModule('show_fuchsmajor2', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showScriptor')){
-	$libGenericStorage->saveValueInCurrentModule('showScriptor', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_scriptor')){
+	$libGenericStorage->saveValueInCurrentModule('show_scriptor', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showQuaestor')){
-	$libGenericStorage->saveValueInCurrentModule('showQuaestor', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_quaestor')){
+	$libGenericStorage->saveValueInCurrentModule('show_quaestor', 0);
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showHaftungshinweis')){
-	$libGenericStorage->saveValueInCurrentModule('showHaftungshinweis', 1);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_haftungshinweis')){
+	$libGenericStorage->saveValueInCurrentModule('show_haftungshinweis', 1);
 }
 
 $mailsent = false;
@@ -135,31 +135,31 @@ echo '<p>';
 
 $vorstand = $libAssociation->getAnsprechbarerAktivenVorstandIds();
 
-if($libGenericStorage->loadValueInCurrentModule('showSenior') && $vorstand['senior']){
+if($libGenericStorage->loadValueInCurrentModule('show_senior') && $vorstand['senior']){
 	echo 'Senior: ' .$libPerson->getNameString($vorstand['senior'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showJubelsenior') && $vorstand['jubelsenior']){
+if($libGenericStorage->loadValueInCurrentModule('show_jubelsenior') && $vorstand['jubelsenior']){
 	echo 'Jubelsenior: ' .$libPerson->getNameString($vorstand['jubelsenior'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showConsenior') && $vorstand['consenior']){
+if($libGenericStorage->loadValueInCurrentModule('show_consenior') && $vorstand['consenior']){
 	echo 'Consenior: ' .$libPerson->getNameString($vorstand['consenior'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor') && $vorstand['fuchsmajor']){
+if($libGenericStorage->loadValueInCurrentModule('show_fuchsmajor') && $vorstand['fuchsmajor']){
 	echo 'Fuchsmajor: ' .$libPerson->getNameString($vorstand['fuchsmajor'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showFuchsmajor2') && $vorstand['fuchsmajor2']){
+if($libGenericStorage->loadValueInCurrentModule('show_fuchsmajor2') && $vorstand['fuchsmajor2']){
 	echo 'Fuchsmajor 2: ' .$libPerson->getNameString($vorstand['fuchsmajor2'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showScriptor') && $vorstand['scriptor']){
+if($libGenericStorage->loadValueInCurrentModule('show_scriptor') && $vorstand['scriptor']){
 	echo 'Scriptor: ' .$libPerson->getNameString($vorstand['scriptor'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('showQuaestor') && $vorstand['quaestor']){
+if($libGenericStorage->loadValueInCurrentModule('show_quaestor') && $vorstand['quaestor']){
 	echo 'Quaestor: ' .$libPerson->getNameString($vorstand['quaestor'], 0). '<br />';
 }
 
@@ -223,7 +223,7 @@ if($mailsent){
 echo '</div>';
 echo '</div>';
 
-if($libGenericStorage->loadValueInCurrentModule('showHaftungshinweis') == 1){
+if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis') == 1){
 	echo '<h2>Haftungshinweis</h2>';
 	echo '<div class="row">';
 	echo '<p class="col-md-12">';

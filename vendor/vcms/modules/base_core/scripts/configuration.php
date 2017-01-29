@@ -76,13 +76,13 @@ foreach($storage as $moduleid => $arrays){
 		//positions and values at that positions
 		foreach($positionen as $position => $value){
 			echo '<div class="form-group">';
-			echo '<label class="col-sm-2 control-label">' .$array_name. '</label>';
+			echo '<label class="col-sm-4 control-label">' .$array_name. '</label>';
 
 			echo '<div class="col-sm-1">';
 			echo '<input type="text" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" class="form-control input-sm" />';
 			echo '</div>';
 
-			echo '<div class="col-sm-8">';
+			echo '<div class="col-sm-6">';
 			echo '<input type="text" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" class="form-control input-sm" />';
 			echo '</div>';
 

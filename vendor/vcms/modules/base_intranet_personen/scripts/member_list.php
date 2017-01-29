@@ -20,8 +20,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('showGroupY')){
-	$libGenericStorage->saveValueInCurrentModule('showGroupY', 1);
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_group_y')){
+	$libGenericStorage->saveValueInCurrentModule('show_group_y', 1);
 }
 
 require('lib/persons.php');
@@ -165,7 +165,7 @@ else {
 		printPersons($stmt);
 	}
 
-	if($libGenericStorage->loadValueInCurrentModule('showGroupY')){
+	if($libGenericStorage->loadValueInCurrentModule('show_group_y')){
 		//Vereinsfreunde
 		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'Y'");
 		$stmt->execute();

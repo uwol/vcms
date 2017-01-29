@@ -24,33 +24,33 @@ if($libGlobal->page->isContainerEnabled()){
 }
 
 
-$fb_url = $libGenericStorage->loadValue('mod_internet_home', 'fb_url');
-$instagram_url = $libGenericStorage->loadValue('mod_internet_home', 'instagram_url');
-$twitter_url = $libGenericStorage->loadValue('mod_internet_home', 'twitter_url');
-$wp_url = $libGenericStorage->loadValue('mod_internet_home', 'wp_url');
+$facebookUrl = $libGenericStorage->loadValue('mod_internet_home', 'facebook_url');
+$instagramUrl = $libGenericStorage->loadValue('mod_internet_home', 'instagram_url');
+$twitterUrl = $libGenericStorage->loadValue('mod_internet_home', 'twitter_url');
+$wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wikipedia_url');
 
 
 echo '    <footer>' . PHP_EOL;
 echo '      <div class="social-buttons text-right container">' . PHP_EOL;
 
-if($fb_url != ''){
-	echo '        <a href="' .$fb_url. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+if($facebookUrl != ''){
+	echo '        <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
 	echo '        <a href="http://www.facebook.com/sharer/sharer.php?u=' .urlencode($libGlobal->getSiteUrl()). '"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
-if($instagram_url != ''){
-	echo '        <a href="' .$instagram_url. '" rel="nofollow"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+if($instagramUrl != ''){
+	echo '        <a href="' .$instagramUrl. '" rel="nofollow"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
-if($twitter_url != ''){
-	echo '        <a href="' .$twitter_url. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+if($twitterUrl != ''){
+	echo '        <a href="' .$twitterUrl. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
 	echo '        <a href="http://twitter.com/share?url=' .urlencode($libGlobal->getSiteUrl()). '&amp;text=' .urlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
-if($wp_url != ''){
-	echo '        <a href="' .$wp_url. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+if($wikipediaUrl != ''){
+	echo '        <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 echo '      </div>' . PHP_EOL;

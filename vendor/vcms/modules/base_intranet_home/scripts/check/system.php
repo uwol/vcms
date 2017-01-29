@@ -20,8 +20,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('checkFilePermissions')){
-	$libGenericStorage->saveValueInCurrentModule('checkFilePermissions', 0);
+if(!$libGenericStorage->attributeExistsInCurrentModule('check_file_permissions')){
+	$libGenericStorage->saveValueInCurrentModule('check_file_permissions', 0);
 }
 
 
@@ -82,7 +82,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	* nonreadable files
 	*/
 	if(function_exists('posix_access')){
-		if($libGenericStorage->loadValueInCurrentModule('checkFilePermissions') == 1){
+		if($libGenericStorage->loadValueInCurrentModule('check_file_permissions') == 1){
 			$notReadableFiles = searchNotReadAbleFiles('.');
 		}
 	}

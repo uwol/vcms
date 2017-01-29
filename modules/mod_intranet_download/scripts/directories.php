@@ -20,8 +20,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('rightsPreselection')){
-	$libGenericStorage->saveValueInCurrentModule('rightsPreselection', 1);
+if(!$libGenericStorage->attributeExistsInCurrentModule('preselect_rights')){
+	$libGenericStorage->saveValueInCurrentModule('preselect_rights', 1);
 }
 
 
@@ -148,7 +148,7 @@ if(!empty($libAuth->getAemter())){
 		if($row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "V"){
 			echo '<div class="checkbox"><label><input type="checkbox" name="gruppen[]" value="' .$row['bezeichnung']. '"';
 
-			if($libGenericStorage->loadValueInCurrentModule('rightsPreselection') == 1){
+			if($libGenericStorage->loadValueInCurrentModule('preselect_rights') == 1){
 				echo 'checked="checked"';
 			}
 

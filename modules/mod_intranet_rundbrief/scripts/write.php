@@ -75,8 +75,8 @@ $stmt->fetch();
 * configuration
 */
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('preselectInteressierteAHAH')){
-	$libGenericStorage->saveValueInCurrentModule('preselectInteressierteAHAH', 1);
+if(!$libGenericStorage->attributeExistsInCurrentModule('preselect_int_ahah')){
+	$libGenericStorage->saveValueInCurrentModule('preselect_int_ahah', 1);
 }
 
 
@@ -102,7 +102,7 @@ echo '</label></div>';
 
 $ahahInteressiertChecked = '';
 
-if($libGenericStorage->loadValueInCurrentModule('preselectInteressierteAHAH') == 1){
+if($libGenericStorage->loadValueInCurrentModule('preselect_int_ahah') == 1){
 	$ahahInteressiertChecked = 'checked="checked"';
 }
 

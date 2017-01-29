@@ -20,8 +20,8 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 * configuration
 */
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('sslProxyUrl')){
-	$libGenericStorage->saveValueInCurrentModule('sslProxyUrl', '');
+if(!$libGenericStorage->attributeExistsInCurrentModule('ssl_proxy_url')){
+	$libGenericStorage->saveValueInCurrentModule('ssl_proxy_url', '');
 }
 
 
@@ -35,7 +35,7 @@ echo '<p>Bitte zum Anmelden die E-Mail-Adresse und das Passwort eingeben.</p>';
 $urlPrefix = '';
 
 if($libGlobal->getSiteUrlAuthority() != ""){
-	$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
+	$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
 
 	if($sslProxyUrl != ''){
 		$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libGlobal->getSiteUrlAuthority() . '/';

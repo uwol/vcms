@@ -144,7 +144,7 @@ if($formSent && !$formError){
 	$urlPrefix = '';
 
 	if($libGlobal->getSiteUrlAuthority() != ''){
-		$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('sslProxyUrl');
+		$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
 
 		if($sslProxyUrl != ''){
 			$urlPrefix = 'https://' .$sslProxyUrl. '/' .$libGlobal->getSiteUrlAuthority(). '/';
