@@ -32,27 +32,29 @@ $wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wikipedia_ur
 
 echo '    <footer>' . PHP_EOL;
 echo '      <div class="social-buttons text-right container">' . PHP_EOL;
+echo '        <div class="col-xs-12">' . PHP_EOL;
 
 if($facebookUrl != ''){
-	echo '        <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '          <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
-	echo '        <a href="http://www.facebook.com/sharer/sharer.php?u=' .urlencode($libGlobal->getSiteUrl()). '"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '          <a href="http://www.facebook.com/sharer/sharer.php?u=' .urlencode($libGlobal->getSiteUrl()). '"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if($instagramUrl != ''){
-	echo '        <a href="' .$instagramUrl. '" rel="nofollow"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '          <a href="' .$instagramUrl. '" rel="nofollow"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if($twitterUrl != ''){
-	echo '        <a href="' .$twitterUrl. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '          <a href="' .$twitterUrl. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
-	echo '        <a href="http://twitter.com/share?url=' .urlencode($libGlobal->getSiteUrl()). '&amp;text=' .urlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '          <a href="http://twitter.com/share?url=' .urlencode($libGlobal->getSiteUrl()). '&amp;text=' .urlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if($wikipediaUrl != ''){
-	echo '        <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '          <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
+echo '        </div>' . PHP_EOL;
 echo '      </div>' . PHP_EOL;
 echo '    </footer>' . PHP_EOL;
 echo '    <script src="vendor/object-fit-polyfill/object-fit-polyfill.js"></script>' . PHP_EOL;
