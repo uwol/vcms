@@ -188,24 +188,24 @@ class LibCronjobs{
 	function initConfiguration(){
 		global $libGenericStorage, $libConfig;
 
-		if($libGenericStorage->loadValue('base_core', 'siteUrl') == ''){
-			$libGenericStorage->saveValue('base_core', 'siteUrl', $this->getCurrentSiteUrl());
+		if($libGenericStorage->loadValue('base_core', 'site_url') == ''){
+			$libGenericStorage->saveValue('base_core', 'site_url', $this->getCurrentSiteUrl());
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'smtpEnable')){
-			$libGenericStorage->saveValue('base_core', 'smtpEnable', 0);
+		if(!$libGenericStorage->attributeExists('base_core', 'smtp_enable')){
+			$libGenericStorage->saveValue('base_core', 'smtp_enable', 0);
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'smtpHost')){
-			$libGenericStorage->saveValue('base_core', 'smtpHost', '');
+		if(!$libGenericStorage->attributeExists('base_core', 'smtp_host')){
+			$libGenericStorage->saveValue('base_core', 'smtp_host', '');
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'smtpUsername')){
-			$libGenericStorage->saveValue('base_core', 'smtpUsername', '');
+		if(!$libGenericStorage->attributeExists('base_core', 'smtp_username')){
+			$libGenericStorage->saveValue('base_core', 'smtp_username', '');
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'smtpPassword')){
-			$libGenericStorage->saveValue('base_core', 'smtpPassword', '');
+		if(!$libGenericStorage->attributeExists('base_core', 'smtp_password')){
+			$libGenericStorage->saveValue('base_core', 'smtp_password', '');
 		}
 
 		if(!$libGenericStorage->attributeExists('base_core', 'facebook_appid')){

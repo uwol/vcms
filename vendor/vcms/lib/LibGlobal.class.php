@@ -103,7 +103,7 @@ class LibGlobal{
 	function getSiteUrl(){
 		global $libGenericStorage;
 
-		$result = $libGenericStorage->loadValue('base_core', 'siteUrl');
+		$result = $libGenericStorage->loadValue('base_core', 'site_url');
 		return $result;
 	}
 

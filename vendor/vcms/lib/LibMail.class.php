@@ -32,12 +32,12 @@ class LibMail{
 		);
 		$mail->CharSet = 'UTF-8';
 
-		if($libGenericStorage->loadValue('base_core', 'smtpEnable') == 1){
+		if($libGenericStorage->loadValue('base_core', 'smtp_enable') == 1){
 			$mail->IsSMTP();
 			$mail->SMTPAuth = true;
-			$mail->Host = $libGenericStorage->loadValue('base_core', 'smtpHost');
-			$mail->Username = $libGenericStorage->loadValue('base_core', 'smtpUsername');
-			$mail->Password = $libGenericStorage->loadValue('base_core', 'smtpPassword');
+			$mail->Host = $libGenericStorage->loadValue('base_core', 'smtp_host');
+			$mail->Username = $libGenericStorage->loadValue('base_core', 'smtp_username');
+			$mail->Password = $libGenericStorage->loadValue('base_core', 'smtp_password');
 		}
 	}
 }
