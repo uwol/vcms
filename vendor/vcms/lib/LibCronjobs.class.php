@@ -172,7 +172,7 @@ class LibCronjobs{
 	function setGalleryPublicityLevels(){
 		global $libGenericStorage, $libGallery, $libTime;
 
-		$eventGalleryMaxPublicSemesters = $libGenericStorage->loadValue('base_core', 'event_gallery_max_public_semesters');
+		$eventGalleryMaxPublicSemesters = $libGenericStorage->loadValue('base_core', 'event_public_gallery_semesters');
 
 		if($eventGalleryMaxPublicSemesters > 0){
 			$semester = $libTime->getSemesterName();
@@ -240,8 +240,8 @@ class LibCronjobs{
 			$libGenericStorage->saveValue('base_core', 'event_banned_titles', 'AH-Besuch,Vortrag,Vortragsabend');
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'event_gallery_max_public_semesters')){
-			$libGenericStorage->saveValue('base_core', 'event_gallery_max_public_semesters', 0);
+		if(!$libGenericStorage->attributeExists('base_core', 'event_public_gallery_semesters')){
+			$libGenericStorage->saveValue('base_core', 'event_public_gallery_semesters', 0);
 		}
 	}
 

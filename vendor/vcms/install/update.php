@@ -168,7 +168,7 @@ echo 'Aktualisiere Tabelle sys_genericstorage<br />';
 renameStorageKey('base_core', 'brandXs', 'brand_xs');
 renameStorageKey('base_core', 'deleteAusgetretene', 'delete_ausgetretene');
 renameStorageKey('base_core', 'eventBannedTitles', 'event_banned_titles');
-renameStorageKey('base_core', 'eventGalleryMaxPublicSemesters', 'event_gallery_max_public_semesters');
+renameStorageKey('base_core', 'eventGalleryMaxPublicSemesters', 'event_public_gallery_semesters');
 renameStorageKey('base_core', 'eventPreselectIntern', 'event_preselect_intern');
 renameStorageKey('base_core', 'fbAppId', 'facebook_appid');
 renameStorageKey('base_core', 'fbSecretKey', 'facebook_secret_key');
