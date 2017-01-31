@@ -248,7 +248,7 @@ if($libGenericStorage->loadValueInCurrentModule('show_map')){
 	echo '<div id="map"></div>' . PHP_EOL;
 	echo '<script>' . PHP_EOL;
 	echo '	function initMap() {' . PHP_EOL;
-	echo '		var center = {lat: 51.968609, lng: 7.624257};' . PHP_EOL;
+	echo '		var center = {lat: ' .$latitude. ', lng: ' .$longitude. '};' . PHP_EOL;
 	echo '		var map = new google.maps.Map(document.getElementById("map"), {' . PHP_EOL;
 	echo '			zoom: 15,' . PHP_EOL;
 	echo '			disableDefaultUI: true,' . PHP_EOL;
