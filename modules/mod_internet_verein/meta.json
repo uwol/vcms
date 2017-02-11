@@ -23,7 +23,7 @@
 	],
 	"menuElementsInternet": [
 		{
-			"name": "Verein",
+			"name": "Verbindung",
 			"type": "menu_folder",
 			"position": 600,
 			"elements": [
