@@ -90,7 +90,7 @@ if(isset($_GET['id'])){
 	echo '<p>';
 
 	if($vereinarray['datum_gruendung'] != ''){
-		echo 'Gründung am ';
+		echo 'Gründung ';
 		echo $libAssociation->getGruendungString($vereinarray['datum_gruendung']);
 		echo '<br />';
 	}
