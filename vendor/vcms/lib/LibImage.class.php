@@ -28,8 +28,8 @@ class LibImage{
 	var $startseiteFotoWidth = 600;
 	var $startseiteFotoHeight = 400;
 
-	var $semesterCoverWidth = 400;
-	var $semesterCoverHeight = 300;
+	var $semesterCoverWidth = 800;
+	var $semesterCoverHeight = 600;
 
 	var $GDlib_colorBits = 5;
 

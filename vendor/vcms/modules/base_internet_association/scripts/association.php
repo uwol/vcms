@@ -31,10 +31,6 @@ if(isset($_GET['id'])){
 	echo '<div class="row">';
 	echo '<div class="col-sm-9">';
 
-	/*
-	* association address
-	*/
-	echo '<h3>Adresse</h3>';
 	echo '<address>';
 
 	if($vereinarray['zusatz1'] != ''){
@@ -63,41 +59,38 @@ if(isset($_GET['id'])){
 
 	echo '</address>';
 
-	echo '<h3>Daten zum Verein</h3>';
+	echo '<hr />';
 
-	/*
-	* association data
-	*/
 	if($vereinarray['farbe1'] != ''){
-		echo '<p>';
-		echo 'Farben: ' .$vereinarray['farbe1']. ' ' .$vereinarray['farbe2']. ' ' .$vereinarray['farbe3'];
-		echo '</p>';
-
-		echo '<table style="border:1px solid black;width:50px;border-collapse:collapse">';
+		echo '<div style="width:50px">';
 
 		if($vereinarray['farbe1'] != ''){
-			echo '<tr><td style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe1']). '"></td></tr>';
+			echo '<div style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe1']). '"></div>';
 		}
 
 		if($vereinarray['farbe2'] != ''){
-			echo '<tr><td style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe2']). '"></td></tr>';
+			echo '<div style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe2']). '"></div>';
 		}
 
 		if($vereinarray['farbe3'] != ''){
-			echo '<tr><td style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe3']). '"></td></tr>';
+			echo '<div style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe3']). '"></div>';
 		}
 
 		if($vereinarray['farbe4'] != ''){
-			echo '<tr><td style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe4']). '"></td></tr>';
+			echo '<div style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe4']). '"></div>';
 		}
 
-		echo '</table>';
+		echo '</div>';
+
+		echo '<p>';
+		echo $vereinarray['farbe1']. ' ' .$vereinarray['farbe2']. ' ' .$vereinarray['farbe3']. '<br />';
+		echo '</p>';
 	}
 
 	echo '<p>';
 
 	if($vereinarray['datum_gruendung'] != ''){
-		echo 'Gründung: ';
+		echo 'Gründung am ';
 		echo $libAssociation->getGruendungString($vereinarray['datum_gruendung']);
 		echo '<br />';
 	}
@@ -165,6 +158,7 @@ if(isset($_GET['id'])){
 	echo '</p>';
 
 	if($vereinarray['farbenstrophe'] != ''){
+		echo '<hr />';
 		echo '<h3>Farbenstrophe</h3>';
 		echo '<p>';
 		echo nl2br($vereinarray['farbenstrophe']);
@@ -172,13 +166,15 @@ if(isset($_GET['id'])){
 	}
 
 	if($vereinarray['farbenstrophe_inoffiziell'] != ''){
-		echo '<h3>inoffizielle Farbenstrophe</h3>';
+		echo '<hr />';
+		echo '<h3>Inoffizielle Farbenstrophe</h3>';
 		echo '<p>';
 		echo nl2br($vereinarray['farbenstrophe_inoffiziell']);
 		echo '</p>';
 	}
 
 	if($vereinarray['fuchsenstrophe'] != ''){
+		echo '<hr />';
 		echo '<h3>Fuchsenstrophe</h3>';
 		echo '<p>';
 		echo nl2br($vereinarray['fuchsenstrophe']);
@@ -186,6 +182,7 @@ if(isset($_GET['id'])){
 	}
 
 	if($vereinarray['bundeslied'] != ''){
+		echo '<hr />';
 		echo '<h3>Bundeslied</h3>';
 		echo '<p>';
 		echo nl2br($vereinarray['bundeslied']);
@@ -193,7 +190,7 @@ if(isset($_GET['id'])){
 	}
 
 	if($vereinarray['beschreibung'] != ''){
-		echo '<h3>Weitere Informationen</h3>';
+		echo '<hr />';
 		echo '<p>';
 		echo nl2br($vereinarray['beschreibung']);
 		echo '</p>';
