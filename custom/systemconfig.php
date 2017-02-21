@@ -16,9 +16,9 @@ class LibConfig{
 	var $verbindungLand = '';
 	var $verbindungTelefon = '+49 251 123456789';
 
-	var $seiteBeschreibung = 'Katholischer Studentenverein Example im Kartellverband katholischer deutscher Studentenvereine (KV) zu Muenster (Westf.)';
-	var $seiteKeywords = 'Studentenverbindung, Universitaet, Verbindung, Studentenverein, Student';
-	var $emailInfo = 'info@example.net';
+	var $seiteBeschreibung = 'Katholischer Studentenverein Example im Kartellverband katholischer deutscher Studentenvereine (KV) zu Münster (Westf.)';
+	var $seiteKeywords = 'Studentenverbindung, Universität, Verbindung, Studentenverein, Student';
+	var $emailInfo = 'kontakt@example.net';
 	var $emailWebmaster = 'webmaster@example.net';
 
 	var $chargenSenior = 'x';
