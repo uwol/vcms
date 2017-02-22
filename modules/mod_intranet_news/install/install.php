@@ -43,20 +43,7 @@ $libDb->query($sql);
 
 
 echo 'Speichere Standarddatensätze<br />';
-$sql = "INSERT IGNORE INTO mod_news_kategorie (id, bezeichnung) VALUES (1, 'Todesfall'),
-(2, 'Geburt'),
-(3, 'Hochzeit'),
-(4, 'Klatsch und Tratsch'),
-(5, 'Austritt'),
-(6, 'Eintritt'),
-(8, 'Veranstaltung'),
-(9, 'Adressänderung'),
-(10, 'Allgemeiner Hinweis'),
-(11, 'Philistrierung'),
-(12, 'Neuerung'),
-(13, 'Kritik'),
-(15, 'Frage'),
-(16, 'Chargieren');";
+$sql = "INSERT IGNORE INTO mod_news_kategorie (id, bezeichnung) VALUES (1, 'Todesfall'), (2, 'Geburt'), (3, 'Hochzeit'), (4, 'Klatsch und Tratsch'), (5, 'Austritt'), (6, 'Eintritt'), (8, 'Veranstaltung'), (9, 'Adressänderung'), (10, 'Allgemeiner Hinweis'), (11, 'Philistrierung'), (12, 'Neuerung'), (13, 'Kritik'), (15, 'Frage'), (16, 'Chargieren'), (17, 'Gratulation');";
 $libDb->query($sql);
 
 
