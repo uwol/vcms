@@ -1,6 +1,4 @@
-@media(min-width: 768px) {
-	.navbar-default.affix-top {
-		background-color: rgba(255, 255, 255, 0.7);
-		border-color: rgba(255, 255, 255, 0.9);
-	}
+.navbar-default.affix-top {
+	background-color: rgba(255, 255, 255, 0.7);
+	border-color: rgba(255, 255, 255, 0.9);
 }
