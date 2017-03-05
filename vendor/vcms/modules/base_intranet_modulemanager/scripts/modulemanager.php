@@ -26,17 +26,17 @@ $libRepositoryClient->resetTempDirectory();
 $libCronjobs->executeJobs();
 
 
-if(isset($_REQUEST['aktion'])){
-	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'updateEngine'){
+if(isset($_REQUEST['action'])){
+	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'updateEngine'){
 		$libRepositoryClient->updateEngine();
 	}
 
 	if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] != 'engine'){
 		$module = $_REQUEST['modul'];
 
-		if($_REQUEST['aktion'] == 'installModule' && $module != ''){
+		if($_REQUEST['action'] == 'installModule' && $module != ''){
 			$libRepositoryClient->installModule($module);
-		} elseif($_REQUEST['aktion'] == 'uninstallModule' && $module != ''){
+		} elseif($_REQUEST['action'] == 'uninstallModule' && $module != ''){
 			$libRepositoryClient->uninstallModule($module);
 		}
 	}
@@ -144,7 +144,7 @@ if(isset($_REQUEST['aktion'])){
 
 		if($key != 'engine'){
 			if(!$engineIsOld && !$libModuleHandler->moduleIsAvailable($key)){
-				echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
+				echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;action=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
 				echo '<i class="fa fa-plus-circle" aria-hidden="true"></i>';
 				echo '</a>';
 			}
@@ -156,7 +156,7 @@ if(isset($_REQUEST['aktion'])){
 		echo '<td class="toolColumn">';
 
 		if($engineIsOld && $key == 'engine'){
-			echo '<a href="index.php?pid=modules&amp;aktion=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
+			echo '<a href="index.php?pid=modules&amp;action=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
 			echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
 			echo '</a>';
 		} else {
@@ -166,7 +166,7 @@ if(isset($_REQUEST['aktion'])){
 				$newVersion = (double) $value;
 
 				if(!$engineIsOld && $newVersion > $actualVersion){
-					echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
+					echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;action=installModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
 					echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
 					echo '</a>';
 				}
@@ -185,7 +185,7 @@ if(isset($_REQUEST['aktion'])){
 				$actualVersion = (double) $module->getVersion();
 				$newVersion = (double) $value;
 
-				echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
+				echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;action=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
 				echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 				echo '</a>';
 			}
