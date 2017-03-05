@@ -21,22 +21,19 @@ namespace vcms;
 class LibRepositoryClient{
 
   var $repoHostname;
-  var $modulesRelativeDirectoryPath;
-  var $engineUpdateScript;
-  var $tempRelativeDirectoryPath;
+  var $modulesRelativeDirectoryPath = 'modules';
+  var $engineUpdateScript = 'vendor/vcms/install/update.php';
+  var $tempRelativeDirectoryPath = 'temp';
   var $tempAbsoluteDirectoryPath;
 
   function __construct(){
     global $libGlobal, $libFilesystem;
 
 		$this->repoHostname = 'repository.' . $libGlobal->vcmsHostname;
-    $this->modulesRelativeDirectoryPath = 'modules';
-    $this->engineUpdateScript = 'vendor/vcms/install/update.php';
-    $this->tempRelativeDirectoryPath = 'temp';
     $this->tempAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($this->tempRelativeDirectoryPath);
 	}
 
-  function getModules(){
+  function getModuleVersions(){
   	global $libGlobal, $libHttp, $libModuleHandler;
 
     $manifestUrl = 'http://' .$this->repoHostname. '/manifest.json?id=' .$libGlobal->getSiteUrlAuthority(). '&version=' .$libGlobal->version;
@@ -59,6 +56,30 @@ class LibRepositoryClient{
   	ksort($modules);
 
   	return $modules;
+  }
+
+  function getModuleStates(){
+    global $libGlobal, $libModuleHandler;
+
+    $moduleVersions = $this->getModuleVersions();
+    $result = array();
+
+    foreach($moduleVersions as $key => $value){
+      if($key == 'engine'){
+        $actualEngineVersion = (double) $libGlobal->version;
+        $newEngineVersion = (double) $modules['engine'];
+        $engineIsOld = $newEngineVersion > $actualEngineVersion;
+        $result['engine'] = $engineIsOld;
+      } elseif($libModuleHandler->moduleIsAvailable($key)){
+        $module = $libModuleHandler->getModuleByModuleid($key);
+        $actualversion = (double) $module->getVersion();
+        $newversion = (double) $value;
+        $moduleIsOld = $newversion > $actualversion;
+        $result[$key] = $moduleIsOld;
+      }
+    }
+
+    return $result;
   }
 
   function installModule($module){
@@ -213,7 +234,6 @@ class LibRepositoryClient{
   		$libGlobal->notificationTexts[] = 'Führe Aktualisierungsskript der Engine aus.';
   		$scriptAbsolutePath = $libFilesystem->getAbsolutePath($this->engineUpdateScript);
   		include($scriptAbsolutePath);
-  		exit();
   	}
   }
 

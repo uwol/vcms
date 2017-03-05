@@ -25,10 +25,6 @@ if(isset($_REQUEST['modul']) && !preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['modu
 
 
 $gitHubRepoUrl = 'https://github.com/uwol/vcms/tree/master';
-
-/*
-* actions
-*/
 $libRepositoryClient->resetTempDirectory();
 
 if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] != 'engine'){
@@ -46,7 +42,6 @@ if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'updateEngine'){
 }
 
 $libCronjobs->executeJobs();
-$modules = $libRepositoryClient->getModules();
 
 
 /*
@@ -71,6 +66,7 @@ echo '<th class="toolColumn"></th>';
 echo '</tr>';
 echo '</thead>';
 
+$modules = $libRepositoryClient->getModuleVersions();
 
 $actualEngineVersion = (double) $libGlobal->version;
 $newEngineVersion = (double) $modules['engine'];
@@ -82,8 +78,9 @@ if($newEngineVersion > $actualEngineVersion){
 }
 
 foreach($modules as $key => $value){
-	//module id
 	echo '<tr>';
+
+	//module id
 	echo '<td>';
 
 	if($value){
@@ -144,7 +141,6 @@ foreach($modules as $key => $value){
 
 	echo '</td>';
 
-
 	// install action
 	echo '<td class="toolColumn">';
 
@@ -158,7 +154,6 @@ foreach($modules as $key => $value){
 
 	echo '</td>';
 
-
 	// update action
 	echo '<td class="toolColumn">';
 
@@ -169,10 +164,10 @@ foreach($modules as $key => $value){
 	} else {
 		if($libModuleHandler->moduleIsAvailable($key)){
 			$module = $libModuleHandler->getModuleByModuleid($key);
-			$actualversion = (double) $module->getVersion();
-			$newversion = (double) $value;
+			$actualVersion = (double) $module->getVersion();
+			$newVersion = (double) $value;
 
-			if(!$engineIsOld && $newversion > $actualversion){
+			if(!$engineIsOld && $newVersion > $actualVersion){
 				echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;aktion=installModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
 				echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
 				echo '</a>';
@@ -189,8 +184,8 @@ foreach($modules as $key => $value){
 	if($key != 'engine'){
 		if(!$engineIsOld && $libModuleHandler->moduleIsAvailable($key)){
 			$module = $libModuleHandler->getModuleByModuleid($key);
-			$actualversion = (double) $module->getVersion();
-			$newversion = (double) $value;
+			$actualVersion = (double) $module->getVersion();
+			$newVersion = (double) $value;
 
 			echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;aktion=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
 			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
