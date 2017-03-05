@@ -11,6 +11,13 @@
 			}
 		}
 	],
+	"includes": [
+		{
+			"iid": "auto_update",
+			"file": "auto_update.php",
+			"directory": "scripts"
+		}
+	],
 	"menuElementsAdministration": [
 		{
 			"name": "System",

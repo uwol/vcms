@@ -243,6 +243,10 @@ class LibCronjobs{
 		if(!$libGenericStorage->attributeExists('base_core', 'event_public_gallery_semesters')){
 			$libGenericStorage->saveValue('base_core', 'event_public_gallery_semesters', 0);
 		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'auto_update')){
+			$libGenericStorage->saveValue('base_core', 'auto_update', '1');
+		}
 	}
 
 	//------------------------------------------------------

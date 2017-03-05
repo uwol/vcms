@@ -64,18 +64,12 @@ class LibRepositoryClient{
     $moduleVersions = $this->getModuleVersions();
     $result = array();
 
-    foreach($moduleVersions as $key => $value){
+    foreach($moduleVersions as $key => $newVersion){
       if($key == 'engine'){
-        $actualEngineVersion = (double) $libGlobal->version;
-        $newEngineVersion = (double) $modules['engine'];
-        $engineIsOld = $newEngineVersion > $actualEngineVersion;
-        $result['engine'] = $engineIsOld;
+        $result['engine'] = ((double) $newVersion) > ((double) $libGlobal->version);
       } elseif($libModuleHandler->moduleIsAvailable($key)){
         $module = $libModuleHandler->getModuleByModuleid($key);
-        $actualversion = (double) $module->getVersion();
-        $newversion = (double) $value;
-        $moduleIsOld = $newversion > $actualversion;
-        $result[$key] = $moduleIsOld;
+        $result[$key] = ((double) $newVersion) > ((double) $module->getVersion());
       }
     }
 
