@@ -50,7 +50,7 @@ class LibCronjobs{
 		$stmt->bindColumn('number', $numberOfCronJobExecutionsToday);
 		$stmt->fetch();
 
-		if($numberOfCronJobExecutionsToday === 0){
+		if($numberOfCronJobExecutionsToday == 0){
 			$this->executeJobs();
 			$this->setGalleryPublicityLevels();
 		}
