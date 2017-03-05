@@ -23,7 +23,6 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 echo '<h1>Module</h1>';
 
 $libRepositoryClient->resetTempDirectory();
-$libCronjobs->executeJobs();
 
 
 if(isset($_REQUEST['action'])){
@@ -196,4 +195,6 @@ if(isset($_REQUEST['action'])){
 	}
 
 	echo '</table>';
+
+	$libCronjobs->executeJobs();
 }
