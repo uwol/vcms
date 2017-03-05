@@ -44,7 +44,7 @@ if($_REQUEST['aktion']){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p><a href="index.php?pid=modules">Modulliste laden</a></p>';
+	echo '<p><a href="index.php?pid=modules">Module anzeigen</a></p>';
 } else {
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
