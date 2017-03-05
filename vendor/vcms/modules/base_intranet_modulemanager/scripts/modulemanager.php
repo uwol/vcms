@@ -24,8 +24,6 @@ echo '<h1>Module</h1>';
 
 
 if(isset($_REQUEST['action'])){
-	$libRepositoryClient->resetTempDirectory();
-
 	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'updateEngine'){
 		$libRepositoryClient->updateEngine();
 	}
@@ -39,8 +37,6 @@ if(isset($_REQUEST['action'])){
 			$libRepositoryClient->uninstallModule($module);
 		}
 	}
-
-	$libRepositoryClient->resetTempDirectory();
 
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
@@ -205,5 +201,6 @@ if(isset($_REQUEST['action'])){
 
 	echo '</table>';
 
+	$libRepositoryClient->resetTempDirectory();
 	$libCronjobs->executeJobs();
 }
