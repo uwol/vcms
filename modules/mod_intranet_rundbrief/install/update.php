@@ -36,7 +36,7 @@ while($row = $stmt->fetch(PDO::FETCH_NUM)){
 }
 
 if($tableExists){
-	echo 'Aktualisiere Tabelle: mod_rundbrief_brief<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_brief';
 
 	$sql = "DROP TABLE mod_rundbrief_brief";
 	$libDb->query($sql);
@@ -67,24 +67,24 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 if($fieldExists_sollEmpfangen){
-	echo 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, benenne Spalte um<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, benenne Spalte um';
 
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger CHANGE sollempfangen empfaenger tinyint(1) NOT NULL default '1'";
 	$libDb->query($sql);
 } elseif(!$fieldExists_empfaenger){
-	echo 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, füge Spalte hinzu<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, füge Spalte hinzu';
 
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger ADD empfaenger tinyint(1) NOT NULL default '1'";
 	$libDb->query($sql);
 }
 
 if($fieldExists_sollEmpfangen_interessierteahah){
-	echo 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, benenne Spalte um<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, benenne Spalte um';
 
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger CHANGE sollempfangen_interessierteahah interessiert tinyint(1) NOT NULL default '0'";
 	$libDb->query($sql);
 } elseif(!$fieldExists_interessiert){
-	echo 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, füge Spalte hinzu<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, füge Spalte hinzu';
 
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger ADD interessiert tinyint(1) NOT NULL default '0'";
 	$libDb->query($sql);

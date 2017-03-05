@@ -48,6 +48,12 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		case 10:
 			echo 'Cronjobs ausgeführt';
 			break;
+		case 20:
+			echo 'Versionsprüfung für Auto-Update ausgeführt';
+			break;
+		case 21:
+			echo 'Auto-Update ausgeführt';
+			break;
 	}
 
 	echo '</td>';

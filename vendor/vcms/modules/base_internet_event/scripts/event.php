@@ -75,6 +75,10 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 
 
 	echo '<h1>' .$row['titel']. '</h1>';
+
+	echo $libString->getErrorBoxText();
+	echo $libString->getNotificationBoxText();
+
 	echo '<div class="row">';
 
 	echo '<div class="col-sm-6 col-md-4 col-lg-3">';

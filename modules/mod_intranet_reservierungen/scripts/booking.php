@@ -21,6 +21,10 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 echo '<h1>Reservierung durchführen</h1>';
+
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 echo '<p>Bitte die Daten der Reservierung eingeben.</p>';
 
 echo '<form action="index.php?pid=intranet_reservations" method="post" class="form-horizontal">';

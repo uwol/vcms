@@ -22,6 +22,9 @@ if(!is_object($libGlobal))
 
 echo '<h1>Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
 
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 

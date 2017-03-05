@@ -24,6 +24,9 @@ require('lib/persons.php');
 
 echo '<h1>Der Damenflor</h1>';
 
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'C'");
 $stmt->execute();
 $stmt->bindColumn('number', $anzahl);

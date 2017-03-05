@@ -81,6 +81,10 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('preselect_int_ahah')){
 
 
 echo '<h1>Rundbrief an Mitglieder verschicken</h1>';
+
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 echo '<p>Auf dieser Seite kann per E-Mail ein Rundbrief an diejenigen Mitglieder verschickt werden, die sich nicht aus dem Verteiler ausgetragen haben.</p>';
 
 echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" enctype="multipart/form-data" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');" class="form-horizontal">';

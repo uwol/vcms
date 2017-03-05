@@ -24,6 +24,9 @@ require('lib/persons.php');
 
 echo '<h1>' .$libConfig->verbindungName. ' - Die Verstorbenen</h1>';
 
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 $stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "T" ORDER BY name');
 
 printPersons($stmt);

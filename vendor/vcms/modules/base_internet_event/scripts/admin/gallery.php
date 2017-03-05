@@ -112,7 +112,6 @@ echo '<h1>Galerie - ' .$libEvent->getTitle($id). '</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-
 echo '<div id="progress" class="progress">';
 echo '<div class="progress-bar progress-bar-success"></div>';
 echo '</div>';

@@ -22,6 +22,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 echo '<h1>Chargierkalender ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
 
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 /*
 * actions
 */

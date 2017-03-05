@@ -23,15 +23,36 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 $libDb->connect();
 
 if($libGenericStorage->loadValue('base_core', 'auto_update')){
-	$moduleStates = $libRepositoryClient->getModuleStates();
+	$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_log_intranet WHERE aktion = 20 AND DATEDIFF(NOW(), datum) < 1');
+	$stmt->execute();
+	$stmt->bindColumn('number', $numberOfAutoUpdateExecutionsToday);
+	$stmt->fetch();
 
-	if($moduleStates['engine']){
-		$libRepositoryClient->updateEngine();
-	}
+	if($numberOfAutoUpdateExecutionsToday === 0){
+		$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (20, NOW())');
 
-	foreach($moduleStates as $key => $value){
-	  if($key !== 'engine' && $value){
-			$libRepositoryClient->installModule($_REQUEST['modul']);
-	  }
+		$moduleStates = $libRepositoryClient->getModuleStates();
+		$autoUpdated = false;
+
+		if($moduleStates['engine']){
+			$libRepositoryClient->updateEngine();
+			$libRepositoryClient->resetTempDirectory(
+
+			$autoUpdated = true;
+		}
+
+		foreach($moduleStates as $key => $value){
+		  if($key !== 'engine' && $value){
+				$libRepositoryClient->installModule($_REQUEST['modul']);
+				$libRepositoryClient->resetTempDirectory(
+
+				$autoUpdated = true;
+		  }
+		}
+
+		if($autoUpdated){
+			$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (21, NOW())');
+			$libCronjobs->executeJobs();
+		}
 	}
 }

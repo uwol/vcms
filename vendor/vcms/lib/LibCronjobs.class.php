@@ -50,15 +50,16 @@ class LibCronjobs{
 		$stmt->bindColumn('number', $numberOfCronJobExecutionsToday);
 		$stmt->fetch();
 
-		if($numberOfCronJobExecutionsToday == 0){
-			$this->setGalleryPublicityLevels();
-
+		if($numberOfCronJobExecutionsToday === 0){
 			$this->executeJobs();
+			$this->setGalleryPublicityLevels();
 		}
 	}
 
 	function executeJobs(){
 		global $libGenericStorage, $libDb;
+
+		$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (10, NOW())');
 
 		$this->deleteFiles();
 		$this->deleteDirectories();
@@ -71,7 +72,7 @@ class LibCronjobs{
 			$this->cleanBasePerson();
 		}
 
-		$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (10, NOW())');
+		$this->autoUpdate();
 	}
 
 	function getDirectoriesToCreate(){
@@ -247,6 +248,12 @@ class LibCronjobs{
 		if(!$libGenericStorage->attributeExists('base_core', 'auto_update')){
 			$libGenericStorage->saveValue('base_core', 'auto_update', '1');
 		}
+	}
+
+	function autoUpdate(){
+		global $libGlobal;
+
+		$libGlobal->notificationTexts[] = '<img src="api.php?iid=auto_update" alt="auto update" />';
 	}
 
 	//------------------------------------------------------

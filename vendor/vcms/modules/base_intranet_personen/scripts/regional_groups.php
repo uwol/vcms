@@ -24,6 +24,9 @@ require('lib/persons.php');
 
 echo '<h1>Regionalzirkel</h1>';
 
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 
 $stmt = $libDb->prepare("SELECT id, bezeichnung FROM base_region ORDER BY bezeichnung");
 $stmt->execute();

@@ -29,6 +29,9 @@ require('lib/persons.php');
 
 echo '<h1>' .$libConfig->verbindungName. ' - Die Mitglieder</h1>';
 
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 echo '<p>Der Balken unter einem Foto zeigt an, wie häufig ein Mitglied das Intranet besucht. Mitglieder können anhand von Schlüsselwörtern gesucht werden.</p>';
 
 echo '<form action="index.php?pid=intranet_mitglied_listelebende" method="post" class="form-inline">';

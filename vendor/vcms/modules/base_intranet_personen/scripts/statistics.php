@@ -22,6 +22,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 echo '<h1>Statistik</h1>';
 
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 $personsPerRow = 4;
 
 $tArray = array();

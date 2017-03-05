@@ -22,6 +22,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 echo '<h1>Zipfelranking</h1>';
 
+echo $libString->getErrorBoxText();
+echo $libString->getNotificationBoxText();
+
 echo '<p>Die Anzahl Zipfel lässt sich im <a href="index.php?pid=intranet_person">Profil</a> eingeben.</p>';
 
 $stmt = $libDb->prepare('SELECT * FROM base_person, mod_zipfelranking_anzahl WHERE base_person.id = mod_zipfelranking_anzahl.id AND anzahlzipfel > 0 ORDER BY anzahlzipfel DESC');

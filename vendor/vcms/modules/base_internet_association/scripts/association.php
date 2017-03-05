@@ -28,6 +28,9 @@ if(isset($_GET['id'])){
 
 	echo '<h1>' .$libAssociation->getVereinNameString($vereinarray['id']). '</h1>';
 
+	echo $libString->getErrorBoxText();
+	echo $libString->getNotificationBoxText();
+
 	echo '<div class="row">';
 	echo '<div class="col-sm-9">';
 

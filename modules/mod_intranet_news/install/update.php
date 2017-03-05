@@ -20,6 +20,6 @@ if(!is_object($libGlobal))
 	exit();
 
 
-echo 'Speichere Standarddatensätze<br />';
+$libGlobal->notificationTexts[] = 'Speichere Standarddatensätze';
 $sql = "INSERT IGNORE INTO mod_news_kategorie (id, bezeichnung) VALUES (17, 'Gratulation');";
 $libDb->query($sql);
