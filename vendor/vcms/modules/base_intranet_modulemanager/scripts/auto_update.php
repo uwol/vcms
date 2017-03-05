@@ -43,7 +43,7 @@ if($libGenericStorage->loadValue('base_core', 'auto_update')){
 
 		foreach($moduleStates as $key => $value){
 		  if($key !== 'engine' && $value){
-				$libRepositoryClient->installModule($_REQUEST['modul']);
+				$libRepositoryClient->installModule($key);
 				$libRepositoryClient->resetTempDirectory();
 
 				$autoUpdated = true;
