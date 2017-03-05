@@ -204,6 +204,3 @@ renameStorageKey('mod_internet_kontakt', 'showScriptor', 'show_scriptor');
 renameStorageKey('mod_intranet_download', 'rightsPreselection', 'preselect_rights');
 
 renameStorageKey('mod_intranet_rundbrief', 'preselectInteressierteAHAH', 'preselect_int_ahah');
-
-
-die('</div><a href="index.php?pid=modules">Klicke hier</a>, um die Modulliste anzuzeigen.');
