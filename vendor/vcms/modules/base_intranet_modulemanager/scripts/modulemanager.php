@@ -26,7 +26,7 @@ $libRepositoryClient->resetTempDirectory();
 $libCronjobs->executeJobs();
 
 
-if($_REQUEST['aktion']){
+if(isset($_REQUEST['aktion'])){
 	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'updateEngine'){
 		$libRepositoryClient->updateEngine();
 	}
