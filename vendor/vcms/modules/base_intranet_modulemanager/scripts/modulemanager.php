@@ -22,10 +22,10 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 echo '<h1>Module</h1>';
 
-$libRepositoryClient->resetTempDirectory();
-
 
 if(isset($_REQUEST['action'])){
+	$libRepositoryClient->resetTempDirectory();
+
 	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'updateEngine'){
 		$libRepositoryClient->updateEngine();
 	}
@@ -40,14 +40,13 @@ if(isset($_REQUEST['action'])){
 		}
 	}
 
+	$libRepositoryClient->resetTempDirectory();
+
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
 	echo '<p><a href="index.php?pid=modules">Module anzeigen</a></p>';
 } else {
-	echo $libString->getErrorBoxText();
-	echo $libString->getNotificationBoxText();
-
 	echo '<p>Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen.</p>';
 	echo '<table class="table table-condensed table-striped table-hover">';
 

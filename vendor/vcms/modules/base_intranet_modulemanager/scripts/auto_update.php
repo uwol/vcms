@@ -31,27 +31,26 @@ if($libGenericStorage->loadValue('base_core', 'auto_update')){
 	if($numberOfAutoUpdateExecutionsToday == 0){
 		$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (20, NOW())');
 
+		$libRepositoryClient->resetTempDirectory();
 		$moduleStates = $libRepositoryClient->getModuleStates();
 		$autoUpdated = false;
 
 		if($moduleStates['engine']){
 			$libRepositoryClient->updateEngine();
-			$libRepositoryClient->resetTempDirectory();
-
 			$autoUpdated = true;
 		}
 
 		foreach($moduleStates as $key => $value){
 		  if($key !== 'engine' && $value){
 				$libRepositoryClient->installModule($key);
-				$libRepositoryClient->resetTempDirectory();
-
 				$autoUpdated = true;
 		  }
 		}
 
 		if($autoUpdated){
 			$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (21, NOW())');
+
+			$libRepositoryClient->resetTempDirectory();
 			$libCronjobs->executeJobs();
 		}
 	}

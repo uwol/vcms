@@ -82,6 +82,11 @@ a .fa {
 	display: none;
 }
 
+.auto-update-img {
+	width: 1px;
+	height: 1px;
+}
+
 footer {
 	padding-top: 1em;
 	padding-bottom: 3em;
