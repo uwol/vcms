@@ -67,6 +67,7 @@ $libMail = new \vcms\LibMail();
 $libPerson = new \vcms\LibPerson();
 $libModuleHandler = new \vcms\LibModuleHandler();
 $libModuleParser = new \vcms\LibModuleParser();
+$libRepositoryClient = new \vcms\LibRepositoryClient();
 $libSecurityManager = new \vcms\LibSecurityManager();
 $libString = new \vcms\LibString();
 $libTime = new \vcms\LibTime();
