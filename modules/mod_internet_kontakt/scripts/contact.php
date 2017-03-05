@@ -53,7 +53,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('show_quaestor')){
 
 
 if(!$libGenericStorage->attributeExistsInCurrentModule('show_map')){
-	$libGenericStorage->saveValueInCurrentModule('show_map', '0');
+	$libGenericStorage->saveValueInCurrentModule('show_map', '1');
 }
 
 if(!$libGenericStorage->attributeExistsInCurrentModule('map_latitude')){
