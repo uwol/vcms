@@ -51,6 +51,16 @@ if(isset($_REQUEST['action'])){
 	echo '<p>Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen.</p>';
 	echo '<table class="table table-condensed table-striped table-hover">';
 
+	echo '<p>Automatische Aktualisierung: <a href="index.php?pid=configuration">';
+
+	if($libGenericStorage->loadValue('base_core', 'auto_update')){
+		echo 'aktiviert';
+	} else {
+		echo 'deaktiviert';
+	}
+
+	echo '</a></p>';
+
 	echo '<thead>';
 	echo '<tr>';
 	echo '<th>Modulname</th><th>Status</th>';
