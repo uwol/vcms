@@ -67,17 +67,17 @@ function renameStorageKey($moduleId, $oldArrayName, $newArrayName){
 $columnsBaseVeranstaltung = getColumns('base_veranstaltung');
 
 if(!in_array('datum_ende', $columnsBaseVeranstaltung)){
-	echo 'Aktualisiere Tabelle base_veranstaltung<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
 	$libDb->query('ALTER TABLE base_veranstaltung ADD datum_ende DATETIME NULL AFTER datum');
 }
 
 if(!in_array('fb_eventid', $columnsBaseVeranstaltung)){
-	echo 'Aktualisiere Tabelle base_veranstaltung<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
 	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255) NULL');
 }
 
 if(!in_array('intern', $columnsBaseVeranstaltung)){
-	echo 'Aktualisiere Tabelle base_veranstaltung<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
 	$libDb->query('ALTER TABLE base_veranstaltung ADD intern tinyint(1) NOT NULL default 0');
 }
 
@@ -89,42 +89,42 @@ $columnsBasePerson = getColumns('base_person');
 $indexesBasePerson = getIndexes('base_person');
 
 if(in_array('username', $indexesBasePerson)){
-	echo 'Aktualisiere Index auf Tabelle base_person<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Index auf Tabelle base_person';
 	$libDb->query('DROP INDEX username ON base_person');
 }
 
 if(in_array('austritt_grund', $columnsBasePerson)){
-	echo 'Aktualisiere Tabelle base_person<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
 	$libDb->query('ALTER TABLE base_person DROP austritt_grund');
 }
 
 if(in_array('password_salt', $columnsBasePerson)){
-	echo 'Aktualisiere Tabelle base_person<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
 	$libDb->query('ALTER TABLE base_person DROP password_salt');
 }
 
 if(in_array('icq', $columnsBasePerson)){
-	echo 'Aktualisiere Tabelle base_person<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
 	$libDb->query('ALTER TABLE base_person DROP icq');
 }
 
 if(in_array('msn', $columnsBasePerson)){
-	echo 'Aktualisiere Tabelle base_person<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
 	$libDb->query('ALTER TABLE base_person DROP msn');
 }
 
 if(in_array('vita_letzterautor', $columnsBasePerson)){
-	echo 'Aktualisiere Tabelle base_person<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
 	$libDb->query('ALTER TABLE base_person DROP vita_letzterautor');
 }
 
 if(in_array('username', $columnsBasePerson)){
-	echo 'Aktualisiere Tabelle base_person<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
 	$libDb->query('ALTER TABLE base_person DROP username');
 }
 
 if(!in_array('email', $indexesBasePerson)){
-	echo 'Aktualisiere Index auf Tabelle base_person<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Index auf Tabelle base_person';
 	$libDb->query('ALTER TABLE base_person ADD UNIQUE email (email)');
 }
 
@@ -135,27 +135,27 @@ if(!in_array('email', $indexesBasePerson)){
 $columnsBaseSemester = getColumns('base_semester');
 
 if(!in_array('vop', $columnsBaseSemester)){
-	echo 'Aktualisiere Tabelle base_semester<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
 	$libDb->query('ALTER TABLE base_semester ADD vop int(11) default NULL');
 }
 
 if(!in_array('vvop', $columnsBaseSemester)){
-	echo 'Aktualisiere Tabelle base_semester<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
 	$libDb->query('ALTER TABLE base_semester ADD vvop int(11) default NULL');
 }
 
 if(!in_array('vopxx', $columnsBaseSemester)){
-	echo 'Aktualisiere Tabelle base_semester<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
 	$libDb->query('ALTER TABLE base_semester ADD vopxx int(11) default NULL');
 }
 
 if(!in_array('vopxxx', $columnsBaseSemester)){
-	echo 'Aktualisiere Tabelle base_semester<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
 	$libDb->query('ALTER TABLE base_semester ADD vopxxx int(11) default NULL');
 }
 
 if(!in_array('vopxxxx', $columnsBaseSemester)){
-	echo 'Aktualisiere Tabelle base_semester<br />';
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
 	$libDb->query('ALTER TABLE base_semester ADD vopxxxx int(11) default NULL');
 }
 
@@ -163,7 +163,7 @@ if(!in_array('vopxxxx', $columnsBaseSemester)){
 /*
 * Update base_semester
 */
-echo 'Aktualisiere Tabelle sys_genericstorage<br />';
+$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle sys_genericstorage';
 
 renameStorageKey('base_core', 'brandXs', 'brand_xs');
 renameStorageKey('base_core', 'deleteAusgetretene', 'delete_ausgetretene');
