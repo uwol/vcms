@@ -31,6 +31,8 @@ if($libGenericStorage->loadValue('base_core', 'auto_update')){
 	if($numberOfAutoUpdateExecutionsToday == 0){
 		$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (20, NOW())');
 
+		ignore_user_abort(true);
+
 		$moduleStates = $libRepositoryClient->getModuleStates();
 		$autoUpdated = false;
 
