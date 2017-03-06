@@ -53,8 +53,11 @@ class LibCronjobs{
 		if($numberOfCronJobExecutionsToday == 0){
 			$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (10, NOW())');
 
-			$this->setGalleryPublicityLevels();
 			$this->executeJobs();
+
+			if(int(date('j')) == 1){
+				$this->setGalleryPublicityLevels();
+			}
 		}
 	}
 
@@ -252,7 +255,7 @@ class LibCronjobs{
 	function autoUpdate(){
 		global $libGlobal;
 
-		$libGlobal->notificationTexts[] = '<img src="api.php?iid=auto_update" alt="auto update" class="auto-update-img" />';
+		$libGlobal->notificationTexts[] = '<img src="api.php?iid=auto_update" alt="auto update" class="auto-update-img" /> Initiiere Auto-Update';
 	}
 
 	//------------------------------------------------------
