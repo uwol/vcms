@@ -33,7 +33,6 @@ $wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wikipedia_ur
 echo '    <footer>' . PHP_EOL;
 echo '      <div class="social-buttons text-right container">' . PHP_EOL;
 echo '        <div class="col-xs-12">' . PHP_EOL;
-echo '            <img src="api.php?iid=auto_update" alt="auto-update" class="auto-update-img" />';
 
 if($facebookUrl != ''){
 	echo '          <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
@@ -53,6 +52,10 @@ if($twitterUrl != ''){
 
 if($wikipediaUrl != ''){
 	echo '          <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg" aria-hidden="true"></i></a>' . PHP_EOL;
+}
+
+if($libGenericStorage->loadValue('base_core', 'auto_update')){
+	echo '            <img src="api.php?iid=auto_update" alt="auto-update" class="auto-update-img" />';
 }
 
 echo '        </div>' . PHP_EOL;

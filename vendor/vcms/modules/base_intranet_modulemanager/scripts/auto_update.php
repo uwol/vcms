@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
+if(!is_object($libGlobal))
 	exit();
 
 
