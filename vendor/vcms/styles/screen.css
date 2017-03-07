@@ -82,14 +82,15 @@ a .fa {
 	display: none;
 }
 
-.auto-update-img {
-	width: 1px;
-	height: 1px;
-}
-
 footer {
 	padding-top: 1em;
 	padding-bottom: 3em;
+}
+
+footer .auto-update-img {
+	display: none;
+	width: 1px;
+	height: 1px;
 }
 
 footer .social-buttons {

@@ -55,7 +55,7 @@ class LibCronjobs{
 
 			$this->executeJobs();
 
-			if(int(date('j')) == 1){
+			if(date('j') == 1){
 				$this->setGalleryPublicityLevels();
 			}
 		}
@@ -70,7 +70,6 @@ class LibCronjobs{
 		$this->createHtaccessFiles();
 		$this->cleanSysLogIntranet();
 		$this->initConfiguration();
-		$this->autoUpdate();
 
 		if($libGenericStorage->loadValue('base_core', 'delete_ausgetretene') == 1){
 			$this->cleanBasePerson();
@@ -250,12 +249,6 @@ class LibCronjobs{
 		if(!$libGenericStorage->attributeExists('base_core', 'auto_update')){
 			$libGenericStorage->saveValue('base_core', 'auto_update', '1');
 		}
-	}
-
-	function autoUpdate(){
-		global $libGlobal;
-
-		$libGlobal->notificationTexts[] = '<img src="api.php?iid=auto_update" alt="auto update" class="auto-update-img" /> Initiiere Auto-Update';
 	}
 
 	//------------------------------------------------------
