@@ -55,7 +55,7 @@ if($wikipediaUrl != ''){
 }
 
 if($libGenericStorage->loadValue('base_core', 'auto_update')){
-	echo '            <img src="api.php?iid=auto_update" alt="auto-update" class="auto-update-img" />';
+	echo '          <img src="api.php?iid=auto_update" alt="auto-update" class="auto-update-img" />';
 }
 
 echo '        </div>' . PHP_EOL;
