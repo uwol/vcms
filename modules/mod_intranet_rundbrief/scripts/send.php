@@ -32,49 +32,46 @@ $stmt->fetch();
 if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['subject'])){
 	$libGlobal->errorTexts[] = 'Es wurde kein Nachrichtentext eingegeben.';
 } else {
-	/*
-	* build receiver string
-	*/
-	$betreffgruppenstring = '';
+	$subjectGroups = array();
 
 	if(isset($_POST['fuchsia']) && $_POST['fuchsia'] == 'on'){
-		$betreffgruppen[] = 'Füchse';
+		$subjectGroups[] = 'Füchse';
 	}
 
 	if(isset($_POST['burschen']) && $_POST['burschen'] == 'on'){
-		$betreffgruppen[] = 'Burschen';
+		$subjectGroups[] = 'Burschen';
 	}
 
 	if(isset($_POST['ahah_interessiert']) && $_POST['ahah_interessiert'] == 'on' && (!isset($_POST['ahah']) || $_POST['ahah'] != 'on')){
-		$betreffgruppen[] = 'Int. AHAH';
+		$subjectGroups[] = 'Int. AHAH';
 	}
 
 	if(isset($_POST['ahah']) && $_POST['ahah'] == 'on'){
-		$betreffgruppen[] = 'AHAH';
+		$subjectGroups[] = 'AHAH';
 	}
 
 	if(isset($_POST['hausbewohner']) && $_POST['hausbewohner'] == 'on'){
-		$betreffgruppen[] = 'Hausbewohner';
+		$subjectGroups[] = 'Hausbewohner';
 	}
 
 	if(isset($_POST['couleurdamen']) && $_POST['couleurdamen'] == 'on'){
-		$betreffgruppen[] = 'Couleurdamen';
+		$subjectGroups[] = 'Couleurdamen';
 	}
 
 	if(isset($_POST['gattinnen_interessiert']) && $_POST['gattinnen_interessiert'] == 'on' && (!isset($_POST['gattinnen']) || $_POST['gattinnen'] != 'on')){
-		$betreffgruppen[] = 'Int. Gattinnen';
+		$subjectGroups[] = 'Int. Gattinnen';
 	}
 
 	if(isset($_POST['gattinnen']) && $_POST['gattinnen'] == 'on'){
-		$betreffgruppen[] = 'Gattinnen';
+		$subjectGroups[] = 'Gattinnen';
 	}
 
-	if(count($betreffgruppen) == 0){
+	if(count($subjectGroups) == 0){
 		$libGlobal->errorTexts[] = 'Es wurde keine Adressatengruppe ausgewählt.';
 	}
 
-	$betreffgruppenstring = '[' .implode(', ', $betreffgruppen). '] ';
-	$betreffregionstring = '';
+	$subjectGroupsString = '[' .implode(', ', $subjectGroups). '] ';
+	$subjectRegionsString = '';
 
 	if($_POST['region'] != '' && $_POST['region'] != 'NULL'){
 		$stmt = $libDb->prepare('SELECT bezeichnung FROM base_region WHERE id=:id');
@@ -84,14 +81,14 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$stmt->fetch();
 
 		if($region != ''){
-			$betreffregionstring = '[' .$region. '] ';
+			$subjectRegionsString = '[' .$region. '] ';
 		}
 	}
 
 	/*
 	* build subject
 	*/
-	$subject = '[' .$libConfig->verbindungName. '] ' .$betreffgruppenstring . $betreffregionstring . $_POST['subject'];
+	$subject = '[' .$libConfig->verbindungName. '] ' .$subjectGroupsString . $subjectRegionsString . $_POST['subject'];
 
 	/*
 	* start output
@@ -102,42 +99,41 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	/*
 	* build and send mail
 	*/
-	$sqlgruppen_string = '';
-	$sqlgruppen = array();
+	$sqlGroups = array();
 
 	if(isset($_POST['fuchsia']) && $_POST['fuchsia'] == 'on'){
-		$sqlgruppen[] = "gruppe='F'";
+		$sqlGroups[] = "gruppe='F'";
 	}
 
 	if(isset($_POST['burschen']) && $_POST['burschen'] == 'on'){
-		$sqlgruppen[] = "gruppe='B'";
+		$sqlGroups[] = "gruppe='B'";
 	}
 
 	if(isset($_POST['ahah_interessiert']) && $_POST['ahah_interessiert'] == 'on'){
-		$sqlgruppen[] = "(gruppe = 'P' AND interessiert = 1)";
+		$sqlGroups[] = "(gruppe = 'P' AND interessiert = 1)";
 	}
 
 	if(isset($_POST['ahah']) && $_POST['ahah'] == 'on'){
-		$sqlgruppen[] = "gruppe='P'";
+		$sqlGroups[] = "gruppe='P'";
 	}
 
 	if(isset($_POST['hausbewohner']) && $_POST['hausbewohner'] == 'on'){
-		$sqlgruppen[] = "((gruppe='F' OR gruppe='B') AND plz1=:plz AND strasse1 LIKE :street)";
+		$sqlGroups[] = "((gruppe='F' OR gruppe='B') AND plz1=:plz AND strasse1 LIKE :street)";
 	}
 
 	if(isset($_POST['couleurdamen']) && $_POST['couleurdamen'] == 'on'){
-		$sqlgruppen[] = "gruppe='C'";
+		$sqlGroups[] = "gruppe='C'";
 	}
 
 	if(isset($_POST['gattinnen_interessiert']) && $_POST['gattinnen_interessiert'] == 'on'){
-		$sqlgruppen[] = "((gruppe='G' OR gruppe='W') AND interessiert = 1)";
+		$sqlGroups[] = "((gruppe='G' OR gruppe='W') AND interessiert = 1)";
 	}
 
 	if(isset($_POST['gattinnen']) && $_POST['gattinnen'] == 'on'){
-		$sqlgruppen[] = "(gruppe='G' OR gruppe='W')";
+		$sqlGroups[] = "(gruppe='G' OR gruppe='W')";
 	}
 
-	$sqlgruppen_string = ' AND ('.implode(' OR ',$sqlgruppen).') ';
+	$sqlGroupsString = ' AND ('.implode(' OR ',$sqlGroups).') ';
 
 	//evaluate regional restrictions
 	$regionString = '';
@@ -147,10 +143,10 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	}
 
 	//build array of receivers
-	$empfaengerArray = array();
+	$recipientsArray = array();
 
 	//add receivers
-	$sql = "SELECT anrede, titel, rang, vorname, praefix, name, suffix, email FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 ".$regionString.$sqlgruppen_string ." AND gruppe != 'X' AND gruppe != 'T' AND gruppe != 'V' ORDER BY name";
+	$sql = "SELECT anrede, titel, rang, vorname, praefix, name, suffix, email FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 ".$regionString.$sqlGroupsString ." AND gruppe != 'X' AND gruppe != 'T' AND gruppe != 'V' ORDER BY name";
 	$stmt = $libDb->prepare($sql);
 
 	if($regionString != ''){
@@ -169,8 +165,8 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	$i = 0;
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$empfaengerArray[$i][0] = $row['email'];
-		$empfaengerArray[$i][1] = $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
+		$recipientsArray[$i][0] = $row['email'];
+		$recipientsArray[$i][1] = $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 		$i++;
 	}
 
@@ -185,8 +181,8 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($row['email'] != ''){
-				$empfaengerArray[$i][0] = $row['email'];
-				$empfaengerArray[$i][1] = $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
+				$recipientsArray[$i][0] = $row['email'];
+				$recipientsArray[$i][1] = $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 				$i++;
 			}
 		}
@@ -201,12 +197,12 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$attachementName = $_FILES['anhang']['name'];
 	}
 
-	$empfangerPerMail = 15;
-	$anzahlMails = ceil(count($empfaengerArray) / $empfangerPerMail);
+	$recipientsPerMail = 15;
+	$numberOfMails = ceil(count($recipientsArray) / $recipientsPerMail);
 
-	for($j=0; $j<$anzahlMails; $j++){
+	for($j=0; $j<$numberOfMails; $j++){
 		$mailNumber = $j + 1;
-		$subEmpfaengerArray = array_slice($empfaengerArray, $j*$empfangerPerMail, $empfangerPerMail);
+		$subRecipientsArray = array_slice($recipientsArray, $j*$recipientsPerMail, $recipientsPerMail);
 
 		echo '<hr />';
 		echo '<p>Sende E-Mail ' .$mailNumber;
@@ -218,15 +214,15 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		echo ' an:</p>';
 		echo '<p>';
 
-		foreach($subEmpfaengerArray as $empfaenger){
-			echo $empfaenger[1]. ' &lt;' .$empfaenger[0]. '&gt;<br />';
+		foreach($subRecipientsArray as $recipient){
+			echo $recipient[1]. ' &lt;' .$recipient[0]. '&gt;<br />';
 		}
 
 		echo '</p>';
 
 		sendMail(
 			$libPerson->formatNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4),
-			$subject, $email, $_POST['nachricht'], $subEmpfaengerArray, $attachementFile, $attachementName);
+			$subject, $email, $_POST['nachricht'], $subRecipientsArray, $attachementFile, $attachementName);
 	}
 }
 
@@ -234,7 +230,7 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-function sendMail($fromName, $subject, $replyEmail, $message, $empfaengerArray, $attachementFile, $attachementName){
+function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, $attachementFile, $attachementName){
 	global $libAuth, $libMail;
 
 	$mail = new PHPMailer();
@@ -251,8 +247,8 @@ function sendMail($fromName, $subject, $replyEmail, $message, $empfaengerArray, 
 		$mail->Priority = 5;
 	}
 
-	foreach($empfaengerArray as $empfaenger){
-		$mail->AddBCC($empfaenger[0]);
+	foreach($recipientsArray as $recipient){
+		$mail->AddBCC($recipient[0]);
 	}
 
 	if(is_file($attachementFile)){
@@ -269,10 +265,10 @@ function istImVorstand($aemter){
 		return false;
 	}
 
-	$vorstandsaemter = array('senior', 'consenior', 'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior', 'ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor');
-	$vorstandsaemterderperson = array_intersect($aemter, $vorstandsaemter);
+	$vorstandsAemter = array('senior', 'consenior', 'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior', 'ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor');
+	$vorstandsAemterOfPerson = array_intersect($aemter, $vorstandsAemter);
 
-	if(count($vorstandsaemterderperson) > 0){
+	if(count($vorstandsAemterOfPerson) > 0){
 		return true;
 	} else {
 		return false;

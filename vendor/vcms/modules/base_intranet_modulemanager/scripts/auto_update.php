@@ -36,7 +36,7 @@ if($libGenericStorage->loadValue('base_core', 'auto_update')){
 		$moduleStates = $libRepositoryClient->getModuleStates();
 		$autoUpdated = false;
 
-		if($moduleStates['engine']){
+		if(isset($moduleStates['engine']) && $moduleStates['engine']){
 			$libRepositoryClient->updateEngine();
 			$autoUpdated = true;
 		}
