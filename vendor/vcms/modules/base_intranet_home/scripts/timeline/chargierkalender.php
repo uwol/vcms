@@ -62,7 +62,7 @@ class LibChargiereventTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 }
 
 
-$stmt = $libDb->prepare('SELECT id, datum, verein, beschreibung FROM mod_chargierkalender_veranstaltung WHERE DATEDIFF(datum, :semesterstart) >= 0 AND DATEDIFF(datum, :semesterende) <= 0 AND (id IN (SELECT chargierveranstaltung FROM mod_chargierkalender_teilnahme) OR (DATEDIFF(datum, NOW()) >= 0 AND DATEDIFF(datum, NOW()) <= :zeitraumlimit)) ORDER BY datum');
+$stmt = $libDb->prepare('SELECT id, datum, verein, beschreibung FROM mod_chargierkalender_veranstaltung WHERE DATEDIFF(datum, :semesterstart) >= 0 AND DATEDIFF(datum, :semesterende) <= 0 AND DATEDIFF(datum, NOW()) >= 0 AND DATEDIFF(datum, NOW()) <= :zeitraumlimit ORDER BY datum');
 $stmt->bindValue(':semesterstart', $zeitraum[0]);
 $stmt->bindValue(':semesterende', $zeitraum[1]);
 $stmt->bindValue(':zeitraumlimit', $zeitraumLimit, PDO::PARAM_INT);
