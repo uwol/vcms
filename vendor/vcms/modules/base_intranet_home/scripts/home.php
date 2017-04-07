@@ -69,7 +69,6 @@ $zeitraumLimit = 7;
 $timelineEventSet = new \vcms\timeline\LibTimelineEventSet();
 
 require_once('timeline/now.php');
-require_once('timeline/semester.php');
 require_once('timeline/birthdays.php');
 require_once('timeline/deceased.php');
 require_once('timeline/wedding.php');
@@ -88,6 +87,10 @@ if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')
 	require_once('timeline/reservations.php');
 }
 
+$timelineEventSet->sortEvents();
+
+require_once('timeline/semester.php');
+
 
 // -----------------------------------------------------------------------
 
@@ -95,7 +98,6 @@ echo '<div class="timeline">';
 echo '<div class="timeline-divider"></div>';
 echo '<div class="timeline-body">';
 
-$timelineEventSet->sortEvents();
 $timelineEvents = $timelineEventSet->getEvents();
 
 foreach($timelineEvents as $timelineEvent){
