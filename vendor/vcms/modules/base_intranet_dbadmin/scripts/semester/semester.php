@@ -353,7 +353,7 @@ if($libAuth->isLoggedin()){
 		//image upload form
 		echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_semester&amp;semester='. $semesterarray['semester'] .'" class="form-horizontal text-center">';
 		echo '<input type="hidden" name="formtyp" value="semestercoverupload" />';
-		$libForm->printFileUpload('semestercover', 'Semestercover hochladen');
+		$libForm->printFileUpload('semestercover', 'Semestercover hochladen', false, false, array(), array('image/jpeg'));
 		echo '</form>';
 	}
 

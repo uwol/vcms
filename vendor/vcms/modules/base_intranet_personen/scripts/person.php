@@ -466,7 +466,7 @@ function printPersonSignature($row, $ownprofile){
 		//image upload form
 		echo '<form action="index.php?pid=intranet_person" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
 		echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
-		$libForm->printFileUpload('bilddatei', 'Foto (4x3) hochladen');
+		$libForm->printFileUpload('bilddatei', 'Foto (4x3) hochladen', false, false, array(), array('image/jpeg'));
 		echo '</form>';
 	}
 }

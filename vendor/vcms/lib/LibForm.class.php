@@ -43,6 +43,12 @@ class LibForm{
 		}
 	}
 
+	function printAcceptString($accepts){
+		if(!empty($accepts)){
+			echo ' accept="' .implode(', ', $accepts). '"';
+		}
+	}
+
 	function printTextInput($name, $label, $value, $type = 'text', $disabled = false, $required = false, $classes = array()){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -79,7 +85,7 @@ class LibForm{
 		echo '</div>';
 	}
 
-	function printFileInput($name, $label, $disabled = false, $required = false, $classes = array()){
+	function printFileInput($name, $label, $disabled = false, $required = false, $classes = array(), $accepts = array()){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-10">';
@@ -92,6 +98,7 @@ class LibForm{
 
 		$this->printDisabledString($disabled);
 		$this->printRequiredString($required);
+		$this->printAcceptString($accepts);
 
 		echo ' style="display:none">';
 		echo '</label>';
@@ -99,7 +106,7 @@ class LibForm{
 		echo '</div>';
 	}
 
-	function printFileUpload($name, $label, $disabled = false, $required = false, $classes = array()){
+	function printFileUpload($name, $label, $disabled = false, $required = false, $classes = array(), $accepts = array()){
 		echo '<div class="form-group">';
 		echo '<label class="btn btn-default btn-file';
 
@@ -110,6 +117,7 @@ class LibForm{
 
 		$this->printDisabledString($disabled);
 		$this->printRequiredString($required);
+		$this->printAcceptString($accepts);
 
 		echo ' style="display:none">';
 		echo '</label>';
