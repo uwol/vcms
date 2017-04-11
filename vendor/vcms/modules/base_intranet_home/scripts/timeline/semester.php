@@ -45,7 +45,12 @@ $description = '';
 /**
 * semester cover
 */
+$description .= '<div class="row">';
+$description .= '<div class="col-sm-offset-2 col-md-offset-3 col-sm-8 col-md-6">';
 $description .= $libTime->getSemesterCoverString($row['semester']);
+$description .= '</div>';
+$description .= '</div>';
+
 $description .= '<hr />';
 
 /**
