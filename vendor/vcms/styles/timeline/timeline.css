@@ -86,6 +86,8 @@
 
 .timeline > .timeline-body > .timeline-event > .timeline-panel {
 	position: relative;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 }
 
 .timeline > .timeline-body > .timeline-event > .timeline-panel {
@@ -153,25 +155,25 @@
 }
 
 @media (max-width: 991px) {
-    .timeline > .timeline-divider:before {
-        left: 40px;
-    }
+  .timeline > .timeline-divider:before {
+    left: 40px;
+  }
 
 	.timeline > .timeline-body > .timeline-event:nth-child(even) {
 		clear: right;
 	}
 
-    .timeline > .timeline-body > .timeline-event > .timeline-badge {
-        left: 15px;
-        margin-left: 0;
-        top: 16px;
-    }
+  .timeline > .timeline-body > .timeline-event > .timeline-badge {
+    left: 15px;
+    margin-left: 0;
+    top: 16px;
+  }
 
-    .timeline > .timeline-body > .timeline-event > .timeline-panel {
-        width: calc(100% - 90px);
-        width: -moz-calc(100% - 90px);
-        width: -webkit-calc(100% - 90px);
-    }
+  .timeline > .timeline-body > .timeline-event > .timeline-panel {
+    width: calc(100% - 90px);
+    width: -moz-calc(100% - 90px);
+    width: -webkit-calc(100% - 90px);
+  }
 
 	.timeline > .timeline-body > .timeline-event:nth-child(even) > .timeline-panel {
 		float: right;

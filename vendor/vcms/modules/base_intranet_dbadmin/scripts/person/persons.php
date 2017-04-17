@@ -116,7 +116,7 @@ if($libAuth->isLoggedin()){
 
 	if(in_array('internetwart', $libAuth->getAemter())){
 		echo '<div class="panel panel-default">';
-  		echo '<div class="panel-body">';
+		echo '<div class="panel-body">';
 		echo '<div class="btn-toolbar">';
 		echo '<a href="index.php?pid=intranet_admin_person&amp;aktion=blank" class="btn btn-default">Eine neue Person anlegen</a>';
 		echo '</div>';
@@ -124,6 +124,7 @@ if($libAuth->isLoggedin()){
 		echo '</div>';
 	}
 
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_admin_persons" method="post" class="form-inline">';
 	echo '<fieldset>';
 	echo '<div class="form-group">';
@@ -165,6 +166,7 @@ if($libAuth->isLoggedin()){
 	echo '</div>';
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';
