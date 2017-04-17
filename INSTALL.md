@@ -17,7 +17,7 @@ Nach dem Download befindet sich das VCMS in einer Zipdatei, die z. B. mit Winzip
 
 ### Systemkonfiguration
 
-Die Datei custom/systemconfig.php ist die zentrale Konfigurationsdatei. Diese muss mit einem UTF-8-fähigen Texteditor wie z. B. Notepad++ für Windows oder TextWrangler für Mac OS angepasst werden. Bei der Datenbankkonfiguration unter $mysqlServer, $mysqlUser, $mysqlPass und $mysqlDb sind die Angaben des Hosters einzutragen, die normalerweise dem Konfigurationsmenü des Hosters entnommen werden können. Es ist darauf zu achten, dass die Anführungszeichen nicht entfernt werden.
+Die Datei custom/systemconfig.php ist die zentrale Konfigurationsdatei. Diese muss mit einem UTF-8-fähigen Texteditor wie z. B. Atom (https://atom.io) angepasst werden. Bei der Datenbankkonfiguration unter $mysqlServer, $mysqlUser, $mysqlPass und $mysqlDb sind die Angaben des Hosters einzutragen, die normalerweise dem Konfigurationsmenü des Hosters entnommen werden können. Es ist darauf zu achten, dass die Anführungszeichen nicht entfernt werden.
 
 ### Hochladen
 
