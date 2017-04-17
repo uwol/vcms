@@ -71,14 +71,9 @@ echo '<h1>Neuigkeiten im ' .$libTime->getSemesterString($libGlobal->semester). '
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
-echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_news_write" class="btn btn-default">Einen Beitrag hinzufügen</a>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
 
+echo '<div class="row">';
+echo '<div class="col-md-6">';
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(eingabedatum,'%Y-%m-01') AS eingabedatum FROM mod_news_news GROUP BY eingabedatum ORDER BY eingabedatum DESC");
 $stmt->execute();
@@ -90,6 +85,21 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
+
+echo '</div>';
+echo '<div class="col-md-6">';
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
+echo '<div class="btn-toolbar">';
+echo '<a href="index.php?pid=intranet_news_write" class="btn btn-default">Einen Beitrag hinzufügen</a>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
+echo '</div>';
+echo '</div>';
+
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 

@@ -60,8 +60,6 @@ echo '<h1>Konfiguration</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Auf dieser Seite können die Module des Systems konfiguriert werden.</p>';
-
 $storage = $libGenericStorage->listAllArrayValues();
 
 echo '<form action="index.php?pid=configuration" method="post" class="form-horizontal">';
