@@ -81,6 +81,14 @@ a .fa {
 	display: none;
 }
 
+.social-buttons {
+	word-spacing: .25em;
+}
+
+.social-buttons a {
+	color: #333;
+}
+
 footer {
 	padding-top: 1em;
 	padding-bottom: 3em;
@@ -90,12 +98,4 @@ footer .auto-update-img {
 	display: none;
 	width: 1px;
 	height: 1px;
-}
-
-footer .social-buttons {
-	word-spacing: .5em;
-}
-
-footer .social-buttons a {
-	color: #333;
 }
