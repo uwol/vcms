@@ -89,6 +89,11 @@ a .fa {
 	color: #333;
 }
 
+tiny {
+	font-size: 65%;
+	vertical-align: middle;
+}
+
 footer {
 	padding-top: 1em;
 	padding-bottom: 3em;
