@@ -70,8 +70,7 @@ dd {
 
 .panel {
 	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.176);
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
+	margin-bottom: 2em;
 }
 
 .panel .panel-title {
