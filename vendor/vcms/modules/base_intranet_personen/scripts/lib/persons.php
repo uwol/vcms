@@ -36,14 +36,6 @@ function printPersons($stmt){
 		echo '<b>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
 		echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getVereineString($row['id']);
 
-		if($row['status'] != ''){
-			echo ' ' .$row['status'];
-		}
-
-		if($row['ort1'] != ''){
-			echo '<br />' .$row['ort1'];
-		}
-
 		if($row['tod_datum'] != '' && $row['tod_datum'] != '0000-00-00'){
 			echo '<br />';
 
@@ -52,6 +44,8 @@ function printPersons($stmt){
 			}
 
 			echo ' - ' .substr($row['tod_datum'], 0, 4);
+		} elseif($row['ort1'] != ''){
+			echo '<br />' .$row['ort1'];
 		}
 
 		echo '</div>';
