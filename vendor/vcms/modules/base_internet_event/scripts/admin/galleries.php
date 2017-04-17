@@ -45,6 +45,7 @@ echo $libString->getNotificationBoxText();
 
 echo '<h2>Galerie anlegen</h2>';
 
+echo '<div class="panel panel-default">';
 echo '<form action="index.php?pid=event_admin_galerie" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -53,6 +54,7 @@ $libForm->printSubmitButton('Galerie anlegen &frasl; bearbeiten');
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 
 
 echo '<h2>Bestehende Galerien</h2>';

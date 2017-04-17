@@ -87,6 +87,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<h2>Neue Region anlegen</h2>';
 
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_admin_regions" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
@@ -96,4 +97,5 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 }

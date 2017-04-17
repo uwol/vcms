@@ -5,7 +5,7 @@ html, body {
 body {
 	padding: 0;
 	background-color: white;
-	color: #333;
+	color: black;
 	font-family: "Libre Franklin", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	/* hyphenation */
 	overflow-wrap: break-word;
@@ -17,9 +17,7 @@ body {
 }
 
 fieldset {
-	border: 1px solid #ddd;
 	padding: 1em;
-	margin-bottom: 1em;
 }
 
 #container {

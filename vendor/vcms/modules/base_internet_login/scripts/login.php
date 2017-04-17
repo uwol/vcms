@@ -43,15 +43,17 @@ if($libGlobal->getSiteUrlAuthority() != ""){
 }
 
 
+echo '<div class="panel panel-default">';
 echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
 $libForm->printTextInput('intranet_login_email', 'E-Mail-Adresse', '', 'email');
 $libForm->printTextInput('intranet_login_password', 'Passwort', '', 'password');
-$libForm->printSubmitButton('<i class="fa fa-sign-in" aria-hidden="true"></i> Anmelden', array('btn-success'));
+$libForm->printSubmitButton('<i class="fa fa-sign-in" aria-hidden="true"></i> Anmelden');
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 
 echo '<h2>Registrierung</h2>';
 echo '<p>Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=registration">Registrierungsseite</a> angefordert werden kann.</p>';

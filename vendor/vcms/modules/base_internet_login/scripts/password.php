@@ -79,6 +79,7 @@ echo $libString->getNotificationBoxText();
 
 echo '<p>Auf dieser Seite kann ein neues Passwort erzeugt werden. Bitte gib Dein Geburtsdatum und die E-Mail-Adresse Deines Intranet-Kontos an.</p>';
 
+echo '<div class="panel panel-default">';
 echo '<form action="index.php?pid=password" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -88,3 +89,4 @@ $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';

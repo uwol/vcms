@@ -99,7 +99,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 		echo '</div>';
 
 		echo '<div class="caption">';
-		echo '<h3><i class="fa fa-calendar" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
+		echo '<h3><i class="fa fa-calendar-o" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
 		echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
 		echo '</div>';
 

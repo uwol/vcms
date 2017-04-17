@@ -85,12 +85,10 @@ echo '<h1>Rundbrief an Mitglieder verschicken</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Auf dieser Seite kann per E-Mail ein Rundbrief an diejenigen Mitglieder verschickt werden, die sich nicht aus dem Verteiler ausgetragen haben.</p>';
 
+echo '<div class="panel panel-default">';
 echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" enctype="multipart/form-data" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');" class="form-horizontal">';
 echo '<fieldset>';
-
-
 
 echo '<div class="form-group">';
 echo '<label class="col-sm-2 control-label">Adressaten</label>';
@@ -166,3 +164,4 @@ $libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i>
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';

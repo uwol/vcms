@@ -140,6 +140,7 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = '&amp;aktion=update';
 	}
 
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_admin_event' .$extraActionParam. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="veranstaltungsdaten" />';
@@ -162,4 +163,5 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 }

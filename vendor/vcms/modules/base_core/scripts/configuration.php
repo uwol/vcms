@@ -62,6 +62,7 @@ echo $libString->getNotificationBoxText();
 
 $storage = $libGenericStorage->listAllArrayValues();
 
+echo '<div class="panel panel-default">';
 echo '<form action="index.php?pid=configuration" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -102,3 +103,4 @@ $libForm->printSubmitButton('Speichern');
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';

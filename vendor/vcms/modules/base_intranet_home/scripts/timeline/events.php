@@ -57,7 +57,7 @@ class LibEventTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 	}
 
 	function getBadgeIcon(){
-		return '<i class="fa fa-calendar" aria-hidden="true"></i>';
+		return '<i class="fa fa-calendar-o" aria-hidden="true"></i>';
 	}
 }
 

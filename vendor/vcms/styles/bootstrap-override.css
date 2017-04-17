@@ -52,7 +52,6 @@ dd {
 
 .panel {
 	margin-bottom: 0.5em;
-	border-radius: 0;
 }
 
 .thumbnail {
@@ -69,16 +68,33 @@ dd {
 	font-weight: normal;
 }
 
-.panel .panel-title {
-	font-weight: normal;
+.panel {
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.176);
 }
 
-.panel .panel-heading {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
+.panel .panel-title {
+	font-weight: normal;
 }
 
 .panel .panel-heading,
 .panel .panel-body {
 	padding: 1em;
+	background-color: inherit;
+}
+
+.alert,
+.form-control,
+.btn,
+.btn-link,
+.dropdown-menu,
+.label,
+.list-group-item,
+.modal-content,
+.nav-tabs a,
+.nav-pills a,
+.navbar,
+.navbar-toggle,
+.panel,
+.panel .panel-heading {
+	border-radius: 0 !important;
 }

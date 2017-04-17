@@ -220,6 +220,7 @@ if($ownprofile){
 	echo '<h2>Passwort ändern</h2>';
 	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
 
+ 	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_person&amp;id=' .$id. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
@@ -231,9 +232,12 @@ if($ownprofile){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 
 
 	echo '<h2>Stammdaten ändern</h2>';
+
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_person" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="person_data" />';
@@ -323,6 +327,7 @@ if($ownprofile){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 }
 
 

@@ -139,6 +139,7 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = '&amp;aktion=update';
 	}
 
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_admin_membership' .$extraActionParam. '" method="post" class="form-horizontal">';
 	echo '<fielset>';
 	echo '<input type="hidden" name="verein" value="' .$vmarray['verein']. '" />';
@@ -163,4 +164,5 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 }

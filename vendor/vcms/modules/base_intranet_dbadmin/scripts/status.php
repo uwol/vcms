@@ -86,6 +86,7 @@ if($libAuth->isLoggedin()){
 
 	echo '<h2>Neuen Status anlegen</h2>';
 
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_admin_status" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
@@ -96,4 +97,5 @@ if($libAuth->isLoggedin()){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 }

@@ -124,6 +124,7 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = '&amp;aktion=update';
 	}
 
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_admin_association' .$extraActionParam. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="vereinsdaten" />';
@@ -173,6 +174,7 @@ if($libAuth->isLoggedin()){
 
 	echo '</fielset>';
 	echo '</form>';
+	echo '</div>';
 }
 
 function updateAdresseStand($table, $field, $id){

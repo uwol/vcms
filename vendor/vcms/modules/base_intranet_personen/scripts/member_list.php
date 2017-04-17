@@ -32,17 +32,17 @@ echo '<h1>' .$libConfig->verbindungName. ' - Die Mitglieder</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Der Balken unter einem Foto zeigt an, wie häufig ein Mitglied das Intranet besucht. Mitglieder können anhand von Schlüsselwörtern gesucht werden.</p>';
-
+echo '<div class="panel panel-default">';
 echo '<form action="index.php?pid=intranet_mitglied_listelebende" method="post" class="form-inline">';
 echo '<fieldset>';
 echo '<div class="form-group">';
 echo '<label for="searchterm" class="sr-only">Suchbegriff</label>';
-echo '<input type="text" id="searchterm" name="searchterm" class="form-control" />';
+echo '<input type="text" id="searchterm" name="searchterm" class="form-control" placeholder="Suchbegriff" />';
 echo '</div> ';
 echo '<button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i> Suchen</button>';
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 
 
 // search term given?

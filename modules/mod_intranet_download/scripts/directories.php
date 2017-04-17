@@ -112,13 +112,13 @@ echo '<hr />';
 listFolderContentRec($rootFolderObject, true);
 
 
-
 if(!empty($libAuth->getAemter())){
 	/*
 	* upload form
 	*/
 	echo '<h2>Datei hochladen</h2>';
 
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_directories" method="post" enctype="multipart/form-data" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="upload" />';
@@ -170,6 +170,7 @@ if(!empty($libAuth->getAemter())){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 
 
 	/*
@@ -177,12 +178,13 @@ if(!empty($libAuth->getAemter())){
 	*/
 	echo '<h2>Ordner anlegen</h2>';
 
+  echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_directories" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="newfolder" />';
 
 	echo '<div class="form-group">';
-	echo '<label for="foldername" class="col-sm-2 control-label">neuen Ordner</label>';
+	echo '<label for="foldername" class="col-sm-2 control-label">Neuen Ordner</label>';
 	echo '<div class="col-sm-2"><input type="text" id="foldername" name="foldername" class="form-control" /></div>';
 	echo '</div>';
 
@@ -206,6 +208,7 @@ if(!empty($libAuth->getAemter())){
 	echo '</div>';
 
 	echo '</form>';
+	echo '</div>';
 }
 
 
@@ -216,7 +219,7 @@ if(!empty($libAuth->getAemter())){
 function listFolderContentRec(&$rootFolderObject, $firstLevel){
 	global $libAuth, $libModuleHandler;
 
-	echo '<div style="margin-left:20px">';
+	echo '<div style="margin-left:1.5em">';
 
 	foreach($rootFolderObject->nestedFolderElements as $folderElement){
 		//folder?
@@ -224,10 +227,10 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			if(!$folderElement->isAmtsRootFolder() || $folderElement->hasNestedFolderElements()){
 				if($folderElement->isOpen){
 					echo '<a href="index.php?pid=intranet_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
-					echo '<i class="fa fa-folder-open" aria-hidden="true"></i> ';
+					echo '<i class="fa fa-lg fa-folder-open-o" aria-hidden="true"></i> ';
 				} else{
 					echo '<a href="index.php?pid=intranet_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
-					echo '<i class="fa fa-folder" aria-hidden="true"></i> ';
+					echo '<i class="fa fa-lg fa-folder-o" aria-hidden="true"></i> ';
 				}
 
 				echo $folderElement->name;
@@ -257,18 +260,18 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			switch($extension){
 				case 'doc':
 				case 'docx':
-					echo '<i class="fa fa-file-word-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-word-o" aria-hidden="true"></i>';
 					break;
 				case 'xls':
 				case 'xlsx':
-					echo '<i class="fa fa-file-excel-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-excel-o" aria-hidden="true"></i>';
 					break;
 				case 'ppt':
 				case 'pptx':
-					echo '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-powerpoint-o" aria-hidden="true"></i>';
 					break;
 				case 'pdf':
-					echo '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-pdf-o" aria-hidden="true"></i>';
 					break;
 				case 'cdr':
 				case 'jpg':
@@ -276,27 +279,27 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				case 'gif':
 				case 'png':
 				case 'svg':
-					echo '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-image-o" aria-hidden="true"></i>';
 					break;
 				case 'txt':
-					echo '<i class="fa fa-file-text-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-text-o" aria-hidden="true"></i>';
 					break;
 				case 'aac':
 				case 'mp3':
 				case 'wav':
-					echo '<i class="fa fa-file-audio-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-audio-o" aria-hidden="true"></i>';
 					break;
 				case 'mp4':
 				case 'xvid':
-					echo '<i class="fa fa-file-video-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-video-o" aria-hidden="true"></i>';
 					break;
 				case 'html':
 				case 'htm':
 				case 'css':
-					echo '<i class="fa fa-file-code-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-code-o" aria-hidden="true"></i>';
 					break;
 				default:
-					echo '<i class="fa fa-file-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-file-o" aria-hidden="true"></i>';
 			}
 
 			$fileName = $folderElement->getFilename();

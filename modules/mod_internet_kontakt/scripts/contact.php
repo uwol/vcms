@@ -222,6 +222,7 @@ if($mailsent){
 	}
 
 
+	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=kontakt" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 
@@ -233,6 +234,7 @@ if($mailsent){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 }
 
 echo '</section>';

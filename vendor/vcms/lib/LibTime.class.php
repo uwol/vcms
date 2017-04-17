@@ -22,6 +22,7 @@ use DateTime;
 use DateTimeZone;
 
 class LibTime{
+
 	function getSemestersConfig(){
 		global $libConfig;
 
@@ -598,6 +599,7 @@ class LibTime{
 		$retstr = '';
 
 		if(count($semesters) > 1 || (count($semesters) == 1 && ($semesters[0] != $globalsemester))){
+			$retstr .= '<div class="panel panel-default">';
 			$retstr .= '<form action="index.php" class="form-inline">';
 			$retstr .= '<fieldset>';
 			$retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';
@@ -620,10 +622,11 @@ class LibTime{
 			}
 
 			$retstr .= '</select> ';
-			$retstr .= '<button type="submit" class="btn btn-default">Semester wählen</button>';
+			$retstr .= '<button type="submit" class="btn btn-default"><i class="fa fa-calendar-o" aria-hidden="true"></i> Semester wählen</button>';
 			$retstr .= '</div>';
 			$retstr .= '</fieldset>';
 			$retstr .= '</form>';
+			$retstr .= '</div>';
 		}
 
 		return $retstr;

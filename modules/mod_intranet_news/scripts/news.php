@@ -92,7 +92,7 @@ echo '<div class="col-md-6">';
 echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_news_write" class="btn btn-default">Einen Beitrag hinzufügen</a>';
+echo '<a href="index.php?pid=intranet_news_write" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> Einen Beitrag hinzufügen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
