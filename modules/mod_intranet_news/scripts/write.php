@@ -22,14 +22,11 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 echo '<h1>Neuer Nachrichtenbeitrag</h1>';
 
-/*
-* input form
-*/
+echo '<div class="panel panel-default">';
 echo '<form action="index.php?pid=intranet_news" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
 $libForm->printTextarea('text', 'Nachricht', '');
-
 
 echo '<div class="form-group">';
 echo '<label for="kategorie" class="col-sm-2 control-label">Kategorie</label>';
@@ -45,11 +42,9 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 echo '</select></div>';
 echo '</div>';
 
-
 $libForm->printMitgliederDropDownBox('betroffenesmitglied', 'Betroffenes Mitglied', '');
-echo '<p class="col-sm-offset-2 col-sm-10">Bei einer Nachricht mit Bezug zu einem Mitglied wie z. B. einer Hochzeit oder einem Todesfall kann das betroffene Mitglied angeben werden.</p>';
-
 $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Beitrag speichern');
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
