@@ -114,7 +114,7 @@ class LibEvent{
 		$title = $this->getShareTitle($id);
 
 		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;title=' .urlencode($title). '" rel="nofollow">';
-		echo '<i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>';
+		echo '<i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i>';
 		echo '</a> ';
 	}
 
@@ -123,7 +123,7 @@ class LibEvent{
 		$title = $this->getShareTitle($id);
 
 		echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
-		echo '<i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>';
+		echo '<i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i>';
 		echo '</a> ';
 	}
 

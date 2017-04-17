@@ -142,7 +142,7 @@ class LibForm{
 	function printSubmitButton($label, $classes = array()){
 		echo '<div class="form-group">';
 		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
-		echo '<button type="submit" class="btn btn-default';
+		echo '<button type="submit" class="btn btn-default hvr-forward';
 
 		$this->printClassesString($classes);
 
@@ -152,7 +152,7 @@ class LibForm{
 	}
 
 	function printSubmitButtonInline($label, $classes = array()){
-		echo '<button type="submit" class="btn btn-default';
+		echo '<button type="submit" class="btn btn-default hvr-forward';
 
 		$this->printClassesString($classes);
 
