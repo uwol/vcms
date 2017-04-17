@@ -203,7 +203,7 @@ function printSemesterCover($row){
 
 	if($semesterCoverString != ''){
 		echo '<div class="col-sm-6 col-md-8 col-lg-offset-3 col-lg-6">';
-		echo '<div class="semestercover-box center-block">';
+		echo '<div class="semestercover-box center-block reveal">';
 
 		if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
 			echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$semester. '">';

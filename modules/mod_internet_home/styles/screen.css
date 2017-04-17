@@ -43,7 +43,7 @@ header .header-content .header-content-inner .btn-circle {
 	width: 70px;
 	height: 70px;
 	margin-top: 15px;
-	padding: 7px 16px;
+	padding: 3px;
 	border: 2px solid white;
 	border-radius: 100% !important;
 	font-size: 40px;
@@ -60,7 +60,7 @@ header .header-content .header-content-inner .btn-circle:focus {
 	background: rgba(255, 255, 255, 0.3);
 }
 
-header .header-content .header-content-inner .btn-circle .fa{
+header .header-content .header-content-inner .btn-circle .fa {
 	color: white;
 }
 

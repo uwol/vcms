@@ -99,7 +99,7 @@ if($libEvent->isFacebookEvent($row)){
 
 		echo '<p>';
 		echo '<a href="' .$libString->protectXss($eventUrl). '">';
-		echo '<i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>';
+		echo '<i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i>';
 		echo '</a>';
 		echo '</p>';
 

@@ -25,7 +25,7 @@ echo '<div class="header-content">';
 echo '<div class="header-content-inner">';
 echo '<h1 id="homeHeading">Willkommen</h1>';
 echo '<a class="btn btn-circle" href="#pastevents">';
-echo '<i class="fa fa-angle-double-down"></i>';
+echo '<i class="fa fa-angle-double-down hvr-wobble-vertical"></i>';
 echo '</a>';
 echo '</div>';
 echo '</div>';
