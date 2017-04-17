@@ -82,7 +82,7 @@ a .fa {
 }
 
 .reveal {
-	display: none;
+	visibility: hidden;
 }
 
 .social-buttons {
