@@ -33,13 +33,17 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$imageExists = is_file($image);
 
 	if($imageExists){
-		echo '<img src="' .$image. '" class="img-responsive center-block" alt="" />';
+		echo '<img src="' .$image. '" class="img-responsive center-block reveal" alt="" />';
 		echo '<hr />';
 	}
 
-	echo '<p>' .$libString->parseBBCode(nl2br(trim($row['text']))). '</p>';
+	echo '<p class="reveal">';
+	$text = nl2br(trim($row['text']));
+	echo $libString->parseBBCode($text);
+	echo '</p>';
+
 	echo '</div>';
-    echo '</div>';
-    echo '</div>';
-    echo '</section>';
+	echo '</div>';
+	echo '</div>';
+	echo '</section>';
 }

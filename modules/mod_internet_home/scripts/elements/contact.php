@@ -36,11 +36,11 @@ echo '<hr>';
 echo '<p>Interesse geweckt? Großartig! Melde Dich bei uns und wir antworten Dir schnellstmöglich.</p>';
 echo '</div>';
 echo '<div class="col-lg-4 col-lg-offset-2 text-center">';
-echo '<i class="fa fa-phone fa-3x sr-contact"></i>';
+echo '<i class="fa fa-phone fa-3x sr-contact reveal"></i>';
 echo '<p>' .$libConfig->verbindungTelefon. '</p>';
 echo '</div>';
 echo '<div class="col-lg-4 text-center">';
-echo '<i class="fa fa-envelope-o fa-3x sr-contact"></i>';
+echo '<i class="fa fa-envelope-o fa-3x sr-contact reveal"></i>';
 echo '<p>' .$libConfig->emailInfo. '</p>';
 
 echo '</div>';

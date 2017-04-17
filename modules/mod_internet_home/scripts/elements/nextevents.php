@@ -57,7 +57,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			echo '<div class="col-sm-4">';
-			echo '<div class="thumbnail">';
+			echo '<div class="thumbnail reveal">';
 			echo '<div class="caption">';
 			echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 
@@ -94,7 +94,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 
 	if($semesterCoverAvailable){
 		echo '<div class="col-sm-4">';
-		echo '<div class="thumbnail">';
+		echo '<div class="thumbnail reveal">';
 		echo '<div class="semestercover-box center-block">';
 		echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">';
 		echo $semesterCoverString;

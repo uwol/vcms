@@ -182,7 +182,7 @@ echo '</section>';
 echo '</div>';
 
 echo '<aside class="col-sm-6">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="img-responsive center-block" />';
+echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="img-responsive center-block reveal" />';
 echo '</aside>';
 
 echo '</div>';
