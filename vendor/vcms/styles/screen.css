@@ -81,6 +81,10 @@ a .fa {
 	display: none;
 }
 
+.reveal {
+	display: none;
+}
+
 .social-buttons {
 	word-spacing: .25em;
 }
