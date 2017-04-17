@@ -4,7 +4,7 @@ html, body {
 
 body {
 	padding: 0;
-	background-color: #f8f8f8;
+	background-color: white;
 	color: #333;
 	font-family: "Libre Franklin", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	/* hyphenation */
@@ -36,7 +36,6 @@ fieldset {
 
 main,
 footer {
-	background: rgba(255, 255, 255, 0.5);
 	padding: 0.6em;
 }
 

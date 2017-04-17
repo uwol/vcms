@@ -77,7 +77,6 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			echo '</address>';
 
 			echo '<p>' .$libEvent->getStatusString($row['status']). '</p>';
-			echo '<hr />';
 			echo '<p>';
 
 			if(!$libEvent->isFacebookEvent($row)){

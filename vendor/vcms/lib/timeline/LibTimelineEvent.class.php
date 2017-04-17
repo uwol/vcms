@@ -84,7 +84,9 @@ class LibTimelineEvent {
 		$retstr = '<article class="timeline-event">';
 
 		if(!$this->isFullWidth()){
-			$retstr .= '<div class="timeline-badge ' .$this->getBadgeClass(). '">' .$this->getBadgeIcon(). '</div>';
+			$retstr .= '<div class="timeline-badge ' .$this->getBadgeClass(). '">';
+			$retstr .= '<span class="reveal">' .$this->getBadgeIcon(). '</span>';
+			$retstr .= '</div>';
 		}
 
 		$panelTypeClass = $this->isFullWidth() ? 'full-width' : 'with-badge';

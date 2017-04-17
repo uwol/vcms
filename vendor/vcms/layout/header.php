@@ -9,8 +9,8 @@ echo '    <title>' .$libGlobal->getPageTitle(). '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">' . PHP_EOL;
-echo '    <link rel="stylesheet" href="vendor/hover/hover-min.css">' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/hover/hover-min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/screen.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/calendar/calendar.css" />' . PHP_EOL;
@@ -23,6 +23,7 @@ echo '    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=L
 echo '    <link rel="canonical" href="' .$libGlobal->getPageCanonicalUrl(). '"/>' . PHP_EOL;
 echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
+echo '    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/vcms/styles/gallery/modal.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/vcms/styles/screen.js"></script>' . PHP_EOL;
 

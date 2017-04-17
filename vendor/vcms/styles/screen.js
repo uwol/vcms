@@ -1,10 +1,6 @@
-/* inserted elements */
-
 function animateLasteInsertId(){
 	$(".lastInsertId").slideDown(1000);
 }
-
-/* smooth scrolling */
 
 function configureScrolling(){
 	$('a[href^="#"]').on('click', function(event){
@@ -12,8 +8,6 @@ function configureScrolling(){
 	  $('html,body').animate({scrollTop:$(this.hash).offset().top}, 'slow', 'swing');
 	});
 }
-
-/* facebook event plugin */
 
 function loadFacebookEventPlugins(){
 	$(".facebookEventPlugin").each(function() {
@@ -30,8 +24,6 @@ function loadFacebookEventPlugins(){
 	});
 }
 
-/* facebook plugins */
-
 function adjustFacebookPagePluginsSrc(){
 	$("iframe.facebookPagePlugin").each(function() {
 		var iframe = $(this);
@@ -42,8 +34,6 @@ function adjustFacebookPagePluginsSrc(){
 		iframe.attr('src', newSrc);
 	});
 }
-
-/* navigation */
 
 function configureNavigation(){
 	var navbarHeight = $(".navbar-fixed-top").height();
@@ -58,18 +48,25 @@ function configureNavigation(){
     $("#content").css("padding-top", paddingTop);
 }
 
-// --------------------
+function reveal(){
+	window.sr = ScrollReveal();
+  sr.reveal('.reveal');
+}
+
 
 function adjustElementDimensions(){
 	adjustFacebookPagePluginsSrc();
 	configureNavigation();
 }
 
+
 // --------------------
+
 
 $(document).ready(function() {
 	animateLasteInsertId();
 	configureScrolling();
+	reveal();
 
 	loadFacebookEventPlugins();
 	adjustElementDimensions();
