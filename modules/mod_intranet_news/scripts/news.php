@@ -127,7 +127,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if((in_array('internetwart', $libAuth->getAemter()))
 			|| ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)){
 		echo ' <a href="index.php?pid=intranet_news&amp;semester=' .$libGlobal->semester. '&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
-		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
+		echo '<i class="fa fa-fw fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 	}
 

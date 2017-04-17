@@ -80,7 +80,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($libAuth->getId() == $row['person']){
 		echo ' ';
 		echo '<a href="index.php?pid=intranet_reservations&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
-		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
+		echo '<i class="fa fa-fw fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
 	}
 
