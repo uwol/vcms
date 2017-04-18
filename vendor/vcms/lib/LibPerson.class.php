@@ -150,20 +150,24 @@ class LibPerson{
 
 	function getImage($id, $size = 'md'){
 		$retstr = '<a href="index.php?pid=intranet_person&amp;id=' .$id. '" class="personProfileLink">';
-		$classes = 'img-responsive hvr-glow';
+		$classes = 'img-responsive';
 
 		switch($size){
 			case 'lg':
+				$hvrClass = '';
 				$sizeClass = 'person-img-lg';
 				break;
 			case 'xs':
+				$hvrClass = 'hvr-glow';
 				$sizeClass = 'person-img-xs';
 				break;
 			default:
+				$hvrClass = 'hvr-glow';
 				$sizeClass = 'person-img-md';
 				break;
 		}
 
+		$classes .= ' ' .$hvrClass;
 		$classes .= ' ' .$sizeClass;
 
 		if($this->hasImageFile($id)){
