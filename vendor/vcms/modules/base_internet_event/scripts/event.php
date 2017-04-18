@@ -88,7 +88,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 
 	echo '<div class="row event-semestercover-box" style="' .$style. '">';
 	echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-	echo '<div class="panel panel-default">';
+	echo '<div class="panel panel-default reveal">';
 	echo '<div class="panel-body">';
 	printEventDateTime($row);
 
@@ -124,7 +124,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	$panelText .= printAnmeldungen($row);
 
 	if($panelText){
-		echo '<div class="panel panel-default">';
+		echo '<div class="panel panel-default reveal">';
 		echo '<div class="panel-body">';
 		echo $panelText;
 		echo '</div>';
@@ -274,7 +274,7 @@ function printGallery($row){
 
 		foreach($pictures as $key => $value){
 			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-			echo '<div class="thumbnail">';
+			echo '<div class="thumbnail reveal">';
 			echo '<div class="img-frame">';
 			echo '<a href="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '">';
 			echo '<img data-object-fit="cover" src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" />';
