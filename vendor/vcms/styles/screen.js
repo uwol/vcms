@@ -19,7 +19,6 @@ function loadFacebookEventPlugins(){
 			context: document.body
 		}).done(function(html) {
 			div.replaceWith(html);
-			adjustThumbnailImgsOnLoad();
 		});
 	});
 }

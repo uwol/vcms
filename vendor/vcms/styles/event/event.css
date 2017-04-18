@@ -1,0 +1,14 @@
+.event-semestercover-box {
+	background-size: cover;
+	background-position: center;
+	margin-bottom: 2em;
+	padding: 1em;
+}
+
+.event-semestercover-box .panel {
+  margin: 0;
+}
+
+.event-semestercover-box .thumbnail .img-frame {
+	height: 140px;
+}

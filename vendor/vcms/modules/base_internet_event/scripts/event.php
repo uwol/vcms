@@ -73,14 +73,20 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo json_encode($eventSchema);
 	echo '</script>';
 
-
 	echo '<h1>' .$row['titel']. '</h1>';
 
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<div class="row">';
+	$semester = $libTime->getSemesterNameAtDate($row['datum']);
+	$semesterCover = $libTime->determineSemesterCover($semester);
+	$style = '';
 
+	if($semesterCover){
+		$style = "background-image: url('custom/semestercover/" .$semesterCover. "')";
+	}
+
+	echo '<div class="row event-semestercover-box" style="' .$style. '">';
 	echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
@@ -90,30 +96,41 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 
 	if ($row['ort'] != ''){
 		echo '<address>';
-		echo 'Ort: ' .$row['ort'];
+		echo '<i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> ' .$row['ort'];
 		echo '</address>';
 	}
 
 	$status = $libEvent->getStatusString($row['status']);
-	echo '<p>' .$status. '</p>';
+
+	if(status){
+		echo '<div><i class="fa fa-fw fa-info" aria-hidden="true"></i> ' .$status. '</div>';
+	}
 
 	printAnmeldeStatus($row);
 	printSocialButtons($row);
+
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
 
 	if($libEvent->isFacebookEvent($row)){
 		printFacebookEvent($row);
-	} else {
-		printSemesterCover($row);
 	}
 
 	echo '</div>';
 
-	printDescription($row);
-	printSpruch($row);
-	printAnmeldungen($row);
+  $panelText = printSpruch($row);
+	$panelText .= printDescription($row);
+	$panelText .= printAnmeldungen($row);
+
+	if($panelText){
+		echo '<div class="panel panel-default">';
+		echo '<div class="panel-body">';
+		echo $panelText;
+		echo '</div>';
+		echo '</div>';
+	}
+
 	printGallery($row);
 }
 
@@ -126,7 +143,7 @@ function printEventDateTime($row){
 	* date and time
 	*/
 	echo '<div class="text-center">';
-	echo '<h3 class="text-muted">';
+	echo '<h3>';
 
 	$monatName = $libTime->getMonth($libTime->formatMonthString($row['datum']));
 	$monatNameSubstr = substr($monatName, 0, 3);
@@ -178,43 +195,20 @@ function printAnmeldeStatus($row){
 
 			if($angemeldet){
 				echo '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
-				$libForm->printSubmitButtonInline('<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden');
+				$libForm->printSubmitButtonInline('<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> Abmelden', array('btn-sm'));
 			} else {
 				echo '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
-				$libForm->printSubmitButtonInline('<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden');
+				$libForm->printSubmitButtonInline('<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> Anmelden', array('btn-sm'));
 			}
 
 			echo '</form>';
 		} else {
 			if($angemeldet){
-				echo '<i class="fa fa-check-square-o" aria-hidden="true"></i> angemeldet';
+				echo '<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> angemeldet';
 			} else {
-				echo '<i class="fa fa-square-o" aria-hidden="true"></i> nicht angemeldet';
+				echo '<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> nicht angemeldet';
 			}
 		}
-	}
-}
-
-function printSemesterCover($row){
-	global $libTime, $libModuleHandler;
-
-	$semester = $libTime->getSemesterNameAtDate($row['datum']);
-	$semesterCoverString = $libTime->getSemesterCoverString($semester);
-
-	if($semesterCoverString != ''){
-		echo '<div class="col-sm-6 col-md-8 col-lg-offset-3 col-lg-6">';
-		echo '<div class="semestercover-box center-block reveal">';
-
-		if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
-			echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$semester. '">';
-			echo $semesterCoverString;
-			echo '</a>';
-		} else {
-			echo $semesterCoverString;
-		}
-
-		echo '</div>';
-		echo '</div>';
 	}
 }
 
@@ -226,42 +220,43 @@ function printFacebookEvent($row){
 
 function printDescription($row){
 	if($row['beschreibung'] != ''){
-		echo '<hr />';
-		echo '<p>' .nl2br($row['beschreibung']). '</p>';
+		return '<p>' .nl2br($row['beschreibung']). '</p>';
 	}
 }
 
 function printSpruch($row){
 	if($row['spruch'] != ''){
-		echo '<p>' .nl2br($row['spruch']). '</p>';
+		return '<p>' .nl2br($row['spruch']). '</p>';
 	}
 }
 
 function printAnmeldungen($row){
 	global $libAuth, $libDb, $libGallery, $libPerson;
 
-	if($libAuth->isLoggedin()){
-		echo '<hr />';
+	$retstr = '';
 
+	if($libAuth->isLoggedin()){
 		$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
 		$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
 		$anmeldungWritten = false;
 
-		echo '<p>';
+		$retstr .= '<p>';
 
 		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($anmeldungWritten){
-				echo ', ';
+				$retstr .= ', ';
 			}
 
-			echo '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getNameString($eventrow['person'], 0). '</a></span>';
+			$retstr .= '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getNameString($eventrow['person'], 0). '</a></span>';
 			$anmeldungWritten = true;
 		}
 
-		echo '</p>';
+		$retstr .= '</p>';
 	}
+
+	return $retstr;
 }
 
 function printGallery($row){
@@ -273,7 +268,6 @@ function printGallery($row){
 	}
 
 	if($libGallery->hasPictures($row['id'], $level)){
-		echo '<hr />';
 		echo '<div class="row gallery">';
 
 		$pictures = $libGallery->getPictures($row['id'], $level);

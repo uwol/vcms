@@ -84,6 +84,8 @@ a .fa {
 }
 
 .social-buttons {
+	margin-top: 0;
+	margin-bottom: 0;
 	word-spacing: .25em;
 }
 
