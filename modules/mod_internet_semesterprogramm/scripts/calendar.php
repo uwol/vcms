@@ -25,6 +25,10 @@ echo '<h1>Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester).
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
+
+echo '<div class="row">';
+echo '<div class="col-sm-6">';
+
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 
@@ -36,7 +40,21 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
 
-echo '<p>Das Semesterprogramm kann per <a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=semesterprogramm_icalendar"><i class="fa fa-calendar" aria-hidden="true"></i> iCalendar</a> z. B. in iCloud oder Google Calendar abonniert werden.</p>';
+echo '</div>';
+
+echo '<div class="col-sm-6 hidden-xs">';
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
+echo '<div class="btn-toolbar">';
+echo '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=semesterprogramm_icalendar" class="btn btn-default"><i class="fa fa-calendar" aria-hidden="true"></i> Semesterprogramm abonnieren</a>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
+echo '</div>';
+
+
 echo '<div>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
