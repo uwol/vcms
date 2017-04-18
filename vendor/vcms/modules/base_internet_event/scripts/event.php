@@ -102,7 +102,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 
 	$status = $libEvent->getStatusString($row['status']);
 
-	if(status){
+	if($status){
 		echo '<div><i class="fa fa-fw fa-info" aria-hidden="true"></i> ' .$status. '</div>';
 	}
 
