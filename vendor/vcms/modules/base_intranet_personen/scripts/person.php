@@ -198,6 +198,8 @@ printPersonSignature($row, $ownprofile);
 echo '</div>';
 
 echo '<div class="col-sm-9">';
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 printPersonData($row);
 
 echo '<div class="row">';
@@ -207,9 +209,16 @@ echo '</div>';
 
 printCommunication($row);
 printAssociationDetails($row);
+echo '</div>';
+echo '</div>';
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 printVita($row);
 echo '</div>';
 
+echo '</div>';
+echo '</div>';
 echo '</div>';
 
 
@@ -820,7 +829,6 @@ function getClassForChargierAnzahl($chargierAnzahl){
 }
 
 function printVita($row){
-	echo '<hr />';
 	echo '<article>';
 
 	$vita = trim($row['vita']);
