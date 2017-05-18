@@ -27,21 +27,22 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<section class="announcement-box">';
 	echo '<div class="container">';
 	echo '<div class="row">';
-	echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
+	echo '<div class="col-lg-8 col-lg-offset-2">';
+	echo '<div class="thumbnail">';
 
 	$image = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
 	$imageExists = is_file($image);
 
 	if($imageExists){
 		echo '<img src="' .$image. '" class="img-responsive center-block reveal" alt="" />';
-		echo '<hr />';
 	}
 
-	echo '<p class="reveal">';
+	echo '<p class="caption">';
 	$text = nl2br(trim($row['text']));
 	echo $libString->parseBBCode($text);
 	echo '</p>';
 
+	echo '</div>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
