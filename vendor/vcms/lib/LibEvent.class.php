@@ -22,7 +22,13 @@ use PDO;
 
 class LibEvent{
 
-	function getUrl($id){
+	function getEventUrl($id){
+		global $libGlobal;
+
+		return $libGlobal->getSiteUrl(). '/index.php?pid=event&id=' .$id;
+	}
+	
+	function getShareUrl($id){
 		global $libGlobal, $libDb, $libTime;
 
 		$stmt = $libDb->prepare('SELECT id, datum FROM base_veranstaltung WHERE id=:id');
@@ -32,7 +38,7 @@ class LibEvent{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		$semester = $libTime->getSemesterNameAtDate($row['datum']);
-		$result = $libGlobal->getSiteUrl(). '/index.php?pid=event&amp;id=' .$row['id']. '&amp;semester=' .$semester;
+		$result = $libGlobal->getSiteUrl(). '/index.php?pid=event&id=' .$row['id']. '&semester=' .$semester;
 		return $result;
 	}
 
@@ -110,28 +116,28 @@ class LibEvent{
 	}
 
 	function printFacebookShareButton($id){
-		$url = $this->getUrl($id);
+		$url = $this->getShareUrl($id);
 		$title = $this->getShareTitle($id);
 
-		echo '<a href="http://www.facebook.com/share.php?u=' .urlencode($url). '&amp;title=' .urlencode($title). '" rel="nofollow">';
+		echo '<a href="http://www.facebook.com/share.php?u=' .rawurlencode($url). '&amp;title=' .rawurlencode($title). '" rel="nofollow">';
 		echo '<i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i>';
 		echo '</a> ';
 	}
 
 	function printTwitterShareButton($id){
-		$url = $this->getUrl($id);
+		$url = $this->getShareUrl($id);
 		$title = $this->getShareTitle($id);
 
-		echo '<a href="http://twitter.com/share?url=' .urlencode($url). '&amp;text=' .urlencode($title). '" rel="nofollow">';
+		echo '<a href="http://twitter.com/share?url=' .rawurlencode($url). '&amp;text=' .rawurlencode($title). '" rel="nofollow">';
 		echo '<i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i>';
 		echo '</a> ';
 	}
 
 	function printWhatsAppShareButton($id){
-		$url = $this->getUrl($id);
+		$url = $this->getShareUrl($id);
 		$title = $this->getShareTitle($id);
 
-		echo '<a href="whatsapp://send?text=' .urlencode($title. ' ' .$url). '" rel="nofollow">';
+		echo '<a href="whatsapp://send?text=' .rawurlencode($title. ' ' .$url). '" rel="nofollow">';
 		echo '<i class="fa fa-whatsapp fa-lg hvr-pop" aria-hidden="true"></i>';
 		echo '</a> ';
 	}
@@ -170,11 +176,5 @@ class LibEvent{
 		$result['location'] = $address;
 
 		return $result;
-	}
-
-	function getEventUrl($id){
-		global $libGlobal;
-
-		return $libGlobal->getSiteUrl(). '/index.php?pid=event&amp;id=' .$id;
 	}
 }

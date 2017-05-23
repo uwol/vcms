@@ -37,7 +37,7 @@ echo '        <div class="col-xs-12">' . PHP_EOL;
 if($facebookUrl != ''){
 	echo '          <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
-	echo '          <a href="http://www.facebook.com/sharer/sharer.php?u=' .urlencode($libGlobal->getSiteUrl()). '"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '          <a href="http://www.facebook.com/sharer/sharer.php?u=' .rawurlencode($libGlobal->getSiteUrl()). '"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if($instagramUrl != ''){
@@ -47,10 +47,10 @@ if($instagramUrl != ''){
 if($twitterUrl != ''){
 	echo '          <a href="' .$twitterUrl. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
-	echo '          <a href="http://twitter.com/share?url=' .urlencode($libGlobal->getSiteUrl()). '&amp;text=' .urlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '          <a href="http://twitter.com/share?url=' .rawurlencode($libGlobal->getSiteUrl()). '&amp;text=' .rawurlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
-echo '<a href="whatsapp://send?text=' .urlencode($libConfig->verbindungName. ' ' .$libGlobal->getSiteUrl()). '"><i class="fa fa-whatsapp fa-lg hvr-pop" aria-hidden="true"></i></a>';
+echo '<a href="whatsapp://send?text=' .rawurlencode($libConfig->verbindungName. ' ' .$libGlobal->getSiteUrl()). '"><i class="fa fa-whatsapp fa-lg hvr-pop" aria-hidden="true"></i></a>';
 
 if($wikipediaUrl != ''){
 	echo '          <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;

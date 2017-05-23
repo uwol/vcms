@@ -30,7 +30,7 @@ if($fbPagePluginEnabled){
 	echo '<div class="row">';
 
 	echo '<div style="max-width:500px" class="center-block">';
-	echo '<iframe src="https://www.facebook.com/plugins/page.php?href=' .urlencode($facebookUrl). '&tabs&width=340&height=154&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId" width="100%" height="154" class="facebookPagePlugin" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>';
+	echo '<iframe src="https://www.facebook.com/plugins/page.php?href=' .rawurlencode($facebookUrl). '&tabs&width=340&height=154&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId" width="100%" height="154" class="facebookPagePlugin" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>';
 	echo '</div>';
 
 	echo '</div>';
