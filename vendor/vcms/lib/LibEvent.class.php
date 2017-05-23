@@ -27,20 +27,6 @@ class LibEvent{
 
 		return $libGlobal->getSiteUrl(). '/index.php?pid=event&id=' .$id;
 	}
-	
-	function getShareUrl($id){
-		global $libGlobal, $libDb, $libTime;
-
-		$stmt = $libDb->prepare('SELECT id, datum FROM base_veranstaltung WHERE id=:id');
-		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
-		$stmt->execute();
-
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-		$semester = $libTime->getSemesterNameAtDate($row['datum']);
-		$result = $libGlobal->getSiteUrl(). '/index.php?pid=event&id=' .$row['id']. '&semester=' .$semester;
-		return $result;
-	}
 
 	function getShareTitle($id){
 		global $libConfig, $libDb, $libTime;
@@ -116,7 +102,7 @@ class LibEvent{
 	}
 
 	function printFacebookShareButton($id){
-		$url = $this->getShareUrl($id);
+		$url = $this->getEventUrl($id);
 		$title = $this->getShareTitle($id);
 
 		echo '<a href="http://www.facebook.com/share.php?u=' .rawurlencode($url). '&amp;title=' .rawurlencode($title). '" rel="nofollow">';
@@ -125,7 +111,7 @@ class LibEvent{
 	}
 
 	function printTwitterShareButton($id){
-		$url = $this->getShareUrl($id);
+		$url = $this->getEventUrl($id);
 		$title = $this->getShareTitle($id);
 
 		echo '<a href="http://twitter.com/share?url=' .rawurlencode($url). '&amp;text=' .rawurlencode($title). '" rel="nofollow">';
@@ -134,7 +120,7 @@ class LibEvent{
 	}
 
 	function printWhatsAppShareButton($id){
-		$url = $this->getShareUrl($id);
+		$url = $this->getEventUrl($id);
 		$title = $this->getShareTitle($id);
 
 		echo '<a href="whatsapp://send?text=' .rawurlencode($title. ' ' .$url). '" rel="nofollow">';
