@@ -79,8 +79,11 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			echo '<p>' .$libEvent->getStatusString($row['status']). '</p>';
 
 			echo '<p class="social-buttons">';
+
 			$libEvent->printFacebookShareButton($row['id']);
 			$libEvent->printTwitterShareButton($row['id']);
+			$libEvent->printWhatsAppShareButton($row['id']);
+
 			echo '</p>';
 
 			echo '</div>';

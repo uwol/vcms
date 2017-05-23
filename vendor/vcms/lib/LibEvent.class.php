@@ -127,6 +127,15 @@ class LibEvent{
 		echo '</a> ';
 	}
 
+	function printWhatsAppShareButton($id){
+		$url = $this->getUrl($id);
+		$title = $this->getShareTitle($id);
+
+		echo '<a href="whatsapp://send?text=' .urlencode($title. ' ' .$url). '" rel="nofollow">';
+		echo '<i class="fa fa-whatsapp fa-lg hvr-pop" aria-hidden="true"></i>';
+		echo '</a> ';
+	}
+
 	function getEventSchema($row){
 		global $libGlobal, $libTime;
 

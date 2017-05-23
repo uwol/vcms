@@ -175,6 +175,7 @@ function printSocialButtons($row){
 	}
 
 	$libEvent->printTwitterShareButton($row['id']);
+	$libEvent->printWhatsAppShareButton($row['id']);
 
 	echo '</p>';
 }

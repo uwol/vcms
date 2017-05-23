@@ -50,6 +50,8 @@ if($twitterUrl != ''){
 	echo '          <a href="http://twitter.com/share?url=' .urlencode($libGlobal->getSiteUrl()). '&amp;text=' .urlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
+echo '<a href="whatsapp://send?text=' .urlencode($libConfig->verbindungName. ' ' .$libGlobal->getSiteUrl()). '"><i class="fa fa-whatsapp fa-lg hvr-pop" aria-hidden="true"></i></a>';
+
 if($wikipediaUrl != ''){
 	echo '          <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
