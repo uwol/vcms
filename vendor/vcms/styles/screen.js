@@ -49,7 +49,7 @@ function configureNavigation(){
 
 function reveal(){
 	window.sr = ScrollReveal();
-  sr.reveal('.reveal');
+  sr.reveal('.reveal', { scale: 1.0 });
 }
 
 
