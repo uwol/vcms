@@ -1,10 +1,10 @@
 p {
 	line-height: 1.5;
-	margin-bottom: 20px;
+	margin-bottom: 1.5em;
 }
 
 section {
-	padding: 50px 0;
+	padding: 3em 0;
 }
 
 header {
@@ -24,7 +24,7 @@ header .header-content {
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
-	padding: 0 50px;
+	padding: 0 3em;
 	width: 100%;
 }
 
@@ -81,8 +81,7 @@ header .header-content .header-content-inner .btn-circle .fa {
 }
 
 section.announcement-box:nth-of-type(even) {
-	background-color: #575757;
-	color: white;
+	background-color: #666;
 }
 
 .thumbnail {
@@ -135,7 +134,7 @@ section.announcement-box:nth-of-type(even) {
 }
 
 .contact-box {
-	background-color: #575757;
+	background-color: #666;
 	color: white;
 }
 

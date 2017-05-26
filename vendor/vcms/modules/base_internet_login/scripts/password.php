@@ -72,12 +72,10 @@ if(isset($_POST['email']) && $_POST['email'] != '' &&
 	}
 }
 
-echo '<h1>Neues Passwort erzeugen</h1>';
+echo '<h1>Neues Passwort anfordern</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
-
-echo '<p>Auf dieser Seite kann ein neues Passwort erzeugt werden. Bitte gib Dein Geburtsdatum und die E-Mail-Adresse Deines Intranet-Kontos an.</p>';
 
 echo '<div class="panel panel-default">';
 echo '<form action="index.php?pid=password" method="post" class="form-horizontal">';

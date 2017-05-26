@@ -96,6 +96,7 @@ dd {
 .navbar,
 .navbar-toggle,
 .panel,
-.panel .panel-heading {
+.panel .panel-heading,
+.thumbnail {
 	border-radius: 0 !important;
 }

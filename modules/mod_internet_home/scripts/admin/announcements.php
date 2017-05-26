@@ -72,7 +72,7 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlob
 
 echo '<table class="table table-condensed table-striped table-hover">';
 echo '<thead>';
-echo '<tr><th>Bild</th><th>Zeitraum</th><th>Text</th><th></th></tr>';
+echo '<tr><th>Bild</th><th>Start</th><th>Text</th><th></th></tr>';
 echo '</thead>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
@@ -90,12 +90,14 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
 
  	if(is_file($posssibleImage)){
+		echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$row['id']. '">';
  		echo '<img src="'.$posssibleImage.'" class="img-responsive center-block" alt="" />';
+		echo '</a>';
  	}
 
  	echo '</td>';
-	echo '<td>' .$row['startdatum']. '<br />bis<br /> ' .$row['verfallsdatum']. '<br /><br /></td>';
-	echo '<td>'.$libString->deleteBBCode($row['text']). '<br /><br /></td>';
+	echo '<td>' .$row['startdatum']. '</td>';
+	echo '<td>' .$libString->deleteBBCode($row['text']). '</td>';
 	echo '<td class="toolColumn">';
 	echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$row['id']. '">';
 	echo '<i class="fa fa-cog" aria-hidden="true"></i>';

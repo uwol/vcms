@@ -42,7 +42,7 @@ hr {
 }
 
 td.img-column {
-	max-width: 100px;
+	width: 200px;
 }
 
 td.toolColumn {
@@ -54,6 +54,7 @@ a .fa {
 }
 
 .image-tile {
+	margin-top: 4px;
 	margin-bottom: 2%;
 }
 
