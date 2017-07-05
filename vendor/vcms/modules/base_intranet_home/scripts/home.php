@@ -29,6 +29,10 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('show_reservations')){
 	$libGenericStorage->saveValueInCurrentModule('show_reservations', '1');
 }
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_chargierevents')){
+	$libGenericStorage->saveValueInCurrentModule('show_chargierevents', '1');
+}
+
 
 echo '<h1>Intranet-Portal</h1>';
 
@@ -78,7 +82,8 @@ if($libModuleHandler->moduleIsAvailable('mod_intranet_news')){
 	require_once('timeline/news.php');
 }
 
-if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')){
+if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')
+		&& $libGenericStorage->loadValueInCurrentModule('show_chargierevents')){
 	require_once('timeline/chargierkalender.php');
 }
 
