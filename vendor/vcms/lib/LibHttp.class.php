@@ -21,7 +21,11 @@ namespace vcms;
 class LibHttp{
 
 	function get($url, $destinationFile = false){
-		$response = \Httpful\Request::get($url)->send();
+		global $libGlobal;
+
+		$response = \Httpful\Request::get($url)
+			->addHeader('Referer', $libGlobal->getSiteUrl())
+			->send();
 
 		if(!$destinationFile){
 			return $response;
