@@ -63,7 +63,7 @@ if($libEvent->isFacebookEvent($row)){
 
 		echo '<div class="img-frame">';
 		echo '<a href="' .$libString->protectXss($eventUrl). '">';
-		echo '<img data-object-fit="cover" src="' .$libString->protectXss($eventCoverSource). '" alt="" />';
+		echo '<img src="' .$libString->protectXss($eventCoverSource). '" alt="" />';
 		echo '</a>';
 		echo '</div>';
 

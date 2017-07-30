@@ -148,7 +148,7 @@ class LibCalendarEvent{
 		if($this->imageUrl != ''){
 			$retstr .= '<div class="thumbnail">';
 			$retstr .= '<div class="img-frame">';
-			$retstr .= '<img data-object-fit="cover" src="' .$this->imageUrl. '" alt="Foto" />';
+			$retstr .= '<img src="' .$this->imageUrl. '" alt="Foto" />';
 			$retstr .= '</div>';
 			$retstr .= '</div>';
 		}

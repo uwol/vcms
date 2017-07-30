@@ -113,7 +113,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			echo '<div class="thumbnail">';
 			echo '<div class="img-frame">';
 			echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
-			echo '<img data-object-fit="cover" ';
+			echo '<img ';
 
 			//are there pooled images?
     		if($libGallery->getPictures($row['id'], 2) > $libGallery->getPictures($row['id'], 1)){

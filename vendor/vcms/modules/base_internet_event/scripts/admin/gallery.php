@@ -190,7 +190,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		echo '<div class="thumbnail reveal">';
 		echo '<div class="img-frame">';
 		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
-		echo '<img data-object-fit="cover" src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
+		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
 		echo '</a>';
 		echo '</div>';
 		echo '</div>';
@@ -219,7 +219,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 		echo '<div class="img-frame">';
 		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
-		echo '<img data-object-fit="cover" src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" class="' .$visibilityClass. '">';
+		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" class="' .$visibilityClass. '">';
 		echo '</a>';
 		echo '</div>';
 

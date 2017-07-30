@@ -278,7 +278,7 @@ function printGallery($row){
 			echo '<div class="thumbnail reveal">';
 			echo '<div class="img-frame">';
 			echo '<a href="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '">';
-			echo '<img data-object-fit="cover" src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" />';
+			echo '<img src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" />';
 			echo '</a>';
 			echo '</div>';
 			echo '</div>';
