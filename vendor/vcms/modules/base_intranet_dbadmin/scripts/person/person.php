@@ -81,7 +81,7 @@ if($libAuth->isLoggedin()){
 		$valueArray = $_REQUEST;
 		$valueArray['email'] = strtolower($valueArray['email']);
 		$valueArray['jabber'] = strtolower($valueArray['jabber']);
-		$valueArray['webseite'] = strtolower($valueArray['webseite']);
+		$valueArray['webseite'] = $valueArray['webseite'];
 		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
 		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
 		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);
@@ -169,7 +169,7 @@ if($libAuth->isLoggedin()){
 		$valueArray = $_REQUEST;
 		$valueArray['email'] = strtolower($valueArray['email']);
 		$valueArray['jabber'] = strtolower($valueArray['jabber']);
-		$valueArray['webseite'] = strtolower($valueArray['webseite']);
+		$valueArray['webseite'] = $valueArray['webseite'];
 		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
 		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
 		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);
