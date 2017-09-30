@@ -5,8 +5,8 @@ aside,
   margin-bottom: 3em;
 }
 
-.contact-address,
-.contact-vorstand {
+address.contact-address,
+p.contact-vorstand {
   margin-bottom: 2em;
 }
 
