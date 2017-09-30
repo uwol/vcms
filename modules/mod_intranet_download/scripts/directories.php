@@ -106,8 +106,11 @@ echo '<h1>Dateien</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>In diesem Bereich können Chargen und Warte Dateien zum Download anbieten. Der Ausdruck hinter einer Datei gibt an, welche Gruppen ein Leserecht für die Datei besitzen.</p>';
-echo '<hr />';
+
+echo '<div class="panel panel-default">';
+echo 'In diesem Bereich können Chargen und Warte Dateien zum Download anbieten. Der Ausdruck hinter einer Datei gibt an, welche Gruppen ein Leserecht für die Datei besitzen.';
+echo '</div>';
+
 
 listFolderContentRec($rootFolderObject, true);
 

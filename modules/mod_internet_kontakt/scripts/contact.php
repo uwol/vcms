@@ -131,7 +131,7 @@ echo '<div class="col-sm-6">';
 echo '<section class="address-box">';
 
 echo '<p>' .$libConfig->verbindungName. '</p>';
-echo '<address>';
+echo '<address class="contact-address">';
 
 if($libConfig->verbindungZusatz != ''){
 	echo '<span>' .$libConfig->verbindungZusatz. '</span><br />';
@@ -140,12 +140,11 @@ if($libConfig->verbindungZusatz != ''){
 echo '<span>' .$libConfig->verbindungStrasse. '</span><br />';
 echo '<span>' .$libConfig->verbindungPlz. '</span> <span>' .$libConfig->verbindungOrt. '</span><br />';
 echo '<span>' .$libConfig->verbindungLand. '</span><br />';
-echo '</address>';
-
 echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span>' .$libConfig->verbindungTelefon. '</span><br />';
 echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span>' .$libConfig->emailInfo. '</span><br />';
+echo '</address>';
 
-echo '<p>';
+echo '<p class="contact-vorstand">';
 
 $vorstand = $libAssociation->getAnsprechbarerAktivenVorstandIds();
 

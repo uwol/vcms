@@ -1,5 +1,13 @@
-.address-box, aside, .contact-form-box, #map {
+.address-box,
+.contact-form-box,
+aside,
+#map {
   margin-bottom: 3em;
+}
+
+.contact-address,
+.contact-vorstand {
+  margin-bottom: 2em;
 }
 
 #map {
