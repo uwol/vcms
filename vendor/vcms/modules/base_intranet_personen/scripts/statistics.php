@@ -124,7 +124,7 @@ foreach($tArray as $key1 => $value1){
 	echo '<tr>';
 	$rowspan = max(1, ceil(count($value1) / $personsPerRow));
 	echo '<td rowspan=' .$rowspan. '>';
-	echo '<a href="index.php?pid=semesterhistorie_liste&amp;semester=' .$key1. '">' . $key1 . '</a>';
+	echo '<a href="index.php?pid=intranet_home&amp;semester=' .$key1. '">' . $key1 . '</a>';
 	echo '</td>';
 
 	$i = 0;
