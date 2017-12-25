@@ -1,12 +1,11 @@
 .navbar-default {
 	background-color: white;
-	border-color: rgba(34, 34, 34, 0.1);
+	border-color: transparent;
+	box-shadow: 0 1px 10px rgba(0, 0, 0, .2);
 }
 
 .navbar-default,
 .navbar-default a {
-	-webkit-transition: all 0.35s;
-	-moz-transition: all 0.35s;
 	transition: all 0.35s;
 }
 

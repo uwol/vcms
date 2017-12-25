@@ -129,7 +129,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '</td>';
 		echo '<td>' .$row['titel']. '</td>';
 		echo '<td>' .$row['datum']. '</td>';
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 		echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</td>';

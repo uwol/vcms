@@ -78,7 +78,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$libPerson->getNameString($row['senior'],5). '</td>';
 		echo '<td>' .$libPerson->getNameString($row['fuchsmajor'],5). '</td>';
 		echo '<td>' .$libPerson->getNameString($row['internetwart'],5). '</td>';
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 		echo '<a href="index.php?pid=intranet_admin_semester&amp;semester=' .$row['semester']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';

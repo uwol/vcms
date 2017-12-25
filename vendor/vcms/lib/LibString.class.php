@@ -117,7 +117,7 @@ class LibString{
 
 	function getLastInsertId($lastInsertId, $id){
 		if($lastInsertId == $id){
-			return ' lastInsertId ';
+			return ' last-insert-id ';
 		}
 	}
 

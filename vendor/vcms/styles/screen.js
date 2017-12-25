@@ -1,5 +1,5 @@
 function animateLasteInsertId(){
-	$(".lastInsertId").slideDown(1000);
+	$(".last-insert-id").slideDown(1000);
 }
 
 function configureScrolling(){

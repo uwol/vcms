@@ -463,7 +463,7 @@ function printPersonSignature($row, $ownprofile){
 	echo '<div class="img-box">';
 
 	if($ownprofile){
-		echo '<span class="deleteIconBox">';
+		echo '<span class="delete-icon-box">';
 		echo '<a href="index.php?pid=intranet_person&amp;aktion=fotodelete">';
 		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';

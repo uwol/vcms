@@ -83,7 +83,7 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['name']. '</td>';
 		echo '<td>' .$row['dachverband']. '</td>';
 		echo '<td>' .$row['ort1']. '</td>';
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 		echo '<a href="index.php?pid=intranet_admin_association&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';

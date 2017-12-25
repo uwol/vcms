@@ -45,7 +45,7 @@ td.img-column {
 	width: 200px;
 }
 
-td.toolColumn {
+td.tool-column {
 	text-align: center;
 }
 
@@ -66,7 +66,7 @@ a .fa {
 	opacity: 0.5;
 }
 
-.img-box .deleteIconBox {
+.img-box .delete-icon-box {
 	position: absolute;
 	padding: 1px;
 	background-color: white;
@@ -76,7 +76,7 @@ a .fa {
 	max-width: 400px;
 }
 
-.lastInsertId {
+.last-insert-id {
 	display: none;
 }
 
@@ -84,19 +84,22 @@ a .fa {
 	visibility: hidden;
 }
 
+tiny {
+	font-size: 65%;
+	vertical-align: middle;
+}
+
 .social-buttons {
 	margin-top: 0;
 	margin-bottom: 0;
-	word-spacing: .25em;
 }
 
 .social-buttons a {
 	color: #333;
 }
 
-tiny {
-	font-size: 65%;
-	vertical-align: middle;
+.social-buttons a i {
+	margin-right: 0.5em;
 }
 
 footer {

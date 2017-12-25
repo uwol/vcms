@@ -98,7 +98,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
  	echo '</td>';
 	echo '<td>' .$row['startdatum']. '</td>';
 	echo '<td>' .$libString->deleteBBCode($row['text']). '</td>';
-	echo '<td class="toolColumn">';
+	echo '<td class="tool-column">';
 	echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$row['id']. '">';
 	echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 	echo '</a>';

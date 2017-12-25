@@ -61,9 +61,9 @@ if(isset($_REQUEST['action'])){
 	echo '<th>Modulname</th><th>Status</th>';
 	echo '<th>Version<br />(installiert)</th>';
 	echo '<th>Version<br />(Repository)</th>';
-	echo '<th class="toolColumn"></th>';
-	echo '<th class="toolColumn"></th>';
-	echo '<th class="toolColumn"></th>';
+	echo '<th class="tool-column"></th>';
+	echo '<th class="tool-column"></th>';
+	echo '<th class="tool-column"></th>';
 	echo '</tr>';
 	echo '</thead>';
 
@@ -144,7 +144,7 @@ if(isset($_REQUEST['action'])){
 		echo '</td>';
 
 		// install action
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 
 		if($key != 'engine'){
 			if(!$engineIsOld && !$libModuleHandler->moduleIsAvailable($key)){
@@ -157,7 +157,7 @@ if(isset($_REQUEST['action'])){
 		echo '</td>';
 
 		// update action
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 
 		if($engineIsOld && $key == 'engine'){
 			echo '<a href="index.php?pid=modules&amp;action=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
@@ -181,7 +181,7 @@ if(isset($_REQUEST['action'])){
 
 
 		// delete action
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 
 		if($key != 'engine'){
 			if(!$engineIsOld && $libModuleHandler->moduleIsAvailable($key)){

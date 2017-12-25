@@ -88,14 +88,14 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['datum']. '</td>';
 		echo '<td>' .$row['titel']. '</td>';
 		echo '<td>' .$row['status']. '</td>';
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 
 		if($row['intern']){
 			echo '<i aria-hidden="true" class="fa fa-check-square-o"></i>';
 		}
 
 		echo '</td>';
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 		echo '<a href="index.php?pid=intranet_admin_event&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
 		echo '</a>';

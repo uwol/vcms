@@ -161,7 +161,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 		echo '<div class="center-block">';
 		echo '<div class="img-box">';
 
-		echo '<span class="deleteIconBox">';
+		echo '<span class="delete-icon-box">';
 		echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$array['id']. '&amp;aktion=bilddelete">';
 		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';

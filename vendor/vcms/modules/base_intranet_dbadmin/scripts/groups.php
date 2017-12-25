@@ -70,7 +70,7 @@ if($libAuth->isLoggedin()){
 		echo '<tr>';
 		echo '<td>' .$row['bezeichnung']. '</td>';
 		echo '<td>' .$row['beschreibung']. '</td>';
-		echo '<td class="toolColumn">';
+		echo '<td class="tool-column">';
 
 		if($row['bezeichnung'] != 'F' && $row['bezeichnung'] != 'B' && $row['bezeichnung'] != 'P' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'C' && $row['bezeichnung'] != 'G' && $row['bezeichnung'] != 'W' && $row['bezeichnung'] != 'V' && $row['bezeichnung'] != 'Y'){
 			echo '<a href="index.php?pid=intranet_admin_groups&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';

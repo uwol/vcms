@@ -331,7 +331,7 @@ if($libAuth->isLoggedin()){
 		echo '<div class="center-block person-signature-box person-signature-box-lg">';
 		echo '<div class="img-box">';
 
-		echo '<span class="deleteIconBox">';
+		echo '<span class="delete-icon-box">';
 		echo '<a href="index.php?pid=intranet_admin_person&amp;id=' .$mgarray['id']. '&amp;aktion=fotodelete">';
 		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
 		echo '</a>';
