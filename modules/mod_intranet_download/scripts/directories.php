@@ -222,6 +222,12 @@ if(!empty($libAuth->getAemter())){
 function listFolderContentRec(&$rootFolderObject, $firstLevel){
 	global $libAuth, $libModuleHandler;
 
+	if($firstLevel){
+		echo '<div class="col-md-6">';
+		echo '<div class="panel panel-default">';
+		echo '<div class="panel-body">';
+	}
+
 	echo '<div style="margin-left:1.5em">';
 
 	foreach($rootFolderObject->nestedFolderElements as $folderElement){
@@ -320,6 +326,12 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 	}
 
 	echo '</div>';
+
+	if($firstLevel){
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+	}
 }
 
 function getSizeString($size){

@@ -22,7 +22,10 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 $libDb->connect();
 
-echo '<h1>System-Log</h1>';
+echo '<h1>System-Protokoll</h1>';
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 
 echo '<table class="table table-condensed table-striped table-hover">';
 echo '<thead>';
@@ -63,3 +66,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo '</table>';
+
+echo '</div>';
+echo '</div>';

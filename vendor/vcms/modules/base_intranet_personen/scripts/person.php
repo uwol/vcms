@@ -227,7 +227,6 @@ echo '</div>';
 */
 if($ownprofile){
 	echo '<h2>Passwort ändern</h2>';
-	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
 
  	echo '<div class="panel panel-default">';
 	echo '<form action="index.php?pid=intranet_person&amp;id=' .$id. '" method="post" class="form-horizontal">';
@@ -237,6 +236,11 @@ if($ownprofile){
 	$libForm->printTextInput('oldpwd', 'Altes Passwort', '', 'password', false, true);
 	$libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password', false, true);
 	$libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password', false, true);
+
+	echo '<div class="form-group">';
+	echo '<div class"col-sm-offset-2 col-sm-10">' .$libAuth->getPasswordRequirements(). '</div>';
+	echo '</div>';
+
 	$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Passwort speichern');
 
 	echo '</fieldset>';

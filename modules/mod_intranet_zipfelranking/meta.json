@@ -1,6 +1,6 @@
 {
 	"moduleName": "Zipfelranking",
-	"version": 2.40,
+	"version": 2.42,
 	"installScript": "install/install.php",
 	"pages": [
 		{

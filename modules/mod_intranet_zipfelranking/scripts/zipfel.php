@@ -29,6 +29,9 @@ $stmt = $libDb->prepare('SELECT * FROM base_person, mod_zipfelranking_anzahl WHE
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
+
 	echo '<div class="row">';
 	echo '<div class="col-xs-6 col-sm-2">';
 	echo $libPerson->getSignature($row['id']);
@@ -44,6 +47,9 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	for($j=0; $j<$row['anzahlzipfel'] && $j < 50; $j++){
 		echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/zipfel.png" class="zipfel" style="height:80px" />';
 	}
+
+	echo '</div>';
+	echo '</div>';
 
 	echo '</div>';
 	echo '</div>';

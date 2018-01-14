@@ -66,16 +66,19 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 $physikumSemester = $libTime->getSemesterName();
+
 for($i = 0; $i < 4; $i++){
 	$physikumSemester = $libTime->getPreviousSemesterNameOfSemester($physikumSemester);
 }
 
 $bachelorSemester = $libTime->getSemesterName();
+
 for($i = 0; $i < 6; $i++){
 	$bachelorSemester = $libTime->getPreviousSemesterNameOfSemester($bachelorSemester);
 }
 
 $masterSemester = $libTime->getSemesterName();
+
 for($i = 0; $i < 10; $i++){
 	$masterSemester = $libTime->getPreviousSemesterNameOfSemester($masterSemester);
 }
@@ -85,7 +88,6 @@ for($i = 0; $i < 10; $i++){
 */
 
 echo '<h2>Struktur der Aktivitas</h2>';
-
 echo '<p>Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, Inaktive und Aktive ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
 
 echo '<p>';
@@ -107,6 +109,9 @@ echo 'Anzahl Aktive ex loco oder inaktiv: ' . $inaktive . '<br />';
 
 echo '</p>';
 
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 echo '<table class="table table-bordered table-condensed">';
 
 //for all semesters
@@ -171,6 +176,8 @@ foreach($tArray as $key1 => $value1){
 }
 
 echo '</table>';
+echo '</div>';
+echo '</div>';
 
 
 /*
@@ -183,8 +190,12 @@ $classWidth = 5;
 $agesAhAh = fetchAges('P');
 $ageClassesAhAh = calculateAgeClasses($agesAhAh, $classWidth);
 
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
+
 if(empty($ageClassesAhAh)){
-	echo '<p>Bei den alten Herren sind keine Geburtstage eingetragen.</p>';
+	echo '<p>Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
 } else {
 	echo '<canvas id="age_structure" style="width:100%;height:300px"></canvas>' . PHP_EOL;
 	echo '<script>' . PHP_EOL;
@@ -205,6 +216,9 @@ if(empty($ageClassesAhAh)){
 	echo 'var myBarChart = new Chart(ageStructureContext, { type: \'bar\', data: data, options: {} });' . PHP_EOL;
 	echo '</script>' . PHP_EOL;
 }
+
+echo '</div>';
+echo '</div>';
 
 
 function fetchAges($gruppe){

@@ -21,9 +21,9 @@ function printPersons($stmt){
 
 	$stmt->execute();
 
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
 	echo '<div class="row">';
-
-	$lastsetletter = '';
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<div class="col-sm-6 col-md-4 col-lg-3">';
@@ -53,5 +53,7 @@ function printPersons($stmt){
 		echo '</div>';
 	}
 
+	echo '</div>';
+	echo '</div>';
 	echo '</div>';
 }

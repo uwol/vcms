@@ -1,6 +1,6 @@
 {
 	"moduleName": "Log",
-	"version": 1.10,
+	"version": 1.11,
 	"pages": [
 		{
 			"pid": "intranet_log",
