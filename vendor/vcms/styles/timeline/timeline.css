@@ -8,7 +8,7 @@
 	position: absolute;
 	content: " ";
 	width: 3px;
-	background-color: #eeeeee;
+	background-color: #eee;
 	left: 50%;
 	margin-left: -1.5px;
 }
@@ -87,6 +87,7 @@
 .timeline > .timeline-body > .timeline-event > .timeline-panel {
 	position: relative;
 	margin-bottom: 0.5em;
+	border: 1px solid #ccc;
 }
 
 .timeline > .timeline-body > .timeline-event > .timeline-panel {
