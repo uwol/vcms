@@ -18,40 +18,9 @@ h2 {
 }
 
 h3 {
-	font-size: 1.2em;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-a:link,
-main a:hover {
-	text-decoration: none;
-}
-
-hr {
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
-}
-
-p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-address {
-	margin-bottom: 0;
-}
-
-dt {
-	font-weight: normal;
-}
-
-dd {
-	margin-left: 2em;
-}
-
-.panel {
-	margin-bottom: 0.5em;
+	font-size: 1.25em;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .thumbnail {
@@ -71,6 +40,7 @@ dd {
 .panel {
 	box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 	margin-bottom: 2em;
+	border-color: transparent;
 }
 
 .panel .panel-title {
