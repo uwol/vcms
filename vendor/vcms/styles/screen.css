@@ -16,10 +16,6 @@ body {
 	hyphens: auto;
 }
 
-fieldset {
-	padding: 1em;
-}
-
 #container {
 	min-height: 100%;
 }
