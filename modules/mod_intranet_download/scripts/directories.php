@@ -227,13 +227,13 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 	foreach($rootFolderObject->nestedFolderElements as $folderElement){
 		//folder?
 		if($folderElement->type == 1){
-			if($firstLevel){
-				echo '<div class="col-md-6">';
-				echo '<div class="panel panel-default">';
-				echo '<div class="panel-body">';
-			}
-
 			if(!$folderElement->isAmtsRootFolder() || $folderElement->hasNestedFolderElements()){
+				if($firstLevel){
+					echo '<div class="col-md-6">';
+					echo '<div class="panel panel-default">';
+					echo '<div class="panel-body">';
+				}
+
 				if($folderElement->isOpen){
 					echo '<a href="index.php?pid=intranet_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
 					echo '<i class="fa fa-lg fa-folder-open-o" aria-hidden="true"></i> ';
@@ -260,12 +260,12 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				if($folderElement->isOpen){
 					listFolderContentRec($folderElement, false);
 				}
-			}
 
-			if($firstLevel){
-				echo '</div>';
-				echo '</div>';
-				echo '</div>';
+				if($firstLevel){
+					echo '</div>';
+					echo '</div>';
+					echo '</div>';
+				}
 			}
 		}
 		//file & readable?
