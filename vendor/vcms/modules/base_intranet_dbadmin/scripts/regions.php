@@ -57,6 +57,9 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
+
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';
 	echo '<tr><th>Region</th><th>Anzahl Personen</th><th></th></tr>';
@@ -84,6 +87,10 @@ if($libAuth->isLoggedin()){
 	}
 
 	echo '</table>';
+
+	echo '</div>';
+	echo '</div>';
+	
 
 	echo '<h2>Neue Region anlegen</h2>';
 

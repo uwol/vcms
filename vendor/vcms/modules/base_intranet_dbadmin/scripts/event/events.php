@@ -68,7 +68,10 @@ if($libAuth->isLoggedin()){
 
 	echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten),$libGlobal->semester);
 
-	//Datenausgeben
+
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
+
 	echo '<table class="table table-condensed table-striped table-hover">';
 	echo '<thead>';
 	echo '<tr><th>Id</th><th>Datum</th><th>Titel</th><th>Status</th><th>Intern</th><th></th></tr>';
@@ -104,4 +107,7 @@ if($libAuth->isLoggedin()){
 	}
 
 	echo '</table>';
+
+	echo '</div>';
+	echo '</div>';
 }
