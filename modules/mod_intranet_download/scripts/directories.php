@@ -112,7 +112,11 @@ echo '<p>In diesem Bereich können Chargen und Warte Dateien zum Download anbiet
 echo '</div>';
 echo '</div>';
 
+echo '<div class="row">';
+
 listFolderContentRec($rootFolderObject, true);
+
+echo '</div>';
 
 
 if(!empty($libAuth->getAemter())){
