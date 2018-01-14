@@ -87,6 +87,7 @@ echo $libString->getNotificationBoxText();
 
 
 echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" enctype="multipart/form-data" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -137,9 +138,7 @@ echo '</label></div>';
 
 echo '</div></div>';
 
-
 $libForm->printRegionDropDownBox("region", "Region", "");
-
 
 echo '<hr />';
 
@@ -164,4 +163,5 @@ $libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i>
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 echo '</div>';

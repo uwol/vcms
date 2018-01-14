@@ -42,6 +42,7 @@ if($libGlobal->getSiteUrlAuthority() != ""){
 
 
 echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -51,6 +52,7 @@ $libForm->printSubmitButton('<i class="fa fa-sign-in" aria-hidden="true"></i> An
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 echo '</div>';
 
 echo '<h2>Registrierung</h2>';

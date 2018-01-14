@@ -126,6 +126,7 @@ if(!empty($libAuth->getAemter())){
 	echo '<h2>Datei hochladen</h2>';
 
 	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_directories" method="post" enctype="multipart/form-data" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="upload" />';
@@ -178,6 +179,7 @@ if(!empty($libAuth->getAemter())){
 	echo '</fieldset>';
 	echo '</form>';
 	echo '</div>';
+	echo '</div>';
 
 
 	/*
@@ -186,6 +188,7 @@ if(!empty($libAuth->getAemter())){
 	echo '<h2>Ordner anlegen</h2>';
 
   echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_directories" method="post" class="form-horizontal">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="newfolder" />';
@@ -215,6 +218,7 @@ if(!empty($libAuth->getAemter())){
 	echo '</div>';
 
 	echo '</form>';
+	echo '</div>';
 	echo '</div>';
 }
 

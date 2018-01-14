@@ -33,6 +33,7 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 echo '<form action="index.php?pid=intranet_mitglied_listelebende" method="post" class="form-inline">';
 echo '<fieldset>';
 echo '<div class="form-group">';
@@ -42,6 +43,7 @@ echo '</div> ';
 echo '<button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i> Suchen</button>';
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 echo '</div>';
 
 

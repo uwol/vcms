@@ -78,6 +78,7 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 echo '<form action="index.php?pid=password" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -87,4 +88,5 @@ $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 echo '</div>';

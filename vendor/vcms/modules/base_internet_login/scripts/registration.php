@@ -152,6 +152,7 @@ if($formSent && !$formError){
 	}
 
 	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
 	echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="form-horizontal">';
 	echo '<fieldset>';
 
@@ -165,5 +166,6 @@ if($formSent && !$formError){
 
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 	echo '</div>';
 }

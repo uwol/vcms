@@ -125,6 +125,7 @@ if($libAuth->isLoggedin()){
 	}
 
 	echo '<div class="panel panel-default">';
+	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_admin_persons" method="post" class="form-inline">';
 	echo '<fieldset>';
 	echo '<div class="form-group">';
@@ -166,6 +167,7 @@ if($libAuth->isLoggedin()){
 	echo '</div>';
 	echo '</fieldset>';
 	echo '</form>';
+	echo '</div>';
 	echo '</div>';
 
 	echo '<table class="table table-condensed table-striped table-hover">';

@@ -23,6 +23,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 echo '<h1>Neuer Nachrichtenbeitrag</h1>';
 
 echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 echo '<form action="index.php?pid=intranet_news" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -47,4 +48,5 @@ $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 echo '</div>';

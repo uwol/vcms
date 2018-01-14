@@ -98,6 +98,7 @@ if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "blank"){
 }
 
 echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 echo '<form action="index.php?pid=intranet_chargierkalender_adminveranstaltung' .$extraActionParam. '" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -115,4 +116,5 @@ $libForm->printSubmitButton('Speichern');
 
 echo '</fieldset>';
 echo '</form>';
+echo '</div>';
 echo '</div>';
