@@ -142,13 +142,18 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 		echo '</div>';
 	} else {
 		if($libEvent->isFacebookEvent($row)){
-			echo '<div class="col-sm-8 col-md-4 col-lg-3">';
+			echo '<div class="col-sm-4 col-lg-3">';
 			printFacebookEvent($row);
 			echo '</div>';
 		}
 
 		if($descriptionText){
-			echo '<div class="col-sm-12 col-md-4 col-lg-6">';
+			if($libEvent->isFacebookEvent($row)){
+				echo '<div class="col-sm-4 col-lg-6">';
+			} else {
+				echo '<div class="col-sm-8 col-lg-9">';
+			}
+
 			echo '<div class="panel panel-default reveal">';
 			echo '<div class="panel-body">';
 			echo $descriptionText;
@@ -245,13 +250,13 @@ function printFacebookEvent($row){
 }
 
 function printDescription($row){
-	if($row['beschreibung'] != ''){
+	if(trim($row['beschreibung'])){
 		return '<p>' .nl2br($row['beschreibung']). '</p>';
 	}
 }
 
 function printSpruch($row){
-	if($row['spruch'] != ''){
+	if(trim($row['spruch'])){
 		return '<p>' .nl2br($row['spruch']). '</p>';
 	}
 }
