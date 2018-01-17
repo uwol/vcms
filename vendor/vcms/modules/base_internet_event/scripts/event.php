@@ -67,6 +67,9 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	/*
 	* output
 	*/
+	$semester = $libTime->getSemesterNameAtDate($row['datum']);
+	$pictures = getPictures($row['id']);
+	$hasPictures = is_array($pictures);
 	$eventSchema = $libEvent->getEventSchema($row);
 
 	echo '<script type="application/ld+json">';
@@ -78,23 +81,28 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	$semester = $libTime->getSemesterNameAtDate($row['datum']);
-	$semesterCover = $libTime->determineSemesterCover($semester);
 	$style = '';
 
-	if($semesterCover){
-		$style = "background-image: url('custom/semestercover/" .$semesterCover. "')";
+	if(!$hasPictures){
+		$semesterCover = $libTime->determineSemesterCover($semester);
+
+		if($semesterCover){
+			$style = "background-image: url('custom/semestercover/" .$semesterCover. "')";
+		}
 	}
 
 	echo '<div class="row event-semestercover-box" style="' .$style. '">';
-	echo '<div class="col-sm-6 col-md-4 col-lg-3">';
+
+	// date and time panel
+	echo '<div class="col-sm-4 col-lg-3">';
 	echo '<div class="panel panel-default reveal">';
 	echo '<div class="panel-body">';
+
 	printEventDateTime($row);
 
 	echo '<hr />';
 
-	if ($row['ort'] != ''){
+	if($row['ort'] != ''){
 		echo '<address>';
 		echo '<i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> ' .$row['ort'];
 		echo '</address>';
@@ -113,25 +121,44 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '</div>';
 	echo '</div>';
 
-	if($libEvent->isFacebookEvent($row)){
-		printFacebookEvent($row);
+	// description
+	$descriptionText = printSpruch($row);
+	$descriptionText .= printDescription($row);
+	$descriptionText .= printAnmeldungen($row);
+
+	if($hasPictures){
+		if($descriptionText){
+			echo '<div class="col-sm-8 col-lg-9">';
+			echo '<div class="panel panel-default reveal">';
+			echo '<div class="panel-body">';
+			echo $descriptionText;
+			echo '</div>';
+			echo '</div>';
+			echo '</div>';
+		}
+
+		echo '<div class="col-sm-8 col-lg-9">';
+		printGallery($row['id'], $pictures);
+		echo '</div>';
+	} else {
+		if($libEvent->isFacebookEvent($row)){
+			echo '<div class="col-sm-8 col-md-4 col-lg-3">';
+			printFacebookEvent($row);
+			echo '</div>';
+		}
+
+		if($descriptionText){
+			echo '<div class="col-sm-12 col-md-4 col-lg-6">';
+			echo '<div class="panel panel-default reveal">';
+			echo '<div class="panel-body">';
+			echo $descriptionText;
+			echo '</div>';
+			echo '</div>';
+			echo '</div>';
+		}
 	}
 
 	echo '</div>';
-
-  $panelText = printSpruch($row);
-	$panelText .= printDescription($row);
-	$panelText .= printAnmeldungen($row);
-
-	if($panelText){
-		echo '<div class="panel panel-default reveal">';
-		echo '<div class="panel-body">';
-		echo $panelText;
-		echo '</div>';
-		echo '</div>';
-	}
-
-	printGallery($row);
 }
 
 // -----------------------------------------------------------
@@ -214,9 +241,7 @@ function printAnmeldeStatus($row){
 }
 
 function printFacebookEvent($row){
-	echo '<div class="col-sm-6 col-md-4 col-lg-3">';
 	echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
-	echo '</div>';
 }
 
 function printDescription($row){
@@ -260,31 +285,34 @@ function printAnmeldungen($row){
 	return $retstr;
 }
 
-function printGallery($row){
+function printGallery($id, $pictures){
+	echo '<div class="row gallery">';
+
+	foreach($pictures as $key => $value){
+		echo '<div class="col-sm-6 col-lg-4">';
+		echo '<div class="thumbnail reveal">';
+		echo '<div class="img-frame">';
+		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
+		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" alt="" />';
+		echo '</a>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+	}
+
+	echo '</div>';
+}
+
+function getPictures($id){
 	global $libAuth, $libGallery;
 
 	$level = 0;
+
 	if($libAuth->isLoggedin()){
 		$level = 1;
 	}
 
-	if($libGallery->hasPictures($row['id'], $level)){
-		echo '<div class="row gallery">';
-
-		$pictures = $libGallery->getPictures($row['id'], $level);
-
-		foreach($pictures as $key => $value){
-			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-			echo '<div class="thumbnail reveal">';
-			echo '<div class="img-frame">';
-			echo '<a href="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '">';
-			echo '<img src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$key. '" alt="" />';
-			echo '</a>';
-			echo '</div>';
-			echo '</div>';
-			echo '</div>';
-		}
-
-		echo '</div>';
+	if($libGallery->hasPictures($id, $level)){
+		return $libGallery->getPictures($id, $level);
 	}
 }
