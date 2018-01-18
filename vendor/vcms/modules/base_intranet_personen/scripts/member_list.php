@@ -147,10 +147,6 @@ else {
 		$stmt->bindColumn('number', $anzahlInaktivExLoco);
 		$stmt->fetch();
 
-		if($anzahlAktiv > 0 && $anzahlInaktivExLoco > 0){
-			echo '<hr />';
-		}
-
 		if($anzahlInaktivExLoco > 0){
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%') ORDER BY name");
 			printPersons($stmt);

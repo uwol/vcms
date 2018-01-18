@@ -89,7 +89,7 @@ if($libAuth->isLoggedin()){
 
 	echo '</div>';
 	echo '</div>';
-	
+
 
 	echo '<h2>Neue Gruppe anlegen</h2>';
 
@@ -99,7 +99,7 @@ if($libAuth->isLoggedin()){
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
 
-	$libForm->printTextInput('bezeichnung', 'Bezeichnung (nur 1 Buchstabe)', '');
+	$libForm->printTextInput('bezeichnung', 'Bezeichnung (1 Buchstabe)', '');
 	$libForm->printTextInput('beschreibung', 'Beschreibung', '');
 	$libForm->printSubmitButton('Anlegen');
 
