@@ -81,17 +81,20 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
+	$class = '';
 	$style = '';
 
 	if(!$hasPictures){
 		$semesterCover = $libTime->determineSemesterCover($semester);
 
 		if($semesterCover){
+			$class = 'event-semestercover-box';
 			$style = "background-image: url('custom/semestercover/" .$semesterCover. "')";
 		}
 	}
 
-	echo '<div class="row event-semestercover-box" style="' .$style. '">';
+	echo '<div class="event">';
+	echo '<div class="row ' .$class. '" style="' .$style. '">';
 
 	// date and time panel
 	echo '<div class="col-sm-4 col-lg-3">';
@@ -163,6 +166,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 		}
 	}
 
+	echo '</div>';
 	echo '</div>';
 }
 
