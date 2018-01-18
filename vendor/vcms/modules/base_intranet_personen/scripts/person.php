@@ -239,8 +239,8 @@ if($ownprofile){
 	$libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password', false, true);
 
 	echo '<div class="form-group">';
-	echo '<div class"col-sm-3"></div>';
-	echo '<div class"col-sm-9">' .$libAuth->getPasswordRequirements(). '</div>';
+	echo '<div class="col-sm-3"></div>';
+	echo '<div class="col-sm-9">' .$libAuth->getPasswordRequirements(). '</div>';
 	echo '</div>';
 
 	$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Passwort speichern');
