@@ -156,12 +156,12 @@ if($formSent && !$formError){
 	echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="form-horizontal">';
 	echo '<fieldset>';
 
-	$libForm->printTextInput('registrierung_name', 'Vorname und Nachname', $libString->protectXSS($registrierung_name));
-	$libForm->printTextInput('registrierung_telnr', 'Telefonnummer', $libString->protectXSS($registrierung_telnr), 'tel');
-	$libForm->printTextInput('registrierung_emailadresse', 'E-Mail-Adresse', $libString->protectXSS($registrierung_emailadresse), 'email');
-	$libForm->printTextInput('registrierung_geburtsdatum', 'Geburtsdatum', $libString->protectXSS($registrierung_geburtsdatum), 'date');
-	$libForm->printTextInput('registrierung_pwd1', 'Passwort', '', 'password');
-	$libForm->printTextInput('registrierung_pwd2', 'Passwort-Wiederholung', '', 'password');
+	$libForm->printTextInput('registrierung_name', 'Vorname und Nachname', $libString->protectXSS($registrierung_name), 'text', false, true);
+	$libForm->printTextInput('registrierung_telnr', 'Telefonnummer', $libString->protectXSS($registrierung_telnr), 'tel', false, true);
+	$libForm->printTextInput('registrierung_emailadresse', 'E-Mail-Adresse', $libString->protectXSS($registrierung_emailadresse), 'email', false, true);
+	$libForm->printTextInput('registrierung_geburtsdatum', 'Geburtsdatum', $libString->protectXSS($registrierung_geburtsdatum), 'date', false, true);
+	$libForm->printTextInput('registrierung_pwd1', 'Passwort', '', 'password', false, true);
+	$libForm->printTextInput('registrierung_pwd2', 'Passwort-Wiederholung', '', 'password', false, true);
 	$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Abschicken');
 
 	echo '</fieldset>';

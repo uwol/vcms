@@ -45,7 +45,7 @@ if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "blank"){
 }
 //blank data to save
 elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "insert"){
-	if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
+	if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 		die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
 	}
 
@@ -54,7 +54,7 @@ elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "insert"){
 }
 //data modification
 elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "update"){
-	if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
+	if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 		die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
 	}
 
@@ -110,7 +110,7 @@ $libForm->printTextInput('datum', 'Datum', $array['datum'], 'date');
 $libForm->printVereineDropDownBox("verein", "Verein", $array['verein'], true, false);
 $libForm->printTextInput('beschreibung', 'Beschreibung', $array['beschreibung']);
 
-echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
+echo '<input type="hidden" name="form_complete" value="1" />';
 
 $libForm->printSubmitButton('Speichern');
 

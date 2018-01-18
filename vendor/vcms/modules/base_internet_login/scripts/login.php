@@ -46,8 +46,8 @@ echo '<div class="panel-body">';
 echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-$libForm->printTextInput('intranet_login_email', 'E-Mail-Adresse', '', 'email');
-$libForm->printTextInput('intranet_login_password', 'Passwort', '', 'password');
+$libForm->printTextInput('intranet_login_email', 'E-Mail-Adresse', '', 'email', false, true);
+$libForm->printTextInput('intranet_login_password', 'Passwort', '', 'password', false, true);
 $libForm->printSubmitButton('<i class="fa fa-sign-in" aria-hidden="true"></i> Anmelden');
 
 echo '</fieldset>';

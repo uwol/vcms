@@ -20,9 +20,9 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(isset($_POST['formkomplettdargestellt']) && $_POST['formkomplettdargestellt'] && isset($_POST['action']) && $_POST['action'] == "save"){
+if(isset($_POST['form_complete']) && $_POST['form_complete'] && isset($_POST['action']) && $_POST['action'] == "save"){
 	foreach($_POST as $key => $value){
-		if($key != 'formkomplettdargestellt'){
+		if($key != 'form_complete'){
 			$array = explode('#', $key);
 
 			$moduleid = $array[0];
@@ -98,7 +98,7 @@ foreach($storage as $moduleid => $arrays){
 }
 
 echo '<input type="hidden" name="action" value="save" />';
-echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
+echo '<input type="hidden" name="form_complete" value="1" />';
 
 $libForm->printSubmitButton('Speichern');
 

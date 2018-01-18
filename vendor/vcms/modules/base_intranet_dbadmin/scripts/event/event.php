@@ -60,7 +60,7 @@ if($libAuth->isLoggedin()){
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
 	elseif($aktion == 'insert'){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
+		if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
@@ -79,7 +79,7 @@ if($libAuth->isLoggedin()){
 	}
 	//bestehende Daten werden modifiziert
 	elseif($aktion == 'update'){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt'])
+		if(!isset($_POST['form_complete']) || !$_POST['form_complete'])
 			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 
 		$valueArray = $_REQUEST;
@@ -158,7 +158,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('fb_eventid', '<i class="fa fa-facebook-official" aria-hidden="true"></i> Event-Id', $varray['fb_eventid']);
 	$libForm->printBoolSelectBox('intern', 'Intern', $varray['intern']);
 
-	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
+	echo '<input type="hidden" name="form_complete" value="1" />';
 
 	$libForm->printSubmitButton('Speichern');
 

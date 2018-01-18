@@ -82,8 +82,8 @@ echo '<div class="panel-body">';
 echo '<form action="index.php?pid=password" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-$libForm->printTextInput('email', 'E-Mail-Adresse', '', 'email');
-$libForm->printTextInput('geburtsdatum', 'Geburtsdatum', '', 'date');
+$libForm->printTextInput('email', 'E-Mail-Adresse', '', 'email', false, true);
+$libForm->printTextInput('geburtsdatum', 'Geburtsdatum', '', 'date', false, true);
 $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Neues Passwort anfordern', array('btn-danger'));
 
 echo '</fieldset>';

@@ -22,8 +22,9 @@ use PDO;
 
 class LibForm{
 
-	var $colLabel = 2;
-	var $colInput = 10;
+	var $colLabel = 3;
+	
+	var $colInput = 9;
 
 	function printDisabledString($disabled){
 		if($disabled){

@@ -43,7 +43,7 @@ if($aktion == 'blank'){
 }
 //blank data to be saved
 elseif($aktion == 'insert'){
-	if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
+	if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 		die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 	}
 
@@ -60,7 +60,7 @@ elseif($aktion == 'insert'){
 }
 //modification
 elseif($aktion == 'update'){
-	if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
+	if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 		die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 	}
 
@@ -139,7 +139,7 @@ $libForm->printTextInput('startdatum', 'Startdatum', $array['startdatum'], 'date
 $libForm->printTextInput('verfallsdatum', 'Verfallsdatum', $array['verfallsdatum'], 'date');
 $libForm->printTextarea('text', 'Beschreibung', $array['text']);
 
-echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
+echo '<input type="hidden" name="form_complete" value="1" />';
 
 $libForm->printSubmitButton('Speichern');
 

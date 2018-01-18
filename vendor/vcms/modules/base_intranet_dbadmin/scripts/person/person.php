@@ -69,7 +69,7 @@ if($libAuth->isLoggedin()){
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert: INSERT
 	elseif($aktion == 'insert'){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
+		if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
@@ -97,7 +97,7 @@ if($libAuth->isLoggedin()){
 	}
 	//bestehende Mitgliedsdaten werden modifiziert: UPDATE
 	elseif($aktion == 'update'){
-		if(!isset($_POST['formkomplettdargestellt']) || !$_POST['formkomplettdargestellt']){
+		if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
 
@@ -317,7 +317,7 @@ if($libAuth->isLoggedin()){
 		$libForm->printTextInput('password_hash', 'Passwort-Hash', $mgarray['password_hash']);
 	}
 
-	echo '<input type="hidden" name="formkomplettdargestellt" value="1" />';
+	echo '<input type="hidden" name="form_complete" value="1" />';
 
 	$libForm->printSubmitButton('Speichern');
 
