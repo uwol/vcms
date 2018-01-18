@@ -23,7 +23,7 @@ use PDO;
 class LibForm{
 
 	var $colLabel = 3;
-	
+
 	var $colInput = 9;
 
 	function printDisabledString($disabled){
@@ -89,7 +89,7 @@ class LibForm{
 	function printFileInput($name, $label, $disabled = false, $required = false, $classes = array(), $accepts = array()){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-10">';
+		echo '<div class="col-sm-' .$this->colInput. '">';
 		echo '<label class="btn btn-default btn-file';
 
 		$this->printClassesString($classes);

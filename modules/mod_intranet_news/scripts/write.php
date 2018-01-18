@@ -30,8 +30,8 @@ echo '<fieldset>';
 $libForm->printTextarea('text', 'Nachricht', '');
 
 echo '<div class="form-group">';
-echo '<label for="kategorie" class="col-sm-2 control-label">Kategorie</label>';
-echo '<div class="col-sm-10"><select id="kategorie" name="kategorie" class="form-control">';
+echo '<label for="kategorie" class="col-sm-3 control-label">Kategorie</label>';
+echo '<div class="col-sm-9"><select id="kategorie" name="kategorie" class="form-control">';
 
 $stmt = $libDb->prepare('SELECT * FROM mod_news_kategorie ORDER BY bezeichnung');
 $stmt->execute();

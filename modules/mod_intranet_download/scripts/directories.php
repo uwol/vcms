@@ -132,8 +132,8 @@ if(!empty($libAuth->getAemter())){
 	echo '<input type="hidden" name="aktion" value="upload" />';
 
 	echo '<div class="form-group">';
-	echo '<label for="hash" class="col-sm-2 control-label">in den Ordner</label>';
-	echo '<div class="col-sm-2"><select name="hash" class="form-control">';
+	echo '<label for="hash" class="col-sm-3 control-label">in den Ordner</label>';
+	echo '<div class="col-sm-3"><select name="hash" class="form-control">';
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
@@ -146,8 +146,8 @@ if(!empty($libAuth->getAemter())){
 
 
 	echo '<div class="form-group">';
-	echo '<label class="col-sm-2 control-label">mit Leserecht für</label>';
-	echo '<div class="col-sm-10">';
+	echo '<label class="col-sm-3 control-label">mit Leserecht für</label>';
+	echo '<div class="col-sm-9">';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_gruppe ORDER BY bezeichnung");
 	$stmt->execute();
@@ -169,7 +169,7 @@ if(!empty($libAuth->getAemter())){
 	echo '</div></div>';
 
 	echo '<div class="form-group">';
-	echo '<div class="col-sm-offset-2 col-sm-2">';
+	echo '<div class="col-sm-offset-3 col-sm-3">';
 	echo '<label class="btn btn-default btn-file"><i class="fa fa-upload" aria-hidden="true"></i> Datei hochladen';
 	echo '<input type="file" name="datei" onchange="this.form.submit()" style="display:none">';
 	echo '</label>';
@@ -194,13 +194,13 @@ if(!empty($libAuth->getAemter())){
 	echo '<input type="hidden" name="aktion" value="newfolder" />';
 
 	echo '<div class="form-group">';
-	echo '<label for="foldername" class="col-sm-2 control-label">Neuen Ordner</label>';
-	echo '<div class="col-sm-2"><input type="text" id="foldername" name="foldername" class="form-control" /></div>';
+	echo '<label for="foldername" class="col-sm-3 control-label">Neuen Ordner</label>';
+	echo '<div class="col-sm-3"><input type="text" id="foldername" name="foldername" class="form-control" /></div>';
 	echo '</div>';
 
 	echo '<div class="form-group">';
-	echo '<label for="hash" class="col-sm-2 control-label">in Ordner</label>';
-	echo '<div class="col-sm-2"><select name="hash" class="form-control">';
+	echo '<label for="hash" class="col-sm-3 control-label">in Ordner</label>';
+	echo '<div class="col-sm-3"><select name="hash" class="form-control">';
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
@@ -212,7 +212,7 @@ if(!empty($libAuth->getAemter())){
 	echo '</div>';
 
 	echo '<div class="form-group">';
-	echo '<div class="col-sm-offset-2 col-sm-2">';
+	echo '<div class="col-sm-offset-3 col-sm-3">';
 	echo '<button type="submit" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
 	echo '</div>';
 	echo '</div>';

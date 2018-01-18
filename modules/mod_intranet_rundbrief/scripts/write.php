@@ -92,7 +92,7 @@ echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" encty
 echo '<fieldset>';
 
 echo '<div class="form-group">';
-echo '<label class="col-sm-2 control-label">Adressaten</label>';
+echo '<label class="col-sm-3 control-label">Adressaten</label>';
 echo '<div class="col-sm-4">';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="fuchsia" checked="checked">';

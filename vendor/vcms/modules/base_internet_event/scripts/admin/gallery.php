@@ -119,10 +119,12 @@ echo '</div>';
 echo '<div id="files-success" role="alert" class="alert alert-success" style="display:none"></div>';
 echo '<div id="files-danger" role="alert" class="alert alert-danger" style="display:none"></div>';
 
+echo '<div class="form-group">';
 echo '<label class="btn btn-default btn-file">';
 echo '<i aria-hidden="true" class="fa fa-upload"></i> Fotos hochladen';
 echo '<input id="fileupload" type="file" style="display:none" name="files[]" multiple>';
 echo '</label>';
+echo '</div>';
 
 echo '<script src="vendor/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>';
 echo '<script src="vendor/blueimp-file-upload/js/jquery.iframe-transport.js"></script>';
