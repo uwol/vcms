@@ -153,9 +153,6 @@ $stmt->fetch();
 $formattedSenderString = $formattedMitgliedNameString. ' &lt;' .$email. '&gt;';
 
 $libForm->printStaticText('Absender', $formattedSenderString);
-
-echo '<hr />';
-
 $libForm->printTextInput('subject', 'Betreff', '');
 $libForm->printTextarea('nachricht', 'Nachricht', '');
 $libForm->printFileInput('anhang', 'Anhang');

@@ -105,7 +105,7 @@ echo $libString->getNotificationBoxText();
 
 echo '<p>Hier können die Daten einer Ankündigung für die Startseite bearbeitet werden. Start- und Verfallsdatum müssen so gewählt werden, dass sich der Zeitraum ergibt, in dem die Ankündigung angezeigt werden soll.</p>';
 echo '<p>Es können die folgenden <a href="http://de.wikipedia.org/wiki/Bbcode">BBCodes</a> verwendet werden: [b]fett[/b], [i]kursiv[/i], [url=http://www.wikipedia.de]Link[/url]</p>';
-echo '<hr />';
+
 
 /*
 * deletion
@@ -128,6 +128,8 @@ if($aktion == 'blank'){
 	$extraActionParam = '&amp;aktion=update';
 }
 
+echo '<div class="panel panel-default">';
+echo '<div class="panel-body">';
 echo '<form action="index.php?pid=intranet_admin_announcement' .$extraActionParam. '" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
@@ -145,7 +147,8 @@ $libForm->printSubmitButton('Speichern');
 
 echo '</fieldset>';
 echo '</form>';
-
+echo '</div>';
+echo '</div>';
 
 echo '</div>';
 echo '<div class="col-sm-3">';
