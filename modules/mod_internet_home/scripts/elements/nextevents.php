@@ -39,7 +39,6 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 	echo '<div class="row">';
 	echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
 	echo '<h1 class="section-heading">Nächste Veranstaltungen</h1>';
-	echo '<hr>';
 	echo '</div>';
 	echo '</div>';
 
@@ -56,8 +55,10 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			echo '<div class="panel panel-default reveal">';
+			echo '<div class="panel-body">';
 			echo '<div class="col-sm-4">';
-			echo '<div class="thumbnail reveal">';
+			echo '<div class="thumbnail">';
 			echo '<div class="caption">';
 			echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 
@@ -85,12 +86,17 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			echo '</div>';
 			echo '</div>';
 			echo '</div>';
+			echo '</div>';
+			echo '</div>';
 		}
 	}
 
 	if($semesterCoverAvailable){
+		echo '<div class="panel panel-default reveal">';
+		echo '<div class="panel-body">';
 		echo '<div class="col-sm-4">';
 		echo '<div class="thumbnail reveal">';
+
 		echo '<div class="semestercover-box center-block">';
 		echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">';
 		echo $semesterCoverString;
@@ -102,6 +108,8 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 		echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
 		echo '</div>';
 
+		echo '</div>';
+		echo '</div>';
 		echo '</div>';
 		echo '</div>';
 	}
