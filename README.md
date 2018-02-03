@@ -14,8 +14,8 @@ Screenshots
 <img src="http://uwol.github.io/img/vcms/intranet.png" alt="Intranet" style="width:100%"/>
 
 
-Fähigkeiten
------------
+Features
+--------
 
 * Semesterprogramm mit Fotogalerien und Veranstaltungsanmeldungen
 * Intranet-Portal mit Semester-Zeitleiste, Nachrichten, Reservierungen
@@ -26,11 +26,11 @@ Fähigkeiten
   * Vorstände, Ämter, Rezeptionen, Promotionen, Philistrierungen, Consemester, Conchargen
   * Vereine, Mitgliedschaften
 * Adress-Export für Semesteranschreiben, Semesterprogramm-Export als iCalendar
-* Flexible Semesterkonfiguration: Semester, Trimester, terms, ...
+* Flexible Semesterkonfiguration: Semester, Trimester, Terms
 
 
-Modulkatalog
-------------
+Module
+------
 
 ### Internet-Module für den öffentlichen Bereich
 
@@ -66,7 +66,3 @@ Lizenz
 ------
 
 Lizenziert unter der GNU General Public License (GPL) Version 3. Details in LICENSE.
-
-### Und zum Schluss...
-
-Pull Requests auf GitHub und Anregungen bzw. Feedback per E-Mail sind willkommen!
