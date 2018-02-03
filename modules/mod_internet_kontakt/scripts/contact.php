@@ -181,7 +181,11 @@ echo '</section>';
 echo '</div>';
 
 echo '<aside class="col-sm-6">';
+echo '<div class="panel panel-default reveal">';
+echo '<div class="thumbnail">';
 echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="img-responsive center-block reveal" />';
+echo '</div>';
+echo '</div>';
 echo '</aside>';
 
 echo '</div>';
