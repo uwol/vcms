@@ -23,10 +23,6 @@ h3 {
 	margin-bottom: 1em;
 }
 
-p {
-	margin-bottom: 2em;
-}
-
 .thumbnail {
 	border: 0;
 	margin-bottom: 0;
@@ -42,9 +38,8 @@ p {
 }
 
 .panel {
-	box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12);
 	margin-bottom: 2em;
-	border-color: transparent;
 }
 
 .panel .panel-title {
@@ -55,22 +50,4 @@ p {
 .panel .panel-body {
 	padding: 1em;
 	background-color: inherit;
-}
-
-.alert,
-.form-control,
-.btn,
-.btn-link,
-.dropdown-menu,
-.label,
-.list-group-item,
-.modal-content,
-.nav-tabs a,
-.nav-pills a,
-.navbar,
-.navbar-toggle,
-.panel,
-.panel .panel-heading,
-.thumbnail {
-	border-radius: 0 !important;
 }
