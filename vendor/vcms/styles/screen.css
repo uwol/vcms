@@ -28,10 +28,6 @@ body {
 	padding-top: 158px;
 }
 
-main {
-	margin-bottom: 4em;
-}
-
 main,
 footer {
 	padding: 0.6em;
@@ -103,8 +99,8 @@ tiny {
 }
 
 footer {
-	padding-top: 1em;
-	padding-bottom: 3em;
+	padding-top: 4em;
+	padding-bottom: 4em;
 }
 
 footer .auto-update-img {
