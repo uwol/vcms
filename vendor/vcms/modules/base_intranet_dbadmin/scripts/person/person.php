@@ -107,47 +107,6 @@ if($libAuth->isLoggedin()){
 		$stmt->execute();
 		$mgarray = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		//ist das zu bearbeitende Mitglied jemals Internetwart gewesen?
-		if($mgarray['id'] != '' && $libPerson->hasBeenInternetWartAnyTime($mgarray['id'])){
-			//soll die Gruppe modifiziert werden? => Drohende Eintragung als tot oder entlassen
-			$gruppeWirdKritischModifiziert = false;
-
-			if(in_array('gruppe', $felder) && $_REQUEST['gruppe'] != $mgarray['gruppe']){
-				//ist eine kritische Gruppe angeben?
-				if($_REQUEST['gruppe'] == 'X' || $_REQUEST['gruppe'] == 'T'){
-					$gruppeWirdKritischModifiziert = true;
-				}
-			}
-
-			//soll die E-Mail-Adresse modifiziert werden? => Drohende Eintragung einer leeren Adresse
-			$emailIstLeer = false;
-			if(in_array('email', $felder) && $_REQUEST['email'] == ''){
-				$emailIstLeer = true;
-			}
-
-			//soll der password_hash modifiziert werden? => Drohende Eintragung eines leeren password_hash
-			$password_hashIstLeer = false;
-			if(in_array('password_hash', $felder) && $_REQUEST['password_hash'] == ''){
-				$password_hashIstLeer = true;
-			}
-
-			//sollen kritische Daten modifiziert werden?
-			if($gruppeWirdKritischModifiziert || $emailIstLeer || $password_hashIstLeer){
-				//ist das Mitglied ein valider Intranetwart?
-				if($libPerson->couldBeValidInternetWart($mgarray['id'])){
-					//dann ist das Ändern evtl ein Problem, wenn nämlich damit der letzte valide Internetwart gekillt wird
-					$valideInternetWarte = $libAssociation->getValideInternetWarte();
-
-					//ist dies der letzte valide Internetwart?
-					if(count($valideInternetWarte) < 2){
-						//STOPP, dann gibt es keinen validen Intranetwart mehr
-						die('Der bisherige Intranetwart ist der einzige valide. Mit der Änderung gibt es keinen validen Intranetwart mehr!');
-					}
-				}
-			}
-		}
-
-
 		//Adressänderungen prüfen und vermerken im Stand
 		if($_REQUEST['strasse1'] != $mgarray['strasse1'] || $_REQUEST['ort1'] != $mgarray['ort1'] || $_REQUEST['plz1'] != $mgarray['plz1'] || $_REQUEST['land1'] != $mgarray['land1'] || $_REQUEST['telefon1'] != $mgarray['telefon1']){
 			updateAdresseStand('base_person', 'datum_adresse1_stand', $mgarray['id']);

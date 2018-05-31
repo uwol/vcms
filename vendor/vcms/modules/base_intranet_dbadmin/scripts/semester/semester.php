@@ -21,8 +21,8 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-
 	$aktion = '';
+
 	if(isset($_REQUEST['aktion'])){
 		$aktion = $_REQUEST['aktion'];
 	}
@@ -33,16 +33,9 @@ if($libAuth->isLoggedin()){
 	$vorstand = array('senior', 'sen_dech', 'consenior', 'con_dech', 'fuchsmajor', 'fm_dech', 'fuchsmajor2', 'fm2_dech', 'scriptor', 'scr_dech', 'quaestor', 'quaes_dech', 'jubelsenior', 'jubelsen_dech');
 	$ahv = array('ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor', 'ahv_beisitzer1', 'ahv_beisitzer2');
 	$hv = array('hv_vorsitzender', 'hv_kassierer', 'hv_beisitzer1', 'hv_beisitzer2');
-	$warte = array('archivar', 'redaktionswart', 'hauswart', 'bierwart', 'kuehlschrankwart', 'thekenwart', 'technikwart', 'fotowart', 'wirtschaftskassenwart', 'wichswart', 'bootshauswart', 'huettenwart', 'fechtwart', 'stammtischwart', 'musikwart', 'ausflugswart', 'sportwart', 'couleurartikelwart', 'ferienordner', 'dachverbandsberichterstatter'); //hier darf der Internetwart nicht enthalten sein!
+	$warte = array('internetwart', 'archivar', 'redaktionswart', 'hauswart', 'bierwart', 'kuehlschrankwart', 'thekenwart', 'technikwart', 'fotowart', 'wirtschaftskassenwart', 'wichswart', 'bootshauswart', 'huettenwart', 'fechtwart', 'stammtischwart', 'musikwart', 'ausflugswart', 'sportwart', 'couleurartikelwart', 'ferienordner', 'dachverbandsberichterstatter');
 	$vorort = array('vop', 'vvop', 'vopxx', 'vopxxx', 'vopxxxx');
-	$sensiblefelder = array('internetwart');
 	$felder = array_merge(array('semester'), $vorstand, $ahv, $hv, $warte, $vorort);
-
-	//falls der Benutzer ein Internetwart ist
-	if(in_array('internetwart', $libAuth->getAemter())){
-		//dann auch die sensiblen Felder bearbeiten
-		$felder = array_merge($felder, $sensiblefelder);
-	}
 
 	/**
 	*
@@ -77,10 +70,6 @@ if($libAuth->isLoggedin()){
 		}
 
 		foreach($hv as $amt){
-			$semesterarray[$amt] = $letztesSemester[$amt];
-		}
-
-		foreach($sensiblefelder as $amt){
 			$semesterarray[$amt] = $letztesSemester[$amt];
 		}
 	}
@@ -122,42 +111,6 @@ if($libAuth->isLoggedin()){
 		$stmt->execute();
 		$semesterarray = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		//war bisher in diesem Semester ein Internetwart eingetragen?
-		if($semesterarray['internetwart'] != ''){
-			//soll der Internetwart modifiziert werden
-			$internetwartWirdModifiziert = false;
-			if(in_array('internetwart', $felder) && $_REQUEST['internetwart'] != $semesterarray['internetwart']){
-				$internetwartWirdModifiziert = true;
-			}
-
-			//soll der bisherige Internetwart modifiziert werden?
-			if($internetwartWirdModifiziert){
-				//ist das bisherige Mitglied auf dem Intranetwartsposten nur in diesem einem Semester Internetwart?
-				if($libPerson->getAnzahlInternetWartsSemester($semesterarray['internetwart']) < 2){
-					//ist das Mitglied auf dem Intranetwartsposten ein valider Intranetwart?
-					if($libPerson->couldBeValidInternetWart($semesterarray['internetwart'])){
-						//ist der neue Internetwart nicht valid? (kein Login, ausgetreten tot)
-						if(!$libPerson->couldBeValidInternetWart($_REQUEST['internetwart'])){
-							//dann ist das Löschen evtl ein Problem, wenn nämlich damit der letzte valide Internetwart ausgetragen wird
-							$valideInternetWarte = $libAssociation->getValideInternetWarte();
-
-							//ist dies der letzte valide Internetwart?
-							if(count($valideInternetWarte) < 2){
-								//STOPP, dann gibt es keinen validen Intranetwart mehr
-								$dieText = 'Der bisherige Intranetwart ist der einzige valide. Falls er gelöscht wird, gibt es keinen validen Intranetwart mehr! ';
-
-								if($_REQUEST['internetwart'] != ''){
-									$dieText .= 'Das ausgewählte Mitglied ist kein valides Mitglied. Es hat entweder keine Logindaten oder ist tot, ausgetreten etc.';
-								}
-
-								die($dieText);
-							}
-						}
-					}
-				}
-			}
-		}
-
 		$semesterarray = $libDb->updateRow($felder,$_REQUEST, 'base_semester', array('semester' => $_REQUEST['semester']));
 	}
 	//keine Aktion
@@ -181,8 +134,6 @@ if($libAuth->isLoggedin()){
 	}
 
 
-
-
 	/**
 	*
 	* Einleitender Text
@@ -193,7 +144,7 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p>Hier können sämtliche Daten eines Semesters bearbeitet werden. Diese Seite ist nur für den Internetwart zugänglich, weil über die Vergabe von Vorstands- und Wartsposten im Semester die Zugangsberechtigungen geregelt werden. Wenn der Vorstand Semesterdaten ändern dürfte, könnte er seine eigenen Zugangsrechte erweitern.</p>';
+	echo '<p>Hier können sämtliche Daten eines Semesters bearbeitet werden. Diese Seite ist nur für den Internetwart zugänglich, weil über die Vergabe von Vorstands- und Wartsposten im Semester die Zugangsberechtigungen geregelt werden.</p>';
 	echo '<hr />';
 
 	/**
@@ -201,7 +152,6 @@ if($libAuth->isLoggedin()){
 	* Löschoption
 	*
 	*/
-
 	if($semesterarray['semester'] != ''){
 		echo '<p><a href="index.php?pid=intranet_admin_semesters&amp;aktion=delete&amp;semester=' .$semesterarray['semester']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 	}
@@ -275,29 +225,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printMitgliederDropDownBox('bierwart', 'Bierwart', $semesterarray['bierwart']);
 	$libForm->printMitgliederDropDownBox('kuehlschrankwart', 'Kühlschrankwart', $semesterarray['kuehlschrankwart']);
 	$libForm->printMitgliederDropDownBox('thekenwart', 'Thekenwart', $semesterarray['thekenwart']);
-
-	//Falls der bearbeitende Benutzer ein Internetwart ist, darf er Internetwarte angeben
-	if(in_array('internetwart', $libAuth->getAemter())){
-		//wird nicht ein Semester neu angelegt sondern ein bestehendes verwaltet?
-		if($aktion != 'blank'){
-			//ist das Mitglied auf dem Intranetwartsposten nur in diesem einem Semester Internetwart?
-			if($semesterarray['internetwart'] != '' && $semesterarray['internetwart'] != 0 && $libPerson->getAnzahlInternetWartsSemester($semesterarray['internetwart']) < 2){
-				//dann ist das Löschen evtl ein Problem, wenn nämlich damit der letzte Internetwart ausgetragen wird
-				echo '<p><b>!!! ACHTUNG !!!</b></p>';
-				echo 'Dies ist die einzige Eintragung als Intranetwart für das folgende Mitglied. Wenn dieser Eintrag entfernt wird, so ist das Mitglied kein Intranetwart mehr! Die folgenden Internetwarte haben Intranetzugang und sind nicht tot oder ausgetreten: ';
-				$valideInternetWarte = $libAssociation->getValideInternetWarte();
-
-				foreach($valideInternetWarte as $key => $value){
-					echo $libPerson->getNameString($key, 5). ', ';
-				}
-
-				echo '<br />';
-				echo 'Bitte stelle sicher, dass die anderen Intranetwarte ansprechbar sind und sie ihre Einwahldaten für das Intranet kennen, bevor Du diesen Intranetwart austrägst und evtl. einen anderen einträgst.<br />';
-			}
-		}
-
-		$libForm->printMitgliederDropDownBox('internetwart', 'Internetwart', $semesterarray['internetwart']);
-	}
+	$libForm->printMitgliederDropDownBox('internetwart', 'Internetwart', $semesterarray['internetwart']);
 
 	$libForm->printMitgliederDropDownBox('technikwart', 'Technikwart', $semesterarray['technikwart']);
 	$libForm->printMitgliederDropDownBox('fotowart', 'Fotowart', $semesterarray['fotowart']);

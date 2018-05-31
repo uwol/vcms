@@ -215,46 +215,6 @@ class LibPerson{
 		}
 	}
 
-	function hasBeenInternetWartAnyTime($mitgliedid){
-		$anzahlSemester = $this->getAnzahlInternetWartsSemester($mitgliedid);
-		return $anzahlSemester > 0;
-	}
-
-	function getAnzahlInternetWartsSemester($mitgliedid){
-		global $libDb;
-
-		// ein valider Internetwart
-		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
-		// 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
-		// 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
-
-		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
-		$stmt->bindValue(':internetwart', $mitgliedid, PDO::PARAM_INT);
-		$stmt->execute();
-		$stmt->bindColumn('number', $anzahlSemester);
-		$stmt->fetch();
-
-		return $anzahlSemester;
-	}
-
-	function couldBeValidInternetWart($mitgliedid){
-		global $libDb;
-
-		// ein valider Internetwart
-		// 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
-		// 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
-		// 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
-
-		// hier wird geprüft, ob ein Mitglied Kondition 2 und 3 erfüllt, ob er also Internetwart werden darf
-		$stmt = $libDb->prepare('SELECT email, password_hash, gruppe FROM base_person WHERE id = :id');
-		$stmt->bindValue(':id', $mitgliedid, PDO::PARAM_INT);
-		$stmt->execute();
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-		// hier wird geprüft, ob ein Mitglied Kondition 2 und 3 erfüllt, ob er also Internetwart werden darf
-		return $row['email'] != '' && $row['password_hash'] != '' && $row['gruppe'] != 'X' && $row['gruppe'] != 'T';
-	}
-
 	function getChargenString($id){
 		global $libDb, $libTime, $libConfig;
 
