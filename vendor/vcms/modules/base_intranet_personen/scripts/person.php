@@ -65,7 +65,7 @@ if($ownprofile){
 		} else {
 			$stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
 				telefon1=:telefon1, zusatz2=:zusatz2, strasse2=:strasse2, ort2=:ort2, plz2=:plz2, land2=:land2,telefon2=:telefon2, mobiltelefon=:mobiltelefon,
-				email=:email, skype=:skype, jabber=:jabber, webseite=:webseite, spitzname=:spitzname, beruf=:beruf, leibmitglied=:leibmitglied, region1=:region1, region2=:region2, vita=:vita WHERE id=:id');
+				email=:email, skype=:skype, webseite=:webseite, spitzname=:spitzname, beruf=:beruf, leibmitglied=:leibmitglied, region1=:region1, region2=:region2, vita=:vita WHERE id=:id');
 			$stmt->bindValue(':anrede', $libString->protectXss(trim($_POST['anrede'])));
 			$stmt->bindValue(':titel', $libString->protectXss(trim($_POST['titel'])));
 			$stmt->bindValue(':rang', $libString->protectXss(trim($_POST['rang'])));
@@ -84,7 +84,6 @@ if($ownprofile){
 			$stmt->bindValue(':mobiltelefon', $libString->protectXss(trim($_POST['mobiltelefon'])));
 			$stmt->bindValue(':email', $libString->protectXss(strtolower(trim($_POST['email']))));
 			$stmt->bindValue(':skype', $libString->protectXss(trim($_POST['skype'])));
-			$stmt->bindValue(':jabber', $libString->protectXss(strtolower(trim($_POST['jabber']))));
 			$stmt->bindValue(':webseite', $libString->protectXss(trim($_POST['webseite'])));
 			$stmt->bindValue(':spitzname', $libString->protectXss(trim($_POST['spitzname'])));
 			$stmt->bindValue(':beruf', $libString->protectXss(trim($_POST['beruf'])));
@@ -299,7 +298,6 @@ if($ownprofile){
 
 	$libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $row2['mobiltelefon']);
 	$libForm->printTextInput('email', 'E-Mail-Adresse', $row2['email'], 'email', false, true);
-	$libForm->printTextInput('jabber', 'XMPP', $row2['jabber']);
 	$libForm->printTextInput('skype', 'Skype', $row2['skype']);
 	$libForm->printTextInput('webseite', 'Webseite', $row2['webseite']);
 
@@ -656,7 +654,7 @@ function printCommunication($row){
 	/*
 	* communication
 	*/
-	if($row['email'] != '' || $row['mobiltelefon'] != '' || $row['webseite'] != '' || $row['jabber'] != '' ||  $row['skype'] != ''){
+	if($row['email'] != '' || $row['mobiltelefon'] != '' || $row['webseite'] != '' ||  $row['skype'] != ''){
 		echo '<hr />';
 		echo '<div>';
 
@@ -698,10 +696,6 @@ function printCommunication($row){
 			echo '<div>';
 			echo $icon. ' <a href="' .$webseite. '">' .$webseite. '</a>';
 			echo '</div>';
-		}
-
-		if($row['jabber'] != ''){
-			echo '<div><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i> <a href="xmpp:' .$row['jabber']. '">' .$row['jabber']. '</a></div>';
 		}
 
 		if($row['skype'] != ''){

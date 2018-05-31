@@ -35,7 +35,7 @@ if($libAuth->isLoggedin()){
 	$mgarray = array();
 	$mgarray['id'] = '';
 	//Felder in der Personentabelle angeben -> Metadaten
-	$felder = array('anrede', 'titel', 'rang', 'vorname', 'praefix', 'name', 'suffix', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'zusatz2', 'strasse2', 'ort2', 'plz2', 'land2', 'region1', 'region2', 'telefon1', 'telefon2', 'mobiltelefon', 'email', 'skype', 'jabber', 'webseite', 'datum_geburtstag', 'beruf', 'heirat_datum', 'heirat_partner', 'tod_datum', 'tod_ort', 'status', 'semester_reception', 'semester_promotion', 'semester_philistrierung', 'semester_aufnahme', 'semester_fusion', 'austritt_datum', 'spitzname', 'leibmitglied', 'anschreiben_zusenden', 'spendenquittung_zusenden', 'bemerkung', 'vita');
+	$felder = array('anrede', 'titel', 'rang', 'vorname', 'praefix', 'name', 'suffix', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'zusatz2', 'strasse2', 'ort2', 'plz2', 'land2', 'region1', 'region2', 'telefon1', 'telefon2', 'mobiltelefon', 'email', 'skype', 'webseite', 'datum_geburtstag', 'beruf', 'heirat_datum', 'heirat_partner', 'tod_datum', 'tod_ort', 'status', 'semester_reception', 'semester_promotion', 'semester_philistrierung', 'semester_aufnahme', 'semester_fusion', 'austritt_datum', 'spitzname', 'leibmitglied', 'anschreiben_zusenden', 'spendenquittung_zusenden', 'bemerkung', 'vita');
 
 	//Ist der Bearbeiter ein Internetwart?
 	if(in_array('internetwart', $libAuth->getAemter())){
@@ -80,7 +80,6 @@ if($libAuth->isLoggedin()){
 
 		$valueArray = $_REQUEST;
 		$valueArray['email'] = strtolower($valueArray['email']);
-		$valueArray['jabber'] = strtolower($valueArray['jabber']);
 		$valueArray['webseite'] = $valueArray['webseite'];
 		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
 		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
@@ -127,7 +126,6 @@ if($libAuth->isLoggedin()){
 
 		$valueArray = $_REQUEST;
 		$valueArray['email'] = strtolower($valueArray['email']);
-		$valueArray['jabber'] = strtolower($valueArray['jabber']);
 		$valueArray['webseite'] = $valueArray['webseite'];
 		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
 		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
@@ -236,7 +234,6 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $mgarray['mobiltelefon'], 'tel');
 	$libForm->printTextInput('email', 'E-Mail-Adresse', $mgarray['email'], 'email');
 	$libForm->printTextInput('skype', 'Skype', $mgarray['skype']);
-	$libForm->printTextInput('jabber', 'XMPP', $mgarray['jabber']);
 	$libForm->printTextInput('webseite', 'Webseite', $mgarray['webseite']);
 	$libForm->printTextInput('datum_geburtstag', 'Geburtsdatum', $mgarray['datum_geburtstag'], 'date');
 	$libForm->printTextInput('beruf', 'Beruf', $mgarray['beruf']);

@@ -113,6 +113,11 @@ if(in_array('msn', $columnsBasePerson)){
 	$libDb->query('ALTER TABLE base_person DROP msn');
 }
 
+if(in_array('jabber', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person DROP jabber');
+}
+
 if(in_array('vita_letzterautor', $columnsBasePerson)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
 	$libDb->query('ALTER TABLE base_person DROP vita_letzterautor');

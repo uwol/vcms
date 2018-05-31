@@ -23,7 +23,7 @@ if(!is_object($libGlobal))
 echo 'Erstelle Tabelle base_gruppe<br />';
 $sql = "CREATE TABLE base_gruppe (
   bezeichnung char(1) NOT NULL default '',
-  beschreibung varchar(30) NOT NULL default '',
+  beschreibung varchar(255) NOT NULL default '',
   PRIMARY KEY (bezeichnung)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
@@ -41,7 +41,7 @@ $libDb->query($sql);
 echo 'Erstelle Tabelle base_region<br />';
 $sql = "CREATE TABLE base_region (
   id int(11) NOT NULL  auto_increment,
-  bezeichnung varchar(30) NOT NULL default '',
+  bezeichnung varchar(255) NOT NULL default '',
   PRIMARY KEY (id),
   UNIQUE KEY bezeichnung (bezeichnung)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;";
@@ -51,24 +51,24 @@ $libDb->query($sql);
 echo 'Erstelle Tabelle base_person<br />';
 $sql = "CREATE TABLE base_person (
   id int(11) NOT NULL auto_increment,
-  anrede varchar(30) NOT NULL default 'Herr',
+  anrede varchar(255) NOT NULL default 'Herr',
   titel varchar(255) default NULL,
   rang varchar(255) default NULL,
   vorname varchar(255) NOT NULL default '',
-  praefix varchar(30) default NULL,
+  praefix varchar(255) default NULL,
   name varchar(255) NOT NULL default '',
-  suffix varchar(30) default NULL,
+  suffix varchar(255) default NULL,
   zusatz1 varchar(255) default NULL,
   strasse1 varchar(255) default NULL,
   ort1 varchar(255) default NULL,
-  plz1 varchar(5) default NULL,
+  plz1 varchar(255) default NULL,
   land1 varchar(255) default NULL,
   telefon1 varchar(255) default NULL,
   datum_adresse1_stand date default NULL,
   zusatz2 varchar(255) default NULL,
   strasse2 varchar(255) default NULL,
   ort2 varchar(255) default NULL,
-  plz2 varchar(5) default NULL,
+  plz2 varchar(255) default NULL,
   land2 varchar(255) default NULL,
   telefon2 varchar(255) default NULL,
   datum_adresse2_stand date default NULL,
@@ -77,7 +77,6 @@ $sql = "CREATE TABLE base_person (
   mobiltelefon varchar(255) default NULL,
   email varchar(255) default NULL,
   skype varchar(255) default NULL,
-  jabber varchar(255) default NULL,
   webseite varchar(255) default NULL,
   datum_geburtstag date default NULL,
   beruf varchar(255) default NULL,
@@ -191,17 +190,17 @@ echo 'Erstelle Tabelle base_verein<br />';
 $sql = "CREATE TABLE base_verein (
   id int(11) NOT NULL auto_increment,
   name varchar(255) default NULL,
-  kuerzel varchar(30) default NULL,
+  kuerzel varchar(255) default NULL,
   aktivitas tinyint(1) NOT NULL default '1',
   ahahschaft tinyint(1) NOT NULL default '1',
   titel varchar(255) default NULL,
   rang varchar(255) default NULL,
-  dachverband varchar(30) default NULL,
+  dachverband varchar(255) default NULL,
   dachverbandnr int(11) default NULL,
   zusatz1 varchar(255) default NULL,
   strasse1 varchar(255) default NULL,
   ort1 varchar(255) default NULL,
-  plz1 varchar(5) default NULL,
+  plz1 varchar(255) default NULL,
   land1 varchar(255) default NULL,
   datum_adresse1_stand date default NULL,
   telefon1 varchar(255) default NULL,
@@ -228,16 +227,16 @@ $libDb->query($sql);
 echo 'Erstelle Tabelle base_vip<br />';
 $sql = "CREATE TABLE base_vip (
   id int(11) NOT NULL auto_increment,
-  praefix varchar(30) default NULL,
+  praefix varchar(255) default NULL,
   name varchar(255) default NULL,
-  suffix varchar(30) default NULL,
+  suffix varchar(255) default NULL,
   vorname varchar(255) default NULL,
-  anrede varchar(30) default NULL,
+  anrede varchar(255) default NULL,
   titel varchar(255) default NULL,
   rang varchar(255) default NULL,
   zusatz1 varchar(255) default NULL,
   strasse1 varchar(255) default NULL,
-  plz1 varchar(5) default NULL,
+  plz1 varchar(255) default NULL,
   ort1 varchar(255) default NULL,
   land1 varchar(255) default NULL,
   datum_adresse1_stand date default NULL,
