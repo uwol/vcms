@@ -28,6 +28,10 @@ body {
 	padding-top: 158px;
 }
 
+main {
+	margin-bottom: 4em;
+}
+
 main,
 footer {
 	padding: 0.6em;
@@ -95,7 +99,7 @@ tiny {
 }
 
 .social-buttons a i {
-	margin-right: 0.5em;
+	margin-left: 0.5em;
 }
 
 footer {

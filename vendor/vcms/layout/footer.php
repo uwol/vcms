@@ -31,35 +31,40 @@ $wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wikipedia_ur
 
 
 echo '    <footer>' . PHP_EOL;
-echo '      <div class="social-buttons text-right container">' . PHP_EOL;
-echo '        <div class="col-xs-12">' . PHP_EOL;
+echo '      <div class="container">' . PHP_EOL;
+echo '        <div class="row">' . PHP_EOL;
+echo '          <div class="col-xs-12">' . PHP_EOL;
+echo '            <div class="social-buttons text-right">' . PHP_EOL;
+echo '              <small class="text-muted"><a href="index.php?pid=datenschutz">Datenschutz</a></small>' . PHP_EOL;
 
 if($facebookUrl != ''){
-	echo '          <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '              <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
-	echo '          <a href="http://www.facebook.com/sharer/sharer.php?u=' .rawurlencode($libGlobal->getSiteUrl()). '"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '              <a href="http://www.facebook.com/sharer/sharer.php?u=' .rawurlencode($libGlobal->getSiteUrl()). '"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if($instagramUrl != ''){
-	echo '          <a href="' .$instagramUrl. '" rel="nofollow"><i class="fa fa-instagram fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '              <a href="' .$instagramUrl. '" rel="nofollow"><i class="fa fa-instagram fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if($twitterUrl != ''){
-	echo '          <a href="' .$twitterUrl. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '              <a href="' .$twitterUrl. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
-	echo '          <a href="http://twitter.com/share?url=' .rawurlencode($libGlobal->getSiteUrl()). '&amp;text=' .rawurlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '              <a href="http://twitter.com/share?url=' .rawurlencode($libGlobal->getSiteUrl()). '&amp;text=' .rawurlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
-echo '<a href="whatsapp://send?text=' .rawurlencode($libConfig->verbindungName. ' ' .$libGlobal->getSiteUrl()). '"><i class="fa fa-whatsapp fa-lg hvr-pop" aria-hidden="true"></i></a>';
+echo '              <a href="whatsapp://send?text=' .rawurlencode($libConfig->verbindungName. ' ' .$libGlobal->getSiteUrl()). '"><i class="fa fa-whatsapp fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 
 if($wikipediaUrl != ''){
-	echo '          <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+	echo '              <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if($libGenericStorage->loadValue('base_core', 'auto_update')){
-	echo '          <img src="api.php?iid=auto_update" alt="auto-update" class="auto-update-img" />';
+	echo '              <img src="api.php?iid=auto_update" alt="auto-update" class="auto-update-img" />' . PHP_EOL;
 }
 
+echo '            </div>' . PHP_EOL;
+echo '          </div>' . PHP_EOL;
 echo '        </div>' . PHP_EOL;
 echo '      </div>' . PHP_EOL;
 echo '    </footer>' . PHP_EOL;
