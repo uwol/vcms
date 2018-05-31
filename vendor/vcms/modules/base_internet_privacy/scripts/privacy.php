@@ -23,6 +23,13 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('datenschutzbeauftragter'
 if(!$libGenericStorage->attributeExistsInCurrentModule('datenschutz_email')){
 	$libGenericStorage->saveValueInCurrentModule('datenschutz_email', '');
 }
+
+$datenschutzbeauftragter = $libGenericStorage->loadValueInCurrentModule('datenschutzbeauftragter');
+$email = $libGenericStorage->loadValueInCurrentModule('datenschutz_email');
+
+if($email == ''){
+	$email = $libConfig->emailInfo;
+}
 ?>
 
 <h1>Datenschutzerklärung</h1>
@@ -44,7 +51,12 @@ if($libConfig->verbindungLand){
 </p>
 
 <p>Datenschutzbeauftragter:
-<?php echo $libGenericStorage->loadValueInCurrentModule('datenschutzbeauftragter') .', '. $libGenericStorage->loadValueInCurrentModule('datenschutz_email'); ?>
+<?php
+if($datenschutzbeauftragter != ''){
+	echo $datenschutzbeauftragter .', ';
+}
+
+echo $email; ?>
 </p>
 
 <h2>2. Erhebung und Speicherung personenbezogener Daten sowie Art und Zweck von deren Verwendung</h2>
@@ -104,7 +116,7 @@ if($libConfig->verbindungLand){
 
 <h2>6. Widerspruchsrecht</h2>
 
-<p>Sofern Ihre personenbezogenen Daten auf Grundlage von berechtigten Interessen gemäß Art. 6 Abs. 1 S. 1 lit. f DSGVO verarbeitet werden, haben Sie das Recht, gemäß Art. 21 DSGVO Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten einzulegen, soweit dafür Gründe vorliegen, die sich aus Ihrer besonderen Situation ergeben oder sich der Widerspruch gegen Direktwerbung richtet. Im letzteren Fall haben Sie ein generelles Widerspruchsrecht, das ohne Angabe einer besonderen Situation von uns umgesetzt wird. Möchten Sie von Ihrem Widerrufs- oder Widerspruchsrecht Gebrauch machen, genügt eine E-Mail an <?php echo $libGenericStorage->loadValueInCurrentModule('datenschutz_email'); ?>
+<p>Sofern Ihre personenbezogenen Daten auf Grundlage von berechtigten Interessen gemäß Art. 6 Abs. 1 S. 1 lit. f DSGVO verarbeitet werden, haben Sie das Recht, gemäß Art. 21 DSGVO Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten einzulegen, soweit dafür Gründe vorliegen, die sich aus Ihrer besonderen Situation ergeben oder sich der Widerspruch gegen Direktwerbung richtet. Im letzteren Fall haben Sie ein generelles Widerspruchsrecht, das ohne Angabe einer besonderen Situation von uns umgesetzt wird. Möchten Sie von Ihrem Widerrufs- oder Widerspruchsrecht Gebrauch machen, genügt eine E-Mail an <?php echo $email; ?>
 
 <h2>7. Datensicherheit</h2>
 
