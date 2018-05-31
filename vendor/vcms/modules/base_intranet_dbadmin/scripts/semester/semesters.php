@@ -44,7 +44,7 @@ if($libAuth->isLoggedin()){
 				//Semestercover löschen
 				$libImage->deleteSemesterCover($_REQUEST['semester']);
 			} else {
-				$libGlobal->errorTexts[] = 'Das Semester kann nicht gelöscht werden, da es einen Internetwarteintrag enthält. Um das Semester zu löschen, muss erst von einem Internetwart der Internetwarteintrag aus dem Semester ausgetragen werden.';
+				$libGlobal->errorTexts[] = 'Das Semester kann nicht gelöscht werden, da es einen Internetwart-Eintrag enthält. Um das Semester zu löschen, muss erst von einem Internetwart der Internetwarteintrag aus dem Semester ausgetragen werden.';
 			}
 		}
 	}

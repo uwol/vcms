@@ -160,16 +160,42 @@ class LibAuth{
 			$stmt->execute();
 
 			//for all semesters
-			while($row2 = $stmt->fetch(PDO::FETCH_ASSOC)){
+			while($semesterRow = $stmt->fetch(PDO::FETCH_ASSOC)){
 				$possibleAemter = $libSecurityManager->getPossibleAemter();
 
 				//for all functions
 				foreach($possibleAemter as $amt){
-					//does the member has the function in the semester?
-					if($row2[$amt] == $row['id']){
-						//save function
+					//does the member have the function in the semester?
+					if($semesterRow[$amt] == $row['id']){
+						//save this function
 						$this->aemter[] = $amt;
 					}
+				}
+			}
+
+			//for the last 20 semesters
+			$semesterIterator = $libTime->getSemesterName();
+
+			for($i=0; $i<20; $i++){
+				$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
+
+				//select the internetwart in that semester
+				$stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester');
+				$stmt->bindValue(':semester', $semesterIterator);
+				$stmt->execute();
+				$stmt->bindColumn('internetwart', $internetwart);
+				$stmt->fetch();
+
+				//if there is an internetwart given
+				if($internetwart){
+					//if the authenticating user is this internetwart
+					if($internetwart == $row['id']){
+						//save this function
+						$this->aemter[] = 'internetwart';
+					}
+
+					//we only want to do this for the most recent internetwart -> break
+					break;
 				}
 			}
 

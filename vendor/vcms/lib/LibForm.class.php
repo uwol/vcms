@@ -172,7 +172,7 @@ class LibForm{
 		echo ' class="form-control">';
 
 		if($allowNull){
-			echo '<option value="">------------</option>';
+			echo '<option value=""></option>';
 		}
 
 		$stmt = $libDb->prepare("SELECT id, anrede, name, vorname, titel, rang, praefix, suffix, gruppe FROM base_person ORDER BY name, vorname");
@@ -204,7 +204,7 @@ class LibForm{
 		echo ' class="form-control">';
 
 		if($allowNull){
-			echo '<option value="">------------</option>';
+			echo '<option value=""></option>';
 		}
 
 		$stmt = $libDb->prepare("SELECT id, titel, name FROM base_verein ORDER BY name");
@@ -236,7 +236,7 @@ class LibForm{
 		echo ' class="form-control">';
 
 		if($allowNull){
-			echo '<option value="">------------</option>';
+			echo '<option value=""></option>';
 		}
 
 		$stmt = $libDb->prepare("SELECT semester FROM base_semester ORDER BY SUBSTRING(semester, 3) DESC");
@@ -268,7 +268,7 @@ class LibForm{
 		echo ' class="form-control">';
 
 		if($allowNull){
-			echo '<option value="">------------</option>';
+			echo '<option value=""></option>';
 		}
 
 		$stmt = $libDb->prepare("SELECT bezeichnung, beschreibung FROM base_status ORDER BY bezeichnung");
@@ -300,7 +300,7 @@ class LibForm{
 		echo ' class="form-control">';
 
 		if($allowNull){
-			echo '<option value="">------------</option>';
+			echo '<option value=""></option>';
 		}
 
 		$stmt = $libDb->prepare("SELECT bezeichnung, beschreibung FROM base_gruppe ORDER BY bezeichnung");
@@ -332,7 +332,7 @@ class LibForm{
 		echo ' class="form-control">';
 
 		if($allowNull){
-			echo '<option value="">------------</option>';
+			echo '<option value=""></option>';
 		}
 
 		$stmt = $libDb->prepare("SELECT id, bezeichnung FROM base_region ORDER BY bezeichnung");
@@ -371,7 +371,7 @@ class LibForm{
 		echo ' class="form-control">';
 
 		if($allowNull){
-			echo '<option value="">------------</option>';
+			echo '<option value=""></option>';
 		}
 
 		$stmt = $libDb->prepare("SELECT id, titel, datum FROM base_veranstaltung ORDER BY datum DESC");
