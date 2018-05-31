@@ -1,12 +1,12 @@
 {
 	"moduleName": "Log",
-	"version": 1.11,
+	"version": 1.20,
 	"pages": [
 		{
 			"pid": "intranet_log",
 			"file": "log.php",
 			"directory": "scripts",
-			"title": "Log",
+			"title": "Protokoll",
 			"accessRestriction": {
 				"aemter": ["internetwart"]
 			}
@@ -19,7 +19,7 @@
 			"elements": [
 				{
 					"pid": "intranet_log",
-					"name": "Log",
+					"name": "Protokoll",
 					"type": "menu_entry",
 					"position": 4
 				}

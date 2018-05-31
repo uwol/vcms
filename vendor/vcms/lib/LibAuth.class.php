@@ -60,7 +60,7 @@ class LibAuth{
 		$this->isLoggedIn = false;
 
 		//collect potential valid groups
-		$stmt = $libDb->prepare("SELECT bezeichnung FROM base_gruppe");
+		$stmt = $libDb->prepare('SELECT bezeichnung FROM base_gruppe');
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -85,7 +85,7 @@ class LibAuth{
 			return false;
 		}
 
-		$stmt = $libDb->prepare("SELECT id, anrede, titel, praefix, vorname, suffix, gruppe, name, email, password_hash FROM base_person WHERE email=:email");
+		$stmt = $libDb->prepare('SELECT id, anrede, titel, praefix, vorname, suffix, gruppe, name, email, password_hash FROM base_person WHERE email=:email');
 		$stmt->bindValue(':email', $email);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -117,7 +117,7 @@ class LibAuth{
 		$stmt->fetch();
 
 		if($numberOfMistakenLoginsToday > 0){
-			$stmt = $libDb->prepare("SELECT datum FROM sys_log_intranet WHERE mitglied=:mitglied AND aktion=2 AND DATEDIFF(NOW(), datum) = 0 ORDER BY datum DESC LIMIT 0,1");
+			$stmt = $libDb->prepare('SELECT datum FROM sys_log_intranet WHERE mitglied=:mitglied AND aktion=2 AND DATEDIFF(NOW(), datum) = 0 ORDER BY datum DESC LIMIT 0,1');
 			$stmt->bindValue(':mitglied', $row['id'], PDO::PARAM_INT);
 			$stmt->execute();
 			$stmt->bindColumn('datum', $lastMistakenLoginToday);
@@ -153,7 +153,7 @@ class LibAuth{
 			$this->gruppe = $row['gruppe'];
 
 			//b. determine functions
-			$stmt = $libDb->prepare("SELECT * FROM base_semester WHERE semester=:semester_aktuell OR semester=:semester_naechst OR semester=:semester_vorherig");
+			$stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester_aktuell OR semester=:semester_naechst OR semester=:semester_vorherig');
 			$stmt->bindValue(':semester_aktuell', $libTime->getSemesterName());
 			$stmt->bindValue(':semester_naechst', $libTime->getFollowingSemesterName());
 			$stmt->bindValue(':semester_vorherig', $libTime->getPreviousSemesterName());
@@ -173,18 +173,6 @@ class LibAuth{
 				}
 			}
 
-			// special case internetwart: if the member has been internetwart in any semester,
-			// add function internetwart; cause: past internetwarts should keep their rights
-			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:id');
-			$stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
-			$stmt->execute();
-			$stmt->bindColumn('number', $anzahl);
-			$stmt->fetch();
-
-			if($anzahl > 0){
-				$this->aemter[] = 'internetwart';
-			}
-
 			//remove redundant functions from multiple semesters
 			$this->aemter = array_unique($this->aemter);
 
@@ -202,7 +190,7 @@ class LibAuth{
 		}
 
 		//8. log mistaken login attempt
-		$stmt = $libDb->prepare("INSERT INTO sys_log_intranet (mitglied, aktion, datum, punkte, ipadresse) VALUES (:mitglied, :aktion, NOW(), :punkte, :ipadresse)");
+		$stmt = $libDb->prepare('INSERT INTO sys_log_intranet (mitglied, aktion, datum, punkte, ipadresse) VALUES (:mitglied, :aktion, NOW(), :punkte, :ipadresse)');
 		$stmt->bindValue(':mitglied', $row['id'], PDO::PARAM_INT);
 		$stmt->bindValue(':aktion', 2, PDO::PARAM_INT);
 		$stmt->bindValue(':punkte', 0, PDO::PARAM_INT);
@@ -233,7 +221,7 @@ class LibAuth{
 		//a. empty password
 		if($newPassword == ''){
 			if(!$quiet){
-				$libGlobal->errorTexts[] = "Das neue Passwort ist leer.";
+				$libGlobal->errorTexts[] = 'Das neue Passwort ist leer.';
 			}
 
 			return false;
@@ -243,7 +231,7 @@ class LibAuth{
 		if($checkIsValidPassword){
 			if(!$this->isValidPassword($newPassword)){
 				if(!$quiet){
-					$libGlobal->errorTexts[] = "Das neue Passwort ist nicht komplex genug. ". $this->getPasswordRequirements();
+					$libGlobal->errorTexts[] = 'Das neue Passwort ist nicht komplex genug. '. $this->getPasswordRequirements();
 				}
 
 				return false;
@@ -286,7 +274,7 @@ class LibAuth{
 			return false;
 		}
 
-		$stmt = $libDb->prepare("SELECT password_hash FROM base_person WHERE id = :id");
+		$stmt = $libDb->prepare('SELECT password_hash FROM base_person WHERE id = :id');
 		$stmt->bindValue(':id', $personId, PDO::PARAM_INT);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);

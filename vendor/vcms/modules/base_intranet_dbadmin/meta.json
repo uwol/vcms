@@ -1,5 +1,5 @@
 {
-	"moduleName": "Datenbank-Admin",
+	"moduleName": "Datenbank-Administration",
 	"pages": [
 		{
 			"pid": "intranet_admin_persons",
@@ -7,7 +7,7 @@
 			"directory": "scripts/person",
 			"title": "Personen",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -16,7 +16,7 @@
 			"directory": "scripts/person",
 			"title": "Person",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -43,7 +43,7 @@
 			"directory": "scripts/event",
 			"title": "Veranstaltungen",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -52,7 +52,7 @@
 			"directory": "scripts/event",
 			"title": "Veranstaltung",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -61,7 +61,7 @@
 			"directory": "scripts/association",
 			"title": "Vereine",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -70,7 +70,7 @@
 			"directory": "scripts/association",
 			"title": "Verein",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -79,7 +79,7 @@
 			"directory": "scripts/vip",
 			"title": "Vips",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -88,7 +88,7 @@
 			"directory": "scripts/vip",
 			"title": "Vip",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -97,7 +97,7 @@
 			"directory": "scripts/membership",
 			"title": "Vereinsmitgliedschaften",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -106,7 +106,7 @@
 			"directory": "scripts/membership",
 			"title": "Vereinsmitgliedschaft",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "jubelsenior", "consenior", "fuchsmajor", "fuchsmajor2", "scriptor", "quaestor", "dachverbandsberichterstatter"]
+				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
