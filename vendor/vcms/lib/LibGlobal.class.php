@@ -21,7 +21,7 @@ namespace vcms;
 use PDO;
 
 class LibGlobal{
-	var $version = '10.02';
+	var $version = '10.03';
 
 	var $semester;
 	var $module;
@@ -103,20 +103,17 @@ class LibGlobal{
 	function getSiteUrl(){
 		global $libGenericStorage;
 
-		$result = $libGenericStorage->loadValue('base_core', 'site_url');
-		return $result;
+		return $libGenericStorage->loadValue('base_core', 'site_url');
 	}
 
 	function getSiteUrlAuthority(){
 		$siteUrl = $this->getSiteUrl();
-		$result = preg_replace('/https?:\/\//', '', $siteUrl);
-		return $result;
+		return preg_replace('/https?:\/\//', '', $siteUrl);
 	}
 
 	function getSiteUrlHost(){
 		$siteUrl = $this->getSiteUrl();
-		$result = parse_url($siteUrl, PHP_URL_HOST);
-		return $result;
+		return parse_url($siteUrl, PHP_URL_HOST);
 	}
 
 	function isEventPage(){

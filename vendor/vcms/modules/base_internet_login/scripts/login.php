@@ -32,14 +32,13 @@ echo $libString->getNotificationBoxText();
 
 $urlPrefix = '';
 
-if($libGlobal->getSiteUrlAuthority() != ""){
+if($libGlobal->getSiteUrlAuthority() != ''){
 	$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
 
 	if($sslProxyUrl != ''){
 		$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libGlobal->getSiteUrlAuthority() . '/';
 	}
 }
-
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';

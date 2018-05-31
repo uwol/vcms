@@ -1,0 +1,14 @@
+{
+	"moduleName": "Datenschutz",
+	"pages": [
+		{
+			"pid": "privacy",
+			"file": "privacy.php",
+			"directory": "scripts",
+			"title": "Datenschutz"
+		}
+	],
+	"headerStrings": [
+		"<meta name='robots' content='noindex' />"
+	]
+}

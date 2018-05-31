@@ -52,3 +52,9 @@ h3 {
 	padding: 1em;
 	background-color: inherit;
 }
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a:hover {
+	background-color: inherit;
+}

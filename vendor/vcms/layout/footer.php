@@ -35,7 +35,7 @@ echo '      <div class="container">' . PHP_EOL;
 echo '        <div class="row">' . PHP_EOL;
 echo '          <div class="col-xs-12">' . PHP_EOL;
 echo '            <div class="social-buttons text-right">' . PHP_EOL;
-echo '              <small class="text-muted"><a href="index.php?pid=datenschutz">Datenschutz</a></small>' . PHP_EOL;
+echo '              <small class="text-muted"><a href="index.php?pid=privacy">Datenschutz</a></small>' . PHP_EOL;
 
 if($facebookUrl != ''){
 	echo '              <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
