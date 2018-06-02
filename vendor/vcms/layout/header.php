@@ -8,8 +8,8 @@ echo '    <meta name="viewport" content="width=device-width, initial-scale=1, ma
 echo '    <title>' .$libGlobal->getPageTitle(). '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">' . PHP_EOL;
-echo '    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/hover/hover-min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/screen.css" />' . PHP_EOL;
@@ -22,8 +22,8 @@ echo '    <link rel="stylesheet" href="vendor/vcms/styles/timeline/timeline.css"
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Franklin">' . PHP_EOL;
 echo '    <link rel="canonical" href="' .$libGlobal->getPageCanonicalUrl(). '"/>' . PHP_EOL;
-echo '    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>' . PHP_EOL;
-echo '    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>' . PHP_EOL;
+echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
+echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/vcms/styles/gallery/modal.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/vcms/styles/screen.js"></script>' . PHP_EOL;
