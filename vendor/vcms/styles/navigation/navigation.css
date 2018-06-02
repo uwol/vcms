@@ -60,6 +60,12 @@
 	font-weight: 700;
 	color: inherit;
 	text-transform: uppercase;
+	border-color: transparent;
+}
+
+.navbar-default .navbar-header .navbar-toggle:focus,
+.navbar-default .navbar-header .navbar-toggle:hover {
+	background-color: inherit;
 }
 
 .navbar-default .nav > li > a,
@@ -104,7 +110,7 @@
 }
 
 .navbar-default .navbar-intranet .nav {
-	font-size: 0.8em;
+	font-size: 0.9em;
 }
 
 .navbar-default .navbar-intranet .nav > li > a {

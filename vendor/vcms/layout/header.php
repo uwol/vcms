@@ -9,7 +9,8 @@ echo '    <title>' .$libGlobal->getPageTitle(). '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/fonts/font-awesome/css/font-awesome.min.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/fonts/source-sans-pro/css/source-sans-pro.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/hover/hover-min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/screen.css" />' . PHP_EOL;
@@ -20,7 +21,6 @@ echo '    <link rel="stylesheet" href="vendor/vcms/styles/navigation/navigation.
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/person/person.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Franklin">' . PHP_EOL;
 echo '    <link rel="canonical" href="' .$libGlobal->getPageCanonicalUrl(). '"/>' . PHP_EOL;
 echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
