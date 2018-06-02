@@ -118,8 +118,10 @@ if($formSent && !$formError){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
+	echo '<div class="mb-4">';
 	echo '<p>Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Internetwart weitergeleitet wird.</p>';
 	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
+	echo '</div>';
 
 	$registrierung_name = '';
 	if(isset($_POST['registrierung_name'])){

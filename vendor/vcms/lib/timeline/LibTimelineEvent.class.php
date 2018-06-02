@@ -125,21 +125,24 @@ class LibTimelineEvent {
 		// description
 		$retstr .= '<div class="media">';
 
-		if($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature){
-			$retstr .= '<div class="media-left hidden-xs">';
-			$retstr .= $libPerson->getSignature($this->referencedPersonId);
-			$retstr .= '</div>';
-		}
-
 		if($this->description != ''){
 			$retstr .= '<div class="media-body">';
 			$retstr .= trim($this->description);
 			$retstr .= '</div>';
 		}
 
-		if($this->authorId != '' && !$this->hideAuthorSignature){
+		if(($this->authorId != '' && !$this->hideAuthorSignature)
+				|| ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature)){
 			$retstr .= '<div class="media-right hidden-xs">';
-			$retstr .= $libPerson->getSignature($this->authorId);
+
+			if($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature){
+				$retstr .= $libPerson->getSignature($this->authorId);
+			}
+
+			if($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature){
+				$retstr .= $libPerson->getSignature($this->referencedPersonId);
+			}
+
 			$retstr .= '</div>';
 		}
 
