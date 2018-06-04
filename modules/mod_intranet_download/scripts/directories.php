@@ -106,12 +106,6 @@ echo '<h1>Dateien</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
-echo '<p>In diesem Bereich können Chargen und Warte Dateien zum Download anbieten. Der Ausdruck hinter einer Datei gibt an, welche Gruppen ein Leserecht für die Datei besitzen.</p>';
-echo '</div>';
-echo '</div>';
-
 echo '<div class="row">';
 
 listFolderContentRec($rootFolderObject, true);
@@ -243,11 +237,11 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				}
 
 				if($folderElement->isOpen){
+					echo '<i class="fa fa-lg fa-fw fa-folder-open-o" aria-hidden="true"></i> ';
 					echo '<a href="index.php?pid=intranet_directories&amp;aktion=close&amp;hash=' .$folderElement->getHash(). '">';
-					echo '<i class="fa fa-lg fa-folder-open-o" aria-hidden="true"></i> ';
 				} else{
+					echo '<i class="fa fa-lg fa-fw fa-folder-o" aria-hidden="true"></i> ';
 					echo '<a href="index.php?pid=intranet_directories&amp;aktion=open&amp;hash=' .$folderElement->getHash(). '">';
-					echo '<i class="fa fa-lg fa-folder-o" aria-hidden="true"></i> ';
 				}
 
 				echo $folderElement->name;
@@ -256,7 +250,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				$size = $folderElement->getSize();
 
 				if($size > 0){
-					echo ' - ' .getSizeString($folderElement->getSize());
+					echo ' ' .getSizeString($folderElement->getSize());
 				}
 
 				if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
@@ -283,18 +277,18 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			switch($extension){
 				case 'doc':
 				case 'docx':
-					echo '<i class="fa fa-lg fa-file-word-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-word-o" aria-hidden="true"></i>';
 					break;
 				case 'xls':
 				case 'xlsx':
-					echo '<i class="fa fa-lg fa-file-excel-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-excel-o" aria-hidden="true"></i>';
 					break;
 				case 'ppt':
 				case 'pptx':
-					echo '<i class="fa fa-lg fa-file-powerpoint-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-powerpoint-o" aria-hidden="true"></i>';
 					break;
 				case 'pdf':
-					echo '<i class="fa fa-lg fa-file-pdf-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-pdf-o" aria-hidden="true"></i>';
 					break;
 				case 'cdr':
 				case 'jpg':
@@ -302,34 +296,34 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				case 'gif':
 				case 'png':
 				case 'svg':
-					echo '<i class="fa fa-lg fa-file-image-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-image-o" aria-hidden="true"></i>';
 					break;
 				case 'txt':
-					echo '<i class="fa fa-lg fa-file-text-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-text-o" aria-hidden="true"></i>';
 					break;
 				case 'aac':
 				case 'mp3':
 				case 'wav':
-					echo '<i class="fa fa-lg fa-file-audio-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-audio-o" aria-hidden="true"></i>';
 					break;
 				case 'mp4':
 				case 'xvid':
-					echo '<i class="fa fa-lg fa-file-video-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-video-o" aria-hidden="true"></i>';
 					break;
 				case 'html':
 				case 'htm':
 				case 'css':
-					echo '<i class="fa fa-lg fa-file-code-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-code-o" aria-hidden="true"></i>';
 					break;
 				default:
-					echo '<i class="fa fa-lg fa-file-o" aria-hidden="true"></i>';
+					echo '<i class="fa fa-lg fa-fw fa-file-o" aria-hidden="true"></i>';
 			}
 
 			$fileName = $folderElement->getFilename();
 
 			echo ' <a href="api.php?iid=intranet_download&amp;hash=' .$folderElement->getHash(). '">' .$fileName. '</a>';
-			echo ' - ' .implode('', $folderElement->readGroups);
-			echo ' - ' .getSizeString($folderElement->getSize());
+			echo ' ' .implode('', $folderElement->readGroups);
+			echo ' ' .getSizeString($folderElement->getSize());
 
 			if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
 				echo ' <a href="index.php?pid=intranet_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';

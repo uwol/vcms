@@ -39,11 +39,16 @@ h3 {
 
 .panel {
 	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12);
-	margin-bottom: 2em;
+	margin-bottom: 1.5em;
 	overflow: hidden;
 }
 
-.panel .panel-title {
+.panel .panel-heading {
+	padding-bottom: 1.5em;
+	border-bottom: 0;
+}
+
+.panel .panel-heading .panel-title {
 	font-weight: normal;
 }
 

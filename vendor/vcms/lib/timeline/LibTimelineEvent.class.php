@@ -99,7 +99,7 @@ class LibTimelineEvent {
 		$retstr .= '<h3 class="panel-title">';
 
 		if($this->datetime != ''){
-			$retstr .= '<time class="text-muted" datetime="' .$libTime->formatUtcString($this->datetime). '">';
+			$retstr .= '<time datetime="' .$libTime->formatUtcString($this->datetime). '">';
 			$retstr .= $libTime->formatDateString($this->datetime);
 			$retstr .= '</time> ';
 		}
