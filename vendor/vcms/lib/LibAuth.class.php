@@ -153,8 +153,9 @@ class LibAuth{
 			$this->gruppe = $row['gruppe'];
 
 			//b. determine functions
-			$stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester');
+			$stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester OR semester=:semester_next');
 			$stmt->bindValue(':semester', $libTime->getSemesterName());
+			$stmt->bindValue(':semester_next', $libTime->getFollowingSemesterName());
 			$stmt->execute();
 
 			//for all semesters
@@ -178,9 +179,8 @@ class LibAuth{
 				$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
 
 				//select the internetwart in that semester
-				$stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester OR semester=:semester_next');
+				$stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester');
 				$stmt->bindValue(':semester', $semesterIterator);
-				$stmt->bindValue(':semester_next', $libTime->getFollowingSemesterName());
 				$stmt->execute();
 				$stmt->bindColumn('internetwart', $internetwart);
 				$stmt->fetch();
