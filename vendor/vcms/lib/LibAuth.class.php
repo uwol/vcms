@@ -178,8 +178,9 @@ class LibAuth{
 				$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
 
 				//select the internetwart in that semester
-				$stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester');
+				$stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester OR semester=:semester_next');
 				$stmt->bindValue(':semester', $semesterIterator);
+				$stmt->bindValue(':semester_next', $libTime->getFollowingSemesterName());
 				$stmt->execute();
 				$stmt->bindColumn('internetwart', $internetwart);
 				$stmt->fetch();
