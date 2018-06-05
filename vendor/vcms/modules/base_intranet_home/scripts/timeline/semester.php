@@ -45,20 +45,17 @@ $description = '';
 /**
 * semester cover
 */
-$description .= '<div class="row">';
+$description .= '<div class="row mb-4">';
 $description .= '<div class="col-sm-offset-2 col-md-offset-3 col-sm-8 col-md-6">';
 $description .= $libTime->getSemesterCoverString($row['semester']);
 $description .= '</div>';
 $description .= '</div>';
 
-$description .= '<hr />';
-
 /**
 * vorstand
 */
-$description .= '<div class="row">';
+$description .= '<div class="row mb-4">';
 $description .= '<div class="col-sm-1"></div>';
-
 $description .= '<div class="col-sm-2">';
 
 if($row['senior']){
@@ -127,7 +124,14 @@ $description .= '</div>';
 $description .= '<div class="col-sm-1"></div>';
 $description .= '</div>';
 
+/*
+* Ämter
+*/
+
 $description .= '<div>';
+
+$description .= '<div class="row">';
+$description .= '<div class="col-md-6">';
 
 $description .= '<p>';
 $description .= getAmt('Jubelsenior', $row['jubelsenior']);
@@ -211,6 +215,9 @@ $description .= getAmt('Beisitzender 1 Hausverein', $row['hv_beisitzer1']);
 $description .= getAmt('Beisitzender 2 Hausverein', $row['hv_beisitzer2']);
 $description .= '</p>';
 
+$description .= '</div>';
+$description .= '<div class="col-md-6">';
+
 $description .= '<p>';
 $description .= getAmt('Archivar', $row['archivar']);
 $description .= getAmt('Redaktionswart', $row['redaktionswart']);
@@ -236,7 +243,8 @@ $description .= getAmt('Dachverbandsberichterstatter', $row['dachverbandsbericht
 $description .= '</p>';
 
 $description .= '</div>';
-
+$description .= '</div>';
+$description .= '</div>';
 
 
 $timelineEvent = new LibSemesterTimelineEvent();
