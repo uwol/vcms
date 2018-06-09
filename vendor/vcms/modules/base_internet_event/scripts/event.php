@@ -299,7 +299,7 @@ function printGallery($id, $pictures){
 
 	foreach($pictures as $key => $value){
 		echo '<div class="col-sm-6 col-lg-4">';
-		echo '<div class="thumbnail reveal">';
+		echo '<div class="thumbnail reveal mb-2">';
 		echo '<div class="img-frame">';
 		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
 		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" alt="" />';
