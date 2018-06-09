@@ -85,15 +85,13 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	* thumbnail
 	*/
 	if($libGallery->hasPictures($row['id'], 1)){
-		$description .= '<div class="thumbnail">';
+		$description .= '<div class="thumbnail mb-2">';
 		$description .= '<div class="img-frame">';
 		$description .= '<a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 		$description .= '<img src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 1). '" alt="" />';
 		$description .= '</a>';
 		$description .= '</div>';
 		$description .= '</div>';
-
-		$description .= '<hr />';
 	}
 
 	/*

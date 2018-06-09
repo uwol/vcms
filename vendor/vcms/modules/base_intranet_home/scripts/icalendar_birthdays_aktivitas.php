@@ -33,7 +33,7 @@ if(isset($_GET['user']) &&
 
 	$calendar = new vcms\LibICalendar();
 
-	$stmt = $libDb->prepare("SELECT id,datum_geburtstag FROM base_person WHERE gruppe = 'F' OR gruppe ='B' AND datum_geburtstag != '' AND datum_geburtstag != '0000-00-00' AND datum_geburtstag IS NOT NULL");
+	$stmt = $libDb->prepare("SELECT id, datum_geburtstag FROM base_person WHERE gruppe = 'F' OR gruppe ='B' AND datum_geburtstag != '' AND datum_geburtstag != '0000-00-00' AND datum_geburtstag IS NOT NULL");
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
