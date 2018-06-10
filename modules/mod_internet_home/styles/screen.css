@@ -33,7 +33,6 @@ header .header-content .header-content-inner {
 }
 
 header .header-content .header-content-inner h1 {
-	font-weight: 700;
 	text-transform: uppercase;
 	margin-top: 0;
 	margin-bottom: 0;
@@ -112,6 +111,7 @@ section.announcement-box:nth-of-type(even) {
 }
 
 .event-box .event-box-caption .event-box-caption-content {
+	padding: 2em;
 	width: 100%;
 	text-align: center;
 	position: absolute;
@@ -121,7 +121,6 @@ section.announcement-box:nth-of-type(even) {
 
 .event-box .event-box-caption .event-box-caption-content .event-name {
 	text-transform: uppercase;
-	font-weight: 600;
 	font-size: 1.5em;
 }
 
