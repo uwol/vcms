@@ -23,6 +23,10 @@ h3 {
 	margin-bottom: 1em;
 }
 
+label {
+	font-weight: inherit;
+}
+
 .thumbnail {
 	padding: 0;
 	border: 0;
