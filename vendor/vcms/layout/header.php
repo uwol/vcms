@@ -10,7 +10,7 @@ echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '"
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/fonts/font-awesome/css/font-awesome.min.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="vendor/fonts/source-sans-pro/css/source-sans-pro.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/fonts/lato/css/lato.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/hover/hover-min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/screen.css" />' . PHP_EOL;
