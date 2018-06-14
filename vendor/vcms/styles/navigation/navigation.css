@@ -35,7 +35,7 @@
 
 .navbar-default .navbar-header .navbar-brand {
 	color: inherit;
-	font-weight: 600;
+	font-weight: 500;
 	text-transform: uppercase;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .navbar-default .navbar-header .navbar-toggle {
-	font-weight: 600;
+	font-weight: 500;
 	color: inherit;
 	text-transform: uppercase;
 	border-color: transparent;
@@ -70,7 +70,7 @@
 
 .navbar-default .nav > li > a,
 .navbar-default .nav > li > a:focus {
-	font-weight: 600;
+	font-weight: 500;
 	color: inherit;
 }
 

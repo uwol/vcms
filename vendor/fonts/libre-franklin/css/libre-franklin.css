@@ -11,6 +11,19 @@
        url('../fonts/libre-franklin-v2-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../fonts/libre-franklin-v2-latin-regular.svg#LibreFranklin') format('svg'); /* Legacy iOS */
 }
+/* libre-franklin-500 - latin */
+@font-face {
+  font-family: 'Libre Franklin';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/libre-franklin-v2-latin-500.eot'); /* IE9 Compat Modes */
+  src: local('Libre Franklin Medium'), local('LibreFranklin-Medium'),
+       url('../fonts/libre-franklin-v2-latin-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/libre-franklin-v2-latin-500.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/libre-franklin-v2-latin-500.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/libre-franklin-v2-latin-500.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/libre-franklin-v2-latin-500.svg#LibreFranklin') format('svg'); /* Legacy iOS */
+}
 /* libre-franklin-600 - latin */
 @font-face {
   font-family: 'Libre Franklin';
