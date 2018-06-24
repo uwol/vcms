@@ -51,44 +51,49 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('show_quaestor')){
 	$libGenericStorage->saveValueInCurrentModule('show_quaestor', 0);
 }
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_form')){
+	$libGenericStorage->saveValueInCurrentModule('show_form', 1);
+}
+
 if(!$libGenericStorage->attributeExistsInCurrentModule('show_haftungshinweis')){
-	$libGenericStorage->saveValueInCurrentModule('show_haftungshinweis', 1);
+	$libGenericStorage->saveValueInCurrentModule('show_haftungshinweis', 0);
 }
 
 
 $mailsent = false;
 
+if($libGenericStorage->loadValueInCurrentModule('show_form')){
+	if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddress']) && isset($_POST['nachricht'])){
+		$error_emailaddress = false;
+		$error_message = false;
 
-if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddress']) && isset($_POST['nachricht'])){
-	$error_emailaddress = false;
-	$error_message = false;
+		if(!$libString->isValidEmail($_POST['emailaddress'])){
+			$error_emailaddress = true;
+			$libGlobal->errorTexts[] = 'Die angegebene E-Mail-Adresse ist nicht korrekt.';
+		}
 
-	if(!$libString->isValidEmail($_POST['emailaddress'])){
-		$error_emailaddress = true;
-		$libGlobal->errorTexts[] = 'Die angegebene E-Mail-Adresse ist nicht korrekt.';
-	}
+		if(trim($_POST['nachricht']) == ''){
+			$error_message = true;
+			$libGlobal->errorTexts[] = 'Es wurde keine Nachricht eingegeben.';
+		}
 
-	if(trim($_POST['nachricht']) == ''){
-		$error_message = true;
-		$libGlobal->errorTexts[] = 'Es wurde keine Nachricht eingegeben.';
-	}
+		if(!$error_emailaddress && !$error_message) {
+			$nachricht = $_POST['name']. ' mit der Telefonnummer ' .$_POST['telefon']. ' und der E-Mail-Adresse ' .$_POST['emailaddress']. ' hat über das Kontaktformular folgende Nachricht geschrieben:' . PHP_EOL;
+			$nachricht .= PHP_EOL;
+			$nachricht .= $_POST['nachricht'];
 
-	if(!$error_emailaddress && !$error_message) {
-		$nachricht = $_POST['name']. ' mit der Telefonnummer ' .$_POST['telefon']. ' und der E-Mail-Adresse ' .$_POST['emailaddress']. ' hat über das Kontaktformular folgende Nachricht geschrieben:' . PHP_EOL;
-		$nachricht .= PHP_EOL;
-		$nachricht .= $_POST['nachricht'];
+			$mail = new PHPMailer();
+			$libMail->configurePHPMailer($mail);
 
-		$mail = new PHPMailer();
-		$libMail->configurePHPMailer($mail);
+			$mail->AddAddress($libConfig->emailInfo);
+			$mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libGlobal->getSiteUrl();
+			$mail->Body = $libString->protectXSS($nachricht);
+			$mail->AddReplyTo($_POST['emailaddress']);
 
-		$mail->AddAddress($libConfig->emailInfo);
-		$mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libGlobal->getSiteUrl();
-		$mail->Body = $libString->protectXSS($nachricht);
-		$mail->AddReplyTo($_POST['emailaddress']);
-
-		if($mail->Send()){
-			$mailsent = true;
-			$libGlobal->notificationTexts[] = 'Vielen Dank, Ihre Nachricht wurde weitergeleitet.';
+			if($mail->Send()){
+				$mailsent = true;
+				$libGlobal->notificationTexts[] = 'Vielen Dank, Ihre Nachricht wurde weitergeleitet.';
+			}
 		}
 	}
 }
@@ -172,62 +177,61 @@ echo '</aside>';
 
 echo '</div>';
 
+if($libGenericStorage->loadValueInCurrentModule('show_form')){
+	echo '<h2>Kontakt aufnehmen</h2>';
 
-echo '<h2>Kontakt aufnehmen</h2>';
+	echo '<div class="row">';
+	echo '<div class="col-sm-12">';
+	echo '<section class="contact-form-box">';
 
-echo '<div class="row">';
-echo '<div class="col-sm-12">';
-echo '<section class="contact-form-box">';
+	if($mailsent){
+		echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
+	} else {
+		$name = '';
 
-if($mailsent){
-	echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
-} else {
-	$name = '';
+		if(isset($_POST['name']) && $_POST['name'] != ''){
+			$name = $_POST['name'];
+		}
 
-	if(isset($_POST['name']) && $_POST['name'] != ''){
-		$name = $_POST['name'];
+		$email = '';
+
+		if(isset($_POST['emailaddress']) && $_POST['emailaddress'] != ''){
+			$email = $_POST['emailaddress'];
+		}
+
+		$telefon = '';
+
+		if(isset($_POST['telefon']) && $_POST['telefon'] != ''){
+			$telefon = $_POST['telefon'];
+		}
+
+		$nachricht = '';
+
+		if(isset($_POST['nachricht']) && $_POST['nachricht'] != ''){
+			$nachricht = $_POST['nachricht'];
+		}
+
+		echo '<div class="panel panel-default">';
+		echo '<div class="panel-body">';
+		echo '<form action="index.php?pid=kontakt" method="post" class="form-horizontal">';
+		echo '<fieldset>';
+
+		$libForm->printTextInput('name', 'Name', $libString->protectXSS($name));
+		$libForm->printTextInput('emailaddress', 'E-Mail-Adresse', $libString->protectXSS($email), 'email');
+		$libForm->printTextInput('telefon', 'Telefonnummer', $libString->protectXSS($telefon), 'tel');
+		$libForm->printTextarea('nachricht', 'Nachricht', $libString->protectXSS($nachricht));
+		$libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i> Abschicken');
+
+		echo '</fieldset>';
+		echo '</form>';
+		echo '</div>';
+		echo '</div>';
 	}
 
-	$email = '';
-
-	if(isset($_POST['emailaddress']) && $_POST['emailaddress'] != ''){
-		$email = $_POST['emailaddress'];
-	}
-
-	$telefon = '';
-
-	if(isset($_POST['telefon']) && $_POST['telefon'] != ''){
-		$telefon = $_POST['telefon'];
-	}
-
-	$nachricht = '';
-
-	if(isset($_POST['nachricht']) && $_POST['nachricht'] != ''){
-		$nachricht = $_POST['nachricht'];
-	}
-
-
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form action="index.php?pid=kontakt" method="post" class="form-horizontal">';
-	echo '<fieldset>';
-
-	$libForm->printTextInput('name', 'Name', $libString->protectXSS($name));
-	$libForm->printTextInput('emailaddress', 'E-Mail-Adresse', $libString->protectXSS($email), 'email');
-	$libForm->printTextInput('telefon', 'Telefonnummer', $libString->protectXSS($telefon), 'tel');
-	$libForm->printTextarea('nachricht', 'Nachricht', $libString->protectXSS($nachricht));
-	$libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i> Abschicken');
-
-	echo '</fieldset>';
-	echo '</form>';
+	echo '</section>';
 	echo '</div>';
 	echo '</div>';
 }
-
-echo '</section>';
-echo '</div>';
-echo '</div>';
-
 
 if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis')){
 	echo '<h2>Haftungshinweis</h2>';
