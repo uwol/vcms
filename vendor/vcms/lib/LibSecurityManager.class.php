@@ -21,7 +21,24 @@ namespace vcms;
 use PDO;
 
 class LibSecurityManager{
-	var $possibleAemter = array('senior', 'consenior', 'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior', 'ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor', 'ahv_beisitzer1', 'ahv_beisitzer2', 'hv_vorsitzender', 'hv_kassierer', 'hv_beisitzer1', 'hv_beisitzer2', 'archivar', 'redaktionswart', 'hauswart', 'bierwart', 'kuehlschrankwart', 'thekenwart', 'internetwart', 'technikwart', 'fotowart', 'wirtschaftskassenwart', 'wichswart', 'bootshauswart', 'huettenwart', 'fechtwart', 'stammtischwart', 'musikwart', 'ausflugswart', 'sportwart', 'couleurartikelwart', 'ferienordner', 'dachverbandsberichterstatter', 'vop', 'vvop', 'vopxx', 'vopxxx', 'vopxxxx'); //ACHTUNG: der Internetwart darf nicht umbenannt werden, da er in LibAuth explizit referenziert wird.
+	var $possibleAemter = array(
+			'senior', 'consenior', 'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior',
+			'ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor', 'ahv_beisitzer1', 'ahv_beisitzer2',
+			'hv_vorsitzender', 'hv_kassierer', 'hv_beisitzer1', 'hv_beisitzer2',
+			'archivar', 'ausflugswart',
+			'bierwart', 'bootshauswart',
+			'couleurartikelwart',
+			'dachverbandsberichterstatter', 'datenpflegewart',
+			'fechtwart', 'ferienordner', 'fotowart',
+			'hauswart', 'huettenwart',
+			'internetwart',
+			'kuehlschrankwart',
+			'musikwart',
+			'redaktionswart',
+			'sportwart', 'stammtischwart',
+			'technikwart', 'thekenwart',
+			'wirtschaftskassenwart', 'wichswart',
+			'vop', 'vvop', 'vopxx', 'vopxxx', 'vopxxxx');
 
 	function getPossibleAemter(){
 		return $this->possibleAemter;

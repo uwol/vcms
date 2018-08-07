@@ -1,6 +1,6 @@
 {
 	"moduleName": "Export",
-	"version": 2.30,
+	"version": 2.40,
 	"pages": [
 		{
 			"pid": "intranet_admin_export",
@@ -8,7 +8,7 @@
 			"directory": "scripts",
 			"title": "Export",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
+				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		}
 	],
@@ -18,7 +18,7 @@
 			"file": "data_addresses.php",
 			"directory": "scripts",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
+				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -26,7 +26,7 @@
 			"file": "data_birthdays.php",
 			"directory": "scripts",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
+				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -34,7 +34,7 @@
 			"file": "data_significant_birthdays.php",
 			"directory": "scripts",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
+				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		},
 		{
@@ -42,7 +42,7 @@
 			"file": "data_anniversaries.php",
 			"directory": "scripts",
 			"accessRestriction": {
-				"aemter": ["internetwart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
+				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor"]
 			}
 		}
 	],

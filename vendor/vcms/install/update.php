@@ -68,12 +68,12 @@ $columnsBaseVeranstaltung = getColumns('base_veranstaltung');
 
 if(!in_array('datum_ende', $columnsBaseVeranstaltung)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
-	$libDb->query('ALTER TABLE base_veranstaltung ADD datum_ende DATETIME NULL AFTER datum');
+	$libDb->query('ALTER TABLE base_veranstaltung ADD datum_ende DATETIME AFTER datum');
 }
 
 if(!in_array('fb_eventid', $columnsBaseVeranstaltung)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
-	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255) NULL');
+	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255)');
 }
 
 if(!in_array('intern', $columnsBaseVeranstaltung)){
@@ -141,29 +141,33 @@ $columnsBaseSemester = getColumns('base_semester');
 
 if(!in_array('vop', $columnsBaseSemester)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vop int(11) default NULL');
+	$libDb->query('ALTER TABLE base_semester ADD vop int(11)');
 }
 
 if(!in_array('vvop', $columnsBaseSemester)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vvop int(11) default NULL');
+	$libDb->query('ALTER TABLE base_semester ADD vvop int(11)');
 }
 
 if(!in_array('vopxx', $columnsBaseSemester)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vopxx int(11) default NULL');
+	$libDb->query('ALTER TABLE base_semester ADD vopxx int(11)');
 }
 
 if(!in_array('vopxxx', $columnsBaseSemester)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vopxxx int(11) default NULL');
+	$libDb->query('ALTER TABLE base_semester ADD vopxxx int(11)');
 }
 
 if(!in_array('vopxxxx', $columnsBaseSemester)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vopxxxx int(11) default NULL');
+	$libDb->query('ALTER TABLE base_semester ADD vopxxxx int(11)');
 }
 
+if(!in_array('datenpflegewart', $columnsBaseSemester)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
+	$libDb->query('ALTER TABLE base_semester ADD datenpflegewart int(11)');
+}
 
 /*
 * Update base_semester

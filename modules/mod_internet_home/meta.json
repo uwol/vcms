@@ -1,6 +1,6 @@
 {
 	"moduleName": "Home",
-	"version": 3.78,
+	"version": 3.80,
 	"installScript": "install/install.php",
 	"pages": [
 		{
@@ -16,7 +16,7 @@
 			"directory": "scripts/admin",
 			"title": "Ankündigungen",
 			"accessRestriction": {
-				"aemter": ["senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior", "internetwart"]
+				"aemter": ["internetwart", "datenpflegewart", "senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior"]
 			}
 		},
 		{
@@ -25,7 +25,7 @@
 			"directory": "scripts/admin",
 			"title": "Ankündigung",
 			"accessRestriction": {
-				"aemter": ["senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior", "internetwart"]
+				"aemter": ["internetwart", "datenpflegewart", "senior", "consenior", "scriptor", "fuchsmajor", "fuchsmajor2", "quaestor", "jubelsenior"]
 			}
 		}
 	],
