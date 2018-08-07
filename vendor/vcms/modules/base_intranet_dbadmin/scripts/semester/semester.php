@@ -33,7 +33,7 @@ if($libAuth->isLoggedin()){
 	$vorstand = array('senior', 'sen_dech', 'consenior', 'con_dech', 'fuchsmajor', 'fm_dech', 'fuchsmajor2', 'fm2_dech', 'scriptor', 'scr_dech', 'quaestor', 'quaes_dech', 'jubelsenior', 'jubelsen_dech');
 	$ahv = array('ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor', 'ahv_beisitzer1', 'ahv_beisitzer2');
 	$hv = array('hv_vorsitzender', 'hv_kassierer', 'hv_beisitzer1', 'hv_beisitzer2');
-	$warte = array('internetwart', 'archivar', 'redaktionswart', 'hauswart', 'bierwart', 'kuehlschrankwart', 'thekenwart', 'technikwart', 'fotowart', 'wirtschaftskassenwart', 'wichswart', 'bootshauswart', 'huettenwart', 'fechtwart', 'stammtischwart', 'musikwart', 'ausflugswart', 'sportwart', 'couleurartikelwart', 'ferienordner', 'dachverbandsberichterstatter');
+	$warte = array('internetwart', 'datenpflegewart', 'archivar', 'redaktionswart', 'hauswart', 'bierwart', 'kuehlschrankwart', 'thekenwart', 'technikwart', 'fotowart', 'wirtschaftskassenwart', 'wichswart', 'bootshauswart', 'huettenwart', 'fechtwart', 'stammtischwart', 'musikwart', 'ausflugswart', 'sportwart', 'couleurartikelwart', 'ferienordner', 'dachverbandsberichterstatter');
 	$vorort = array('vop', 'vvop', 'vopxx', 'vopxxx', 'vopxxxx');
 	$felder = array_merge(array('semester'), $vorstand, $ahv, $hv, $warte, $vorort);
 
@@ -220,27 +220,28 @@ if($libAuth->isLoggedin()){
 
 	echo '<h2>Warte</h2>';
 	$libForm->printMitgliederDropDownBox('archivar', 'Archivar', $semesterarray['archivar']);
-	$libForm->printMitgliederDropDownBox('redaktionswart', 'Redaktionswart', $semesterarray['redaktionswart']);
-	$libForm->printMitgliederDropDownBox('hauswart', 'Hauswart', $semesterarray['hauswart']);
+	$libForm->printMitgliederDropDownBox('ausflugswart', 'Ausflugswart', $semesterarray['ausflugswart']);
 	$libForm->printMitgliederDropDownBox('bierwart', 'Bierwart', $semesterarray['bierwart']);
-	$libForm->printMitgliederDropDownBox('kuehlschrankwart', 'Kühlschrankwart', $semesterarray['kuehlschrankwart']);
-	$libForm->printMitgliederDropDownBox('thekenwart', 'Thekenwart', $semesterarray['thekenwart']);
-	$libForm->printMitgliederDropDownBox('internetwart', 'Internetwart', $semesterarray['internetwart']);
-
-	$libForm->printMitgliederDropDownBox('technikwart', 'Technikwart', $semesterarray['technikwart']);
+	$libForm->printMitgliederDropDownBox('bootshauswart', 'Bootshauswart', $semesterarray['bootshauswart']);
+	$libForm->printMitgliederDropDownBox('couleurartikelwart', 'Couleurartikelwart', $semesterarray['couleurartikelwart']);
+	$libForm->printMitgliederDropDownBox('dachverbandsberichterstatter', 'Dachverbandsberichterstatter', $semesterarray['dachverbandsberichterstatter']);
+	$libForm->printMitgliederDropDownBox('datenpflegewart', 'Datenpflegewart', $semesterarray['datenpflegewart']);
+	$libForm->printMitgliederDropDownBox('fechtwart', 'Fechtwart', $semesterarray['fechtwart']);
+	$libForm->printMitgliederDropDownBox('ferienordner', 'Ferienordner', $semesterarray['ferienordner']);
 	$libForm->printMitgliederDropDownBox('fotowart', 'Fotowart', $semesterarray['fotowart']);
+	$libForm->printMitgliederDropDownBox('hauswart', 'Hauswart', $semesterarray['hauswart']);
+	$libForm->printMitgliederDropDownBox('huettenwart', 'Hüttenwart', $semesterarray['huettenwart']);
+	$libForm->printMitgliederDropDownBox('internetwart', 'Internetwart', $semesterarray['internetwart']);
+	$libForm->printMitgliederDropDownBox('kuehlschrankwart', 'Kühlschrankwart', $semesterarray['kuehlschrankwart']);
+	$libForm->printMitgliederDropDownBox('musikwart', 'Musikwart', $semesterarray['musikwart']);
+	$libForm->printMitgliederDropDownBox('redaktionswart', 'Redaktionswart', $semesterarray['redaktionswart']);
+	$libForm->printMitgliederDropDownBox('sportwart', 'Sportwart', $semesterarray['sportwart']);
+	$libForm->printMitgliederDropDownBox('stammtischwart', 'Stammtischwart', $semesterarray['stammtischwart']);
+	$libForm->printMitgliederDropDownBox('technikwart', 'Technikwart', $semesterarray['technikwart']);
+	$libForm->printMitgliederDropDownBox('thekenwart', 'Thekenwart', $semesterarray['thekenwart']);
 	$libForm->printMitgliederDropDownBox('wirtschaftskassenwart', 'Wirtschaftskassenwart', $semesterarray['wirtschaftskassenwart']);
 	$libForm->printMitgliederDropDownBox('wichswart', 'Wichswart', $semesterarray['wichswart']);
-	$libForm->printMitgliederDropDownBox('bootshauswart', 'Bootshauswart', $semesterarray['bootshauswart']);
-	$libForm->printMitgliederDropDownBox('huettenwart', 'Hüttenwart', $semesterarray['huettenwart']);
-	$libForm->printMitgliederDropDownBox('fechtwart', 'Fechtwart', $semesterarray['fechtwart']);
-	$libForm->printMitgliederDropDownBox('stammtischwart', 'Stammtischwart', $semesterarray['stammtischwart']);
-	$libForm->printMitgliederDropDownBox('musikwart', 'Musikwart', $semesterarray['musikwart']);
-	$libForm->printMitgliederDropDownBox('ausflugswart', 'Ausflugswart', $semesterarray['ausflugswart']);
-	$libForm->printMitgliederDropDownBox('sportwart', 'Sportwart', $semesterarray['sportwart']);
-	$libForm->printMitgliederDropDownBox('couleurartikelwart', 'Couleurartikelwart', $semesterarray['couleurartikelwart']);
-	$libForm->printMitgliederDropDownBox('ferienordner', 'Ferienordner', $semesterarray['ferienordner']);
-	$libForm->printMitgliederDropDownBox('dachverbandsberichterstatter', 'Dachverbandsberichterstatter', $semesterarray['dachverbandsberichterstatter']);
+
 	$libForm->printMitgliederDropDownBox('vop', 'VOP', $semesterarray['vop']);
 	$libForm->printMitgliederDropDownBox('vvop', 'VVOP', $semesterarray['vvop']);
 	$libForm->printMitgliederDropDownBox('vopxx', 'VOPxx', $semesterarray['vopxx']);
