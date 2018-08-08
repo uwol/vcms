@@ -184,6 +184,13 @@ echo '</script>';
 echo '<h1>';
 echo $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 echo ' ';
+
+if($row['geburtsname']){
+	echo ', geb. ';
+	echo $row['geburtsname'];
+	echo ' ';
+}
+
 echo $libPerson->getChargenString($id);
 echo '</h1>';
 
