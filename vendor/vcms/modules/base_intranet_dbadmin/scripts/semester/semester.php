@@ -33,7 +33,20 @@ if($libAuth->isLoggedin()){
 	$vorstand = array('senior', 'sen_dech', 'consenior', 'con_dech', 'fuchsmajor', 'fm_dech', 'fuchsmajor2', 'fm2_dech', 'scriptor', 'scr_dech', 'quaestor', 'quaes_dech', 'jubelsenior', 'jubelsen_dech');
 	$ahv = array('ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor', 'ahv_beisitzer1', 'ahv_beisitzer2');
 	$hv = array('hv_vorsitzender', 'hv_kassierer', 'hv_beisitzer1', 'hv_beisitzer2');
-	$warte = array('internetwart', 'datenpflegewart', 'archivar', 'redaktionswart', 'hauswart', 'bierwart', 'kuehlschrankwart', 'thekenwart', 'technikwart', 'fotowart', 'wirtschaftskassenwart', 'wichswart', 'bootshauswart', 'huettenwart', 'fechtwart', 'stammtischwart', 'musikwart', 'ausflugswart', 'sportwart', 'couleurartikelwart', 'ferienordner', 'dachverbandsberichterstatter');
+	$warte = array(
+		'archivar', 'ausflugswart',
+		'bierwart', 'bootshauswart',
+		'couleurartikelwart',
+		'dachverbandsberichterstatter', 'datenpflegewart',
+		'fechtwart', 'ferienordner', 'fotowart',
+		'hauswart', 'huettenwart',
+		'internetwart',
+		'kuehlschrankwart',
+		'musikwart',
+		'redaktionswart',
+		'sportwart', 'stammtischwart',
+		'technikwart', 'thekenwart',
+		'wichswart', 'wirtschaftskassenwart');
 	$vorort = array('vop', 'vvop', 'vopxx', 'vopxxx', 'vopxxxx');
 	$felder = array_merge(array('semester'), $vorstand, $ahv, $hv, $warte, $vorort);
 

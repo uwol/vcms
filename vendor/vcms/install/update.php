@@ -73,7 +73,7 @@ if(!in_array('datum_ende', $columnsBaseVeranstaltung)){
 
 if(!in_array('fb_eventid', $columnsBaseVeranstaltung)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
-	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid VARCHAR(255)');
+	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid varchar(255)');
 }
 
 if(!in_array('intern', $columnsBaseVeranstaltung)){
@@ -91,6 +91,11 @@ $indexesBasePerson = getIndexes('base_person');
 if(in_array('username', $indexesBasePerson)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Index auf Tabelle base_person';
 	$libDb->query('DROP INDEX username ON base_person');
+}
+
+if(!in_array('geburtsname', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD geburtsname varchar(255)');
 }
 
 if(in_array('austritt_grund', $columnsBasePerson)){

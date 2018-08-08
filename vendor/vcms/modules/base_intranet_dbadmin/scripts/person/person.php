@@ -35,7 +35,16 @@ if($libAuth->isLoggedin()){
 	$mgarray = array();
 	$mgarray['id'] = '';
 	//Felder in der Personentabelle angeben -> Metadaten
-	$felder = array('anrede', 'titel', 'rang', 'vorname', 'praefix', 'name', 'suffix', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'zusatz2', 'strasse2', 'ort2', 'plz2', 'land2', 'region1', 'region2', 'telefon1', 'telefon2', 'mobiltelefon', 'email', 'skype', 'webseite', 'datum_geburtstag', 'beruf', 'heirat_datum', 'heirat_partner', 'tod_datum', 'tod_ort', 'status', 'semester_reception', 'semester_promotion', 'semester_philistrierung', 'semester_aufnahme', 'semester_fusion', 'austritt_datum', 'spitzname', 'leibmitglied', 'anschreiben_zusenden', 'spendenquittung_zusenden', 'bemerkung', 'vita');
+	$felder = array(
+		'anrede', 'titel', 'rang', 'vorname', 'praefix', 'name', 'suffix', 'geburtsname',
+		'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1',
+		'zusatz2', 'strasse2', 'ort2', 'plz2', 'land2',
+		'region1', 'region2', 'telefon1', 'telefon2', 'mobiltelefon', 'email', 'skype', 'webseite',
+		'datum_geburtstag', 'beruf', 'heirat_datum', 'heirat_partner', 'tod_datum', 'tod_ort', 'status',
+		'semester_reception', 'semester_promotion', 'semester_philistrierung', 'semester_aufnahme', 'semester_fusion',
+		'austritt_datum', 'spitzname', 'leibmitglied',
+		'anschreiben_zusenden', 'spendenquittung_zusenden',
+		'bemerkung', 'vita');
 
 	//Ist der Bearbeiter ein Internetwart?
 	if(in_array('internetwart', $libAuth->getAemter())){
@@ -211,6 +220,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('praefix', 'Präfix', $mgarray['praefix']);
 	$libForm->printTextInput('name', 'Name', $mgarray['name']);
 	$libForm->printTextInput('suffix', 'Suffix', $mgarray['suffix']);
+	$libForm->printTextInput('geburtsname', 'Geburtsname', $mgarray['geburtsname']);
 
 	$libForm->printTextInput('zusatz1', 'Zusatz 1', $mgarray['zusatz1']);
 	$libForm->printTextInput('strasse1', 'Strasse 1', $mgarray['strasse1']);
