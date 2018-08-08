@@ -155,15 +155,30 @@ if(isset($_REQUEST['aktion'])){
 				<p>Mit dem Aufruf der <a href="installer.php?aktion=installAllModules">Gesamtinstallation</a> wird die Installation für das Basissystem und alle Module gestartet. Dies ist einmalig bei der Erstinstallation des VCMS notwendig.</p>
 
 				<h2>Schritt 2: Einfügen eines Internetwarts</h2>
-				<p>Nach der Grundinstallation muss ein Internetwart angelegt werden, um sich initial im Intranet anmelden zu können.</p>
+				<p>Nach der Gesamtinstallation muss ein Internetwart angelegt werden, um sich initial im Intranet anmelden zu können.</p>
+
 				<form action="installer.php" method="post">
-					<input type="hidden" name="aktion" value="createInternetWart" />
-					<input type="text" name="vorname" size="20" /> Vorname<br />
-					<input type="text" name="name" size="20" /> Nachname<br />
-					<input type="text" name="email" size="20" /> E-Mail-Adresse<br />
-					<input type="password" name="pwd1" size="20" /> Passwort<br />
-					<input type="password" name="pwd2" size="20" /> Wiederholung des Passworts<br />
-					<input type="submit" value="Internetwart anlegen" />
+					<div>
+						<input type="hidden" name="aktion" value="createInternetWart"/>
+					</div>
+					<div class="form-group">
+						<input type="text" name="vorname" size="20" class="form-control" placeholder="Vorname"/>
+					</div>
+					<div class="form-group">
+						<input type="text" name="name" size="20" class="form-control" placeholder="Nachname"/>
+					</div>
+					<div class="form-group">
+						<input type="text" name="email" size="20" class="form-control" placeholder="E-Mail-Adresse"/>
+					</div>
+					<div class="form-group">
+						<input type="password" name="pwd1" size="20" class="form-control" placeholder="Passwort"/>
+					</div>
+					<div class="form-group">
+						<input type="password" name="pwd2" size="20" class="form-control" placeholder="Passwort-Wiederholung"/>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Internetwart anlegen" class="btn btn-default"/>
+					</div>
 				</form>
 
 				<p><?php echo $libAuth->getPasswordRequirements(); ?></p>
