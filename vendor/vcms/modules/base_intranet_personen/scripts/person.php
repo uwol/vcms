@@ -185,7 +185,7 @@ echo '<h1>';
 echo $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
 echo ' ';
 
-if($row['geburtsname']){
+if($row['geburtsname'] != ''){
 	echo ', geb. ';
 	echo $row['geburtsname'];
 	echo ' ';
@@ -522,6 +522,12 @@ function printPersonData($row){
 
 	if($row['suffix'] != ''){
 		echo ' ' .$row['suffix'];
+	}
+
+	if($row['geburtsname'] != ''){
+		echo ', geb. ';
+		echo $row['geburtsname'];
+		echo ' ';
 	}
 
 	echo '</div>';
