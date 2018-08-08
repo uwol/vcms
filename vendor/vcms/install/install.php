@@ -276,11 +276,11 @@ $libDb->query($sql);
 
 echo 'Erstelle Tabelle sys_genericstorage<br />';
 $sql = "CREATE TABLE sys_genericstorage (
-  moduleid varchar(255),
-  array_name varchar(255),
+  moduleid varchar(100),
+  array_name varchar(30),
   position int(11) NOT NULL default '0',
   value text,
-  PRIMARY KEY (moduleid,array_name,position)
+  PRIMARY KEY (moduleid, array_name, position)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);
 
