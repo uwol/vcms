@@ -25,7 +25,7 @@ $sql = "CREATE TABLE mod_chargierkalender_veranstaltung (
   id int(11) NOT NULL auto_increment,
   datum datetime NOT NULL default '0000-00-00 00:00:00',
   beschreibung text,
-  verein int(11) default NULL,
+  verein int(11),
   PRIMARY KEY  (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 $libDb->query($sql);

@@ -25,7 +25,7 @@ echo 'Erstelle Tabelle mod_zipfelranking_anzahl<br />';
 $sql = "CREATE TABLE mod_zipfelranking_anzahl (
 	id int(11) NOT NULL,
 	anzahlzipfel smallint(2),
-	PRIMARY KEY  (id)
+	PRIMARY KEY (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 
 $libDb->query($sql);
