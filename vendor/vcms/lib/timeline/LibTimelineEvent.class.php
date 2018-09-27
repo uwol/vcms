@@ -123,17 +123,19 @@ class LibTimelineEvent {
 		$retstr .= '<div class="panel-body">';
 
 		// description
-		$retstr .= '<div class="media">';
+		$retstr .= '<div class="row">';
+
+		$hasPersonColumn = ($this->authorId != '' && !$this->hideAuthorSignature)
+				|| ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature);
 
 		if($this->description != ''){
-			$retstr .= '<div class="media-body">';
+			$retstr .= $hasPersonColumn ? '<div class="col-xs-12 col-sm-9">' : '<div class="col-xs-12">';
 			$retstr .= trim($this->description);
 			$retstr .= '</div>';
 		}
 
-		if(($this->authorId != '' && !$this->hideAuthorSignature)
-				|| ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature)){
-			$retstr .= '<div class="media-right hidden-xs">';
+		if($hasPersonColumn){
+			$retstr .= '<div class="hidden-xs col-sm-3">';
 
 			if($this->authorId != '' && !$this->hideAuthorSignature){
 				$retstr .= $libPerson->getSignature($this->authorId);

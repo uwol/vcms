@@ -296,7 +296,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="col-sm-3">';
 
 	if($mgarray['id'] != ''){
-		echo '<div class="center-block person-signature-box person-signature-box-lg">';
+		echo '<div class="center-block person-signature-box">';
 		echo '<div class="img-box">';
 
 		echo '<span class="delete-icon-box">';

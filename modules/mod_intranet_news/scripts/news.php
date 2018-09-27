@@ -135,14 +135,14 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</div>';
 
 	echo '<div class="panel-body">';
-	echo '<div class="media">';
+	echo '<div class="row">';
 
-	echo '<div class="media-body">';
+	echo '<div class="col-xs-12 col-sm-9 col-md-10">';
 	echo nl2br($row['text']);
 	echo '</div>';
 
 	if(($row['autor'] != '' && $row['autor'] > 0) || ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0)){
-		echo '<div class="media-right hidden-xs">';
+		echo '<div class="hidden-xs col-sm-3 col-md-2">';
 
 		if($row['autor'] != '' && $row['autor'] > 0){
 			echo $libPerson->getSignature($row['autor']);

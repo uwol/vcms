@@ -1,11 +1,6 @@
 .person-signature-box {
-	position: relative;
-	width: 100px;
+	width: 100%;
 	margin-bottom: 1em;
-}
-
-.person-signature-box-lg {
-	width: 150px;
 }
 
 .person-signature-box .img-box {
@@ -33,16 +28,50 @@
 }
 
 .person-img-xs {
-	width: 30px;
 	height: 40px;
 }
 
 .person-img-md {
-	width: 100px;
-	height: 133px;
+	width: 100%;
 }
 
 .person-img-lg {
-	width: 150px;
-	height: 200px;
+	width: 100%;
+}
+
+.person-img-dummy {
+	padding-top: 133%;
+}
+
+.persons-grid {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 576px) {
+	.persons-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 768px) {
+	.persons-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (min-width: 992px) {
+	.persons-grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+.persons-grid .persons-grid-element {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.persons-grid .persons-grid-element .persons-grid-description {
+	padding-left: 1rem;
+	padding-right: 1rem;
 }

@@ -67,6 +67,7 @@ a .fa {
 	position: absolute;
 	padding: 1px;
 	background-color: white;
+	z-index: 100;
 }
 
 .semestercover-box {

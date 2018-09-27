@@ -23,16 +23,16 @@ function printPersons($stmt){
 
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
-	echo '<div class="row">';
+	echo '<div class="persons-grid">';
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<div class="col-sm-6 col-md-4 col-lg-3">';
+		echo '<div class="persons-grid-element">';
 
-		echo '<div class="row">';
-		echo '<div class="col-xs-6">';
+		echo '<div>';
 		echo $libPerson->getSignature($row['id']);
 		echo '</div>';
-		echo '<div class="col-xs-6">';
+
+		echo '<div class="persons-grid-description">';
 		echo '<b>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
 		echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getVereineString($row['id']);
 
@@ -48,7 +48,6 @@ function printPersons($stmt){
 			echo '<br />' .$row['ort1'];
 		}
 
-		echo '</div>';
 		echo '</div>';
 		echo '</div>';
 	}

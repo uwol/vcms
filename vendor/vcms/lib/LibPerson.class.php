@@ -137,7 +137,8 @@ class LibPerson{
 	}
 
 	function getSignature($id){
-		$retstr = '<div class="person-signature-box center-block media-object">';
+		$retstr = '<div class="person-signature-box center-block">';
+
 		$retstr .= '<div class="img-box">';
 		$retstr .= $this->getImage($id);
 		$retstr .= '</div>';
@@ -150,30 +151,24 @@ class LibPerson{
 
 	function getImage($id, $size = 'md'){
 		$retstr = '<a href="index.php?pid=intranet_person&amp;id=' .$id. '" class="person-profile-link">';
-		$classes = 'img-responsive';
+		$sizeClass = '';
 
 		switch($size){
-			case 'lg':
-				$hvrClass = '';
-				$sizeClass = 'person-img-lg';
-				break;
 			case 'xs':
-				$hvrClass = 'hvr-glow';
 				$sizeClass = 'person-img-xs';
 				break;
+			case 'lg':
+				$sizeClass = 'person-img-lg';
+				break;
 			default:
-				$hvrClass = 'hvr-glow';
 				$sizeClass = 'person-img-md';
 				break;
 		}
 
-		$classes .= ' ' .$hvrClass;
-		$classes .= ' ' .$sizeClass;
-
 		if($this->hasImageFile($id)){
-			$retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="' .$classes. '" alt="" />';
+			$retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="img-responsive hvr-glow ' .$sizeClass. '" alt=""/>';
 		} else {
-			$retstr .= '<div class="' .$classes. '"></div>';
+			$retstr .= '<div class="img-responsive hvr-glow person-img-dummy ' .$sizeClass. '"></div>';
 		}
 
 		$retstr .= '</a>';
