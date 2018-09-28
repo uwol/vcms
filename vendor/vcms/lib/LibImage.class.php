@@ -19,14 +19,14 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 namespace vcms;
 
 class LibImage{
-	var $galleryImageWidth = 800;
-	var $galleryImageHeight = 600;
+	var $galleryImageWidth = 1280;
+	var $galleryImageHeight = 960;
 
-	var $personFotoWidth = 200;
-	var $personFotoHeight = 266;
+	var $personFotoWidth = 480;
+	var $personFotoHeight = 640;
 
-	var $startseiteFotoWidth = 800;
-	var $startseiteFotoHeight = 600;
+	var $startseiteFotoWidth = 1280;
+	var $startseiteFotoHeight = 960;
 
 	var $semesterCoverWidth = 1440;
 	var $semesterCoverHeight = 1080;
