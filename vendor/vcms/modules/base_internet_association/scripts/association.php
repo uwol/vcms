@@ -275,20 +275,20 @@ if(isset($_GET['id'])){
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
-		echo '<div class="row">';
+		echo '<div class="persons-grid">';
 
 		$stmt = $libDb->prepare('SELECT base_verein_mitgliedschaft.mitglied, base_verein_mitgliedschaft.ehrenmitglied, base_person.gruppe FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id ORDER BY base_verein_mitgliedschaft.ehrenmitglied DESC, base_person.name ASC');
 		$stmt->bindValue(':verein', $vereinarray['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<div class="col-sm-6 col-md-4 col-lg-3">';
+			echo '<div class="persons-grid-element">';
 
-			echo '<div class="row">';
-			echo '<div class="col-xs-6">';
+			echo '<div>';
 			echo $libPerson->getSignature($row['mitglied'], '');
 			echo '</div>';
-			echo '<div class="col-xs-6">';
+
+			echo '<div class="persons-grid-description">';
 			echo $libPerson->getNameString($row['mitglied'], 0);
 
 			if($row['ehrenmitglied'] == 1){
@@ -296,8 +296,6 @@ if(isset($_GET['id'])){
 			}
 
 			echo '</div>';
-			echo '</div>';
-
 			echo '</div>';
 		}
 
