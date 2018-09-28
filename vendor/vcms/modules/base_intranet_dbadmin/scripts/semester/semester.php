@@ -129,7 +129,7 @@ if($libAuth->isLoggedin()){
 	//keine Aktion
 	else {
 		$stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester');
-		$stmt->bindValue(':semester', $_REQUEST['semester'], PDO::PARAM_INT);
+		$stmt->bindValue(':semester', $_REQUEST['semester']);
 		$stmt->execute();
 		$semesterarray = $stmt->fetch(PDO::FETCH_ASSOC);
 	}
