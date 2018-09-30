@@ -80,21 +80,6 @@ class LibString{
 		return $text;
 	}
 
-	function truncate($string, $start = 50, $replacement = ' ...') {
-		if(strlen($string) <= $start){
-			return $string;
-		}
-
-		$whitespaceposition = strpos($string, ' ', $start);
-
-		if(is_numeric($whitespaceposition)){
-			$string = substr($string, 0, $whitespaceposition);
-			return substr_replace($string, $replacement, $whitespaceposition);
-		} else {
-			return $string;
-		}
-	}
-
 	function getNotificationBoxText(){
 		global $libGlobal;
 

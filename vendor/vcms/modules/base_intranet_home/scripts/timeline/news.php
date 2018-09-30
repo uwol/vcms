@@ -39,14 +39,11 @@ $stmt->execute();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$url = 'index.php?pid=intranet_news&amp;semester=' .$libTime->getSemesterNameAtDate($row['eingabedatum']). '#' .$row['id'];
 
-	$truncateReplacement = ' <a href="' .$url. '">...</a>';
-	$description = $libString->truncate(trim($row['text']), 750, $truncateReplacement);
-
 	$timelineEvent = new LibNewsTimelineEvent();
 
 	$timelineEvent->setTitle($row['bezeichnung']);
 	$timelineEvent->setDatetime($row['eingabedatum']);
-	$timelineEvent->setDescription($description);
+	$timelineEvent->setDescription(trim($row['text']));
 	$timelineEvent->setAuthorId($row['autor']);
 	$timelineEvent->setReferencedPersonId($row['betroffenesmitglied']);
 	$timelineEvent->setUrl($url);
