@@ -43,7 +43,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	$timelineEvent->setTitle($row['bezeichnung']);
 	$timelineEvent->setDatetime($row['eingabedatum']);
-	$timelineEvent->setDescription(trim($row['text']));
+	$timelineEvent->setDescription(nl2br($row['text']));
 	$timelineEvent->setAuthorId($row['autor']);
 	$timelineEvent->setReferencedPersonId($row['betroffenesmitglied']);
 	$timelineEvent->setUrl($url);

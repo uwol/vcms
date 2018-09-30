@@ -605,7 +605,7 @@ class LibTime{
 			$retstr .= '<fieldset>';
 			$retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';
 			$retstr .= '<label for="semester" class="sr-only">Semester</label>';
-			$retstr .= '<select id="semester" name="semester" class="form-control mb-1" onchange=\'this.form.submit()\'>';
+			$retstr .= '<select id="semester" name="semester" class="form-control" onchange=\'this.form.submit()\'>';
 
 			foreach($semesters as $semester){
 				if($semester != '' && $this->isValidSemesterString($semester)){
@@ -622,7 +622,7 @@ class LibTime{
 			}
 
 			$retstr .= '</select> ';
-			$retstr .= '<button type="submit" class="btn btn-default"><i class="fa fa-calendar-o" aria-hidden="true"></i> Semester wählen</button>';
+			$retstr .= '<button type="submit" class="hidden-xs btn btn-default"><i class="fa fa-calendar-o" aria-hidden="true"></i> Semester wählen</button>';
 			$retstr .= '</fieldset>';
 			$retstr .= '</form>';
 			$retstr .= '</div>';

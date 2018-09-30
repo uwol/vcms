@@ -37,8 +37,7 @@ if(isset($_POST['kategorie']) && isset($_POST['betroffenesmitglied']) && isset($
 	$stmt->execute();
 
 	$lastInsertId = $libDb->lastInsertId();
-
-    $libPerson->setIntranetActivity($libAuth->getId(), 2, 0);
+	$libPerson->setIntranetActivity($libAuth->getId(), 2, 0);
 
 	$libGlobal->notificationTexts[] = 'Der Beitrag wurde gespeichert.';
 }
