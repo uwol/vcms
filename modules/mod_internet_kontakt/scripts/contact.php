@@ -216,10 +216,10 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 		echo '<form action="index.php?pid=kontakt" method="post" class="form-horizontal">';
 		echo '<fieldset>';
 
-		$libForm->printTextInput('name', 'Name', $libString->protectXSS($name));
-		$libForm->printTextInput('emailaddress', 'E-Mail-Adresse', $libString->protectXSS($email), 'email');
-		$libForm->printTextInput('telefon', 'Telefonnummer', $libString->protectXSS($telefon), 'tel');
-		$libForm->printTextarea('nachricht', 'Nachricht', $libString->protectXSS($nachricht));
+		$libForm->printTextInput('name', 'Name', $libString->protectXSS($name), 'text', false, true);
+		$libForm->printTextInput('emailaddress', 'E-Mail-Adresse', $libString->protectXSS($email), 'email', false, true);
+		$libForm->printTextInput('telefon', 'Telefonnummer', $libString->protectXSS($telefon), 'tel', false, true);
+		$libForm->printTextarea('nachricht', 'Nachricht', $libString->protectXSS($nachricht), false, true);
 		$libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i> Abschicken');
 
 		echo '</fieldset>';
