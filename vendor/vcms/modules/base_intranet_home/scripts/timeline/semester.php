@@ -59,9 +59,15 @@ $description .= '<div class="col-sm-1"></div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['senior']){
+	$description .= '<div class="row">';
+	$description .= '<div class="col-xs-6 col-sm-12">';
+
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['senior']. '">';
 	$description .= $libPerson->getSignature($row['senior'], '');
 	$description .= '</a>';
+
+	$description .= '</div>';
+	$description .= '<div class="col-xs-6 col-sm-12">';
 
 	$description .= '<p>';
 	$description .= 'Senior<br/>';
@@ -69,15 +75,24 @@ if($row['senior']){
 	$description .= $libPerson->getNameString($row['senior'], 0);
 	$description .= '</a>';
 	$description .= '</p>';
+
+	$description .= '</div>';
+	$description .= '</div>';
 }
 
 $description .= '</div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['consenior']){
+	$description .= '<div class="row">';
+	$description .= '<div class="col-xs-6 col-sm-12">';
+
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['consenior']. '">';
 	$description .= $libPerson->getSignature($row['consenior'], '');
 	$description .= '</a>';
+
+	$description .= '</div>';
+	$description .= '<div class="col-xs-6 col-sm-12">';
 
 	$description .= '<p>';
 	$description .= 'Consenior<br/>';
@@ -85,15 +100,24 @@ if($row['consenior']){
 	$description .= $libPerson->getNameString($row['consenior'], 0);
 	$description .= '</a>';
 	$description .= '</p>';
+
+	$description .= '</div>';
+	$description .= '</div>';
 }
 
 $description .= '</div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['fuchsmajor']){
+	$description .= '<div class="row">';
+	$description .= '<div class="col-xs-6 col-sm-12">';
+
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['fuchsmajor']. '">';
 	$description .= $libPerson->getSignature($row['fuchsmajor'], '');
 	$description .= '</a>';
+
+	$description .= '</div>';
+	$description .= '<div class="col-xs-6 col-sm-12">';
 
 	$description .= '<p>';
 	$description .= 'Fuchsmajor<br/>';
@@ -101,15 +125,24 @@ if($row['fuchsmajor']){
 	$description .= $libPerson->getNameString($row['fuchsmajor'], 0);
 	$description .= '</a>';
 	$description .= '</p>';
+
+	$description .= '</div>';
+	$description .= '</div>';
 }
 
 $description .= '</div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['scriptor']){
+	$description .= '<div class="row">';
+	$description .= '<div class="col-xs-6 col-sm-12">';
+
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['scriptor']. '">';
 	$description .= $libPerson->getSignature($row['scriptor'], '');
 	$description .= '</a>';
+
+	$description .= '</div>';
+	$description .= '<div class="col-xs-6 col-sm-12">';
 
 	$description .= '<p>';
 	$description .= 'Scriptor<br/>';
@@ -117,15 +150,24 @@ if($row['scriptor']){
 	$description .= $libPerson->getNameString($row['scriptor'], 0);
 	$description .= '</a>';
 	$description .= '</p>';
+
+	$description .= '</div>';
+	$description .= '</div>';
 }
 
 $description .= '</div>';
 $description .= '<div class="col-sm-2">';
 
 if($row['quaestor']){
+	$description .= '<div class="row">';
+	$description .= '<div class="col-xs-6 col-sm-12">';
+
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['quaestor']. '">';
 	$description .= $libPerson->getSignature($row['quaestor'], '');
 	$description .= '</a>';
+
+	$description .= '</div>';
+	$description .= '<div class="col-xs-6 col-sm-12">';
 
 	$description .= '<p>';
 	$description .= 'Quaestor<br/>';
@@ -133,6 +175,9 @@ if($row['quaestor']){
 	$description .= $libPerson->getNameString($row['quaestor'], 0);
 	$description .= '</a>';
 	$description .= '</p>';
+
+	$description .= '</div>';
+	$description .= '</div>';
 }
 
 $description .= '</div>';
