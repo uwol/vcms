@@ -72,7 +72,6 @@ $zeitraumLimit = 7;
 
 $timelineEventSet = new \vcms\timeline\LibTimelineEventSet();
 
-require_once('timeline/now.php');
 require_once('timeline/birthdays.php');
 require_once('timeline/deceased.php');
 require_once('timeline/wedding.php');
