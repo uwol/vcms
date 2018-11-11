@@ -69,6 +69,10 @@ label {
 	background-color: inherit;
 }
 
+.modal .modal-body .carousel-inner img {
+	max-height: 80vh;
+}
+
 .mb-1 {
 	margin-bottom: .25rem !important;
 }
