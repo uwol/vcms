@@ -154,8 +154,8 @@ $formattedSenderString = $formattedMitgliedNameString. ' &lt;' .$email. '&gt;';
 
 $libForm->printStaticText('Absender', $formattedSenderString);
 $libForm->printTextInput('subject', 'Betreff', '');
-$libForm->printTextarea('nachricht', 'Nachricht', '');
 $libForm->printFileInput('anhang', 'Anhang');
+$libForm->printTextarea('nachricht', 'Nachricht', '');
 $libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i> Nachricht verschicken');
 
 echo '</fieldset>';
