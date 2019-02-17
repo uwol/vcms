@@ -91,14 +91,14 @@ echo '<h2>Struktur der Aktivitas</h2>';
 echo '<p>Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
 
 
-echo '<div class="row">';
+echo '<div class="row mb-4">';
 
 $stmt = $libDb->prepare("SELECT COUNT(id) AS number FROM base_person WHERE gruppe='F' OR gruppe='B'");
 $stmt->execute();
 $stmt->bindColumn('number', $aktive);
 $stmt->fetch();
 
-echo '<div class="col-xs-12">';
+echo '<div class="col-xs-12 col-sm-4">';
 echo '<p>';
 echo '<span class="label label-default">' .$aktive. '</span> Aktive';
 echo '</p>';
@@ -110,7 +110,7 @@ $stmt->execute();
 $stmt->bindColumn('number', $inLoco);
 $stmt->fetch();
 
-echo '<div class="col-xs-12">';
+echo '<div class="col-xs-12 col-sm-4">';
 echo '<p>';
 echo '<span class="label label-default">' .$inLoco. '</span> in loco';
 echo '</p>';
@@ -122,7 +122,7 @@ $stmt->execute();
 $stmt->bindColumn('number', $inaktive);
 $stmt->fetch();
 
-echo '<div class="col-xs-12">';
+echo '<div class="col-xs-12 col-sm-4">';
 echo '<p>';
 echo '<span class="label label-default">' .$inaktive. '</span> ex loco oder inaktiv';
 echo '</p>';
