@@ -44,7 +44,7 @@ if((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
 	@session_start();
 }
 
-$_SESSION['session_timeout_timestamp'] = time() + 14400;
+$_SESSION['session_timeout_timestamp'] = time() + (3 * 24 * 60 * 60);
 
 
 /*
