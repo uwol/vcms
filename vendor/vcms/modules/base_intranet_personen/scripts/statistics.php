@@ -88,7 +88,7 @@ for($i = 0; $i < 10; $i++){
 */
 
 echo '<h2>Struktur der Aktivitas</h2>';
-echo '<p>Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, Inaktive und Aktive ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
+echo '<p>Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
 
 echo '<p>';
 
@@ -151,8 +151,6 @@ foreach($tArray as $key1 => $value1){
 		echo '<td style="';
 
 		if(strstr(strtolower($value2['status']), 'ex loco')){
-			echo 'background-color: #F5A9A9">';
-		} elseif(strstr(strtolower($value2['status']), 'inaktiv')){
 			echo 'background-color: #F5A9A9">';
  		} elseif($value2['gruppe'] == 'F'){
 			echo 'background-color: #66FF66">';
