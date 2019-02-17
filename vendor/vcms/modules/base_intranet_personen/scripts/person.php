@@ -530,7 +530,7 @@ function printPersonData($row){
 	}
 
 	if($row['spitzname'] != ''){
-		echo '<div>Spitzname: ' .$row['spitzname']. '</div>';
+		echo '<div>Spitzname ' .$row['spitzname']. '</div>';
 	}
 
 	if($row['beruf'] != ''){
@@ -557,7 +557,7 @@ function printPersonData($row){
 
 	if($row['heirat_partner'] != '' && $row['heirat_partner'] != 0){
 		echo '<div>';
-		echo 'Ehepartner: <a href="index.php?pid=intranet_person&amp;id=' .$row['heirat_partner']. '" />' .$libPerson->getNameString($row['heirat_partner'], 5). '</a>';
+		echo 'Ehepartner <a href="index.php?pid=intranet_person&amp;id=' .$row['heirat_partner']. '" />' .$libPerson->getNameString($row['heirat_partner'], 5). '</a>';
 		echo '</div>';
 	}
 
@@ -608,7 +608,7 @@ function printPrimaryAddress($row){
 		}
 
 		if($row['datum_adresse1_stand'] != ''){
-			echo '<div>Stand: ' .$libTime->formatDateString($row['datum_adresse1_stand']). '</div>';
+			echo '<div>Stand ' .$libTime->formatDateString($row['datum_adresse1_stand']). '</div>';
 		}
 
 		echo '</address>';
@@ -648,7 +648,7 @@ function printSecondaryAddress($row){
 		}
 
 		if($row['datum_adresse2_stand'] != ''){
-			echo '<div>Stand: ' .$libTime->formatDateString($row['datum_adresse2_stand']). '</div>';
+			echo '<div>Stand ' .$libTime->formatDateString($row['datum_adresse2_stand']). '</div>';
 		}
 
 		echo '</address>';
@@ -725,23 +725,23 @@ function printAssociationDetails($row){
 		echo '<div>';
 
 		if($row['semester_reception'] != ''){
-			echo '<div>Reception: ' .$libTime->getSemesterString($row['semester_reception']). '</div>';
+			echo '<div>Reception ' .$libTime->getSemesterString($row['semester_reception']). '</div>';
 		}
 
 		if($row['semester_promotion'] != ''){
-			echo '<div>Promotion: ' .$libTime->getSemesterString($row['semester_promotion']). '</div>';
+			echo '<div>Promotion ' .$libTime->getSemesterString($row['semester_promotion']). '</div>';
 		}
 
 		if($row['semester_philistrierung'] != ''){
-			echo '<div>Philistrierung: ' .$libTime->getSemesterString($row['semester_philistrierung']). '</div>';
+			echo '<div>Philistrierung ' .$libTime->getSemesterString($row['semester_philistrierung']). '</div>';
 		}
 
 		if($row['semester_aufnahme'] != ''){
-			echo '<div>Aufnahme: ' .$libTime->getSemesterString($row['semester_aufnahme']). '</div>';
+			echo '<div>Aufnahme ' .$libTime->getSemesterString($row['semester_aufnahme']). '</div>';
 		}
 
 		if($row['semester_fusion'] != ''){
-			echo '<div>Fusion: ' .$libTime->getSemesterString($row['semester_fusion']). '</div>';
+			echo '<div>Fusion ' .$libTime->getSemesterString($row['semester_fusion']). '</div>';
 		}
 
 		echo '</div>';
@@ -749,7 +749,7 @@ function printAssociationDetails($row){
 
 	if($row['gruppe'] == 'F' || $row['gruppe'] == 'B' || $row['gruppe'] == 'P' || $row['gruppe'] == 'T'){
 		if($row['leibmitglied'] > 0){
-			echo '<div>Stammbaum: <a href="index.php?pid=intranet_person_stammbaum&mitgliedid=' .$row['id']. '">öffnen</a></div>';
+			echo '<div>Stammbaum <a href="index.php?pid=intranet_person_stammbaum&mitgliedid=' .$row['id']. '">öffnen</a></div>';
 		}
 	}
 
@@ -792,9 +792,9 @@ function printAssociationDetails($row){
 
 		if($chargierAnzahl > 0){
 			echo '<p>';
-			echo '<span class="label ' .getClassForChargierAnzahl($chargierAnzahl). '">' .$chargierAnzahl. '</span>';
+			echo '<span class="label label-default">' .$chargierAnzahl. '</span>';
 			echo ' ';
-			echo 'Chargierter: ';
+			echo 'Chargierter bei ';
 
 			$stmt = $libDb->prepare('SELECT datum, beschreibung, verein FROM mod_chargierkalender_veranstaltung, mod_chargierkalender_teilnahme WHERE mod_chargierkalender_veranstaltung.id = mod_chargierkalender_teilnahme.chargierveranstaltung AND mod_chargierkalender_teilnahme.mitglied = :mitglied ORDER BY mod_chargierkalender_veranstaltung.datum DESC');
 			$stmt->bindValue(':mitglied', $row['id'], PDO::PARAM_INT);
@@ -822,18 +822,6 @@ function printAssociationDetails($row){
 			echo '</p>';
 		}
 	}
-}
-
-function getClassForChargierAnzahl($chargierAnzahl){
-	$result = 'label-danger';
-
-	if($chargierAnzahl >= 10){
-		$result = 'label-success';
-	} elseif($chargierAnzahl >= 5){
-		$result = 'label-warning';
-	}
-
-	return $result;
 }
 
 function printVita($row){
