@@ -27,7 +27,7 @@ echo $libString->getNotificationBoxText();
 
 
 echo '<div class="row">';
-echo '<div class="col-sm-6">';
+echo '<div class="col-xs-12 col-sm-6">';
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
@@ -42,7 +42,7 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlob
 
 echo '</div>';
 
-echo '<div class="col-sm-6 hidden-xs">';
+echo '<div class="col-xs-12 col-sm-6">';
 echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';
 echo '<div class="btn-toolbar">';
