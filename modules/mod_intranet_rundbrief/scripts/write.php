@@ -138,7 +138,7 @@ echo '</label></div>';
 
 echo '</div></div>';
 
-$libForm->printRegionDropDownBox("region", "Region", "");
+$libForm->printRegionDropDownBox("region", "Nach Region", "");
 
 echo '<hr />';
 
