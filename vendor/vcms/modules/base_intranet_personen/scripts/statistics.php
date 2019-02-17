@@ -97,7 +97,7 @@ $stmt->execute();
 $stmt->bindColumn('number', $aktive);
 $stmt->fetch();
 
-echo $aktive .' Aktive<br />';
+echo '<span class="label label-default">' .$aktive. '</span> Aktive<br />';
 
 
 $stmt = $libDb->prepare("SELECT COUNT(id) AS number FROM base_person WHERE (gruppe='F' OR gruppe='B') AND (status IS NULL OR status NOT LIKE '%ex loco%')");
@@ -105,7 +105,7 @@ $stmt->execute();
 $stmt->bindColumn('number', $inLoco);
 $stmt->fetch();
 
-echo $inLoco .' in loco<br />';
+echo '<span class="label label-default">' .$inLoco. '</span> in loco<br />';
 
 
 $stmt = $libDb->prepare("SELECT COUNT(id) AS number FROM base_person WHERE (gruppe='F' OR gruppe='B') AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%')");
@@ -113,7 +113,7 @@ $stmt->execute();
 $stmt->bindColumn('number', $inaktive);
 $stmt->fetch();
 
-echo $inaktive .' ex loco oder inaktiv<br />';
+echo '<span class="label label-default">' .$inaktive. '</span> ex loco oder inaktiv<br />';
 
 echo '</p>';
 
@@ -137,7 +137,7 @@ foreach($tArray as $key1 => $value1){
 	echo '<tr>';
 	$rowspan = max(1, ceil(count($value1) / $personsPerRow));
 	echo '<td rowspan=' .$rowspan. '>';
-	echo '<a href="index.php?pid=intranet_home&amp;semester=' .$key1. '">' . $key1 . '</a>';
+	echo '<a href="index.php?pid=intranet_home&amp;semester=' .$key1. '">' .$key1. '</a>';
 	echo '</td>';
 
 	$i = 0;
@@ -158,14 +158,14 @@ foreach($tArray as $key1 => $value1){
 			echo 'background-color: #33DD33">';
 		}
 
-		echo '<a href="index.php?pid=intranet_person&amp;id=' . $key2 . '">';
+		echo '<a href="index.php?pid=intranet_person&amp;id=' .$key2. '">';
 		echo $value2['vorname'];
 
 		if($value2['praefix'] != ''){
-			echo ' ' . substr($value2['praefix'], 0, 1) . '.';
+			echo ' ' .substr($value2['praefix'], 0, 1). '.';
 		}
 
-		echo ' ' . substr($value2['name'], 0, 1) . '.';
+		echo ' ' .substr($value2['name'], 0, 1). '.';
 		echo '</a>';
 
 		if(isset($value2['alter']) && is_numeric($value2['alter'])){
