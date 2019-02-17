@@ -250,7 +250,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				$size = $folderElement->getSize();
 
 				if($size > 0){
-					echo ' ' .getSizeString($folderElement->getSize());
+					echo ' <span class="text-muted">' .getSizeString($folderElement->getSize()). '</span>';
 				}
 
 				if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
@@ -322,8 +322,8 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			$fileName = $folderElement->getFilename();
 
 			echo ' <a href="api.php?iid=intranet_download&amp;hash=' .$folderElement->getHash(). '">' .$fileName. '</a>';
-			echo ' ' .implode('', $folderElement->readGroups);
-			echo ' ' .getSizeString($folderElement->getSize());
+			echo ' <span class="text-muted">' .implode('', $folderElement->readGroups). '</span>';
+			echo ' <span class="text-muted">' .getSizeString($folderElement->getSize()). '</span>';
 
 			if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
 				echo ' <a href="index.php?pid=intranet_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
