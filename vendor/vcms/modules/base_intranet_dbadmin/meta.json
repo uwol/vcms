@@ -25,7 +25,7 @@
 			"directory": "scripts/semester",
 			"title": "Semester",
 			"accessRestriction": {
-				"aemter": ["internetwart"]
+				"aemter": ["internetwart", "datenpflegewart"]
 			}
 		},
 		{
@@ -34,7 +34,7 @@
 			"directory": "scripts/semester",
 			"title": "Semester",
 			"accessRestriction": {
-				"aemter": ["internetwart"]
+				"aemter": ["internetwart", "datenpflegewart"]
 			}
 		},
 		{
@@ -115,7 +115,7 @@
 			"directory": "scripts",
 			"title": "Gruppen",
 			"accessRestriction": {
-				"aemter": ["internetwart"]
+				"aemter": ["internetwart", "datenpflegewart"]
 			}
 		},
 		{
@@ -124,7 +124,7 @@
 			"directory": "scripts",
 			"title": "Status",
 			"accessRestriction": {
-				"aemter": ["internetwart"]
+				"aemter": ["internetwart", "datenpflegewart"]
 			}
 		},
 		{
@@ -133,7 +133,7 @@
 			"directory": "scripts",
 			"title": "Regionen",
 			"accessRestriction": {
-				"aemter": ["internetwart"]
+				"aemter": ["internetwart", "datenpflegewart"]
 			}
 		}
 	],
