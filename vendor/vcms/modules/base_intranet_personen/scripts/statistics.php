@@ -100,12 +100,20 @@ $stmt->fetch();
 echo 'Anzahl Aktive: ' . $aktive . '<br />';
 
 
+$stmt = $libDb->prepare("SELECT COUNT(id) AS number FROM base_person WHERE (gruppe='F' OR gruppe='B') AND (status NOT LIKE '%ex loco%')");
+$stmt->execute();
+$stmt->bindColumn('number', $inLoco);
+$stmt->fetch();
+
+echo 'In loco: ' . $inLoco . '<br />';
+
+
 $stmt = $libDb->prepare("SELECT COUNT(id) AS number FROM base_person WHERE (gruppe='F' OR gruppe='B') AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%')");
 $stmt->execute();
 $stmt->bindColumn('number', $inaktive);
 $stmt->fetch();
 
-echo 'Anzahl Aktive ex loco oder inaktiv: ' . $inaktive . '<br />';
+echo 'Ex loco oder inaktiv: ' . $inaktive . '<br />';
 
 echo '</p>';
 
