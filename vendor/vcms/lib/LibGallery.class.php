@@ -173,7 +173,7 @@ class LibGallery{
 	}
 
 	function hasFotowartPrivilege($aemterArrayOfUser){
-		$priviliegedAemter = array('fotowart', 'internetwart', 'senior', 'consenior',
+		$priviliegedAemter = array('fotowart', 'internetwart', 'datenpflegewart', 'senior', 'consenior',
 			'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior');
 		$privilegedAemterOfUser = array_intersect($priviliegedAemter, $aemterArrayOfUser);
 		$numberOfPrivilegedAemterOfUser = count($privilegedAemterOfUser);

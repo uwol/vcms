@@ -30,7 +30,7 @@ if($libAuth->isLoggedin()){
 	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
 		if(isset($_GET['id']) && $_GET['id'] != ''){
 			//Ist der Bearbeiter kein Internetwart?
-			if(!in_array('internetwart', $libAuth->getAemter())){
+			if(!in_array('internetwart', $libAuth->getAemter()) && !in_array('datenpflegewart', $libAuth->getAemter())){
 				die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
 			}
 

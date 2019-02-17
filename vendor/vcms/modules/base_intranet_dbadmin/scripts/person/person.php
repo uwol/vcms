@@ -47,7 +47,7 @@ if($libAuth->isLoggedin()){
 		'bemerkung', 'vita');
 
 	//Ist der Bearbeiter ein Internetwart?
-	if(in_array('internetwart', $libAuth->getAemter())){
+	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		//dann auch die sensiblen Felder bearbeiten
 		$felder = array_merge($felder, array('gruppe', 'password_hash'));
 	}
@@ -83,7 +83,7 @@ if($libAuth->isLoggedin()){
 		}
 
 		//Ist der Bearbeiter kein Internetwart?
-		if(!in_array('internetwart', $libAuth->getAemter())){
+		if(!in_array('internetwart', $libAuth->getAemter()) && !in_array('datenpflegewart', $libAuth->getAemter())){
 			die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
 		}
 
@@ -183,7 +183,7 @@ if($libAuth->isLoggedin()){
 	* Löschoption
 	*
 	*/
-	if(in_array('internetwart', $libAuth->getAemter())){
+	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		if($mgarray['id'] != ''){
 			echo '<p><a href="index.php?pid=intranet_admin_persons&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 		}
@@ -277,7 +277,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextarea('vita', 'Vita', $mgarray['vita']);
 
 	//nur Internetwart darf an sensible Daten
-	if(in_array('internetwart', $libAuth->getAemter())){
+	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		$libForm->printGruppeDropDownBox('gruppe', 'Gruppe', $mgarray['gruppe'], false);
 		$libForm->printTextInput('datum_gruppe_stand', 'Stand', $mgarray['datum_gruppe_stand'], 'date', true);
 		$libForm->printTextInput('password_hash', 'Passwort-Hash', $mgarray['password_hash']);

@@ -49,7 +49,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete' && isset($_REQU
 	$news_array = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	//can the news be deleted?
-	if((in_array('internetwart', $libAuth->getAemter()))
+	if((in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter()))
 		|| ($news_array['autor'] == $libAuth->getId() && $news_array['datediff'] < 7)){
 
 		$stmt = $libDb->prepare('DELETE FROM mod_news_news WHERE id = :id');
@@ -123,7 +123,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo ' ';
 	echo $row['bezeichnung'];
 
-	if((in_array('internetwart', $libAuth->getAemter()))
+	if((in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter()))
 			|| ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)){
 		echo ' <a href="index.php?pid=intranet_news&amp;semester=' .$libGlobal->semester. '&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
 		echo '<i class="fa fa-fw fa-trash" aria-hidden="true"></i>';
