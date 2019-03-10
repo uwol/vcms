@@ -206,7 +206,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 	foreach($pictures as $key => $picture){
 		echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-		echo '<div class="thumbnail reveal">';
+		echo '<div class="thumbnail reveal mb-2">';
 
 		$visibility = $libGallery->getPublicityLevel($picture);
 		$visibilityClass = '';
