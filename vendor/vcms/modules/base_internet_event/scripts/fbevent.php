@@ -83,11 +83,11 @@ if($libEvent->isFacebookEvent($row)){
 
 		echo '<div class="media-body">';
 
-		echo '<h3 style="font-weight:bold;margin-top:0;margin-bottom:0;font-size:14px">';
+		echo '<h3 class="mb-0 mt-0" style="font-weight:bold;font-size:14px">';
 		echo '<a href="' .$libString->protectXss($eventUrl). '" style="color:black">' .$row['titel']. '</a>';
 		echo '</h3>';
 
-		echo '<p style="color:#90949c;margin-top:0;margin-bottom:0;font-size:12px">';
+		echo '<p class="mb-0 mt-0" style="color:#90949c;font-size:12px">';
 		echo $libString->protectXss($eventInterestedCount). ' Personen sind interessiert';
 		echo ' · ';
 		echo $libString->protectXss($eventAttendingCount). ' Personen nehmen teil';
@@ -98,7 +98,7 @@ if($libEvent->isFacebookEvent($row)){
 
 		echo '<hr />';
 
-		echo '<p class="social-buttons">';
+		echo '<p class="social-buttons mb-0 mt-0">';
 		echo '<a href="' .$libString->protectXss($eventUrl). '">';
 		echo '<i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i>';
 		echo '</a>';

@@ -59,7 +59,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			echo '<div class="panel panel-default reveal">';
 			echo '<div class="panel-body">';
 			echo '<div class="thumbnail">';
-			
+
 			echo '<div class="caption">';
 			echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 
@@ -76,7 +76,7 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			}
 
 			echo '</address>';
-			echo '<p class="social-buttons">';
+			echo '<p class="social-buttons mb-0 mt-0">';
 
 			$libEvent->printFacebookShareButton($row['id']);
 			$libEvent->printTwitterShareButton($row['id']);

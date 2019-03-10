@@ -204,7 +204,7 @@ function printSocialButtons($row){
 	global $libEvent;
 
 	echo '<hr />';
-	echo '<p class="social-buttons">';
+	echo '<p class="social-buttons mb-0 mt-0">';
 
 	if(!$libEvent->isFacebookEvent($row)){
 		$libEvent->printFacebookShareButton($row['id']);

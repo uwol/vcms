@@ -34,7 +34,7 @@ echo '    <footer>' . PHP_EOL;
 echo '      <div class="container">' . PHP_EOL;
 echo '        <div class="row">' . PHP_EOL;
 echo '          <div class="col-xs-12">' . PHP_EOL;
-echo '            <div class="social-buttons text-right">' . PHP_EOL;
+echo '            <div class="social-buttons text-right mb-0 mt-0">' . PHP_EOL;
 echo '              <small class="text-muted"><a href="index.php?pid=privacy">Datenschutz</a></small>' . PHP_EOL;
 
 if($facebookUrl != ''){

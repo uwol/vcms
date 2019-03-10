@@ -1,6 +1,5 @@
 p {
 	line-height: 1.5;
-	margin-bottom: 1.5em;
 }
 
 section {
@@ -34,8 +33,6 @@ header .header-content .header-content-inner {
 
 header .header-content .header-content-inner h1 {
 	text-transform: uppercase;
-	margin-top: 0;
-	margin-bottom: 0;
 }
 
 header .header-content .header-content-inner .btn-circle {

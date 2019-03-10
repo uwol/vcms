@@ -73,6 +73,11 @@ label {
 	max-height: 80vh;
 }
 
+
+.mb-0 {
+	margin-bottom: 0 !important;
+}
+
 .mb-1 {
 	margin-bottom: .25rem !important;
 }
@@ -93,6 +98,36 @@ label {
 	margin-bottom: 3rem !important;
 }
 
+
+.mt-0 {
+	margin-top: 0 !important;
+}
+
+.mt-1 {
+	margin-top: .25rem !important;
+}
+
+.mt-2 {
+	margin-top: .5rem !important;
+}
+
+.mt-3 {
+	margin-top: 1rem !important;
+}
+
+.mt-4 {
+	margin-top: 1.5rem !important;
+}
+
+.mt-5 {
+	margin-top: 3rem !important;
+}
+
+
+.pb-0 {
+	padding-bottom: 0 !important;
+}
+
 .pb-1 {
 	padding-bottom: .25rem !important;
 }
@@ -111,4 +146,29 @@ label {
 
 .pb-5 {
 	padding-bottom: 3rem !important;
+}
+
+
+.pt-0 {
+	padding-top: 0 !important;
+}
+
+.pt-1 {
+	padding-top: .25rem !important;
+}
+
+.pt-2 {
+	padding-top: .5rem !important;
+}
+
+.pt-3 {
+	padding-top: 1rem !important;
+}
+
+.pt-4 {
+	padding-top: 1.5rem !important;
+}
+
+.pt-5 {
+	padding-top: 3rem !important;
 }

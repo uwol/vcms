@@ -57,7 +57,3 @@
 .calendar .calendar-day .calendar-event time {
 	font-weight: bold;
 }
-
-.calendar .calendar-day .calendar-event .thumbnail {
-	margin-bottom: 0;
-}

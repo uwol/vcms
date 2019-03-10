@@ -50,11 +50,6 @@ a .fa {
 	color: #333;
 }
 
-.image-tile {
-	margin-top: 4px;
-	margin-bottom: 2%;
-}
-
 .image-muted {
 	background-color: black;
 }
@@ -85,11 +80,6 @@ a .fa {
 tiny {
 	font-size: 65%;
 	vertical-align: middle;
-}
-
-.social-buttons {
-	margin-top: 0;
-	margin-bottom: 0;
 }
 
 .social-buttons a {
