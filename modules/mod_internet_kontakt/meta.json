@@ -1,6 +1,6 @@
 {
 	"moduleName": "Kontakt",
-	"version": 2.97,
+	"version": 2.98,
 	"pages": [
 		{
 			"pid": "kontakt",
@@ -18,7 +18,6 @@
 		}
 	],
 	"headerStrings": [
-		"<link rel='stylesheet' href='modules/mod_internet_kontakt/styles/screen.css' />",
 		"<meta name='robots' content='noindex' />"
 	]
 }

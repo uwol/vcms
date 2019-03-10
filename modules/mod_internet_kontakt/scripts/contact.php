@@ -115,10 +115,10 @@ echo $libString->getNotificationBoxText();
 
 echo '<div class="row">';
 echo '<div class="col-sm-6">';
-echo '<section class="address-box">';
+echo '<section class="address-box mb-5">';
 
 echo '<p>' .$libConfig->verbindungName. '</p>';
-echo '<address class="contact-address">';
+echo '<address class="contact-address mb-4">';
 
 if($libConfig->verbindungZusatz != ''){
 	echo '<span>' .$libConfig->verbindungZusatz. '</span><br />';
@@ -131,7 +131,7 @@ echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span>' .$libConfig->
 echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span>' .$libConfig->emailInfo. '</span><br />';
 echo '</address>';
 
-echo '<p class="contact-vorstand">';
+echo '<p class="contact-vorstand mb-4">';
 
 $vorstand = $libAssociation->getAnsprechbarerAktivenVorstandIds();
 
@@ -168,7 +168,7 @@ echo '</section>';
 echo '</div>';
 
 echo '<aside class="col-sm-6">';
-echo '<div class="panel panel-default reveal">';
+echo '<div class="panel panel-default reveal mb-5">';
 echo '<div class="thumbnail">';
 echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="img-responsive center-block reveal" />';
 echo '</div>';
@@ -182,7 +182,7 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 
 	echo '<div class="row">';
 	echo '<div class="col-sm-12">';
-	echo '<section class="contact-form-box">';
+	echo '<section class="contact-form-box mb-5">';
 
 	if($mailsent){
 		echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';

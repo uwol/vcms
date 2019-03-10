@@ -137,7 +137,7 @@ class LibPerson{
 	}
 
 	function getSignature($id){
-		$retstr = '<div class="person-signature-box center-block">';
+		$retstr = '<div class="person-signature-box center-block mb-3">';
 
 		$retstr .= '<div class="img-box">';
 		$retstr .= $this->getImage($id);
