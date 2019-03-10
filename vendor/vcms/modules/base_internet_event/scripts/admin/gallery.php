@@ -228,7 +228,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 		echo '</div>';
 
 		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
-			echo '<div class="controls">';
+			echo '<div class="controls mb-3">';
 
 			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=main&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-home public" aria-hidden="true"></i></a> ';
 			echo '| ';
