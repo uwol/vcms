@@ -88,7 +88,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 		$semesterCover = $libTime->determineSemesterCover($semester);
 
 		if($semesterCover){
-			$class = 'event-semestercover-box';
+			$class = 'event-semestercover-box pb-3 pt-3';
 			$style = "background-image: url('custom/semestercover/" .$semesterCover. "')";
 		}
 	}

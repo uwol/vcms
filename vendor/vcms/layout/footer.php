@@ -30,7 +30,7 @@ $twitterUrl = $libGenericStorage->loadValue('mod_internet_home', 'twitter_url');
 $wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wikipedia_url');
 
 
-echo '    <footer>' . PHP_EOL;
+echo '    <footer class="pb-5 pt-5">' . PHP_EOL;
 echo '      <div class="container">' . PHP_EOL;
 echo '        <div class="row">' . PHP_EOL;
 echo '          <div class="col-xs-12">' . PHP_EOL;
