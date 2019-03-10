@@ -103,15 +103,15 @@ echo '<h1>Ankündigung</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Hier können die Daten einer Ankündigung für die Startseite bearbeitet werden. Start- und Verfallsdatum müssen so gewählt werden, dass sich der Zeitraum ergibt, in dem die Ankündigung angezeigt werden soll.</p>';
-echo '<p>Es können die folgenden <a href="http://de.wikipedia.org/wiki/Bbcode">BBCodes</a> verwendet werden: [b]fett[/b], [i]kursiv[/i], [url=http://www.wikipedia.de]Link[/url]</p>';
+echo '<p class="mb-4">Hier können die Daten einer Ankündigung für die Startseite bearbeitet werden. Start- und Verfallsdatum müssen so gewählt werden, dass sich der Zeitraum ergibt, in dem die Ankündigung angezeigt werden soll.</p>';
+echo '<p class="mb-4">Es können die folgenden <a href="http://de.wikipedia.org/wiki/Bbcode">BBCodes</a> verwendet werden: [b]fett[/b], [i]kursiv[/i], [url=http://www.wikipedia.de]Link[/url]</p>';
 
 
 /*
 * deletion
 */
 if($array['id'] != ''){
-	echo '<p><a href="index.php?pid=intranet_admin_announcements&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+	echo '<p class="mb-4"><a href="index.php?pid=intranet_admin_announcements&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 }
 
 

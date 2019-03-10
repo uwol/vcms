@@ -91,12 +91,12 @@ if(isset($_GET['id'])){
 
 		echo '</div>';
 
-		echo '<p>';
+		echo '<p class="mb-4">';
 		echo $vereinarray['farbe1']. ' ' .$vereinarray['farbe2']. ' ' .$vereinarray['farbe3']. '<br />';
 		echo '</p>';
 	}
 
-	echo '<p>';
+	echo '<p class="mb-4">';
 
 	if($vereinarray['datum_gruendung']){
 		echo 'Gründung ';
@@ -174,7 +174,7 @@ if(isset($_GET['id'])){
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
-		echo '<p>';
+		echo '<p class="mb-4">';
 		echo nl2br($vereinarray['farbenstrophe']);
 		echo '</p>';
 		echo '</div>';
@@ -186,7 +186,7 @@ if(isset($_GET['id'])){
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
-		echo '<p>';
+		echo '<p class="mb-4">';
 		echo nl2br($vereinarray['farbenstrophe_inoffiziell']);
 		echo '</p>';
 		echo '</div>';
@@ -198,7 +198,7 @@ if(isset($_GET['id'])){
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
-		echo '<p>';
+		echo '<p class="mb-4">';
 		echo nl2br($vereinarray['fuchsenstrophe']);
 		echo '</p>';
 		echo '</div>';
@@ -210,7 +210,7 @@ if(isset($_GET['id'])){
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
-		echo '<p>';
+		echo '<p class="mb-4">';
 		echo nl2br($vereinarray['bundeslied']);
 		echo '</p>';
 		echo '</div>';
@@ -220,7 +220,7 @@ if(isset($_GET['id'])){
 	if($vereinarray['beschreibung']){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
-		echo '<p>';
+		echo '<p class="mb-4">';
 		echo nl2br($vereinarray['beschreibung']);
 		echo '</p>';
 		echo '</div>';
@@ -237,24 +237,24 @@ if(isset($_GET['id'])){
 	$filePathZirkelGif = 'custom/vereine/zirkel/' .$vereinarray['id']. '.gif';
 
 	if(is_file($filePathZirkelSvg)){
-		echo '<p><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></p>';
+		echo '<p class="mb-4"><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></p>';
 	} else if(is_file($filePathZirkelGif)){
-		echo '<p><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></p>';
+		echo '<p class="mb-4"><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></p>';
 	}
 
 	$filePathWappenSvg = 'custom/vereine/wappen/' .$vereinarray['id']. '.svg';
 	$filePathWappenJpg = 'custom/vereine/wappen/' .$vereinarray['id']. '.jpg';
 
 	if(is_file($filePathWappenSvg)){
-		echo '<p><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-responsive center-block" /></p>';
+		echo '<p class="mb-4"><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-responsive center-block" /></p>';
 	} else if(is_file($filePathWappenJpg)){
-		echo '<p><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></p>';
+		echo '<p class="mb-4"><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></p>';
 	}
 
 	$filePathHausJpg = 'custom/vereine/haus/' .$vereinarray['id']. '.jpg';
 
 	if(is_file($filePathHausJpg)){
-		echo '<p><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></p>';
+		echo '<p class="mb-4"><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></p>';
 	}
 
 	echo '</div>';
@@ -292,7 +292,7 @@ if(isset($_GET['id'])){
 			echo $libPerson->getNameString($row['mitglied'], 0);
 
 			if($row['ehrenmitglied'] == 1){
-				echo '<p>Ehrenmitglied</p>';
+				echo '<p class="mb-4">Ehrenmitglied</p>';
 			}
 
 			echo '</div>';

@@ -102,7 +102,7 @@ else {
 
 	if($anzahl > 0){
 		echo '<h2>Mitglieder ohne Zuordnung</h2>';
-		echo '<p>Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
+		echo '<p class="mb-4">Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
 
 		$stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "" OR gruppe IS NULL ORDER BY name');
 		printPersons($stmt);

@@ -42,7 +42,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 if($row['intern'] && !$libAuth->isLoggedIn()){
-	echo '<p>Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
+	echo '<p class="mb-4">Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 } else {
 	if($libAuth->isLoggedIn()){
 		if(isset($_POST['changeanmeldenstate']) && $_POST['changeanmeldenstate'] != ''){
@@ -255,13 +255,13 @@ function printFacebookEvent($row){
 
 function printDescription($row){
 	if(trim($row['beschreibung'])){
-		return '<p>' .nl2br($row['beschreibung']). '</p>';
+		return '<p class="mb-4">' .nl2br($row['beschreibung']). '</p>';
 	}
 }
 
 function printSpruch($row){
 	if(trim($row['spruch'])){
-		return '<p>' .nl2br($row['spruch']). '</p>';
+		return '<p class="mb-4">' .nl2br($row['spruch']). '</p>';
 	}
 }
 
@@ -277,7 +277,7 @@ function printAnmeldungen($row){
 
 		$anmeldungWritten = false;
 
-		$retstr .= '<p>';
+		$retstr .= '<p class="mb-4">';
 
 		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($anmeldungWritten){

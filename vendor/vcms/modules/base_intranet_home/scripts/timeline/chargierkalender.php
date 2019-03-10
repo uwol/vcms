@@ -127,7 +127,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$attendees[] = $attendee;
 	}
 
-	$description .= '<p>' .implode(', ', $attendees). '</p>';
+	$description .= '<p class="mb-4">' .implode(', ', $attendees). '</p>';
 
 	$timelineEvent = new LibChargiereventTimelineEvent();
 	$timelineEvent->setTitle($title);

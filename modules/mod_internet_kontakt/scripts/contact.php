@@ -117,7 +117,7 @@ echo '<div class="row">';
 echo '<div class="col-sm-6">';
 echo '<section class="address-box mb-5">';
 
-echo '<p>' .$libConfig->verbindungName. '</p>';
+echo '<p class="mb-4">' .$libConfig->verbindungName. '</p>';
 echo '<address class="contact-address mb-4">';
 
 if($libConfig->verbindungZusatz != ''){
@@ -185,7 +185,7 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 	echo '<section class="contact-form-box mb-5">';
 
 	if($mailsent){
-		echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
+		echo '<p class="mb-4">Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
 	} else {
 		$name = '';
 
@@ -239,7 +239,7 @@ if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis')){
 	echo '<div class="row">';
 	echo '<div class="col-md-12">';
 	echo '<section class="disclaimer-box">';
-	echo '<p>Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
+	echo '<p class="mb-4">Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
 	echo '</section>';
 	echo '</div>';
 	echo '</div>';
@@ -247,5 +247,5 @@ if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis')){
 
 echo '<h2>VCMS</h2>';
 echo '<section class="cms-box">';
-echo '<p>Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)</p>';
+echo '<p class="mb-4">Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)</p>';
 echo '</section>';

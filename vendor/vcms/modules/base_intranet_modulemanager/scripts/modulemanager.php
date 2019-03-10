@@ -41,10 +41,10 @@ if(isset($_REQUEST['action'])){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p><a href="index.php?pid=modules" class="btn btn-default" role="button">Module zeigen</a></p>';
+	echo '<p class="mb-4"><a href="index.php?pid=modules" class="btn btn-default" role="button">Module zeigen</a></p>';
 } else {
-	echo '<p>Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen.</p>';
-	echo '<p>Auto-Update: <a href="index.php?pid=configuration">';
+	echo '<p class="mb-4">Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen.</p>';
+	echo '<p class="mb-4">Auto-Update: <a href="index.php?pid=configuration">';
 
 	if($libGenericStorage->loadValue('base_core', 'auto_update')){
 		echo 'aktiviert';

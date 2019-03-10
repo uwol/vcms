@@ -69,7 +69,7 @@ if($row['senior']){
 	$description .= '</div>';
 	$description .= '<div class="col-xs-6 col-sm-12">';
 
-	$description .= '<p>';
+	$description .= '<p class="mb-4">';
 	$description .= 'Senior<br/>';
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['senior']. '">';
 	$description .= $libPerson->getNameString($row['senior'], 0);
@@ -94,7 +94,7 @@ if($row['consenior']){
 	$description .= '</div>';
 	$description .= '<div class="col-xs-6 col-sm-12">';
 
-	$description .= '<p>';
+	$description .= '<p class="mb-4">';
 	$description .= 'Consenior<br/>';
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['consenior']. '">';
 	$description .= $libPerson->getNameString($row['consenior'], 0);
@@ -119,7 +119,7 @@ if($row['fuchsmajor']){
 	$description .= '</div>';
 	$description .= '<div class="col-xs-6 col-sm-12">';
 
-	$description .= '<p>';
+	$description .= '<p class="mb-4">';
 	$description .= 'Fuchsmajor<br/>';
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['fuchsmajor']. '">';
 	$description .= $libPerson->getNameString($row['fuchsmajor'], 0);
@@ -144,7 +144,7 @@ if($row['scriptor']){
 	$description .= '</div>';
 	$description .= '<div class="col-xs-6 col-sm-12">';
 
-	$description .= '<p>';
+	$description .= '<p class="mb-4">';
 	$description .= 'Scriptor<br/>';
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['scriptor']. '">';
 	$description .= $libPerson->getNameString($row['scriptor'], 0);
@@ -169,7 +169,7 @@ if($row['quaestor']){
 	$description .= '</div>';
 	$description .= '<div class="col-xs-6 col-sm-12">';
 
-	$description .= '<p>';
+	$description .= '<p class="mb-4">';
 	$description .= 'Quaestor<br/>';
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['quaestor']. '">';
 	$description .= $libPerson->getNameString($row['quaestor'], 0);
@@ -193,12 +193,12 @@ $description .= '<div>';
 $description .= '<div class="row">';
 $description .= '<div class="col-md-6">';
 
-$description .= '<p>';
+$description .= '<p class="mb-4">';
 $description .= getAmt('Jubelsenior', $row['jubelsenior']);
 $description .= getAmt('Fuchsmajor 2', $row['fuchsmajor2']);
 $description .= '</p>';
 
-$description .= '<p>';
+$description .= '<p class="mb-4">';
 
 /**
 * receptionen
@@ -250,7 +250,7 @@ $description .= '</p>';
 /**
 * other functions
 */
-$description .= '<p>';
+$description .= '<p class="mb-4">';
 $description .= getAmt('VOP', $row['vop']);
 $description .= getAmt('VVOP', $row['vvop']);
 $description .= getAmt('VOPxx', $row['vopxx']);
@@ -258,7 +258,7 @@ $description .= getAmt('VOPxxx', $row['vopxxx']);
 $description .= getAmt('VOPxxxx', $row['vopxxxx']);
 $description .= '</p>';
 
-$description .= '<p>';
+$description .= '<p class="mb-4">';
 $description .= getAmt('Senior Altherrenvorstand', $row['ahv_senior']);
 $description .= getAmt('Consenior Altherrenvorstand', $row['ahv_consenior']);
 $description .= getAmt('Keilbeauftragter', $row['ahv_keilbeauftragter']);
@@ -268,7 +268,7 @@ $description .= getAmt('Beisitzer 1 Altherrenvorstand', $row['ahv_beisitzer1']);
 $description .= getAmt('Beisitzer 2 Altherrenvorstand', $row['ahv_beisitzer2']);
 $description .= '</p>';
 
-$description .= '<p>';
+$description .= '<p class="mb-4">';
 $description .= getAmt('Vorsitzender Hausverein', $row['hv_vorsitzender']);
 $description .= getAmt('Kassierer Hausverein', $row['hv_kassierer']);
 $description .= getAmt('Beisitzender 1 Hausverein', $row['hv_beisitzer1']);
@@ -278,7 +278,7 @@ $description .= '</p>';
 $description .= '</div>';
 $description .= '<div class="col-md-6">';
 
-$description .= '<p>';
+$description .= '<p class="mb-4">';
 $description .= getAmt('Ausflugswart', $row['ausflugswart']);
 $description .= getAmt('Bierwart', $row['bierwart']);
 $description .= getAmt('Bootshauswart', $row['bootshauswart']);
@@ -333,7 +333,7 @@ function getVereinsGruppe($stmt, $title){
 	$retstr = '';
 
 	if(count($namensStrings) > 0){
-		$retstr .= '<p>';
+		$retstr .= '<p class="mb-4">';
   	$retstr .= $title. '<br/>';
   	$retstr .= implode(', ', $namensStrings);
   	$retstr .= '</p>';
@@ -348,7 +348,7 @@ function getAmt($amtsname, $id){
 	$retstr = '';
 
 	if($id != ''){
-		$retstr .= '<p>';
+		$retstr .= '<p class="mb-4">';
 		$retstr .= $amtsname. '<br/>';
 		$retstr .= '<a href="index.php?pid=intranet_person&amp;id=' .$id. '">' .$libPerson->getNameString($id, 0). '</a>';
 		$retstr .= '</p>';

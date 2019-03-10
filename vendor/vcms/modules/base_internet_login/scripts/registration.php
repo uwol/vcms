@@ -107,10 +107,10 @@ if($formSent && !$formError){
 
 	if($mail->Send()){
 		echo '<h1>E-Mail verschickt</h1>';
-		echo '<p>Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
+		echo '<p class="mb-4">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
 	} else {
 		echo '<h1>Fehler</h1>';
-		echo '<p>Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
+		echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
 	}
 } else {
 	echo '<h1>Registrierung</h1>';
@@ -119,8 +119,8 @@ if($formSent && !$formError){
 	echo $libString->getNotificationBoxText();
 
 	echo '<div class="mb-4">';
-	echo '<p>Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Internetwart weitergeleitet wird.</p>';
-	echo '<p>' .$libAuth->getPasswordRequirements(). '</p>';
+	echo '<p class="mb-4">Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Internetwart weitergeleitet wird.</p>';
+	echo '<p class="mb-4">' .$libAuth->getPasswordRequirements(). '</p>';
 	echo '</div>';
 
 	$registrierung_name = '';

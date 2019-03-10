@@ -55,7 +55,7 @@ echo '</div>';
 echo '</div>';
 
 echo '<h2>Registrierung</h2>';
-echo '<p>Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=registration">Registrierungsseite</a> angefordert werden kann.</p>';
+echo '<p class="mb-4">Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=registration">Registrierungsseite</a> angefordert werden kann.</p>';
 
 echo '<h2>Passwort vergessen?</h2>';
-echo '<p>Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=password">ein neues Passwort</a> per Email zuschicken lassen.</p>';
+echo '<p class="mb-4">Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=password">ein neues Passwort</a> per Email zuschicken lassen.</p>';

@@ -75,7 +75,7 @@ if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->pag
 	echo '<h1>Zugriffsfehler</h1>';
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
-	echo '<p>Für diese Seite ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
+	echo '<p class="mb-4">Für diese Seite ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 }
 
 require_once('vendor/vcms/layout/footer.php');

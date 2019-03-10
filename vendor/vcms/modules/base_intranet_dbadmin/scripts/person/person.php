@@ -175,7 +175,7 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p>Hier können sämtliche Daten einer Person bearbeitet werden. Die Gruppe (Fuchs, Bursch etc.) kann nur von einem Internetwart ausgewählt werden, da sie als Zugangskontrolle für Seiten im VCMS dient.</p>';
+	echo '<p class="mb-4">Hier können sämtliche Daten einer Person bearbeitet werden. Die Gruppe (Fuchs, Bursch etc.) kann nur von einem Internetwart ausgewählt werden, da sie als Zugangskontrolle für Seiten im VCMS dient.</p>';
 	echo '<hr />';
 
 	/**
@@ -185,7 +185,7 @@ if($libAuth->isLoggedin()){
 	*/
 	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		if($mgarray['id'] != ''){
-			echo '<p><a href="index.php?pid=intranet_admin_persons&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+			echo '<p class="mb-4"><a href="index.php?pid=intranet_admin_persons&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 		}
 	}
 

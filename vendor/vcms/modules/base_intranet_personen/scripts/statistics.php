@@ -88,7 +88,7 @@ for($i = 0; $i < 10; $i++){
 */
 
 echo '<h2>Struktur der Aktivitas</h2>';
-echo '<p>Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
+echo '<p class="mb-4">Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
 
 
 echo '<div class="row mb-4">';
@@ -99,7 +99,7 @@ $stmt->bindColumn('number', $aktive);
 $stmt->fetch();
 
 echo '<div class="col-xs-12 col-sm-4">';
-echo '<p>';
+echo '<p class="mb-4">';
 echo '<span class="badge badge-default">' .$aktive. '</span> Aktive';
 echo '</p>';
 echo '</div>';
@@ -111,7 +111,7 @@ $stmt->bindColumn('number', $inLoco);
 $stmt->fetch();
 
 echo '<div class="col-xs-12 col-sm-4">';
-echo '<p>';
+echo '<p class="mb-4">';
 echo '<span class="badge badge-default">' .$inLoco. '</span> in loco';
 echo '</p>';
 echo '</div>';
@@ -123,7 +123,7 @@ $stmt->bindColumn('number', $inaktive);
 $stmt->fetch();
 
 echo '<div class="col-xs-12 col-sm-4">';
-echo '<p>';
+echo '<p class="mb-4">';
 echo '<span class="badge badge-default">' .$inaktive. '</span> ex loco oder inaktiv';
 echo '</p>';
 echo '</div>';
@@ -214,7 +214,7 @@ echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';
 
 if(empty($ageClassesAhAh)){
-	echo '<p>Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
+	echo '<p class="mb-4">Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
 } else {
 	echo '<canvas id="age_structure" style="width:100%;height:300px"></canvas>' . PHP_EOL;
 	echo '<script>' . PHP_EOL;

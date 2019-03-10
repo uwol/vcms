@@ -125,7 +125,7 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 	if($vmarray['mitglied'] != '' && $vmarray['verein'] != ''){
-		echo '<p><a href="index.php?pid=intranet_admin_memberships&amp;aktion=delete&amp;mitglied='.$vmarray['mitglied'].'&amp;verein='.$vmarray['verein'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+		echo '<p class="mb-4"><a href="index.php?pid=intranet_admin_memberships&amp;aktion=delete&amp;mitglied='.$vmarray['mitglied'].'&amp;verein='.$vmarray['verein'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
 	}
 
 	/**

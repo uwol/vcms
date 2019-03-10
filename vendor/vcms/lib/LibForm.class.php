@@ -129,7 +129,7 @@ class LibForm{
 		echo '<div class="form-group">';
 		echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<p class="form-control-static';
+		echo '<p class="form-control-static mb-3';
 
 		$this->printClassesString($classes);
 

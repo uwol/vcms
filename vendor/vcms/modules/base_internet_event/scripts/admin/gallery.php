@@ -165,7 +165,7 @@ echo '<script>
 	</script>';
 
 
-echo '<p>Hochgeladene Fotos sind nach einer <a href="index.php?pid=event_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
+echo '<p class="mb-4">Hochgeladene Fotos sind nach einer <a href="index.php?pid=event_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
 
 
 if(is_dir('custom/veranstaltungsfotos/' .$id)){
@@ -174,7 +174,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 		echo '<a href="index.php?pid=event_admin_galerien&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Komplette Galerie löschen</a>';
 
-		echo '<p>';
+		echo '<p class="mb-4">';
 		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=oeffentlichalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><i class="fa fa-users public" aria-hidden="true"></i> Sämtliche Bilder veröffentlichen</a><br />';
 		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=intranetalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><i class="fa fa-users internal" aria-hidden="true"></i> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken</a><br />';
 		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=poolalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><i class="fa fa-users private" aria-hidden="true"></i> Sämtliche Bilder in Ablage zurücklegen</a>';
@@ -249,5 +249,5 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 	echo '</div>';
 } else {
 	echo '<hr />';
-	echo '<p>Die Fotos sind auf eine qualitativ hochwertige Auswahl zu beschränken. Es geht nicht um Vollständigkeit. Hochwertige Fotos bilden Personengruppen in einer ansprechenden Umgebung ab und sind gut belichtet.</p>';
+	echo '<p class="mb-4">Die Fotos sind auf eine qualitativ hochwertige Auswahl zu beschränken. Es geht nicht um Vollständigkeit. Hochwertige Fotos bilden Personengruppen in einer ansprechenden Umgebung ab und sind gut belichtet.</p>';
 }

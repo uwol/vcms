@@ -25,7 +25,7 @@ echo '<h1>Stammbaum</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p>Mitglieder der <span style="color:#0000FF">Aktivitas sind blau</span> gekennzeichnet, AHAH schwarz, <span style="color:#660000">verstorbene BbBb braun</span>, <span style="color:#C0C0C0">ausgetretene grau</span> und weitere <span style="color:#669933">grün</span>. Das im vorherigen Menü angewählte Mitglied ist <span style="background-color:red">rot</span> hinterlegt.</p>';
+echo '<p class="mb-4">Mitglieder der <span style="color:#0000FF">Aktivitas sind blau</span> gekennzeichnet, AHAH schwarz, <span style="color:#660000">verstorbene BbBb braun</span>, <span style="color:#C0C0C0">ausgetretene grau</span> und weitere <span style="color:#669933">grün</span>. Das im vorherigen Menü angewählte Mitglied ist <span style="background-color:red">rot</span> hinterlegt.</p>';
 
 if(isset($_GET['mitgliedid']) && is_numeric($_GET['mitgliedid'])){
 	$person = new \vcms\genealogy\LibGenealogyElement($_GET['mitgliedid'], $_GET['mitgliedid']);

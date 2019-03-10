@@ -37,7 +37,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<img src="' .$image. '" class="img-responsive center-block reveal" alt="" />';
 	}
 
-	echo '<p class="caption">';
+	echo '<p class="caption mb-3">';
 	$text = nl2br(trim($row['text']));
 	echo $libString->parseBBCode($text);
 	echo '</p>';

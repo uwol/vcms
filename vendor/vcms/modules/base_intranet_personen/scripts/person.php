@@ -773,7 +773,7 @@ function printAssociationDetails($row){
 	$vereineAnzahl = count($vereine);
 
 	if($vereineAnzahl > 0){
-		echo '<p>';
+		echo '<p class="mb-4">';
 		echo '<span class="badge">' .$vereineAnzahl. '</span>';
 		echo ' ';
 		echo 'Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $vereine);
@@ -791,7 +791,7 @@ function printAssociationDetails($row){
 		$stmt->fetch();
 
 		if($chargierAnzahl > 0){
-			echo '<p>';
+			echo '<p class="mb-4">';
 			echo '<span class="badge badge-default">' .$chargierAnzahl. '</span>';
 			echo ' ';
 			echo 'Chargierter bei ';
