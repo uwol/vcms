@@ -277,7 +277,7 @@ function printAnmeldungen($row){
 
 		$anmeldungWritten = false;
 
-		$retstr .= '<p class="mb-4">';
+		$retstr .= '<p class="mb-0">';
 
 		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($anmeldungWritten){
