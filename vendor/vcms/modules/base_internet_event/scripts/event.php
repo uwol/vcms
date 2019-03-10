@@ -255,13 +255,13 @@ function printFacebookEvent($row){
 
 function printDescription($row){
 	if(trim($row['beschreibung'])){
-		return '<p class="mb-4">' .nl2br($row['beschreibung']). '</p>';
+		return '<p>' .nl2br($row['beschreibung']). '</p>';
 	}
 }
 
 function printSpruch($row){
 	if(trim($row['spruch'])){
-		return '<p class="mb-4">' .nl2br($row['spruch']). '</p>';
+		return '<p>' .nl2br($row['spruch']). '</p>';
 	}
 }
 
@@ -277,7 +277,7 @@ function printAnmeldungen($row){
 
 		$anmeldungWritten = false;
 
-		$retstr .= '<p class="mb-0">';
+		$retstr .= '<p>';
 
 		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($anmeldungWritten){
