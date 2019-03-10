@@ -100,7 +100,7 @@ $stmt->fetch();
 
 echo '<div class="col-xs-12 col-sm-4">';
 echo '<p>';
-echo '<span class="label label-default">' .$aktive. '</span> Aktive';
+echo '<span class="badge badge-default">' .$aktive. '</span> Aktive';
 echo '</p>';
 echo '</div>';
 
@@ -112,7 +112,7 @@ $stmt->fetch();
 
 echo '<div class="col-xs-12 col-sm-4">';
 echo '<p>';
-echo '<span class="label label-default">' .$inLoco. '</span> in loco';
+echo '<span class="badge badge-default">' .$inLoco. '</span> in loco';
 echo '</p>';
 echo '</div>';
 
@@ -124,7 +124,7 @@ $stmt->fetch();
 
 echo '<div class="col-xs-12 col-sm-4">';
 echo '<p>';
-echo '<span class="label label-default">' .$inaktive. '</span> ex loco oder inaktiv';
+echo '<span class="badge badge-default">' .$inaktive. '</span> ex loco oder inaktiv';
 echo '</p>';
 echo '</div>';
 

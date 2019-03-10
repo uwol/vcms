@@ -792,7 +792,7 @@ function printAssociationDetails($row){
 
 		if($chargierAnzahl > 0){
 			echo '<p>';
-			echo '<span class="label label-default">' .$chargierAnzahl. '</span>';
+			echo '<span class="badge badge-default">' .$chargierAnzahl. '</span>';
 			echo ' ';
 			echo 'Chargierter bei ';
 
