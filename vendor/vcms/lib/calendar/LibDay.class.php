@@ -65,7 +65,7 @@ class LibDay{
 
 	function hasEvents($eventSet){
 		$events = $this->getEvents($eventSet);
-		return is_array($events) && sizeof($events > 0);
+		return is_array($events) && sizeof($events) > 0;
 	}
 
 	function isToday(){
