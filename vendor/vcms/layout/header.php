@@ -4,7 +4,7 @@ echo '<html lang="de">' . PHP_EOL;
 echo '  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# business: http://ogp.me/ns/business#">' . PHP_EOL;
 echo '    <meta charset="utf-8" />' . PHP_EOL;
 echo '    <meta http-equiv="X-UA-Compatible" content="IE=edge" />' . PHP_EOL;
-echo '    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">' . PHP_EOL;
+echo '    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>' . PHP_EOL;
 echo '    <title>' .$libGlobal->getPageTitle(). '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
