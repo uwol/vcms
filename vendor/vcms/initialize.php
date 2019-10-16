@@ -35,16 +35,22 @@ ini_set('arg_separator.output', '&amp;');
 /*
 * set up session
 */
-@session_start();
-
-if((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
-		(isset($_SESSION['session_timeout_timestamp']) &&
-		($_SESSION['session_timeout_timestamp'] == "" || $_SESSION['session_timeout_timestamp'] < time()))){
-	@session_destroy();
-	@session_start();
+if(isset($_COOKIE[session_name()])){
+	session_start();
 }
 
-$_SESSION['session_timeout_timestamp'] = time() + (3 * 24 * 60 * 60);
+if((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
+		(isset($_SESSION) && isset($_SESSION['session_timeout_timestamp']) &&
+		($_SESSION['session_timeout_timestamp'] == '' || $_SESSION['session_timeout_timestamp'] < time()))){
+	$_SESSION = array();
+
+	session_destroy();
+	setcookie(session_name(), '', time() - 86400);
+}
+
+if(isset($_COOKIE[session_name()])){
+	$_SESSION['session_timeout_timestamp'] = time() + (3 * 24 * 60 * 60);
+}
 
 
 /*

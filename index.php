@@ -29,6 +29,8 @@ $libCronjobs->executeDueJobs();
 
 
 if(isset($_POST['intranet_login_email']) && isset($_POST['intranet_login_password'])){
+	session_start();
+
 	$_SESSION['libAuth'] = new \vcms\LibAuth();
 	$libAuth = $_SESSION['libAuth'];
 	$libAuth->login($_POST['intranet_login_email'], $_POST['intranet_login_password']);
