@@ -43,7 +43,6 @@ if((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
 		(isset($_SESSION) && isset($_SESSION['session_timeout_timestamp']) &&
 		($_SESSION['session_timeout_timestamp'] == '' || $_SESSION['session_timeout_timestamp'] < time()))){
 	$_SESSION = array();
-
 	session_destroy();
 	setcookie(session_name(), '', time() - 86400);
 }
@@ -108,7 +107,7 @@ if(isset($_REQUEST['semester']) && $libTime->isValidSemesterString($_REQUEST['se
 /*
 * instantiate authentication context
 */
-if(isset($_SESSION['libAuth'])){
+if(isset($_SESSION) && isset($_SESSION['libAuth'])){
 	$libAuth = $_SESSION['libAuth'];
 } else {
 	$libAuth = new \vcms\LibAuth();

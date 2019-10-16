@@ -29,11 +29,13 @@ $libCronjobs->executeDueJobs();
 
 
 if(isset($_POST['intranet_login_email']) && isset($_POST['intranet_login_password'])){
-	session_start();
+	$libAuth = new \vcms\LibAuth();
+	$isLoggedIn = $libAuth->login($_POST['intranet_login_email'], $_POST['intranet_login_password']);
 
-	$_SESSION['libAuth'] = new \vcms\LibAuth();
-	$libAuth = $_SESSION['libAuth'];
-	$libAuth->login($_POST['intranet_login_email'], $_POST['intranet_login_password']);
+	if($isLoggedIn){
+		session_start();
+		$_SESSION['libAuth'] = $libAuth;
+	}
 }
 
 
