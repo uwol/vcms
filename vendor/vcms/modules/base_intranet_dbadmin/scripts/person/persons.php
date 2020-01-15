@@ -114,7 +114,7 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	if(in_array('internetwart', $libAuth->getAemter())){
+	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<div class="btn-toolbar">';
