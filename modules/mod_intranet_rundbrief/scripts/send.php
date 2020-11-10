@@ -235,7 +235,6 @@ function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, 
 
 	$mail = $libMail->createPHPMailer($fromName);
 
-
 	$mail->Subject = $subject;
 	$mail->isHTML(false);
 	$mail->addReplyTo($replyEmail);
