@@ -97,15 +97,14 @@ if($formSent && !$formError){
 	$text .= PHP_EOL;
 	$text .= 'MBuH,';
 
-	$mail = new PHPMailer();
-	$libMail->configurePHPMailer($mail);
+	$mail = $libMail->createPHPMailer();
 
-	$mail->AddAddress($libConfig->emailWebmaster);
+	$mail->addAddress($libConfig->emailWebmaster);
 	$mail->Subject = '[' .$libConfig->verbindungName. '] Intranet-Registrierung';
 	$mail->Body = $text;
-	$mail->AddReplyTo($_POST['registrierung_emailadresse']);
+	$mail->addReplyTo($_POST['registrierung_emailadresse']);
 
-	if($mail->Send()){
+	if($mail->send()){
 		echo '<h1>E-Mail verschickt</h1>';
 		echo '<p class="mb-4">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
 	} else {

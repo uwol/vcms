@@ -57,15 +57,14 @@ if(isset($_POST['email']) && $_POST['email'] != '' &&
 				'Auf ' .$libGlobal->getSiteUrl(). ' wurde ein neues Passwort für den Benutzer ' .$row['email']. ' erzeugt. ' .PHP_EOL.PHP_EOL.
 				'Das neue Passwort lautet ' .$newPassword. ' und kann im Intranet geändert werden.';
 
-			$mail = new PHPMailer();
-			$libMail->configurePHPMailer($mail);
+			$mail = $libMail->createPHPMailer();
 
-			$mail->AddAddress($row['email']);
+			$mail->addAddress($row['email']);
 			$mail->Subject = '[' .$libConfig->verbindungName. '] Passwortänderung';
 			$mail->Body = $text;
-			$mail->AddReplyTo($libConfig->emailWebmaster);
+			$mail->addReplyTo($libConfig->emailWebmaster);
 
-			$mail->Send();
+			$mail->send();
 		}
 
 		$libGlobal->notificationTexts[] =  'Das neue Passwort wurde an Deine E-Mail-Adresse verschickt, falls die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist und das Geburtsdatum korrekt ist.';

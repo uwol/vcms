@@ -1,6 +1,6 @@
 {
 	"moduleName": "Rundbrief",
-	"version": 2.56,
+	"version": 3.01,
 	"installScript": "install/install.php",
 	"updateScript": "install/update.php",
 	"pages": [

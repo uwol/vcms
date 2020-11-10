@@ -6,7 +6,7 @@
         "font-awesome": "^4.6.3",
         "jquery": "^2.2.3",
         "php": ">=5.5.0",
-        "phpmailer/phpmailer": "~5.2",
+        "phpmailer/phpmailer": "~6.1.8",
         "nategood/httpful": "*"
     },
     "license": "GPL-3.0+"

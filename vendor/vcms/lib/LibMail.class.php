@@ -19,25 +19,21 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 namespace vcms;
 
 class LibMail{
-	function configurePHPMailer($mail){
+	function createPHPMailer($fromName = ''){
 		global $libConfig, $libGenericStorage;
 
-		$mail->From = $libConfig->emailInfo;
-		$mail->SMTPOptions = array(
-			'ssl' => array(
-				'verify_peer' => false,
-				'verify_peer_name' => false,
-				'allow_self_signed' => true
-			)
-		);
+		$mail = new \PHPMailer\PHPMailer\PHPMailer();
+		$mail->setFrom($libConfig->emailInfo, $fromName);
 		$mail->CharSet = 'UTF-8';
 
 		if($libGenericStorage->loadValue('base_core', 'smtp_enable') == 1){
-			$mail->IsSMTP();
+			$mail->isSMTP();
 			$mail->SMTPAuth = true;
 			$mail->Host = $libGenericStorage->loadValue('base_core', 'smtp_host');
 			$mail->Username = $libGenericStorage->loadValue('base_core', 'smtp_username');
 			$mail->Password = $libGenericStorage->loadValue('base_core', 'smtp_password');
 		}
+
+		return $mail;
 	}
 }

@@ -233,13 +233,12 @@ echo $libString->getNotificationBoxText();
 function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, $attachementFile, $attachementName){
 	global $libAuth, $libMail;
 
-	$mail = new PHPMailer();
-	$libMail->configurePHPMailer($mail);
+	$mail = $libMail->createPHPMailer($fromName);
 
-	$mail->FromName = $fromName;
+
 	$mail->Subject = $subject;
-	$mail->IsHTML(false);
-	$mail->AddReplyTo($replyEmail);
+	$mail->isHTML(false);
+	$mail->addReplyTo($replyEmail);
 	$mail->Body = stripslashes($message);
 
 	if(!istImVorstand($libAuth->getAemter())){
@@ -248,14 +247,14 @@ function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, 
 	}
 
 	foreach($recipientsArray as $recipient){
-		$mail->AddBCC($recipient[0]);
+		$mail->addBCC($recipient[0]);
 	}
 
 	if(is_file($attachementFile)){
-		$mail->AddAttachment($attachementFile, $attachementName);
+		$mail->addAttachment($attachementFile, $attachementName);
 	}
 
-	if(!$mail->Send()){
+	if(!$mail->send()){
 		echo '<p class="mb-4">Fehler beim Versand: ' .$mail->ErrorInfo. '</p>';
 	}
 }

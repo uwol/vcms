@@ -82,15 +82,14 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 			$nachricht .= PHP_EOL;
 			$nachricht .= $_POST['nachricht'];
 
-			$mail = new PHPMailer();
-			$libMail->configurePHPMailer($mail);
+			$mail = $libMail->createPHPMailer();
 
-			$mail->AddAddress($libConfig->emailInfo);
+			$mail->addAddress($libConfig->emailInfo);
 			$mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libGlobal->getSiteUrl();
 			$mail->Body = $libString->protectXSS($nachricht);
-			$mail->AddReplyTo($_POST['emailaddress']);
+			$mail->addReplyTo($_POST['emailaddress']);
 
-			if($mail->Send()){
+			if($mail->send()){
 				$mailsent = true;
 				$libGlobal->notificationTexts[] = 'Vielen Dank, Ihre Nachricht wurde weitergeleitet.';
 			}
