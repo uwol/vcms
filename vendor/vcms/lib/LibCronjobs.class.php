@@ -210,6 +210,10 @@ class LibCronjobs{
 			$libGenericStorage->saveValue('base_core', 'smtp_password', '');
 		}
 
+		if(!$libGenericStorage->attributeExists('base_core', 'smtp_port')){
+			$libGenericStorage->saveValue('base_core', 'smtp_port', 587);
+		}
+
 		if(!$libGenericStorage->attributeExists('base_core', 'facebook_appid')){
 			$libGenericStorage->saveValue('base_core', 'facebook_appid', '');
 		}

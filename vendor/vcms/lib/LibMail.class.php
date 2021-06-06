@@ -30,6 +30,7 @@ class LibMail{
 			$mail->isSMTP();
 			$mail->SMTPAuth = true;
 			$mail->Host = $libGenericStorage->loadValue('base_core', 'smtp_host');
+			$mail->Port = $libGenericStorage->loadValue('base_core', 'smtp_port');
 			$mail->Username = $libGenericStorage->loadValue('base_core', 'smtp_username');
 			$mail->Password = $libGenericStorage->loadValue('base_core', 'smtp_password');
 		}
