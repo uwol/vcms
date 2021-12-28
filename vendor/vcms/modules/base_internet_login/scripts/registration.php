@@ -104,13 +104,28 @@ if($formSent && !$formError){
 	$mail->Body = $text;
 	$mail->addReplyTo($_POST['registrierung_emailadresse']);
 
+	$mailsent = false;
+
 	if($mail->send()){
+		$mailsent = true;
+	} else {
+		$libGlobal->errorTexts[] = $mail->ErrorInfo;
+	}
+
+	if($mailsent){
 		echo '<h1>E-Mail verschickt</h1>';
+
+		echo $libString->getErrorBoxText();
+		echo $libString->getNotificationBoxText();
+
 		echo '<p class="mb-4">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
 	} else {
 		echo '<h1>Fehler</h1>';
+
+		echo $libString->getErrorBoxText();
+		echo $libString->getNotificationBoxText();
+
 		echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
-		echo '<p class="mb-4">' .$mail->ErrorInfo. '</p>';
 	}
 } else {
 	echo '<h1>Registrierung</h1>';
