@@ -64,7 +64,9 @@ if(isset($_POST['email']) && $_POST['email'] != '' &&
 			$mail->Body = $text;
 			$mail->addReplyTo($libConfig->emailWebmaster);
 
-			$mail->send();
+			if(!$mail->send()){
+				$libGlobal->errorTexts[] = $mail->ErrorInfo;
+			}
 		}
 
 		$libGlobal->notificationTexts[] =  'Das neue Passwort wurde an Deine E-Mail-Adresse verschickt, falls die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist und das Geburtsdatum korrekt ist.';

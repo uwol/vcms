@@ -92,6 +92,8 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 			if($mail->send()){
 				$mailsent = true;
 				$libGlobal->notificationTexts[] = 'Vielen Dank, Ihre Nachricht wurde weitergeleitet.';
+			} else {
+				$libGlobal->errorTexts[] = $mail->ErrorInfo;
 			}
 		}
 	}

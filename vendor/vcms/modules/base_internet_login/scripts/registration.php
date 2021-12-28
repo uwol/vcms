@@ -110,6 +110,7 @@ if($formSent && !$formError){
 	} else {
 		echo '<h1>Fehler</h1>';
 		echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
+		echo '<p class="mb-4">' .$mail->ErrorInfo. '</p>';
 	}
 } else {
 	echo '<h1>Registrierung</h1>';
