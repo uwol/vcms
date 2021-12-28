@@ -158,19 +158,9 @@ if($formSent && !$formError){
 		$registrierung_geburtsdatum = $_POST['registrierung_geburtsdatum'];
 	}
 
-	$urlPrefix = '';
-
-	if($libGlobal->getSiteUrlAuthority() != ''){
-		$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
-
-		if($sslProxyUrl != ''){
-			$urlPrefix = 'https://' .$sslProxyUrl. '/' .$libGlobal->getSiteUrlAuthority(). '/';
-		}
-	}
-
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
-	echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="form-horizontal">';
+	echo '<form method="post" action="index.php?pid=registration" class="form-horizontal">';
 	echo '<fieldset>';
 
 	$libForm->printTextInput('registrierung_name', 'Vorname und Nachname', $libString->protectXSS($registrierung_name), 'text', false, true);
