@@ -188,7 +188,6 @@ renameStorageKey('base_core', 'fbAppId', 'facebook_appid');
 renameStorageKey('base_core', 'fbSecretKey', 'facebook_secret_key');
 renameStorageKey('base_core', 'imagemanipulator', 'image_lib');
 renameStorageKey('base_core', 'siteUrl', 'site_url');
-renameStorageKey('base_core', 'smtpEnable', 'smtp_enable');
 renameStorageKey('base_core', 'smtpHost', 'smtp_host');
 renameStorageKey('base_core', 'smtpPassword', 'smtp_password');
 renameStorageKey('base_core', 'smtpUsername', 'smtp_username');

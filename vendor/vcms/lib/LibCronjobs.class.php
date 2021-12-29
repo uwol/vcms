@@ -194,10 +194,6 @@ class LibCronjobs{
 			$libGenericStorage->saveValue('base_core', 'site_url', $this->getCurrentSiteUrl());
 		}
 
-		if(!$libGenericStorage->attributeExists('base_core', 'smtp_enable')){
-			$libGenericStorage->saveValue('base_core', 'smtp_enable', 1);
-		}
-
 		if(!$libGenericStorage->attributeExists('base_core', 'smtp_host')){
 			$libGenericStorage->saveValue('base_core', 'smtp_host', '');
 		}
