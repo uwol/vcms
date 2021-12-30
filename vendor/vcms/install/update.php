@@ -192,6 +192,8 @@ renameStorageKey('base_core', 'smtpHost', 'smtp_host');
 renameStorageKey('base_core', 'smtpPassword', 'smtp_password');
 renameStorageKey('base_core', 'smtpUsername', 'smtp_username');
 
+renameStorageKey('base_internet_login', 'sslProxyUrl', 'ssl_proxy_url');
+
 renameStorageKey('base_intranet_home', 'checkFilePermissions', 'check_file_permissions');
 renameStorageKey('base_intranet_home', 'passwordICalendar', 'icalendar_password');
 renameStorageKey('base_intranet_home', 'userNameICalendar', 'icalendar_username');

@@ -20,15 +20,29 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 * configuration
 */
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('ssl_proxy_url')){
+	$libGenericStorage->saveValueInCurrentModule('ssl_proxy_url', '');
+}
+
 
 echo '<h1>Intranet-Login</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
+$urlPrefix = '';
+
+if($libGlobal->getSiteUrlAuthority() != ''){
+	$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
+
+	if($sslProxyUrl != ''){
+		$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libGlobal->getSiteUrlAuthority() . '/';
+	}
+}
+
 echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';
-echo '<form action="index.php?pid=intranet_home" method="post" class="form-horizontal">';
+echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
 $libForm->printTextInput('intranet_login_email', 'E-Mail-Adresse', '', 'email', false, true);
