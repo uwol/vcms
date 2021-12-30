@@ -22,6 +22,8 @@ class LibMail{
 	function createPHPMailer($fromName = ''){
 		global $libConfig, $libGenericStorage;
 
+		$smtpPort = $libGenericStorage->loadValue('base_core', 'smtp_port');
+
 		$mail = new \PHPMailer\PHPMailer\PHPMailer();
 		$mail->setFrom($libConfig->emailInfo, $fromName);
 		$mail->CharSet = 'UTF-8';
@@ -29,9 +31,15 @@ class LibMail{
 		$mail->isSMTP();
 		$mail->SMTPAuth = true;
 		$mail->Host = $libGenericStorage->loadValue('base_core', 'smtp_host');
-		$mail->Port = $libGenericStorage->loadValue('base_core', 'smtp_port');
+		$mail->Port = $smtpPort;
 		$mail->Username = $libGenericStorage->loadValue('base_core', 'smtp_username');
 		$mail->Password = $libGenericStorage->loadValue('base_core', 'smtp_password');
+
+		if($smtpPort == 465) {
+			$mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
+		} elseif($smtpPort == 587) {
+			$mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+		}
 
 		return $mail;
 	}
