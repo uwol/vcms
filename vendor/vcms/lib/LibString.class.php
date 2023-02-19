@@ -32,7 +32,7 @@ class LibString{
 
 		for ($i = 0; $i < $len; $i++){
 			$pos = rand(0, strlen($chars)-1);
-			$string .= $chars{$pos};
+			$string .= $chars[$pos];
 		}
 
 		return $string;
