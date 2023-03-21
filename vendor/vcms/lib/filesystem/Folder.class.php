@@ -132,7 +132,7 @@ class Folder extends FolderElement{
 		$name = trim(preg_replace("/[^a-zA-Z0-9\s\.äöüÄÖÜß]/", ' ', $name));
 		$name = preg_replace("/[\s]+/", ' ', $name);
 
-		if(count($name) > 0){
+		if(strlen($name) > 0){
 			$metaFileSystemName = $this->getMetaFileSystemName($name, $groupArray);
 			//copy($tmpFileSystemName, $this->getFileSystemPath() . '/' .$metaFileSystemName);
 			move_uploaded_file($tmpFileSystemName, $this->getFileSystemPath(). '/' .$metaFileSystemName);
