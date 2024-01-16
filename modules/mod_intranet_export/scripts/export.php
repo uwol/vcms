@@ -47,6 +47,14 @@ $semester101zurueck = $libTime->getPreviousSemesterNameOfSemester($semester100zu
 			<tr>
 				<th colspan="2">Adressdaten</th>
 			</tr>
+
+			<?php if(in_array('quaestor', $libAuth->getAemter()) || in_array('ahv_quaestor', $libAuth->getAemter()) || in_array('scriptor', $libAuth->getAemter()) || in_array('ahv_scriptor', $libAuth->getAemter()) || in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())) {?>
+				<tr>
+					<td>Vollständiger Export aller aktuellen Mitglieder:</td>
+					<td>Mitglieder (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_export&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_export&amp;type=html">HTML</a>)</td>
+				</tr>
+			<? } ?>
+
 			<tr>
 				<td rowspan="4">Adressen für Anschreiben:</td>
 				<td>Mitglieder (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_anschreiben&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_anschreiben&amp;type=html">HTML</a>)</td>

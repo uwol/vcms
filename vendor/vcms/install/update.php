@@ -139,6 +139,43 @@ if(!in_array('email', $indexesBasePerson)){
 }
 
 
+
+
+
+if(!in_array('studium', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD studium varchar(255)');
+}
+
+if(!in_array('linkedin', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD linkedin varchar(255)');
+}
+
+if(!in_array('xing', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD xing varchar(255)');
+}
+
+if(!in_array('datenschutz_erklaerung_unterschrieben', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD datenschutz_erklaerung_unterschrieben tinyint(1) NOT NULL default 0');
+}
+
+if(!in_array('iban', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD iban varchar(255)');
+}
+
+if(!in_array('einzugsermaechtigung_erteilt', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD einzugsermaechtigung_erteilt tinyint(1) NOT NULL default 0');
+}
+
+
+
+
+
 /*
 * Update base_semester
 */

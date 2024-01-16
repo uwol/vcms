@@ -44,12 +44,19 @@ if($libAuth->isLoggedin()){
 		'semester_reception', 'semester_promotion', 'semester_philistrierung', 'semester_aufnahme', 'semester_fusion',
 		'austritt_datum', 'spitzname', 'leibmitglied',
 		'anschreiben_zusenden', 'spendenquittung_zusenden',
-		'bemerkung', 'vita');
+		'bemerkung', 'vita',
+		'studium', 'linkedin', 'xing');
 
-	//Ist der Bearbeiter ein Internetwart?
+	//Ist der Bearbeiter ein Internetwart oder Datenpflegewart? Dann need-to-know
 	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		//dann auch die sensiblen Felder bearbeiten
 		$felder = array_merge($felder, array('gruppe', 'password_hash'));
+	}
+
+	//Ist der Bearbeiter ein Internetwart, Datenpflegewart, Scriptor oder Kassierer? Dann need-to-know
+	if(in_array('quaestor', $libAuth->getAemter()) || in_array('ahv_quaestor', $libAuth->getAemter()) || in_array('scriptor', $libAuth->getAemter()) || in_array('ahv_scriptor', $libAuth->getAemter()) || in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
+		//dann auch die sensiblen Felder bearbeiten
+		$felder = array_merge($felder, array('datenschutz_erklaerung_unterschrieben', 'iban', 'einzugsermaechtigung_erteilt'));
 	}
 
 	/**
@@ -245,7 +252,10 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('email', 'E-Mail-Adresse', $mgarray['email'], 'email');
 	$libForm->printTextInput('skype', 'Skype', $mgarray['skype']);
 	$libForm->printTextInput('webseite', 'Webseite', $mgarray['webseite']);
+	$libForm->printTextInput('linkedin', 'LinkedIn', $mgarray['linkedin']);
+	$libForm->printTextInput('xing', 'Xing', $mgarray['xing']);
 	$libForm->printTextInput('datum_geburtstag', 'Geburtsdatum', $mgarray['datum_geburtstag'], 'date');
+	$libForm->printTextInput('studium', 'Studium', $mgarray['studium']);
 	$libForm->printTextInput('beruf', 'Beruf', $mgarray['beruf']);
 	$libForm->printTextInput('heirat_datum', 'Heiratsdatum', $mgarray['heirat_datum'], 'date');
 
@@ -275,6 +285,13 @@ if($libAuth->isLoggedin()){
 
 	$libForm->printTextInput('bemerkung', 'Bemerkung', $mgarray['bemerkung']);
 	$libForm->printTextarea('vita', 'Vita', $mgarray['vita']);
+
+	//Ist der Bearbeiter ein Internetwart, Datenpflegewart, Scriptor oder Kassierer? Dann need-to-know
+	if(in_array('quaestor', $libAuth->getAemter()) || in_array('ahv_quaestor', $libAuth->getAemter()) || in_array('scriptor', $libAuth->getAemter()) || in_array('ahv_scriptor', $libAuth->getAemter()) || in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
+		//dann auch die sensiblen Felder bearbeiten
+		$libForm->printBoolSelectBox('datenschutz_erklaerung_unterschrieben', 'Datenschutzerklärung unterschrieben', $mgarray['datenschutz_erklaerung_unterschrieben']);
+		$libForm->printTextInput('iban', 'IBAN', $mgarray['iban']);
+		$libForm->printBoolSelectBox('einzugsermaechtigung_erteilt', 'Einzugsermächtigung erteilt', $mgarray['einzugsermaechtigung_erteilt']);
 
 	//nur Internetwart darf an sensible Daten
 	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){

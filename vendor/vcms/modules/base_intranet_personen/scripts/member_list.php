@@ -56,7 +56,7 @@ if(isset($_POST['searchterm']) && $_POST['searchterm'] != ''){
 		zusatz1 LIKE :zusatz1 OR strasse1 LIKE :strasse1 OR ort1 LIKE :ort1 OR plz1 LIKE :plz1 OR land1 LIKE :land1 OR
 		zusatz2 LIKE :zusatz2 OR strasse2 LIKE :strasse2 OR ort2 LIKE :ort2 OR plz2 LIKE :plz2 OR land2 LIKE :land2 OR
 		telefon1 LIKE :telefon1 OR telefon2 LIKE :telefon2 OR mobiltelefon LIKE :mobiltelefon OR email LIKE :email OR
-		webseite LIKE :webseite OR status LIKE :status OR beruf LIKE :beruf OR vita LIKE :vita OR
+		webseite LIKE :webseite OR linkedin LIKE :linkedin OR xing LIKE :xing OR status LIKE :status OR beruf LIKE :beruf OR studium LIKE :studium OR vita LIKE :vita OR
 		semester_reception LIKE :semester_reception OR semester_promotion LIKE :semester_promotion OR
 		semester_philistrierung LIKE :semester_philistrierung OR semester_aufnahme LIKE :semester_aufnahme OR
 		semester_fusion LIKE :semester_fusion OR spitzname LIKE :spitzname) ORDER BY name, vorname');
@@ -80,7 +80,10 @@ if(isset($_POST['searchterm']) && $_POST['searchterm'] != ''){
 	$stmt->bindValue(':mobiltelefon', '%'.$_POST['searchterm'].'%');
 	$stmt->bindValue(':email', '%'.$_POST['searchterm'].'%');
 	$stmt->bindValue(':webseite', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':linkedin', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':xing', '%'.$_POST['searchterm'].'%');
 	$stmt->bindValue(':status', '%'.$_POST['searchterm'].'%');
+	$stmt->bindValue(':studium', '%'.$_POST['searchterm'].'%');
 	$stmt->bindValue(':beruf', '%'.$_POST['searchterm'].'%');
 	$stmt->bindValue(':vita', '%'.$_POST['searchterm'].'%');
 	$stmt->bindValue(':semester_reception', '%'.$_POST['searchterm'].'%');
