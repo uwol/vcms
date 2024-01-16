@@ -29,7 +29,8 @@ class LibRepositoryClient{
   function __construct(){
     global $libGlobal, $libFilesystem;
 
-		$this->repoHostname = 'api.' . $libGlobal->vcmsHostname;
+	$this->repoHostname = 'api.' . $libGlobal->vcmsHostname;
+	//$this->repoHostname = 'raw.githubusercontent.com/adrianer/vcms/more-fields';
     $this->tempAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($this->tempRelativeDirectoryPath);
 	}
 
@@ -37,7 +38,7 @@ class LibRepositoryClient{
   	global $libGlobal, $libHttp, $libModuleHandler;
 
     $manifestUrl = 'http://' .$this->repoHostname. '/manifest.json?id=' .$libGlobal->getSiteUrlAuthority(). '&version=' .$libGlobal->version;
-  	$modules = $libHttp->get($manifestUrl);
+	$modules = $libHttp->get($manifestUrl);
 
   	if(!is_array($modules)){
   		$modules = json_decode($modules, true);
