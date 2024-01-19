@@ -102,14 +102,12 @@ $sql = "CREATE TABLE base_person (
   bemerkung varchar(255),
   password_hash varchar(255),
   validationkey varchar(255),
-
   studium varchar(255),
   linkedin varchar(255),
   xing varchar(255),
   datenschutz_erklaerung_unterschrieben tinyint(1) NOT NULL default '0',
   iban varchar(255),
   einzugsermaechtigung_erteilt tinyint(1) NOT NULL default '0',
-
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   KEY gruppe (gruppe),

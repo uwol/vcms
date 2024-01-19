@@ -20,6 +20,14 @@
 			"accessRestriction": {
 				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor", "quaestor", "ahv_quaestor"]
 			}
+		},
+		{
+			"iid": "intranet_admin_import_veranstaltungen",
+			"file": "import_veranstaltungen.php",
+			"directory": "scripts",
+			"accessRestriction": {
+				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor", "quaestor", "ahv_quaestor"]
+			}
 		}
 	],
 	"menuElementsAdministration": [

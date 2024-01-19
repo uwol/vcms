@@ -35,7 +35,7 @@ $semesterNow = $libTime->getSemesterName();
 			<tr>
 				<td>von Mitgliedern:</td>
 				<td>
-					<form action="api.php?iid=intranet_admin_import_persons&amp;datenart=mitglieder_import" method="post" enctype="multipart/form-data">
+					<form action="api.php?iid=intranet_admin_import_persons&amp;datenart=import" method="post" enctype="multipart/form-data">
 						<div class="input-group">
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" id="customFileInput" name="file">
@@ -48,10 +48,10 @@ $semesterNow = $libTime->getSemesterName();
 					</form>
 				</td>
 			</tr>
-			<!--<tr>
+			<tr>
 				<td>von Veranstaltungen:</td>
 				<td>
-					<form action="api.php?iid=intranet_admin_import_veranstaltungen&amp;datenart=mitglieder_import" method="post" enctype="multipart/form-data">
+					<form action="api.php?iid=intranet_admin_import_veranstaltungen&amp;datenart=import" method="post" enctype="multipart/form-data">
 						<div class="input-group">
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" id="customFileInput" name="file">
@@ -63,7 +63,7 @@ $semesterNow = $libTime->getSemesterName();
 						</div>
 					</form>
 				</td>
-			</tr>-->
+			</tr>
 		</table>
 	</div>
 </div>

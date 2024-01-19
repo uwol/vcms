@@ -41,9 +41,6 @@ if($libAuth->isLoggedin()){
     // Validate selected file is a CSV file or not
     if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'], $fileMimes))
     {
-		echo "<script>console.log('');</script>";
-		echo "<script>console.log('{$_FILES['file']['name']}');</script>";
-		echo "<script>console.log('{$_FILES['file']['tmp_name']}');</script>";
         // Open uploaded CSV file with read-only mode
         $csvFile = fopen($_FILES['file']['tmp_name'], 'r');
 
@@ -151,80 +148,101 @@ if($libAuth->isLoggedin()){
 				$gruppe = $getData[48];
 
 				// If user already exists in the database with the same name
-				$query = "SELECT vorname, name FROM base_person WHERE vorname = '" . $vorname . "' AND name = '" . $name . "'";
+				$query = "SELECT id FROM base_person WHERE vorname = '" . $vorname . "' AND name = '" . $name . "'";
 				$stmt = $libDb->prepare($query);
 				$stmt->execute();
 
-				$query2 = "SELECT email FROM base_person WHERE email = '" . $email . "'";
+				$query2 = "SELECT id FROM base_person WHERE email = '" . $email . "'";
 				$stmt2 = $libDb->prepare($query2);
-				$check2 = $stmt2->execute();
+				$stmt2->execute();
 
-				if ($stmt->fetch(PDO::FETCH_NUM)){
-					// Person exists already, skipping for now.
-					// :TODO: Update the person - but watch out to not break the password-hash!
-					echo "" . $vorname . " " . $name . ": already exists, skipping";
-					echo "<script>console.log('{$vorname} {$name}: already exists, skipping');</script>";
-				}
-				else if ($stmt2->fetch(PDO::FETCH_NUM))
+				$valueArray['anrede'] = $anrede;
+				$valueArray['titel'] = $titel;
+				$valueArray['rang'] = $rang;
+				$valueArray['vorname'] = $vorname;
+				$valueArray['praefix'] = $praefix;
+				$valueArray['name'] = $name;
+				$valueArray['suffix'] = $suffix;
+				$valueArray['geburtsname'] = $geburtsname;
+				$valueArray['zusatz1'] = $zusatz1;
+				$valueArray['strasse1'] = $strasse1;
+				$valueArray['ort1'] = $ort1;
+				$valueArray['plz1'] = $plz1;
+				$valueArray['land1'] = $land1;
+				$valueArray['zusatz2'] = $zusatz2;
+				$valueArray['strasse2'] = $strasse2;
+				$valueArray['ort2'] = $ort2;
+				$valueArray['plz2'] = $plz2;
+				$valueArray['land2'] = $land2;
+				$valueArray['telefon1'] = $telefon1;
+				$valueArray['telefon2'] = $telefon2;
+				$valueArray['mobiltelefon'] = $mobiltelefon;
+				$valueArray['skype'] = $skype;
+				$valueArray['beruf'] = $beruf;
+				$valueArray['tod_ort'] = $tod_ort;
+				$valueArray['status'] = $status;
+				$valueArray['semester_reception'] = $semester_reception;
+				$valueArray['semester_promotion'] = $semester_promotion;
+				$valueArray['semester_philistrierung'] = $semester_philistrierung;
+				$valueArray['semester_aufnahme'] = $semester_aufnahme;
+				$valueArray['semester_fusion'] = $semester_fusion;
+				$valueArray['spitzname'] = $spitzname;
+				$valueArray['leibmitglied'] = $leibmitglied;
+				$valueArray['anschreiben_zusenden'] = $anschreiben_zusenden;
+				$valueArray['spendenquittung_zusenden'] = $spendenquittung_zusenden;
+				$valueArray['bemerkung'] = $bemerkung;
+				$valueArray['vita'] = $vita;
+				$valueArray['studium'] = $studium;
+				$valueArray['linkedin'] = $linkedin;
+				$valueArray['xing'] = $xing;
+				$valueArray['datenschutz_erklaerung_unterschrieben'] = $datenschutz_erklaerung_unterschrieben;
+				$valueArray['iban'] = $iban;
+				$valueArray['gruppe'] = $gruppe;
+				$valueArray['einzugsermaechtigung_erteilt'] = $einzugsermaechtigung_erteilt;
+				$valueArray['email'] = strtolower($email);
+				$valueArray['webseite'] = $webseite;
+				$valueArray['atum_geburtstag'] = $libTime->assureMysqlDate($datum_geburtstag);
+				$valueArray['heirat_datum'] = $libTime->assureMysqlDate($heirat_datum);
+				$valueArray['tod_datum'] = $libTime->assureMysqlDate($tod_datum);
+				$valueArray['austritt_datum'] = $libTime->assureMysqlDate($austritt_datum);
+
+				$row = $stmt->fetch(PDO::FETCH_NUM);
+				$row2 = $stmt2->fetch(PDO::FETCH_NUM);
+				if ($row && count($row) > 0)
 				{
-					// Person exists already, skipping for now.
-					// :TODO: Update the person - but watch out to not break the password-hash!
-					echo "" . $email . ": already exists, skipping";
-					echo "<script>console.log('{$email}: already exists, skipping');</script>";
+					$valueArray['id'] = $row[0];
+					echo "" . $vorname . " " . $name . ": updating...";
+					echo "<script>console.log('{$vorname} {$name}: updating...');</script>";
+
+					$mgarray = $libDb->updateRow($felder, $valueArray, 'base_person', array('id' => $row[0]));
+
+					updateAdresseStand('base_person', 'datum_adresse1_stand', $mgarray['id']);
+					updateAdresseStand('base_person', 'datum_adresse2_stand', $mgarray['id']);
+					updateGruppeStand($mgarray['id']);
+
+					echo "" . $vorname . " " . $name . ": updated";
+					echo "<script>console.log('{$vorname} {$name}: updated');</script>";
+				}
+				else if ($row2 && count($row2) > 0)
+				{
+					$valueArray['id'] = $row2[0];
+					echo "" . $vorname . " " . $name . ": updating...";
+					echo "<script>console.log('{$vorname} {$name}: updating...');</script>";
+
+					$mgarray = $libDb->updateRow($felder, $valueArray, 'base_person', array('id' => $row2[0]));
+
+					updateAdresseStand('base_person', 'datum_adresse1_stand', $mgarray['id']);
+					updateAdresseStand('base_person', 'datum_adresse2_stand', $mgarray['id']);
+					updateGruppeStand($mgarray['id']);
+
+					echo "" . $vorname . " " . $name . ": updated";
+					echo "<script>console.log('{$vorname} {$name}: updated');</script>";
 				}
 				else
 				{
 					echo "" . $vorname . " " . $name . ": adding...";
 					echo "<script>console.log('{$vorname} {$name}: adding...');</script>";
-					$valueArray['anrede'] = $anrede;
-					$valueArray['titel'] = $titel;
-					$valueArray['rang'] = $rang;
-					$valueArray['vorname'] = $vorname;
-					$valueArray['praefix'] = $praefix;
-					$valueArray['name'] = $name;
-					$valueArray['suffix'] = $suffix;
-					$valueArray['geburtsname'] = $geburtsname;
-					$valueArray['zusatz1'] = $zusatz1;
-					$valueArray['strasse1'] = $strasse1;
-					$valueArray['ort1'] = $ort1;
-					$valueArray['plz1'] = $plz1;
-					$valueArray['land1'] = $land1;
-					$valueArray['zusatz2'] = $zusatz2;
-					$valueArray['strasse2'] = $strasse2;
-					$valueArray['ort2'] = $ort2;
-					$valueArray['plz2'] = $plz2;
-					$valueArray['land2'] = $land2;
-					$valueArray['telefon1'] = $telefon1;
-					$valueArray['telefon2'] = $telefon2;
-					$valueArray['mobiltelefon'] = $mobiltelefon;
-					$valueArray['skype'] = $skype;
-					$valueArray['beruf'] = $beruf;
-					$valueArray['tod_ort'] = $tod_ort;
-					$valueArray['status'] = $status;
-					$valueArray['semester_reception'] = $semester_reception;
-					$valueArray['semester_promotion'] = $semester_promotion;
-					$valueArray['semester_philistrierung'] = $semester_philistrierung;
-					$valueArray['semester_aufnahme'] = $semester_aufnahme;
-					$valueArray['semester_fusion'] = $semester_fusion;
-					$valueArray['spitzname'] = $spitzname;
-					$valueArray['leibmitglied'] = $leibmitglied;
-					$valueArray['anschreiben_zusenden'] = $anschreiben_zusenden;
-					$valueArray['spendenquittung_zusenden'] = $spendenquittung_zusenden;
-					$valueArray['bemerkung'] = $bemerkung;
-					$valueArray['vita'] = $vita;
-					$valueArray['studium'] = $studium;
-					$valueArray['linkedin'] = $linkedin;
-					$valueArray['xing'] = $xing;
-					$valueArray['datenschutz_erklaerung_unterschrieben'] = $datenschutz_erklaerung_unterschrieben;
-					$valueArray['iban'] = $iban;
-					$valueArray['gruppe'] = $gruppe;
-					$valueArray['einzugsermaechtigung_erteilt'] = $einzugsermaechtigung_erteilt;
-					$valueArray['email'] = strtolower($email);
-					$valueArray['webseite'] = $webseite;
-					$valueArray['atum_geburtstag'] = $libTime->assureMysqlDate($datum_geburtstag);
-					$valueArray['heirat_datum'] = $libTime->assureMysqlDate($heirat_datum);
-					$valueArray['tod_datum'] = $libTime->assureMysqlDate($tod_datum);
-					$valueArray['austritt_datum'] = $libTime->assureMysqlDate($austritt_datum);
+
 					$mgarray = $libDb->insertRow($felder, $valueArray, 'base_person', array('id' => ''));
 
 					updateAdresseStand('base_person', 'datum_adresse1_stand', $mgarray['id']);
@@ -234,13 +252,6 @@ if($libAuth->isLoggedin()){
 					echo "" . $vorname . " " . $name . ": added";
 					echo "<script>console.log('{$vorname} {$name}: added');</script>";
 				}
-
-
-				//$stmt = $libDb->prepare('UPDATE mod_zipfelranking_anzahl SET anzahlzipfel=:anzahlzipfel WHERE id = :id');
-				//$stmt = $libDb->prepare($sql);
-				//$stmt->bindValue(':anzahlzipfel', $_POST['anzahlzipfel'], PDO::PARAM_INT);
-				//$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
-				//$stmt->execute();
 			}
 
 			// Close opened CSV file
