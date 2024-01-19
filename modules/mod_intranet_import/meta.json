@@ -1,0 +1,39 @@
+{
+	"moduleName": "Import",
+	"version": 24.01,
+	"pages": [
+		{
+			"pid": "intranet_admin_import",
+			"file": "import.php",
+			"directory": "scripts",
+			"title": "Import",
+			"accessRestriction": {
+				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor", "quaestor", "ahv_quaestor"]
+			}
+		}
+	],
+	"includes": [
+		{
+			"iid": "intranet_admin_import_persons",
+			"file": "import_persons.php",
+			"directory": "scripts",
+			"accessRestriction": {
+				"aemter": ["internetwart", "datenpflegewart", "senior", "scriptor", "ahv_senior", "ahv_scriptor", "quaestor", "ahv_quaestor"]
+			}
+		}
+	],
+	"menuElementsAdministration": [
+		{
+			"name": "Daten",
+			"type": "menu_folder",
+			"elements": [
+				{
+					"pid": "intranet_admin_import",
+					"name": "Import",
+					"type": "menu_entry",
+					"position": 4000
+				}
+			]
+		}
+	]
+}
