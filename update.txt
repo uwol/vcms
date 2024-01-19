@@ -1,0 +1,104 @@
+<?php
+/*
+This file is part of VCMS.
+
+VCMS is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VCMS is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with VCMS. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+require_once('custom/systemconfig.php');
+require_once('vendor/vcms/initialize.php');
+
+$libDb->connect();
+
+?><!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8"/>
+		<title>VCMS-Installer</title>
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css"/>
+		<link rel="stylesheet" href="vendor/vcms/styles/screen.css"/>
+		<meta name="robots" content="noindex, nofollow, noarchive"/>
+	</head>
+	<body>
+		<main id="content">
+			<div id="container" class="container">
+<?php
+
+/*
+* check configuration
+*/
+if($libConfig->mysqlServer == ''){
+	echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-Server angegeben.</p>';
+} else {
+	echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-Server angegeben: ' .$libConfig->mysqlServer. '</p>';
+}
+
+if($libConfig->mysqlPort != ''){
+	echo '<p class="mb-3" style="color:green">OK: In der Konfiguration ist ein MySQL-Port angegeben: ' .$libConfig->mysqlPort. '</p>';
+}
+
+if($libConfig->mysqlDb == ''){
+	echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist keine MySQL-Datenbank angegeben.</p>';
+} else {
+	echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist eine MySQL-Datenbank angegeben: ' .$libConfig->mysqlDb. '</p>';
+}
+
+if($libConfig->mysqlUser == ''){
+	echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-User angegeben.</p>';
+} else {
+	echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-User angegeben: ' .$libConfig->mysqlUser. '</p>';
+}
+
+if($libConfig->mysqlPass == ''){
+	echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-Passwort angegeben.</p>';
+} else {
+	echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-Passwort angegeben.</p>';
+}
+
+
+/*
+* actions
+*/
+if(isset($_REQUEST['aktion'])){
+	$libDb->setErrModeWarning();
+
+	/*
+	* install all modules
+	*/
+	if($_REQUEST['aktion'] == 'updateAllModules'){
+		echo '<p class="alert alert-info mb-3">Der Updater für die Engine wird gestartet.</p>';
+		include('vendor/vcms/install/update.php');
+
+		foreach($libModuleHandler->getModules() as $module){
+			if($module->getUpdateScript() != ''){
+				echo '<p class="alert alert-info mb-3">Der Updater ' .$module->getPath().'/'.$module->getUpdateScript(). ' wird gestartet.</p>';
+				include($module->getPath().'/'.$module->getUpdateScript());
+			}
+		}
+
+		echo '<p class="alert alert-info mb-3">Falls keine Fehlermeldung erschienen ist, sollte das Update durchgeführt worden sein.</p>';
+	}
+}
+
+/*
+* output
+*/
+?>
+				<h2>Update des Gesamtsystems</h2>
+				<p class="mb-4">Mit dem Aufruf des <a href="update.php?aktion=updateAllModules">Update</a> wird das Update für das Basissystem und alle Module gestartet</p>
+			</div>
+		</main>
+	</body>
+</html>
