@@ -24,7 +24,7 @@ $semesterNow = $libTime->getSemesterName();
 
 ?>
 <h1>Import</h1>
-<p class="mb-4">Das VCMS kann Datenbestände per CSV-Tabellen importieren. Damit das funktionieren kann, <u>müssen</u> die Spalten der CSV genau so geordnet und benannt sein, wie <a href="">im hier verlinktem Beispiel zu sehen</a>.</p>
+<p class="mb-4">Das VCMS kann Datenbestände per CSV-Tabellen importieren. Damit das funktionieren kann, <u>müssen</u> die Spalten der CSV genau so geordnet und benannt sein, wie <a href="import_mitglieder_beispiel.csv">im hier verlinktem Beispiel für Mitglieder</a> und <a href="import_veranstaltungen_beispiel.csv">hier für Veranstaltungen</a> zu sehen ist.</p>
 
 <div class="panel panel-default">
 	<div class="panel-body">
