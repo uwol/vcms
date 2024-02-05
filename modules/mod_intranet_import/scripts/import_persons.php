@@ -201,7 +201,7 @@ if($libAuth->isLoggedin()){
 				$valueArray['einzugsermaechtigung_erteilt'] = $einzugsermaechtigung_erteilt;
 				$valueArray['email'] = strtolower($email);
 				$valueArray['webseite'] = $webseite;
-				$valueArray['atum_geburtstag'] = $libTime->assureMysqlDate($datum_geburtstag);
+				$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($datum_geburtstag);
 				$valueArray['heirat_datum'] = $libTime->assureMysqlDate($heirat_datum);
 				$valueArray['tod_datum'] = $libTime->assureMysqlDate($tod_datum);
 				$valueArray['austritt_datum'] = $libTime->assureMysqlDate($austritt_datum);
