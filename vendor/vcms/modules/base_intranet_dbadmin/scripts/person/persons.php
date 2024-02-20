@@ -74,11 +74,6 @@ if($libAuth->isLoggedin()){
 				$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
 				$stmt->execute();
 
-				//Vitaautorangaben entfernen
-				$stmt = $libDb->prepare('UPDATE base_person SET vita_letzterautor = NULL WHERE vita_letzterautor=:id');
-				$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
-				$stmt->execute();
-
 				//Mitglied aus Datenbank löschen
 				$stmt = $libDb->prepare('DELETE FROM base_person WHERE id=:id');
 				$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
