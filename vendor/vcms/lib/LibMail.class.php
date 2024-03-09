@@ -18,27 +18,33 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 class LibMail{
 	function createPHPMailer($fromName = ''){
 		global $libConfig, $libGenericStorage;
 
-		$smtpPort = $libGenericStorage->loadValue('base_core', 'smtp_port');
+		$smtpPort = intval($libGenericStorage->loadValue('base_core', 'smtp_port'));
 
-		$mail = new \PHPMailer\PHPMailer\PHPMailer();
+		$mail = new PHPMailer(true);
+		$mail->SMTPDebug = SMTP::DEBUG_OFF;
 		$mail->setFrom($libConfig->emailInfo, $fromName);
 		$mail->CharSet = 'UTF-8';
 
 		$mail->isSMTP();
 		$mail->SMTPAuth = true;
+		$mail->SMTPAutoTLS = false;
 		$mail->Host = $libGenericStorage->loadValue('base_core', 'smtp_host');
 		$mail->Port = $smtpPort;
 		$mail->Username = $libGenericStorage->loadValue('base_core', 'smtp_username');
 		$mail->Password = $libGenericStorage->loadValue('base_core', 'smtp_password');
 
 		if($smtpPort == 465) {
-			$mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 		} elseif($smtpPort == 587) {
-			$mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 		}
 
 		return $mail;
