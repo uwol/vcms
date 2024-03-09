@@ -6,7 +6,7 @@
         "components/font-awesome": "^4.6.3",
         "components/jquery": "^2.2.3",
         "php": ">=8.0.0",
-        "phpmailer/phpmailer": "^6.4.1",
+        "phpmailer/phpmailer": "6.5.3",
         "nategood/httpful": "*",
         "mpdf/mpdf": "^8.2"
     },

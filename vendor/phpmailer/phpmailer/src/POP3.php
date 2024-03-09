@@ -46,7 +46,7 @@ class POP3
      *
      * @var string
      */
-    const VERSION = '6.9.1';
+    const VERSION = '6.5.3';
 
     /**
      * Default POP3 port number.
@@ -337,12 +337,7 @@ class POP3
      */
     public function disconnect()
     {
-        // If could not connect at all, no need to disconnect
-        if ($this->pop_conn === false) {
-            return;
-        }
-
-        $this->sendString('QUIT' . static::LE);
+        $this->sendString('QUIT');
 
         // RFC 1939 shows POP3 server sending a +OK response to the QUIT command.
         // Try to get it.  Ignore any failures here.
