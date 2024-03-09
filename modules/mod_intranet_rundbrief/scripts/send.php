@@ -188,6 +188,10 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		}
 	}
 
+	if(count($recipientsArray) <= 0) {
+		echo '<p class="mb-4">Es wurden 0 Adressaten ausgewählt. Es wird keine E-Mail versendet.</p>';
+	}
+
 	//attachement
 	$attachementFile = '';
 	$attachementName = '';
