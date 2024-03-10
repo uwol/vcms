@@ -33,7 +33,6 @@ class LibRepositoryClient{
     global $libGlobal, $libFilesystem;
 
 	$this->repoHostname = 'api.' . $libGlobal->vcmsHostname;
-	//$this->repoHostname = 'raw.githubusercontent.com/adrianer/vcms/more-fields';
     $this->tempAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($this->tempRelativeDirectoryPath);
 	}
 
