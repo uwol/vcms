@@ -27,7 +27,7 @@ class LibCronjobs{
 		'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt', 'INSTALL.md',
 		'LICENSE', 'LICENSE.txt', 'README.md', 'update.php', 'update.txt');
 
-	var $directoriesToDelete = array('design', 'js', 'lib', 'styles',
+	var $directoriesToDelete = array('.git', '.github', 'design', 'js', 'lib', 'styles',
 		'modules/base_core', 'modules/base_internet_login',
 		'modules/base_internet_vereine', 'modules/base_intranet_administration_dbverwaltung',
 		'modules/base_intranet_dbadmin', 'modules/base_intranet_home', 'modules/base_intranet_personen',
