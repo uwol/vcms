@@ -9,7 +9,7 @@ section {
 header {
 	min-height: 100%;
 	background-position: center;
-	background-image: url('../custom/header.jpg');
+	background-image: url('../custom/header.webp');
 	background-size: cover;
 	-moz-background-size: cover;
 	-webkit-background-size: cover;
