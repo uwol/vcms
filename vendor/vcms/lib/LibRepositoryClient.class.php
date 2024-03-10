@@ -18,6 +18,9 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms;
 
+use Archive_Tar;
+
+
 class LibRepositoryClient{
 
   var $repoHostname;
@@ -30,6 +33,7 @@ class LibRepositoryClient{
     global $libGlobal, $libFilesystem;
 
 	$this->repoHostname = 'api.' . $libGlobal->vcmsHostname;
+	//$this->repoHostname = 'raw.githubusercontent.com/adrianer/vcms/more-fields';
     $this->tempAbsoluteDirectoryPath = $libFilesystem->getAbsolutePath($this->tempRelativeDirectoryPath);
 	}
 
@@ -97,7 +101,7 @@ class LibRepositoryClient{
   	$libHttp->get('http://' .$this->repoHostname. '/packages/'. $module. '.tar', $tarAbsoluteFilePath);
 
   	//untar module package
-  	$tar = new \pear\archive_tar\Archive\Tar($tarAbsoluteFilePath);
+  	$tar = new Archive_Tar($tarAbsoluteFilePath);
   	$libGlobal->notificationTexts[] = 'Entpacke das Paket in den temp-Ordner.';
   	$tar->extract($this->tempRelativeDirectoryPath. '/');
 
@@ -206,7 +210,7 @@ class LibRepositoryClient{
   	$libGlobal->notificationTexts[] = 'Lade Enginepaket aus dem Repository.';
   	$libHttp->get('http://' .$this->repoHostname. '/packages/engine.tar', $tarAbsoluteFilePath);
 
-  	$tar = new \pear\archive_tar\Archive\Tar($tarRelativeFilePath);
+  	$tar = new Archive_Tar($tarRelativeFilePath);
   	$libGlobal->notificationTexts[] = 'Entpacke Enginepaket in den temp-Ordner.';
   	$tar->extract($this->tempRelativeDirectoryPath. '/');
 
