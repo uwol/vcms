@@ -22,10 +22,10 @@ use PDO;
 
 class LibCronjobs{
 
-	var $filesToDelete = array('.gitignore', 'composer.json', 'inc.php',
+	var $filesToDelete = array('.gitignore', 'composer.json', 'composer.lock', 'inc.php',
 		'installer.php', 'installer2.php', 'installer3.php', 'installer.txt',
 		'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt', 'INSTALL.md',
-		'LICENSE', 'LICENSE.txt', 'README.md');
+		'LICENSE', 'LICENSE.txt', 'README.md', 'update.php', 'update.txt');
 
 	var $directoriesToDelete = array('design', 'js', 'lib', 'styles',
 		'modules/base_core', 'modules/base_internet_login',
@@ -38,7 +38,9 @@ class LibCronjobs{
 		'custom/semestercover', 'custom/veranstaltungsfotos');
 
 	var $directoriesWithHtaccessFile = array('custom/intranet',
-		'custom/veranstaltungsfotos', 'temp', 'vendor/httpful', 'vendor/pear',
+		'custom/veranstaltungsfotos', 'temp', 'vendor/nategood',
+		'vendor/composer', 'vendor/setasign', 'vendor/psr',
+		'vendor/paragonie', 'vendor/pear', 'vendor/mpdf', 'vendor/myclabs',
 		'vendor/phpass', 'vendor/phpmailer', 'vendor/vcms/install', 'vendor/vcms/layout',
 		'vendor/vcms/lib', 'vendor/vcms/modules');
 

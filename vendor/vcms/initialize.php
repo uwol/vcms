@@ -21,10 +21,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 require_once(__DIR__ . '/autoload.php');
 require_once(__DIR__ . '/../autoload.php');
-require_once(__DIR__ . '/../phpmailer/autoload.php');
 require_once(__DIR__ . '/../phpass/autoload.php');
-require_once(__DIR__ . '/../pear/autoload.php');
-require_once(__DIR__ . '/../httpful/bootstrap.php');
 
 
 /*

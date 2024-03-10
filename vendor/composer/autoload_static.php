@@ -77,10 +77,29 @@ class ComposerStaticInitc6964f01273ef268368e17cca3f72c51
                 0 => __DIR__ . '/..' . '/nategood/httpful/src',
             ),
         ),
+        'C' => 
+        array (
+            'Console' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/console_getopt',
+            ),
+        ),
+        'A' => 
+        array (
+            'Archive_Tar' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/archive_tar',
+            ),
+        ),
+    );
+
+    public static $fallbackDirsPsr0 = array (
+        0 => __DIR__ . '/..' . '/pear/pear-core-minimal/src',
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'PEAR_Exception' => __DIR__ . '/..' . '/pear/pear_exception/PEAR/Exception.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -89,6 +108,7 @@ class ComposerStaticInitc6964f01273ef268368e17cca3f72c51
             $loader->prefixLengthsPsr4 = ComposerStaticInitc6964f01273ef268368e17cca3f72c51::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitc6964f01273ef268368e17cca3f72c51::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitc6964f01273ef268368e17cca3f72c51::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInitc6964f01273ef268368e17cca3f72c51::$fallbackDirsPsr0;
             $loader->classMap = ComposerStaticInitc6964f01273ef268368e17cca3f72c51::$classMap;
 
         }, null, ClassLoader::class);

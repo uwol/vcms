@@ -2,13 +2,15 @@
     "name": "vcms/vcms",
     "type": "project",
     "require": {
-        "twbs/bootstrap": "^3.3.6",
-        "components/font-awesome": "^4.6.3",
-        "components/jquery": "^2.2.3",
+        "twbs/bootstrap": "^3.4.1",
+        "components/font-awesome": "^4.7.0",
+        "components/jquery": "^2.2.4",
         "php": ">=8.0.0",
-        "phpmailer/phpmailer": "6.5.3",
+        "phpmailer/phpmailer": "^6.9.1",
         "nategood/httpful": "*",
-        "mpdf/mpdf": "^8.2"
+        "nnnick/chartjs": "2.9.4",
+        "pear/archive_tar": "^1.4.14",
+        "mpdf/mpdf": "^8.2.2"
     },
     "license": "GPL-3.0+"
 }
