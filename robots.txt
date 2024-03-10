@@ -1,10 +1,128 @@
-User-agent: Googlebot-Image
-Disallow: /
+# The following is a list of well-known, not harmful bots.
+# Bots that e.g. crawl images or crawl for AI-training-data,
+# are explicitly excluded here.
 
-User-agent: ia_archiver
-Disallow: /
-
-User-agent: *
+User-agent: Googlebot
+Allow: /
 Allow: /api.php?iid=semesterprogramm_icalendar
 Disallow: /api.php
 Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: Googlebot-Mobile
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: bingbot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: msnbot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: Applebot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: facebookcatalog
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: facebookexternalhit
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: Facebot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: Twitterbot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: WhatsApp
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: DuckDuckBot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+User-agent: SemrushBot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /custom/
+Disallow: *.jpg
+Disallow: *.jpeg
+Disallow: *.png
+Disallow: *.webp
+
+# Make sure that all other bots, like Googlebot-Image
+# or AI-training-data-bots, are excluded
+User-agent: *
+Disallow: /
