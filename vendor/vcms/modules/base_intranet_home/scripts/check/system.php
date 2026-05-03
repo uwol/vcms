@@ -47,6 +47,19 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	}
 
 	/*
+	* nginx_version (informativ)
+	*/
+	$nginxVersion = getNginxVersion();
+	if($nginxVersion !== null){
+		$oks[] = 'Nginx-Version=' .$nginxVersion. '.';
+	} elseif(!empty($_SERVER['SERVER_SOFTWARE'])){
+		// Falls kein Nginx erkannt wurde, dennoch den Webserver string ausgeben
+		$oks[] = 'Webserver=' .$_SERVER['SERVER_SOFTWARE']. '.';
+	}
+	// Nginx-Flag setzen (auch wenn Version nicht extrahiert werden konnte)
+	$isNginx = ($nginxVersion !== null) || (isset($_SERVER['SERVER_SOFTWARE']) && stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false);
+
+	/*
 	* missing folders
 	*/
 	$directoriesToCreate = $libCronjobs->getDirectoriesToCreate();
@@ -62,20 +75,24 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	}
 
 	/*
-	* missing htaccess deny files
+	* missing htaccess deny files (bei Apache), unter Nginx überspringen
 	*/
-	$directoriesWithHtaccessFile = $libCronjobs->getDirectoriesWithHtaccessFile();
+	if(!$isNginx){
+		$directoriesWithHtaccessFile = $libCronjobs->getDirectoriesWithHtaccessFile();
 
-	foreach($directoriesWithHtaccessFile as $directoryRelativePath){
-		$directoryAbsolutePath = $libFilesystem->getAbsolutePath($directoryRelativePath);
+		foreach($directoriesWithHtaccessFile as $directoryRelativePath){
+			$directoryAbsolutePath = $libFilesystem->getAbsolutePath($directoryRelativePath);
 
-		if(is_dir($directoryAbsolutePath)){
-			if($libCronjobs->hasHtaccessDenyFile($directoryAbsolutePath)){
-				$securedFolders[] = $directoryRelativePath;
-			} else {
-				$unsecuredFolders[] = $directoryRelativePath;
+			if(is_dir($directoryAbsolutePath)){
+				if($libCronjobs->hasHtaccessDenyFile($directoryAbsolutePath)){
+					$securedFolders[] = $directoryRelativePath;
+				} else {
+					$unsecuredFolders[] = $directoryRelativePath;
+				}
 			}
 		}
+	} else {
+		$oks[] = 'Nginx erkannt: .htaccess-Prüfung übersprungen. Bitte Nginx-Konfiguration zum Verzeichnisschutz prüfen.';
 	}
 
 	/*
@@ -132,4 +149,29 @@ function searchNotReadAbleFiles($dir){
 	}
 
 	return $notReadableFiles;
+}
+
+function getNginxVersion(){
+	$version = null;
+
+	// 1) Aus SERVER_SOFTWARE lesen, wenn vorhanden
+	if(isset($_SERVER['SERVER_SOFTWARE'])){
+		if(preg_match('/nginx\/(\d+\.[\d\.]+)/i', $_SERVER['SERVER_SOFTWARE'], $m)){
+			$version = $m[1];
+		}
+	}
+
+	// 2) Fallback: nginx -v ausführen, falls erlaubt
+	if($version === null){
+		$disabled = (string) ini_get('disable_functions');
+		$disabledList = array_map('trim', explode(',', $disabled));
+		if(function_exists('shell_exec') && !in_array('shell_exec', $disabledList)){
+			$out = @shell_exec('nginx -v 2>&1');
+			if(is_string($out) && preg_match('/nginx\/(\d+\.[\d\.]+)/i', $out, $m)){
+				$version = $m[1];
+			}
+		}
+	}
+
+	return $version;
 }
