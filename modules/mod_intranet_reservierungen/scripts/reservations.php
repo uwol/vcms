@@ -54,10 +54,10 @@ echo '<h1>Reservierungen</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
+echo '<div class="card">';
+echo '<div class="card-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_reservation_book" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> Eine Reservierung hinzufügen</a>';
+echo '<a href="index.php?pid=intranet_reservation_book" class="btn btn-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Eine Reservierung hinzufügen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -68,9 +68,9 @@ $stmt->bindValue(':datum', date('Y-m-d'));
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
-	echo '<div class="panel-heading">';
-	echo '<h3 class="panel-title">';
+	echo '<div id="' .$row['id']. '" class="card' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
+	echo '<div class="card-heading">';
+	echo '<h3 class="card-title">';
 	echo $libTime->formatDateString($row['datum']);
 	echo ' ';
 	echo '<a href="index.php?pid=intranet_person&amp;id=' .$row['person']. '">';
@@ -87,13 +87,13 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '</h3>';
 	echo '</div>';
 
-	echo '<div class="panel-body">';
+	echo '<div class="card-body">';
 	echo '<div class="row">';
-	echo '<div class="col-xs-12 col-sm-9 col-md-10">';
+	echo '<div class="col-12 col-sm-9 col-md-10">';
 	echo nl2br($row['beschreibung']);
 	echo '</div>';
 
-	echo '<div class="hidden-xs col-sm-3 col-md-2">';
+	echo '<div class="d-none d-sm-block col-sm-3 col-md-2">';
 	echo $libPerson->getSignature($row['person']);
 	echo '</div>';
 

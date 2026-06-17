@@ -29,10 +29,12 @@ class LibPerson{
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$mitgliedarray = $stmt->fetch(PDO::FETCH_ASSOC);
+		if($mitgliedarray) {
+			$mitgliedstring = $this->formatNameString($mitgliedarray['anrede'], $mitgliedarray['titel'], $mitgliedarray['rang'], $mitgliedarray['vorname'], $mitgliedarray['praefix'], $mitgliedarray['name'], $mitgliedarray['suffix'], $mode);
+			return $mitgliedstring;
+		}
+		return '';
 
-		$mitgliedstring = $this->formatNameString($mitgliedarray['anrede'], $mitgliedarray['titel'], $mitgliedarray['rang'], $mitgliedarray['vorname'], $mitgliedarray['praefix'], $mitgliedarray['name'], $mitgliedarray['suffix'], $mode);
-
-		return $mitgliedstring;
 	}
 
 	function formatNameString($anrede, $titel, $rang, $vorname, $praefix, $name, $suffix, $mode = 0){
@@ -137,7 +139,7 @@ class LibPerson{
 	}
 
 	function getSignature($id){
-		$retstr = '<div class="person-signature-box center-block mb-3">';
+		$retstr = '<div class="person-signature-box mx-auto mb-3">';
 
 		$retstr .= '<div class="img-box">';
 		$retstr .= $this->getImage($id);
@@ -166,9 +168,9 @@ class LibPerson{
 		}
 
 		if($this->hasImageFile($id)){
-			$retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="img-responsive hvr-glow ' .$sizeClass. '" alt=""/>';
+			$retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="img-fluid hvr-glow ' .$sizeClass. '" alt=""/>';
 		} else {
-			$retstr .= '<div class="img-responsive hvr-glow person-img-dummy ' .$sizeClass. '"></div>';
+			$retstr .= '<div class="img-fluid hvr-glow person-img-dummy ' .$sizeClass. '"></div>';
 		}
 
 		$retstr .= '</a>';

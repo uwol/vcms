@@ -25,9 +25,9 @@ echo '<h1>Reservierung durchführen</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
-echo '<form action="index.php?pid=intranet_reservations" method="post" class="form-horizontal">';
+echo '<div class="card">';
+echo '<div class="card-body">';
+echo '<form action="index.php?pid=intranet_reservations" method="post" class="">';
 echo '<fieldset>';
 
 $libForm->printTextInput('datum', 'Datum', date("Y-m-d"), 'date');

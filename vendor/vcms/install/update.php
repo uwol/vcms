@@ -81,6 +81,11 @@ if(!in_array('intern', $columnsBaseVeranstaltung)){
 	$libDb->query('ALTER TABLE base_veranstaltung ADD intern tinyint(1) NOT NULL default 0');
 }
 
+if(in_array('datum', $columnsBaseVeranstaltung)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
+	$libDb->query("ALTER TABLE `base_veranstaltung` CHANGE `datum` `datum` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00'");
+}
+
 
 /*
 * Update base_person
@@ -138,6 +143,36 @@ if(!in_array('email', $indexesBasePerson)){
 	$libDb->query('ALTER TABLE base_person ADD UNIQUE email (email)');
 }
 
+if(!in_array('studium', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD studium varchar(255)');
+}
+
+if(!in_array('linkedin', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD linkedin varchar(255)');
+}
+
+if(!in_array('xing', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD xing varchar(255)');
+}
+
+if(!in_array('datenschutz_erklaerung_unterschrieben', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD datenschutz_erklaerung_unterschrieben tinyint(1) NOT NULL default 0');
+}
+
+if(!in_array('iban', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD iban varchar(255)');
+}
+
+if(!in_array('einzugsermaechtigung_erteilt', $columnsBasePerson)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+	$libDb->query('ALTER TABLE base_person ADD einzugsermaechtigung_erteilt tinyint(1) NOT NULL default 0');
+}
+
 
 /*
 * Update base_semester
@@ -173,6 +208,108 @@ if(!in_array('datenpflegewart', $columnsBaseSemester)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
 	$libDb->query('ALTER TABLE base_semester ADD datenpflegewart int(11)');
 }
+
+
+/*
+* Update mod_chargierkalender_veranstaltung
+*/
+$columnsModChargierkalenderVeranstaltung = getColumns('mod_chargierkalender_veranstaltung');
+
+if(in_array('datum', $columnsModChargierkalenderVeranstaltung)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle mod_chargierkalender_veranstaltung';
+	$libDb->query("ALTER TABLE `mod_chargierkalender_veranstaltung` CHANGE `datum` `datum` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00'");
+}
+
+
+/*
+* Update mod_internethome_nachricht
+*/
+$columnsModInternethomeNachricht = getColumns('mod_internethome_nachricht');
+
+if(in_array('startdatum', $columnsModInternethomeNachricht)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle mod_internethome_nachricht';
+	$libDb->query("ALTER TABLE `mod_internethome_nachricht` CHANGE `startdatum` `startdatum` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00'");
+}
+
+if(in_array('verfallsdatum', $columnsModInternethomeNachricht)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle mod_internethome_nachricht';
+	$libDb->query("ALTER TABLE `mod_internethome_nachricht` CHANGE `verfallsdatum` `verfallsdatum` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00'");
+}
+
+
+/*
+* Update mod_news_news
+*/
+$columnsModNewsNews = getColumns('mod_news_news');
+
+if(in_array('eingabedatum', $columnsModNewsNews)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle mod_news_news';
+	$libDb->query("ALTER TABLE `mod_news_news` CHANGE `eingabedatum` `eingabedatum` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00'");
+}
+
+
+/* Update mod_reservierung_reservierung
+*/
+$columnsModReservierungReservierung = getColumns('mod_reservierung_reservierung');
+
+if(in_array('datum', $columnsModReservierungReservierung)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle mod_reservierung_reservierung';
+	$libDb->query("ALTER TABLE `mod_reservierung_reservierung` CHANGE `datum` `datum` DATE NOT NULL DEFAULT '1970-01-01'");
+}
+
+
+/*
+* Update sys_log_intranet
+*/
+$columnsSysLogIntranet = getColumns('sys_log_intranet');
+
+if(in_array('datum', $columnsSysLogIntranet)){
+	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle sys_log_intranet';
+	$libDb->query("ALTER TABLE `sys_log_intranet` CHANGE `datum` `datum` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00'");
+}
+
+
+/*
+* Drop mod_forum_comment
+*/
+$libGlobal->notificationTexts[] = 'Entferne Tabelle mod_forum_comment';
+$libDb->query('DROP TABLE IF EXISTS mod_forum_comment');
+
+
+/*
+* Drop mod_forum_thread
+*/
+$libGlobal->notificationTexts[] = 'Entferne Tabelle mod_forum_thread';
+$libDb->query('DROP TABLE IF EXISTS mod_forum_thread');
+
+
+/*
+* Drop mod_kvnetz_autologin
+*/
+$libGlobal->notificationTexts[] = 'Entferne Tabelle mod_kvnetz_autologin';
+$libDb->query('DROP TABLE IF EXISTS mod_kvnetz_autologin');
+
+
+/*
+* Drop mod_rpc_nachricht_empfangen
+*/
+$libGlobal->notificationTexts[] = 'Entferne Tabelle mod_rpc_nachricht_empfangen';
+$libDb->query('DROP TABLE IF EXISTS mod_rpc_nachricht_empfangen');
+
+
+/*
+* Drop mod_rpc_nachricht_versendet
+*/
+$libGlobal->notificationTexts[] = 'Entferne Tabelle mod_rpc_nachricht_versendet';
+$libDb->query('DROP TABLE IF EXISTS mod_rpc_nachricht_versendet');
+
+
+/*
+* Drop mod_rpc_verbindungen
+*/
+$libGlobal->notificationTexts[] = 'Entferne Tabelle mod_rpc_verbindungen';
+$libDb->query('DROP TABLE IF EXISTS mod_rpc_verbindungen');
+
 
 /*
 * Update base_semester

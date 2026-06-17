@@ -119,8 +119,8 @@ echo '</div>';
 echo '<div id="files-success" role="alert" class="alert alert-success" style="display:none"></div>';
 echo '<div id="files-danger" role="alert" class="alert alert-danger" style="display:none"></div>';
 
-echo '<div class="form-group">';
-echo '<label class="btn btn-default btn-file">';
+echo '<div class="mb-3 row">';
+echo '<label class="btn btn-secondary btn-file">';
 echo '<i aria-hidden="true" class="fa fa-upload"></i> Fotos hochladen';
 echo '<input id="fileupload" type="file" style="display:none" name="files[]" multiple>';
 echo '</label>';
@@ -188,8 +188,8 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 	if($mainPictureId != -1){
 		echo '<div class="row gallery">';
-		echo '<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">';
-		echo '<div class="thumbnail reveal">';
+		echo '<div class="col-sm-8 offset-sm-2 col-md-6 col-md-offset-3 col-lg-4 offset-lg-4">';
+		echo '<div class="card reveal">';
 		echo '<div class="img-frame">';
 		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
 		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
@@ -206,7 +206,7 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 	foreach($pictures as $key => $picture){
 		echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-		echo '<div class="thumbnail reveal mb-2">';
+		echo '<div class="card reveal mb-2">';
 
 		$visibility = $libGallery->getPublicityLevel($picture);
 		$visibilityClass = '';

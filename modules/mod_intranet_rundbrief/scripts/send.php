@@ -21,6 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 echo '<h1>Versand der Nachricht</h1>';
+echo '<h2>DIESE SEITE NICHT SCHLIESSEN BEVOR ALLE NACHRICHTEN ERFOLGREICH VERSENDET WORDEN SIND!</h2>';
 
 $stmt = $libDb->prepare('SELECT email FROM base_person WHERE id=:id');
 $stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
@@ -188,6 +189,10 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		}
 	}
 
+	if(count($recipientsArray) <= 0) {
+		echo '<p class="mb-4">Es wurden 0 Adressaten ausgewählt. Es wird keine E-Mail versendet.</p>';
+	}
+
 	//attachement
 	$attachementFile = '';
 	$attachementName = '';
@@ -200,12 +205,16 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	$recipientsPerMail = 15;
 	$numberOfMails = ceil(count($recipientsArray) / $recipientsPerMail);
 
+	if($numberOfMails > 1) {
+		echo '<p class="mb-4">Es wurden mehr als 15 Adressaten ausgewählt. Die E-Mail wird in '.$numberOfMails.' E-Mails aufgeteilt mit je max. 15 Adressaten pro E-Mail.</p>';
+	}
+
 	for($j=0; $j<$numberOfMails; $j++){
 		$mailNumber = $j + 1;
 		$subRecipientsArray = array_slice($recipientsArray, $j*$recipientsPerMail, $recipientsPerMail);
 
 		echo '<hr />';
-		echo '<p class="mb-4">Sende E-Mail ' .$mailNumber;
+		echo '<p class="mb-4">Sende E-Mail (' .$mailNumber. '/' .$numberOfMails. ')';
 
 		if(is_file($attachementFile)){
 			echo ' mit Anhang';
@@ -233,7 +242,7 @@ echo $libString->getNotificationBoxText();
 function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, $attachementFile, $attachementName){
 	global $libAuth, $libMail;
 
-	$mail = $libMail->createPHPMailer($fromName);
+	$mail = $libMail->createPHPRundbriefMailer($fromName);
 
 	$mail->Subject = $subject;
 	$mail->isHTML(false);
@@ -245,7 +254,11 @@ function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, 
 		$mail->Priority = 5;
 	}
 
+	echo '<p class="mb-4">DEBUG: Adding sender '.$replyEmail.' to the To-field, so that he/she gets a copy in any case.</p>';
+	$mail->addAddress($replyEmail, $fromName);
+
 	foreach($recipientsArray as $recipient){
+		//echo '<p class="mb-4">DEBUG: Adding BCC: '.$recipient[0].'</p>';
 		$mail->addBCC($recipient[0]);
 	}
 
@@ -253,9 +266,18 @@ function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, 
 		$mail->addAttachment($attachementFile, $attachementName);
 	}
 
-	if(!$mail->send()){
-		echo '<p class="mb-4">Fehler beim Versand: ' .$mail->ErrorInfo. '</p>';
+	try {
+		if(!$mail->send()){
+			echo '<p class="mb-4">Fehler beim Versand: ' .$mail->ErrorInfo. '</p>';
+			echo '<p class="mb-4">E-Mail wahrscheinlich nicht versendet!</p>';
+		} else {
+			echo '<p class="mb-4">E-Mail Versand erfolgreich</p>';
+		}
+	} catch (Exception $exc) {
+		echo '<p class="mb-4">Kritischer Fehler beim Versand: ' .$exc->getMessage(). '</p>';
+		echo '<p class="mb-4">E-Mail wahrscheinlich nicht versendet!</p>';
 	}
+
 }
 
 function istImVorstand($aemter){

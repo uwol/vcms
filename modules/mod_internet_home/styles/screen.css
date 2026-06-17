@@ -9,7 +9,7 @@ section {
 header {
 	min-height: 100%;
 	background-position: center;
-	background-image: url('../custom/header.jpg');
+	background-image: url('../custom/header.webp');
 	background-size: cover;
 	-moz-background-size: cover;
 	-webkit-background-size: cover;
@@ -57,7 +57,7 @@ header .header-content .header-content-inner .btn-circle:focus {
 }
 
 header .header-content .header-content-inner .btn-circle .fa {
-	color: white;
+    color: white;
 }
 
 @media (min-width: 768px) {
@@ -80,7 +80,7 @@ section.announcement-box:nth-of-type(even) {
 	background-color: #666;
 }
 
-.thumbnail {
+.card {
 	padding: 0;
 }
 

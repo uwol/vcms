@@ -40,9 +40,9 @@ if($libGlobal->getSiteUrlAuthority() != ''){
 	}
 }
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
-echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="form-horizontal">';
+echo '<div class="card">';
+echo '<div class="card-body">';
+echo '<form action="' .$urlPrefix. 'index.php?pid=intranet_home" method="post" class="">';
 echo '<fieldset>';
 
 $libForm->printTextInput('intranet_login_email', 'E-Mail-Adresse', '', 'email', false, true);

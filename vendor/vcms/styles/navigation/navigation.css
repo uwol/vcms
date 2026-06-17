@@ -1,119 +1,121 @@
-.navbar-default {
+.navbar-vcms {
 	background-color: white;
 	border-color: transparent;
 	box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
 }
 
-.navbar-default,
-.navbar-default a {
+.navbar-vcms,
+.navbar-vcms a {
 	transition: all 0.35s;
 }
 
-.navbar-default #logo {
+.navbar-vcms #logo {
 	height: 75px;
 }
 
-@media(min-width: 768px){
-	.navbar-default.affix-top {
+@media(min-width: 992x){
+	.navbar-vcms.affix-top {
 		position: absolute;
 	}
 }
 
-@media(max-width: 767px){
-	.navbar-default #logo {
+@media(max-width: 991px){
+	.navbar-vcms #logo {
 		height: 50px;
 		width: 50px;
 		float: left;
 	}
 }
 
-.navbar-default.affix #logo {
+.navbar-vcms.affix #logo {
 	height: 50px;
 	width: 50px;
 	float: left;
 }
 
-.navbar-default .navbar-header .navbar-brand {
+.navbar-vcms .navbar-brand {
 	color: inherit;
 	font-weight: 500;
 	text-transform: uppercase;
 }
 
-.navbar-default .navbar-header .navbar-brand:hover,
-.navbar-default .navbar-header .navbar-brand:focus {
+.navbar-vcms .navbar-brand:hover,
+.navbar-vcms .navbar-brand:focus {
 	color: #111;
 }
 
-@media(max-width: 767px){
-	.navbar-default .navbar-header .navbar-brand {
+@media(max-width: 991px){
+	.navbar-vcms .navbar-brand {
 		padding-left: 5px;
 	}
 }
 
-@media(min-width: 768px) {
-	.navbar-default.affix .navbar-header .navbar-brand {
+@media(min-width: 992px) {
+	.navbar-vcms.affix .navbar-brand {
 		font-size: 1.1em;
 	}
 }
 
-.navbar-default .navbar-header .navbar-toggle {
+.navbar-vcms .navbar-toggler {
 	font-weight: 500;
 	color: inherit;
 	text-transform: uppercase;
 	border-color: transparent;
 }
 
-.navbar-default .navbar-header .navbar-toggle:focus,
-.navbar-default .navbar-header .navbar-toggle:hover {
+.navbar-vcms .navbar-toggler:focus,
+.navbar-vcms .navbar-toggler:hover {
 	background-color: inherit;
 }
 
-.navbar-default .nav > li > a,
-.navbar-default .nav > li > a:focus {
+.navbar-vcms .navbar-nav .nav-link,
+.navbar-vcms .navbar-nav .nav-link:focus {
 	font-weight: 500;
 	color: inherit;
 }
 
-.navbar-default .nav > li > a:hover,
-.navbar-default .nav > li > a:focus:hover {
+.navbar-vcms .navbar-nav .nav-link:hover,
+.navbar-vcms .navbar-nav .nav-link:focus:hover {
 	color: #111;
 }
 
-.navbar-default .nav > li.active > a,
-.navbar-default .nav > li.active > a:focus {
+.navbar-vcms .navbar-nav .nav-link.active,
+.navbar-vcms .navbar-nav .nav-link.active:focus {
 	color: #111;
 	background-color: transparent;
 }
 
-.navbar-default .nav > li.active > a:hover,
-.navbar-default .nav > li.active > a:focus:hover {
+.navbar-vcms .navbar-nav .nav-link.active:hover,
+.navbar-vcms .navbar-nav .nav-link.active:focus:hover {
 	background-color: transparent;
 }
 
-.navbar-default .nav .dropdown-menu > .active > a,
-.navbar-default .nav .dropdown-menu > .active > a:focus,
-.navbar-default .nav .dropdown-menu > .active > a:hover {
+.navbar-vcms .dropdown-item {
+    font-weight: 500;
+    color: inherit;
+    background-color: transparent;
+}
+
+.navbar-vcms .dropdown-menu .active > .dropdown-item,
+.navbar-vcms .dropdown-menu .active > .dropdown-item:focus,
+.navbar-vcms .dropdown-menu .active > .dropdown-item:hover {
 	background-color: transparent;
 }
 
-.navbar-default .nav .open .dropdown-menu > li > a {
-	color: inherit;
-}
-
-.navbar-default .navbar-internet .nav > li > a {
+.navbar-vcms .navbar-internet .nav-link {
 	text-transform: uppercase;
 }
 
-.navbar-default .navbar-internet .nav > li > a.person-profile-link {
+.navbar-vcms .navbar-internet .nav-link.person-profile-link {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-.navbar-default .navbar-intranet .nav {
+.navbar-vcms .navbar-intranet .navbar-nav {
 	font-size: 0.9em;
 }
 
-.navbar-default .navbar-intranet .nav > li > a {
+.navbar-vcms .navbar-intranet .nav-link {
 	font-weight: 500;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;

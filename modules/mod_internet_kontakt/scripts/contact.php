@@ -55,6 +55,18 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('show_form')){
 	$libGenericStorage->saveValueInCurrentModule('show_form', 1);
 }
 
+if(!$libGenericStorage->attributeExistsInCurrentModule('show_map')){
+    $libGenericStorage->saveValueInCurrentModule('show_map', '1');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('map_latitude')){
+    $libGenericStorage->saveValueInCurrentModule('map_latitude', '51.968609');
+}
+
+if(!$libGenericStorage->attributeExistsInCurrentModule('map_longitude')){
+    $libGenericStorage->saveValueInCurrentModule('map_longitude', '7.624257');
+}
+
 if(!$libGenericStorage->attributeExistsInCurrentModule('show_haftungshinweis')){
 	$libGenericStorage->saveValueInCurrentModule('show_haftungshinweis', 0);
 }
@@ -128,8 +140,8 @@ if($libConfig->verbindungZusatz != ''){
 echo '<span>' .$libConfig->verbindungStrasse. '</span><br />';
 echo '<span>' .$libConfig->verbindungPlz. '</span> <span>' .$libConfig->verbindungOrt. '</span><br />';
 echo '<span>' .$libConfig->verbindungLand. '</span><br />';
-echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span>' .$libConfig->verbindungTelefon. '</span><br />';
-echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span>' .$libConfig->emailInfo. '</span><br />';
+echo '<a href="tel:'.filter_var($libConfig->verbindungTelefon, FILTER_SANITIZE_NUMBER_INT). '"> <i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span>' .$libConfig->verbindungTelefon. '</span></a><br />';
+echo '<a href="mailto:ENTFERNEDASVORDEMSENDEN+'.$libConfig->emailInfo.'"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span style="display:none">ENTFERNEDASVORDEMSENDEN+</span><span>' .$libConfig->emailInfo. '</span></a><br />';
 echo '</address>';
 
 echo '<p class="contact-vorstand mb-4">';
@@ -165,13 +177,26 @@ if($libGenericStorage->loadValueInCurrentModule('show_quaestor') && $vorstand['q
 }
 
 echo '</p>';
+
+if($libGenericStorage->loadValueInCurrentModule('show_map')){
+    $latitude = $libGenericStorage->loadValueInCurrentModule('map_latitude');
+    $longitude = $libGenericStorage->loadValueInCurrentModule('map_longitude');
+    echo '<div id="addressmap" class="img-fluid mx-start reveal" style="width:500px; height:300px;"></div>';
+    echo '<script>var map = L.map("addressmap").setView(['.$latitude.', '.$longitude.'], 15);
+        L.tileLayer("https://tile.openstreetmap.de/{z}/{x}/{y}.png",
+        { maxZoom: 19, attribution: "&copy; \<a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"}).addTo(map);
+        var marker = L.marker(['.$latitude.', '.$longitude.']).addTo(map);
+        marker.bindPopup("<b>' .$libConfig->verbindungName. '</b>").openPopup();
+        </script>';
+}
+
 echo '</section>';
 echo '</div>';
 
 echo '<aside class="col-sm-6">';
-echo '<div class="panel panel-default reveal mb-5">';
-echo '<div class="thumbnail">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="img-responsive center-block reveal" />';
+echo '<div class="card reveal mb-5">';
+echo '<div class="card">';
+echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="img-fluid mx-auto reveal" />';
 echo '</div>';
 echo '</div>';
 echo '</aside>';
@@ -212,9 +237,9 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 			$nachricht = $_POST['nachricht'];
 		}
 
-		echo '<div class="panel panel-default">';
-		echo '<div class="panel-body">';
-		echo '<form action="index.php?pid=kontakt" method="post" class="form-horizontal">';
+		echo '<div class="card">';
+		echo '<div class="card-body">';
+		echo '<form action="index.php?pid=kontakt" method="post" class="">';
 		echo '<fieldset>';
 
 		$libForm->printTextInput('name', 'Name', $libString->protectXSS($name), 'text', false, true);
@@ -248,5 +273,5 @@ if($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis')){
 
 echo '<h2>VCMS</h2>';
 echo '<section class="cms-box">';
-echo '<p class="mb-4">Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)</p>';
+echo '<p class="mb-4">Content Management System: <a href="https://' .$libGlobal->vcmsHostname. '/vcms_page">VCMS</a> (GNU General Public License)</p>';
 echo '</section>';

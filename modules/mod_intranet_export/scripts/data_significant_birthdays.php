@@ -27,7 +27,7 @@ if($libAuth->isLoggedin()){
 		die('Das angegebene Jahr ist keine Zahl.');
 	}
 
-	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'P' OR gruppe = 'W' OR gruppe = 'G' AND datum_geburtstag != '' AND datum_geburtstag IS NOT NULL ORDER BY DATE_FORMAT(datum_geburtstag, '%m%d')");
+	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE (gruppe = 'P' OR gruppe = 'W' OR gruppe = 'G') AND (datum_geburtstag IS NOT NULL) ORDER BY DATE_FORMAT(datum_geburtstag, '%m%d')");
 	$stmt->execute();
 
 	$table = new vcms\LibTable($libDb);

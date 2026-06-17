@@ -23,6 +23,14 @@
 a:link,
 a:visited {
 	color: #961419;
+    text-decoration: none;
+}
+
+.btn-toolbar .btn,
+.btn-toolbar .btn.active,
+.btn-toolbar .btn:focus {
+    color: #961419;
+    background-color: white;
 }
 
 .calendar .today {

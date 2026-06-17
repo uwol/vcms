@@ -4,12 +4,16 @@ echo '<html lang="de">' . PHP_EOL;
 echo '  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# business: http://ogp.me/ns/business#">' . PHP_EOL;
 echo '    <meta charset="utf-8" />' . PHP_EOL;
 echo '    <meta http-equiv="X-UA-Compatible" content="IE=edge" />' . PHP_EOL;
+echo '    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">' . PHP_EOL;
+echo '    <meta http-equiv="Pragma" content="no-cache">' . PHP_EOL;
+echo '    <meta http-equiv="Expires" content="0">' . PHP_EOL;
 echo '    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>' . PHP_EOL;
 echo '    <title>' .$libGlobal->getPageTitle(). '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="vendor/fonts/font-awesome/css/font-awesome.min.css" />' . PHP_EOL;
+echo '    <meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' hcaptcha.com *.hcaptcha.com unpkg.com \'unsafe-inline\'; frame-src \'self\' hcaptcha.com *.hcaptcha.com facebook.com *.facebook.com; style-src \'self\' hcaptcha.com *.hcaptcha.com unpkg.com \'unsafe-inline\'; connect-src \'self\' hcaptcha.com *.hcaptcha.com;  img-src \'self\' data: unpkg.com tile.openstreetmap.de tile.openstreetmap.org; " />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="vendor/components/font-awesome/css/font-awesome.min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/fonts/libre-franklin/css/libre-franklin.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/hover/hover-min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css" />' . PHP_EOL;
@@ -22,11 +26,13 @@ echo '    <link rel="stylesheet" href="vendor/vcms/styles/person/person.css" />'
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
 echo '    <link rel="canonical" href="' .$libGlobal->getPageCanonicalUrl(). '"/>' . PHP_EOL;
-echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
-echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
+echo '    <script src="vendor/components/jquery/jquery.min.js"></script>' . PHP_EOL;
+echo '    <script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/vcms/styles/gallery/modal.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/vcms/styles/screen.js"></script>' . PHP_EOL;
+
+
 
 if(is_array($libGlobal->module->getHeaderStrings())){
 	foreach($libGlobal->module->getHeaderStrings() as $headerString){
@@ -38,9 +44,9 @@ if(is_array($libGlobal->module->getHeaderStrings())){
 * robots
 */
 if($libGlobal->page->hasAccessRestriction()){
-	echo '    <meta name="robots" content="noindex, nofollow, noarchive" />' . PHP_EOL;
+	echo '    <meta name="robots" content="noindex, nofollow, noarchive, nocache, notranslate, noimageindex" />' . PHP_EOL;
 } else {
-	echo '    <meta name="robots" content="index, follow, noarchive" />' . PHP_EOL;
+	echo '    <meta name="robots" content="index, follow, notranslate" />' . PHP_EOL;
 }
 
 /*

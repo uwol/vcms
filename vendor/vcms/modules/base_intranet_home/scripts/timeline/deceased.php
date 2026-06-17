@@ -31,7 +31,9 @@ class LibDeceasedTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 }
 
 
-$stmt = $libDb->prepare("SELECT id, tod_datum, datum_geburtstag FROM base_person WHERE tod_datum != '' AND tod_datum != '0000-00-00' AND DATEDIFF(tod_datum, :semesterstart) >= 0 AND DATEDIFF(tod_datum, :semesterende) <= 0 ORDER BY tod_datum");
+$zeitraum = $libTime->getZeitraum($libGlobal->semester);
+
+$stmt = $libDb->prepare("SELECT id, tod_datum, datum_geburtstag FROM base_person WHERE tod_datum IS NOT NULL AND datum_geburtstag IS NOT NULL AND DATEDIFF(tod_datum, :semesterstart) >= 0 AND DATEDIFF(tod_datum, :semesterende) <= 0 ORDER BY tod_datum");
 $stmt->bindValue(':semesterstart', $zeitraum[0]);
 $stmt->bindValue(':semesterende', $zeitraum[1]);
 $stmt->execute();
@@ -42,7 +44,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$age = false;
 	$description = '';
 
-	if($row['datum_geburtstag'] != '' && $row['datum_geburtstag'] != '0000-00-00'){
+	if($row['datum_geburtstag'] != '' && $row['datum_geburtstag'] != null){
 		$dateObjectBirthday = new DateTime($row['datum_geburtstag']);
 		$dateObjectDeceased = new DateTime($row['tod_datum']);
 		$diff = $dateObjectDeceased->diff($dateObjectBirthday);

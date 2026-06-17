@@ -88,17 +88,17 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	if(date('Y-m-d H:i:s') < $row['datum']){
-		$form .= '<form action="index.php?pid=intranet_home" method="post" class="form-horizontal">';
+		$form .= '<form action="index.php?pid=intranet_home" method="post" class="">';
 		$form .= '<input type="hidden" name="chargierveranstaltungid" value="' .$row['id']. '" />';
 
 		if($angemeldet){
 			$form .= '<input type="hidden" name="chargierkalenderchangeanmeldenstate" value="abmelden" />';
-			$form .= '<button type="submit" class="btn btn-default btn-sm">';
+			$form .= '<button type="submit" class="btn btn-secondary btn-sm">';
 			$form .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
 			$form .= '</button>';
 		} else {
 			$form .= '<input type="hidden" name="chargierkalenderchangeanmeldenstate" value="anmelden" />';
-			$form .= '<button type="submit" class="btn btn-default btn-sm">';
+			$form .= '<button type="submit" class="btn btn-secondary btn-sm">';
 			$form .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
 			$form .= '</button>';
 		}

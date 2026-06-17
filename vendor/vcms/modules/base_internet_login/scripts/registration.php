@@ -75,58 +75,68 @@ if(isset($_POST['registrierung_name']) || isset($_POST['registrierung_telnr']) |
 * output
 */
 
-
 if($formSent && !$formError){
-	$password_hash = $libAuth->encryptPassword($_POST['registrierung_pwd1']);
+	if($libForm->wasCaptchaSolved($_POST['h-captcha-response'])){
+		$password_hash = $libAuth->encryptPassword($_POST['registrierung_pwd1']);
 
-	$text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'Name: ' .$libString->protectXSS($_POST['registrierung_name']) . PHP_EOL;
-	$text .= 'E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrierung_emailadresse'])) . PHP_EOL;
-	$text .= 'Telefonnummer: ' .$libString->protectXSS($_POST['registrierung_telnr']) . PHP_EOL;
-	$text .= 'Geburtsdatum: ' .$libString->protectXSS($_POST['registrierung_geburtsdatum']) . PHP_EOL;
-	$text .= 'Passwort-Hash: ' .$password_hash. PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'Die Freischaltung für das Intranet erfolgt, indem der Internetwart die Daten nach einer Plausibilitätsprüfung im Personenprofil speichert.' . PHP_EOL;
-	$text .= 'Im Fall einer Freischaltung lautet die Antwortmail:' . PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'Lieber Bb ' .$libString->protectXSS($_POST['registrierung_name']). ',' . PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'Du wurdest mit der E-Mail-Adresse ' .$libString->protectXSS($_POST['registrierung_emailadresse']). ' für das Intranet freigeschaltet.' . PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'MBuH,';
+		$text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
+		$text .= PHP_EOL;
+		$text .= 'Name: ' .$libString->protectXSS($_POST['registrierung_name']) . PHP_EOL;
+		$text .= 'E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrierung_emailadresse'])) . PHP_EOL;
+		$text .= 'Telefonnummer: ' .$libString->protectXSS($_POST['registrierung_telnr']) . PHP_EOL;
+		$text .= 'Geburtsdatum: ' .$libString->protectXSS($_POST['registrierung_geburtsdatum']) . PHP_EOL;
+		$text .= 'Passwort-Hash: ' .$password_hash. PHP_EOL;
+		$text .= PHP_EOL;
+		$text .= 'Die Freischaltung für das Intranet erfolgt, indem der Internetwart die Daten nach einer Plausibilitätsprüfung im Personenprofil speichert.' . PHP_EOL;
+		$text .= 'Im Fall einer Freischaltung lautet die Antwortmail:' . PHP_EOL;
+		$text .= PHP_EOL;
+		$text .= PHP_EOL;
+		$text .= 'Lieber Bb ' .$libString->protectXSS($_POST['registrierung_name']). ',' . PHP_EOL;
+		$text .= PHP_EOL;
+		$text .= 'Du wurdest mit der E-Mail-Adresse ' .$libString->protectXSS($_POST['registrierung_emailadresse']). ' für das Intranet freigeschaltet.' . PHP_EOL;
+		$text .= PHP_EOL;
+		$text .= 'MBuH,';
 
-	$mail = $libMail->createPHPMailer();
+		$mail = $libMail->createPHPMailer();
 
-	$mail->addAddress($libConfig->emailWebmaster);
-	$mail->Subject = '[' .$libConfig->verbindungName. '] Intranet-Registrierung';
-	$mail->Body = $text;
-	$mail->addReplyTo($_POST['registrierung_emailadresse']);
+		$mail->addAddress($libConfig->emailWebmaster);
+		$mail->Subject = '[' .$libConfig->verbindungName. '] Intranet-Registrierung';
+		$mail->Body = $text;
+		$mail->addReplyTo($_POST['registrierung_emailadresse']);
 
-	$mailsent = false;
+		$mailsent = false;
 
-	if($mail->send()){
-		$mailsent = true;
+		if($mail->send()){
+			$mailsent = true;
+		} else {
+			$libGlobal->errorTexts[] = $mail->ErrorInfo;
+		}
+
+		if($mailsent){
+			echo '<h1>E-Mail verschickt</h1>';
+
+			echo $libString->getErrorBoxText();
+			echo $libString->getNotificationBoxText();
+
+			echo '<p class="mb-4">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
+		} else {
+			echo '<h1>Fehler</h1>';
+
+			echo $libString->getErrorBoxText();
+			echo $libString->getNotificationBoxText();
+
+			echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
+		}
 	} else {
-		$libGlobal->errorTexts[] = $mail->ErrorInfo;
+			echo '<h1>Fehler</h1>';
+
+			echo $libString->getErrorBoxText();
+			echo $libString->getNotificationBoxText();
+
+			echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte stellen Sie sicher, dass sie ein Mensch sind.</p>';
 	}
 
-	if($mailsent){
-		echo '<h1>E-Mail verschickt</h1>';
 
-		echo $libString->getErrorBoxText();
-		echo $libString->getNotificationBoxText();
-
-		echo '<p class="mb-4">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
-	} else {
-		echo '<h1>Fehler</h1>';
-
-		echo $libString->getErrorBoxText();
-		echo $libString->getNotificationBoxText();
-
-		echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
-	}
 } else {
 	echo '<h1>Registrierung</h1>';
 
@@ -168,9 +178,9 @@ if($formSent && !$formError){
 		}
 	}
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="form-horizontal">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
+	echo '<form id="h-captcha-protected-form" method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="">';
 	echo '<fieldset>';
 
 	$libForm->printTextInput('registrierung_name', 'Vorname und Nachname', $libString->protectXSS($registrierung_name), 'text', false, true);
@@ -179,6 +189,7 @@ if($formSent && !$formError){
 	$libForm->printTextInput('registrierung_geburtsdatum', 'Geburtsdatum', $libString->protectXSS($registrierung_geburtsdatum), 'date', false, true);
 	$libForm->printTextInput('registrierung_pwd1', 'Passwort', '', 'password', false, true);
 	$libForm->printTextInput('registrierung_pwd2', 'Passwort-Wiederholung', '', 'password', false, true);
+	$libForm->printCaptcha();
 	$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Abschicken');
 
 	echo '</fieldset>';

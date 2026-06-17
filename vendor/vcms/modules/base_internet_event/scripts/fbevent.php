@@ -58,9 +58,9 @@ if($libEvent->isFacebookEvent($row)){
 		$eventAttendingCount = $eventObject['attending_count'];
 		$eventInterestedCount = $eventObject['interested_count'];
 
-		echo '<div class="panel panel-default">';
-		// no panel-body here!
-		echo '<div class="thumbnail">';
+		echo '<div class="card">';
+		// no card-body here!
+		echo '<div class="card">';
 
 		echo '<div class="img-frame">';
 		echo '<a href="' .$libString->protectXss($eventUrl). '">';

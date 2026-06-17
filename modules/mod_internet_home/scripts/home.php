@@ -54,6 +54,7 @@ function printVeranstaltungDateTime($row){
 }
 
 require_once('elements/header.php');
+echo '<div id="main-section" class="main-box"></div>';
 require_once('elements/announcements.php');
 require_once('elements/pastevents.php');
 require_once('elements/nextevents.php');

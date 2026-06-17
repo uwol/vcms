@@ -45,9 +45,9 @@ echo $libString->getNotificationBoxText();
 
 echo '<h2>Galerie anlegen</h2>';
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
-echo '<form action="index.php?pid=event_admin_galerie" method="post" class="form-horizontal">';
+echo '<div class="card">';
+echo '<div class="card-body">';
+echo '<form action="index.php?pid=event_admin_galerie" method="post" class="">';
 echo '<fieldset>';
 
 $libForm->printVeranstaltungDropDownBox('id', 'Veranstaltung', '', false);
@@ -91,7 +91,7 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlob
 
 
 //list events
-echo '<table class="table table-condensed table-striped table-hover">';
+echo '<table class="table table-sm table-striped table-hover">';
 echo '<thead>';
 echo '<tr><th>Bild</th><th>Titel</th><th>Datum</th><th></th></tr>';
 echo '</thead>';
@@ -112,7 +112,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		//are there images?
 		if($libGallery->hasPictures($row['id'], 2)){
-			echo '<div class="thumbnail">';
+			echo '<div class="card">';
 			echo '<div class="img-frame">';
 			echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
 			echo '<img ';

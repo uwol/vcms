@@ -46,7 +46,7 @@ $description = '';
 * semester cover
 */
 $description .= '<div class="row mb-4">';
-$description .= '<div class="col-sm-offset-2 col-md-offset-3 col-sm-8 col-md-6">';
+$description .= '<div class="offset-sm-2 col-md-offset-3 col-sm-8 col-md-6">';
 $description .= $libTime->getSemesterCoverString($row['semester']);
 $description .= '</div>';
 $description .= '</div>';
@@ -60,14 +60,14 @@ $description .= '<div class="col-sm-2">';
 
 if($row['senior']){
 	$description .= '<div class="row">';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['senior']. '">';
 	$description .= $libPerson->getSignature($row['senior'], '');
 	$description .= '</a>';
 
 	$description .= '</div>';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<p class="mb-4">';
 	$description .= 'Senior<br/>';
@@ -85,14 +85,14 @@ $description .= '<div class="col-sm-2">';
 
 if($row['consenior']){
 	$description .= '<div class="row">';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['consenior']. '">';
 	$description .= $libPerson->getSignature($row['consenior'], '');
 	$description .= '</a>';
 
 	$description .= '</div>';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<p class="mb-4">';
 	$description .= 'Consenior<br/>';
@@ -110,14 +110,14 @@ $description .= '<div class="col-sm-2">';
 
 if($row['fuchsmajor']){
 	$description .= '<div class="row">';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['fuchsmajor']. '">';
 	$description .= $libPerson->getSignature($row['fuchsmajor'], '');
 	$description .= '</a>';
 
 	$description .= '</div>';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<p class="mb-4">';
 	$description .= 'Fuchsmajor<br/>';
@@ -135,14 +135,14 @@ $description .= '<div class="col-sm-2">';
 
 if($row['scriptor']){
 	$description .= '<div class="row">';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['scriptor']. '">';
 	$description .= $libPerson->getSignature($row['scriptor'], '');
 	$description .= '</a>';
 
 	$description .= '</div>';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<p class="mb-4">';
 	$description .= 'Scriptor<br/>';
@@ -160,14 +160,14 @@ $description .= '<div class="col-sm-2">';
 
 if($row['quaestor']){
 	$description .= '<div class="row">';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['quaestor']. '">';
 	$description .= $libPerson->getSignature($row['quaestor'], '');
 	$description .= '</a>';
 
 	$description .= '</div>';
-	$description .= '<div class="col-xs-6 col-sm-12">';
+	$description .= '<div class="col-6 col-sm-12">';
 
 	$description .= '<p class="mb-4">';
 	$description .= 'Quaestor<br/>';

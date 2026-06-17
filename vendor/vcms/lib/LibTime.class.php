@@ -512,7 +512,11 @@ class LibTime{
 
 		$file = '';
 
-		if(is_file('custom/semestercover/'.$semesterString. '.jpg')){
+		if(is_file('custom/semestercover/'.$semesterString. '.webp')){
+			$file = $semesterString.'.webp';
+		} elseif(is_file('custom/semestercover/'.strtolower($semesterString). '.webp')){
+			$file = strtolower($semesterString).'.webp';
+		} elseif(is_file('custom/semestercover/'.$semesterString. '.jpg')){
 			$file = $semesterString.'.jpg';
 		} elseif(is_file('custom/semestercover/'.strtolower($semesterString). '.jpg')){
 			$file = strtolower($semesterString).'.jpg';
@@ -524,6 +528,22 @@ class LibTime{
 			$file = $semesterString.'.gif';
 		} elseif(is_file('custom/semestercover/'.strtolower($semesterString). '.gif')){
 			$file = strtolower($semesterString). '.gif';
+		}
+
+		return $file;
+	}
+
+	function determineSemesterProgramm($semesterString){
+		if(!$this->isValidSemesterString($semesterString)){
+			return;
+		}
+
+		$file = '';
+
+		if(is_file('custom/semesterprogramm/'.$semesterString. '.pdf')){
+			$file = $semesterString.'.pdf';
+		}  elseif(is_file('custom/semesterprogramm/'.strtolower($semesterString). '.pdf')){
+			$file = strtolower($semesterString).'.pdf';
 		}
 
 		return $file;
@@ -547,7 +567,19 @@ class LibTime{
 		$file = $this->determineSemesterCover($semesterString);
 
 		if($file != ''){
-			return '<img src="custom/semestercover/' .$file. '" class="img-responsive center-block" alt="Semestercover" />';
+			return '<img src="custom/semestercover/' .$file. '" class="img-fluid mx-auto" alt="Semestercover ' .$semesterString . '" />';
+		}
+	}
+
+	function getSemesterProgrammString($semesterString){
+		if(!$this->isValidSemesterString($semesterString)){
+			return;
+		}
+
+		$file = $this->determineSemesterProgramm($semesterString);
+
+		if($file != ''){
+			return '<a href="custom/semesterprogramm/' .$file. '" class="mx-auto">' . $this->getSemesterCoverString($semesterString) . '<h3>Semesterprogramm ' .$semesterString . ' als PDF</h3></a>';
 		}
 	}
 
@@ -599,13 +631,13 @@ class LibTime{
 		$retstr = '';
 
 		if(count($semesters) > 1 || (count($semesters) == 1 && ($semesters[0] != $globalsemester))){
-			$retstr .= '<div class="panel panel-default">';
-			$retstr .= '<div class="panel-body">';
+			$retstr .= '<div class="card">';
+			$retstr .= '<div class="card-body">';
 			$retstr .= '<form action="index.php" class="form-inline">';
 			$retstr .= '<fieldset>';
 			$retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';
-			$retstr .= '<label for="semester" class="sr-only">Semester</label>';
-			$retstr .= '<select id="semester" name="semester" class="form-control" onchange=\'this.form.submit()\'>';
+			$retstr .= '<label for="semester" class="visually-hidden">Semester</label>';
+			$retstr .= '<select id="semester" name="semester" class="form-select" onchange=\'this.form.submit()\'>';
 
 			foreach($semesters as $semester){
 				if($semester != '' && $this->isValidSemesterString($semester)){
@@ -622,7 +654,7 @@ class LibTime{
 			}
 
 			$retstr .= '</select> ';
-			$retstr .= '<button type="submit" class="hidden-xs btn btn-default"><i class="fa fa-calendar-o" aria-hidden="true"></i> Semester wählen</button>';
+			$retstr .= '<button type="submit" class="d-none d-sm-block btn btn-secondary"><i class="fa fa-calendar-o" aria-hidden="true"></i> Semester wählen</button>';
 			$retstr .= '</fieldset>';
 			$retstr .= '</form>';
 			$retstr .= '</div>';

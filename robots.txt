@@ -1,10 +1,129 @@
-User-agent: Googlebot-Image
-Disallow: /
+# The following is a list of well-known, not harmful bots.
+# Bots that e.g. crawl images or crawl for AI-training-data,
+# are explicitly not included here.
 
-User-agent: ia_archiver
-Disallow: /
-
-User-agent: *
+User-agent: Googlebot
+Allow: /
 Allow: /api.php?iid=semesterprogramm_icalendar
 Disallow: /api.php
-Disallow: /custom/
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: Googlebot-Mobile
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: bingbot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: msnbot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: Applebot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: facebookcatalog
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: facebookexternalhit
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: Facebot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: LinkedInBot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: Twitterbot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: WhatsApp
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: DuckDuckBot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: SemrushBot
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: ia_archiver
+Allow: /
+Allow: /api.php?iid=semesterprogramm_icalendar
+Disallow: /api.php
+Disallow: /index.php?pid=login
+Disallow: /custom/intranet/
+Disallow: /custom/veranstaltungsfotos/
+
+User-agent: Mediapartners-Google
+Disallow: /
+
+User-agent: AdsBot-Google
+Disallow: /
+
+User-agent: AdsBot-Google-Mobile
+Disallow: /
+
+# Make sure that all other bots, like Googlebot-Image
+# or AI-training-data-bots, are excluded
+User-agent: *
+Disallow: /

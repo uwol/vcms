@@ -62,9 +62,9 @@ echo $libString->getNotificationBoxText();
 
 $storage = $libGenericStorage->listAllArrayValues();
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
-echo '<form action="index.php?pid=configuration" method="post" class="form-horizontal">';
+echo '<div class="card">';
+echo '<div class="card-body">';
+echo '<form action="index.php?pid=configuration" method="post" class="">';
 echo '<fieldset>';
 
 //modules
@@ -75,19 +75,19 @@ foreach($storage as $moduleid => $arrays){
 	foreach($arrays as $array_name => $positionen){
 		//positions and values at that positions
 		foreach($positionen as $position => $value){
-			echo '<div class="form-group">';
-			echo '<label class="col-sm-4 control-label">' .$array_name. '</label>';
+			echo '<div class="mb-3 row">';
+			echo '<label class="col-sm-4 col-form-label">' .$array_name. '</label>';
 
 			echo '<div class="col-sm-1">';
-			echo '<input type="text" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" class="form-control input-sm" />';
+			echo '<input type="text" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" class="form-control form-control-sm" />';
 			echo '</div>';
 
 			echo '<div class="col-sm-6">';
-			echo '<input type="text" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" class="form-control input-sm" />';
+			echo '<input type="text" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" class="form-control form-control-sm" />';
 			echo '</div>';
 
 			echo '<div class="col-sm-1">';
-			echo '<div class="form-control-static">';
+			echo '<div class="form-control-plaintext">';
 			echo '<a href="index.php?pid=configuration&amp;action=delete&amp;moduleid=' .$moduleid. '&amp;array_name=' .$array_name. '&amp;position=' .$position. '" onclick="return confirm(\'Willst Du den Eintrag wirklich löschen?\')"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>';
 			echo '</div>';
 			echo '</div>';

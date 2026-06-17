@@ -88,7 +88,7 @@ class LibDay{
 		$events = $this->getEvents($eventSet);
 
 		$todayClass = $this->isToday() ? ' today' : '';
-		$hiddenClass = $hasEvents ? '' : ' hidden-xs';
+		$hiddenClass = $hasEvents ? '' : ' d-none d-sm-block';
 
 		//header
 		$retstr = '';

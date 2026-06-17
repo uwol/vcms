@@ -20,10 +20,8 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 * register autoloaders
 */
 require_once(__DIR__ . '/autoload.php');
-require_once(__DIR__ . '/../phpmailer/autoload.php');
+require_once(__DIR__ . '/../autoload.php');
 require_once(__DIR__ . '/../phpass/autoload.php');
-require_once(__DIR__ . '/../pear/autoload.php');
-require_once(__DIR__ . '/../httpful/bootstrap.php');
 
 
 /*
@@ -35,7 +33,14 @@ ini_set('arg_separator.output', '&amp;');
 /*
 * set up session
 */
-session_set_cookie_params(['samesite' => 'Strict']);
+$sessionExpireTime = 3 * 24 * 60 * 60;
+ini_set('session.gc_maxlifetime',$sessionExpireTime);
+ini_set('session.gc_probability',1);
+ini_set('session.gc_divisor',1);
+ini_set('session.cookie_lifetime',$sessionExpireTime);
+ini_set("session.save_path", dirname(__FILE__) . "/../../PhpSessionData");
+
+session_set_cookie_params(['samesite' => 'Strict', 'secure' => true, 'lifetime' => $sessionExpireTime]);
 
 if(isset($_COOKIE[session_name()])){
 	session_start();
@@ -50,7 +55,7 @@ if((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
 }
 
 if(isset($_COOKIE[session_name()])){
-	$_SESSION['session_timeout_timestamp'] = time() + (3 * 24 * 60 * 60);
+	$_SESSION['session_timeout_timestamp'] = time() + $sessionExpireTime;
 }
 
 

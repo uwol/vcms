@@ -36,6 +36,7 @@ if(isset($_POST['intranet_login_email']) && isset($_POST['intranet_login_passwor
 		session_start();
 		$_SESSION['libAuth'] = $libAuth;
 	}
+	echo '<script>if (window.history.replaceState) { window.history.replaceState(null, null, window.location.href); }</script>';
 }
 
 

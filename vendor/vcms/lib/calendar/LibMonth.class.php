@@ -82,7 +82,7 @@ class LibMonth{
 		$retstr .= '<div class="calendar-cell-container">'.PHP_EOL;
 
 		for($i=0+$weekShift; $i<count($dayNames)+$weekShift; $i++){
-			$retstr .= '<div class="calendar-cell calendar-day-name reveal hidden-xs">';
+			$retstr .= '<div class="calendar-cell calendar-day-name reveal d-none d-sm-block">';
 			$retstr .= $dayNames[$i % 7];
 			$retstr .= '</div>'.PHP_EOL;
 		}
@@ -104,7 +104,7 @@ class LibMonth{
 				$retstr .= $this->days[$dayCounter]->toString($eventSet);
 				$dayCounter++;
 			} else {
-				$retstr .= '<div class="calendar-cell reveal hidden-xs"></div>'.PHP_EOL;
+				$retstr .= '<div class="calendar-cell reveal d-none d-sm-block"></div>'.PHP_EOL;
 			}
 
 			$colCounter = ($colCounter + 1) % 7;

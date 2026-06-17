@@ -35,7 +35,7 @@ class LibICalendarEvent{
 	var $allDay = false;
 
 	function setStartAndEndDateTime($startDateTime, $endDateTime){
-		if($startDateTime != '' && $startDateTime != '0000-00-00 00:00:00'){
+		if($startDateTime != '' && $startDateTime != '1970-01-01 00:00:00'){
 			if($endDateTime < $startDateTime){
 				$endDateTime = '';
 			}
@@ -62,7 +62,7 @@ class LibICalendarEvent{
 				$this->dtstart = str_pad($startYear, 4, '0', STR_PAD_LEFT).str_pad($startMonth, 2, '0', STR_PAD_LEFT).str_pad($startDay, 2, '0', STR_PAD_LEFT);
 
 				//end date given?
-				if($endDateTime != '' && $endDateTime != '0000-00-00 00:00:00'){
+				if($endDateTime != '' && $endDateTime != '1970-01-01 00:00:00'){
 					$endDateTime = new DateTime(substr($endDateTime, 0, 10));
 					$endDateTime->modify('+1 day');
 					//no change to UTC, as otherwise the day may be shiftet
@@ -83,7 +83,7 @@ class LibICalendarEvent{
 				$this->dtstart = $startDateTime->format('Ymd').'T'.$startDateTime->format('His').'Z';
 
 				//end date given?
-				if($endDateTime != '' && $endDateTime != '0000-00-00 00:00:00'){
+				if($endDateTime != '' && $endDateTime != '1970-01-01 00:00:00'){
 					//end date without time
 					if($endHour == 0 && $endMinute == 0 && $endSecond == 0){
 						//shortened end date

@@ -41,7 +41,7 @@ if(isset($_REQUEST['action'])){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<p class="mb-4"><a href="index.php?pid=modules" class="btn btn-default" role="button">Module zeigen</a></p>';
+	echo '<p class="mb-4"><a href="index.php?pid=modules" class="btn btn-secondary" role="button">Module zeigen</a></p>';
 } else {
 	echo '<p class="mb-4">Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen.</p>';
 	echo '<p class="mb-4">Auto-Update: <a href="index.php?pid=configuration">';
@@ -54,10 +54,10 @@ if(isset($_REQUEST['action'])){
 
 	echo '</a></p>';
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
 
-	echo '<table class="table table-condensed table-striped table-hover">';
+	echo '<table class="table table-sm table-striped table-hover">';
 	echo '<thead>';
 	echo '<tr>';
 	echo '<th>Modulname</th><th>Status</th>';
@@ -69,7 +69,7 @@ if(isset($_REQUEST['action'])){
 	echo '</tr>';
 	echo '</thead>';
 
-	$gitHubRepoUrl = 'https://github.com/uwol/vcms/tree/master';
+	$gitHubRepoUrl = 'https://github.com/adrianer/vcms/tree/main';
 	$modules = $libRepositoryClient->getModuleVersions();
 
 	$actualEngineVersion = (double) $libGlobal->version;

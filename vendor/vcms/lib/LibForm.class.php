@@ -51,8 +51,8 @@ class LibForm{
 	}
 
 	function printTextInput($name, $label, $value, $type = 'text', $disabled = false, $required = false, $classes = array()){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '">';
 		echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
 
@@ -69,8 +69,8 @@ class LibForm{
 	}
 
 	function printTextarea($name, $label, $value, $disabled = false, $required = false, $classes = array()){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '">';
 		echo '<textarea id="' .$name. '" name="' .$name. '" rows="10"';
 
@@ -87,10 +87,10 @@ class LibForm{
 	}
 
 	function printFileInput($name, $label, $disabled = false, $required = false, $classes = array(), $accepts = array()){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<label class="btn btn-default btn-file';
+		echo '<label class="btn btn-secondary btn-file';
 
 		$this->printClassesString($classes);
 
@@ -101,15 +101,15 @@ class LibForm{
 		$this->printRequiredString($required);
 		$this->printAcceptString($accepts);
 
-		echo ' style="display:none">';
+		echo '>';
 		echo '</label>';
 		echo '</div>';
 		echo '</div>';
 	}
 
 	function printFileUpload($name, $label, $disabled = false, $required = false, $classes = array(), $accepts = array()){
-		echo '<div class="form-group">';
-		echo '<label class="btn btn-default btn-file';
+		echo '<div class="mb-3 row">';
+		echo '<label class="btn btn-secondary btn-file';
 
 		$this->printClassesString($classes);
 
@@ -126,10 +126,10 @@ class LibForm{
 	}
 
 	function printStaticText($label, $value, $disabled = false, $required = false, $classes = array()){
-		echo '<div class="form-group">';
-		echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<p class="form-control-static mb-3';
+		echo '<p class="form-control-plaintext mb-3';
 
 		$this->printClassesString($classes);
 
@@ -141,9 +141,9 @@ class LibForm{
 	}
 
 	function printSubmitButton($label, $classes = array()){
-		echo '<div class="form-group">';
-		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
-		echo '<button type="submit" class="btn btn-default';
+		echo '<div class="mb-3 row">';
+		echo '<div class="offset-sm-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
+		echo '<button type="submit" class="btn btn-secondary';
 
 		$this->printClassesString($classes);
 
@@ -153,7 +153,7 @@ class LibForm{
 	}
 
 	function printSubmitButtonInline($label, $classes = array()){
-		echo '<button type="submit" class="btn btn-default';
+		echo '<button type="submit" class="btn btn-secondary';
 
 		$this->printClassesString($classes);
 
@@ -163,13 +163,13 @@ class LibForm{
 	function printMitgliederDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
 		global $libDb, $libPerson;
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		$this->printDisabledString($disabled);
 
-		echo ' class="form-control">';
+		echo ' class="form-select">';
 
 		if($allowNull){
 			echo '<option value=""></option>';
@@ -195,13 +195,13 @@ class LibForm{
 	function printVereineDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		$this->printDisabledString($disabled);
 
-		echo ' class="form-control">';
+		echo ' class="form-select">';
 
 		if($allowNull){
 			echo '<option value=""></option>';
@@ -227,13 +227,13 @@ class LibForm{
 	function printSemesterDropDownBox($name, $label, $selectedSemester = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		$this->printDisabledString($disabled);
 
-		echo ' class="form-control">';
+		echo ' class="form-select">';
 
 		if($allowNull){
 			echo '<option value=""></option>';
@@ -259,13 +259,13 @@ class LibForm{
 	function printStatusDropDownBox($name, $label, $selectedStatus = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		$this->printDisabledString($disabled);
 
-		echo ' class="form-control">';
+		echo ' class="form-select">';
 
 		if($allowNull){
 			echo '<option value=""></option>';
@@ -291,13 +291,13 @@ class LibForm{
 	function printGruppeDropDownBox($name, $label, $selectedGruppe = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		$this->printDisabledString($disabled);
 
-		echo ' class="form-control">';
+		echo ' class="form-select">';
 
 		if($allowNull){
 			echo '<option value=""></option>';
@@ -323,13 +323,13 @@ class LibForm{
 	function printRegionDropDownBox($name, $label, $selectedRegion = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		$this->printDisabledString($disabled);
 
-		echo ' class="form-control">';
+		echo ' class="form-select">';
 
 		if($allowNull){
 			echo '<option value=""></option>';
@@ -362,13 +362,13 @@ class LibForm{
 	function printVeranstaltungDropDownBox($name, $label, $selectedVeranstaltung = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
 		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
 		$this->printDisabledString($disabled);
 
-		echo ' class="form-control">';
+		echo ' class="form-select">';
 
 		if($allowNull){
 			echo '<option value=""></option>';
@@ -392,9 +392,9 @@ class LibForm{
 	}
 
 	function printBoolSelectBox($name, $label, $selectedValue = 0){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select name="' .$name. '" class="form-control">';
+		echo '<div class="mb-3 row">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '"><select name="' .$name. '" class="form-select">';
 		echo '<option value="1"';
 
 		if($selectedValue > 0){
@@ -411,5 +411,51 @@ class LibForm{
 		echo '>Nein</option>';
 		echo '</select></div>';
 		echo '</div>';
+	}
+
+	function wasCaptchaSolved($hcaptcha_reponse){
+		global $libGenericStorage;
+		$hcaptcha_secret_key = $libGenericStorage->loadValue('base_core', 'hcaptcha_secret_key');
+		if(!isset($hcaptcha_secret_key) || empty($hcaptcha_secret_key)) {
+			return true;  // No secret-key set, no way to verify. Assume captcha is not wanted
+		}
+		if(!isset($hcaptcha_reponse) || empty($hcaptcha_reponse)) {
+			return false;
+		}
+
+		// $data = array(
+		// 			'secret' => $hcaptcha_secret_key,
+		// 			'response' => $hcaptcha_reponse
+		// 		);
+		// $verify = curl_init();
+		// curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+		// curl_setopt($verify, CURLOPT_POST, true);
+		// curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+		// curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+		// $response = curl_exec($verify);
+		// curl_close($verify);
+
+		$verify_url = 'https://hcaptcha.com/siteverify?secret='.$hcaptcha_secret_key.'&response='.$hcaptcha_reponse;
+		$response = file_get_contents($verify_url);
+		//var_dump($response);
+		$responseData = json_decode($response);
+		if($responseData->success) {
+			return true;
+		} 
+		else {
+			return false;
+		}
+	}
+
+	function printCaptcha(){
+		global $libGenericStorage;
+		$hcaptcha_site_key = $libGenericStorage->loadValue('base_core', 'hcaptcha_site_key');
+		if(!isset($hcaptcha_site_key) || empty($hcaptcha_site_key)) {
+			return false;
+		}
+
+		echo '<script src="https://www.hCaptcha.com/1/api.js?hl=de" async defer></script>';
+		echo '<script src="vendor/vcms/styles/hCaptcha.js"></script>';
+		echo '<div class="h-captcha offset-sm-' .$this->colLabel. ' col-sm-' .$this->colInput. '" data-sitekey="'.$hcaptcha_site_key.'"></div>';
 	}
 }

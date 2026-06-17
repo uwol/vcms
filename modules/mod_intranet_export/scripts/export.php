@@ -41,9 +41,47 @@ $semester101zurueck = $libTime->getPreviousSemesterNameOfSemester($semester100zu
 <h1>Export</h1>
 <p class="mb-4">Das VCMS kann Datenbestände als CSV- und HTML-Tabellen exportieren. Die Dateien können in Word und LibreOffice/OpenOffice in der Serienbrieffunktion verwendet werden. Bitte behandle diese Dateien vertraulich, verschicke sie nicht per E-Mail und lösche sie nach der Verwendung.</p>
 
-<div class="panel panel-default">
-	<div class="panel-body">
-		<table class="table table-condensed">
+<div class="card">
+	<div class="card-body">
+		<table class="table table-sm">
+			<tr>
+				<th colspan="2">Vollständige Adressdaten</th>
+			</tr>
+
+			<tr>
+				<td>Vollständiger Export aller Adressdaten:</td>
+				<td>Alle lebenden Mitglieder (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_export&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_export&amp;type=html">HTML</a>)</td>
+			</tr>
+			<tr>
+				<td>Mitgliederverzeichnis:</td>
+				<td>Mitglieder (Philister, Aktive) (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=adressverzeichnis&amp;gruppen=PFB">PDF</a>)</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td>Mitglieder (Philister, Aktive, Verstorbene BbBb) (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=adressverzeichnis&amp;gruppen=PFBT">PDF</a>)</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td>Mitglieder (Philister, Aktive, Vereinsfreunde) (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=adressverzeichnis&amp;gruppen=PFBY">PDF</a>)</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td>Mitglieder (Philister, Aktive, Vereinsfreunde, Verstorbene BbBb) (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=adressverzeichnis&amp;gruppen=PFBYT">PDF</a>)</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td>Mitglieder (Philister, Aktive, Vereinsfreunde, Verstorbene BbBb, Couleurdamen, Gattinnen, Witwen) (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=adressverzeichnis&amp;gruppen=PFBYTCGW">PDF</a>)</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td>Mitglieder (Philister, Aktive, Vereinsfreunde, Verstorbene BbBb, Couleurdamen, Gattinnen, Witwen, Verstorbene Gattinen) (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=adressverzeichnis&amp;gruppen=PFBYTCGWV">PDF</a>)</td>
+			</tr>
+
 			<tr>
 				<th colspan="2">Adressdaten</th>
 			</tr>

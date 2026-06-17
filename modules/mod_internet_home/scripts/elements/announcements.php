@@ -20,21 +20,21 @@ if(!is_object($libGlobal))
 	exit();
 
 
-$stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum = '0000-00-00 00:00:00') ORDER BY startdatum DESC LIMIT 0,2");
+$stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum = '1970-01-01 00:00:00') ORDER BY startdatum DESC LIMIT 0,2");
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<section class="announcement-box">';
 	echo '<div class="container">';
 	echo '<div class="row">';
-	echo '<div class="col-lg-8 col-lg-offset-2">';
-	echo '<div class="thumbnail">';
+	echo '<div class="col-lg-8 offset-lg-2">';
+	echo '<div class="card">';
 
 	$image = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
 	$imageExists = is_file($image);
 
 	if($imageExists){
-		echo '<img src="' .$image. '" class="img-responsive center-block reveal" alt="" />';
+		echo '<img src="' .$image. '" class="img-fluid mx-auto reveal" alt="" />';
 	}
 
 	echo '<p class="caption mb-3">';

@@ -33,7 +33,7 @@ echo 'Erstelle Tabelle mod_news_news<br />';
 $sql = "CREATE TABLE mod_news_news (
 	id int(11) NOT NULL auto_increment,
 	kategorieid int(11),
-	eingabedatum datetime NOT NULL default '0000-00-00 00:00:00',
+	eingabedatum datetime NOT NULL default '1970-01-01 00:00:00',
 	text text NOT NULL,
 	betroffenesmitglied int(11),
 	autor int(11),

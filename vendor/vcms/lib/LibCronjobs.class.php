@@ -22,12 +22,12 @@ use PDO;
 
 class LibCronjobs{
 
-	var $filesToDelete = array('.gitignore', 'composer.json', 'inc.php',
+	var $filesToDelete = array('.gitignore', 'composer.json', 'composer.lock', 'inc.php',
 		'installer.php', 'installer2.php', 'installer3.php', 'installer.txt',
 		'Installationsanleitung.html', 'INSTALLATIONSANLEITUNG.txt', 'INSTALL.md',
-		'LICENSE', 'LICENSE.txt', 'README.md');
+		'LICENSE', 'LICENSE.txt', 'README.md', 'update.php', 'update.txt');
 
-	var $directoriesToDelete = array('design', 'js', 'lib', 'styles',
+	var $directoriesToDelete = array('.git', '.github', 'design', 'js', 'lib', 'styles',
 		'modules/base_core', 'modules/base_internet_login',
 		'modules/base_internet_vereine', 'modules/base_intranet_administration_dbverwaltung',
 		'modules/base_intranet_dbadmin', 'modules/base_intranet_home', 'modules/base_intranet_personen',
@@ -35,12 +35,14 @@ class LibCronjobs{
 
 	var $directoriesToCreate = array('temp', 'custom/styles', 'custom/intranet',
 		'custom/intranet/downloads', 'custom/intranet/mitgliederfotos',
-		'custom/semestercover', 'custom/veranstaltungsfotos');
+		'custom/semestercover', 'custom/veranstaltungsfotos', 'PhpSessionData');
 
 	var $directoriesWithHtaccessFile = array('custom/intranet',
-		'custom/veranstaltungsfotos', 'temp', 'vendor/httpful', 'vendor/pear',
+		'custom/veranstaltungsfotos', 'temp', 'vendor/nategood',
+		'vendor/composer', 'vendor/setasign', 'vendor/psr',
+		'vendor/paragonie', 'vendor/pear', 'vendor/mpdf', 'vendor/myclabs',
 		'vendor/phpass', 'vendor/phpmailer', 'vendor/vcms/install', 'vendor/vcms/layout',
-		'vendor/vcms/lib', 'vendor/vcms/modules');
+		'vendor/vcms/lib', 'vendor/vcms/modules', 'PhpSessionData');
 
 	function executeDueJobs(){
 		global $libDb;
@@ -168,7 +170,7 @@ class LibCronjobs{
 	function cleanBasePerson(){
 		global $libDb;
 
-		$libDb->query("UPDATE base_person SET zusatz1=NULL, strasse1=NULL, ort1=NULL, plz1=NULL, land1=NULL, datum_adresse1_stand=NULL, zusatz2=NULL, strasse2=NULL, ort2=NULL, plz2=NULL, land2=NULL, datum_adresse2_stand=NULL, region1=NULL, region2=NULL, telefon1=NULL, telefon2=NULL, mobiltelefon=NULL, email=NULL, skype=NULL, webseite=NULL, datum_geburtstag=NULL, beruf=NULL, heirat_partner=NULL, heirat_datum=NULL, tod_datum=NULL, tod_ort=NULL, status=NULL, spitzname=NULL, vita=NULL, bemerkung=NULL, password_hash=NULL, validationkey=NULL WHERE gruppe='X' AND (datum_gruppe_stand = '0000-00-00' OR datum_gruppe_stand IS NULL OR DATEDIFF(NOW(), datum_gruppe_stand) > 30)");
+		$libDb->query("UPDATE base_person SET zusatz1=NULL, strasse1=NULL, ort1=NULL, plz1=NULL, land1=NULL, datum_adresse1_stand=NULL, zusatz2=NULL, strasse2=NULL, ort2=NULL, plz2=NULL, land2=NULL, datum_adresse2_stand=NULL, region1=NULL, region2=NULL, telefon1=NULL, telefon2=NULL, mobiltelefon=NULL, email=NULL, skype=NULL, webseite=NULL, linkedin=NULL, xing=NULL, datum_geburtstag=NULL, beruf=NULL, studium=NULL, heirat_partner=NULL, heirat_datum=NULL, tod_datum=NULL, tod_ort=NULL, status=NULL, spitzname=NULL, vita=NULL, bemerkung=NULL, datenschutz_erklaerung_unterschrieben=NULL, einzugsermaechtigung_erteilt=NULL, password_hash=NULL, validationkey=NULL WHERE gruppe='X' AND (datum_gruppe_stand = '0000-00-00' OR datum_gruppe_stand IS NULL OR DATEDIFF(NOW(), datum_gruppe_stand) > 30)");
 	}
 
 	function setGalleryPublicityLevels(){
@@ -210,12 +212,56 @@ class LibCronjobs{
 			$libGenericStorage->saveValue('base_core', 'smtp_port', 587);
 		}
 
+		if(!$libGenericStorage->attributeExists('base_core', 'smtp_use_auto_tls')){
+			$libGenericStorage->saveValue('base_core', 'smtp_use_auto_tls', 1);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'smtp_use_starttls')){
+			$libGenericStorage->saveValue('base_core', 'smtp_use_starttls', 1);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'use_rundbrief_smtp')){
+			$libGenericStorage->saveValue('base_core', 'use_rundbrief_smtp', 0);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'rundbrief_smtp_host')){
+			$libGenericStorage->saveValue('base_core', 'rundbrief_smtp_host', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'rundbrief_smtp_username')){
+			$libGenericStorage->saveValue('base_core', 'rundbrief_smtp_username', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'rundbrief_smtp_password')){
+			$libGenericStorage->saveValue('base_core', 'rundbrief_smtp_password', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'rundbrief_smtp_port')){
+			$libGenericStorage->saveValue('base_core', 'rundbrief_smtp_port', 587);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'rundbrief_smtp_use_auto_tls')){
+			$libGenericStorage->saveValue('base_core', 'rundbrief_smtp_use_auto_tls', 1);
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'rundbrief_smtp_use_starttls')){
+			$libGenericStorage->saveValue('base_core', 'rundbrief_smtp_use_starttls', 1);
+		}
+
 		if(!$libGenericStorage->attributeExists('base_core', 'facebook_appid')){
 			$libGenericStorage->saveValue('base_core', 'facebook_appid', '');
 		}
 
 		if(!$libGenericStorage->attributeExists('base_core', 'facebook_secret_key')){
 			$libGenericStorage->saveValue('base_core', 'facebook_secret_key', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'hcaptcha_site_key')){
+			$libGenericStorage->saveValue('base_core', 'hcaptcha_site_key', '');
+		}
+
+		if(!$libGenericStorage->attributeExists('base_core', 'hcaptcha_secret_key')){
+			$libGenericStorage->saveValue('base_core', 'hcaptcha_secret_key', '');
 		}
 
 		if(!$libGenericStorage->attributeExists('base_core', 'image_lib')){

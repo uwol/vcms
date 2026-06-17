@@ -119,15 +119,15 @@ if(!empty($libAuth->getAemter())){
 	*/
 	echo '<h2>Datei hochladen</h2>';
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form action="index.php?pid=intranet_directories" method="post" enctype="multipart/form-data" class="form-horizontal">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
+	echo '<form action="index.php?pid=intranet_directories" method="post" enctype="multipart/form-data" class="">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="upload" />';
 
-	echo '<div class="form-group">';
-	echo '<label for="hash" class="col-sm-3 control-label">in den Ordner</label>';
-	echo '<div class="col-sm-3"><select name="hash" class="form-control">';
+	echo '<div class="mb-3 row">';
+	echo '<label for="hash" class="col-sm-3 col-form-label">in den Ordner</label>';
+	echo '<div class="col-sm-3"><select name="hash" class="form-select">';
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
@@ -139,32 +139,34 @@ if(!empty($libAuth->getAemter())){
 	echo '</div>';
 
 
-	echo '<div class="form-group">';
-	echo '<label class="col-sm-3 control-label">mit Leserecht für</label>';
+	echo '<div class="mb-3 row">';
+	echo '<label class="col-sm-3 col-form-label">mit Leserecht für</label>';
 	echo '<div class="col-sm-9">';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_gruppe ORDER BY bezeichnung");
 	$stmt->execute();
 
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		if($row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "V"){
-			echo '<div class="checkbox"><label><input type="checkbox" name="gruppen[]" value="' .$row['bezeichnung']. '"';
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			if($row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "V"){
+				echo '<div class="form-check">';
+				echo '<input class="form-check-input" type="checkbox" id="group_' .$row['bezeichnung']. '" name="gruppen[]" value="' .$row['bezeichnung']. '"';
 
-			if($libGenericStorage->loadValueInCurrentModule('preselect_rights') == 1){
-				echo 'checked="checked"';
+				if($libGenericStorage->loadValueInCurrentModule('preselect_rights') == 1){
+					echo 'checked="checked"';
+				}
+
+				echo '/>';
+				echo '<label class="form-check-label" for="group_' .$row['bezeichnung']. '">';
+				echo $row['bezeichnung']. ' - ' .$row['beschreibung'];
+				echo '</label></div>';
 			}
-
-			echo '/>';
-			echo $row['bezeichnung']. ' - ' .$row['beschreibung'];
-			echo '</label></div>';
 		}
-	}
 
 	echo '</div></div>';
 
-	echo '<div class="form-group">';
-	echo '<div class="col-sm-offset-3 col-sm-3">';
-	echo '<label class="btn btn-default btn-file"><i class="fa fa-upload" aria-hidden="true"></i> Datei hochladen';
+	echo '<div class="mb-3 row">';
+	echo '<div class="offset-sm-3 col-sm-3">';
+	echo '<label class="btn btn-secondary btn-file"><i class="fa fa-upload" aria-hidden="true"></i> Datei hochladen';
 	echo '<input type="file" name="datei" onchange="this.form.submit()" style="display:none">';
 	echo '</label>';
 	echo '</div>';
@@ -181,20 +183,20 @@ if(!empty($libAuth->getAemter())){
 	*/
 	echo '<h2>Ordner anlegen</h2>';
 
-  echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form action="index.php?pid=intranet_directories" method="post" class="form-horizontal">';
+  echo '<div class="card">';
+	echo '<div class="card-body">';
+	echo '<form action="index.php?pid=intranet_directories" method="post" class="">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="newfolder" />';
 
-	echo '<div class="form-group">';
-	echo '<label for="foldername" class="col-sm-3 control-label">Neuen Ordner</label>';
+	echo '<div class="mb-3 row">';
+	echo '<label for="foldername" class="col-sm-3 col-form-label">Neuen Ordner</label>';
 	echo '<div class="col-sm-3"><input type="text" id="foldername" name="foldername" class="form-control" /></div>';
 	echo '</div>';
 
-	echo '<div class="form-group">';
-	echo '<label for="hash" class="col-sm-3 control-label">in Ordner</label>';
-	echo '<div class="col-sm-3"><select name="hash" class="form-control">';
+	echo '<div class="mb-3 row">';
+	echo '<label for="hash" class="col-sm-3 col-form-label">in Ordner</label>';
+	echo '<div class="col-sm-3"><select name="hash" class="form-select">';
 
 	foreach($rootFolderObject->getNestedFoldersRec() as $folderElement){
 		if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
@@ -205,9 +207,9 @@ if(!empty($libAuth->getAemter())){
 	echo '</select></div>';
 	echo '</div>';
 
-	echo '<div class="form-group">';
-	echo '<div class="col-sm-offset-3 col-sm-3">';
-	echo '<button type="submit" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
+	echo '<div class="mb-3 row">';
+	echo '<div class="offset-sm-3 col-sm-3">';
+	echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
 	echo '</div>';
 	echo '</div>';
 
@@ -232,8 +234,8 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			if(!$folderElement->isAmtsRootFolder() || $folderElement->hasNestedFolderElements()){
 				if($firstLevel){
 					echo '<div class="col-md-6">';
-					echo '<div class="panel panel-default">';
-					echo '<div class="panel-body">';
+					echo '<div class="card">';
+					echo '<div class="card-body">';
 				}
 
 				if($folderElement->isOpen){

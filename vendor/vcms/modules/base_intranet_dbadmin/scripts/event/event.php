@@ -68,7 +68,7 @@ if($libAuth->isLoggedin()){
 		$valueArray['datum'] = $libTime->assureMysqlDateTime($valueArray['datum']);
 		$valueArray['datum_ende'] = $libTime->assureMysqlDateTime($valueArray['datum_ende']);
 
-		if($valueArray['datum_ende'] != '0000-00-00 00:00:00' &&
+		if($valueArray['datum_ende'] != '1970-01-01 00:00:00' &&
 				$valueArray['datum_ende'] != '' &&
 				$valueArray['datum_ende'] < $valueArray['datum']){
 			$valueArray['datum_ende'] = '';
@@ -86,7 +86,7 @@ if($libAuth->isLoggedin()){
 		$valueArray['datum'] = $libTime->assureMysqlDateTime($valueArray['datum']);
 		$valueArray['datum_ende'] = $libTime->assureMysqlDateTime($valueArray['datum_ende']);
 
-		if($valueArray['datum_ende'] != '0000-00-00 00:00:00' &&
+		if($valueArray['datum_ende'] != '1970-01-01 00:00:00' &&
 				$valueArray['datum_ende'] != '' &&
 				$valueArray['datum_ende'] < $valueArray['datum']){
 			$valueArray['datum_ende'] = '';
@@ -140,9 +140,9 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = '&amp;aktion=update';
 	}
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form action="index.php?pid=intranet_admin_event' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
+	echo '<form action="index.php?pid=intranet_admin_event' .$extraActionParam. '" method="post" class="">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="veranstaltungsdaten" />';
 	echo '<input type="hidden" name="id" value="' .$varray['id']. '" />';

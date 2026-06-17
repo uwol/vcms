@@ -40,7 +40,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	/*
 	* php_version
 	*/
-	if(version_compare(PHP_VERSION, '5.5') < 0){
+	if(version_compare(PHP_VERSION, '8.0') < 0){
 		$errors[] = 'Die PHP-Version ist ' .PHP_VERSION. '.';
 	} else {
 		$oks[] = 'PHP-Version=' .PHP_VERSION. '.';

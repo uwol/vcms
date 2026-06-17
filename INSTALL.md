@@ -33,7 +33,7 @@ Nun sollte man sich im Intranet mit dem generierten Internetwart anmelden könne
 
 ### Design
 
-Im Ordner custom/styles können die Farbgebung und das Panier angepasst werden. Das Bild für die Startseite findet sich unter modules/mod_internet_home/custom/header.jpg und ist ebenfalls anzupassen.
+Im Ordner custom/styles können die Farbgebung und das Panier angepasst werden. Das Bild für die Startseite findet sich unter modules/mod_internet_home/custom/header.webp und ist ebenfalls anzupassen.
 
 ### Entfernen nicht benötigter Module
 

@@ -57,10 +57,10 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
 
-	echo '<table class="table table-condensed table-striped table-hover">';
+	echo '<table class="table table-sm table-striped table-hover">';
 	echo '<thead>';
 	echo '<tr><th>Region</th><th>Anzahl Personen</th><th></th></tr>';
 	echo '</thead>';
@@ -94,9 +94,9 @@ if($libAuth->isLoggedin()){
 
 	echo '<h2>Neue Region anlegen</h2>';
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form action="index.php?pid=intranet_admin_regions" method="post" class="form-horizontal">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
+	echo '<form action="index.php?pid=intranet_admin_regions" method="post" class="">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="aktion" value="create" />';
 

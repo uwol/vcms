@@ -31,7 +31,7 @@ class LibWeddingTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 }
 
 
-$stmt = $libDb->prepare("SELECT id, heirat_datum, heirat_partner FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND heirat_datum != '' AND heirat_datum != '0000-00-00' AND DATEDIFF(heirat_datum, :semesterstart) >= 0 AND DATEDIFF(heirat_datum, :semesterende) <= 0 ORDER BY heirat_datum");
+$stmt = $libDb->prepare("SELECT id, heirat_datum, heirat_partner FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND heirat_datum IS NOT NULL AND DATEDIFF(heirat_datum, :semesterstart) >= 0 AND DATEDIFF(heirat_datum, :semesterende) <= 0 ORDER BY heirat_datum");
 $stmt->bindValue(':semesterstart', $zeitraum[0]);
 $stmt->bindValue(':semesterende', $zeitraum[1]);
 $stmt->execute();

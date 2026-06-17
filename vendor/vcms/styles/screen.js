@@ -35,16 +35,22 @@ function adjustFacebookPagePluginsSrc(){
 }
 
 function configureNavigation(){
-	var navbarHeight = $(".navbar-fixed-top").height();
+	var navbarHeight = $(".fixed-top").outerHeight() || $(".navbar").outerHeight() || 0;
 	var paddingTop = navbarHeight;
 
-    $('nav').affix({
-        offset: {
-            top: 75
-        }
-    });
+	updateAffixState();
+	$("#content").css("padding-top", paddingTop);
+}
 
-    $("#content").css("padding-top", paddingTop);
+function updateAffixState(){
+	var $nav = $("#nav");
+	var offset = 75;
+
+	if($(window).scrollTop() > offset){
+		$nav.addClass("affix").removeClass("affix-top");
+	} else {
+		$nav.addClass("affix-top").removeClass("affix");
+	}
 }
 
 function reveal(){
@@ -79,11 +85,11 @@ $(document).ready(function() {
 		}, 20);
 	});
 
-	$('.navbar').on('affixed-top.bs.affix', function(event) {
-		configureNavigation();
+	$(window).on('scroll', function() {
+		updateAffixState();
 	});
 });
 
-$(document).load(function() {
+$(window).on('load', function() {
 	adjustElementDimensions();
 });

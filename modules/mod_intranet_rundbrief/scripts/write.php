@@ -86,20 +86,24 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
-echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" enctype="multipart/form-data" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');" class="form-horizontal">';
+echo '<div class="card">';
+echo '<div class="card-body">';
+echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" enctype="multipart/form-data" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');" class="">';
 echo '<fieldset>';
 
-echo '<div class="form-group">';
-echo '<label class="col-sm-3 control-label">Adressaten</label>';
+echo '<div class="mb-3 row">';
+echo '<label class="col-sm-3 col-form-label">Adressaten</label>';
 echo '<div class="col-sm-4">';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="fuchsia" checked="checked">';
+echo '<div class="form-check">';
+echo '<input class="form-check-input" type="checkbox" id="recipient_fuchsia" name="fuchsia" checked="checked">';
+echo '<label class="form-check-label" for="recipient_fuchsia">';
 echo $anzahlFuechse. ' Füchse &amp; Fuchsmajor';
 echo '</label></div>';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="burschen" checked="checked">';
+echo '<div class="form-check">';
+echo '<input class="form-check-input" type="checkbox" id="recipient_burschen" name="burschen" checked="checked">';
+echo '<label class="form-check-label" for="recipient_burschen">';
 echo $anzahlBurschen. ' Burschen';
 echo '</label></div>';
 
@@ -109,30 +113,42 @@ if($libGenericStorage->loadValueInCurrentModule('preselect_int_ahah') == 1){
 	$ahahInteressiertChecked = 'checked="checked"';
 }
 
-echo '<div class="checkbox"><label><input type="checkbox" name="ahah_interessiert" ' .$ahahInteressiertChecked. '>';
+echo '<div class="form-check">';
+echo '<input class="form-check-input" type="checkbox" id="recipient_ahah_interessiert" name="ahah_interessiert" ' .$ahahInteressiertChecked. '>';
+echo '<label class="form-check-label" for="recipient_ahah_interessiert">';
 echo $anzahlBesondersInteressierteAhah. ' besonders interessierte alte Herren';
 echo '</label></div>';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="ahah">';
+echo '<div class="form-check">';
+echo '<input class="form-check-input" type="checkbox" id="recipient_ahah" name="ahah">';
+echo '<label class="form-check-label" for="recipient_ahah">';
 echo $anzahlAhah. ' alte Herren';
 echo '</label></div>';
 
 echo '</div>';
 echo '<div class="col-sm-4">';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="hausbewohner">';
+echo '<div class="form-check">';
+echo '<input class="form-check-input" type="checkbox" id="recipient_hausbewohner" name="hausbewohner">';
+echo '<label class="form-check-label" for="recipient_hausbewohner">';
 echo $anzahlHausbewohner. ' Hausbewohner';
 echo '</label></div>';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="couleurdamen">';
+echo '<div class="form-check">';
+echo '<input class="form-check-input" type="checkbox" id="recipient_couleurdamen" name="couleurdamen">';
+echo '<label class="form-check-label" for="recipient_couleurdamen">';
 echo $anzahlCouleurdamen. ' Couleurdamen';
 echo '</label></div>';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="gattinnen_interessiert">';
+echo '<div class="form-check">';
+echo '<input class="form-check-input" type="checkbox" id="recipient_gattinnen_interessiert" name="gattinnen_interessiert">';
+echo '<label class="form-check-label" for="recipient_gattinnen_interessiert">';
 echo $anzahlBesondersInteressierteGattinnen. ' besonders interessierte Gattinnen';
 echo '</label></div>';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="gattinnen">';
+echo '<div class="form-check">';
+echo '<input class="form-check-input" type="checkbox" id="recipient_gattinnen" name="gattinnen">';
+echo '<label class="form-check-label" for="recipient_gattinnen">';
 echo $anzahlGattinnen. ' Gattinnen';
 echo '</label></div>';
 

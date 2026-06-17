@@ -24,10 +24,10 @@ $libDb->connect();
 
 echo '<h1>System-Protokoll</h1>';
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
+echo '<div class="card">';
+echo '<div class="card-body">';
 
-echo '<table class="table table-condensed table-striped table-hover">';
+echo '<table class="table table-sm table-striped table-hover">';
 echo '<thead>';
 echo '<tr><th>Datum</th><th>Meldung</th><th>Person</th><th>IP-Adresse</th></tr>';
 echo '</thead>';

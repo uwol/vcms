@@ -25,6 +25,7 @@ if($libAuth->isLoggedin()){
 
 	if(isset($_POST['orderby'])){
 		$orderby = $_POST['orderby'];
+		echo '<script>if (window.history.replaceState) { window.history.replaceState(null, null, window.location.href); }</script>';
 	}
 
 	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
@@ -109,24 +110,14 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
-		echo '<div class="panel panel-default">';
-		echo '<div class="panel-body">';
-		echo '<div class="btn-toolbar">';
-		echo '<a href="index.php?pid=intranet_admin_person&amp;aktion=blank" class="btn btn-default">Eine neue Person anlegen</a>';
-		echo '</div>';
-		echo '</div>';
-		echo '</div>';
-	}
-
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
 	echo '<form action="index.php?pid=intranet_admin_persons" method="post" class="form-inline">';
 	echo '<fieldset>';
-	echo '<div class="form-group">';
+	echo '<div class="mb-3 row">';
 
-	echo '<label class="sr-only" for="sortierung">Sortierung</label>';
-	echo '<select id="orderby" name="orderby" class="form-control" onchange="this.form.submit()">';
+	echo '<label class="visually-hidden" for="sortierung">Sortierung</label>';
+	echo '<select id="orderby" name="orderby" class="form-select" onchange="this.form.submit()">';
 	echo '<option value="0" ';
 
 	if (isset($_POST['orderby']) && $_POST['orderby'] == 0){
@@ -157,8 +148,6 @@ if($libAuth->isLoggedin()){
 	echo '>Id</option>';
 	echo '</select> ';
 
-	$libForm->printSubmitButtonInline('Sortieren');
-
 	echo '</div>';
 	echo '</fieldset>';
 	echo '</form>';
@@ -166,12 +155,13 @@ if($libAuth->isLoggedin()){
 	echo '</div>';
 
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
+	echo '<div class="table-responsive-sm d-none d-lg-block">';
 
-	echo '<table class="table table-condensed table-striped table-hover">';
+	echo '<table class="table table table-striped table-hover">';
 	echo '<thead>';
-	echo '<tr><th>Id</th><th>Präfix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th>Gruppe</th><th>Status</th><th>Reception</th><th></th></tr>';
+	echo '<tr><th>Id</th><th>Präfix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th>Gruppe</th><th>Status</th><th>Reception</th><th>Bearbeiten</th></tr>';
 	echo '</thead>';
 
 	$stmt = $libDb->prepare('SELECT * FROM base_person ORDER BY ' .$order);
@@ -194,9 +184,47 @@ if($libAuth->isLoggedin()){
 		echo '</td>';
 		echo '</tr>';
 	}
-
 	echo '</table>';
 
 	echo '</div>';
+
+	echo '<div class="d-lg-none container-fluid px-0 pb-5" id="contactList">';
+
+	$stmt = $libDb->prepare('SELECT * FROM base_person ORDER BY ' .$order);
+	$stmt->execute();
+
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		echo '<div class="contact-card card mx-3 mb-2 border shadow-sm">';
+		echo '<div class="card-body py-2 px-3 d-flex align-items-center gap-3">';
+			echo '<div class="avatar rounded-circle d-flex align-items-center justify-content-center>">'.$row['gruppe'].'</div>';
+			echo '<div class="flex-grow-1 overflow-hidden">';
+			echo '<div class="fw-semibold text-truncate">'.$row['name'].', '.$row['praefix'].' '.$row['vorname'].' '.$row['suffix'].'</div>';
+			echo '<div class="text-muted small text-truncate">';
+				echo '<i class="bi me-1 text-success"></i>Gruppe: '.$row['gruppe'];
+			echo '</div>';
+			echo '<div class="text-muted small text-truncate">';
+				echo '<i class="bi me-1 text-success"></i>Status: '.$row['status'];
+			echo '</div>';
+			echo '<div class="text-muted small text-truncate">';
+				echo '<i class="bi me-1 text-success"></i>Reception: '.$row['semester_reception'];
+			echo '</div>';
+			echo '</div>';
+			echo '<div class="d-flex flex-column align-items-end gap-2">';
+			echo '<span><a href="index.php?pid=intranet_admin_person&amp;id=' .$row['id']. '" class="btn"><i class="fa fa-cog"></i></a></span>';
+			echo '<i class="bi bi-chevron-right"></i>';
+			echo '</div>';
+		echo '</div>';
+		echo '</div>';
+	}
+
 	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+
+	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
+		echo '<a href="index.php?pid=intranet_admin_person&amp;aktion=blank"><button class="btn btn-success rounded-circle shadow position-fixed bottom-0 end-0 m-4 d-flex align-items-center justify-content-center" style="width:52px;height:52px;font-size:1.4rem" title="Eine neue Person anlegen">';
+			echo '<i class="bi bi-plus-lg"></i>';
+			echo '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg>';
+		echo '</button></a>';
+	}
 }

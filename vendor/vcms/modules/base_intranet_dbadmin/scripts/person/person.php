@@ -44,12 +44,19 @@ if($libAuth->isLoggedin()){
 		'semester_reception', 'semester_promotion', 'semester_philistrierung', 'semester_aufnahme', 'semester_fusion',
 		'austritt_datum', 'spitzname', 'leibmitglied',
 		'anschreiben_zusenden', 'spendenquittung_zusenden',
-		'bemerkung', 'vita');
+		'bemerkung', 'vita',
+		'studium', 'linkedin', 'xing');
 
-	//Ist der Bearbeiter ein Internetwart?
+	//Ist der Bearbeiter ein Internetwart oder Datenpflegewart? Dann need-to-know
 	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		//dann auch die sensiblen Felder bearbeiten
 		$felder = array_merge($felder, array('gruppe', 'password_hash'));
+	}
+
+	//Ist der Bearbeiter ein Internetwart, Datenpflegewart, Scriptor oder Kassierer? Dann need-to-know
+	if(in_array('quaestor', $libAuth->getAemter()) || in_array('ahv_quaestor', $libAuth->getAemter()) || in_array('scriptor', $libAuth->getAemter()) || in_array('ahv_scriptor', $libAuth->getAemter()) || in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
+		//dann auch die sensiblen Felder bearbeiten
+		$felder = array_merge($felder, array('datenschutz_erklaerung_unterschrieben', 'iban', 'einzugsermaechtigung_erteilt'));
 	}
 
 	/**
@@ -75,6 +82,12 @@ if($libAuth->isLoggedin()){
 		$mgarray['gruppe'] = '';
 		$mgarray['datum_gruppe_stand'] = '';
 		$mgarray['password_hash'] = '';
+		$mgarray['studium'] = '';
+		$mgarray['linkedin'] = '';
+		$mgarray['xing'] = '';
+		$mgarray['datenschutz_erklaerung_unterschrieben'] = '0';
+		$mgarray['iban'] = '';
+		$mgarray['einzugsermaechtigung_erteilt'] = '0';
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert: INSERT
 	elseif($aktion == 'insert'){
@@ -205,9 +218,9 @@ if($libAuth->isLoggedin()){
 		$extraActionParam = '&amp;aktion=update';
 	}
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form action="index.php?pid=intranet_admin_person' .$extraActionParam. '" method="post" class="form-horizontal">';
+	echo '<div class="card">';
+	echo '<div class="card-body">';
+	echo '<form action="index.php?pid=intranet_admin_person' .$extraActionParam. '" method="post" class="">';
 	echo '<fieldset>';
 	echo '<input type="hidden" name="formtyp" value="personendaten" />';
 	echo '<input type="hidden" name="id" value="' .$mgarray['id']. '" />';
@@ -245,7 +258,10 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('email', 'E-Mail-Adresse', $mgarray['email'], 'email');
 	$libForm->printTextInput('skype', 'Skype', $mgarray['skype']);
 	$libForm->printTextInput('webseite', 'Webseite', $mgarray['webseite']);
+	$libForm->printTextInput('linkedin', 'LinkedIn', $mgarray['linkedin']);
+	$libForm->printTextInput('xing', 'Xing', $mgarray['xing']);
 	$libForm->printTextInput('datum_geburtstag', 'Geburtsdatum', $mgarray['datum_geburtstag'], 'date');
+	$libForm->printTextInput('studium', 'Studium', $mgarray['studium']);
 	$libForm->printTextInput('beruf', 'Beruf', $mgarray['beruf']);
 	$libForm->printTextInput('heirat_datum', 'Heiratsdatum', $mgarray['heirat_datum'], 'date');
 
@@ -276,6 +292,14 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('bemerkung', 'Bemerkung', $mgarray['bemerkung']);
 	$libForm->printTextarea('vita', 'Vita', $mgarray['vita']);
 
+	//Ist der Bearbeiter ein Internetwart, Datenpflegewart, Scriptor oder Kassierer? Dann need-to-know
+	if(in_array('quaestor', $libAuth->getAemter()) || in_array('ahv_quaestor', $libAuth->getAemter()) || in_array('scriptor', $libAuth->getAemter()) || in_array('ahv_scriptor', $libAuth->getAemter()) || in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
+		//dann auch die sensiblen Felder bearbeiten
+		$libForm->printBoolSelectBox('datenschutz_erklaerung_unterschrieben', 'Datenschutzerklärung unterschrieben', $mgarray['datenschutz_erklaerung_unterschrieben']);
+		$libForm->printTextInput('iban', 'IBAN', $mgarray['iban']);
+		$libForm->printBoolSelectBox('einzugsermaechtigung_erteilt', 'Einzugsermächtigung erteilt', $mgarray['einzugsermaechtigung_erteilt']);
+	}
+
 	//nur Internetwart darf an sensible Daten
 	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		$libForm->printGruppeDropDownBox('gruppe', 'Gruppe', $mgarray['gruppe'], false);
@@ -296,7 +320,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="col-sm-3">';
 
 	if($mgarray['id'] != ''){
-		echo '<div class="center-block person-signature-box mb-3">';
+		echo '<div class="mx-auto person-signature-box mb-3">';
 		echo '<div class="img-box">';
 
 		echo '<span class="delete-icon-box">';
@@ -310,7 +334,7 @@ if($libAuth->isLoggedin()){
 		echo '</div>';
 
 		//image upload form
-		echo '<form action="index.php?pid=intranet_admin_person&amp;id='. $mgarray['id'] .'" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
+		echo '<form action="index.php?pid=intranet_admin_person&amp;id='. $mgarray['id'] .'" method="post" enctype="multipart/form-data" class="text-center">';
 		echo '<input type="hidden" name="formtyp" value="fotoupload" />';
 		$libForm->printFileUpload('bilddatei', 'Foto (4x3) hochladen', false, false, array(), array('image/jpeg'));
 		echo '</form>';
