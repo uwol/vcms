@@ -129,7 +129,7 @@ if($libAuth->isLoggedin()){
 		echo '<input type="hidden" name="aktion" value="delete" />';
 		echo '<input type="hidden" name="mitglied" value="' .$vmarray['mitglied']. '" />';
 		echo '<input type="hidden" name="verein" value="' .$vmarray['verein']. '" />';
-		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
 		echo '</form>';
 	}
 

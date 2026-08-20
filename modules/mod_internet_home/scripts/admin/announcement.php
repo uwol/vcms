@@ -113,7 +113,7 @@ if($array['id'] != ''){
 	echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_announcements" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 	echo '<input type="hidden" name="aktion" value="delete" />';
 	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
-	echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+	echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
 	echo '</form>';
 }
 
@@ -168,10 +168,10 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 		echo '<div class="img-box">';
 
 		echo '<span class="delete-icon-box">';
-		echo '<form method="post" action="index.php?pid=intranet_admin_announcement" class="inline-form">';
+		echo '<form method="post" action="index.php?pid=intranet_admin_announcement" class="d-inline">';
 		echo '<input type="hidden" name="aktion" value="bilddelete" />';
 		echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
-		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
 		echo '</span>';
 

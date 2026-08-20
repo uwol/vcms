@@ -70,7 +70,7 @@ $stmt->execute();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
 	echo '<div class="panel-heading">';
-	echo '<h3 class="panel-title panel-title-inline">';
+	echo '<h3 class="panel-title d-inline">';
 	echo $libTime->formatDateString($row['datum']);
 	echo ' ';
 	echo '<a href="index.php?pid=intranet_person&amp;id=' .$row['person']. '">';
@@ -80,10 +80,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if($libAuth->getId() == $row['person']){
 		echo ' ';
-		echo '<form method="post" action="index.php?pid=intranet_reservations" class="inline-form" onsubmit="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
+		echo '<form method="post" action="index.php?pid=intranet_reservations" class="d-inline" onsubmit="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
 		echo '<input type="hidden" name="action" value="delete" />';
 		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
-		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
+		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
 	}
 

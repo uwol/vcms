@@ -174,25 +174,40 @@ label {
 }
 
 
-.inline-form {
-	display: inline;
+.d-inline {
+	display: inline !important;
 }
 
-.btn.btn-icon {
-	padding: 0;
-	border: 0;
-	background: none;
-	box-shadow: none;
-	font-size: inherit;
-	line-height: inherit;
-	vertical-align: baseline;
+.float-left {
+	float: left !important;
 }
 
-.panel-title-inline {
-	display: inline-block;
+
+.p-0 {
+	padding: 0 !important;
 }
 
-.btn-toolbar > .inline-form {
-	float: left;
-	margin-left: 5px;
+.ml-1 {
+	margin-left: .25rem !important;
+}
+
+
+.border-0 {
+	border: 0 !important;
+}
+
+.bg-transparent {
+	background-color: transparent !important;
+}
+
+.align-baseline {
+	vertical-align: baseline !important;
+}
+
+.text-dark {
+	color: #333 !important;
+}
+
+.cursor-pointer {
+	cursor: pointer !important;
 }

@@ -470,9 +470,9 @@ function printPersonSignature($row, $ownprofile){
 
 	if($ownprofile){
 		echo '<span class="delete-icon-box">';
-		echo '<form method="post" action="index.php?pid=intranet_person" class="inline-form" onsubmit="return confirm(\'Willst Du Dein Foto wirklich löschen?\')">';
+		echo '<form method="post" action="index.php?pid=intranet_person" class="d-inline" onsubmit="return confirm(\'Willst Du Dein Foto wirklich löschen?\')">';
 		echo '<input type="hidden" name="aktion" value="fotodelete" />';
-		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
 		echo '</span>';
 	}

@@ -62,7 +62,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<form method="post" action="index.php?pid=intranet_admin_associations" class="inline-form" onsubmit="return confirm(\'Willst den Import wirklich durchführen?\')">';
+	echo '<form method="post" action="index.php?pid=intranet_admin_associations" class="float-left ml-1" onsubmit="return confirm(\'Willst den Import wirklich durchführen?\')">';
 	echo '<input type="hidden" name="aktion" value="import" />';
 	echo '<button type="submit" class="btn btn-default"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</button>';
 	echo '</form>';

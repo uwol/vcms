@@ -76,10 +76,10 @@ if($libAuth->isLoggedin()){
 		echo '<td class="tool-column">';
 
 		if($row['bezeichnung'] != 'F' && $row['bezeichnung'] != 'B' && $row['bezeichnung'] != 'P' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'C' && $row['bezeichnung'] != 'G' && $row['bezeichnung'] != 'W' && $row['bezeichnung'] != 'V' && $row['bezeichnung'] != 'Y'){
-			echo '<form method="post" action="index.php?pid=intranet_admin_groups" class="inline-form" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<form method="post" action="index.php?pid=intranet_admin_groups" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 			echo '<input type="hidden" name="aktion" value="delete" />';
 			echo '<input type="hidden" name="bezeichnung" value="' .$row['bezeichnung']. '" />';
-			echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+			echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 			echo '</form>';
 		}
 

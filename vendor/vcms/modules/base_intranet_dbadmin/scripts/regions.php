@@ -79,10 +79,10 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['bezeichnung']. '</td>';
 		echo '<td>' .$anzahl. ' Personen</td>';
 		echo '<td class="tool-column">';
-		echo '<form method="post" action="index.php?pid=intranet_admin_regions" class="inline-form" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+		echo '<form method="post" action="index.php?pid=intranet_admin_regions" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 		echo '<input type="hidden" name="aktion" value="delete" />';
 		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
-		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
 		echo '</td>';
 		echo '</tr>';

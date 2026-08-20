@@ -188,7 +188,7 @@ if($libAuth->isLoggedin()){
 			echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_persons" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 			echo '<input type="hidden" name="aktion" value="delete" />';
 			echo '<input type="hidden" name="id" value="' .$mgarray['id']. '" />';
-			echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+			echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
 			echo '</form>';
 		}
 	}
@@ -304,10 +304,10 @@ if($libAuth->isLoggedin()){
 		echo '<div class="img-box">';
 
 		echo '<span class="delete-icon-box">';
-		echo '<form method="post" action="index.php?pid=intranet_admin_person" class="inline-form" onsubmit="return confirm(\'Willst Du das Foto wirklich löschen?\')">';
+		echo '<form method="post" action="index.php?pid=intranet_admin_person" class="d-inline" onsubmit="return confirm(\'Willst Du das Foto wirklich löschen?\')">';
 		echo '<input type="hidden" name="aktion" value="fotodelete" />';
 		echo '<input type="hidden" name="id" value="' .$mgarray['id']. '" />';
-		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
 		echo '</span>';
 

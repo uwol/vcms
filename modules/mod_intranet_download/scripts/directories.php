@@ -257,10 +257,10 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				}
 
 				if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
-					echo ' <form method="post" action="index.php?pid=intranet_directories" class="inline-form" onsubmit="return confirm(\'Willst Du den Ordner wirklich löschen?\')">';
+					echo ' <form method="post" action="index.php?pid=intranet_directories" class="d-inline" onsubmit="return confirm(\'Willst Du den Ordner wirklich löschen?\')">';
 					echo '<input type="hidden" name="aktion" value="delete" />';
 					echo '<input type="hidden" name="hash" value="' .$folderElement->getHash(). '" />';
-					echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+					echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 					echo '</form>';
 				}
 
@@ -333,10 +333,10 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			echo ' <span class="text-muted"><small>' .getSizeString($folderElement->getSize()). '</small></span>';
 
 			if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-				echo ' <form method="post" action="index.php?pid=intranet_directories" class="inline-form" onsubmit="return confirm(\'Willst Du die Datei wirklich löschen?\')">';
+				echo ' <form method="post" action="index.php?pid=intranet_directories" class="d-inline" onsubmit="return confirm(\'Willst Du die Datei wirklich löschen?\')">';
 				echo '<input type="hidden" name="aktion" value="delete" />';
 				echo '<input type="hidden" name="hash" value="' .$folderElement->getHash(). '" />';
-				echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+				echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 				echo '</form>';
 			}
 

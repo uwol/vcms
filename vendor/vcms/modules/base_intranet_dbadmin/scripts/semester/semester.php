@@ -169,7 +169,7 @@ if($libAuth->isLoggedin()){
 		echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_semesters" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 		echo '<input type="hidden" name="aktion" value="delete" />';
 		echo '<input type="hidden" name="semester" value="' .$semesterarray['semester']. '" />';
-		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
 		echo '</form>';
 	}
 
@@ -290,10 +290,10 @@ if($libAuth->isLoggedin()){
 
 		if($hasSemesterCover){
 			echo '<span class="delete-icon-box">';
-			echo '<form method="post" action="index.php?pid=intranet_admin_semester" class="inline-form" onsubmit="return confirm(\'Willst Du das Semestercover wirklich löschen?\')">';
+			echo '<form method="post" action="index.php?pid=intranet_admin_semester" class="d-inline" onsubmit="return confirm(\'Willst Du das Semestercover wirklich löschen?\')">';
 			echo '<input type="hidden" name="aktion" value="semestercoverdelete" />';
 			echo '<input type="hidden" name="semester" value="' .$semesterarray['semester']. '" />';
-			echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+			echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 			echo '</form>';
 			echo '</span>';
 		}
