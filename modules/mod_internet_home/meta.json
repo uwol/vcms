@@ -1,6 +1,6 @@
 {
 	"moduleName": "Home",
-	"version": 3.84,
+	"version": 3.85,
 	"installScript": "install/install.php",
 	"pages": [
 		{

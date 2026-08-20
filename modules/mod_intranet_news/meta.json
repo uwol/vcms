@@ -1,6 +1,6 @@
 {
 	"moduleName": "Neuigkeiten",
-	"version": 2.95,
+	"version": 2.96,
 	"installScript": "install/install.php",
 	"updateScript": "install/update.php",
 	"pages": [
