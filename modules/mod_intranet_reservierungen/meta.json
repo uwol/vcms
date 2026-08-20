@@ -1,6 +1,6 @@
 {
 	"moduleName": "Reservierungen",
-	"version": 2.86,
+	"version": 2.87,
 	"installScript": "install/install.php",
 	"pages": [
 		{
