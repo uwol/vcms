@@ -140,7 +140,7 @@ if($libAuth->isLoggedin()){
 		if($semesterarray['semester'] != ''){
 			$libImage->saveSemesterCoverByFilesArray($semesterarray['semester'], 'semestercover');
 		}
-	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'semestercoverdelete'){
+	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'semestercoverdelete'){
 		if($semesterarray['semester'] != ''){
 			$libImage->deleteSemesterCover($semesterarray['semester']);
 		}
@@ -166,11 +166,11 @@ if($libAuth->isLoggedin()){
 	*
 	*/
 	if($semesterarray['semester'] != ''){
-		echo '<p class="mb-4"><form method="post" action="index.php?pid=intranet_admin_semesters" style="display:inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+		echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_semesters" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 		echo '<input type="hidden" name="aktion" value="delete" />';
 		echo '<input type="hidden" name="semester" value="' .$semesterarray['semester']. '" />';
-		echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
-		echo '</form></p>';
+		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+		echo '</form>';
 	}
 
 	echo '<div class="row">';
@@ -290,9 +290,11 @@ if($libAuth->isLoggedin()){
 
 		if($hasSemesterCover){
 			echo '<span class="delete-icon-box">';
-			echo '<a href="index.php?pid=intranet_admin_semester&amp;semester=' .$semesterarray['semester']. '&amp;aktion=semestercoverdelete">';
-			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-			echo '</a>';
+			echo '<form method="post" action="index.php?pid=intranet_admin_semester" class="inline-form" onsubmit="return confirm(\'Willst Du das Semestercover wirklich löschen?\')">';
+			echo '<input type="hidden" name="aktion" value="semestercoverdelete" />';
+			echo '<input type="hidden" name="semester" value="' .$semesterarray['semester']. '" />';
+			echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+			echo '</form>';
 			echo '</span>';
 		}
 

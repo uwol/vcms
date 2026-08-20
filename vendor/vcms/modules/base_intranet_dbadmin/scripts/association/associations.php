@@ -49,7 +49,7 @@ if($libAuth->isLoggedin()){
 
 			$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 		}
-	} else if(isset($_GET['aktion']) && $_GET['aktion'] == 'import'){
+	} else if(isset($_POST['aktion']) && $_POST['aktion'] == 'import'){
 		$libAssociation->importAssociations();
 	}
 
@@ -62,7 +62,10 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_associations&amp;aktion=import" onclick="return confirm(\'Willst den Import wirklich durchführen?\')" class="btn btn-default"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</a>';
+	echo '<form method="post" action="index.php?pid=intranet_admin_associations" class="inline-form" onsubmit="return confirm(\'Willst den Import wirklich durchführen?\')">';
+	echo '<input type="hidden" name="aktion" value="import" />';
+	echo '<button type="submit" class="btn btn-default"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</button>';
+	echo '</form>';
 	echo '<a href="index.php?pid=intranet_admin_association&amp;aktion=blank" class="btn btn-default">Einen neuen Verein anlegen</a>';
 	echo '</div>';
 	echo '</div>';

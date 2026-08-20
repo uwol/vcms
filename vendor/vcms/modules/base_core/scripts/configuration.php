@@ -20,7 +20,15 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-if(isset($_POST['form_complete']) && $_POST['form_complete'] && isset($_POST['action']) && $_POST['action'] == "save"){
+//the delete buttons are part of the surrounding save form, so deletion has to be checked first
+if(isset($_POST['delete_target']) && $_POST['delete_target'] != ''){
+	$target = explode('#', $_POST['delete_target']);
+
+	if(count($target) == 3 && $target[0] != '' && $target[1] != '' && $target[2] != ''){
+		$libGenericStorage->deleteArrayValue($target[0], $target[1], $target[2]);
+		$libGlobal->notificationTexts[] = 'Der Wert wurde gelöscht.';
+	}
+} elseif(isset($_POST['form_complete']) && $_POST['form_complete'] && isset($_POST['action']) && $_POST['action'] == "save"){
 	foreach($_POST as $key => $value){
 		if($key != 'form_complete'){
 			$array = explode('#', $key);
@@ -43,15 +51,6 @@ if(isset($_POST['form_complete']) && $_POST['form_complete'] && isset($_POST['ac
 				$libGenericStorage->saveArrayValue($moduleid, $array_name, $position, $value);
 			}
 		}
-	}
-} elseif(isset($_POST['action']) && $_POST['action'] == "delete"){
-	$moduleid = $_POST['moduleid'];
-	$array_name = $_POST['array_name'];
-	$position = $_POST['position'];
-
-	if($moduleid != "" && $array_name != "" && $position != ""){
-		$libGenericStorage->deleteArrayValue($moduleid, $array_name, $position);
-		$libGlobal->notificationTexts[] = 'Der Wert wurde gelöscht.';
 	}
 }
 
@@ -88,13 +87,7 @@ foreach($storage as $moduleid => $arrays){
 
 			echo '<div class="col-sm-1">';
 			echo '<div class="form-control-static">';
-			echo '<form method="post" action="index.php?pid=configuration" style="display:inline" onsubmit="return confirm(\'Willst Du den Eintrag wirklich löschen?\')">';
-			echo '<input type="hidden" name="action" value="delete" />';
-			echo '<input type="hidden" name="moduleid" value="' .$moduleid. '" />';
-			echo '<input type="hidden" name="array_name" value="' .$array_name. '" />';
-			echo '<input type="hidden" name="position" value="' .$position. '" />';
-			echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>';
-			echo '</form>';
+			echo '<button type="submit" name="delete_target" value="' .$moduleid.'#'.$array_name.'#'.$position. '" class="btn btn-link btn-icon" onclick="return confirm(\'Willst Du den Eintrag wirklich löschen?\')"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>';
 			echo '</div>';
 			echo '</div>';
 

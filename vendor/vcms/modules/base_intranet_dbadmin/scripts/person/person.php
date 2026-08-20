@@ -157,7 +157,7 @@ if($libAuth->isLoggedin()){
 				$libImage->savePersonFotoByFilesArray($mgarray['id'], 'bilddatei');
 			}
 		}
-	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'fotodelete'){
+	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'fotodelete'){
 		if($mgarray['id'] != ''){
 			$libImage->deletePersonFoto($mgarray['id']);
 		}
@@ -185,11 +185,11 @@ if($libAuth->isLoggedin()){
 	*/
 	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		if($mgarray['id'] != ''){
-			echo '<p class="mb-4"><form method="post" action="index.php?pid=intranet_admin_persons" style="display:inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_persons" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
 			echo '<input type="hidden" name="aktion" value="delete" />';
 			echo '<input type="hidden" name="id" value="' .$mgarray['id']. '" />';
-			echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
-			echo '</form></p>';
+			echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+			echo '</form>';
 		}
 	}
 
@@ -304,9 +304,11 @@ if($libAuth->isLoggedin()){
 		echo '<div class="img-box">';
 
 		echo '<span class="delete-icon-box">';
-		echo '<a href="index.php?pid=intranet_admin_person&amp;id=' .$mgarray['id']. '&amp;aktion=fotodelete">';
-		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-		echo '</a>';
+		echo '<form method="post" action="index.php?pid=intranet_admin_person" class="inline-form" onsubmit="return confirm(\'Willst Du das Foto wirklich löschen?\')">';
+		echo '<input type="hidden" name="aktion" value="fotodelete" />';
+		echo '<input type="hidden" name="id" value="' .$mgarray['id']. '" />';
+		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+		echo '</form>';
 		echo '</span>';
 
 		echo $libPerson->getImage($mgarray['id'], 'lg');

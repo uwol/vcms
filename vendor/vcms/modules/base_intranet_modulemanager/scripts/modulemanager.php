@@ -23,17 +23,17 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 echo '<h1>Module</h1>';
 
 
-if(isset($_REQUEST['action'])){
-	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'updateEngine'){
+if(isset($_POST['action'])){
+	if($_POST['action'] == 'updateEngine'){
 		$libRepositoryClient->updateEngine();
 	}
 
-	if(isset($_REQUEST['modul']) && $_REQUEST['modul'] != '' && $_REQUEST['modul'] != 'engine'){
-		$module = $_REQUEST['modul'];
+	if(isset($_POST['modul']) && $_POST['modul'] != '' && $_POST['modul'] != 'engine'){
+		$module = $_POST['modul'];
 
-		if($_REQUEST['action'] == 'installModule' && $module != ''){
+		if($_POST['action'] == 'installModule' && $module != ''){
 			$libRepositoryClient->installModule($module);
-		} elseif($_REQUEST['action'] == 'uninstallModule' && $module != ''){
+		} elseif($_POST['action'] == 'uninstallModule' && $module != ''){
 			$libRepositoryClient->uninstallModule($module);
 		}
 	}
@@ -150,9 +150,11 @@ if(isset($_REQUEST['action'])){
 
 		if($key != 'engine'){
 			if(!$engineIsOld && !$libModuleHandler->moduleIsAvailable($key)){
-				echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;action=installModule" onclick="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
-				echo '<i class="fa fa-plus-circle" aria-hidden="true"></i>';
-				echo '</a>';
+				echo '<form method="post" action="index.php?pid=modules" class="inline-form" onsubmit="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
+				echo '<input type="hidden" name="action" value="installModule" />';
+				echo '<input type="hidden" name="modul" value="' .$key. '" />';
+				echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
+				echo '</form>';
 			}
 		}
 
@@ -162,9 +164,10 @@ if(isset($_REQUEST['action'])){
 		echo '<td class="tool-column">';
 
 		if($engineIsOld && $key == 'engine'){
-			echo '<a href="index.php?pid=modules&amp;action=updateEngine" onclick="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
-			echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
-			echo '</a>';
+			echo '<form method="post" action="index.php?pid=modules" class="inline-form" onsubmit="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
+			echo '<input type="hidden" name="action" value="updateEngine" />';
+			echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-cloud-download" aria-hidden="true"></i></button>';
+			echo '</form>';
 		} else {
 			if($libModuleHandler->moduleIsAvailable($key)){
 				$module = $libModuleHandler->getModuleByModuleid($key);
@@ -172,9 +175,11 @@ if(isset($_REQUEST['action'])){
 				$newVersion = (double) $value;
 
 				if(!$engineIsOld && $newVersion > $actualVersion){
-					echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;action=installModule" onclick="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
-					echo '<i class="fa fa-cloud-download" aria-hidden="true"></i>';
-					echo '</a>';
+					echo '<form method="post" action="index.php?pid=modules" class="inline-form" onsubmit="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
+					echo '<input type="hidden" name="action" value="installModule" />';
+					echo '<input type="hidden" name="modul" value="' .$key. '" />';
+					echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-cloud-download" aria-hidden="true"></i></button>';
+					echo '</form>';
 				}
 			}
 		}
@@ -191,9 +196,11 @@ if(isset($_REQUEST['action'])){
 				$actualVersion = (double) $module->getVersion();
 				$newVersion = (double) $value;
 
-				echo '<a href="index.php?pid=modules&amp;modul=' .$key. '&amp;action=uninstallModule" onclick="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
-				echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-				echo '</a>';
+				echo '<form method="post" action="index.php?pid=modules" class="inline-form" onsubmit="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
+				echo '<input type="hidden" name="action" value="uninstallModule" />';
+				echo '<input type="hidden" name="modul" value="' .$key. '" />';
+				echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+				echo '</form>';
 			}
 		}
 

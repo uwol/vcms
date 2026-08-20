@@ -172,3 +172,27 @@ label {
 .pt-5 {
 	padding-top: 3rem !important;
 }
+
+
+.inline-form {
+	display: inline;
+}
+
+.btn.btn-icon {
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	font-size: inherit;
+	line-height: inherit;
+	vertical-align: baseline;
+}
+
+.panel-title-inline {
+	display: inline-block;
+}
+
+.btn-toolbar > .inline-form {
+	float: left;
+	margin-left: 5px;
+}

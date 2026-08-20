@@ -154,7 +154,7 @@ if($ownprofile){
 		} else {
 			$libAuth->savePassword($libAuth->getId(), $_POST['newpwd1']);
 		}
-	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'fotodelete'){
+	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'fotodelete'){
 		$libImage->deletePersonFoto($libAuth->getId());
 	}
 }
@@ -470,9 +470,10 @@ function printPersonSignature($row, $ownprofile){
 
 	if($ownprofile){
 		echo '<span class="delete-icon-box">';
-		echo '<a href="index.php?pid=intranet_person&amp;aktion=fotodelete">';
-		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-		echo '</a>';
+		echo '<form method="post" action="index.php?pid=intranet_person" class="inline-form" onsubmit="return confirm(\'Willst Du Dein Foto wirklich löschen?\')">';
+		echo '<input type="hidden" name="aktion" value="fotodelete" />';
+		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+		echo '</form>';
 		echo '</span>';
 	}
 

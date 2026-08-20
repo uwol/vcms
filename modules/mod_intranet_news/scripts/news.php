@@ -118,22 +118,22 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
 	echo '<div class="panel-heading">';
-	echo '<h3 class="panel-title">';
+	echo '<h3 class="panel-title panel-title-inline">';
 	echo $libTime->formatDateString($row['eingabedatum']);
 	echo ' ';
 	echo $row['bezeichnung'];
+	echo '</h3>';
 
 	if((in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter()))
 			|| ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)){
-		echo ' <form method="post" action="index.php?pid=intranet_news" style="display:inline" onsubmit="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
+		echo ' <form method="post" action="index.php?pid=intranet_news" class="inline-form" onsubmit="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
 		echo '<input type="hidden" name="action" value="delete" />';
 		echo '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
 		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
-		echo '<button type="submit" class="btn btn-link"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
+		echo '<button type="submit" class="btn btn-link btn-icon"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
 	}
 
-	echo '</h3>';
 	echo '</div>';
 
 	echo '<div class="panel-body">';
