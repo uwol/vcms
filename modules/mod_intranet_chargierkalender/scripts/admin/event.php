@@ -49,7 +49,10 @@ elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "insert"){
 		die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
 	}
 
-	$array = $libDb->insertRow($felder,$_REQUEST, "mod_chargierkalender_veranstaltung", array("id"=>''));
+	$valueArray = $_REQUEST;
+	$valueArray['datum'] = $libTime->assureMysqlDateTime($valueArray['datum']);
+
+	$array = $libDb->insertRow($felder, $valueArray, "mod_chargierkalender_veranstaltung", array("id"=>''));
 	$libGlobal->notificationTexts[] = 'Die Chargierveranstaltung wurde gespeichert.';
 }
 //data modification
@@ -58,7 +61,10 @@ elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "update"){
 		die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
 	}
 
-	$array = $libDb->updateRow($felder,$_REQUEST, "mod_chargierkalender_veranstaltung", array("id" => $id));
+	$valueArray = $_REQUEST;
+	$valueArray['datum'] = $libTime->assureMysqlDateTime($valueArray['datum']);
+
+	$array = $libDb->updateRow($felder, $valueArray, "mod_chargierkalender_veranstaltung", array("id" => $id));
 	$libGlobal->notificationTexts[] = 'Die Chargierveranstaltung wurde gespeichert.';
 }
 // select
@@ -110,7 +116,7 @@ echo '<input type="hidden" name="formtyp" value="veranstaltungsdaten" />';
 echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 
 $libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
-$libForm->printTextInput('datum', 'Datum', $array['datum'], 'date');
+$libForm->printDateTimeInput('datum', 'Datum und Uhrzeit (00:00 = ganztägig)', $array['datum']);
 $libForm->printVereineDropDownBox("verein", "Verein", $array['verein'], true, false);
 $libForm->printTextInput('beschreibung', 'Beschreibung', $array['beschreibung']);
 

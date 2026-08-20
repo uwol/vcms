@@ -718,17 +718,54 @@ class LibTime{
 		}
 	}
 
+	/**
+	* Wert für ein HTML5-Feld <input type="date">, also YYYY-MM-DD.
+	* Leerer String, falls kein vollständiges Datum vorliegt.
+	*/
+	function formatHtmlDateString($date){
+		$date = (string) $date;
+
+		$year = (int) substr($date, 0, 4);
+		$month = (int) substr($date, 5, 2);
+		$day = (int) substr($date, 8, 2);
+
+		if($year == 0 || $month == 0 || $day == 0){
+			return '';
+		}
+
+		return $this->zeroFill($year, 4). '-' .$this->zeroFill($month). '-' .$this->zeroFill($day);
+	}
+
+	/**
+	* Wert für ein HTML5-Feld <input type="datetime-local">, also YYYY-MM-DDTHH:MM.
+	* Leerer String, falls kein vollständiges Datum vorliegt.
+	*/
+	function formatHtmlDateTimeString($dateTime){
+		$date = $this->formatHtmlDateString($dateTime);
+
+		if($date == ''){
+			return '';
+		}
+
+		$dateTime = (string) $dateTime;
+
+		$hour = (int) substr($dateTime, 11, 2);
+		$minute = (int) substr($dateTime, 14, 2);
+
+		return $date. 'T' .$this->zeroFill($hour). ':' .$this->zeroFill($minute);
+	}
+
 	function assureMysqlDateTime($dateTime){
-		$dateTime = trim($dateTime);
+		$dateTime = trim((string) $dateTime);
 
 		$regexpDatumComplete					= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/";
 		$regexpDatumWithoutSeconds 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2}):([0-9]{1,2})/";
 		$regexpDatumWithoutMinutes 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2})/";
 		$regexpDatumWithoutHour 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/";
 
-		$regexpMysqlDateTimeComplete			= "/([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})/";
-		$regexpMysqlDateTimeWithoutSeconds		= "/([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2})/";
-		$regexpMysqlDateTimeWithoutMinutes		= "/([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2})/";
+		$regexpMysqlDateTimeComplete			= "/([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})/";
+		$regexpMysqlDateTimeWithoutSeconds		= "/([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2})/";
+		$regexpMysqlDateTimeWithoutMinutes		= "/([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2})/";
 		$regexpMysqlDate 						= "/([0-9]{4})-([0-9]{2})-([0-9]{2})/";
 
 		$matchesDatum = array();
@@ -741,8 +778,8 @@ class LibTime{
 			return $this->zeroFill($matchesDatum[3], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[1]).' '.$this->zeroFill($matchesDatum[4]).':00:00';
 		} elseif(preg_match($regexpDatumWithoutHour, $dateTime, $matchesDatum)){
 			return $this->zeroFill($matchesDatum[3], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[1]).' 00:00:00';
-		} elseif(preg_match($regexpMysqlDateTimeComplete, $dateTime)){
-			return $dateTime;
+		} elseif(preg_match($regexpMysqlDateTimeComplete, $dateTime, $matchesDatum)){
+			return $this->zeroFill($matchesDatum[1], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[3]).' '.$this->zeroFill($matchesDatum[4]).':'.$this->zeroFill($matchesDatum[5]).':'.$this->zeroFill($matchesDatum[6]);
 		} elseif(preg_match($regexpMysqlDateTimeWithoutSeconds, $dateTime, $matchesDatum)){
 			return $this->zeroFill($matchesDatum[1], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[3]).' '.$this->zeroFill($matchesDatum[4]).':'.$this->zeroFill($matchesDatum[5]).':00';
 		} elseif(preg_match($regexpMysqlDateTimeWithoutMinutes, $dateTime, $matchesDatum)){
@@ -755,7 +792,7 @@ class LibTime{
 	}
 
 	function assureMysqlDate($date){
-		$date = trim($date);
+		$date = trim((string) $date);
 		$regexpDatum = "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/";
 		$regexpMysqlDate = "/([0-9]{4})-([0-9]{2})-([0-9]{2})/";
 		$regexpJahr = "/([0-9]{4})/";

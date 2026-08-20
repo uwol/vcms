@@ -140,7 +140,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('plz1', 'Plz 1', $array['plz1']);
 	$libForm->printTextInput('ort1', 'Ort 1', $array['ort1']);
 	$libForm->printTextInput('land1', 'Land 1', $array['land1']);
-	$libForm->printTextInput('datum_adresse1_stand', 'Stand 1', $array['datum_adresse1_stand'], 'date', true);
+	$libForm->printDateInput('datum_adresse1_stand', 'Stand 1', $array['datum_adresse1_stand'], true);
 	$libForm->printTextInput('telefon1', 'Telefon 1', $array['telefon1'], 'tel');
 	$libForm->printTextInput('status', 'Status', $array['status']);
 	$libForm->printTextInput('grund', 'Grund', $array['grund']);

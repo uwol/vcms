@@ -140,8 +140,8 @@ echo '<input type="hidden" name="formtyp" value="newsdaten" />';
 echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 
 $libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
-$libForm->printTextInput('startdatum', 'Startdatum', $array['startdatum'], 'date');
-$libForm->printTextInput('verfallsdatum', 'Verfallsdatum', $array['verfallsdatum'], 'date');
+$libForm->printDateTimeInput('startdatum', 'Anzeigen ab', $array['startdatum']);
+$libForm->printDateTimeInput('verfallsdatum', 'Anzeigen bis (optional)', $array['verfallsdatum']);
 $libForm->printTextarea('text', 'Beschreibung', $array['text']);
 
 echo '<input type="hidden" name="form_complete" value="1" />';

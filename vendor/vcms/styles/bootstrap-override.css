@@ -211,3 +211,22 @@ label {
 .cursor-pointer {
 	cursor: pointer !important;
 }
+
+
+input[type="date"].form-control,
+input[type="datetime-local"].form-control {
+	/* WebKit richtet den Wert in nativen Datumsfeldern sonst nicht korrekt aus */
+	line-height: normal;
+	min-height: 34px;
+}
+
+input[type="date"].form-control::-webkit-calendar-picker-indicator,
+input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+	opacity: .5;
+}
+
+input[type="date"].form-control:hover::-webkit-calendar-picker-indicator,
+input[type="datetime-local"].form-control:hover::-webkit-calendar-picker-indicator {
+	opacity: 1;
+}

@@ -152,8 +152,8 @@ if($libAuth->isLoggedin()){
 	echo '<input type="hidden" name="id" value="' .$varray['id']. '" />';
 
 	$libForm->printTextInput('id', 'Id', $varray['id'], 'text', true);
-	$libForm->printTextInput('datum', 'Startdatum (falls ganztägig: Uhrzeit 00:00:00)', $varray['datum'], 'datetime');
-	$libForm->printTextInput('datum_ende', 'Enddatum (optional; falls ganztägig: Uhrzeit 00:00:00)', $varray['datum_ende'], 'datetime');
+	$libForm->printDateTimeInput('datum', 'Beginn (Uhrzeit 00:00 = ganztägig)', $varray['datum']);
+	$libForm->printDateTimeInput('datum_ende', 'Ende (optional, Uhrzeit 00:00 = ganztägig)', $varray['datum_ende']);
 	$libForm->printTextInput('titel', 'Titel', $varray['titel']);
 	$libForm->printTextInput('spruch', 'Spruch', $varray['spruch']);
 	$libForm->printTextarea('beschreibung', 'Beschreibung', $varray['beschreibung']);

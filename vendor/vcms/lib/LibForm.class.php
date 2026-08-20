@@ -68,6 +68,76 @@ class LibForm{
 		echo '</div>';
 	}
 
+	function printMinMaxString($min, $max){
+		if($min != ''){
+			echo ' min="' .$min. '"';
+		}
+
+		if($max != ''){
+			echo ' max="' .$max. '"';
+		}
+	}
+
+	/**
+	* HTML5-Datumsfeld. Der Wert wird auf YYYY-MM-DD normalisiert. Werte, die kein
+	* vollständiges Datum sind (z. B. Altbestände wie 1985-00-00), werden in einem
+	* Textfeld angezeigt, damit sie sichtbar bleiben und nicht still verloren gehen.
+	*/
+	function printDateInput($name, $label, $value, $disabled = false, $required = false, $classes = array(), $min = '', $max = ''){
+		global $libTime;
+
+		$type = 'date';
+		$htmlValue = $libTime->formatHtmlDateString($value);
+
+		if($htmlValue == '' && trim((string) $value) != ''){
+			$type = 'text';
+			$htmlValue = (string) $value;
+			$min = '';
+			$max = '';
+		}
+
+		$this->printDateTimeInputInternal($name, $label, $htmlValue, $type, $disabled, $required, $classes, $min, $max);
+	}
+
+	/**
+	* HTML5-Feld für Datum und Uhrzeit. Der Wert wird auf YYYY-MM-DDTHH:MM normalisiert,
+	* Fallback wie bei printDateInput.
+	*/
+	function printDateTimeInput($name, $label, $value, $disabled = false, $required = false, $classes = array(), $min = '', $max = ''){
+		global $libTime;
+
+		$type = 'datetime-local';
+		$htmlValue = $libTime->formatHtmlDateTimeString($value);
+
+		if($htmlValue == '' && trim((string) $value) != ''){
+			$type = 'text';
+			$htmlValue = (string) $value;
+			$min = '';
+			$max = '';
+		}
+
+		$this->printDateTimeInputInternal($name, $label, $htmlValue, $type, $disabled, $required, $classes, $min, $max);
+	}
+
+	function printDateTimeInputInternal($name, $label, $value, $type, $disabled, $required, $classes, $min, $max){
+		echo '<div class="form-group">';
+		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+		echo '<div class="col-sm-' .$this->colInput. '">';
+		echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
+
+		$this->printMinMaxString($min, $max);
+		$this->printDisabledString($disabled);
+		$this->printRequiredString($required);
+
+		echo ' class="form-control';
+
+		$this->printClassesString($classes);
+
+		echo '" />';
+		echo '</div>';
+		echo '</div>';
+	}
+
 	function printTextarea($name, $label, $value, $disabled = false, $required = false, $classes = array()){
 		echo '<div class="form-group">';
 		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';

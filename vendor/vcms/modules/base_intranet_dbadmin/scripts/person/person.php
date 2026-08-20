@@ -232,7 +232,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('plz1', 'Plz 1', $mgarray['plz1']);
 	$libForm->printTextInput('land1', 'Land 1', $mgarray['land1']);
 	$libForm->printTextInput('telefon1', 'Telefon 1', $mgarray['telefon1'], 'tel');
-	$libForm->printTextInput('datum_adresse1_stand', 'Stand 1', $mgarray['datum_adresse1_stand'], 'date', true);
+	$libForm->printDateInput('datum_adresse1_stand', 'Stand 1', $mgarray['datum_adresse1_stand'], true);
 
 	$libForm->printTextInput('zusatz2', 'Zusatz 2', $mgarray['zusatz2']);
 	$libForm->printTextInput('strasse2', 'Strasse 2', $mgarray['strasse2']);
@@ -240,7 +240,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('plz2', 'Plz 2', $mgarray['plz2']);
 	$libForm->printTextInput('land2', 'Land 2', $mgarray['land2']);
 	$libForm->printTextInput('telefon2', 'Telefon 2', $mgarray['telefon2'], 'tel');
-	$libForm->printTextInput('datum_adresse2_stand', 'Stand 2', $mgarray['datum_adresse2_stand'], 'date', true);
+	$libForm->printDateInput('datum_adresse2_stand', 'Stand 2', $mgarray['datum_adresse2_stand'], true);
 
 	$libForm->printRegionDropDownBox('region1', 'Region 1', $mgarray['region1']);
 	$libForm->printRegionDropDownBox('region2', 'Region 2', $mgarray['region2']);
@@ -249,13 +249,13 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('email', 'E-Mail-Adresse', $mgarray['email'], 'email');
 	$libForm->printTextInput('skype', 'Skype', $mgarray['skype']);
 	$libForm->printTextInput('webseite', 'Webseite', $mgarray['webseite']);
-	$libForm->printTextInput('datum_geburtstag', 'Geburtsdatum', $mgarray['datum_geburtstag'], 'date');
+	$libForm->printDateInput('datum_geburtstag', 'Geburtsdatum', $mgarray['datum_geburtstag']);
 	$libForm->printTextInput('beruf', 'Beruf', $mgarray['beruf']);
-	$libForm->printTextInput('heirat_datum', 'Heiratsdatum', $mgarray['heirat_datum'], 'date');
+	$libForm->printDateInput('heirat_datum', 'Heiratsdatum', $mgarray['heirat_datum']);
 
 	$libForm->printMitgliederDropDownBox('heirat_partner', 'Ehepartner', $mgarray['heirat_partner']);
 
-	$libForm->printTextInput('tod_datum', 'Todesdatum', $mgarray['tod_datum'], 'date');
+	$libForm->printDateInput('tod_datum', 'Todesdatum', $mgarray['tod_datum']);
 	$libForm->printTextInput('tod_ort', 'Todesort', $mgarray['tod_ort']);
 
 	$libForm->printStatusDropDownBox('status', 'Status', $mgarray['status']);
@@ -266,7 +266,7 @@ if($libAuth->isLoggedin()){
 	$libForm->printSemesterDropDownBox('semester_aufnahme', 'Semester Aufnahme', $mgarray['semester_aufnahme']);
 	$libForm->printSemesterDropDownBox('semester_fusion', 'Semester Fusion', $mgarray['semester_fusion']);
 
-	$libForm->printTextInput('austritt_datum', 'Austrittsdatum', $mgarray['austritt_datum'], 'date');
+	$libForm->printDateInput('austritt_datum', 'Austrittsdatum', $mgarray['austritt_datum']);
 	$libForm->printTextInput('spitzname', 'Spitzname', $mgarray['spitzname']);
 
 	$libForm->printMitgliederDropDownBox('leibmitglied', 'Leibmitglied', $mgarray['leibmitglied']);
@@ -283,7 +283,7 @@ if($libAuth->isLoggedin()){
 	//nur Internetwart darf an sensible Daten
 	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		$libForm->printGruppeDropDownBox('gruppe', 'Gruppe', $mgarray['gruppe'], false);
-		$libForm->printTextInput('datum_gruppe_stand', 'Stand', $mgarray['datum_gruppe_stand'], 'date', true);
+		$libForm->printDateInput('datum_gruppe_stand', 'Stand', $mgarray['datum_gruppe_stand'], true);
 		$libForm->printTextInput('password_hash', 'Passwort-Hash', $mgarray['password_hash']);
 	}
 

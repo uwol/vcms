@@ -151,14 +151,14 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('ort1', 'Ort', $array['ort1']);
 	$libForm->printTextInput('plz1', 'Plz', $array['plz1']);
 	$libForm->printTextInput('land1', 'Land', $array['land1']);
-	$libForm->printTextInput('datum_adresse1_stand', 'Stand', $array['datum_adresse1_stand'], 'date', true);
+	$libForm->printDateInput('datum_adresse1_stand', 'Stand', $array['datum_adresse1_stand'], true);
 	$libForm->printTextInput('telefon1', 'Telefon 1', $array['telefon1']);
 
 	$libForm->printBoolSelectBox('anschreiben_zusenden', 'Anschreiben zusenden', $array['anschreiben_zusenden']);
 	$libForm->printVereineDropDownBox('mutterverein', 'Mutterverein', $array['mutterverein']);
 	$libForm->printVereineDropDownBox('fusioniertin', 'Fusioniert in', $array['fusioniertin']);
 
-	$libForm->printTextInput('datum_gruendung', 'Gründungsdatum', $array['datum_gruendung'], 'date');
+	$libForm->printDateInput('datum_gruendung', 'Gründungsdatum', $array['datum_gruendung']);
 	$libForm->printTextInput('webseite', 'Webseite', $array['webseite']);
 	$libForm->printTextInput('wahlspruch', 'Wahlspruch', $array['wahlspruch']);
 	$libForm->printTextarea('farbenstrophe', 'Farbenstrophe', $array['farbenstrophe']);

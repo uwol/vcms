@@ -26,7 +26,7 @@ if(isset($_POST["datum"]) && $_POST["datum"] < @date("Y-m-d")){
 	$libGlobal->errorTexts[] = "Das Datum liegt in der Vergangenheit.";
 } elseif(isset($_POST["datum"]) && isset($_POST["beschreibung"])){
 	$stmt = $libDb->prepare("INSERT INTO mod_reservierung_reservierung (datum, beschreibung, person) VALUES (:datum, :beschreibung, :person)");
-	$stmt->bindValue(':datum', $_POST["datum"]);
+	$stmt->bindValue(':datum', $libTime->assureMysqlDate($_POST["datum"]));
 	$stmt->bindValue(':beschreibung', $libString->protectXss($_POST["beschreibung"]));
 	$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt->execute();
