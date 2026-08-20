@@ -42,9 +42,9 @@ if(isset($_POST['kategorie']) && isset($_POST['betroffenesmitglied']) && isset($
 	$libGlobal->notificationTexts[] = 'Der Beitrag wurde gespeichert.';
 }
 
-if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete' && isset($_REQUEST['id']) && $_REQUEST['id'] != ''){
+if(isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id']) && $_POST['id'] != ''){
 	$stmt = $libDb->prepare('SELECT *, DATEDIFF(NOW(), eingabedatum) AS datediff FROM mod_news_news WHERE id=:id');
-	$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+	$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 	$stmt->execute();
 	$news_array = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -53,7 +53,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete' && isset($_REQU
 		|| ($news_array['autor'] == $libAuth->getId() && $news_array['datediff'] < 7)){
 
 		$stmt = $libDb->prepare('DELETE FROM mod_news_news WHERE id = :id');
-		$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+		$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
 		$libGlobal->notificationTexts[] = 'Der Beitrag wurde gelöscht.';
@@ -125,9 +125,12 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if((in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter()))
 			|| ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)){
-		echo ' <a href="index.php?pid=intranet_news&amp;semester=' .$libGlobal->semester. '&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
-		echo '<i class="fa fa-fw fa-trash" aria-hidden="true"></i>';
-		echo '</a>';
+		echo ' <form method="post" action="index.php?pid=intranet_news" style="display:inline" onsubmit="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
+		echo '<input type="hidden" name="action" value="delete" />';
+		echo '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
+		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
+		echo '<button type="submit" class="btn btn-link"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
+		echo '</form>';
 	}
 
 	echo '</h3>';

@@ -185,7 +185,11 @@ if($libAuth->isLoggedin()){
 	*/
 	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
 		if($mgarray['id'] != ''){
-			echo '<p class="mb-4"><a href="index.php?pid=intranet_admin_persons&amp;aktion=delete&amp;id='.$mgarray['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+			echo '<p class="mb-4"><form method="post" action="index.php?pid=intranet_admin_persons" style="display:inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<input type="hidden" name="aktion" value="delete" />';
+			echo '<input type="hidden" name="id" value="' .$mgarray['id']. '" />';
+			echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+			echo '</form></p>';
 		}
 	}
 

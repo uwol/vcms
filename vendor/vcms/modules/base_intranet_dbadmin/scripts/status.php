@@ -30,10 +30,10 @@ if($libAuth->isLoggedin()){
 		} else {
 			$libGlobal->errorTexts[] = 'Keine Bezeichnung angegeben.';
 		}
-	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
-		if($_GET['bezeichnung'] != ''){
+	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+		if($_POST['bezeichnung'] != ''){
 			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE status = :status');
-			$stmt->bindValue(':status', $_GET['bezeichnung']);
+			$stmt->bindValue(':status', $_POST['bezeichnung']);
 			$stmt->execute();
 			$stmt->bindColumn('number', $anzahl);
 			$stmt->fetch();
@@ -43,7 +43,7 @@ if($libAuth->isLoggedin()){
 				echo 'Dieser Status wird von Mitgliedern verwendet.';
 			} else {
 				$stmt = $libDb->prepare('DELETE FROM base_status WHERE bezeichnung = :bezeichnung');
-				$stmt->bindValue(':bezeichnung', $_GET['bezeichnung']);
+				$stmt->bindValue(':bezeichnung', $_POST['bezeichnung']);
 				$stmt->execute();
 
 				$libGlobal->notificationTexts[] = 'Status gelöscht.';
@@ -76,9 +76,11 @@ if($libAuth->isLoggedin()){
 		echo '<td class="tool-column">';
 
 		if($row['bezeichnung'] != 'A-Phil' && $row['bezeichnung'] != 'B-Phil' && $row['bezeichnung'] != 'Ehrenmitglied' && $row['bezeichnung'] != 'ex loco' && $row['bezeichnung'] != 'HV-M' && $row['bezeichnung'] != 'Inaktiv ex loco' && $row['bezeichnung'] != 'Inaktiv' && $row['bezeichnung'] != 'VG'){
-			echo '<a href="index.php?pid=intranet_admin_status&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-			echo '</a>';
+			echo '<form method="post" action="index.php?pid=intranet_admin_status" style="display:inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<input type="hidden" name="aktion" value="delete" />';
+			echo '<input type="hidden" name="bezeichnung" value="' .$row['bezeichnung']. '" />';
+			echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+			echo '</form>';
 		}
 
 		echo '</td>';

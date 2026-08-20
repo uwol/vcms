@@ -24,10 +24,10 @@ if($libAuth->isLoggedin()){
 	/**
 	* Löschvorgang durchführen
 	*/
-	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
-		if(isset($_GET['semester']) && $_GET['semester'] != ''){
+	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+		if(isset($_POST['semester']) && $_POST['semester'] != ''){
 			$stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester');
-			$stmt->bindValue(':semester', $_REQUEST['semester']);
+			$stmt->bindValue(':semester', $_POST['semester']);
 			$stmt->execute();
 			$stmt->bindColumn('internetwart', $internetwart);
 			$stmt->fetch();
@@ -36,13 +36,13 @@ if($libAuth->isLoggedin()){
 			if($internetwart == '' || $internetwart == 0){
 				//aus Datenbank löschen
 				$stmt = $libDb->prepare('DELETE FROM base_semester WHERE semester=:semester');
-				$stmt->bindValue(':semester', $_REQUEST['semester']);
+				$stmt->bindValue(':semester', $_POST['semester']);
 				$stmt->execute();
 
 				$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 
 				//Semestercover löschen
-				$libImage->deleteSemesterCover($_REQUEST['semester']);
+				$libImage->deleteSemesterCover($_POST['semester']);
 			} else {
 				$libGlobal->errorTexts[] = 'Das Semester kann nicht gelöscht werden, da es einen Internetwart-Eintrag enthält. Um das Semester zu löschen, muss erst von einem Internetwart der Internetwarteintrag aus dem Semester ausgetragen werden.';
 			}

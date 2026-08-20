@@ -85,7 +85,11 @@ echo $libString->getNotificationBoxText();
 * delete option
 */
 if($array['id'] != ''){
-	echo '<p class="mb-4"><a href="index.php?pid=intranet_chargierkalender_adminliste&amp;aktion=delete&amp;id='.$array['id'].'" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+	echo '<p class="mb-4"><form method="post" action="index.php?pid=intranet_chargierkalender_adminliste" style="display:inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+	echo '<input type="hidden" name="aktion" value="delete" />';
+	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
+	echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+	echo '</form></p>';
 }
 
 /*

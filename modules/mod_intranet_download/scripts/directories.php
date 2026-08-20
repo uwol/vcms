@@ -56,8 +56,8 @@ $hashes = $rootFolderObject->getHashMap();
 */
 
 //delete file
-if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete' && isset($_GET['hash'])){
-	$element = $hashes[$_GET['hash']];
+if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete' && isset($_POST['hash'])){
+	$element = $hashes[$_POST['hash']];
 
 	if(in_array($element->owningAmt, $libAuth->getAemter())){
 		$element->delete();
@@ -74,9 +74,12 @@ elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'upload' && isset($_POST['
 		if(isset($_POST['gruppen']) && count($_POST['gruppen']) > 0){
 			if($_FILES['datei']['tmp_name'] != ''){
 				$groupArray = array_merge($_POST['gruppen'], array($libAuth->getGruppe()));
-				$folder->addFile($_FILES['datei']['tmp_name'], $_FILES['datei']['name'], $groupArray);
-				$libGlobal->notificationTexts[] = 'Die Datei wurde hochgeladen.';
-				$rootFolderObject->scanFileSystem();
+				if($folder->addFile($_FILES['datei']['tmp_name'], $_FILES['datei']['name'], $groupArray)){
+					$libGlobal->notificationTexts[] = 'Die Datei wurde hochgeladen.';
+					$rootFolderObject->scanFileSystem();
+				} else {
+					$libGlobal->errorTexts[] = 'Die Datei konnte nicht hochgeladen werden. Dieser Dateityp ist aus Sicherheitsgründen nicht erlaubt.';
+				}
 			}
 		} else {
 			$libGlobal->errorTexts[] = 'Du hast keine Gruppe mit Leseberechtigung ausgewählt.';
@@ -254,7 +257,11 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 				}
 
 				if($folderElement->isDeleteable() && in_array($folderElement->owningAmt, $libAuth->getAemter())){
-					echo ' <a href="index.php?pid=intranet_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du den Ordner wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+					echo ' <form method="post" action="index.php?pid=intranet_directories" style="display:inline" onsubmit="return confirm(\'Willst Du den Ordner wirklich löschen?\')">';
+					echo '<input type="hidden" name="aktion" value="delete" />';
+					echo '<input type="hidden" name="hash" value="' .$folderElement->getHash(). '" />';
+					echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+					echo '</form>';
 				}
 
 				echo '<br />';
@@ -326,7 +333,11 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel){
 			echo ' <span class="text-muted"><small>' .getSizeString($folderElement->getSize()). '</small></span>';
 
 			if(in_array($folderElement->owningAmt, $libAuth->getAemter())){
-				echo ' <a href="index.php?pid=intranet_directories&amp;aktion=delete&amp;hash=' .$folderElement->getHash(). '" onclick="return confirm(\'Willst Du die Datei wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+				echo ' <form method="post" action="index.php?pid=intranet_directories" style="display:inline" onsubmit="return confirm(\'Willst Du die Datei wirklich löschen?\')">';
+				echo '<input type="hidden" name="aktion" value="delete" />';
+				echo '<input type="hidden" name="hash" value="' .$folderElement->getHash(). '" />';
+				echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+				echo '</form>';
 			}
 
 			echo '<br />';

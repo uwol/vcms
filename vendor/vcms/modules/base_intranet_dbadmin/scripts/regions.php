@@ -29,10 +29,10 @@ if($libAuth->isLoggedin()){
 		} else {
 			$libGlobal->errorTexts[] = 'Keine Bezeichnung angegeben.';
 		}
-	} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
-		if(isset($_GET['id']) && $_GET['id'] != ''){
+	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+		if(isset($_POST['id']) && $_POST['id'] != ''){
 			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE region1 = :region OR region2 = :region');
-			$stmt->bindValue(':region', $_GET['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':region', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 			$stmt->bindColumn('number', $anzahl);
 			$stmt->fetch();
@@ -42,7 +42,7 @@ if($libAuth->isLoggedin()){
 				$libGlobal->errorTexts[] = 'Diese Region ist bei Personen angegeben.';
 			} else {
 				$stmt = $libDb->prepare('DELETE FROM base_region WHERE id = :id');
-				$stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 				$stmt->execute();
 
 				$libGlobal->notificationTexts[] = 'Region gelöscht.';
@@ -79,9 +79,11 @@ if($libAuth->isLoggedin()){
 		echo '<td>' .$row['bezeichnung']. '</td>';
 		echo '<td>' .$anzahl. ' Personen</td>';
 		echo '<td class="tool-column">';
-		echo '<a href="index.php?pid=intranet_admin_regions&amp;aktion=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-		echo '</a>';
+		echo '<form method="post" action="index.php?pid=intranet_admin_regions" style="display:inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+		echo '<input type="hidden" name="aktion" value="delete" />';
+		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
+		echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+		echo '</form>';
 		echo '</td>';
 		echo '</tr>';
 	}

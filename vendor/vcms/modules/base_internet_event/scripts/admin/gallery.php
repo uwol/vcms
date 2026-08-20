@@ -33,12 +33,12 @@ if(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])){
 
 if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 	//delete image
-	if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'deleteFoto'){
-		if(is_numeric($id) && isset($_REQUEST['bildnr']) && is_numeric($_REQUEST['bildnr'])){
+	if(isset($_POST['aktion']) && $_POST['aktion'] == 'deleteFoto'){
+		if(is_numeric($id) && isset($_POST['bildnr']) && is_numeric($_POST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 
-			if(isset($pictures[$_REQUEST['bildnr']])){
-				$libImage->deleteVeranstaltungsFoto($id, $pictures[$_REQUEST['bildnr']]);
+			if(isset($pictures[$_POST['bildnr']])){
+				$libImage->deleteVeranstaltungsFoto($id, $pictures[$_POST['bildnr']]);
 			}
 		}
 	}
@@ -172,7 +172,11 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		echo '<hr />';
 
-		echo '<a href="index.php?pid=event_admin_galerien&amp;aktion=delete&amp;id=' .$id. '"  onclick="return confirm(\'Willst Du die Galerie wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Komplette Galerie löschen</a>';
+		echo '<form method="post" action="index.php?pid=event_admin_galerien" style="display:inline" onsubmit="return confirm(\'Willst Du die Galerie wirklich löschen?\')">';
+		echo '<input type="hidden" name="aktion" value="delete" />';
+		echo '<input type="hidden" name="id" value="' .$id. '" />';
+		echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i> Komplette Galerie löschen</button>';
+		echo '</form>';
 
 		echo '<p class="mb-4">';
 		echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=oeffentlichalle&amp;id=' .$id. '" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><i class="fa fa-users public" aria-hidden="true"></i> Sämtliche Bilder veröffentlichen</a><br />';
@@ -238,7 +242,13 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 			echo '| ';
 			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoLinks&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-undo" aria-hidden="true"></i></a> ';
 			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=rotateFotoRechts&amp;id=' .$id. '&amp;bildnr=' .$key. '"><i class="fa fa-repeat" aria-hidden="true"></i></a> ';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;aktion=deleteFoto&amp;id=' .$id. '&amp;bildnr=' .$key. '" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></a><br />';
+			echo '<form method="post" action="index.php?pid=event_admin_galerie" style="display:inline" onsubmit="return confirm(\'Willst Du das Bild wirklich löschen?\')">';
+			echo '<input type="hidden" name="aktion" value="deleteFoto" />';
+			echo '<input type="hidden" name="id" value="' .$id. '" />';
+			echo '<input type="hidden" name="bildnr" value="' .$key. '" />';
+			echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+			echo '</form>';
+			echo '<br />';
 
 			echo '</div>';
 		}

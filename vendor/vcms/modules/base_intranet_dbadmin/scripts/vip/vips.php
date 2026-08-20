@@ -21,11 +21,11 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
-		if(isset($_GET['id']) && $_GET['id'] != ''){
+	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+		if(isset($_POST['id']) && $_POST['id'] != ''){
 			// aus Datenbank löschen
 			$stmt = $libDb->prepare('DELETE FROM base_vip WHERE id=:id');
-			$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 
 			$libGlobal->notificationTexts[] = 'Datensatz gelöscht.';

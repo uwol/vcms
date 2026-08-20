@@ -88,8 +88,8 @@ if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'bildupload'){
 	if($_FILES['bilddatei']['tmp_name'] != ''){
 		$libImage->saveStartseitenBildByFilesArray($_REQUEST['id'], 'bilddatei');
 	}
-} elseif(isset($_GET['aktion']) && $_GET['aktion'] == 'bilddelete'){
-	$libImage->deleteStartseitenBild($_REQUEST['id']);
+} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'bilddelete'){
+	$libImage->deleteStartseitenBild($_POST['id']);
 }
 
 
@@ -110,7 +110,11 @@ echo '<p class="mb-4">Hier können die Daten einer Ankündigung für die Startse
 * deletion
 */
 if($array['id'] != ''){
-	echo '<p class="mb-4"><a href="index.php?pid=intranet_admin_announcements&amp;aktion=delete&amp;id=' .$array['id']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</a></p>';
+	echo '<p class="mb-4"><form method="post" action="index.php?pid=intranet_admin_announcements" style="display:inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+	echo '<input type="hidden" name="aktion" value="delete" />';
+	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
+	echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
+	echo '</form></p>';
 }
 
 
@@ -164,9 +168,11 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 		echo '<div class="img-box">';
 
 		echo '<span class="delete-icon-box">';
-		echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$array['id']. '&amp;aktion=bilddelete">';
-		echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-		echo '</a>';
+		echo '<form method="post" action="index.php?pid=intranet_admin_announcement" style="display:inline">';
+		echo '<input type="hidden" name="aktion" value="bilddelete" />';
+		echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
+		echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+		echo '</form>';
 		echo '</span>';
 
 		echo '<img src="' .$posssibleImage. '" class="img-responsive center-block" alt="Veranstaltungsbild" />';

@@ -23,13 +23,13 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 /*
 * deletion
 */
-if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'delete'){
+if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
 	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
-		if(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])){
-			$pictures = $libGallery->getPictures($_REQUEST['id'], 2);
+		if(isset($_POST['id']) && is_numeric($_POST['id'])){
+			$pictures = $libGallery->getPictures($_POST['id'], 2);
 
 			foreach($pictures as $picture){
-				$libImage->deleteVeranstaltungsFoto($_REQUEST['id'], $picture);
+				$libImage->deleteVeranstaltungsFoto($_POST['id'], $picture);
 			}
 
 			$libGlobal->notificationTexts[] = 'Die Galerie wurde gelöscht.';

@@ -22,19 +22,19 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 if($libAuth->isLoggedin()){
 
-	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
-		if(isset($_GET['id']) && $_GET['id'] != ''){
+	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+		if(isset($_POST['id']) && $_POST['id'] != ''){
 			//Verwendung der Veranstaltung in anderen Tabellen prüfen
 			//diese Einträge vorher löschen
 
 			//Veranstaltungsteilnahmen löschen
 			$stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung');
-			$stmt->bindValue(':veranstaltung', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':veranstaltung', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 
 			//Veranstaltung aus Datenbank löschen
 			$stmt = $libDb->prepare('DELETE FROM base_veranstaltung WHERE id=:id');
-			$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 
 			$libGlobal->notificationTexts[] = 'Datensatz gelöscht.';

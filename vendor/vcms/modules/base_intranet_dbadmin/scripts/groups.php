@@ -30,10 +30,10 @@ if($libAuth->isLoggedin()){
 		} else {
 			$libGlobal->errorTexts[] = 'Keine Gruppe angegeben.';
 		}
-	} elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == 'delete'){
-		if($_REQUEST['bezeichnung'] != '' && $_REQUEST['bezeichnung'] != 'F' && $_REQUEST['bezeichnung'] != 'B' && $_REQUEST['bezeichnung'] != 'P' && $_REQUEST['bezeichnung'] != 'C' && $_REQUEST['bezeichnung'] != 'X' && $_REQUEST['bezeichnung'] != 'T' && $_REQUEST['bezeichnung'] != 'G' && $_REQUEST['bezeichnung'] != 'W' && $_REQUEST['bezeichnung'] != 'V' && $_REQUEST['bezeichnung'] != 'Y'){
+	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+		if($_POST['bezeichnung'] != '' && $_POST['bezeichnung'] != 'F' && $_POST['bezeichnung'] != 'B' && $_POST['bezeichnung'] != 'P' && $_POST['bezeichnung'] != 'C' && $_POST['bezeichnung'] != 'X' && $_POST['bezeichnung'] != 'T' && $_POST['bezeichnung'] != 'G' && $_POST['bezeichnung'] != 'W' && $_POST['bezeichnung'] != 'V' && $_POST['bezeichnung'] != 'Y'){
 			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE gruppe = :gruppe');
-			$stmt->bindValue(':gruppe', $libString->protectXss($_REQUEST['bezeichnung']));
+			$stmt->bindValue(':gruppe', $libString->protectXss($_POST['bezeichnung']));
 			$stmt->execute();
 			$stmt->bindColumn('number', $anzahl);
 			$stmt->fetch();
@@ -43,7 +43,7 @@ if($libAuth->isLoggedin()){
 				$libGlobal->errorTexts[] = 'Diese Gruppe wird von Mitgliedern verwendet.';
 			} else {
 				$stmt = $libDb->prepare('DELETE FROM base_gruppe WHERE bezeichnung = :bezeichnung');
-				$stmt->bindValue(':bezeichnung', $_REQUEST['bezeichnung']);
+				$stmt->bindValue(':bezeichnung', $_POST['bezeichnung']);
 				$stmt->execute();
 
 				$libGlobal->notificationTexts[] = 'Gruppe gelöscht.';
@@ -76,9 +76,11 @@ if($libAuth->isLoggedin()){
 		echo '<td class="tool-column">';
 
 		if($row['bezeichnung'] != 'F' && $row['bezeichnung'] != 'B' && $row['bezeichnung'] != 'P' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'C' && $row['bezeichnung'] != 'G' && $row['bezeichnung'] != 'W' && $row['bezeichnung'] != 'V' && $row['bezeichnung'] != 'Y'){
-			echo '<a href="index.php?pid=intranet_admin_groups&amp;aktion=delete&amp;bezeichnung=' .$row['bezeichnung']. '" onclick="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-			echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-			echo '</a>';
+			echo '<form method="post" action="index.php?pid=intranet_admin_groups" style="display:inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+			echo '<input type="hidden" name="aktion" value="delete" />';
+			echo '<input type="hidden" name="bezeichnung" value="' .$row['bezeichnung']. '" />';
+			echo '<button type="submit" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+			echo '</form>';
 		}
 
 		echo '</td>';

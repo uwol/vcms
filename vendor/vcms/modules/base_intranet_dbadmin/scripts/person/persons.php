@@ -27,8 +27,8 @@ if($libAuth->isLoggedin()){
 		$orderby = $_POST['orderby'];
 	}
 
-	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
-		if(isset($_GET['id']) && $_GET['id'] != ''){
+	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+		if(isset($_POST['id']) && $_POST['id'] != ''){
 			//Ist der Bearbeiter kein Internetwart?
 			if(!in_array('internetwart', $libAuth->getAemter()) && !in_array('datenpflegewart', $libAuth->getAemter())){
 				die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
@@ -36,7 +36,7 @@ if($libAuth->isLoggedin()){
 
 			//Problemfall Internetwart: Dieser darf nie gelöscht werden, um immer einen Admin im System zu haben
 			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
-			$stmt->bindValue(':internetwart', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':internetwart', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 			$stmt->bindColumn('number', $anzahl);
 			$stmt->fetch();
@@ -49,40 +49,40 @@ if($libAuth->isLoggedin()){
 
 				//Veranstaltungsteilnahmen löschen
 				$stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE person=:id');
-				$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 				$stmt->execute();
 
 				//Vereinsmitgliedschaften löschen
 				$stmt = $libDb->prepare('DELETE FROM base_verein_mitgliedschaft WHERE mitglied=:id');
-				$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 				$stmt->execute();
 
 				//Semesterämter löschen
 				foreach($libSecurityManager->getPossibleAemter() as $amt){
 					$stmt = $libDb->prepare('UPDATE base_semester SET '.$amt.' = NULL WHERE '.$amt.'=:id');
-					$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+					$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 					$stmt->execute();
 				}
 
 				//Leibvaterangaben entfernen
 				$stmt = $libDb->prepare('UPDATE base_person SET leibmitglied = NULL WHERE leibmitglied=:id');
-				$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 				$stmt->execute();
 
 				//Ehepartnerangaben entfernen
 				$stmt = $libDb->prepare('UPDATE base_person SET heirat_partner = NULL WHERE heirat_partner=:id');
-				$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 				$stmt->execute();
 
 				//Mitglied aus Datenbank löschen
 				$stmt = $libDb->prepare('DELETE FROM base_person WHERE id=:id');
-				$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 				$stmt->execute();
 
 				$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 
 				//Fotodatei löschen
-				$libImage->deletePersonFoto($_REQUEST['id']);
+				$libImage->deletePersonFoto($_POST['id']);
 			}
 		}
 	}

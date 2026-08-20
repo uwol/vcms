@@ -22,29 +22,29 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 if($libAuth->isLoggedin()){
 
-	if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
-		if(isset($_GET['id']) && $_GET['id'] != ''){
+	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+		if(isset($_POST['id']) && $_POST['id'] != ''){
 			// Verwendung der Veranstaltung in anderen Tabellen prüfen
 			// diese Einträge vorher löschen, da kein InnoDB und somit kein CASCADE ALL
 			// verwendet wird.
 
 			// Vereinsmitgliedschaften löschen
 			$stmt = $libDb->prepare('DELETE FROM base_verein_mitgliedschaft WHERE verein=:verein');
-			$stmt->bindValue(':verein', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':verein', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 
 			// falls der Verein ein Mutterverein oder Fusionsverein ist, die darauf verweisenden auf null setzen
 			$stmt = $libDb->prepare('UPDATE base_verein SET mutterverein = NULL WHERE mutterverein=:mutterverein');
-			$stmt->bindValue(':mutterverein', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':mutterverein', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 
 			$stmt = $libDb->prepare('UPDATE base_verein SET fusioniertin = NULL WHERE fusioniertin=:fusioniertin');
-			$stmt->bindValue(':fusioniertin', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':fusioniertin', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 
 			// Verein aus Datenbank löschen
 			$stmt = $libDb->prepare('DELETE FROM base_verein WHERE id=:id');
-			$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+			$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
 
 			$libGlobal->notificationTexts[] = 'Datensatz gelöscht';

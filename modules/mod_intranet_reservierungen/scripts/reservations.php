@@ -36,9 +36,9 @@ if(isset($_POST["datum"]) && $_POST["datum"] < @date("Y-m-d")){
 	$libGlobal->notificationTexts[] = 'Die Reservierung wurde gespeichert.';
 }
 
-if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET["id"]) && $_GET["id"] != ''){
+if(isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST["id"]) && $_POST["id"] != ''){
 	$stmt = $libDb->prepare("DELETE FROM mod_reservierung_reservierung WHERE id=:id AND person=:person");
-	$stmt->bindValue(':id', $_GET["id"], PDO::PARAM_INT);
+	$stmt->bindValue(':id', $_POST["id"], PDO::PARAM_INT);
 	$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt->execute();
 
@@ -79,9 +79,11 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 	if($libAuth->getId() == $row['person']){
 		echo ' ';
-		echo '<a href="index.php?pid=intranet_reservations&amp;action=delete&amp;id=' .$row['id']. '" onclick="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
-		echo '<i class="fa fa-fw fa-trash" aria-hidden="true"></i>';
-		echo '</a>';
+		echo '<form method="post" action="index.php?pid=intranet_reservations" style="display:inline" onsubmit="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
+		echo '<input type="hidden" name="action" value="delete" />';
+		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
+		echo '<button type="submit" class="btn btn-link"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
+		echo '</form>';
 	}
 
 	echo '</h3>';

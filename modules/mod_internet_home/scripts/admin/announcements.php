@@ -22,14 +22,14 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 /*
 * actions
 */
-if(isset($_GET['aktion']) && $_GET['aktion'] == 'delete'){
-	if(isset($_GET['id']) && $_GET['id'] != ''){
+if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	if(isset($_POST['id']) && $_POST['id'] != ''){
 		$stmt = $libDb->prepare('DELETE FROM mod_internethome_nachricht WHERE id=:id');
-		$stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+		$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
 		$libGlobal->notificationTexts[] = 'Ankündigung gelöscht.';
-		$libImage->deleteStartseitenBild($_REQUEST['id']);
+		$libImage->deleteStartseitenBild($_POST['id']);
 	} else {
 		$libGlobal->errorTexts[] = 'Keine Ankündigung angegeben.';
 	}
