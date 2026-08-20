@@ -177,7 +177,7 @@ if($libAuth->isLoggedin()){
 
 	$libForm->printSubmitButton('Speichern');
 
-	echo '</fielset>';
+	echo '</fieldset>';
 	echo '</form>';
 	echo '</div>';
 	echo '</div>';

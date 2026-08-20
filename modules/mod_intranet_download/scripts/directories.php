@@ -154,7 +154,7 @@ if(!empty($libAuth->getAemter())){
 			echo '<div class="checkbox"><label><input type="checkbox" name="gruppen[]" value="' .$row['bezeichnung']. '"';
 
 			if($libGenericStorage->loadValueInCurrentModule('preselect_rights') == 1){
-				echo 'checked="checked"';
+				echo ' checked="checked"';
 			}
 
 			echo '/>';

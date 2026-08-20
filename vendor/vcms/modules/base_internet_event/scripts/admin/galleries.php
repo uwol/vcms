@@ -134,6 +134,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		echo '<td class="tool-column">';
 		echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
 		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
+		echo '</a>';
 		echo '</td>';
 		echo '</tr>';
 	}

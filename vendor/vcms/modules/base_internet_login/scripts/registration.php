@@ -28,7 +28,7 @@ $formSent = false;
 $formError = false;
 
 if(isset($_POST['registrierung_name']) || isset($_POST['registrierung_telnr']) ||
-	isset($_POST['registrierung_mail']) || isset($_POST['registrierung_geburtsdatum']) ||
+	isset($_POST['registrierung_emailadresse']) || isset($_POST['registrierung_geburtsdatum']) ||
 	isset($_POST['registrierung_pwd1']) || isset($_POST['registrierung_pwd2'])){
 
 	$formSent = true;

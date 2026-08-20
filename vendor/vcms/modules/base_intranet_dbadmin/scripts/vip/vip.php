@@ -93,6 +93,9 @@ if($libAuth->isLoggedin()){
 	*/
 	echo '<h1>Vip</h1>';
 
+	echo $libString->getErrorBoxText();
+	echo $libString->getNotificationBoxText();
+
 	/**
 	*
 	* Löschoption

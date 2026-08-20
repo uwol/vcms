@@ -40,7 +40,7 @@ if($libAuth->isLoggedin()){
 
 			//wird dieser Status noch in base_person benutzt?
 			if($anzahl > 0){
-				echo 'Dieser Status wird von Mitgliedern verwendet.';
+				$libGlobal->errorTexts[] = 'Dieser Status wird von Mitgliedern verwendet.';
 			} else {
 				$stmt = $libDb->prepare('DELETE FROM base_status WHERE bezeichnung = :bezeichnung');
 				$stmt->bindValue(':bezeichnung', $_POST['bezeichnung']);
