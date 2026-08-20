@@ -396,6 +396,12 @@ class LibTime{
 	}
 
 	function getSemesterAtDate($date){
+		$date = (string) $date;
+
+		if($date == ''){
+			return null;
+		}
+
 		$year = (int) substr($date, 0, 4);
 		$semesters = $this->getSemestersInYear($year);
 
@@ -410,6 +416,11 @@ class LibTime{
 
 	function getSemesterNameAtDate($datum){
 		$semester = $this->getSemesterAtDate($datum);
+
+		if(!is_array($semester)){
+			return '';
+		}
+
 		return $semester['name'];
 	}
 
@@ -635,10 +646,13 @@ class LibTime{
 	//-------------------- conversions ------------------------------------------
 
 	function formatDateString($dateTime){
+		$dateTime = (string) $dateTime;
+
 		return substr($dateTime, 8, 2) .'.'. substr($dateTime, 5, 2) .'.'. substr($dateTime, 0, 4);
 	}
 
 	function formatTimeString($dateTime){
+		$dateTime = (string) $dateTime;
 		$time = substr($dateTime, 11, 5);
 		$result = '';
 
@@ -664,24 +678,36 @@ class LibTime{
 	}
 
 	function formatYearString($dateTime){
+		$dateTime = (string) $dateTime;
+
 		return (int) substr($dateTime, 0, 4);
 	}
 
 	function formatMonthString($dateTime){
+		$dateTime = (string) $dateTime;
+
 		return (int) substr($dateTime, 5, 2);
 	}
 
 	function formatDayString($dateTime){
+		$dateTime = (string) $dateTime;
+
 		return (int) substr($dateTime, 8, 2);
 	}
 
 	function formatUtcString($dateTime){
+		$dateTime = (string) $dateTime;
 		$year = (int) substr($dateTime, 0, 4);
 		$month = (int) substr($dateTime, 5, 2);
 		$day = (int) substr($dateTime, 8, 2);
 		$hour = (int) substr($dateTime, 11, 2);
 		$minute = (int) substr($dateTime, 14, 2);
 		$second = (int) substr($dateTime, 17, 2);
+
+		//no date at all
+		if($year == 0 && $month == 0 && $day == 0){
+			return '';
+		}
 
 		if($hour == 0 && $minute == 0 && $second == 0){
 			return str_pad($year, 4, '0', STR_PAD_LEFT). '-' .str_pad($month, 2, '0', STR_PAD_LEFT). '-' .str_pad($day, 2, '0', STR_PAD_LEFT);

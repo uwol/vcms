@@ -23,8 +23,8 @@ if(!is_object($libGlobal))
 echo 'Erstelle Tabelle mod_internethome_nachricht<br />';
 $sql = "CREATE TABLE mod_internethome_nachricht (
   id int(11) NOT NULL auto_increment,
-  startdatum datetime NOT NULL default '0000-00-00 00:00:00',
-  verfallsdatum datetime NOT NULL default '0000-00-00 00:00:00',
+  startdatum datetime,
+  verfallsdatum datetime,
   text text,
   PRIMARY KEY  (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";

@@ -162,7 +162,7 @@ class LibCronjobs{
 	function cleanSysLogIntranet(){
 		global $libDb;
 
-		$libDb->query('DELETE FROM sys_log_intranet WHERE DATEDIFF(NOW(), datum) > 90');
+		$libDb->query('DELETE FROM sys_log_intranet WHERE datum IS NULL OR DATEDIFF(NOW(), datum) > 90');
 	}
 
 	function cleanBasePerson(){

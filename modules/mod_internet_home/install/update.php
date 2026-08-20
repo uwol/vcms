@@ -20,11 +20,6 @@ if(!is_object($libGlobal))
 	exit();
 
 
-$libGlobal->notificationTexts[] = 'Speichere Standarddatensätze';
-$sql = "INSERT IGNORE INTO mod_news_kategorie (id, bezeichnung) VALUES (17, 'Gratulation');";
-$libDb->query($sql);
-
-
 if(!function_exists('vcmsMakeDateColumnNullable')){
 	/**
 	* Macht eine date- oder datetime-Spalte nullable ohne Default und konvertiert
@@ -100,4 +95,5 @@ if(!function_exists('vcmsMakeDateColumnNullable')){
 }
 
 
-vcmsMakeDateColumnNullable('mod_news_news', 'eingabedatum', 'datetime');
+vcmsMakeDateColumnNullable('mod_internethome_nachricht', 'startdatum', 'datetime');
+vcmsMakeDateColumnNullable('mod_internethome_nachricht', 'verfallsdatum', 'datetime');

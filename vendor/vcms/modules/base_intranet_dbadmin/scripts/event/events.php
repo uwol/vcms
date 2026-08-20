@@ -57,7 +57,7 @@ if($libAuth->isLoggedin()){
 
 
 	//Semesterauswahl
-	$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
+	$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 	$stmt->execute();
 
 	$daten = array();
@@ -79,7 +79,7 @@ if($libAuth->isLoggedin()){
 
 	$zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
-	$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum = :datum OR (DATEDIFF(datum, :semester_start) >= 0 AND DATEDIFF(datum, :semester_ende) <= 0) ORDER BY datum DESC');
+	$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum IS NULL OR datum = :datum OR (DATEDIFF(datum, :semester_start) >= 0 AND DATEDIFF(datum, :semester_ende) <= 0) ORDER BY datum DESC');
 	$stmt->bindValue(':datum', $zeitraum[0]);
 	$stmt->bindValue(':semester_start', $zeitraum[0]);
 	$stmt->bindValue(':semester_ende', $zeitraum[1]);

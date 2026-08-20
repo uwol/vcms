@@ -47,7 +47,7 @@ if(isset($_POST["changeanmeldenstate"]) && $_POST["changeanmeldenstate"] != ""){
 */
 
 //semester
-$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM mod_chargierkalender_veranstaltung GROUP BY datum ORDER BY datum DESC");
+$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM mod_chargierkalender_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 
 $daten = array();

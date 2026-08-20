@@ -59,7 +59,7 @@ echo '</div>';
 echo '</div>';
 
 
-$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM mod_chargierkalender_veranstaltung GROUP BY datum ORDER BY datum DESC");
+$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM mod_chargierkalender_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 
 $daten = array();
@@ -80,7 +80,7 @@ echo '</thead>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
-$stmt = $libDb->prepare("SELECT * FROM mod_chargierkalender_veranstaltung WHERE datum = :datum_equal OR (DATEDIFF(datum, :semester_start) > 0 AND DATEDIFF(datum, :semester_ende) < 0) ORDER BY datum DESC");
+$stmt = $libDb->prepare("SELECT * FROM mod_chargierkalender_veranstaltung WHERE datum IS NULL OR datum = :datum_equal OR (DATEDIFF(datum, :semester_start) > 0 AND DATEDIFF(datum, :semester_ende) < 0) ORDER BY datum DESC");
 $stmt->bindValue(':datum_equal', $zeitraum[0]);
 $stmt->bindValue(':semester_start', $zeitraum[0]);
 $stmt->bindValue(':semester_ende', $zeitraum[1]);

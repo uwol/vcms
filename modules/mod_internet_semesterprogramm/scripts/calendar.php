@@ -29,7 +29,7 @@ echo $libString->getNotificationBoxText();
 echo '<div class="row">';
 echo '<div class="col-xs-12 col-sm-6">';
 
-$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung GROUP BY datum ORDER BY datum DESC");
+$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 
 $daten = array();

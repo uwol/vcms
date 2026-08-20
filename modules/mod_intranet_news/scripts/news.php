@@ -74,7 +74,7 @@ echo $libString->getNotificationBoxText();
 echo '<div class="row">';
 echo '<div class="col-md-6">';
 
-$stmt = $libDb->prepare("SELECT DATE_FORMAT(eingabedatum,'%Y-%m-01') AS eingabedatum FROM mod_news_news GROUP BY eingabedatum ORDER BY eingabedatum DESC");
+$stmt = $libDb->prepare("SELECT DATE_FORMAT(eingabedatum,'%Y-%m-01') AS eingabedatum FROM mod_news_news WHERE eingabedatum IS NOT NULL GROUP BY eingabedatum ORDER BY eingabedatum DESC");
 $stmt->execute();
 
 $daten = array();

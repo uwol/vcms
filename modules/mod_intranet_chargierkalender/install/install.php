@@ -23,7 +23,7 @@ if(!is_object($libGlobal))
 echo 'Erstelle Tabelle mod_chargierkalender_veranstaltung<br />';
 $sql = "CREATE TABLE mod_chargierkalender_veranstaltung (
   id int(11) NOT NULL auto_increment,
-  datum datetime NOT NULL default '0000-00-00 00:00:00',
+  datum datetime,
   beschreibung text,
   verein int(11),
   PRIMARY KEY  (id)

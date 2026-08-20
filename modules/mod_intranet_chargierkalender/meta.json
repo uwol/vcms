@@ -1,7 +1,8 @@
 {
 	"moduleName": "Chargierkalender",
-	"version": 3.01,
+	"version": 3.02,
 	"installScript": "install/install.php",
+	"updateScript": "install/update.php",
 	"pages": [
 		{
 			"pid": "intranet_chargierkalender",

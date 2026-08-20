@@ -22,7 +22,7 @@ class LibCalendarEventSet{
 	var $events = array();
 
 	function addEvent($event){
-		if($event->getStartDate() != '0000-00-00'){
+		if($event->getStartDate() != '' && $event->getStartDate() != '0000-00-00'){
 			if($event->getEndDate() == '0000-00-00' || $event->getEndDate() == '' || $event->getEndDate() < $event->getStartDate()){
 				$this->events[$event->getStartDate()][] = $event;
 			} else {

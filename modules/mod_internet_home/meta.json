@@ -1,7 +1,8 @@
 {
 	"moduleName": "Home",
-	"version": 3.89,
+	"version": 3.90,
 	"installScript": "install/install.php",
+	"updateScript": "install/update.php",
 	"pages": [
 		{
 			"pid": "home",

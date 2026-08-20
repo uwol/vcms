@@ -24,7 +24,7 @@ echo 'Erstelle Tabelle mod_reservierung_reservierung<br />';
 
 $sql = "CREATE TABLE mod_reservierung_reservierung (
 	id int(11) NOT NULL auto_increment,
-	datum date NOT NULL default '0000-00-00',
+	datum date,
 	beschreibung text NOT NULL,
 	person int(11) NOT NULL default '0',
 	PRIMARY KEY  (id)

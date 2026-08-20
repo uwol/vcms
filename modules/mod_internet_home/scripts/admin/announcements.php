@@ -58,7 +58,7 @@ echo '</div>';
 /*
 * semester selection
 */
-$stmt = $libDb->prepare("SELECT DATE_FORMAT(startdatum,'%Y-%m-01') AS datum FROM mod_internethome_nachricht GROUP BY startdatum ORDER BY startdatum DESC");
+$stmt = $libDb->prepare("SELECT DATE_FORMAT(startdatum,'%Y-%m-01') AS datum FROM mod_internethome_nachricht WHERE startdatum IS NOT NULL GROUP BY startdatum ORDER BY startdatum DESC");
 $stmt->execute();
 
 $daten = array();
@@ -77,7 +77,7 @@ echo '</thead>';
 
 $zeitraum = $libTime->getZeitraum($libGlobal->semester);
 
-$stmt = $libDb->prepare('SELECT * FROM mod_internethome_nachricht WHERE startdatum = :startdatum_equal OR (DATEDIFF(startdatum, :startdatum) >= 0 AND DATEDIFF(startdatum , :enddatum) < 0) ORDER BY startdatum DESC');
+$stmt = $libDb->prepare('SELECT * FROM mod_internethome_nachricht WHERE startdatum IS NULL OR startdatum = :startdatum_equal OR (DATEDIFF(startdatum, :startdatum) >= 0 AND DATEDIFF(startdatum , :enddatum) < 0) ORDER BY startdatum DESC');
 $stmt->bindValue(':startdatum_equal', $zeitraum[0]);
 $stmt->bindValue(':startdatum', $zeitraum[0]);
 $stmt->bindValue(':enddatum', $zeitraum[1]);
