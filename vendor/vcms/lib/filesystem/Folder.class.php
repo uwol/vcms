@@ -133,10 +133,24 @@ class Folder extends FolderElement{
 		$name = preg_replace("/[\s]+/", ' ', $name);
 
 		if(strlen($name) > 0){
+			//block critical file types (e.g. executable web content) from being uploaded
+			$extension = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+			$blockedExtensions = array(
+				'php', 'php3', 'php4', 'php5', 'php7', 'phtml', 'pht', 'phar',
+				'htaccess', 'cgi', 'pl', 'py', 'sh', 'asp', 'aspx', 'jsp',
+				'exe', 'com', 'bat', 'cmd', 'js', 'html', 'htm', 'svg'
+			);
+
+			if(in_array($extension, $blockedExtensions)){
+				return false;
+			}
+
 			$metaFileSystemName = $this->getMetaFileSystemName($name, $groupArray);
 			//copy($tmpFileSystemName, $this->getFileSystemPath() . '/' .$metaFileSystemName);
-			move_uploaded_file($tmpFileSystemName, $this->getFileSystemPath(). '/' .$metaFileSystemName);
+			return move_uploaded_file($tmpFileSystemName, $this->getFileSystemPath(). '/' .$metaFileSystemName);
 		}
+
+		return false;
 	}
 
 	function delete(){
