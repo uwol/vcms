@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 echo '<h1>Statistik</h1>';
@@ -27,60 +29,60 @@ echo $libString->getNotificationBoxText();
 
 $personsPerRow = 4;
 
-$tArray = array();
+$tArray = [];
 
 $stmt = $libDb->prepare("SELECT semester FROM base_semester ORDER BY SUBSTRING(semester, 3) DESC LIMIT 0,25");
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$tArray[$row['semester']] = array();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $tArray[$row['semester']] = [];
 }
 
 
 $stmt = $libDb->prepare("SELECT id, vorname, praefix, name, status, gruppe, semester_reception, YEAR(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(datum_geburtstag) + 1)) AS age FROM base_person WHERE (gruppe='B' OR gruppe='F') AND (YEAR(CURDATE()) - SUBSTRING(semester_reception, 3, 4) < 40) ORDER BY SUBSTRING(semester_reception, 3) DESC, status ASC");
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	if(isset($row['semester_reception']) && isset($tArray[$row['semester_reception']]) && is_array($tArray[$row['semester_reception']])){
-		$firstNameArray = explode(" ", (string) $row['vorname']);
-		$firstName = $firstNameArray[0];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if (isset($row['semester_reception']) && isset($tArray[$row['semester_reception']]) && is_array($tArray[$row['semester_reception']])) {
+        $firstNameArray = explode(" ", (string) $row['vorname']);
+        $firstName = $firstNameArray[0];
 
-		$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, base_semester WHERE id = :id AND (base_semester.senior = base_person.id OR base_semester.consenior = base_person.id OR base_semester.fuchsmajor = base_person.id OR base_semester.fuchsmajor2 = base_person.id OR base_semester.scriptor = base_person.id OR base_semester.quaestor = base_person.id OR base_semester.jubelsenior = base_person.id OR base_semester.vop = base_person.id OR base_semester.vvop = base_person.id OR base_semester.vopxx = base_person.id OR base_semester.vopxxx = base_person.id OR base_semester.vopxxxx = base_person.id)");
-		$stmt2->bindValue(':id', $row['id'], PDO::PARAM_INT);
-		$stmt2->execute();
-		$stmt2->bindColumn('number', $countChargen);
-		$stmt2->fetch();
+        $stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, base_semester WHERE id = :id AND (base_semester.senior = base_person.id OR base_semester.consenior = base_person.id OR base_semester.fuchsmajor = base_person.id OR base_semester.fuchsmajor2 = base_person.id OR base_semester.scriptor = base_person.id OR base_semester.quaestor = base_person.id OR base_semester.jubelsenior = base_person.id OR base_semester.vop = base_person.id OR base_semester.vvop = base_person.id OR base_semester.vopxx = base_person.id OR base_semester.vopxxx = base_person.id OR base_semester.vopxxxx = base_person.id)");
+        $stmt2->bindValue(':id', $row['id'], PDO::PARAM_INT);
+        $stmt2->execute();
+        $stmt2->bindColumn('number', $countChargen);
+        $stmt2->fetch();
 
-		$tArray[$row['semester_reception']][$row['id']]['gruppe'] = $row['gruppe'];
-		$tArray[$row['semester_reception']][$row['id']]['status'] = $row['status'];
+        $tArray[$row['semester_reception']][$row['id']]['gruppe'] = $row['gruppe'];
+        $tArray[$row['semester_reception']][$row['id']]['status'] = $row['status'];
 
-		if($row['age'] > 0 && $row['age'] < 200){
-			$tArray[$row['semester_reception']][$row['id']]['alter'] = $row['age'];
-		}
+        if ($row['age'] > 0 && $row['age'] < 200) {
+            $tArray[$row['semester_reception']][$row['id']]['alter'] = $row['age'];
+        }
 
-		$tArray[$row['semester_reception']][$row['id']]['vorname'] = trim($firstName);
-		$tArray[$row['semester_reception']][$row['id']]['name'] = $row['name'];
-		$tArray[$row['semester_reception']][$row['id']]['praefix'] = $row['praefix'];
-		$tArray[$row['semester_reception']][$row['id']]['anzahlChargen'] = $countChargen;
-	}
+        $tArray[$row['semester_reception']][$row['id']]['vorname'] = trim($firstName);
+        $tArray[$row['semester_reception']][$row['id']]['name'] = $row['name'];
+        $tArray[$row['semester_reception']][$row['id']]['praefix'] = $row['praefix'];
+        $tArray[$row['semester_reception']][$row['id']]['anzahlChargen'] = $countChargen;
+    }
 }
 
 $physikumSemester = $libTime->getSemesterName();
 
-for($i = 0; $i < 4; $i++){
-	$physikumSemester = $libTime->getPreviousSemesterNameOfSemester($physikumSemester);
+for ($i = 0; $i < 4; $i++) {
+    $physikumSemester = $libTime->getPreviousSemesterNameOfSemester($physikumSemester);
 }
 
 $bachelorSemester = $libTime->getSemesterName();
 
-for($i = 0; $i < 6; $i++){
-	$bachelorSemester = $libTime->getPreviousSemesterNameOfSemester($bachelorSemester);
+for ($i = 0; $i < 6; $i++) {
+    $bachelorSemester = $libTime->getPreviousSemesterNameOfSemester($bachelorSemester);
 }
 
 $masterSemester = $libTime->getSemesterName();
 
-for($i = 0; $i < 10; $i++){
-	$masterSemester = $libTime->getPreviousSemesterNameOfSemester($masterSemester);
+for ($i = 0; $i < 10; $i++) {
+    $masterSemester = $libTime->getPreviousSemesterNameOfSemester($masterSemester);
 }
 
 /*
@@ -136,62 +138,62 @@ echo '<div class="panel-body">';
 echo '<table class="table table-bordered table-condensed">';
 
 //for all semesters
-foreach($tArray as $key1 => $value1){
-	if($key1 == $physikumSemester){
-		echo '<tr><td colspan="20" style="text-align: center"><i class="fa fa-graduation-cap" aria-hidden="true"></i> 1. Staatsexamen Medizin</td></tr>';
-	}
+foreach ($tArray as $key1 => $value1) {
+    if ($key1 == $physikumSemester) {
+        echo '<tr><td colspan="20" style="text-align: center"><i class="fa fa-graduation-cap" aria-hidden="true"></i> 1. Staatsexamen Medizin</td></tr>';
+    }
 
-	if($key1 == $bachelorSemester){
-		echo '<tr><td colspan="20" style="text-align: center"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Bachelor</td></tr>';
-	} elseif($key1 == $masterSemester){
-		echo '<tr><td colspan="20" style="text-align: center"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Master / 1. Staatsexamen Jura / 2. Staatsexamen Medizin</td></tr>';
-	}
+    if ($key1 == $bachelorSemester) {
+        echo '<tr><td colspan="20" style="text-align: center"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Bachelor</td></tr>';
+    } elseif ($key1 == $masterSemester) {
+        echo '<tr><td colspan="20" style="text-align: center"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Master / 1. Staatsexamen Jura / 2. Staatsexamen Medizin</td></tr>';
+    }
 
-	echo '<tr>';
-	$rowspan = max(1, ceil(count($value1) / $personsPerRow));
-	echo '<td rowspan=' .$rowspan. '>';
-	echo '<a href="index.php?pid=intranet_home&amp;semester=' .$key1. '">' .$key1. '</a>';
-	echo '</td>';
+    echo '<tr>';
+    $rowspan = max(1, ceil(count($value1) / $personsPerRow));
+    echo '<td rowspan=' .$rowspan. '>';
+    echo '<a href="index.php?pid=intranet_home&amp;semester=' .$key1. '">' .$key1. '</a>';
+    echo '</td>';
 
-	$i = 0;
+    $i = 0;
 
-	//for all members in that semester
-	foreach($value1 as $key2 => $value2){
-		if($i != 0 && $i % $personsPerRow == 0){
-			echo '</tr><tr>';
-		}
+    //for all members in that semester
+    foreach ($value1 as $key2 => $value2) {
+        if ($i != 0 && $i % $personsPerRow == 0) {
+            echo '</tr><tr>';
+        }
 
-		echo '<td style="';
+        echo '<td style="';
 
-		if(strstr(strtolower((string) $value2['status']), 'ex loco')){
-			echo 'background-color: #F5A9A9">';
- 		} elseif($value2['gruppe'] == 'F'){
-			echo 'background-color: #66FF66">';
-		} else {
-			echo 'background-color: #33DD33">';
-		}
+        if (strstr(strtolower((string) $value2['status']), 'ex loco')) {
+            echo 'background-color: #F5A9A9">';
+        } elseif ($value2['gruppe'] == 'F') {
+            echo 'background-color: #66FF66">';
+        } else {
+            echo 'background-color: #33DD33">';
+        }
 
-		echo '<a href="index.php?pid=intranet_person&amp;id=' .$key2. '">';
-		echo $value2['vorname'];
+        echo '<a href="index.php?pid=intranet_person&amp;id=' .$key2. '">';
+        echo $value2['vorname'];
 
-		if($value2['praefix'] != ''){
-			echo ' ' .substr((string) $value2['praefix'], 0, 1). '.';
-		}
+        if ($value2['praefix'] != '') {
+            echo ' ' .substr((string) $value2['praefix'], 0, 1). '.';
+        }
 
-		echo ' ' .substr((string) $value2['name'], 0, 1). '.';
-		echo '</a>';
+        echo ' ' .substr((string) $value2['name'], 0, 1). '.';
+        echo '</a>';
 
-		if(isset($value2['alter']) && is_numeric($value2['alter'])){
-			echo ' (' .$value2['alter']. ')';
-		}
+        if (isset($value2['alter']) && is_numeric($value2['alter'])) {
+            echo ' (' .$value2['alter']. ')';
+        }
 
-		echo ' (' .$value2['anzahlChargen']. ')';
-		echo '</td>';
+        echo ' (' .$value2['anzahlChargen']. ')';
+        echo '</td>';
 
-		$i++;
-	}
+        $i++;
+    }
 
-	echo '</tr>';
+    echo '</tr>';
 }
 
 echo '</table>';
@@ -213,65 +215,67 @@ $ageClassesAhAh = calculateAgeClasses($agesAhAh, $classWidth);
 echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';
 
-if(empty($ageClassesAhAh)){
-	echo '<p class="mb-4">Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
+if (empty($ageClassesAhAh)) {
+    echo '<p class="mb-4">Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
 } else {
-	echo '<canvas id="age_structure" style="width:100%;height:300px"></canvas>' . PHP_EOL;
-	echo '<script>' . PHP_EOL;
-	echo 'var ageStructureContext = document.getElementById(\'age_structure\').getContext(\'2d\');' . PHP_EOL;
-	echo 'var ahahLabels = [' .implode(', ', array_keys($ageClassesAhAh)). '];' . PHP_EOL;
-	echo 'var ahahData = [' .implode(', ', array_values($ageClassesAhAh)). '];' . PHP_EOL;
+    echo '<canvas id="age_structure" style="width:100%;height:300px"></canvas>' . PHP_EOL;
+    echo '<script>' . PHP_EOL;
+    echo 'var ageStructureContext = document.getElementById(\'age_structure\').getContext(\'2d\');' . PHP_EOL;
+    echo 'var ahahLabels = [' .implode(', ', array_keys($ageClassesAhAh)). '];' . PHP_EOL;
+    echo 'var ahahData = [' .implode(', ', array_values($ageClassesAhAh)). '];' . PHP_EOL;
 
-	echo 'var data = {' . PHP_EOL;
-	echo '  labels: ahahLabels, ' . PHP_EOL;
-	echo '  datasets: [' . PHP_EOL;
-	echo '    {' . PHP_EOL;
-	echo '      label: "AHAH", ' . PHP_EOL;
-	echo '      data: ahahData' . PHP_EOL;
-	echo '    }' . PHP_EOL;
-	echo '  ]' . PHP_EOL;
-	echo '};' . PHP_EOL;
+    echo 'var data = {' . PHP_EOL;
+    echo '  labels: ahahLabels, ' . PHP_EOL;
+    echo '  datasets: [' . PHP_EOL;
+    echo '    {' . PHP_EOL;
+    echo '      label: "AHAH", ' . PHP_EOL;
+    echo '      data: ahahData' . PHP_EOL;
+    echo '    }' . PHP_EOL;
+    echo '  ]' . PHP_EOL;
+    echo '};' . PHP_EOL;
 
-	echo 'var myBarChart = new Chart(ageStructureContext, { type: \'bar\', data: data, options: {} });' . PHP_EOL;
-	echo '</script>' . PHP_EOL;
+    echo 'var myBarChart = new Chart(ageStructureContext, { type: \'bar\', data: data, options: {} });' . PHP_EOL;
+    echo '</script>' . PHP_EOL;
 }
 
 echo '</div>';
 echo '</div>';
 
 
-function fetchAges($group){
-	global $libDb;
+function fetchAges($group)
+{
+    global $libDb;
 
-	$stmt = $libDb->prepare("SELECT YEAR(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(datum_geburtstag) + 1)) AS age FROM base_person WHERE gruppe=:gruppe HAVING age > 0 ORDER BY datum_geburtstag DESC");
-	$stmt->bindValue(':gruppe', $group);
-	$stmt->execute();
+    $stmt = $libDb->prepare("SELECT YEAR(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(datum_geburtstag) + 1)) AS age FROM base_person WHERE gruppe=:gruppe HAVING age > 0 ORDER BY datum_geburtstag DESC");
+    $stmt->bindValue(':gruppe', $group);
+    $stmt->execute();
 
-	$ageArray = array();
+    $ageArray = [];
 
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		if(!isset($ageArray[$row['age']])){
-			$ageArray[$row['age']] = 0;
-		}
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        if (!isset($ageArray[$row['age']])) {
+            $ageArray[$row['age']] = 0;
+        }
 
-		$ageArray[$row['age']] = $ageArray[$row['age']] + 1;
-	}
+        $ageArray[$row['age']] = $ageArray[$row['age']] + 1;
+    }
 
-	return $ageArray;
+    return $ageArray;
 }
 
-function calculateAgeClasses($ageArray, $classWidth){
-	$ageClasses = array();
+function calculateAgeClasses($ageArray, $classWidth)
+{
+    $ageClasses = [];
 
-	foreach($ageArray as $key => $value){
-		$ageClass = $key - ($key % $classWidth);
+    foreach ($ageArray as $key => $value) {
+        $ageClass = $key - ($key % $classWidth);
 
-		if(!isset($ageClasses[$ageClass])){
-			$ageClasses[$ageClass] = 0;
-		}
+        if (!isset($ageClasses[$ageClass])) {
+            $ageClasses[$ageClass] = 0;
+        }
 
-		$ageClasses[$ageClass] = $ageClasses[$ageClass] + $value;
-	}
+        $ageClasses[$ageClass] = $ageClasses[$ageClass] + $value;
+    }
 
-	return $ageClasses;
+    return $ageClasses;
 }

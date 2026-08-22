@@ -16,22 +16,23 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 $semesterIterator = $libTime->getSemesterName();
 
-for($i=0; $i<50; $i++){
-	$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
+for ($i = 0; $i < 50; $i++) {
+    $semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
 }
 
 $semester50Back = $semesterIterator;
 $semester49Back = $libTime->getFollowingSemesterNameOfSemester($semester50Back);
 $semester51Back = $libTime->getPreviousSemesterNameOfSemester($semester50Back);
 
-for($i=0; $i<50; $i++){
-	$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
+for ($i = 0; $i < 50; $i++) {
+    $semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
 }
 
 $semester100Back = $semesterIterator;
@@ -73,19 +74,19 @@ $semester101Back = $libTime->getPreviousSemesterNameOfSemester($semester100Back)
 			<tr>
 				<td>Sämtliche Geburtstage eines Jahres:</td>
 				<td>
-					<?php echo @date('Y')-2;?> (<a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y')-2;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y')-2;?>&amp;type=html">HTML</a>),
-					<?php echo @date('Y')-1;?> (<a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y')-1;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y')-1;?>&amp;type=html">HTML</a>), <br />
+					<?php echo @date('Y') - 2;?> (<a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y') - 2;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y') - 2;?>&amp;type=html">HTML</a>),
+					<?php echo @date('Y') - 1;?> (<a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y') - 1;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y') - 1;?>&amp;type=html">HTML</a>), <br />
 					<?php echo @date('Y');?> (<a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y');?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y');?>&amp;type=html">HTML</a>),
-					<?php echo @date('Y')+1;?> (<a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y')+1;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y')+1;?>&amp;type=html">HTML</a>)
+					<?php echo @date('Y') + 1;?> (<a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y') + 1;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_geburtstage&amp;jahr=<?php echo @date('Y') + 1;?>&amp;type=html">HTML</a>)
 				</td>
 			</tr>
 			<tr>
 				<td>Runde Geburtstage eines Jahres:</td>
 				<td>
-					<?php echo @date('Y')-2;?> (<a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y')-2;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y')-2;?>&amp;type=html">HTML</a>),
-					<?php echo @date('Y')-1;?> (<a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y')-1;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y')-1;?>&amp;type=html">HTML</a>), <br />
+					<?php echo @date('Y') - 2;?> (<a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y') - 2;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y') - 2;?>&amp;type=html">HTML</a>),
+					<?php echo @date('Y') - 1;?> (<a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y') - 1;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y') - 1;?>&amp;type=html">HTML</a>), <br />
 					<?php echo @date('Y');?> (<a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y');?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y');?>"&amp;type=html>HTML</a>),
-					<?php echo @date('Y')+1;?> (<a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y')+1;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y')+1;?>"&amp;type=html>HTML</a>)
+					<?php echo @date('Y') + 1;?> (<a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y') + 1;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_rundegeburtstage&amp;jahr=<?php echo @date('Y') + 1;?>"&amp;type=html>HTML</a>)
 				</td>
 			</tr>
 			<tr>

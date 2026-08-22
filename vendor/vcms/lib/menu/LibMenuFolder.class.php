@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,193 +19,206 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\menu;
 
-class LibMenuFolder extends LibMenuElement{
-	var $elements = array();
+class LibMenuFolder extends LibMenuElement
+{
+    public $elements = [];
 
-	function __construct($pid, $name, $position){
-		parent::__construct($pid, $name, $position, 2);
-	}
+    public function __construct($pid, $name, $position)
+    {
+        parent::__construct($pid, $name, $position, 2);
+    }
 
-	function addElement($element){
-		$this->elements[] = $element;
-		$this->id = substr(sha1($element->getId().$this->id), 0, 8);
-	}
+    public function addElement($element)
+    {
+        $this->elements[] = $element;
+        $this->id = substr(sha1($element->getId().$this->id), 0, 8);
+    }
 
-	function addElements($elements){
-		$this->elements = array_merge($this->elements, $elements);
-	}
+    public function addElements($elements)
+    {
+        $this->elements = array_merge($this->elements, $elements);
+    }
 
-	function setElements($menuElements){
-		$this->elements = $menuElements;
-	}
+    public function setElements($menuElements)
+    {
+        $this->elements = $menuElements;
+    }
 
-	function getElements(){
-		return $this->elements;
-	}
+    public function getElements()
+    {
+        return $this->elements;
+    }
 
-	function hasElements(){
-		return !empty($this->elements);
-	}
+    public function hasElements()
+    {
+        return !empty($this->elements);
+    }
 
-	function canonizeElements(){
-		$result = array();
+    public function canonizeElements()
+    {
+        $result = [];
 
-		foreach($this->elements as $element){
-			$name = $element->getName();
-			$type = $element->getType();
-			$position = $element->getPosition();
+        foreach ($this->elements as $element) {
+            $name = $element->getName();
+            $type = $element->getType();
+            $position = $element->getPosition();
 
-			if(!isset($result[$name])){
-				$result[$name] = $element;
-			} elseif($type == 2) {
-				$collidingElement = $result[$name];
-				$collidingElement->addElements($element->getElements());
-				$newPosition = min($collidingElement->getPosition(), $position);
-				$collidingElement->setPosition($newPosition);
-			}
-		}
+            if (!isset($result[$name])) {
+                $result[$name] = $element;
+            } elseif ($type == 2) {
+                $collidingElement = $result[$name];
+                $collidingElement->addElements($element->getElements());
+                $newPosition = min($collidingElement->getPosition(), $position);
+                $collidingElement->setPosition($newPosition);
+            }
+        }
 
-		$result = array_values($result);
-		$this->setElements($result);
-	}
+        $result = array_values($result);
+        $this->setElements($result);
+    }
 
-	function sortElementsByPosition(){
-		$elementsNew = array();
+    public function sortElementsByPosition()
+    {
+        $elementsNew = [];
 
-		$minPositionValue = -1;
-		$minPosition = -1;
+        $minPositionValue = -1;
+        $minPosition = -1;
 
-		$temp = array_values($this->elements);
+        $temp = array_values($this->elements);
 
-		while(count($temp) > 0){
-			for($i=0; $i<count($temp); $i++){
-				$position = $temp[$i]->getPosition();
+        while (count($temp) > 0) {
+            for ($i = 0; $i < count($temp); $i++) {
+                $position = $temp[$i]->getPosition();
 
-				if($minPositionValue == -1 || $position < $minPositionValue){
-					$minPositionValue = $position;
-					$minPosition = $i;
-				}
-			}
+                if ($minPositionValue == -1 || $position < $minPositionValue) {
+                    $minPositionValue = $position;
+                    $minPosition = $i;
+                }
+            }
 
-			$elementsNew[] = $temp[$minPosition];
+            $elementsNew[] = $temp[$minPosition];
 
-			//clean up
-			unset($temp[$minPosition]);
-			$minPosition = -1;
-			$minPositionValue = -1;
+            //clean up
+            unset($temp[$minPosition]);
+            $minPosition = -1;
+            $minPositionValue = -1;
 
-			//build temp array for correct indices
-			$temp = array_values($temp);
-		}
+            //build temp array for correct indices
+            $temp = array_values($temp);
+        }
 
-		$this->elements = $elementsNew;
+        $this->elements = $elementsNew;
 
-		//no foreach, as otherwise php4 does copy-by-value
-		for($i=0; $i<count($this->elements); $i++){
-			$element = $this->elements[$i];
+        //no foreach, as otherwise php4 does copy-by-value
+        for ($i = 0; $i < count($this->elements); $i++) {
+            $element = $this->elements[$i];
 
-			if($element->getType() == 2){
-				$element->sortElementsByPosition();
-			}
-		}
-	}
+            if ($element->getType() == 2) {
+                $element->sortElementsByPosition();
+            }
+        }
+    }
 
-	function reduceByAccessRestriction($group, $offices){
-		//no foreach, as otherwise php4 does copy-by-value
-		for($i=0; $i<count($this->elements); $i++){
-			$element = $this->elements[$i];
+    public function reduceByAccessRestriction($group, $offices)
+    {
+        //no foreach, as otherwise php4 does copy-by-value
+        for ($i = 0; $i < count($this->elements); $i++) {
+            $element = $this->elements[$i];
 
-			//menu folder?
-			if($element->getType() == 2){
-				$element->reduceByAccessRestriction($group, $offices);
-			}
-		}
+            //menu folder?
+            if ($element->getType() == 2) {
+                $element->reduceByAccessRestriction($group, $offices);
+            }
+        }
 
-		$elementsNew = array();
+        $elementsNew = [];
 
-		//no foreach, as otherwise php4 does copy-by-value
-		for($i=0; $i<count($this->elements); $i++){
-			$element = $this->elements[$i];
+        //no foreach, as otherwise php4 does copy-by-value
+        for ($i = 0; $i < count($this->elements); $i++) {
+            $element = $this->elements[$i];
 
-			//menu entry?
-			if(!$element->hasAccessRestriction()){
-				$elementsNew[] = $element;
-			} else {
-				$accessRestriction = $element->getAccessRestriction();
+            //menu entry?
+            if (!$element->hasAccessRestriction()) {
+                $elementsNew[] = $element;
+            } else {
+                $accessRestriction = $element->getAccessRestriction();
 
-				//restrict
-				if($accessRestriction->isFulfilledBy($group, $offices)){
-					$elementsNew[] = $element;
-				}
-			}
-		}
+                //restrict
+                if ($accessRestriction->isFulfilledBy($group, $offices)) {
+                    $elementsNew[] = $element;
+                }
+            }
+        }
 
-		$this->elements = $elementsNew;
-	}
+        $this->elements = $elementsNew;
+    }
 
-	function applyMinAccessRestriction(){
-		global $libSecurityManager;
+    public function applyMinAccessRestriction()
+    {
+        global $libSecurityManager;
 
-		//no foreach, as otherwise php4 does copy-by-value
-		//apply min access restriction recursively
-		for($i=0; $i<count($this->elements); $i++){
-			$element = $this->elements[$i];
+        //no foreach, as otherwise php4 does copy-by-value
+        //apply min access restriction recursively
+        for ($i = 0; $i < count($this->elements); $i++) {
+            $element = $this->elements[$i];
 
-			//a folder?
-			if($element->getType() == 2){
-				//without access restriction?
-				if(!$element->hasAccessRestriction()){
-					//generate access restriction
-					$element->applyMinAccessRestriction();
-				}
-			}
-		}
+            //a folder?
+            if ($element->getType() == 2) {
+                //without access restriction?
+                if (!$element->hasAccessRestriction()) {
+                    //generate access restriction
+                    $element->applyMinAccessRestriction();
+                }
+            }
+        }
 
-		$accessRestrictions = array();
-		//no foreach, as otherwise php4 does copy-by-value
-		//collect access restrictions of a folder
-		for($i=0; $i<count($this->elements); $i++){
-			$element = $this->elements[$i];
+        $accessRestrictions = [];
+        //no foreach, as otherwise php4 does copy-by-value
+        //collect access restrictions of a folder
+        for ($i = 0; $i < count($this->elements); $i++) {
+            $element = $this->elements[$i];
 
-			//element with access restriction?
-			if($element->hasAccessRestriction()){
-				$accessRestrictions[] = $element->getAccessRestriction();
-			}
-		}
+            //element with access restriction?
+            if ($element->hasAccessRestriction()) {
+                $accessRestrictions[] = $element->getAccessRestriction();
+            }
+        }
 
-		//aggregate access restrictions
-		$accessRestriction = $libSecurityManager->
-			generateAggregatedAccessRestriction($accessRestrictions);
+        //aggregate access restrictions
+        $accessRestriction = $libSecurityManager->
+            generateAggregatedAccessRestriction($accessRestrictions);
 
-		if($accessRestriction->hasGroupsRestriction() ||
-			$accessRestriction->hasOfficesRestriction()){
-			$this->accessRestriction = $accessRestriction;
-		}
-	}
+        if ($accessRestriction->hasGroupsRestriction() ||
+            $accessRestriction->hasOfficesRestriction()) {
+            $this->accessRestriction = $accessRestriction;
+        }
+    }
 
-	function setAccessRestrictionOfMenuElement($mid, $accessRestriction){
-		//no foreach, as otherwise php4 does copy-by-value
-		for($i=0; $i<count($this->elements); $i++){
-			$element = $this->elements[$i];
+    public function setAccessRestrictionOfMenuElement($mid, $accessRestriction)
+    {
+        //no foreach, as otherwise php4 does copy-by-value
+        for ($i = 0; $i < count($this->elements); $i++) {
+            $element = $this->elements[$i];
 
-			if($element->getId() == $mid){
-				$element->setAccessRestriction($accessRestriction);
-			}
-		}
-	}
+            if ($element->getId() == $mid) {
+                $element->setAccessRestriction($accessRestriction);
+            }
+        }
+    }
 
-	function copy(){
-		$menuFolder	= new LibMenuFolder($this->pid, $this->name, $this->position);
-		$menuFolder->id = $this->id;
-		$menuFolder->type = $this->type;
-		$menuFolder->accessRestriction = $this->accessRestriction;
+    public function copy()
+    {
+        $menuFolder	= new LibMenuFolder($this->pid, $this->name, $this->position);
+        $menuFolder->id = $this->id;
+        $menuFolder->type = $this->type;
+        $menuFolder->accessRestriction = $this->accessRestriction;
 
-		//no foreach, as otherwise php4 does copy-by-value
-		for($i=0; $i<count($this->elements); $i++){
-			$element = $this->elements[$i];
-			$menuFolder->elements[] = $element->copy();
-		}
+        //no foreach, as otherwise php4 does copy-by-value
+        for ($i = 0; $i < count($this->elements); $i++) {
+            $element = $this->elements[$i];
+            $menuFolder->elements[] = $element->copy();
+        }
 
-		return $menuFolder;
-	}
+        return $menuFolder;
+    }
 }

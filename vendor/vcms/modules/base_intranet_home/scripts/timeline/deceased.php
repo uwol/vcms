@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,18 +17,22 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
-class LibDeceasedTimelineEvent extends \vcms\timeline\LibTimelineEvent{
-	function getBadgeClass(){
-		return 'deceased';
-	}
+class LibDeceasedTimelineEvent extends \vcms\timeline\LibTimelineEvent
+{
+    public function getBadgeClass()
+    {
+        return 'deceased';
+    }
 
-	function getBadgeIcon(){
-		return '&dagger;';
-	}
+    public function getBadgeIcon()
+    {
+        return '&dagger;';
+    }
 }
 
 
@@ -36,36 +41,36 @@ $stmt->bindValue(':semesterstart', $period[0]);
 $stmt->bindValue(':semesterende', $period[1]);
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$title = 'Todesfall ' .$libPerson->getNameString($row['id'], 0);
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $title = 'Todesfall ' .$libPerson->getNameString($row['id'], 0);
 
-	$age = false;
-	$description = '';
+    $age = false;
+    $description = '';
 
-	if($row['datum_geburtstag'] != '' && $row['datum_geburtstag'] != '0000-00-00'){
-		$dateObjectBirthday = new DateTime($row['datum_geburtstag']);
-		$dateObjectDeceased = new DateTime($row['tod_datum']);
-		$diff = $dateObjectDeceased->diff($dateObjectBirthday);
-		$age = $diff->y;
-	}
+    if ($row['datum_geburtstag'] != '' && $row['datum_geburtstag'] != '0000-00-00') {
+        $dateObjectBirthday = new DateTime($row['datum_geburtstag']);
+        $dateObjectDeceased = new DateTime($row['tod_datum']);
+        $diff = $dateObjectDeceased->diff($dateObjectBirthday);
+        $age = $diff->y;
+    }
 
-	if($age){
-		$description = 'Verstorben mit ' .$age. ' Jahren ';
-	}
+    if ($age) {
+        $description = 'Verstorben mit ' .$age. ' Jahren ';
+    }
 
-	$description .= '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=intranet_kalender_todestage&amp;user=' .$libGenericStorage->loadValueInCurrentModule('icalendar_username'). '&amp;pass=' .$libGenericStorage->loadValueInCurrentModule('icalendar_password'). '">';
-	$description .= '<i class="fa fa-calendar" aria-hidden="true"></i>';
-	$description .= '</a>';
+    $description .= '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=intranet_kalender_todestage&amp;user=' .$libGenericStorage->loadValueInCurrentModule('icalendar_username'). '&amp;pass=' .$libGenericStorage->loadValueInCurrentModule('icalendar_password'). '">';
+    $description .= '<i class="fa fa-calendar" aria-hidden="true"></i>';
+    $description .= '</a>';
 
-	$url = 'index.php?pid=intranet_person&amp;id=' .$row['id'];
+    $url = 'index.php?pid=intranet_person&amp;id=' .$row['id'];
 
-	$timelineEvent = new LibDeceasedTimelineEvent();
+    $timelineEvent = new LibDeceasedTimelineEvent();
 
-	$timelineEvent->setTitle($title);
-	$timelineEvent->setDatetime($row['tod_datum']);
-	$timelineEvent->setUrl($url);
-	$timelineEvent->setDescription($description);
-	$timelineEvent->setReferencedPersonId($row['id']);
+    $timelineEvent->setTitle($title);
+    $timelineEvent->setDatetime($row['tod_datum']);
+    $timelineEvent->setUrl($url);
+    $timelineEvent->setDescription($description);
+    $timelineEvent->setReferencedPersonId($row['id']);
 
-	$timelineEventSet->addEvent($timelineEvent);
+    $timelineEventSet->addEvent($timelineEvent);
 }

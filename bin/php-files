@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Prints the paths of all PHP files that belong to VCMS itself, one per line.
+# Kept in sync with the finder in .php-cs-fixer.dist.php.
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+find custom modules vendor/vcms -name '*.php' -type f
+echo 'api.php'
+echo 'index.php'
+echo 'installer.txt'

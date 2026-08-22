@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 $libDb->connect();
@@ -36,33 +38,33 @@ echo '</thead>';
 $stmt = $libDb->prepare('SELECT aktion, datum, mitglied, ipadresse FROM sys_log_intranet WHERE datum >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND aktion IS NOT NULL ORDER BY datum DESC');
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<tr>';
-	echo '<td>' .$row['datum']. '</td>';
-	echo '<td>';
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<tr>';
+    echo '<td>' .$row['datum']. '</td>';
+    echo '<td>';
 
-	switch($row['aktion']){
-		case 1:
-			echo 'Login erfolgreich';
-			break;
-		case 2:
-			echo 'Passwort falsch';
-			break;
-		case 10:
-			echo 'Cronjobs ausgeführt';
-			break;
-		case 20:
-			echo 'Versionsprüfung für Auto-Update ausgeführt';
-			break;
-		case 21:
-			echo 'Auto-Update ausgeführt';
-			break;
-	}
+    switch ($row['aktion']) {
+        case 1:
+            echo 'Login erfolgreich';
+            break;
+        case 2:
+            echo 'Passwort falsch';
+            break;
+        case 10:
+            echo 'Cronjobs ausgeführt';
+            break;
+        case 20:
+            echo 'Versionsprüfung für Auto-Update ausgeführt';
+            break;
+        case 21:
+            echo 'Auto-Update ausgeführt';
+            break;
+    }
 
-	echo '</td>';
-	echo '<td>' .$libPerson->getNameString($row['mitglied'], $mode = 4). '</td>';
-	echo '<td>' .$row['ipadresse']. '</td>';
-	echo '</tr>';
+    echo '</td>';
+    echo '<td>' .$libPerson->getNameString($row['mitglied'], $mode = 4). '</td>';
+    echo '<td>' .$row['ipadresse']. '</td>';
+    echo '</tr>';
 }
 
 echo '</table>';

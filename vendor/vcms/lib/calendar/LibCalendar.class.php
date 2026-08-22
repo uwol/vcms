@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,34 +19,38 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\calendar;
 
-class LibCalendar{
-	var $years = array();
-	var $eventSet;
+class LibCalendar
+{
+    public $years = [];
+    public $eventSet;
 
-	function __construct($startDate, $endDate){
-		$startDate = (string) $startDate;
-		$endDate = (string) $endDate;
+    public function __construct($startDate, $endDate)
+    {
+        $startDate = (string) $startDate;
+        $endDate = (string) $endDate;
 
-		$this->eventSet = new LibCalendarEventSet();
-		$startYear = intval(substr($startDate, 0, 4));
-		$endYear = intval(substr($endDate, 0, 4));
+        $this->eventSet = new LibCalendarEventSet();
+        $startYear = intval(substr($startDate, 0, 4));
+        $endYear = intval(substr($endDate, 0, 4));
 
-		for($i = $startYear; $i <= $endYear; $i++){
-			$this->years[] = new LibYear($i, $startDate, $endDate);
-		}
-	}
+        for ($i = $startYear; $i <= $endYear; $i++) {
+            $this->years[] = new LibYear($i, $startDate, $endDate);
+        }
+    }
 
-	function addEvent($event){
-		$this->eventSet->addEvent($event);
-	}
+    public function addEvent($event)
+    {
+        $this->eventSet->addEvent($event);
+    }
 
-	function toString(){
-		$retstr = '';
+    public function toString()
+    {
+        $retstr = '';
 
-		foreach($this->years as $year){
-			$retstr .= $year->toString($this->eventSet);
-		}
+        foreach ($this->years as $year) {
+            $retstr .= $year->toString($this->eventSet);
+        }
 
-		return $retstr;
-	}
+        return $retstr;
+    }
 }

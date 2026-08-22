@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,43 +17,44 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 $libDb->connect();
 
-if($libGenericStorage->loadValue('base_core', 'auto_update')){
-	$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_log_intranet WHERE aktion = 20 AND DATEDIFF(NOW(), datum) < 1');
-	$stmt->execute();
-	$stmt->bindColumn('number', $numberOfAutoUpdateExecutionsToday);
-	$stmt->fetch();
+if ($libGenericStorage->loadValue('base_core', 'auto_update')) {
+    $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_log_intranet WHERE aktion = 20 AND DATEDIFF(NOW(), datum) < 1');
+    $stmt->execute();
+    $stmt->bindColumn('number', $numberOfAutoUpdateExecutionsToday);
+    $stmt->fetch();
 
-	if($numberOfAutoUpdateExecutionsToday == 0){
-		$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (20, NOW())');
+    if ($numberOfAutoUpdateExecutionsToday == 0) {
+        $libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (20, NOW())');
 
-		ignore_user_abort(true);
+        ignore_user_abort(true);
 
-		$moduleStates = $libRepositoryClient->getModuleStates();
-		$autoUpdated = false;
+        $moduleStates = $libRepositoryClient->getModuleStates();
+        $autoUpdated = false;
 
-		if(isset($moduleStates['engine']) && $moduleStates['engine']){
-			$libRepositoryClient->updateEngine();
-			$autoUpdated = true;
-		}
+        if (isset($moduleStates['engine']) && $moduleStates['engine']) {
+            $libRepositoryClient->updateEngine();
+            $autoUpdated = true;
+        }
 
-		foreach($moduleStates as $key => $value){
-		  if($key !== 'engine' && $value){
-				$libRepositoryClient->installModule($key);
-				$autoUpdated = true;
-		  }
-		}
+        foreach ($moduleStates as $key => $value) {
+            if ($key !== 'engine' && $value) {
+                $libRepositoryClient->installModule($key);
+                $autoUpdated = true;
+            }
+        }
 
-		if($autoUpdated){
-			$libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (21, NOW())');
+        if ($autoUpdated) {
+            $libDb->query('INSERT INTO sys_log_intranet (aktion, datum) VALUES (21, NOW())');
 
-			$libRepositoryClient->resetTempDirectory();
-			$libCronjobs->executeJobs();
-		}
-	}
+            $libRepositoryClient->resetTempDirectory();
+            $libCronjobs->executeJobs();
+        }
+    }
 }

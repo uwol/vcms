@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,34 +17,35 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 $stmt = $libDb->prepare("SELECT * FROM mod_internethome_nachricht WHERE startdatum < NOW() AND (verfallsdatum > NOW() || verfallsdatum IS NULL || verfallsdatum = '0000-00-00 00:00:00') ORDER BY startdatum DESC LIMIT 0,2");
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<section class="announcement-box">';
-	echo '<div class="container">';
-	echo '<div class="row">';
-	echo '<div class="col-lg-8 col-lg-offset-2">';
-	echo '<div class="thumbnail">';
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<section class="announcement-box">';
+    echo '<div class="container">';
+    echo '<div class="row">';
+    echo '<div class="col-lg-8 col-lg-offset-2">';
+    echo '<div class="thumbnail">';
 
-	$image = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
-	$imageExists = is_file($image);
+    $image = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
+    $imageExists = is_file($image);
 
-	if($imageExists){
-		echo '<img src="' .$image. '" class="img-responsive center-block reveal" alt="" />';
-	}
+    if ($imageExists) {
+        echo '<img src="' .$image. '" class="img-responsive center-block reveal" alt="" />';
+    }
 
-	echo '<p class="caption mb-3">';
-	echo nl2br(trim((string) $row['text']));
-	echo '</p>';
+    echo '<p class="caption mb-3">';
+    echo nl2br(trim((string) $row['text']));
+    echo '</p>';
 
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
-	echo '</section>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</section>';
 }

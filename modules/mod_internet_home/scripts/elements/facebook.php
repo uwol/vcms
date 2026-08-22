@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,24 +17,25 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 $facebookUrl = (string) $libGenericStorage->loadValueInCurrentModule('facebook_url');
 $showFacebookPlugin = $libGenericStorage->loadValueInCurrentModule('show_facebook_plugin');
 $fbPagePluginEnabled = $showFacebookPlugin && $facebookUrl != '';
 
-if($fbPagePluginEnabled){
-	echo '<section class="facebook-box">';
-	echo '<div class="container">';
-	echo '<div class="row">';
+if ($fbPagePluginEnabled) {
+    echo '<section class="facebook-box">';
+    echo '<div class="container">';
+    echo '<div class="row">';
 
-	echo '<div style="max-width:500px" class="center-block">';
-	echo '<iframe src="https://www.facebook.com/plugins/page.php?href=' .rawurlencode($facebookUrl). '&tabs&width=340&height=154&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId" width="100%" height="154" class="facebookPagePlugin" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>';
-	echo '</div>';
+    echo '<div style="max-width:500px" class="center-block">';
+    echo '<iframe src="https://www.facebook.com/plugins/page.php?href=' .rawurlencode($facebookUrl). '&tabs&width=340&height=154&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId" width="100%" height="154" class="facebookPagePlugin" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>';
+    echo '</div>';
 
-	echo '</div>';
-	echo '</div>';
-	echo '</section>';
+    echo '</div>';
+    echo '</div>';
+    echo '</section>';
 }

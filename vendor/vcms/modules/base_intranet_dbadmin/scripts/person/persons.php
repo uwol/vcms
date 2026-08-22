@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,187 +17,188 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
-if($libAuth->isLoggedin()){
-	$orderby = 0;
+if ($libAuth->isLoggedin()) {
+    $orderby = 0;
 
-	if(isset($_POST['orderby'])){
-		$orderby = $_POST['orderby'];
-	}
+    if (isset($_POST['orderby'])) {
+        $orderby = $_POST['orderby'];
+    }
 
-	if(isset($_POST['action']) && $_POST['action'] == 'delete'){
-		if(isset($_POST['id']) && $_POST['id'] != ''){
-			//Ist der Bearbeiter kein Internetwart?
-			if(!in_array('internetwart', $libAuth->getOffices()) && !in_array('datenpflegewart', $libAuth->getOffices())){
-				die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
-			}
+    if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+        if (isset($_POST['id']) && $_POST['id'] != '') {
+            //Ist der Bearbeiter kein Internetwart?
+            if (!in_array('internetwart', $libAuth->getOffices()) && !in_array('datenpflegewart', $libAuth->getOffices())) {
+                die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
+            }
 
-			//Problemfall Internetwart: Dieser darf nie gelöscht werden, um immer einen Admin im System zu haben
-			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
-			$stmt->bindValue(':internetwart', $_POST['id'], PDO::PARAM_INT);
-			$stmt->execute();
-			$stmt->bindColumn('number', $count);
-			$stmt->fetch();
+            //Problemfall Internetwart: Dieser darf nie gelöscht werden, um immer einen Admin im System zu haben
+            $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
+            $stmt->bindValue(':internetwart', $_POST['id'], PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt->bindColumn('number', $count);
+            $stmt->fetch();
 
-			if($count > 0){
-				$libGlobal->errorTexts[] = 'Die Person kann nicht gelöscht werden, weil sie ein Internetwart in mindestens einem Semester ist. Internetwarte können nicht gelöscht werden, weil sie die Administratoren sind und im Extremfall somit kein Administrator im System existiert. Falls diese Person gelöscht werden soll, so muss sie erst manuell von einem Internetwart in allen Semestern aus den Internetwartsposten entfernt werden.';
-			} else {
-				//Verwendung der Person in anderen Tabellen prüfen
-				//diese Einträge vorher löschen oder vom Mitglied befreien
+            if ($count > 0) {
+                $libGlobal->errorTexts[] = 'Die Person kann nicht gelöscht werden, weil sie ein Internetwart in mindestens einem Semester ist. Internetwarte können nicht gelöscht werden, weil sie die Administratoren sind und im Extremfall somit kein Administrator im System existiert. Falls diese Person gelöscht werden soll, so muss sie erst manuell von einem Internetwart in allen Semestern aus den Internetwartsposten entfernt werden.';
+            } else {
+                //Verwendung der Person in anderen Tabellen prüfen
+                //diese Einträge vorher löschen oder vom Mitglied befreien
 
-				//Veranstaltungsteilnahmen löschen
-				$stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE person=:id');
-				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-				$stmt->execute();
+                //Veranstaltungsteilnahmen löschen
+                $stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE person=:id');
+                $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+                $stmt->execute();
 
-				//Vereinsmitgliedschaften löschen
-				$stmt = $libDb->prepare('DELETE FROM base_verein_mitgliedschaft WHERE mitglied=:id');
-				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-				$stmt->execute();
+                //Vereinsmitgliedschaften löschen
+                $stmt = $libDb->prepare('DELETE FROM base_verein_mitgliedschaft WHERE mitglied=:id');
+                $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+                $stmt->execute();
 
-				//Semesterämter löschen
-				foreach($libSecurityManager->getPossibleOffices() as $office){
-					$stmt = $libDb->prepare('UPDATE base_semester SET '.$office.' = NULL WHERE '.$office.'=:id');
-					$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-					$stmt->execute();
-				}
+                //Semesterämter löschen
+                foreach ($libSecurityManager->getPossibleOffices() as $office) {
+                    $stmt = $libDb->prepare('UPDATE base_semester SET '.$office.' = NULL WHERE '.$office.'=:id');
+                    $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+                    $stmt->execute();
+                }
 
-				//Leibvaterangaben entfernen
-				$stmt = $libDb->prepare('UPDATE base_person SET leibmitglied = NULL WHERE leibmitglied=:id');
-				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-				$stmt->execute();
+                //Leibvaterangaben entfernen
+                $stmt = $libDb->prepare('UPDATE base_person SET leibmitglied = NULL WHERE leibmitglied=:id');
+                $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+                $stmt->execute();
 
-				//Ehepartnerangaben entfernen
-				$stmt = $libDb->prepare('UPDATE base_person SET heirat_partner = NULL WHERE heirat_partner=:id');
-				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-				$stmt->execute();
+                //Ehepartnerangaben entfernen
+                $stmt = $libDb->prepare('UPDATE base_person SET heirat_partner = NULL WHERE heirat_partner=:id');
+                $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+                $stmt->execute();
 
-				//Mitglied aus Datenbank löschen
-				$stmt = $libDb->prepare('DELETE FROM base_person WHERE id=:id');
-				$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-				$stmt->execute();
+                //Mitglied aus Datenbank löschen
+                $stmt = $libDb->prepare('DELETE FROM base_person WHERE id=:id');
+                $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+                $stmt->execute();
 
-				$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
+                $libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 
-				//Fotodatei löschen
-				$libImage->deletePersonPhoto($_POST['id']);
-			}
-		}
-	}
+                //Fotodatei löschen
+                $libImage->deletePersonPhoto($_POST['id']);
+            }
+        }
+    }
 
-	switch($orderby){
-		case 0:
-			$order = 'SUBSTRING(semester_reception, 3) DESC';
-			break;
-		case 1:
-			$order = 'name, vorname, datum_geburtstag ASC';
-			break;
-		case 2:
-			$order = 'gruppe, name, vorname ASC';
-			break;
-		case 3:
-			$order = 'id ASC';
-			break;
-		default:
-			$order = 'SUBSTRING(semester_reception, 3) DESC';
-	}
+    switch ($orderby) {
+        case 0:
+            $order = 'SUBSTRING(semester_reception, 3) DESC';
+            break;
+        case 1:
+            $order = 'name, vorname, datum_geburtstag ASC';
+            break;
+        case 2:
+            $order = 'gruppe, name, vorname ASC';
+            break;
+        case 3:
+            $order = 'id ASC';
+            break;
+        default:
+            $order = 'SUBSTRING(semester_reception, 3) DESC';
+    }
 
-	echo '<h1>Personen</h1>';
+    echo '<h1>Personen</h1>';
 
-	echo $libString->getErrorBoxText();
-	echo $libString->getNotificationBoxText();
+    echo $libString->getErrorBoxText();
+    echo $libString->getNotificationBoxText();
 
-	if(in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())){
-		echo '<div class="panel panel-default">';
-		echo '<div class="panel-body">';
-		echo '<div class="btn-toolbar">';
-		echo '<a href="index.php?pid=intranet_admin_person&amp;action=blank" class="btn btn-default">Eine neue Person anlegen</a>';
-		echo '</div>';
-		echo '</div>';
-		echo '</div>';
-	}
+    if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
+        echo '<div class="panel panel-default">';
+        echo '<div class="panel-body">';
+        echo '<div class="btn-toolbar">';
+        echo '<a href="index.php?pid=intranet_admin_person&amp;action=blank" class="btn btn-default">Eine neue Person anlegen</a>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+    }
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form action="index.php?pid=intranet_admin_persons" method="post" class="form-inline">';
-	echo '<fieldset>';
-	echo '<div class="form-group">';
+    echo '<div class="panel panel-default">';
+    echo '<div class="panel-body">';
+    echo '<form action="index.php?pid=intranet_admin_persons" method="post" class="form-inline">';
+    echo '<fieldset>';
+    echo '<div class="form-group">';
 
-	echo '<label class="sr-only" for="orderby">Sortierung</label>';
-	echo '<select id="orderby" name="orderby" class="form-control" onchange="this.form.submit()">';
-	echo '<option value="0" ';
+    echo '<label class="sr-only" for="orderby">Sortierung</label>';
+    echo '<select id="orderby" name="orderby" class="form-control" onchange="this.form.submit()">';
+    echo '<option value="0" ';
 
-	if (isset($_POST['orderby']) && $_POST['orderby'] == 0){
-		echo 'selected="selected"';
-	}
+    if (isset($_POST['orderby']) && $_POST['orderby'] == 0) {
+        echo 'selected="selected"';
+    }
 
-	echo '>Receptionssemester</option>';
-	echo '<option value="1" ';
+    echo '>Receptionssemester</option>';
+    echo '<option value="1" ';
 
-	if (isset($_POST['orderby']) && $_POST['orderby'] == 1){
-		echo 'selected="selected"';
-	}
+    if (isset($_POST['orderby']) && $_POST['orderby'] == 1) {
+        echo 'selected="selected"';
+    }
 
-	echo '>Name</option>';
-	echo '<option value="2" ';
+    echo '>Name</option>';
+    echo '<option value="2" ';
 
-	if (isset($_POST['orderby']) && $_POST['orderby'] == 2){
-		echo 'selected="selected"';
-	}
+    if (isset($_POST['orderby']) && $_POST['orderby'] == 2) {
+        echo 'selected="selected"';
+    }
 
-	echo '>Gruppe</option>';
-	echo '<option value="3" ';
+    echo '>Gruppe</option>';
+    echo '<option value="3" ';
 
-	if (isset($_POST['orderby']) && $_POST['orderby'] == 3){
-		echo 'selected="selected"';
-	}
+    if (isset($_POST['orderby']) && $_POST['orderby'] == 3) {
+        echo 'selected="selected"';
+    }
 
-	echo '>Id</option>';
-	echo '</select> ';
+    echo '>Id</option>';
+    echo '</select> ';
 
-	$libForm->printSubmitButtonInline('Sortieren');
+    $libForm->printSubmitButtonInline('Sortieren');
 
-	echo '</div>';
-	echo '</fieldset>';
-	echo '</form>';
-	echo '</div>';
-	echo '</div>';
+    echo '</div>';
+    echo '</fieldset>';
+    echo '</form>';
+    echo '</div>';
+    echo '</div>';
 
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
+    echo '<div class="panel panel-default">';
+    echo '<div class="panel-body">';
 
-	echo '<table class="table table-condensed table-striped table-hover">';
-	echo '<thead>';
-	echo '<tr><th>Id</th><th>Präfix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th>Gruppe</th><th>Status</th><th>Reception</th><th></th></tr>';
-	echo '</thead>';
+    echo '<table class="table table-condensed table-striped table-hover">';
+    echo '<thead>';
+    echo '<tr><th>Id</th><th>Präfix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th>Gruppe</th><th>Status</th><th>Reception</th><th></th></tr>';
+    echo '</thead>';
 
-	$stmt = $libDb->prepare('SELECT * FROM base_person ORDER BY ' .$order);
-	$stmt->execute();
+    $stmt = $libDb->prepare('SELECT * FROM base_person ORDER BY ' .$order);
+    $stmt->execute();
 
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<tr>';
-		echo '<td>' .$row['id']. '</td>';
-		echo '<td>' .$row['praefix']. '</td>';
-		echo '<td>' .$row['name']. '</td>';
-		echo '<td>' .$row['suffix']. '</td>';
-		echo '<td>' .$row['vorname']. '</td>';
-		echo '<td>' .$row['gruppe']. '</td>';
-		echo '<td>' .$row['status']. '</td>';
-		echo '<td>' .$row['semester_reception']. '</td>';
-		echo '<td class="tool-column">';
-		echo '<a href="index.php?pid=intranet_admin_person&amp;id=' .$row['id']. '">';
-		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
-		echo '</a>';
-		echo '</td>';
-		echo '</tr>';
-	}
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo '<tr>';
+        echo '<td>' .$row['id']. '</td>';
+        echo '<td>' .$row['praefix']. '</td>';
+        echo '<td>' .$row['name']. '</td>';
+        echo '<td>' .$row['suffix']. '</td>';
+        echo '<td>' .$row['vorname']. '</td>';
+        echo '<td>' .$row['gruppe']. '</td>';
+        echo '<td>' .$row['status']. '</td>';
+        echo '<td>' .$row['semester_reception']. '</td>';
+        echo '<td class="tool-column">';
+        echo '<a href="index.php?pid=intranet_admin_person&amp;id=' .$row['id']. '">';
+        echo '<i class="fa fa-cog" aria-hidden="true"></i>';
+        echo '</a>';
+        echo '</td>';
+        echo '</tr>';
+    }
 
-	echo '</table>';
+    echo '</table>';
 
-	echo '</div>';
-	echo '</div>';
+    echo '</div>';
+    echo '</div>';
 }

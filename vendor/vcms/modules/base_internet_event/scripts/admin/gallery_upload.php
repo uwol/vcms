@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,59 +17,61 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 $libDb->connect();
 
-if($libAuth->isLoggedin() &&
-		isset($_REQUEST['veranstaltungId']) && is_numeric($_REQUEST['veranstaltungId']) &&
-		preg_match("/^[0-9]+$/", $_REQUEST['veranstaltungId']) && isset($_FILES['files']['name'])){
+if ($libAuth->isLoggedin() &&
+        isset($_REQUEST['veranstaltungId']) && is_numeric($_REQUEST['veranstaltungId']) &&
+        preg_match("/^[0-9]+$/", $_REQUEST['veranstaltungId']) && isset($_FILES['files']['name'])) {
 
-	$allowedExtensions = array('jpg', 'jpeg');
-	$numerOfFiles = count($_FILES['files']['name']);
-	$filesResult = array();
+    $allowedExtensions = ['jpg', 'jpeg'];
+    $numerOfFiles = count($_FILES['files']['name']);
+    $filesResult = [];
 
-	for($i=0; $i<$numerOfFiles; $i++){
-		$fileResult = handleFileUpload($i, $allowedExtensions);
-		$filesResult[] = $fileResult;
-	}
+    for ($i = 0; $i < $numerOfFiles; $i++) {
+        $fileResult = handleFileUpload($i, $allowedExtensions);
+        $filesResult[] = $fileResult;
+    }
 
-	$result = array();
-	$result['files'] = $filesResult;
+    $result = [];
+    $result['files'] = $filesResult;
 
-	echo json_encode($result);
+    echo json_encode($result);
 }
 
 
 
-function handleFileUpload($i, $allowedExtensions){
-	global $libGlobal, $libImage;
+function handleFileUpload($i, $allowedExtensions)
+{
+    global $libGlobal, $libImage;
 
-	$name = $_FILES['files']['name'][$i];
-	$tmp_name = $_FILES['files']['tmp_name'][$i];
-	$size = $_FILES['files']['size'][$i];
+    $name = $_FILES['files']['name'][$i];
+    $tmp_name = $_FILES['files']['tmp_name'][$i];
+    $size = $_FILES['files']['size'][$i];
 
-	$pathinfo = pathinfo((string) $name);
-	$filename = isset($pathinfo['filename']) ? $pathinfo['filename'] : '';
-	$ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
+    $pathinfo = pathinfo((string) $name);
+    $filename = isset($pathinfo['filename']) ? $pathinfo['filename'] : '';
+    $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
 
-	$result = array();
+    $result = [];
 
-	if(is_array($allowedExtensions) && !in_array(strtolower($ext), $allowedExtensions)){
-		$allowedExtensionsString = implode(', ', $allowedExtensions);
-		$result['error'] = 'Die Dateiendung ist nicht korrekt. Erlaubt sind ' .$allowedExtensionsString. '.';
-	} else {
-		$libImage->saveEventPhotoByAjax($_REQUEST['veranstaltungId'], $filename. '.' .$ext, $tmp_name);
+    if (is_array($allowedExtensions) && !in_array(strtolower($ext), $allowedExtensions)) {
+        $allowedExtensionsString = implode(', ', $allowedExtensions);
+        $result['error'] = 'Die Dateiendung ist nicht korrekt. Erlaubt sind ' .$allowedExtensionsString. '.';
+    } else {
+        $libImage->saveEventPhotoByAjax($_REQUEST['veranstaltungId'], $filename. '.' .$ext, $tmp_name);
 
-		if(count($libGlobal->errorTexts) > 0){
-			$result['error'] = implode(' ', $libGlobal->errorTexts);
-		} else {
-			$result['size'] = $size;
-		}
-	}
+        if (count($libGlobal->errorTexts) > 0) {
+            $result['error'] = implode(' ', $libGlobal->errorTexts);
+        } else {
+            $result['size'] = $size;
+        }
+    }
 
-	$result['name'] = $name;
-	return $result;
+    $result['name'] = $name;
+    return $result;
 }

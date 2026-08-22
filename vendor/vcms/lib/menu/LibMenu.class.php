@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,46 +19,56 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\menu;
 
-class LibMenu{
-	var $rootMenuFolder;
+class LibMenu
+{
+    public $rootMenuFolder;
 
-	function __construct(){
-		$this->rootMenuFolder = new LibMenuFolder('', '', 0);
-	}
+    public function __construct()
+    {
+        $this->rootMenuFolder = new LibMenuFolder('', '', 0);
+    }
 
-	function addMenuElement($menuElement){
-		$this->rootMenuFolder->addElement($menuElement);
-	}
+    public function addMenuElement($menuElement)
+    {
+        $this->rootMenuFolder->addElement($menuElement);
+    }
 
-	function applyMinAccessRestriction(){
-		$this->rootMenuFolder->applyMinAccessRestriction();
-		//public main folder
-		$this->rootMenuFolder->setAccessRestriction('');
-	}
+    public function applyMinAccessRestriction()
+    {
+        $this->rootMenuFolder->applyMinAccessRestriction();
+        //public main folder
+        $this->rootMenuFolder->setAccessRestriction('');
+    }
 
-	function copy(){
-		$menu = new LibMenu();
-		$menu->setRootMenuFolder($this->rootMenuFolder->copy());
-		return $menu;
-	}
+    public function copy()
+    {
+        $menu = new LibMenu();
+        $menu->setRootMenuFolder($this->rootMenuFolder->copy());
+        return $menu;
+    }
 
-	function canonizeElements(){
-		$this->rootMenuFolder->canonizeElements();
-	}
+    public function canonizeElements()
+    {
+        $this->rootMenuFolder->canonizeElements();
+    }
 
-	function reduceByAccessRestriction($group, $offices){
-		$this->rootMenuFolder->reduceByAccessRestriction($group, $offices);
-	}
+    public function reduceByAccessRestriction($group, $offices)
+    {
+        $this->rootMenuFolder->reduceByAccessRestriction($group, $offices);
+    }
 
-	function sortElementsByPosition(){
-		$this->rootMenuFolder->sortElementsByPosition();
-	}
+    public function sortElementsByPosition()
+    {
+        $this->rootMenuFolder->sortElementsByPosition();
+    }
 
-	function getRootMenuFolder(){
-		return $this->rootMenuFolder;
-	}
+    public function getRootMenuFolder()
+    {
+        return $this->rootMenuFolder;
+    }
 
-	function setRootMenuFolder($rootMenuFolder){
-		$this->rootMenuFolder = $rootMenuFolder;
-	}
+    public function setRootMenuFolder($rootMenuFolder)
+    {
+        $this->rootMenuFolder = $rootMenuFolder;
+    }
 }

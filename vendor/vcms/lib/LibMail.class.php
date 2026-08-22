@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,29 +19,31 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms;
 
-class LibMail{
-	function createPHPMailer($fromName = ''){
-		global $libConfig, $libGenericStorage;
+class LibMail
+{
+    public function createPHPMailer($fromName = '')
+    {
+        global $libConfig, $libGenericStorage;
 
-		$smtpPort = $libGenericStorage->loadValue('base_core', 'smtp_port');
+        $smtpPort = $libGenericStorage->loadValue('base_core', 'smtp_port');
 
-		$mail = new \PHPMailer\PHPMailer\PHPMailer();
-		$mail->setFrom($libConfig->emailInfo, $fromName);
-		$mail->CharSet = 'UTF-8';
+        $mail = new \PHPMailer\PHPMailer\PHPMailer();
+        $mail->setFrom($libConfig->emailInfo, $fromName);
+        $mail->CharSet = 'UTF-8';
 
-		$mail->isSMTP();
-		$mail->SMTPAuth = true;
-		$mail->Host = $libGenericStorage->loadValue('base_core', 'smtp_host');
-		$mail->Port = $smtpPort;
-		$mail->Username = $libGenericStorage->loadValue('base_core', 'smtp_username');
-		$mail->Password = $libGenericStorage->loadValue('base_core', 'smtp_password');
+        $mail->isSMTP();
+        $mail->SMTPAuth = true;
+        $mail->Host = $libGenericStorage->loadValue('base_core', 'smtp_host');
+        $mail->Port = $smtpPort;
+        $mail->Username = $libGenericStorage->loadValue('base_core', 'smtp_username');
+        $mail->Password = $libGenericStorage->loadValue('base_core', 'smtp_password');
 
-		if($smtpPort == 465) {
-			$mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
-		} elseif($smtpPort == 587) {
-			$mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-		}
+        if ($smtpPort == 465) {
+            $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
+        } elseif ($smtpPort == 587) {
+            $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        }
 
-		return $mail;
-	}
+        return $mail;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 $stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE intern = 0 AND DATEDIFF(NOW(), datum) < 365 ORDER BY datum DESC');
@@ -26,58 +28,58 @@ $stmt->execute();
 $maxNumberOfThumbnails = 6;
 $i = 0;
 
-$eventIds = array();
+$eventIds = [];
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$pictureId = $libGallery->getMainPictureId($row['id']);
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $pictureId = $libGallery->getMainPictureId($row['id']);
 
-	if($pictureId > -1){
-		$eventIds[] = $row['id'];
-		$i++;
+    if ($pictureId > -1) {
+        $eventIds[] = $row['id'];
+        $i++;
 
-		if($i > $maxNumberOfThumbnails - 1){
-			break;
-		}
-	}
+        if ($i > $maxNumberOfThumbnails - 1) {
+            break;
+        }
+    }
 }
 
-if(count($eventIds) > 0){
-	echo '<section id="pastevents" class="pastevents-box">';
-	echo '<div class="container-fluid">';
-	echo '<div class="row no-gutter">';
+if (count($eventIds) > 0) {
+    echo '<section id="pastevents" class="pastevents-box">';
+    echo '<div class="container-fluid">';
+    echo '<div class="row no-gutter">';
 
-	foreach($eventIds as $eventId){
-		$stmt = $libDb->prepare('SELECT id, titel, datum, ort, intern FROM base_veranstaltung WHERE id = :id');
-		$stmt->bindValue(':id', $eventId);
-		$stmt->execute();
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+    foreach ($eventIds as $eventId) {
+        $stmt = $libDb->prepare('SELECT id, titel, datum, ort, intern FROM base_veranstaltung WHERE id = :id');
+        $stmt->bindValue(':id', $eventId);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		$pictureId = $libGallery->getMainPictureId($eventId);
+        $pictureId = $libGallery->getMainPictureId($eventId);
 
-		echo '<div class="col-lg-4 col-sm-6">';
+        echo '<div class="col-lg-4 col-sm-6">';
 
-		echo '<div class="thumbnail">';
-		echo '<div class="img-frame">';
-		echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box">';
-		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$eventId. '&amp;id=' .$pictureId . '" alt="" />';
-		echo '<div class="event-box-caption">';
-		echo '<div class="event-box-caption-content">';
-		echo '<div class="event-name text-faded">';
-		printEventTitle($row);
-		echo '</div>';
-    echo '<div class="event-time">';
-    printEventDateTime($row);
+        echo '<div class="thumbnail">';
+        echo '<div class="img-frame">';
+        echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box">';
+        echo '<img src="api.php?iid=event_picture&amp;eventid=' .$eventId. '&amp;id=' .$pictureId . '" alt="" />';
+        echo '<div class="event-box-caption">';
+        echo '<div class="event-box-caption-content">';
+        echo '<div class="event-name text-faded">';
+        printEventTitle($row);
+        echo '</div>';
+        echo '<div class="event-time">';
+        printEventDateTime($row);
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+
+        echo '</a>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+    }
+
     echo '</div>';
     echo '</div>';
-    echo '</div>';
-
-    echo '</a>';
-    echo '</div>';
-		echo '</div>';
-    echo '</div>';
-	}
-
-	echo '</div>';
-	echo '</div>';
-	echo '</section>';
+    echo '</section>';
 }

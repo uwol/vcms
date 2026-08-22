@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,147 +19,161 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\timeline;
 
-class LibTimelineEvent {
-	var $title;
-	var $datetime;
-	var $description;
-	var $referencedPersonId;
-	var $authorId;
-	var $url;
-	var $form;
+class LibTimelineEvent
+{
+    public $title;
+    public $datetime;
+    public $description;
+    public $referencedPersonId;
+    public $authorId;
+    public $url;
+    public $form;
 
-	var $hideAuthorSignature;
-	var $hideReferencedPersonSignature;
+    public $hideAuthorSignature;
+    public $hideReferencedPersonSignature;
 
-	function getBadgeClass(){
-		return '';
-	}
+    public function getBadgeClass()
+    {
+        return '';
+    }
 
-	function getBadgeIcon(){
-		return '';
-	}
+    public function getBadgeIcon()
+    {
+        return '';
+    }
 
-	function hideAuthorSignature(){
-		$this->hideAuthorSignature = true;
-	}
+    public function hideAuthorSignature()
+    {
+        $this->hideAuthorSignature = true;
+    }
 
-	function hideReferencedPersonSignature(){
-		$this->hideReferencedPersonSignature = true;
-	}
+    public function hideReferencedPersonSignature()
+    {
+        $this->hideReferencedPersonSignature = true;
+    }
 
-	function isFullWidth(){
-		return false;
-	}
+    public function isFullWidth()
+    {
+        return false;
+    }
 
-	function setAuthorId($authorId){
-		$this->authorId = $authorId;
-	}
+    public function setAuthorId($authorId)
+    {
+        $this->authorId = $authorId;
+    }
 
-	function setDatetime($datetime){
-		$this->datetime = $datetime;
-	}
+    public function setDatetime($datetime)
+    {
+        $this->datetime = $datetime;
+    }
 
-	function setDescription($description){
-		$this->description = $description;
-	}
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
-	function setForm($form){
-		$this->form = $form;
-	}
+    public function setForm($form)
+    {
+        $this->form = $form;
+    }
 
-	function setReferencedPersonId($referencedPersonId){
-		$this->referencedPersonId = $referencedPersonId;
-	}
+    public function setReferencedPersonId($referencedPersonId)
+    {
+        $this->referencedPersonId = $referencedPersonId;
+    }
 
-	function setTitle($title){
-		$this->title = $title;
-	}
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 
-	function setUrl($url){
-		$this->url = $url;
-	}
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
 
-	function toString(){
-		global $libPerson, $libTime;
+    public function toString()
+    {
+        global $libPerson, $libTime;
 
-		$retstr = '<article class="timeline-event">';
+        $retstr = '<article class="timeline-event">';
 
-		if(!$this->isFullWidth()){
-			$retstr .= '<div class="timeline-badge ' .$this->getBadgeClass(). '">';
-			$retstr .= '<span class="reveal">' .$this->getBadgeIcon(). '</span>';
-			$retstr .= '</div>';
-		}
+        if (!$this->isFullWidth()) {
+            $retstr .= '<div class="timeline-badge ' .$this->getBadgeClass(). '">';
+            $retstr .= '<span class="reveal">' .$this->getBadgeIcon(). '</span>';
+            $retstr .= '</div>';
+        }
 
-		$panelTypeClass = $this->isFullWidth() ? 'full-width' : 'with-badge';
-		$retstr .= '<div class="timeline-panel ' .$panelTypeClass. ' panel panel-default mb-2">';
+        $panelTypeClass = $this->isFullWidth() ? 'full-width' : 'with-badge';
+        $retstr .= '<div class="timeline-panel ' .$panelTypeClass. ' panel panel-default mb-2">';
 
-		/*
-		* heading
-		*/
-		$retstr .= '<div class="panel-heading">';
-		$retstr .= '<h3 class="panel-title">';
+        /*
+        * heading
+        */
+        $retstr .= '<div class="panel-heading">';
+        $retstr .= '<h3 class="panel-title">';
 
-		if($this->datetime != ''){
-			$retstr .= '<time datetime="' .$libTime->formatUtcString($this->datetime). '">';
-			$retstr .= $libTime->formatDateString($this->datetime);
-			$retstr .= '</time> ';
-		}
+        if ($this->datetime != '') {
+            $retstr .= '<time datetime="' .$libTime->formatUtcString($this->datetime). '">';
+            $retstr .= $libTime->formatDateString($this->datetime);
+            $retstr .= '</time> ';
+        }
 
-		if($this->url != ''){
-			$retstr .= '<a href="' .$this->url. '">';
-		}
+        if ($this->url != '') {
+            $retstr .= '<a href="' .$this->url. '">';
+        }
 
-		$retstr .= $this->title;
+        $retstr .= $this->title;
 
-		if($this->url != ''){
-			$retstr .=  '</a>';
-		}
+        if ($this->url != '') {
+            $retstr .=  '</a>';
+        }
 
-		$retstr .= '</h3>';
-		$retstr .= '</div>';
+        $retstr .= '</h3>';
+        $retstr .= '</div>';
 
-		/*
-		* body
-		*/
-		$retstr .= '<div class="panel-body">';
+        /*
+        * body
+        */
+        $retstr .= '<div class="panel-body">';
 
-		// description
-		$retstr .= '<div class="row">';
+        // description
+        $retstr .= '<div class="row">';
 
-		$hasPersonColumn = ($this->authorId != '' && !$this->hideAuthorSignature)
-				|| ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature);
+        $hasPersonColumn = ($this->authorId != '' && !$this->hideAuthorSignature)
+                || ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature);
 
-		if($this->description != ''){
-			$retstr .= $hasPersonColumn ? '<div class="col-xs-12 col-sm-9">' : '<div class="col-xs-12">';
-			$retstr .= trim((string) $this->description);
-			$retstr .= '</div>';
-		}
+        if ($this->description != '') {
+            $retstr .= $hasPersonColumn ? '<div class="col-xs-12 col-sm-9">' : '<div class="col-xs-12">';
+            $retstr .= trim((string) $this->description);
+            $retstr .= '</div>';
+        }
 
-		if($hasPersonColumn){
-			$retstr .= '<div class="hidden-xs col-sm-3">';
+        if ($hasPersonColumn) {
+            $retstr .= '<div class="hidden-xs col-sm-3">';
 
-			if($this->authorId != '' && !$this->hideAuthorSignature){
-				$retstr .= $libPerson->getSignature($this->authorId);
-			}
+            if ($this->authorId != '' && !$this->hideAuthorSignature) {
+                $retstr .= $libPerson->getSignature($this->authorId);
+            }
 
-			if($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature){
-				$retstr .= $libPerson->getSignature($this->referencedPersonId);
-			}
+            if ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature) {
+                $retstr .= $libPerson->getSignature($this->referencedPersonId);
+            }
 
-			$retstr .= '</div>';
-		}
+            $retstr .= '</div>';
+        }
 
-		$retstr .= '</div>';
+        $retstr .= '</div>';
 
-		// form
-		if($this->form != ''){
-			$retstr .= $this->form;
-		}
+        // form
+        if ($this->form != '') {
+            $retstr .= $this->form;
+        }
 
-		$retstr .= '</div>';
-		$retstr .= '</div>';
-		$retstr .= '</article>';
+        $retstr .= '</div>';
+        $retstr .= '</div>';
+        $retstr .= '</article>';
 
-		return $retstr;
-	}
+        return $retstr;
+    }
 }

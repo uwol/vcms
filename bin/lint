@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#
+# Checks VCMS' own PHP code: syntax check via `php -l`, code style via PHP-CS-Fixer.
+# Exits non-zero if any file has a syntax error or deviates from the code style.
+#
+# Requires: brew install php-cs-fixer
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+if ! command -v php > /dev/null 2>&1; then
+    echo 'Error: php not found. Install it with: brew install php' >&2
+    exit 1
+fi
+
+if ! command -v php-cs-fixer > /dev/null 2>&1; then
+    echo 'Error: php-cs-fixer not found. Install it with: brew install php-cs-fixer' >&2
+    exit 1
+fi
+
+echo '==> php -l'
+
+status=0
+
+while IFS= read -r file; do
+    if ! output="$(php -l "$file" 2>&1)"; then
+        echo "$output" >&2
+        status=1
+    fi
+done < <(bin/php-files)
+
+if [ "$status" -ne 0 ]; then
+    exit "$status"
+fi
+
+echo 'No syntax errors detected.'
+echo
+echo '==> php-cs-fixer'
+
+php-cs-fixer check \
+    --config=.php-cs-fixer.dist.php \
+    --diff \
+    --show-progress=none

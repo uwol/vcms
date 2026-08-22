@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -20,108 +21,113 @@ namespace vcms\genealogy;
 
 use PDO;
 
-class LibGenealogyElement{
-	var $leibvater;
-	var $id;
-	var $memberId;
-	var $title;
-	var $firstName;
-	var $prefix;
-	var $lastName;
-	var $suffix;
-	var $group;
+class LibGenealogyElement
+{
+    public $leibvater;
+    public $id;
+    public $memberId;
+    public $title;
+    public $firstName;
+    public $prefix;
+    public $lastName;
+    public $suffix;
+    public $group;
 
-	function __construct($id, $memberId){
-		global $libDb;
+    public function __construct($id, $memberId)
+    {
+        global $libDb;
 
-		$this->id = $id;
-		$this->memberId = $memberId;
+        $this->id = $id;
+        $this->memberId = $memberId;
 
-		$stmt = $libDb->prepare('SELECT leibmitglied, titel, vorname, praefix, name, suffix, gruppe FROM base_person WHERE id=:id');
-		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
-		$stmt->execute();
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $libDb->prepare('SELECT leibmitglied, titel, vorname, praefix, name, suffix, gruppe FROM base_person WHERE id=:id');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if(!is_array($row)){
-			return;
-		}
+        if (!is_array($row)) {
+            return;
+        }
 
-		$this->leibvater = $row['leibmitglied'];
-		$this->title = $row['titel'];
-		$this->firstName = $row['vorname'];
-		$this->prefix = $row['praefix'];
-		$this->lastName = $row['name'];
-		$this->suffix = $row['suffix'];
-		$this->group = $row['gruppe'];
-	}
+        $this->leibvater = $row['leibmitglied'];
+        $this->title = $row['titel'];
+        $this->firstName = $row['vorname'];
+        $this->prefix = $row['praefix'];
+        $this->lastName = $row['name'];
+        $this->suffix = $row['suffix'];
+        $this->group = $row['gruppe'];
+    }
 
-	function searchFirstLeibvater(){
-		if($this->leibvater != ''){
-			$leibvaterElement = new LibGenealogyElement($this->leibvater, '');
-			return $leibvaterElement->searchFirstLeibvater();
-		} else {
-			return $this->id;
-		}
-	}
+    public function searchFirstLeibvater()
+    {
+        if ($this->leibvater != '') {
+            $leibvaterElement = new LibGenealogyElement($this->leibvater, '');
+            return $leibvaterElement->searchFirstLeibvater();
+        } else {
+            return $this->id;
+        }
+    }
 
-	function searchLeibSoehne(){
-		global $libDb;
+    public function searchLeibSoehne()
+    {
+        global $libDb;
 
-		$stmt = $libDb->prepare('SELECT id FROM base_person WHERE leibmitglied=:leibmitglied');
-		$stmt->bindValue(':leibmitglied', $this->id, PDO::PARAM_INT);
-		$stmt->execute();
+        $stmt = $libDb->prepare('SELECT id FROM base_person WHERE leibmitglied=:leibmitglied');
+        $stmt->bindValue(':leibmitglied', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
 
-		$leibsoehne = array();
+        $leibsoehne = [];
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$leibsoehne[] = $row['id'];
-		}
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $leibsoehne[] = $row['id'];
+        }
 
-		return $leibsoehne;
-	}
+        return $leibsoehne;
+    }
 
-	function getString($depth){
-		$retstr = '';
+    public function getString($depth)
+    {
+        $retstr = '';
 
-		for($i=0; $i < $depth-1; $i++){
-			$retstr .= '&#124;&nbsp;&nbsp;';
-		}
+        for ($i = 0; $i < $depth - 1; $i++) {
+            $retstr .= '&#124;&nbsp;&nbsp;';
+        }
 
-		if($depth > 0){
-			$retstr .= '&#124;-';
-		}
+        if ($depth > 0) {
+            $retstr .= '&#124;-';
+        }
 
-		$retstr .= '<a href="index.php?pid=intranet_person&amp;id=' .$this->id. '">';
-		$retstr .= '<span style="';
+        $retstr .= '<a href="index.php?pid=intranet_person&amp;id=' .$this->id. '">';
+        $retstr .= '<span style="';
 
-		if($this->id == $this->memberId){
-			$retstr .= 'background-color:red;';
-		}
+        if ($this->id == $this->memberId) {
+            $retstr .= 'background-color:red;';
+        }
 
-		if($this->group == 'B' || $this->group == 'F'){
-			$retstr .= 'color:#0000FF';
-		} elseif($this->group == 'P'){
-			$retstr .= 'color:#000000';
-		} elseif($this->group == 'T'){
-			$retstr .= 'color:#660000';
-		} elseif($this->group == 'X'){
-			$retstr .= 'color:#C0C0C0';
-		} else {
-			$retstr .= 'color:#669933';
-		}
+        if ($this->group == 'B' || $this->group == 'F') {
+            $retstr .= 'color:#0000FF';
+        } elseif ($this->group == 'P') {
+            $retstr .= 'color:#000000';
+        } elseif ($this->group == 'T') {
+            $retstr .= 'color:#660000';
+        } elseif ($this->group == 'X') {
+            $retstr .= 'color:#C0C0C0';
+        } else {
+            $retstr .= 'color:#669933';
+        }
 
-		$retstr .= '">';
+        $retstr .= '">';
 
-		if($this->title != ''){
-			$retstr .= $this->title. ' ';
-		}
+        if ($this->title != '') {
+            $retstr .= $this->title. ' ';
+        }
 
-		$retstr .= $this->firstName. ' ' .$this->prefix. ' ' .$this->lastName. ' ' .$this->suffix;
+        $retstr .= $this->firstName. ' ' .$this->prefix. ' ' .$this->lastName. ' ' .$this->suffix;
 
-		$retstr .= '</span>';
-		$retstr .= '</a>';
-		$retstr .= '<br />';
+        $retstr .= '</span>';
+        $retstr .= '</a>';
+        $retstr .= '<br />';
 
-		return $retstr;
-	}
+        return $retstr;
+    }
 }

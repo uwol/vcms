@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,23 +17,24 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 /*
 * actions
 */
-if(isset($_POST['action']) && $_POST['action'] == 'delete'){
-	if(isset($_POST['id']) && $_POST['id'] != ''){
-		$stmt = $libDb->prepare('DELETE FROM mod_internethome_nachricht WHERE id=:id');
-		$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-		$stmt->execute();
+if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+    if (isset($_POST['id']) && $_POST['id'] != '') {
+        $stmt = $libDb->prepare('DELETE FROM mod_internethome_nachricht WHERE id=:id');
+        $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();
 
-		$libGlobal->notificationTexts[] = 'Ankündigung gelöscht.';
-		$libImage->deleteHomeImage($_POST['id']);
-	} else {
-		$libGlobal->errorTexts[] = 'Keine Ankündigung angegeben.';
-	}
+        $libGlobal->notificationTexts[] = 'Ankündigung gelöscht.';
+        $libImage->deleteHomeImage($_POST['id']);
+    } else {
+        $libGlobal->errorTexts[] = 'Keine Ankündigung angegeben.';
+    }
 }
 
 
@@ -61,10 +63,10 @@ echo '</div>';
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(startdatum,'%Y-%m-01') AS datum FROM mod_internethome_nachricht WHERE startdatum IS NOT NULL GROUP BY startdatum ORDER BY startdatum DESC");
 $stmt->execute();
 
-$data = array();
+$data = [];
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$data[] = $row['datum'];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $data[] = $row['datum'];
 }
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
@@ -83,27 +85,27 @@ $stmt->bindValue(':startdatum', $period[0]);
 $stmt->bindValue(':enddatum', $period[1]);
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<tr>';
-	echo '<td class="img-column">';
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<tr>';
+    echo '<td class="img-column">';
 
-	$posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
+    $posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
 
- 	if(is_file($posssibleImage)){
-		echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$row['id']. '">';
- 		echo '<img src="'.$posssibleImage.'" class="img-responsive center-block" alt="" />';
-		echo '</a>';
- 	}
+    if (is_file($posssibleImage)) {
+        echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$row['id']. '">';
+        echo '<img src="'.$posssibleImage.'" class="img-responsive center-block" alt="" />';
+        echo '</a>';
+    }
 
- 	echo '</td>';
-	echo '<td>' .$row['startdatum']. '</td>';
-	echo '<td>' .$row['text']. '</td>';
-	echo '<td class="tool-column">';
-	echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$row['id']. '">';
-	echo '<i class="fa fa-cog" aria-hidden="true"></i>';
-	echo '</a>';
-	echo '</td>';
-	echo '</tr>';
+    echo '</td>';
+    echo '<td>' .$row['startdatum']. '</td>';
+    echo '<td>' .$row['text']. '</td>';
+    echo '<td class="tool-column">';
+    echo '<a href="index.php?pid=intranet_admin_announcement&amp;id=' .$row['id']. '">';
+    echo '<i class="fa fa-cog" aria-hidden="true"></i>';
+    echo '</a>';
+    echo '</td>';
+    echo '</tr>';
 }
 
 echo '</table>';

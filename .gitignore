@@ -5,3 +5,4 @@
 ehthumbs.db
 Thumbs.db
 modules/mk_*
+.php-cs-fixer.cache

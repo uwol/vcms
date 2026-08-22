@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,37 +19,43 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\module;
 
-class LibInclude extends LibRestrictableElement{
+class LibInclude extends LibRestrictableElement
+{
+    public $iid;
+    public $file;
+    public $directory;
 
-	var $iid;
-	var $file;
-	var $directory;
+    public function __construct($iid, $directory, $file, $accessRestriction)
+    {
+        parent::__construct($accessRestriction);
 
-	function __construct($iid, $directory, $file, $accessRestriction){
-		parent::__construct($accessRestriction);
+        $this->iid = $iid;
+        $this->directory = $directory;
+        $this->file = $file;
+    }
 
-		$this->iid = $iid;
-		$this->directory = $directory;
-		$this->file = $file;
-	}
+    public function setDirectory($directory)
+    {
+        $this->directory = $directory;
+    }
 
-	function setDirectory($directory){
-		$this->directory = $directory;
-	}
+    public function getIid()
+    {
+        return $this->iid;
+    }
 
-	function getIid(){
-		return $this->iid;
-	}
+    public function getFile()
+    {
+        return $this->file;
+    }
 
-	function getFile(){
-		return $this->file;
-	}
+    public function getPath()
+    {
+        return $this->directory. '/' .$this->file;
+    }
 
-	function getPath(){
-		return $this->directory. '/' .$this->file;
-	}
-
-	function getDirectory(){
-		return $this->directory;
-	}
+    public function getDirectory()
+    {
+        return $this->directory;
+    }
 }

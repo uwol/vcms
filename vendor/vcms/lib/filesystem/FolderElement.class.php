@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,74 +19,80 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\filesystem;
 
-class FolderElement{
-	var $name;
-	var $nestingFolder;
-	var $owningOffice;
-	var $type;
-	var $fileSystemFileName;
+class FolderElement
+{
+    public $name;
+    public $nestingFolder;
+    public $owningOffice;
+    public $type;
+    public $fileSystemFileName;
 
-	function __construct($nestingFolder, $name, $fileSystemFileName){
-		$this->name = $name;
-		$this->fileSystemFileName = $fileSystemFileName;
-		$this->nestingFolder = $nestingFolder;
+    public function __construct($nestingFolder, $name, $fileSystemFileName)
+    {
+        $this->name = $name;
+        $this->fileSystemFileName = $fileSystemFileName;
+        $this->nestingFolder = $nestingFolder;
 
-		if(is_object($nestingFolder)){
-			$nestingFolder->friend_addFolderElement($this);
-		}
-	}
+        if (is_object($nestingFolder)) {
+            $nestingFolder->friend_addFolderElement($this);
+        }
+    }
 
-	function getFileSystemPath(){
-		if(is_object($this->nestingFolder)){
-			return $this->nestingFolder->getFileSystemPath(). '/' .$this->fileSystemFileName;
-		} else {
-			return $this->fileSystemFileName;
-		}
-	}
+    public function getFileSystemPath()
+    {
+        if (is_object($this->nestingFolder)) {
+            return $this->nestingFolder->getFileSystemPath(). '/' .$this->fileSystemFileName;
+        } else {
+            return $this->fileSystemFileName;
+        }
+    }
 
-	function getHash(){
-		return sha1($this->getFileSystemPath());
-	}
+    public function getHash()
+    {
+        return sha1($this->getFileSystemPath());
+    }
 
-	function getFileMetaInfos($fileSystemFileName){
-		$retArray = array();
+    public function getFileMetaInfos($fileSystemFileName)
+    {
+        $retArray = [];
 
-		$parts = explode('-', $fileSystemFileName);
+        $parts = explode('-', $fileSystemFileName);
 
-		//group prefix
-		if(count($parts) > 1){
-			$groupPrefix = $parts[0];
-		} else {
-			$groupPrefix = '';
-		}
+        //group prefix
+        if (count($parts) > 1) {
+            $groupPrefix = $parts[0];
+        } else {
+            $groupPrefix = '';
+        }
 
-		$retArray['readgroups'] = array();
+        $retArray['readgroups'] = [];
 
-		for($i=0; $i<strlen($groupPrefix); $i++){
-			$group = $groupPrefix[$i];
-			$retArray['readgroups'][] = $group;
-		}
+        for ($i = 0; $i < strlen($groupPrefix); $i++) {
+            $group = $groupPrefix[$i];
+            $retArray['readgroups'][] = $group;
+        }
 
-		sort($retArray['readgroups']);
+        sort($retArray['readgroups']);
 
-		//filename
-		$fileNameParts = array();
+        //filename
+        $fileNameParts = [];
 
-		for($i=1; $i<count($parts); $i++){
-			$fileNameParts[] = $parts[$i];
-		}
+        for ($i = 1; $i < count($parts); $i++) {
+            $fileNameParts[] = $parts[$i];
+        }
 
-		$retArray['name'] = implode('-', $fileNameParts);
+        $retArray['name'] = implode('-', $fileNameParts);
 
-		return $retArray;
-	}
+        return $retArray;
+    }
 
-	function getMetaFileSystemName($name, $groupArray){
-		$securityPrefix = implode('', array_unique($groupArray));
+    public function getMetaFileSystemName($name, $groupArray)
+    {
+        $securityPrefix = implode('', array_unique($groupArray));
 
-		$stringArray = array();
-		$stringArray[] = $securityPrefix;
-		$stringArray[] = $name;
-		return implode('-', $stringArray);
-	}
+        $stringArray = [];
+        $stringArray[] = $securityPrefix;
+        $stringArray[] = $name;
+        return implode('-', $stringArray);
+    }
 }

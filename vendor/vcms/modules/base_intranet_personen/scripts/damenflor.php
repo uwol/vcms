@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 require('lib/persons.php');
@@ -32,11 +34,11 @@ $stmt->execute();
 $stmt->bindColumn('number', $count);
 $stmt->fetch();
 
-if($count > 0){
-	echo '<h2>Die Couleurdamen (' .$count. ')</h2>';
+if ($count > 0) {
+    echo '<h2>Die Couleurdamen (' .$count. ')</h2>';
 
-	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'C' ORDER BY name");
-	printPersons($stmt);
+    $stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'C' ORDER BY name");
+    printPersons($stmt);
 }
 
 
@@ -45,9 +47,9 @@ $stmt->execute();
 $stmt->bindColumn('number', $count);
 $stmt->fetch();
 
-if($count > 0){
-	echo '<h2>Die Gattinnen (' .$count. ')</h2>';
+if ($count > 0) {
+    echo '<h2>Die Gattinnen (' .$count. ')</h2>';
 
-	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'G' OR gruppe = 'W' ORDER BY name");
-	printPersons($stmt);
+    $stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'G' OR gruppe = 'W' ORDER BY name");
+    printPersons($stmt);
 }

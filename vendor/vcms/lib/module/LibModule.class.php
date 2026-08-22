@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,117 +19,143 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\module;
 
-class LibModule{
-	var $id;
-	var $version;
-	var $name;
-	var $path;
-	var $pages;
-	var $includes;
-	var $headerStrings;
-	var $installScript;
-	var $uninstallScript;
-	var $updateScript;
-	var $menuElementsInternet;
-	var $menuElementsIntranet;
-	var $menuElementsAdministration;
+class LibModule
+{
+    public $id;
+    public $version;
+    public $name;
+    public $path;
+    public $pages;
+    public $includes;
+    public $headerStrings;
+    public $installScript;
+    public $uninstallScript;
+    public $updateScript;
+    public $menuElementsInternet;
+    public $menuElementsIntranet;
+    public $menuElementsAdministration;
 
-	function __construct($id, $name, $version, $path, $pages, $includes, $headerStrings,
-			$installScript, $uninstallScript, $updateScript,
-			$menuElementsInternet, $menuElementsIntranet, $menuElementsAdministration){
-		global $libGlobal;
+    public function __construct(
+        $id,
+        $name,
+        $version,
+        $path,
+        $pages,
+        $includes,
+        $headerStrings,
+        $installScript,
+        $uninstallScript,
+        $updateScript,
+        $menuElementsInternet,
+        $menuElementsIntranet,
+        $menuElementsAdministration
+    ) {
+        global $libGlobal;
 
-		if($id == ''){
-			$libGlobal->errorTexts[] = 'Fehlende Module-Id';
-		}
+        if ($id == '') {
+            $libGlobal->errorTexts[] = 'Fehlende Module-Id';
+        }
 
-		if($version != '' && !is_numeric($version)){
-			$libGlobal->errorTexts[] = 'Versionsangabe nicht numerisch';
-		}
+        if ($version != '' && !is_numeric($version)) {
+            $libGlobal->errorTexts[] = 'Versionsangabe nicht numerisch';
+        }
 
-		if($name == ''){
-			$libGlobal->errorTexts[] = 'Fehlende Namensangabe';
-		}
+        if ($name == '') {
+            $libGlobal->errorTexts[] = 'Fehlende Namensangabe';
+        }
 
-		if($path == ''){
-			$libGlobal->errorTexts[] = 'Fehlender Modulpfad';
-		}
+        if ($path == '') {
+            $libGlobal->errorTexts[] = 'Fehlender Modulpfad';
+        }
 
-		if(!is_array($pages)){
-			$libGlobal->errorTexts[] = 'Fehlendes Array pages';
-		}
+        if (!is_array($pages)) {
+            $libGlobal->errorTexts[] = 'Fehlendes Array pages';
+        }
 
-		if(!is_array($includes)){
-			$libGlobal->errorTexts[] = 'Fehlendes Array includes';
-		}
+        if (!is_array($includes)) {
+            $libGlobal->errorTexts[] = 'Fehlendes Array includes';
+        }
 
-		$this->id = $id;
-		$this->version = $version;
-		$this->name = $name;
-		$this->path = $path;
-		$this->pages = $pages;
-		$this->includes = $includes;
+        $this->id = $id;
+        $this->version = $version;
+        $this->name = $name;
+        $this->path = $path;
+        $this->pages = $pages;
+        $this->includes = $includes;
 
-		$this->installScript = $installScript;
-		$this->uninstallScript = $uninstallScript;
-		$this->updateScript = $updateScript;
+        $this->installScript = $installScript;
+        $this->uninstallScript = $uninstallScript;
+        $this->updateScript = $updateScript;
 
-		$this->menuElementsInternet = $menuElementsInternet;
-		$this->menuElementsIntranet = $menuElementsIntranet;
-		$this->menuElementsAdministration = $menuElementsAdministration;
+        $this->menuElementsInternet = $menuElementsInternet;
+        $this->menuElementsIntranet = $menuElementsIntranet;
+        $this->menuElementsAdministration = $menuElementsAdministration;
 
-		$this->headerStrings = $headerStrings;
-	}
+        $this->headerStrings = $headerStrings;
+    }
 
-	function getId(){
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	function getName(){
-		return $this->name;
-	}
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	function getVersion(){
-		return $this->version;
-	}
+    public function getVersion()
+    {
+        return $this->version;
+    }
 
-	function getPath(){
-		return $this->path;
-	}
+    public function getPath()
+    {
+        return $this->path;
+    }
 
-	function getPages(){
-		return $this->pages;
-	}
+    public function getPages()
+    {
+        return $this->pages;
+    }
 
-	function getIncludes(){
-		return $this->includes;
-	}
+    public function getIncludes()
+    {
+        return $this->includes;
+    }
 
-	function getInstallScript(){
-		return $this->installScript;
-	}
+    public function getInstallScript()
+    {
+        return $this->installScript;
+    }
 
-	function getUninstallScript(){
-		return $this->uninstallScript;
-	}
+    public function getUninstallScript()
+    {
+        return $this->uninstallScript;
+    }
 
-	function getUpdateScript(){
-		return $this->updateScript;
-	}
+    public function getUpdateScript()
+    {
+        return $this->updateScript;
+    }
 
-	function getMenuElementsInternet(){
-		return $this->menuElementsInternet;
-	}
+    public function getMenuElementsInternet()
+    {
+        return $this->menuElementsInternet;
+    }
 
-	function getMenuElementsIntranet(){
-		return $this->menuElementsIntranet;
-	}
+    public function getMenuElementsIntranet()
+    {
+        return $this->menuElementsIntranet;
+    }
 
-	function getMenuElementsAdministration(){
-		return $this->menuElementsAdministration;
-	}
+    public function getMenuElementsAdministration()
+    {
+        return $this->menuElementsAdministration;
+    }
 
-	function getHeaderStrings(){
-		return $this->headerStrings;
-	}
+    public function getHeaderStrings()
+    {
+        return $this->headerStrings;
+    }
 }

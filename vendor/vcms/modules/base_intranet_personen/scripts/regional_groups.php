@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 require('lib/persons.php');
@@ -31,21 +33,21 @@ echo $libString->getNotificationBoxText();
 $stmt = $libDb->prepare("SELECT id, bezeichnung FROM base_region ORDER BY bezeichnung");
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE (base_person.region1 = :region1 OR base_person.region2 = :region2)");
-	$stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
-	$stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
-	$stmt2->execute();
-	$stmt2->bindColumn('number', $count);
-	$stmt2->fetch();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE (base_person.region1 = :region1 OR base_person.region2 = :region2)");
+    $stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
+    $stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
+    $stmt2->execute();
+    $stmt2->bindColumn('number', $count);
+    $stmt2->fetch();
 
-	if($count > 0){
-		echo '<h2>'.$row['bezeichnung'].'</h2>';
+    if ($count > 0) {
+        echo '<h2>'.$row['bezeichnung'].'</h2>';
 
-		$stmt2 = $libDb->prepare("SELECT * FROM base_person WHERE (base_person.region1 = :region1 OR base_person.region2 = :region2) AND gruppe != 'X' AND gruppe != 'T' AND gruppe != 'V' ORDER BY name");
-		$stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
-		$stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
+        $stmt2 = $libDb->prepare("SELECT * FROM base_person WHERE (base_person.region1 = :region1 OR base_person.region2 = :region2) AND gruppe != 'X' AND gruppe != 'T' AND gruppe != 'V' ORDER BY name");
+        $stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
+        $stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
 
-		printPersons($stmt2);
-	}
+        printPersons($stmt2);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -36,25 +37,25 @@ ini_set('arg_separator.output', '&amp;');
 * set up session
 */
 session_set_cookie_params([
-	'samesite' => 'Strict',
-	'httponly' => true,
-	'secure' => true
+    'samesite' => 'Strict',
+    'httponly' => true,
+    'secure' => true
 ]);
 
-if(isset($_COOKIE[session_name()])){
-	session_start();
+if (isset($_COOKIE[session_name()])) {
+    session_start();
 }
 
-if((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
-		(isset($_SESSION) && isset($_SESSION['session_timeout_timestamp']) &&
-		($_SESSION['session_timeout_timestamp'] == '' || $_SESSION['session_timeout_timestamp'] < time()))){
-	$_SESSION = array();
-	session_destroy();
-	setcookie(session_name(), '', time() - 86400);
+if ((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
+        (isset($_SESSION) && isset($_SESSION['session_timeout_timestamp']) &&
+        ($_SESSION['session_timeout_timestamp'] == '' || $_SESSION['session_timeout_timestamp'] < time()))) {
+    $_SESSION = [];
+    session_destroy();
+    setcookie(session_name(), '', time() - 86400);
 }
 
-if(isset($_COOKIE[session_name()])){
-	$_SESSION['session_timeout_timestamp'] = time() + (3 * 24 * 60 * 60);
+if (isset($_COOKIE[session_name()])) {
+    $_SESSION['session_timeout_timestamp'] = time() + (3 * 24 * 60 * 60);
 }
 
 
@@ -93,28 +94,28 @@ $libModuleHandler->initModules();
 /*
 * set timezone
 */
-if(isset($libConfig->timezone) && $libConfig->timezone != ''){
-	date_default_timezone_set($libConfig->timezone);
+if (isset($libConfig->timezone) && $libConfig->timezone != '') {
+    date_default_timezone_set($libConfig->timezone);
 } else {
-	date_default_timezone_set('Europe/Berlin');
+    date_default_timezone_set('Europe/Berlin');
 }
 
 
 /*
 * set the current semester
 */
-if(isset($_REQUEST['semester']) && $libTime->isValidSemesterString($_REQUEST['semester'])){
-	$libGlobal->semester = $_REQUEST['semester'];
+if (isset($_REQUEST['semester']) && $libTime->isValidSemesterString($_REQUEST['semester'])) {
+    $libGlobal->semester = $_REQUEST['semester'];
 } else {
-	$libGlobal->semester = $libTime->getSemesterName();
+    $libGlobal->semester = $libTime->getSemesterName();
 }
 
 
 /*
 * instantiate authentication context
 */
-if(isset($_SESSION) && isset($_SESSION['libAuth'])){
-	$libAuth = $_SESSION['libAuth'];
+if (isset($_SESSION) && isset($_SESSION['libAuth'])) {
+    $libAuth = $_SESSION['libAuth'];
 } else {
-	$libAuth = new \vcms\LibAuth();
+    $libAuth = new \vcms\LibAuth();
 }

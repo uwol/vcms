@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 /*
@@ -26,12 +28,12 @@ if(!is_object($libGlobal))
 
 $id = '';
 
-if(isset($_REQUEST['id'])){
-	$id = $_REQUEST['id'];
+if (isset($_REQUEST['id'])) {
+    $id = $_REQUEST['id'];
 }
 
-if($id == ''){
-	exit;
+if ($id == '') {
+    exit;
 }
 
 
@@ -41,291 +43,300 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-if($row['intern'] && !$libAuth->isLoggedIn()){
-	echo '<p class="mb-4">Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
+if ($row['intern'] && !$libAuth->isLoggedIn()) {
+    echo '<p class="mb-4">Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 } else {
-	if($libAuth->isLoggedIn()){
-		if(isset($_POST['changeRegistrationState']) && $_POST['changeRegistrationState'] != ''){
-			// event in future?
-			if(date('Y-m-d H:i:s') < $row['datum']){
-				if($_POST['changeRegistrationState'] == 'register'){
-					$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)');
-					$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
-					$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
-					$stmt->execute();
-				} else {
-					$stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung AND person=:person');
-					$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
-					$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
-					$stmt->execute();
-				}
-			}
-		}
-	}
+    if ($libAuth->isLoggedIn()) {
+        if (isset($_POST['changeRegistrationState']) && $_POST['changeRegistrationState'] != '') {
+            // event in future?
+            if (date('Y-m-d H:i:s') < $row['datum']) {
+                if ($_POST['changeRegistrationState'] == 'register') {
+                    $stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)');
+                    $stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
+                    $stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
+                    $stmt->execute();
+                } else {
+                    $stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung AND person=:person');
+                    $stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
+                    $stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
+                    $stmt->execute();
+                }
+            }
+        }
+    }
 
 
-	/*
-	* output
-	*/
-	$semester = $libTime->getSemesterNameAtDate($row['datum']);
-	$pictures = getPictures($row['id']);
-	$hasPictures = is_array($pictures);
-	$eventSchema = $libEvent->getEventSchema($row);
+    /*
+    * output
+    */
+    $semester = $libTime->getSemesterNameAtDate($row['datum']);
+    $pictures = getPictures($row['id']);
+    $hasPictures = is_array($pictures);
+    $eventSchema = $libEvent->getEventSchema($row);
 
-	echo '<script type="application/ld+json">';
-	echo json_encode($eventSchema);
-	echo '</script>';
+    echo '<script type="application/ld+json">';
+    echo json_encode($eventSchema);
+    echo '</script>';
 
-	echo '<h1>' .$row['titel']. '</h1>';
+    echo '<h1>' .$row['titel']. '</h1>';
 
-	echo $libString->getErrorBoxText();
-	echo $libString->getNotificationBoxText();
+    echo $libString->getErrorBoxText();
+    echo $libString->getNotificationBoxText();
 
-	$class = '';
-	$style = '';
+    $class = '';
+    $style = '';
 
-	if(!$hasPictures){
-		$semesterCover = $libTime->determineSemesterCover($semester);
+    if (!$hasPictures) {
+        $semesterCover = $libTime->determineSemesterCover($semester);
 
-		if($semesterCover){
-			$class = 'event-semestercover-box pb-3 pt-3';
-			$style = "background-image: url('custom/semestercover/" .$semesterCover. "')";
-		}
-	}
+        if ($semesterCover) {
+            $class = 'event-semestercover-box pb-3 pt-3';
+            $style = "background-image: url('custom/semestercover/" .$semesterCover. "')";
+        }
+    }
 
-	echo '<div class="event">';
-	echo '<div class="row ' .$class. '" style="' .$style. '">';
+    echo '<div class="event">';
+    echo '<div class="row ' .$class. '" style="' .$style. '">';
 
-	// date and time panel
-	echo '<div class="col-sm-4 col-lg-3">';
-	echo '<div class="panel panel-default reveal">';
-	echo '<div class="panel-body">';
+    // date and time panel
+    echo '<div class="col-sm-4 col-lg-3">';
+    echo '<div class="panel panel-default reveal">';
+    echo '<div class="panel-body">';
 
-	printEventDetailDateTime($row);
+    printEventDetailDateTime($row);
 
-	echo '<hr />';
+    echo '<hr />';
 
-	if($row['ort'] != ''){
-		echo '<address>';
-		echo '<i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> ' .$row['ort'];
-		echo '</address>';
-	}
+    if ($row['ort'] != '') {
+        echo '<address>';
+        echo '<i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> ' .$row['ort'];
+        echo '</address>';
+    }
 
-	$status = $libEvent->getStatusString($row['status']);
+    $status = $libEvent->getStatusString($row['status']);
 
-	if($status){
-		echo '<div><i class="fa fa-fw fa-info" aria-hidden="true"></i> ' .$status. '</div>';
-	}
+    if ($status) {
+        echo '<div><i class="fa fa-fw fa-info" aria-hidden="true"></i> ' .$status. '</div>';
+    }
 
-	printRegistrationStatus($row);
-	printSocialButtons($row);
+    printRegistrationStatus($row);
+    printSocialButtons($row);
 
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
 
-	// description
-	$descriptionText = printMotto($row);
-	$descriptionText .= printDescription($row);
-	$descriptionText .= printRegistrations($row);
+    // description
+    $descriptionText = printMotto($row);
+    $descriptionText .= printDescription($row);
+    $descriptionText .= printRegistrations($row);
 
-	if($hasPictures){
-		if($descriptionText){
-			echo '<div class="col-sm-8 col-lg-9">';
-			echo '<div class="panel panel-default reveal">';
-			echo '<div class="panel-body">';
-			echo $descriptionText;
-			echo '</div>';
-			echo '</div>';
-			echo '</div>';
-		}
+    if ($hasPictures) {
+        if ($descriptionText) {
+            echo '<div class="col-sm-8 col-lg-9">';
+            echo '<div class="panel panel-default reveal">';
+            echo '<div class="panel-body">';
+            echo $descriptionText;
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
 
-		echo '<div class="col-sm-8 col-lg-9">';
-		printGallery($row['id'], $pictures);
-		echo '</div>';
-	} else {
-		if($libEvent->isFacebookEvent($row)){
-			echo '<div class="col-sm-4 col-lg-3">';
-			printFacebookEvent($row);
-			echo '</div>';
-		}
+        echo '<div class="col-sm-8 col-lg-9">';
+        printGallery($row['id'], $pictures);
+        echo '</div>';
+    } else {
+        if ($libEvent->isFacebookEvent($row)) {
+            echo '<div class="col-sm-4 col-lg-3">';
+            printFacebookEvent($row);
+            echo '</div>';
+        }
 
-		if($descriptionText){
-			if($libEvent->isFacebookEvent($row)){
-				echo '<div class="col-sm-4 col-lg-6">';
-			} else {
-				echo '<div class="col-sm-8 col-lg-9">';
-			}
+        if ($descriptionText) {
+            if ($libEvent->isFacebookEvent($row)) {
+                echo '<div class="col-sm-4 col-lg-6">';
+            } else {
+                echo '<div class="col-sm-8 col-lg-9">';
+            }
 
-			echo '<div class="panel panel-default reveal">';
-			echo '<div class="panel-body">';
-			echo $descriptionText;
-			echo '</div>';
-			echo '</div>';
-			echo '</div>';
-		}
-	}
+            echo '<div class="panel panel-default reveal">';
+            echo '<div class="panel-body">';
+            echo $descriptionText;
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+    }
 
-	echo '</div>';
-	echo '</div>';
+    echo '</div>';
+    echo '</div>';
 }
 
 // -----------------------------------------------------------
 
-function printEventDetailDateTime($row){
-	global $libTime, $libEvent;
+function printEventDetailDateTime($row)
+{
+    global $libTime, $libEvent;
 
-	/*
-	* date and time
-	*/
-	echo '<div class="text-center">';
-	echo '<h3>';
+    /*
+    * date and time
+    */
+    echo '<div class="text-center">';
+    echo '<h3>';
 
-	$monatName = $libTime->getMonth($libTime->formatMonthString($row['datum']));
-	$monatNameSubstr = substr($monatName, 0, 3);
+    $monatName = $libTime->getMonth($libTime->formatMonthString($row['datum']));
+    $monatNameSubstr = substr($monatName, 0, 3);
 
- 	echo $monatNameSubstr;
-	echo ' ';
-	echo $libTime->formatYearString($row['datum']);
-	echo '</h3>';
+    echo $monatNameSubstr;
+    echo ' ';
+    echo $libTime->formatYearString($row['datum']);
+    echo '</h3>';
 
-	echo '<h1><time datetime="' .$libTime->formatUtcString($row['datum']). '">' .$libTime->formatDayString($row['datum']). '.</time></h1>';
+    echo '<h1><time datetime="' .$libTime->formatUtcString($row['datum']). '">' .$libTime->formatDayString($row['datum']). '.</time></h1>';
 
-	$timeString = $libTime->formatTimeString($row['datum']);
+    $timeString = $libTime->formatTimeString($row['datum']);
 
-	if($timeString != ''){
-		echo '<h3>' .$timeString. '</h3>';
-	}
+    if ($timeString != '') {
+        echo '<h3>' .$timeString. '</h3>';
+    }
 
-	echo '</div>';
+    echo '</div>';
 }
 
-function printSocialButtons($row){
-	global $libEvent;
+function printSocialButtons($row)
+{
+    global $libEvent;
 
-	echo '<hr />';
-	echo '<p class="social-buttons mb-0 mt-0">';
+    echo '<hr />';
+    echo '<p class="social-buttons mb-0 mt-0">';
 
-	if(!$libEvent->isFacebookEvent($row)){
-		$libEvent->printFacebookShareButton($row['id']);
-	}
+    if (!$libEvent->isFacebookEvent($row)) {
+        $libEvent->printFacebookShareButton($row['id']);
+    }
 
-	$libEvent->printTwitterShareButton($row['id']);
-	$libEvent->printWhatsAppShareButton($row['id']);
+    $libEvent->printTwitterShareButton($row['id']);
+    $libEvent->printWhatsAppShareButton($row['id']);
 
-	echo '</p>';
+    echo '</p>';
 }
 
-function printRegistrationStatus($row){
-	global $libAuth, $libDb, $libForm;
+function printRegistrationStatus($row)
+{
+    global $libAuth, $libDb, $libForm;
 
-	if($libAuth->isLoggedin()){
-		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");
-		$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
-		$stmt->bindValue(':veranstaltung', $row["id"], PDO::PARAM_INT);
-		$stmt->execute();
-		$stmt->bindColumn('number', $isRegistered);
-		$stmt->fetch();
+    if ($libAuth->isLoggedin()) {
+        $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_veranstaltung_teilnahme WHERE person=:person AND veranstaltung=:veranstaltung");
+        $stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
+        $stmt->bindValue(':veranstaltung', $row["id"], PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->bindColumn('number', $isRegistered);
+        $stmt->fetch();
 
-		if(date('Y-m-d H:i:s') < $row['datum']){
-			echo '<form action="index.php?pid=event&amp;id=' .$row['id']. '" method="post" class="form-inline">';
+        if (date('Y-m-d H:i:s') < $row['datum']) {
+            echo '<form action="index.php?pid=event&amp;id=' .$row['id']. '" method="post" class="form-inline">';
 
-			if($isRegistered){
-				echo '<input type="hidden" name="changeRegistrationState" value="unregister" />';
-				$libForm->printSubmitButtonInline('<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> Abmelden', array('btn-sm'));
-			} else {
-				echo '<input type="hidden" name="changeRegistrationState" value="register" />';
-				$libForm->printSubmitButtonInline('<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> Anmelden', array('btn-sm'));
-			}
+            if ($isRegistered) {
+                echo '<input type="hidden" name="changeRegistrationState" value="unregister" />';
+                $libForm->printSubmitButtonInline('<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> Abmelden', ['btn-sm']);
+            } else {
+                echo '<input type="hidden" name="changeRegistrationState" value="register" />';
+                $libForm->printSubmitButtonInline('<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> Anmelden', ['btn-sm']);
+            }
 
-			echo '</form>';
-		} else {
-			if($isRegistered){
-				echo '<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> angemeldet';
-			} else {
-				echo '<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> nicht angemeldet';
-			}
-		}
-	}
+            echo '</form>';
+        } else {
+            if ($isRegistered) {
+                echo '<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> angemeldet';
+            } else {
+                echo '<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> nicht angemeldet';
+            }
+        }
+    }
 }
 
-function printFacebookEvent($row){
-	echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
+function printFacebookEvent($row)
+{
+    echo '<div class="facebookEventPlugin" data-eventid="' .$row['id']. '"></div>';
 }
 
-function printDescription($row){
-	$description = (string) $row['beschreibung'];
+function printDescription($row)
+{
+    $description = (string) $row['beschreibung'];
 
-	if(trim($description)){
-		return '<p>' .nl2br($description). '</p>';
-	}
+    if (trim($description)) {
+        return '<p>' .nl2br($description). '</p>';
+    }
 }
 
-function printMotto($row){
-	$motto = (string) $row['spruch'];
+function printMotto($row)
+{
+    $motto = (string) $row['spruch'];
 
-	if(trim($motto)){
-		return '<p>' .nl2br($motto). '</p>';
-	}
+    if (trim($motto)) {
+        return '<p>' .nl2br($motto). '</p>';
+    }
 }
 
-function printRegistrations($row){
-	global $libAuth, $libDb, $libGallery, $libPerson;
+function printRegistrations($row)
+{
+    global $libAuth, $libDb, $libGallery, $libPerson;
 
-	$retstr = '';
+    $retstr = '';
 
-	if($libAuth->isLoggedin()){
-		$stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
-		$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
-		$stmt->execute();
+    if ($libAuth->isLoggedin()) {
+        $stmt = $libDb->prepare("SELECT base_veranstaltung_teilnahme.person FROM base_veranstaltung_teilnahme, base_person WHERE base_veranstaltung_teilnahme.veranstaltung = :veranstaltung AND base_veranstaltung_teilnahme.person = base_person.id AND base_person.gruppe != 'T' ORDER BY base_person.name, base_person.vorname");
+        $stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
+        $stmt->execute();
 
-		$registrationWritten = false;
+        $registrationWritten = false;
 
-		$retstr .= '<p>';
+        $retstr .= '<p>';
 
-		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
-			if($registrationWritten){
-				$retstr .= ', ';
-			}
+        while ($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($registrationWritten) {
+                $retstr .= ', ';
+            }
 
-			$retstr .= '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getNameString($eventrow['person'], 0). '</a></span>';
-			$registrationWritten = true;
-		}
+            $retstr .= '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getNameString($eventrow['person'], 0). '</a></span>';
+            $registrationWritten = true;
+        }
 
-		$retstr .= '</p>';
-	}
+        $retstr .= '</p>';
+    }
 
-	return $retstr;
+    return $retstr;
 }
 
-function printGallery($id, $pictures){
-	echo '<div class="row gallery">';
+function printGallery($id, $pictures)
+{
+    echo '<div class="row gallery">';
 
-	foreach($pictures as $key => $value){
-		echo '<div class="col-sm-6 col-lg-4">';
-		echo '<div class="thumbnail reveal mb-2">';
-		echo '<div class="img-frame">';
-		echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
-		echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" alt="" />';
-		echo '</a>';
-		echo '</div>';
-		echo '</div>';
-		echo '</div>';
-	}
+    foreach ($pictures as $key => $value) {
+        echo '<div class="col-sm-6 col-lg-4">';
+        echo '<div class="thumbnail reveal mb-2">';
+        echo '<div class="img-frame">';
+        echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
+        echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" alt="" />';
+        echo '</a>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+    }
 
-	echo '</div>';
+    echo '</div>';
 }
 
-function getPictures($id){
-	global $libAuth, $libGallery;
+function getPictures($id)
+{
+    global $libAuth, $libGallery;
 
-	$level = 0;
+    $level = 0;
 
-	if($libAuth->isLoggedin()){
-		$level = 1;
-	}
+    if ($libAuth->isLoggedin()) {
+        $level = 1;
+    }
 
-	if($libGallery->hasPictures($id, $level)){
-		return $libGallery->getPictures($id, $level);
-	}
+    if ($libGallery->hasPictures($id, $level)) {
+        return $libGallery->getPictures($id, $level);
+    }
 }

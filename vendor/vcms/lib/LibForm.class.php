@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -20,466 +21,489 @@ namespace vcms;
 
 use PDO;
 
-class LibForm{
-
-	var $colLabel = 3;
-
-	var $colInput = 9;
-
-	function printDisabledString($disabled){
-		if($disabled){
-			echo ' disabled';
-		}
-	}
-
-	function printRequiredString($required){
-		if($required){
-			echo ' required';
-		}
-	}
-
-	function printClassesString($classes){
-		if(!empty($classes)){
-			echo ' ' .implode(' ', $classes);
-		}
-	}
-
-	function printAcceptString($accepts){
-		if(!empty($accepts)){
-			echo ' accept="' .implode(', ', $accepts). '"';
-		}
-	}
-
-	function printTextInput($name, $label, $value, $type = 'text', $disabled = false, $required = false, $classes = array()){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
-
-		$this->printDisabledString($disabled);
-		$this->printRequiredString($required);
-
-		echo ' class="form-control';
-
-		$this->printClassesString($classes);
-
-		echo '" />';
-		echo '</div>';
-		echo '</div>';
-	}
-
-	function printMinMaxString($min, $max){
-		if($min != ''){
-			echo ' min="' .$min. '"';
-		}
-
-		if($max != ''){
-			echo ' max="' .$max. '"';
-		}
-	}
-
-	/**
-	* HTML5-Datumsfeld. Der Wert wird auf YYYY-MM-DD normalisiert. Werte, die kein
-	* vollständiges Datum sind (z. B. Altbestände wie 1985-00-00), werden in einem
-	* Textfeld angezeigt, damit sie sichtbar bleiben und nicht still verloren gehen.
-	*/
-	function printDateInput($name, $label, $value, $disabled = false, $required = false, $classes = array(), $min = '', $max = ''){
-		global $libTime;
-
-		$type = 'date';
-		$htmlValue = $libTime->formatHtmlDateString($value);
-
-		if($htmlValue == '' && trim((string) $value) != ''){
-			$type = 'text';
-			$htmlValue = (string) $value;
-			$min = '';
-			$max = '';
-		}
-
-		$this->printDateTimeInputInternal($name, $label, $htmlValue, $type, $disabled, $required, $classes, $min, $max);
-	}
-
-	/**
-	* HTML5-Feld für Datum und Uhrzeit. Der Wert wird auf YYYY-MM-DDTHH:MM normalisiert,
-	* Fallback wie bei printDateInput.
-	*/
-	function printDateTimeInput($name, $label, $value, $disabled = false, $required = false, $classes = array(), $min = '', $max = ''){
-		global $libTime;
-
-		$type = 'datetime-local';
-		$htmlValue = $libTime->formatHtmlDateTimeString($value);
-
-		if($htmlValue == '' && trim((string) $value) != ''){
-			$type = 'text';
-			$htmlValue = (string) $value;
-			$min = '';
-			$max = '';
-		}
-
-		$this->printDateTimeInputInternal($name, $label, $htmlValue, $type, $disabled, $required, $classes, $min, $max);
-	}
-
-	function printDateTimeInputInternal($name, $label, $value, $type, $disabled, $required, $classes, $min, $max){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
+class LibForm
+{
+    public $colLabel = 3;
+
+    public $colInput = 9;
+
+    public function printDisabledString($disabled)
+    {
+        if ($disabled) {
+            echo ' disabled';
+        }
+    }
+
+    public function printRequiredString($required)
+    {
+        if ($required) {
+            echo ' required';
+        }
+    }
+
+    public function printClassesString($classes)
+    {
+        if (!empty($classes)) {
+            echo ' ' .implode(' ', $classes);
+        }
+    }
+
+    public function printAcceptString($accepts)
+    {
+        if (!empty($accepts)) {
+            echo ' accept="' .implode(', ', $accepts). '"';
+        }
+    }
+
+    public function printTextInput($name, $label, $value, $type = 'text', $disabled = false, $required = false, $classes = [])
+    {
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '">';
+        echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
+
+        $this->printDisabledString($disabled);
+        $this->printRequiredString($required);
+
+        echo ' class="form-control';
+
+        $this->printClassesString($classes);
+
+        echo '" />';
+        echo '</div>';
+        echo '</div>';
+    }
+
+    public function printMinMaxString($min, $max)
+    {
+        if ($min != '') {
+            echo ' min="' .$min. '"';
+        }
+
+        if ($max != '') {
+            echo ' max="' .$max. '"';
+        }
+    }
+
+    /**
+    * HTML5-Datumsfeld. Der Wert wird auf YYYY-MM-DD normalisiert. Werte, die kein
+    * vollständiges Datum sind (z. B. Altbestände wie 1985-00-00), werden in einem
+    * Textfeld angezeigt, damit sie sichtbar bleiben und nicht still verloren gehen.
+    */
+    public function printDateInput($name, $label, $value, $disabled = false, $required = false, $classes = [], $min = '', $max = '')
+    {
+        global $libTime;
+
+        $type = 'date';
+        $htmlValue = $libTime->formatHtmlDateString($value);
+
+        if ($htmlValue == '' && trim((string) $value) != '') {
+            $type = 'text';
+            $htmlValue = (string) $value;
+            $min = '';
+            $max = '';
+        }
+
+        $this->printDateTimeInputInternal($name, $label, $htmlValue, $type, $disabled, $required, $classes, $min, $max);
+    }
+
+    /**
+    * HTML5-Feld für Datum und Uhrzeit. Der Wert wird auf YYYY-MM-DDTHH:MM normalisiert,
+    * Fallback wie bei printDateInput.
+    */
+    public function printDateTimeInput($name, $label, $value, $disabled = false, $required = false, $classes = [], $min = '', $max = '')
+    {
+        global $libTime;
+
+        $type = 'datetime-local';
+        $htmlValue = $libTime->formatHtmlDateTimeString($value);
+
+        if ($htmlValue == '' && trim((string) $value) != '') {
+            $type = 'text';
+            $htmlValue = (string) $value;
+            $min = '';
+            $max = '';
+        }
+
+        $this->printDateTimeInputInternal($name, $label, $htmlValue, $type, $disabled, $required, $classes, $min, $max);
+    }
+
+    public function printDateTimeInputInternal($name, $label, $value, $type, $disabled, $required, $classes, $min, $max)
+    {
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '">';
+        echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
+
+        $this->printMinMaxString($min, $max);
+        $this->printDisabledString($disabled);
+        $this->printRequiredString($required);
+
+        echo ' class="form-control';
+
+        $this->printClassesString($classes);
+
+        echo '" />';
+        echo '</div>';
+        echo '</div>';
+    }
+
+    public function printTextarea($name, $label, $value, $disabled = false, $required = false, $classes = [])
+    {
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '">';
+        echo '<textarea id="' .$name. '" name="' .$name. '" rows="10"';
+
+        $this->printDisabledString($disabled);
+        $this->printRequiredString($required);
 
-		$this->printMinMaxString($min, $max);
-		$this->printDisabledString($disabled);
-		$this->printRequiredString($required);
+        echo ' class="form-control';
 
-		echo ' class="form-control';
+        $this->printClassesString($classes);
 
-		$this->printClassesString($classes);
+        echo '">' .$value. '</textarea>';
+        echo '</div>';
+        echo '</div>';
+    }
 
-		echo '" />';
-		echo '</div>';
-		echo '</div>';
-	}
+    public function printFileInput($name, $label, $disabled = false, $required = false, $classes = [], $accepts = [])
+    {
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '">';
+        echo '<label class="btn btn-default btn-file';
 
-	function printTextarea($name, $label, $value, $disabled = false, $required = false, $classes = array()){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<textarea id="' .$name. '" name="' .$name. '" rows="10"';
+        $this->printClassesString($classes);
 
-		$this->printDisabledString($disabled);
-		$this->printRequiredString($required);
+        echo '">Datei wählen';
+        echo '<input type="file" name="' .$name. '"';
 
-		echo ' class="form-control';
+        $this->printDisabledString($disabled);
+        $this->printRequiredString($required);
+        $this->printAcceptString($accepts);
 
-		$this->printClassesString($classes);
+        echo ' style="display:none">';
+        echo '</label>';
+        echo '</div>';
+        echo '</div>';
+    }
 
-		echo '">' .$value. '</textarea>';
-		echo '</div>';
-		echo '</div>';
-	}
+    public function printFileUpload($name, $label, $disabled = false, $required = false, $classes = [], $accepts = [])
+    {
+        echo '<div class="form-group">';
+        echo '<label class="btn btn-default btn-file';
 
-	function printFileInput($name, $label, $disabled = false, $required = false, $classes = array(), $accepts = array()){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<label class="btn btn-default btn-file';
+        $this->printClassesString($classes);
 
-		$this->printClassesString($classes);
+        echo '">' .$label;
+        echo '<input type="file" name="' .$name. '" onchange="this.form.submit()"';
 
-		echo '">Datei wählen';
-		echo '<input type="file" name="' .$name. '"';
+        $this->printDisabledString($disabled);
+        $this->printRequiredString($required);
+        $this->printAcceptString($accepts);
 
-		$this->printDisabledString($disabled);
-		$this->printRequiredString($required);
-		$this->printAcceptString($accepts);
+        echo ' style="display:none">';
+        echo '</label>';
+        echo '</div>';
+    }
 
-		echo ' style="display:none">';
-		echo '</label>';
-		echo '</div>';
-		echo '</div>';
-	}
+    public function printStaticText($label, $value, $disabled = false, $required = false, $classes = [])
+    {
+        echo '<div class="form-group">';
+        echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '">';
+        echo '<p class="form-control-static mb-3';
 
-	function printFileUpload($name, $label, $disabled = false, $required = false, $classes = array(), $accepts = array()){
-		echo '<div class="form-group">';
-		echo '<label class="btn btn-default btn-file';
+        $this->printClassesString($classes);
 
-		$this->printClassesString($classes);
+        echo '">';
+        echo $value;
+        echo '</p>';
+        echo '</div>';
+        echo '</div>';
+    }
 
-		echo '">' .$label;
-		echo '<input type="file" name="' .$name. '" onchange="this.form.submit()"';
+    public function printSubmitButton($label, $classes = [])
+    {
+        echo '<div class="form-group">';
+        echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
+        echo '<button type="submit" class="btn btn-default';
 
-		$this->printDisabledString($disabled);
-		$this->printRequiredString($required);
-		$this->printAcceptString($accepts);
+        $this->printClassesString($classes);
 
-		echo ' style="display:none">';
-		echo '</label>';
-		echo '</div>';
-	}
+        echo '">' .$label. '</button>';
+        echo '</div>';
+        echo '</div>';
+    }
 
-	function printStaticText($label, $value, $disabled = false, $required = false, $classes = array()){
-		echo '<div class="form-group">';
-		echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '">';
-		echo '<p class="form-control-static mb-3';
+    public function printSubmitButtonInline($label, $classes = [])
+    {
+        echo '<button type="submit" class="btn btn-default';
 
-		$this->printClassesString($classes);
+        $this->printClassesString($classes);
 
-		echo '">';
-		echo $value;
-		echo '</p>';
-		echo '</div>';
-		echo '</div>';
-	}
+        echo '">' .$label. '</button>';
+    }
 
-	function printSubmitButton($label, $classes = array()){
-		echo '<div class="form-group">';
-		echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
-		echo '<button type="submit" class="btn btn-default';
+    public function printMembersDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false)
+    {
+        global $libDb, $libPerson;
 
-		$this->printClassesString($classes);
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		echo '">' .$label. '</button>';
-		echo '</div>';
-		echo '</div>';
-	}
+        $this->printDisabledString($disabled);
 
-	function printSubmitButtonInline($label, $classes = array()){
-		echo '<button type="submit" class="btn btn-default';
+        echo ' class="form-control">';
 
-		$this->printClassesString($classes);
+        if ($allowNull) {
+            echo '<option value=""></option>';
+        }
 
-		echo '">' .$label. '</button>';
-	}
+        $stmt = $libDb->prepare("SELECT id, anrede, name, vorname, titel, rang, praefix, suffix, gruppe FROM base_person ORDER BY name, vorname");
+        $stmt->execute();
 
-	function printMembersDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
-		global $libDb, $libPerson;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo '<option value="' .$row['id']. '"';
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
+            if ($activeElementId == $row['id']) {
+                echo ' selected="selected"';
+            }
 
-		$this->printDisabledString($disabled);
+            echo '>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 7). ' [' .$row['gruppe']. ']</option>';
+        }
 
-		echo ' class="form-control">';
+        echo '</select></div>';
+        echo '</div>';
+    }
 
-		if($allowNull){
-			echo '<option value=""></option>';
-		}
+    public function printAssociationsDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false)
+    {
+        global $libDb;
 
-		$stmt = $libDb->prepare("SELECT id, anrede, name, vorname, titel, rang, praefix, suffix, gruppe FROM base_person ORDER BY name, vorname");
-		$stmt->execute();
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<option value="' .$row['id']. '"';
+        $this->printDisabledString($disabled);
 
-			if($activeElementId == $row['id']){
-				echo ' selected="selected"';
-			}
+        echo ' class="form-control">';
 
-			echo '>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 7). ' [' .$row['gruppe']. ']</option>';
-		}
+        if ($allowNull) {
+            echo '<option value=""></option>';
+        }
 
-		echo '</select></div>';
-		echo '</div>';
-	}
+        $stmt = $libDb->prepare("SELECT id, titel, name FROM base_verein ORDER BY name");
+        $stmt->execute();
 
-	function printAssociationsDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
-		global $libDb;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo '<option value="' .$row['id']. '"';
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
+            if ($activeElementId == $row['id']) {
+                echo ' selected="selected"';
+            }
 
-		$this->printDisabledString($disabled);
+            echo '>' .$row['name']. ', ' .$row['titel']. '</option>';
+        }
 
-		echo ' class="form-control">';
+        echo '</select></div>';
+        echo '</div>';
+    }
 
-		if($allowNull){
-			echo '<option value=""></option>';
-		}
+    public function printSemesterDropDownBox($name, $label, $selectedSemester = '', $allowNull = true, $disabled = false)
+    {
+        global $libDb;
 
-		$stmt = $libDb->prepare("SELECT id, titel, name FROM base_verein ORDER BY name");
-		$stmt->execute();
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<option value="' .$row['id']. '"';
+        $this->printDisabledString($disabled);
 
-			if($activeElementId == $row['id']){
-				echo ' selected="selected"';
-			}
+        echo ' class="form-control">';
 
-			echo '>' .$row['name']. ', ' .$row['titel']. '</option>';
-		}
+        if ($allowNull) {
+            echo '<option value=""></option>';
+        }
 
-		echo '</select></div>';
-		echo '</div>';
-	}
+        $stmt = $libDb->prepare("SELECT semester FROM base_semester ORDER BY SUBSTRING(semester, 3) DESC");
+        $stmt->execute();
 
-	function printSemesterDropDownBox($name, $label, $selectedSemester = '', $allowNull = true, $disabled = false){
-		global $libDb;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo '<option value="' .$row['semester']. '"';
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
+            if ($selectedSemester == $row['semester']) {
+                echo ' selected="selected"';
+            }
 
-		$this->printDisabledString($disabled);
+            echo '>' .$row['semester']. '</option>';
+        }
 
-		echo ' class="form-control">';
+        echo '</select></div>';
+        echo '</div>';
+    }
 
-		if($allowNull){
-			echo '<option value=""></option>';
-		}
+    public function printStatusDropDownBox($name, $label, $selectedStatus = '', $allowNull = true, $disabled = false)
+    {
+        global $libDb;
 
-		$stmt = $libDb->prepare("SELECT semester FROM base_semester ORDER BY SUBSTRING(semester, 3) DESC");
-		$stmt->execute();
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<option value="' .$row['semester']. '"';
+        $this->printDisabledString($disabled);
 
-			if($selectedSemester == $row['semester']){
-				echo ' selected="selected"';
-			}
+        echo ' class="form-control">';
 
-			echo '>' .$row['semester']. '</option>';
-		}
+        if ($allowNull) {
+            echo '<option value=""></option>';
+        }
 
-		echo '</select></div>';
-		echo '</div>';
-	}
+        $stmt = $libDb->prepare("SELECT bezeichnung, beschreibung FROM base_status ORDER BY bezeichnung");
+        $stmt->execute();
 
-	function printStatusDropDownBox($name, $label, $selectedStatus = '', $allowNull = true, $disabled = false){
-		global $libDb;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo '<option value="' .$row['bezeichnung']. '"';
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
+            if ($selectedStatus == $row['bezeichnung']) {
+                echo ' selected="selected"';
+            }
 
-		$this->printDisabledString($disabled);
+            echo '>' .$row['bezeichnung']. ' - ' .$row['beschreibung']. '</option>';
+        }
 
-		echo ' class="form-control">';
+        echo '</select></div>';
+        echo '</div>';
+    }
 
-		if($allowNull){
-			echo '<option value=""></option>';
-		}
+    public function printGroupDropDownBox($name, $label, $selectedGroup = '', $allowNull = true, $disabled = false)
+    {
+        global $libDb;
 
-		$stmt = $libDb->prepare("SELECT bezeichnung, beschreibung FROM base_status ORDER BY bezeichnung");
-		$stmt->execute();
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<option value="' .$row['bezeichnung']. '"';
+        $this->printDisabledString($disabled);
 
-			if($selectedStatus == $row['bezeichnung']){
-				echo ' selected="selected"';
-			}
+        echo ' class="form-control">';
 
-			echo '>' .$row['bezeichnung']. ' - ' .$row['beschreibung']. '</option>';
-		}
+        if ($allowNull) {
+            echo '<option value=""></option>';
+        }
 
-		echo '</select></div>';
-		echo '</div>';
-	}
+        $stmt = $libDb->prepare("SELECT bezeichnung, beschreibung FROM base_gruppe ORDER BY bezeichnung");
+        $stmt->execute();
 
-	function printGroupDropDownBox($name, $label, $selectedGroup = '', $allowNull = true, $disabled = false){
-		global $libDb;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo '<option value="' .$row['bezeichnung']. '"';
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
+            if ($selectedGroup == $row['bezeichnung']) {
+                echo ' selected="selected"';
+            }
 
-		$this->printDisabledString($disabled);
+            echo '>' .$row['bezeichnung']. ' - ' .$row['beschreibung']. '</option>';
+        }
 
-		echo ' class="form-control">';
+        echo '</select></div>';
+        echo '</div>';
+    }
 
-		if($allowNull){
-			echo '<option value=""></option>';
-		}
+    public function printRegionDropDownBox($name, $label, $selectedRegion = '', $allowNull = true, $disabled = false)
+    {
+        global $libDb;
 
-		$stmt = $libDb->prepare("SELECT bezeichnung, beschreibung FROM base_gruppe ORDER BY bezeichnung");
-		$stmt->execute();
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<option value="' .$row['bezeichnung']. '"';
+        $this->printDisabledString($disabled);
 
-			if($selectedGroup == $row['bezeichnung']){
-				echo ' selected="selected"';
-			}
+        echo ' class="form-control">';
 
-			echo '>' .$row['bezeichnung']. ' - ' .$row['beschreibung']. '</option>';
-		}
+        if ($allowNull) {
+            echo '<option value=""></option>';
+        }
 
-		echo '</select></div>';
-		echo '</div>';
-	}
+        $stmt = $libDb->prepare("SELECT id, bezeichnung FROM base_region ORDER BY bezeichnung");
+        $stmt->execute();
 
-	function printRegionDropDownBox($name, $label, $selectedRegion = '', $allowNull = true, $disabled = false){
-		global $libDb;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE region1 = :region1 OR region2 = :region2");
+            $stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
+            $stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
+            $stmt2->execute();
+            $stmt2->bindColumn('number', $count);
+            $stmt2->fetch();
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
+            echo '<option value="' .$row['id']. '"';
 
-		$this->printDisabledString($disabled);
+            if ($selectedRegion == $row['id']) {
+                echo ' selected="selected"';
+            }
 
-		echo ' class="form-control">';
+            echo '>' .$row['bezeichnung']. ' [' .$count. ' Personen]</option>';
+        }
 
-		if($allowNull){
-			echo '<option value=""></option>';
-		}
+        echo '</select></div>';
+        echo '</div>';
+    }
 
-		$stmt = $libDb->prepare("SELECT id, bezeichnung FROM base_region ORDER BY bezeichnung");
-		$stmt->execute();
+    public function printEventDropDownBox($name, $label, $selectedEvent = '', $allowNull = true, $disabled = false)
+    {
+        global $libDb;
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE region1 = :region1 OR region2 = :region2");
-			$stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
-			$stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
-			$stmt2->execute();
-			$stmt2->bindColumn('number', $count);
-			$stmt2->fetch();
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
-			echo '<option value="' .$row['id']. '"';
+        $this->printDisabledString($disabled);
 
-			if($selectedRegion == $row['id']){
-				echo ' selected="selected"';
-			}
+        echo ' class="form-control">';
 
-			echo '>' .$row['bezeichnung']. ' [' .$count. ' Personen]</option>';
-		}
+        if ($allowNull) {
+            echo '<option value=""></option>';
+        }
 
-		echo '</select></div>';
-		echo '</div>';
-	}
+        $stmt = $libDb->prepare("SELECT id, titel, datum FROM base_veranstaltung ORDER BY datum DESC");
+        $stmt->execute();
 
-	function printEventDropDownBox($name, $label, $selectedEvent = '', $allowNull = true, $disabled = false){
-		global $libDb;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo '<option value="' .$row['id']. '"';
 
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
+            if ($selectedEvent == $row['id']) {
+                echo ' selected="selected"';
+            }
 
-		$this->printDisabledString($disabled);
+            echo '>' .substr((string) $row['titel'], 0, 25). ' [' .$row['datum']. ']</option>';
+        }
 
-		echo ' class="form-control">';
+        echo '</select></div>';
+        echo '</div>';
+    }
 
-		if($allowNull){
-			echo '<option value=""></option>';
-		}
+    public function printBoolSelectBox($name, $label, $selectedValue = 0)
+    {
+        echo '<div class="form-group">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select name="' .$name. '" class="form-control">';
+        echo '<option value="1"';
 
-		$stmt = $libDb->prepare("SELECT id, titel, datum FROM base_veranstaltung ORDER BY datum DESC");
-		$stmt->execute();
+        if ($selectedValue > 0) {
+            echo ' selected="selected"';
+        }
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<option value="' .$row['id']. '"';
+        echo '>Ja</option>';
+        echo '<option value="0"';
 
-			if($selectedEvent == $row['id']){
-				echo ' selected="selected"';
-			}
+        if ($selectedValue == 0) {
+            echo ' selected="selected"';
+        }
 
-			echo '>' .substr((string) $row['titel'], 0, 25). ' [' .$row['datum']. ']</option>';
-		}
-
-		echo '</select></div>';
-		echo '</div>';
-	}
-
-	function printBoolSelectBox($name, $label, $selectedValue = 0){
-		echo '<div class="form-group">';
-		echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-		echo '<div class="col-sm-' .$this->colInput. '"><select name="' .$name. '" class="form-control">';
-		echo '<option value="1"';
-
-		if($selectedValue > 0){
-			echo ' selected="selected"';
-		}
-
-		echo '>Ja</option>';
-		echo '<option value="0"';
-
-		if($selectedValue == 0){
-			echo ' selected="selected"';
-		}
-
-		echo '>Nein</option>';
-		echo '</select></div>';
-		echo '</div>';
-	}
+        echo '>Nein</option>';
+        echo '</select></div>';
+        echo '</div>';
+    }
 }

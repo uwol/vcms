@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,20 +19,24 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\timeline;
 
-class LibTimelineEventSet {
-	var $events = array();
+class LibTimelineEventSet
+{
+    public $events = [];
 
-	function addEvent($event){
-		$this->events[] = $event;
-	}
+    public function addEvent($event)
+    {
+        $this->events[] = $event;
+    }
 
-	function sortEvents(){
-		usort($this->events, function($a, $b){
-    		return strcmp($b->datetime, $a->datetime);
-		});
-	}
+    public function sortEvents()
+    {
+        usort($this->events, function ($a, $b) {
+            return strcmp($b->datetime, $a->datetime);
+        });
+    }
 
-	function getEvents(){
-		return $this->events;
-	}
+    public function getEvents()
+    {
+        return $this->events;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,48 +17,49 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 $lastInsertId = '';
 
-if(isset($_POST['category']) && isset($_POST['betroffenesmitglied']) && isset($_POST['text']) && trim($_POST['text']) != ''){
-	$affectedMember = null;
+if (isset($_POST['category']) && isset($_POST['betroffenesmitglied']) && isset($_POST['text']) && trim($_POST['text']) != '') {
+    $affectedMember = null;
 
-	if(is_numeric($_POST['betroffenesmitglied']) && $_POST['betroffenesmitglied'] > 0){
-		$affectedMember = $_POST['betroffenesmitglied'];
-	}
+    if (is_numeric($_POST['betroffenesmitglied']) && $_POST['betroffenesmitglied'] > 0) {
+        $affectedMember = $_POST['betroffenesmitglied'];
+    }
 
-	$stmt = $libDb->prepare('INSERT INTO mod_news_news (kategorieid, eingabedatum, text, betroffenesmitglied, autor) VALUES (:kategorieid, NOW(), :text, :betroffenesmitglied, :autor)');
-	$stmt->bindValue(':kategorieid', $_POST['category'], PDO::PARAM_INT);
-	$stmt->bindValue(':text', $libString->protectXss(trim($_POST['text'])));
-	$stmt->bindValue(':betroffenesmitglied', $affectedMember, PDO::PARAM_INT);
-	$stmt->bindValue(':autor', $libAuth->getId(), PDO::PARAM_INT);
-	$stmt->execute();
+    $stmt = $libDb->prepare('INSERT INTO mod_news_news (kategorieid, eingabedatum, text, betroffenesmitglied, autor) VALUES (:kategorieid, NOW(), :text, :betroffenesmitglied, :autor)');
+    $stmt->bindValue(':kategorieid', $_POST['category'], PDO::PARAM_INT);
+    $stmt->bindValue(':text', $libString->protectXss(trim($_POST['text'])));
+    $stmt->bindValue(':betroffenesmitglied', $affectedMember, PDO::PARAM_INT);
+    $stmt->bindValue(':autor', $libAuth->getId(), PDO::PARAM_INT);
+    $stmt->execute();
 
-	$lastInsertId = $libDb->lastInsertId();
-	$libPerson->setIntranetActivity($libAuth->getId(), 2, 0);
+    $lastInsertId = $libDb->lastInsertId();
+    $libPerson->setIntranetActivity($libAuth->getId(), 2, 0);
 
-	$libGlobal->notificationTexts[] = 'Der Beitrag wurde gespeichert.';
+    $libGlobal->notificationTexts[] = 'Der Beitrag wurde gespeichert.';
 }
 
-if(isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id']) && $_POST['id'] != ''){
-	$stmt = $libDb->prepare('SELECT *, DATEDIFF(NOW(), eingabedatum) AS datediff FROM mod_news_news WHERE id=:id');
-	$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-	$stmt->execute();
-	$newsRows = $stmt->fetch(PDO::FETCH_ASSOC);
+if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id']) && $_POST['id'] != '') {
+    $stmt = $libDb->prepare('SELECT *, DATEDIFF(NOW(), eingabedatum) AS datediff FROM mod_news_news WHERE id=:id');
+    $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $newsRows = $stmt->fetch(PDO::FETCH_ASSOC);
 
-	//can the news be deleted?
-	if((in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices()))
-		|| ($newsRows['autor'] == $libAuth->getId() && $newsRows['datediff'] < 7)){
+    //can the news be deleted?
+    if ((in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices()))
+        || ($newsRows['autor'] == $libAuth->getId() && $newsRows['datediff'] < 7)) {
 
-		$stmt = $libDb->prepare('DELETE FROM mod_news_news WHERE id = :id');
-		$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-		$stmt->execute();
+        $stmt = $libDb->prepare('DELETE FROM mod_news_news WHERE id = :id');
+        $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();
 
-		$libGlobal->notificationTexts[] = 'Der Beitrag wurde gelöscht.';
-	}
+        $libGlobal->notificationTexts[] = 'Der Beitrag wurde gelöscht.';
+    }
 }
 
 
@@ -77,10 +79,10 @@ echo '<div class="col-md-6">';
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(eingabedatum,'%Y-%m-01') AS eingabedatum FROM mod_news_news WHERE eingabedatum IS NOT NULL GROUP BY eingabedatum ORDER BY eingabedatum DESC");
 $stmt->execute();
 
-$data = array();
+$data = [];
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$data[] = $row['eingabedatum'];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $data[] = $row['eingabedatum'];
 }
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
@@ -109,57 +111,57 @@ $stmt->execute();
 
 $lastSetMonth = '';
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	//month name
-	$inputDate = (string) $row['eingabedatum'];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    //month name
+    $inputDate = (string) $row['eingabedatum'];
 
-	if($lastSetMonth != substr($inputDate, 0, 7)){
-		echo '<h2>' .$libTime->getMonth($libTime->formatMonthString($inputDate)). ' ' .substr($inputDate, 0, 4). '</h2>';
-		$lastSetMonth = substr($inputDate, 0, 7);
-	}
+    if ($lastSetMonth != substr($inputDate, 0, 7)) {
+        echo '<h2>' .$libTime->getMonth($libTime->formatMonthString($inputDate)). ' ' .substr($inputDate, 0, 4). '</h2>';
+        $lastSetMonth = substr($inputDate, 0, 7);
+    }
 
-	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
-	echo '<div class="panel-heading">';
-	echo '<h3 class="panel-title d-inline">';
-	echo $libTime->formatDateString($row['eingabedatum']);
-	echo ' ';
-	echo $row['bezeichnung'];
-	echo '</h3>';
+    echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
+    echo '<div class="panel-heading">';
+    echo '<h3 class="panel-title d-inline">';
+    echo $libTime->formatDateString($row['eingabedatum']);
+    echo ' ';
+    echo $row['bezeichnung'];
+    echo '</h3>';
 
-	if((in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices()))
-			|| ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)){
-		echo ' <form method="post" action="index.php?pid=intranet_news" class="d-inline" onsubmit="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
-		echo '<input type="hidden" name="action" value="delete" />';
-		echo '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
-		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
-		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
-		echo '</form>';
-	}
+    if ((in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices()))
+            || ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)) {
+        echo ' <form method="post" action="index.php?pid=intranet_news" class="d-inline" onsubmit="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
+        echo '<input type="hidden" name="action" value="delete" />';
+        echo '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
+        echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
+        echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
+        echo '</form>';
+    }
 
-	echo '</div>';
+    echo '</div>';
 
-	echo '<div class="panel-body">';
-	echo '<div class="row">';
+    echo '<div class="panel-body">';
+    echo '<div class="row">';
 
-	echo '<div class="col-xs-12 col-sm-9 col-md-10">';
-	echo nl2br((string) $row['text']);
-	echo '</div>';
+    echo '<div class="col-xs-12 col-sm-9 col-md-10">';
+    echo nl2br((string) $row['text']);
+    echo '</div>';
 
-	if(($row['autor'] != '' && $row['autor'] > 0) || ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0)){
-		echo '<div class="hidden-xs col-sm-3 col-md-2">';
+    if (($row['autor'] != '' && $row['autor'] > 0) || ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0)) {
+        echo '<div class="hidden-xs col-sm-3 col-md-2">';
 
-		if($row['autor'] != '' && $row['autor'] > 0){
-			echo $libPerson->getSignature($row['autor']);
-		}
+        if ($row['autor'] != '' && $row['autor'] > 0) {
+            echo $libPerson->getSignature($row['autor']);
+        }
 
-		if($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0){
-			echo $libPerson->getSignature($row['betroffenesmitglied']);
-		}
+        if ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0) {
+            echo $libPerson->getSignature($row['betroffenesmitglied']);
+        }
 
-		echo '</div>';
-	}
+        echo '</div>';
+    }
 
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
 }

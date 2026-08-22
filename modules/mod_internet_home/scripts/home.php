@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,41 +17,44 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
-
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('wikipedia_url')){
-	$libGenericStorage->saveValueInCurrentModule('wikipedia_url', '');
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('twitter_url')){
-	$libGenericStorage->saveValueInCurrentModule('twitter_url', '');
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('instagram_url')){
-	$libGenericStorage->saveValueInCurrentModule('instagram_url', '');
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('facebook_url')){
-	$libGenericStorage->saveValueInCurrentModule('facebook_url', '');
-}
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('show_facebook_plugin')){
-	$libGenericStorage->saveValueInCurrentModule('show_facebook_plugin', 1);
+if (!is_object($libGlobal)) {
+    exit();
 }
 
 
-function printEventTitle($row){
-	echo $row['titel'];
+if (!$libGenericStorage->attributeExistsInCurrentModule('wikipedia_url')) {
+    $libGenericStorage->saveValueInCurrentModule('wikipedia_url', '');
 }
 
-function printEventDateTime($row){
-	global $libTime;
+if (!$libGenericStorage->attributeExistsInCurrentModule('twitter_url')) {
+    $libGenericStorage->saveValueInCurrentModule('twitter_url', '');
+}
 
-	echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '">';
-	echo $libTime->formatDateTimeString($row['datum']);
-	echo '</time>';
+if (!$libGenericStorage->attributeExistsInCurrentModule('instagram_url')) {
+    $libGenericStorage->saveValueInCurrentModule('instagram_url', '');
+}
+
+if (!$libGenericStorage->attributeExistsInCurrentModule('facebook_url')) {
+    $libGenericStorage->saveValueInCurrentModule('facebook_url', '');
+}
+
+if (!$libGenericStorage->attributeExistsInCurrentModule('show_facebook_plugin')) {
+    $libGenericStorage->saveValueInCurrentModule('show_facebook_plugin', 1);
+}
+
+
+function printEventTitle($row)
+{
+    echo $row['titel'];
+}
+
+function printEventDateTime($row)
+{
+    global $libTime;
+
+    echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '">';
+    echo $libTime->formatDateTimeString($row['datum']);
+    echo '</time>';
 }
 
 require_once('elements/header.php');

@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,24 +19,27 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\genealogy;
 
-class LibGenealogy{
-	var $retstr;
+class LibGenealogy
+{
+    public $retstr;
 
-	function __construct($root, $depth, $memberId){
-		$retstr = '';
-		$genealogyRoot = new LibGenealogyElement($root, $memberId);
-		$retstr .= $genealogyRoot->getString($depth);
-		$leibsoehne = $genealogyRoot->searchLeibSoehne();
+    public function __construct($root, $depth, $memberId)
+    {
+        $retstr = '';
+        $genealogyRoot = new LibGenealogyElement($root, $memberId);
+        $retstr .= $genealogyRoot->getString($depth);
+        $leibsoehne = $genealogyRoot->searchLeibSoehne();
 
-		for($i=0; $i<count($leibsoehne); $i++){
-			$genealogy = new LibGenealogy($leibsoehne[$i], $depth + 1, $memberId);
-			$retstr .= $genealogy->getString();
-		}
+        for ($i = 0; $i < count($leibsoehne); $i++) {
+            $genealogy = new LibGenealogy($leibsoehne[$i], $depth + 1, $memberId);
+            $retstr .= $genealogy->getString();
+        }
 
-		$this->retstr = $retstr;
-	}
+        $this->retstr = $retstr;
+    }
 
-	function getString(){
-		return $this->retstr;
-	}
+    public function getString()
+    {
+        return $this->retstr;
+    }
 }

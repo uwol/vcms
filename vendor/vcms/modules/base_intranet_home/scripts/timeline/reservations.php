@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,18 +17,22 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
-class LibReservationTimelineEvent extends \vcms\timeline\LibTimelineEvent{
-	function getBadgeClass(){
-		return 'reservation';
-	}
+class LibReservationTimelineEvent extends \vcms\timeline\LibTimelineEvent
+{
+    public function getBadgeClass()
+    {
+        return 'reservation';
+    }
 
-	function getBadgeIcon(){
-		return '<i class="fa fa-map-marker" aria-hidden="true"></i>';
-	}
+    public function getBadgeIcon()
+    {
+        return '<i class="fa fa-map-marker" aria-hidden="true"></i>';
+    }
 }
 
 
@@ -37,19 +42,19 @@ $stmt->bindValue(':semesterende', $period[1]);
 $stmt->bindValue(':zeitraumlimit', $periodLimit, PDO::PARAM_INT);
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$title = 'Reservierung durch ' .$libPerson->getNameString($row['person'], 0);
-	$url = 'index.php?pid=intranet_reservations#' .$row['id'];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $title = 'Reservierung durch ' .$libPerson->getNameString($row['person'], 0);
+    $url = 'index.php?pid=intranet_reservations#' .$row['id'];
 
-	$timelineEvent = new LibReservationTimelineEvent();
+    $timelineEvent = new LibReservationTimelineEvent();
 
-	$timelineEvent->setTitle($title);
-	$timelineEvent->setDatetime($row['datum']);
-	$timelineEvent->setDescription($row['beschreibung']);
-	$timelineEvent->setAuthorId($row['person']);
-	$timelineEvent->setUrl($url);
+    $timelineEvent->setTitle($title);
+    $timelineEvent->setDatetime($row['datum']);
+    $timelineEvent->setDescription($row['beschreibung']);
+    $timelineEvent->setAuthorId($row['person']);
+    $timelineEvent->setUrl($url);
 
-	$timelineEvent->hideAuthorSignature();
+    $timelineEvent->hideAuthorSignature();
 
-	$timelineEventSet->addEvent($timelineEvent);
+    $timelineEventSet->addEvent($timelineEvent);
 }

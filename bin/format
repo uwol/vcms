@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#
+# Formats VCMS' own PHP code according to .php-cs-fixer.dist.php (PSR-12).
+#
+# Requires: brew install php-cs-fixer
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+if ! command -v php-cs-fixer > /dev/null 2>&1; then
+    echo 'Error: php-cs-fixer not found. Install it with: brew install php-cs-fixer' >&2
+    exit 1
+fi
+
+php-cs-fixer fix \
+    --config=.php-cs-fixer.dist.php \
+    --show-progress=dots

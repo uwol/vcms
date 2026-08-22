@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,190 +19,210 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms;
 
-class LibModuleParser{
+class LibModuleParser
+{
+    public $defaultMenuEntryPosition = 65535;
 
-	var $defaultMenuEntryPosition = 65535;
+    public $defaultPageContainerEnabled = true;
 
-	var $defaultPageContainerEnabled = true;
+    public function parseMetaJson($moduleDirectory, $moduleRelativePath)
+    {
+        global $libGlobal, $libFilesystem;
 
-	function parseMetaJson($moduleDirectory, $moduleRelativePath){
-		global $libGlobal, $libFilesystem;
+        $moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
+        $jsonAbsolutePath = $moduleAbsolutePath. '/meta.json';
 
-		$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
-		$jsonAbsolutePath = $moduleAbsolutePath. '/meta.json';
+        $jsonFileContents = @file_get_contents($jsonAbsolutePath);
 
-		$jsonFileContents = @file_get_contents($jsonAbsolutePath);
+        if ($jsonFileContents === false) {
+            $libGlobal->errorTexts[] = 'Die Datei ' .$jsonAbsolutePath. ' konnte nicht gelesen werden.';
+            return;
+        }
 
-		if($jsonFileContents === false){
-			$libGlobal->errorTexts[] = 'Die Datei ' .$jsonAbsolutePath. ' konnte nicht gelesen werden.';
-			return;
-		}
+        $json = json_decode($jsonFileContents, true);
 
-		$json = json_decode($jsonFileContents, true);
+        if (json_last_error()) {
+            $errorMessage = json_last_error_msg();
+            $libGlobal->errorTexts[] = 'Fehler in ' .$jsonAbsolutePath. ': ' .$errorMessage;
+        } else {
+            if (isset($json['version']) && !is_numeric($json['version'])) {
+                $libGlobal->errorTexts[] = 'Versionsangabe nicht numerisch in Modul ' .$moduleRelativePath;
+            }
 
-		if(json_last_error()){
-			$errorMessage = json_last_error_msg();
-			$libGlobal->errorTexts[] = 'Fehler in ' .$jsonAbsolutePath. ': ' .$errorMessage;
-		} else {
-			if(isset($json['version']) && !is_numeric($json['version'])){
-				$libGlobal->errorTexts[] = 'Versionsangabe nicht numerisch in Modul ' .$moduleRelativePath;
-			}
+            if (!isset($json['moduleName']) || $json['moduleName'] == '') {
+                $libGlobal->errorTexts[] = 'Kein moduleName in Modul ' .$moduleRelativePath;
+            }
 
-			if(!isset($json['moduleName']) || $json['moduleName'] == ''){
-				$libGlobal->errorTexts[] = 'Kein moduleName in Modul ' .$moduleRelativePath;
-			}
+            /*
+            * determine module parameters
+            */
+            $version = isset($json['version']) ? $json['version'] : '';
+            $moduleName = isset($json['moduleName']) ? $json['moduleName'] : '';
+            $installScript = isset($json['installScript']) ? $json['installScript'] : '';
+            $uninstallScript = isset($json['uninstallScript']) ? $json['uninstallScript'] : '';
+            $updateScript = isset($json['updateScript']) ? $json['updateScript'] : '';
+            $headerStrings = isset($json['headerStrings']) ? $json['headerStrings'] : '';
 
-			/*
-			* determine module parameters
-			*/
-			$version = isset($json['version']) ? $json['version'] : '';
-			$moduleName = isset($json['moduleName']) ? $json['moduleName'] : '';
-			$installScript = isset($json['installScript']) ? $json['installScript'] : '';
-			$uninstallScript = isset($json['uninstallScript']) ? $json['uninstallScript'] : '';
-			$updateScript = isset($json['updateScript']) ? $json['updateScript'] : '';
-			$headerStrings = isset($json['headerStrings']) ? $json['headerStrings'] : '';
+            $pages = [];
+            $includes = [];
+            $menuElementsInternet = [];
+            $menuElementsIntranet = [];
+            $menuElementsAdministration = [];
 
-			$pages = array();
-			$includes = array();
-			$menuElementsInternet = array();
-			$menuElementsIntranet = array();
-			$menuElementsAdministration = array();
+            if (isset($json['pages']) && is_array($json['pages'])) {
+                foreach ($json['pages'] as $pageJson) {
+                    $page = $this->parsePageJson($pageJson);
+                    $pages[$page->getPid()] = $page;
+                }
+            }
 
-			if(isset($json['pages']) && is_array($json['pages'])){
-				foreach($json['pages'] as $pageJson) {
-					$page = $this->parsePageJson($pageJson);
-					$pages[$page->getPid()] = $page;
-				}
-			}
+            if (isset($json['includes']) && is_array($json['includes'])) {
+                foreach ($json['includes'] as $includeJson) {
+                    $include = $this->parseIncludeJson($includeJson);
+                    $includes[$include->getIid()] = $include;
+                }
+            }
 
-			if(isset($json['includes']) && is_array($json['includes'])){
-				foreach($json['includes'] as $includeJson) {
-					$include = $this->parseIncludeJson($includeJson);
-					$includes[$include->getIid()] = $include;
-				}
-			}
+            if (isset($json['menuElementsInternet']) && is_array($json['menuElementsInternet'])) {
+                foreach ($json['menuElementsInternet'] as $menuElementInternetJson) {
+                    $menuElementsInternet[] = $this->parseMenuElement($menuElementInternetJson);
+                }
+            }
 
-			if(isset($json['menuElementsInternet']) && is_array($json['menuElementsInternet'])){
-				foreach($json['menuElementsInternet'] as $menuElementInternetJson) {
-					$menuElementsInternet[] = $this->parseMenuElement($menuElementInternetJson);
-				}
-			}
+            if (isset($json['menuElementsIntranet']) && is_array($json['menuElementsIntranet'])) {
+                foreach ($json['menuElementsIntranet'] as $menuElementsIntranetJson) {
+                    $menuElementsIntranet[] = $this->parseMenuElement($menuElementsIntranetJson);
+                }
+            }
 
-			if(isset($json['menuElementsIntranet']) && is_array($json['menuElementsIntranet'])){
-				foreach($json['menuElementsIntranet'] as $menuElementsIntranetJson) {
-					$menuElementsIntranet[] = $this->parseMenuElement($menuElementsIntranetJson);
-				}
-			}
+            if (isset($json['menuElementsAdministration']) && is_array($json['menuElementsAdministration'])) {
+                foreach ($json['menuElementsAdministration'] as $menuElementsAdministrationJson) {
+                    $menuElementsAdministration[] = $this->parseMenuElement($menuElementsAdministrationJson);
+                }
+            }
 
-			if(isset($json['menuElementsAdministration']) && is_array($json['menuElementsAdministration'])){
-				foreach($json['menuElementsAdministration'] as $menuElementsAdministrationJson) {
-					$menuElementsAdministration[] = $this->parseMenuElement($menuElementsAdministrationJson);
-				}
-			}
+            // instantiate new module
+            $module = new \vcms\module\LibModule(
+                $moduleDirectory,
+                $moduleName,
+                $version,
+                $moduleRelativePath,
+                $pages,
+                $includes,
+                $headerStrings,
+                $installScript,
+                $uninstallScript,
+                $updateScript,
+                $menuElementsInternet,
+                $menuElementsIntranet,
+                $menuElementsAdministration
+            );
+            return $module;
+        }
+    }
 
-			// instantiate new module
-			$module = new \vcms\module\LibModule($moduleDirectory, $moduleName,	$version,
-				$moduleRelativePath, $pages, $includes, $headerStrings,
-				$installScript, $uninstallScript, $updateScript,
-				$menuElementsInternet, $menuElementsIntranet, $menuElementsAdministration);
-			return $module;
-		}
-	}
+    public function parsePageJson($pageJson)
+    {
+        $pid = isset($pageJson['pid']) ? $pageJson['pid'] : '';
+        $file = isset($pageJson['file']) ? $pageJson['file'] : '';
+        $directory = isset($pageJson['directory']) ? $pageJson['directory'] : '';
+        $accessRestriction = isset($pageJson['accessRestriction']) ? $this->parseAccessRestrictionJson($pageJson['accessRestriction']) : '';
+        $title = isset($pageJson['title']) ? $pageJson['title'] : '';
+        $containerEnabled = isset($pageJson['containerEnabled']) ? boolval($pageJson['containerEnabled']) : $this->defaultPageContainerEnabled;
 
-	function parsePageJson($pageJson){
-		$pid = isset($pageJson['pid']) ? $pageJson['pid'] : '';
-		$file = isset($pageJson['file']) ? $pageJson['file'] : '';
-		$directory = isset($pageJson['directory']) ? $pageJson['directory'] : '';
-		$accessRestriction = isset($pageJson['accessRestriction']) ? $this->parseAccessRestrictionJson($pageJson['accessRestriction']) : '';
-		$title = isset($pageJson['title']) ? $pageJson['title'] : '';
-		$containerEnabled = isset($pageJson['containerEnabled']) ? boolval($pageJson['containerEnabled']) : $this->defaultPageContainerEnabled;
+        $page = new \vcms\module\LibPage($pid, $directory, $file, $accessRestriction, $title, $containerEnabled);
+        return $page;
+    }
 
-		$page = new \vcms\module\LibPage($pid, $directory, $file, $accessRestriction, $title, $containerEnabled);
-		return $page;
-	}
+    public function parseIncludeJson($includeJson)
+    {
+        $iid = isset($includeJson['iid']) ? $includeJson['iid'] : '';
+        $file = isset($includeJson['file']) ? $includeJson['file'] : '';
+        $directory = isset($includeJson['directory']) ? $includeJson['directory'] : '';
+        $accessRestriction = isset($includeJson['accessRestriction']) ? $this->parseAccessRestrictionJson($includeJson['accessRestriction']) : '';
 
-	function parseIncludeJson($includeJson){
-		$iid = isset($includeJson['iid']) ? $includeJson['iid'] : '';
-		$file = isset($includeJson['file']) ? $includeJson['file'] : '';
-		$directory = isset($includeJson['directory']) ? $includeJson['directory'] : '';
-		$accessRestriction = isset($includeJson['accessRestriction']) ? $this->parseAccessRestrictionJson($includeJson['accessRestriction']) : '';
+        $include = new \vcms\module\LibInclude($iid, $directory, $file, $accessRestriction);
+        return $include;
+    }
 
-		$include = new \vcms\module\LibInclude($iid, $directory, $file, $accessRestriction);
-		return $include;
-	}
+    public function parseAccessRestrictionJson($accessRestrictionJson)
+    {
+        $offices = isset($accessRestrictionJson['aemter']) ? $accessRestrictionJson['aemter'] : '';
+        $groups = isset($accessRestrictionJson['gruppen']) ? $accessRestrictionJson['gruppen'] : '';
 
-	function parseAccessRestrictionJson($accessRestrictionJson){
-		$offices = isset($accessRestrictionJson['aemter']) ? $accessRestrictionJson['aemter'] : '';
-		$groups = isset($accessRestrictionJson['gruppen']) ? $accessRestrictionJson['gruppen'] : '';
+        $accessRestriction = new \vcms\module\LibAccessRestriction($groups, $offices);
+        return $accessRestriction;
+    }
 
-		$accessRestriction = new \vcms\module\LibAccessRestriction($groups, $offices);
-		return $accessRestriction;
-	}
+    public function parseMenuElement($menuElementJson)
+    {
+        $type = isset($menuElementJson['type']) ? $menuElementJson['type'] : '';
+        $menuElement = null;
 
-	function parseMenuElement($menuElementJson){
-		$type = isset($menuElementJson['type']) ? $menuElementJson['type'] : '';
-		$menuElement = null;
+        switch ($type) {
+            case 'menu_entry':
+                $menuElement = $this->parseMenuEntry($menuElementJson);
+                break;
+            case 'menu_entry_login':
+                $menuElement = $this->parseMenuEntryLogin($menuElementJson);
+                break;
+            case 'menu_entry_external_link':
+                $menuElement = $this->parseMenuEntryExternalLink($menuElementJson);
+                break;
+            case 'menu_folder':
+                $menuElement = $this->parseMenuFolder($menuElementJson);
+                break;
+        }
 
-		switch($type){
-			case 'menu_entry':
-				$menuElement = $this->parseMenuEntry($menuElementJson);
-				break;
-			case 'menu_entry_login':
-				$menuElement = $this->parseMenuEntryLogin($menuElementJson);
-				break;
-			case 'menu_entry_external_link':
-				$menuElement = $this->parseMenuEntryExternalLink($menuElementJson);
-				break;
-			case 'menu_folder':
-				$menuElement = $this->parseMenuFolder($menuElementJson);
-				break;
-		}
+        return $menuElement;
+    }
 
-		return $menuElement;
-	}
+    public function parseMenuEntry($menuElementJson)
+    {
+        $pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
+        $name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
+        $position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultMenuEntryPosition;
 
-	function parseMenuEntry($menuElementJson){
-		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
-		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
-		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultMenuEntryPosition;
+        $menuEntry = new \vcms\menu\LibMenuEntry($pid, $name, $position);
+        return $menuEntry;
+    }
 
-		$menuEntry = new \vcms\menu\LibMenuEntry($pid, $name, $position);
-		return $menuEntry;
-	}
+    public function parseMenuEntryLogin($menuElementJson)
+    {
+        $pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
+        $name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
+        $nameLogout = isset($menuElementJson['nameLogout']) ? $menuElementJson['nameLogout'] : '';
+        $position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultMenuEntryPosition;
 
-	function parseMenuEntryLogin($menuElementJson){
-		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
-		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
-		$nameLogout = isset($menuElementJson['nameLogout']) ? $menuElementJson['nameLogout'] : '';
-		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultMenuEntryPosition;
+        $menuEntry = new \vcms\menu\LibMenuEntryLogin($pid, $name, $nameLogout, $position);
+        return $menuEntry;
+    }
 
-		$menuEntry = new \vcms\menu\LibMenuEntryLogin($pid, $name, $nameLogout, $position);
-		return $menuEntry;
-	}
+    public function parseMenuEntryExternalLink($menuElementJson)
+    {
+        $pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
+        $name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
+        $position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultMenuEntryPosition;
 
-	function parseMenuEntryExternalLink($menuElementJson){
-		$pid = isset($menuElementJson['pid']) ? $menuElementJson['pid'] : '';
-		$name = isset($menuElementJson['name']) ? $menuElementJson['name'] : '';
-		$position = isset($menuElementJson['position']) ? $menuElementJson['position'] : $this->defaultMenuEntryPosition;
+        $menuEntry = new \vcms\menu\LibMenuEntryExternalLink($pid, $name, $position);
+        return $menuEntry;
+    }
 
-		$menuEntry = new \vcms\menu\LibMenuEntryExternalLink($pid, $name, $position);
-		return $menuEntry;
-	}
+    public function parseMenuFolder($menuFolderJson)
+    {
+        $pid = isset($menuFolderJson['pid']) ? $menuFolderJson['pid'] : '';
+        $name = isset($menuFolderJson['name']) ? $menuFolderJson['name'] : '';
+        $position = isset($menuFolderJson['position']) ? $menuFolderJson['position'] : $this->defaultMenuEntryPosition;
 
-	function parseMenuFolder($menuFolderJson){
-		$pid = isset($menuFolderJson['pid']) ? $menuFolderJson['pid'] : '';
-		$name = isset($menuFolderJson['name']) ? $menuFolderJson['name'] : '';
-		$position = isset($menuFolderJson['position']) ? $menuFolderJson['position'] : $this->defaultMenuEntryPosition;
+        $menuFolder = new \vcms\menu\LibMenuFolder($pid, $name, $position);
 
-		$menuFolder = new \vcms\menu\LibMenuFolder($pid, $name, $position);
+        if (isset($menuFolderJson['elements']) && is_array($menuFolderJson['elements'])) {
+            foreach ($menuFolderJson['elements'] as $menuElementJson) {
+                $menuElement = $this->parseMenuElement($menuElementJson);
+                $menuFolder->addElement($menuElement);
+            }
+        }
 
-		if(isset($menuFolderJson['elements']) && is_array($menuFolderJson['elements'])){
-			foreach($menuFolderJson['elements'] as $menuElementJson) {
-				$menuElement = $this->parseMenuElement($menuElementJson);
-				$menuFolder->addElement($menuElement);
-			}
-		}
-
-		return $menuFolder;
-	}
+        return $menuFolder;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,43 +17,44 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function printPersons($stmt){
-	global $libDb, $libPerson;
+function printPersons($stmt)
+{
+    global $libDb, $libPerson;
 
-	$stmt->execute();
+    $stmt->execute();
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<div class="persons-grid">';
+    echo '<div class="panel panel-default">';
+    echo '<div class="panel-body">';
+    echo '<div class="persons-grid">';
 
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<div class="persons-grid-element">';
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo '<div class="persons-grid-element">';
 
-		echo '<div>';
-		echo $libPerson->getSignature($row['id']);
-		echo '</div>';
+        echo '<div>';
+        echo $libPerson->getSignature($row['id']);
+        echo '</div>';
 
-		echo '<div class="persons-grid-description">';
-		echo '<b>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
-		echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getAssociationsString($row['id']);
+        echo '<div class="persons-grid-description">';
+        echo '<b>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
+        echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getAssociationsString($row['id']);
 
-		if($row['tod_datum'] != '' && $row['tod_datum'] != '0000-00-00'){
-			echo '<br />';
+        if ($row['tod_datum'] != '' && $row['tod_datum'] != '0000-00-00') {
+            echo '<br />';
 
-			if($row['datum_geburtstag'] != '0000-00-00'){
-				echo substr((string) $row['datum_geburtstag'], 0, 4);
-			}
+            if ($row['datum_geburtstag'] != '0000-00-00') {
+                echo substr((string) $row['datum_geburtstag'], 0, 4);
+            }
 
-			echo ' - ' .substr((string) $row['tod_datum'], 0, 4);
-		} elseif($row['ort1'] != ''){
-			echo '<br />' .$row['ort1'];
-		}
+            echo ' - ' .substr((string) $row['tod_datum'], 0, 4);
+        } elseif ($row['ort1'] != '') {
+            echo '<br />' .$row['ort1'];
+        }
 
-		echo '</div>';
-		echo '</div>';
-	}
+        echo '</div>';
+        echo '</div>';
+    }
 
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
 }

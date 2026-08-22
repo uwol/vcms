@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,37 +17,38 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 $libDb->connect();
 
 $calendarId = $libGlobal->getSiteUrlAuthority().'_todestage_';
 
-if(isset($_GET['user']) &&
-		$_GET['user'] == $libGenericStorage->loadValueInCurrentModule('icalendar_username') &&
-		isset($_GET['pass']) &&
-		$_GET['pass'] == $libGenericStorage->loadValueInCurrentModule('icalendar_password') &&
-		$libGenericStorage->loadValueInCurrentModule('icalendar_username') != '' &&
-		$libGenericStorage->loadValueInCurrentModule('icalendar_password') != ''){
+if (isset($_GET['user']) &&
+        $_GET['user'] == $libGenericStorage->loadValueInCurrentModule('icalendar_username') &&
+        isset($_GET['pass']) &&
+        $_GET['pass'] == $libGenericStorage->loadValueInCurrentModule('icalendar_password') &&
+        $libGenericStorage->loadValueInCurrentModule('icalendar_username') != '' &&
+        $libGenericStorage->loadValueInCurrentModule('icalendar_password') != '') {
 
-	$calendar = new vcms\LibICalendar();
+    $calendar = new vcms\LibICalendar();
 
-	$stmt = $libDb->prepare("SELECT id, tod_datum FROM base_person WHERE gruppe = 'T' AND tod_datum != '' AND tod_datum != '0000-00-00' AND tod_datum IS NOT NULL");
-	$stmt->execute();
+    $stmt = $libDb->prepare("SELECT id, tod_datum FROM base_person WHERE gruppe = 'T' AND tod_datum != '' AND tod_datum != '0000-00-00' AND tod_datum IS NOT NULL");
+    $stmt->execute();
 
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$name = $libPerson->getNameString($row['id'], 0);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $name = $libPerson->getNameString($row['id'], 0);
 
-		$e = new vcms\LibICalendarEvent();
-		$e->summary = $name;
-		$e->setStartAndEndDateTime($row['tod_datum'], '');
-	 	$e->description = $name. ' - ' .$row['tod_datum'];
-		$e->uid = $calendarId.$row['id'];
-		$e->rrule = 'FREQ=YEARLY';
-		$calendar->addEvent($e);
-	}
+        $e = new vcms\LibICalendarEvent();
+        $e->summary = $name;
+        $e->setStartAndEndDateTime($row['tod_datum'], '');
+        $e->description = $name. ' - ' .$row['tod_datum'];
+        $e->uid = $calendarId.$row['id'];
+        $e->rrule = 'FREQ=YEARLY';
+        $calendar->addEvent($e);
+    }
 
-	$calendar->printCalendar();
+    $calendar->printCalendar();
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 /*
@@ -27,47 +29,47 @@ if(!is_object($libGlobal))
 $formSent = false;
 $formError = false;
 
-if(isset($_POST['registrationName']) || isset($_POST['registrationPhone']) ||
-	isset($_POST['registrationEmail']) || isset($_POST['registrationBirthdate']) ||
-	isset($_POST['registrationPassword1']) || isset($_POST['registrationPassword2'])){
+if (isset($_POST['registrationName']) || isset($_POST['registrationPhone']) ||
+    isset($_POST['registrationEmail']) || isset($_POST['registrationBirthdate']) ||
+    isset($_POST['registrationPassword1']) || isset($_POST['registrationPassword2'])) {
 
-	$formSent = true;
+    $formSent = true;
 
-	if(!isset($_POST['registrationName']) || $_POST['registrationName'] == ''){
-		$libGlobal->errorTexts[] = 'Bitte geben Sie einen Namen an.';
-		$formError = true;
-	}
+    if (!isset($_POST['registrationName']) || $_POST['registrationName'] == '') {
+        $libGlobal->errorTexts[] = 'Bitte geben Sie einen Namen an.';
+        $formError = true;
+    }
 
-	if(!isset($_POST['registrationPhone']) || $_POST['registrationPhone'] == ''){
-		$libGlobal->errorTexts[] = 'Bitte geben Sie eine Telefonnummer an.';
-		$formError = true;
-	}
+    if (!isset($_POST['registrationPhone']) || $_POST['registrationPhone'] == '') {
+        $libGlobal->errorTexts[] = 'Bitte geben Sie eine Telefonnummer an.';
+        $formError = true;
+    }
 
-	if(!isset($_POST['registrationEmail']) || $_POST['registrationEmail'] == ''){
-		$libGlobal->errorTexts[] = 'Bitte geben Sie eine E-Mail-Adresse an.';
-		$formError = true;
-	} elseif(isset($_POST['registrationEmail']) && !$libString->isValidEmail($_POST['registrationEmail'])){
-		$libGlobal->errorTexts[] = 'Die E-Mail-Adresse ist nicht gültig.';
-		$formError = true;
-	}
+    if (!isset($_POST['registrationEmail']) || $_POST['registrationEmail'] == '') {
+        $libGlobal->errorTexts[] = 'Bitte geben Sie eine E-Mail-Adresse an.';
+        $formError = true;
+    } elseif (isset($_POST['registrationEmail']) && !$libString->isValidEmail($_POST['registrationEmail'])) {
+        $libGlobal->errorTexts[] = 'Die E-Mail-Adresse ist nicht gültig.';
+        $formError = true;
+    }
 
-	if(!isset($_POST['registrationPassword1']) || trim($_POST['registrationPassword1']) == ''){
-		$libGlobal->errorTexts[] = 'Bitte geben Sie ein Passwort ein.';
-		$formError = true;
-	} elseif(!$libAuth->isValidPassword($_POST['registrationPassword1'])){
-		$libGlobal->errorTexts[] = 'Das Passwort ist nicht komplex genug. ' .$libAuth->getPasswordRequirements();
-		$formError = true;
-	} else {
-		if(!isset($_POST['registrationPassword2']) || trim($_POST['registrationPassword2']) == ''){
-			$libGlobal->errorTexts[] = 'Bitte geben Sie das Passwort ein zweites Mal ein.';
-			$formError = true;
-		} else {
-			if($_POST['registrationPassword1'] != $_POST['registrationPassword2']){
-				$libGlobal->errorTexts[] = 'Die beiden Passwörter stimmen nicht überein.';
-				$formError = true;
-			}
-		}
-	}
+    if (!isset($_POST['registrationPassword1']) || trim($_POST['registrationPassword1']) == '') {
+        $libGlobal->errorTexts[] = 'Bitte geben Sie ein Passwort ein.';
+        $formError = true;
+    } elseif (!$libAuth->isValidPassword($_POST['registrationPassword1'])) {
+        $libGlobal->errorTexts[] = 'Das Passwort ist nicht komplex genug. ' .$libAuth->getPasswordRequirements();
+        $formError = true;
+    } else {
+        if (!isset($_POST['registrationPassword2']) || trim($_POST['registrationPassword2']) == '') {
+            $libGlobal->errorTexts[] = 'Bitte geben Sie das Passwort ein zweites Mal ein.';
+            $formError = true;
+        } else {
+            if ($_POST['registrationPassword1'] != $_POST['registrationPassword2']) {
+                $libGlobal->errorTexts[] = 'Die beiden Passwörter stimmen nicht überein.';
+                $formError = true;
+            }
+        }
+    }
 }
 
 
@@ -76,113 +78,113 @@ if(isset($_POST['registrationName']) || isset($_POST['registrationPhone']) ||
 */
 
 
-if($formSent && !$formError){
-	$password_hash = $libAuth->encryptPassword($_POST['registrationPassword1']);
+if ($formSent && !$formError) {
+    $password_hash = $libAuth->encryptPassword($_POST['registrationPassword1']);
 
-	$text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'Name: ' .$libString->protectXSS($_POST['registrationName']) . PHP_EOL;
-	$text .= 'E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrationEmail'])) . PHP_EOL;
-	$text .= 'Telefonnummer: ' .$libString->protectXSS($_POST['registrationPhone']) . PHP_EOL;
-	$text .= 'Geburtsdatum: ' .$libString->protectXSS($_POST['registrationBirthdate']) . PHP_EOL;
-	$text .= 'Passwort-Hash: ' .$password_hash. PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'Die Freischaltung für das Intranet erfolgt, indem der Internetwart die Daten nach einer Plausibilitätsprüfung im Personenprofil speichert.' . PHP_EOL;
-	$text .= 'Im Fall einer Freischaltung lautet die Antwortmail:' . PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'Lieber Bb ' .$libString->protectXSS($_POST['registrationName']). ',' . PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'Du wurdest mit der E-Mail-Adresse ' .$libString->protectXSS($_POST['registrationEmail']). ' für das Intranet freigeschaltet.' . PHP_EOL;
-	$text .= PHP_EOL;
-	$text .= 'MBuH,';
+    $text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
+    $text .= PHP_EOL;
+    $text .= 'Name: ' .$libString->protectXSS($_POST['registrationName']) . PHP_EOL;
+    $text .= 'E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrationEmail'])) . PHP_EOL;
+    $text .= 'Telefonnummer: ' .$libString->protectXSS($_POST['registrationPhone']) . PHP_EOL;
+    $text .= 'Geburtsdatum: ' .$libString->protectXSS($_POST['registrationBirthdate']) . PHP_EOL;
+    $text .= 'Passwort-Hash: ' .$password_hash. PHP_EOL;
+    $text .= PHP_EOL;
+    $text .= 'Die Freischaltung für das Intranet erfolgt, indem der Internetwart die Daten nach einer Plausibilitätsprüfung im Personenprofil speichert.' . PHP_EOL;
+    $text .= 'Im Fall einer Freischaltung lautet die Antwortmail:' . PHP_EOL;
+    $text .= PHP_EOL;
+    $text .= PHP_EOL;
+    $text .= 'Lieber Bb ' .$libString->protectXSS($_POST['registrationName']). ',' . PHP_EOL;
+    $text .= PHP_EOL;
+    $text .= 'Du wurdest mit der E-Mail-Adresse ' .$libString->protectXSS($_POST['registrationEmail']). ' für das Intranet freigeschaltet.' . PHP_EOL;
+    $text .= PHP_EOL;
+    $text .= 'MBuH,';
 
-	$mail = $libMail->createPHPMailer();
+    $mail = $libMail->createPHPMailer();
 
-	$mail->addAddress($libConfig->emailWebmaster);
-	$mail->Subject = '[' .$libConfig->verbindungName. '] Intranet-Registrierung';
-	$mail->Body = $text;
-	$mail->addReplyTo($_POST['registrationEmail']);
+    $mail->addAddress($libConfig->emailWebmaster);
+    $mail->Subject = '[' .$libConfig->verbindungName. '] Intranet-Registrierung';
+    $mail->Body = $text;
+    $mail->addReplyTo($_POST['registrationEmail']);
 
-	$mailsent = false;
+    $mailsent = false;
 
-	if($mail->send()){
-		$mailsent = true;
-	} else {
-		$libGlobal->errorTexts[] = $mail->ErrorInfo;
-	}
+    if ($mail->send()) {
+        $mailsent = true;
+    } else {
+        $libGlobal->errorTexts[] = $mail->ErrorInfo;
+    }
 
-	if($mailsent){
-		echo '<h1>E-Mail verschickt</h1>';
+    if ($mailsent) {
+        echo '<h1>E-Mail verschickt</h1>';
 
-		echo $libString->getErrorBoxText();
-		echo $libString->getNotificationBoxText();
+        echo $libString->getErrorBoxText();
+        echo $libString->getNotificationBoxText();
 
-		echo '<p class="mb-4">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
-	} else {
-		echo '<h1>Fehler</h1>';
+        echo '<p class="mb-4">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
+    } else {
+        echo '<h1>Fehler</h1>';
 
-		echo $libString->getErrorBoxText();
-		echo $libString->getNotificationBoxText();
+        echo $libString->getErrorBoxText();
+        echo $libString->getNotificationBoxText();
 
-		echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
-	}
+        echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
+    }
 } else {
-	echo '<h1>Registrierung</h1>';
+    echo '<h1>Registrierung</h1>';
 
-	echo $libString->getErrorBoxText();
-	echo $libString->getNotificationBoxText();
+    echo $libString->getErrorBoxText();
+    echo $libString->getNotificationBoxText();
 
-	echo '<div class="mb-4">';
-	echo '<p class="mb-4">Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Internetwart weitergeleitet wird.</p>';
-	echo '<p class="mb-4">' .$libAuth->getPasswordRequirements(). '</p>';
-	echo '</div>';
+    echo '<div class="mb-4">';
+    echo '<p class="mb-4">Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Internetwart weitergeleitet wird.</p>';
+    echo '<p class="mb-4">' .$libAuth->getPasswordRequirements(). '</p>';
+    echo '</div>';
 
-	$registrationName = '';
-	if(isset($_POST['registrationName'])){
-		$registrationName = $_POST['registrationName'];
-	}
+    $registrationName = '';
+    if (isset($_POST['registrationName'])) {
+        $registrationName = $_POST['registrationName'];
+    }
 
-	$registrationPhone = '';
-	if(isset($_POST['registrationPhone'])){
-		$registrationPhone = $_POST['registrationPhone'];
-	}
+    $registrationPhone = '';
+    if (isset($_POST['registrationPhone'])) {
+        $registrationPhone = $_POST['registrationPhone'];
+    }
 
-	$registrationEmail = '';
-	if(isset($_POST['registrationEmail'])){
-		$registrationEmail = $_POST['registrationEmail'];
-	}
+    $registrationEmail = '';
+    if (isset($_POST['registrationEmail'])) {
+        $registrationEmail = $_POST['registrationEmail'];
+    }
 
-	$registrationBirthdate = '';
-	if(isset($_POST['registrationBirthdate'])){
-		$registrationBirthdate = $_POST['registrationBirthdate'];
-	}
+    $registrationBirthdate = '';
+    if (isset($_POST['registrationBirthdate'])) {
+        $registrationBirthdate = $_POST['registrationBirthdate'];
+    }
 
-	$urlPrefix = '';
+    $urlPrefix = '';
 
-	if($libGlobal->getSiteUrlAuthority() != ''){
-		$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
+    if ($libGlobal->getSiteUrlAuthority() != '') {
+        $sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
 
-		if($sslProxyUrl != ''){
-			$urlPrefix = 'https://' .$sslProxyUrl. '/' .$libGlobal->getSiteUrlAuthority(). '/';
-		}
-	}
+        if ($sslProxyUrl != '') {
+            $urlPrefix = 'https://' .$sslProxyUrl. '/' .$libGlobal->getSiteUrlAuthority(). '/';
+        }
+    }
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="form-horizontal">';
-	echo '<fieldset>';
+    echo '<div class="panel panel-default">';
+    echo '<div class="panel-body">';
+    echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="form-horizontal">';
+    echo '<fieldset>';
 
-	$libForm->printTextInput('registrationName', 'Vorname und Nachname', $libString->protectXSS($registrationName), 'text', false, true);
-	$libForm->printTextInput('registrationPhone', 'Telefonnummer', $libString->protectXSS($registrationPhone), 'tel', false, true);
-	$libForm->printTextInput('registrationEmail', 'E-Mail-Adresse', $libString->protectXSS($registrationEmail), 'email', false, true);
-	$libForm->printDateInput('registrationBirthdate', 'Geburtsdatum', $libString->protectXSS($registrationBirthdate), false, true, array(), '', date('Y-m-d'));
-	$libForm->printTextInput('registrationPassword1', 'Passwort', '', 'password', false, true);
-	$libForm->printTextInput('registrationPassword2', 'Passwort-Wiederholung', '', 'password', false, true);
-	$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Abschicken');
+    $libForm->printTextInput('registrationName', 'Vorname und Nachname', $libString->protectXSS($registrationName), 'text', false, true);
+    $libForm->printTextInput('registrationPhone', 'Telefonnummer', $libString->protectXSS($registrationPhone), 'tel', false, true);
+    $libForm->printTextInput('registrationEmail', 'E-Mail-Adresse', $libString->protectXSS($registrationEmail), 'email', false, true);
+    $libForm->printDateInput('registrationBirthdate', 'Geburtsdatum', $libString->protectXSS($registrationBirthdate), false, true, [], '', date('Y-m-d'));
+    $libForm->printTextInput('registrationPassword1', 'Passwort', '', 'password', false, true);
+    $libForm->printTextInput('registrationPassword2', 'Passwort-Wiederholung', '', 'password', false, true);
+    $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Abschicken');
 
-	echo '</fieldset>';
-	echo '</form>';
-	echo '</div>';
-	echo '</div>';
+    echo '</fieldset>';
+    echo '</form>';
+    echo '</div>';
+    echo '</div>';
 }

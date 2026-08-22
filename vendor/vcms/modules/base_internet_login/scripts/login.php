@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -20,8 +21,8 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 * configuration
 */
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('ssl_proxy_url')){
-	$libGenericStorage->saveValueInCurrentModule('ssl_proxy_url', '');
+if (!$libGenericStorage->attributeExistsInCurrentModule('ssl_proxy_url')) {
+    $libGenericStorage->saveValueInCurrentModule('ssl_proxy_url', '');
 }
 
 
@@ -32,12 +33,12 @@ echo $libString->getNotificationBoxText();
 
 $urlPrefix = '';
 
-if($libGlobal->getSiteUrlAuthority() != ''){
-	$sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
+if ($libGlobal->getSiteUrlAuthority() != '') {
+    $sslProxyUrl = $libGenericStorage->loadValueInCurrentModule('ssl_proxy_url');
 
-	if($sslProxyUrl != ''){
-		$urlPrefix = 'https://' . $sslProxyUrl . '/' . $libGlobal->getSiteUrlAuthority() . '/';
-	}
+    if ($sslProxyUrl != '') {
+        $urlPrefix = 'https://' . $sslProxyUrl . '/' . $libGlobal->getSiteUrlAuthority() . '/';
+    }
 }
 
 echo '<div class="panel panel-default">';

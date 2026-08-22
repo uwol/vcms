@@ -16,19 +16,19 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('datenschutzbeauftragter')){
-	$libGenericStorage->saveValueInCurrentModule('datenschutzbeauftragter', '');
+if (!$libGenericStorage->attributeExistsInCurrentModule('datenschutzbeauftragter')) {
+    $libGenericStorage->saveValueInCurrentModule('datenschutzbeauftragter', '');
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('datenschutz_email')){
-	$libGenericStorage->saveValueInCurrentModule('datenschutz_email', '');
+if (!$libGenericStorage->attributeExistsInCurrentModule('datenschutz_email')) {
+    $libGenericStorage->saveValueInCurrentModule('datenschutz_email', '');
 }
 
 $datenschutzbeauftragter = $libGenericStorage->loadValueInCurrentModule('datenschutzbeauftragter');
 $email = $libGenericStorage->loadValueInCurrentModule('datenschutz_email');
 
-if($email == ''){
-	$email = $libConfig->emailInfo;
+if ($email == '') {
+    $email = $libConfig->emailInfo;
 }
 ?>
 
@@ -44,16 +44,16 @@ if($email == ''){
 <?php
 echo $libConfig->verbindungName .', '. $libConfig->verbindungStrasse .', '. $libConfig->verbindungPlz .' '. $libConfig->verbindungOrt;
 
-if($libConfig->verbindungLand){
-	echo ', '. $libConfig->verbindungLand;
+if ($libConfig->verbindungLand) {
+    echo ', '. $libConfig->verbindungLand;
 }
 ?>
 </p>
 
 <p class="mb-4">Datenschutzbeauftragter:
 <?php
-if($datenschutzbeauftragter != ''){
-	echo $datenschutzbeauftragter .', ';
+if ($datenschutzbeauftragter != '') {
+    echo $datenschutzbeauftragter .', ';
 }
 
 echo $email; ?>

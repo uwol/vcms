@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,176 +19,196 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\calendar;
 
-class LibCalendarEvent{
-	//time infos
-	var $startDateTime; //2008-12-24 20:15:00
-	var $endDateTime;
-	var $allDay;
+class LibCalendarEvent
+{
+    //time infos
+    public $startDateTime; //2008-12-24 20:15:00
+    public $endDateTime;
+    public $allDay;
 
-	//event infos
-	var $id;
-	var $summary;
-	var $description;
-	var $category;
-	var $status;
-	var $location;
-	var $linkUrl;
-	var $imageUrl;
+    //event infos
+    public $id;
+    public $summary;
+    public $description;
+    public $category;
+    public $status;
+    public $location;
+    public $linkUrl;
+    public $imageUrl;
 
-	//meta infos
-	var $attended;
-	var $attendedIcon;
+    //meta infos
+    public $attended;
+    public $attendedIcon;
 
-	//-------------------------------------------------
+    //-------------------------------------------------
 
-	function __construct($startDateTime){
-		$this->startDateTime = $startDateTime;
-	}
+    public function __construct($startDateTime)
+    {
+        $this->startDateTime = $startDateTime;
+    }
 
-	function setEndDateTime($endDateTime){
-		$this->endDateTime = $endDateTime;
-	}
+    public function setEndDateTime($endDateTime)
+    {
+        $this->endDateTime = $endDateTime;
+    }
 
-	function isAllDay($allDay){
-		$this->allDay = $allDay;
-	}
+    public function isAllDay($allDay)
+    {
+        $this->allDay = $allDay;
+    }
 
-	function setId($id){
-		$this->id = $id;
-	}
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-	function setSummary($summary){
-		$this->summary = $summary;
-	}
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    }
 
-	function setDescription($description){
-		$this->description = $description;
-	}
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
-	function setCategory($category){
-		$this->category = $category;
-	}
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
 
-	function setStatus($status){
-		$this->status = $status;
-	}
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
 
-	function setLocation($location){
-		$this->location = $location;
-	}
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
 
-	function setLinkUrl($linkUrl){
-		$this->linkUrl = $linkUrl;
-	}
+    public function setLinkUrl($linkUrl)
+    {
+        $this->linkUrl = $linkUrl;
+    }
 
-	function setImageUrl($imageUrl){
-		$this->imageUrl = $imageUrl;
-	}
+    public function setImageUrl($imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
+    }
 
-	function isAttended($attended){
-		$this->attended = $attended;
-	}
+    public function isAttended($attended)
+    {
+        $this->attended = $attended;
+    }
 
-	function setAttendedIcon($attendedIcon){
-		$this->attendedIcon = $attendedIcon;
-	}
+    public function setAttendedIcon($attendedIcon)
+    {
+        $this->attendedIcon = $attendedIcon;
+    }
 
-	function getStartDateTime(){
-		return $this->startDateTime;
-	}
+    public function getStartDateTime()
+    {
+        return $this->startDateTime;
+    }
 
-	function getStartDate(){
-		return $this->getDateOfDateTime($this->startDateTime);
-	}
+    public function getStartDate()
+    {
+        return $this->getDateOfDateTime($this->startDateTime);
+    }
 
-	function getEndDateTime(){
-		return $this->endDateTime;
-	}
+    public function getEndDateTime()
+    {
+        return $this->endDateTime;
+    }
 
-	function getEndDate(){
-		return $this->getDateOfDateTime($this->endDateTime);
-	}
+    public function getEndDate()
+    {
+        return $this->getDateOfDateTime($this->endDateTime);
+    }
 
-	function getDateOfDateTime($dateTime){
-		return substr((string) $dateTime, 0, 10);
-	}
+    public function getDateOfDateTime($dateTime)
+    {
+        return substr((string) $dateTime, 0, 10);
+    }
 
-	function toString($forDate = ''){
-		//optionally, $forDate contains the date this event should be printed for
-		//this is relevant for multi-day events, that should not contain time information for
-		//days between startDate and endDate
-		global $libString, $libTime, $libEvent;
+    public function toString($forDate = '')
+    {
+        //optionally, $forDate contains the date this event should be printed for
+        //this is relevant for multi-day events, that should not contain time information for
+        //days between startDate and endDate
+        global $libString, $libTime, $libEvent;
 
-		$retstr = '';
-		$timeString = '';
+        $retstr = '';
+        $timeString = '';
 
-		//format timeString
-		if(!$this->allDay){ //event with timeinfo?
-			if($forDate == $this->getStartDate()){
-				$timeString = $libTime->formatTimeString($this->startDateTime);
-			}
-		}
+        //format timeString
+        if (!$this->allDay) { //event with timeinfo?
+            if ($forDate == $this->getStartDate()) {
+                $timeString = $libTime->formatTimeString($this->startDateTime);
+            }
+        }
 
-		/*
-		* print event
-		*/
-		$retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendar-event">';
-		$retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
+        /*
+        * print event
+        */
+        $retstr .= '<div id="t' .$this->id. '_' .$forDate. '" class="calendar-event">';
+        $retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
-		//link
-		if($this->linkUrl != ''){
-			$retstr .= '<a href="' .$this->linkUrl. '">';
-		}
+        //link
+        if ($this->linkUrl != '') {
+            $retstr .= '<a href="' .$this->linkUrl. '">';
+        }
 
-		//summary
-		$retstr .= '<div>';
-		$retstr .= $this->summary;
-		$retstr .= '</div>';
+        //summary
+        $retstr .= '<div>';
+        $retstr .= $this->summary;
+        $retstr .= '</div>';
 
-		//image
-		if($this->imageUrl != ''){
-			$retstr .= '<div class="thumbnail mb-0">';
-			$retstr .= '<div class="img-frame">';
-			$retstr .= '<img src="' .$this->imageUrl. '" alt="Foto" />';
-			$retstr .= '</div>';
-			$retstr .= '</div>';
-		}
+        //image
+        if ($this->imageUrl != '') {
+            $retstr .= '<div class="thumbnail mb-0">';
+            $retstr .= '<div class="img-frame">';
+            $retstr .= '<img src="' .$this->imageUrl. '" alt="Foto" />';
+            $retstr .= '</div>';
+            $retstr .= '</div>';
+        }
 
-		if($this->linkUrl != ''){
-			$retstr .= '</a>';
-		}
+        if ($this->linkUrl != '') {
+            $retstr .= '</a>';
+        }
 
-		//description
-		if($this->description != ''){
-			$retstr .= '<div>';
-			$retstr .= $this->description;
-			$retstr .= '</div>';
-		}
+        //description
+        if ($this->description != '') {
+            $retstr .= '<div>';
+            $retstr .= $this->description;
+            $retstr .= '</div>';
+        }
 
-		//location
-		$retstr .= '<address>';
+        //location
+        $retstr .= '<address>';
 
-		if($this->location != ''){
-			$retstr .= '<span>' .$this->location. '</span>';
-		}
+        if ($this->location != '') {
+            $retstr .= '<span>' .$this->location. '</span>';
+        }
 
-		$retstr .= '</address>';
+        $retstr .= '</address>';
 
-		//attended
-		if($this->attended && $this->attendedIcon != ''){
-			$retstr .= $this->attendedIcon. ' ';
-		}
+        //attended
+        if ($this->attended && $this->attendedIcon != '') {
+            $retstr .= $this->attendedIcon. ' ';
+        }
 
-		//status
-		if($this->status != ''){
-			$retstr .= '<span class="status">';
-			$retstr .= $this->status;
-			$retstr .= '</span>';
-		}
+        //status
+        if ($this->status != '') {
+            $retstr .= '<span class="status">';
+            $retstr .= $this->status;
+            $retstr .= '</span>';
+        }
 
-		//footer
-		$retstr .= '</div>';
+        //footer
+        $retstr .= '</div>';
 
-		return $retstr;
-	}
+        return $retstr;
+    }
 }

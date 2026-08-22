@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -20,14 +21,14 @@ require_once('custom/systemconfig.php');
 require_once('vendor/vcms/initialize.php');
 
 
-if(isset($_REQUEST['iid'])){
-	$libGlobal->iid = $_REQUEST['iid'];
-	$libGlobal->libInclude = $libModuleHandler->getInclude($libGlobal->iid);
-	$libGlobal->module = $libModuleHandler->getModuleByIncludeid($libGlobal->iid);
+if (isset($_REQUEST['iid'])) {
+    $libGlobal->iid = $_REQUEST['iid'];
+    $libGlobal->libInclude = $libModuleHandler->getInclude($libGlobal->iid);
+    $libGlobal->module = $libModuleHandler->getModuleByIncludeid($libGlobal->iid);
 
-	if(is_object($libGlobal->libInclude) && $libSecurityManager->hasAccess($libGlobal->libInclude, $libAuth)){
-		if(is_file($libGlobal->libInclude->getPath())){
-			require_once($libGlobal->libInclude->getPath());
-		}
-	}
+    if (is_object($libGlobal->libInclude) && $libSecurityManager->hasAccess($libGlobal->libInclude, $libAuth)) {
+        if (is_file($libGlobal->libInclude->getPath())) {
+            require_once($libGlobal->libInclude->getPath());
+        }
+    }
 }

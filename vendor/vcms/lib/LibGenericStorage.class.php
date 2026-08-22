@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -20,217 +21,239 @@ namespace vcms;
 
 use PDO;
 
-class LibGenericStorage{
+class LibGenericStorage
+{
+    /*
+    * scalar attributes/values
+    */
 
-	/*
-	* scalar attributes/values
-	*/
+    //load
+    public function loadValue($moduleId, $attributeName)
+    {
+        return $this->loadArrayValue($moduleId, $attributeName, 0);
+    }
 
-	//load
-	function loadValue($moduleId, $attributeName){
-		return $this->loadArrayValue($moduleId, $attributeName, 0);
-	}
+    public function loadValueInCurrentModule($attributeName)
+    {
+        return $this->loadArrayValue($this->getCurrentModuleId(), $attributeName, 0);
+    }
 
-	function loadValueInCurrentModule($attributeName){
-		return $this->loadArrayValue($this->getCurrentModuleId(), $attributeName, 0);
-	}
+    //save
+    public function saveValue($moduleId, $attributeName, $value)
+    {
+        return $this->saveArrayValue($moduleId, $attributeName, 0, $value);
+    }
 
-	//save
-	function saveValue($moduleId, $attributeName, $value){
-		return $this->saveArrayValue($moduleId, $attributeName, 0, $value);
-	}
+    public function saveValueInCurrentModule($attributeName, $value)
+    {
+        return $this->saveArrayValue($this->getCurrentModuleId(), $attributeName, 0, $value);
+    }
 
-	function saveValueInCurrentModule($attributeName, $value){
-		return $this->saveArrayValue($this->getCurrentModuleId(), $attributeName, 0, $value);
-	}
+    //delete
+    public function deleteAttribute($moduleId, $attributeName)
+    {
+        return $this->deleteArray($moduleId, $attributeName);
+    }
 
-	//delete
-	function deleteAttribute($moduleId, $attributeName){
-		return $this->deleteArray($moduleId, $attributeName);
-	}
+    public function deleteAttributeInCurrentModule($attributeName)
+    {
+        return $this->deleteArray($this->getCurrentModuleId(), $attributeName);
+    }
 
-	function deleteAttributeInCurrentModule($attributeName){
-		return $this->deleteArray($this->getCurrentModuleId(), $attributeName);
-	}
+    /*
+    * arrays
+    */
 
-	/*
-	* arrays
-	*/
+    //list
+    public function listAllArrayValues()
+    {
+        global $libDb;
 
-	//list
-	function listAllArrayValues(){
-		global $libDb;
+        $result = $libDb->query('SELECT moduleid, array_name, value, position FROM sys_genericstorage');
 
-		$result = $libDb->query('SELECT moduleid, array_name, value, position FROM sys_genericstorage');
+        $array = [];
 
-		$array = array();
+        foreach ($result as $row) {
+            $array[$row['moduleid']][$row['array_name']][$row['position']] = $row['value'];
 
-		foreach($result as $row){
-			$array[$row['moduleid']][$row['array_name']][$row['position']] = $row['value'];
+            ksort($array[$row['moduleid']][$row['array_name']]);
+            ksort($array[$row['moduleid']]);
+        }
 
-			ksort($array[$row['moduleid']][$row['array_name']]);
-			ksort($array[$row['moduleid']]);
-		}
+        ksort($array);
 
-		ksort($array);
+        return $array;
+    }
 
-		return $array;
-	}
+    public function attributeExists($moduleId, $arrayName)
+    {
+        global $libDb;
 
-	function attributeExists($moduleId, $arrayName){
-		global $libDb;
+        $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
+        $stmt->bindValue(':moduleid', $moduleId);
+        $stmt->bindValue(':array_name', $arrayName);
+        $stmt->execute();
+        $stmt->bindColumn('number', $count);
+        $stmt->fetch();
 
-		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
-		$stmt->bindValue(':moduleid', $moduleId);
-		$stmt->bindValue(':array_name', $arrayName);
-		$stmt->execute();
-		$stmt->bindColumn('number', $count);
-		$stmt->fetch();
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		if($count > 0){
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public function attributeExistsInCurrentModule($arrayName)
+    {
+        return $this->attributeExists($this->getCurrentModuleId(), $arrayName);
+    }
 
-	function attributeExistsInCurrentModule($arrayName){
-		return $this->attributeExists($this->getCurrentModuleId(), $arrayName);
-	}
+    //load
+    public function loadArrayValue($moduleId, $arrayName, $position)
+    {
+        global $libDb;
 
-	//load
-	function loadArrayValue($moduleId, $arrayName, $position){
-		global $libDb;
+        $stmt = $libDb->prepare('SELECT value FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
+        $stmt->bindValue(':moduleid', $moduleId);
+        $stmt->bindValue(':array_name', $arrayName);
+        $stmt->bindValue(':position', $position, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->bindColumn('value', $value);
+        $stmt->fetch();
 
-		$stmt = $libDb->prepare('SELECT value FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
-		$stmt->bindValue(':moduleid', $moduleId);
-		$stmt->bindValue(':array_name', $arrayName);
-		$stmt->bindValue(':position', $position, PDO::PARAM_INT);
-		$stmt->execute();
-		$stmt->bindColumn('value', $value);
-		$stmt->fetch();
+        return $value;
+    }
 
-		return $value;
-	}
+    public function loadArrayValueInCurrentModule($arrayName, $position)
+    {
+        return $this->loadArrayValue($this->getCurrentModuleId(), $arrayName, $position);
+    }
 
-	function loadArrayValueInCurrentModule($arrayName, $position){
-		return $this->loadArrayValue($this->getCurrentModuleId(), $arrayName, $position);
-	}
+    public function loadArray($moduleId, $arrayName)
+    {
+        global $libDb;
 
-	function loadArray($moduleId, $arrayName){
-		global $libDb;
+        $stmt = $libDb->prepare('SELECT value, position FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
+        $stmt->bindValue(':moduleid', $moduleId);
+        $stmt->bindValue(':array_name', $arrayName);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		$stmt = $libDb->prepare('SELECT value, position FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
-		$stmt->bindValue(':moduleid', $moduleId);
-		$stmt->bindValue(':array_name', $arrayName);
-		$stmt->execute();
-		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $array = [];
 
-		$array = array();
+        foreach ($result as $row) {
+            $array[$row['position']] = $row['value'];
+        }
 
-		foreach($result as $row){
-			$array[$row['position']] = $row['value'];
-		}
+        ksort($array);
 
-		ksort($array);
+        return $array;
+    }
 
-		return $array;
-	}
+    public function loadArrayInCurrentModule($arrayName)
+    {
+        return $this->loadArray($this->getCurrentModuleId(), $arrayName);
+    }
 
-	function loadArrayInCurrentModule($arrayName){
-		return $this->loadArray($this->getCurrentModuleId(), $arrayName);
-	}
+    public function loadArraysOfModule($moduleId)
+    {
+        global $libDb;
 
-	function loadArraysOfModule($moduleId){
-		global $libDb;
+        $stmt = $libDb->prepare('SELECT array_name, position, value FROM sys_genericstorage WHERE moduleid=:moduleid');
+        $stmt->bindValue(':moduleid', $moduleId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		$stmt = $libDb->prepare('SELECT array_name, position, value FROM sys_genericstorage WHERE moduleid=:moduleid');
-		$stmt->bindValue(':moduleid', $moduleId);
-		$stmt->execute();
-		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $moduleArrays = [];
 
-		$moduleArrays = array();
+        foreach ($result as $row) {
+            $moduleArrays[$row['array_name']][$row['position']] = $row['value'];
+        }
 
-		foreach($result as $row){
-			$moduleArrays[$row['array_name']][$row['position']] = $row['value'];
-		}
+        ksort($moduleArrays);
 
-		ksort($moduleArrays);
+        return $moduleArrays;
+    }
 
-		return $moduleArrays;
-	}
+    public function loadArraysOfModuleInCurrentModule()
+    {
+        return loadArraysOfModule($this->getCurrentModuleId());
+    }
 
-	function loadArraysOfModuleInCurrentModule(){
-		return loadArraysOfModule($this->getCurrentModuleId());
-	}
+    //save
+    public function saveArrayValue($moduleId, $arrayName, $position, $value)
+    {
+        global $libDb, $libString;
 
-	//save
-	function saveArrayValue($moduleId, $arrayName, $position, $value){
-		global $libDb, $libString;
+        $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
+        $stmt->bindValue(':moduleid', $moduleId);
+        $stmt->bindValue(':array_name', $arrayName);
+        $stmt->bindValue(':position', $position, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->bindColumn('number', $count);
+        $stmt->fetch();
 
-		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
-		$stmt->bindValue(':moduleid', $moduleId);
-		$stmt->bindValue(':array_name', $arrayName);
-		$stmt->bindValue(':position', $position, PDO::PARAM_INT);
-		$stmt->execute();
-		$stmt->bindColumn('number', $count);
-		$stmt->fetch();
+        if ($count > 0) {
+            $stmt = $libDb->prepare('UPDATE sys_genericstorage SET value = :value WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
+            $stmt->bindValue(':value', $libString->protectXss($value));
+            $stmt->bindValue(':moduleid', $moduleId);
+            $stmt->bindValue(':array_name', $arrayName);
+            $stmt->bindValue(':position', $position, PDO::PARAM_INT);
+            $stmt->execute();
+        } else {
+            $stmt = $libDb->prepare('INSERT INTO sys_genericstorage (moduleid, array_name, position, value) VALUES (:moduleid, :array_name, :position, :value)');
+            $stmt->bindValue(':value', $libString->protectXss($value));
+            $stmt->bindValue(':moduleid', $libString->protectXss($moduleId));
+            $stmt->bindValue(':array_name', $libString->protectXss($arrayName));
+            $stmt->bindValue(':position', $libString->protectXss($position), PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    }
 
-		if($count > 0){
-			$stmt = $libDb->prepare('UPDATE sys_genericstorage SET value = :value WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
-			$stmt->bindValue(':value', $libString->protectXss($value));
-			$stmt->bindValue(':moduleid', $moduleId);
-			$stmt->bindValue(':array_name', $arrayName);
-			$stmt->bindValue(':position', $position, PDO::PARAM_INT);
-			$stmt->execute();
-		} else {
-			$stmt = $libDb->prepare('INSERT INTO sys_genericstorage (moduleid, array_name, position, value) VALUES (:moduleid, :array_name, :position, :value)');
-			$stmt->bindValue(':value', $libString->protectXss($value));
-			$stmt->bindValue(':moduleid', $libString->protectXss($moduleId));
-			$stmt->bindValue(':array_name', $libString->protectXss($arrayName));
-			$stmt->bindValue(':position', $libString->protectXss($position), PDO::PARAM_INT);
-			$stmt->execute();
-		}
-	}
+    public function saveArrayValueInCurrentModule($arrayName, $position, $value)
+    {
+        return $this->saveArrayValue($this->getCurrentModuleId(), $arrayName, $position, $value);
+    }
 
-	function saveArrayValueInCurrentModule($arrayName, $position, $value){
-		return $this->saveArrayValue($this->getCurrentModuleId(), $arrayName, $position, $value);
-	}
+    //delete
+    public function deleteArrayValue($moduleId, $arrayName, $position)
+    {
+        global $libDb;
 
-	//delete
-	function deleteArrayValue($moduleId, $arrayName, $position){
-		global $libDb;
+        $stmt = $libDb->prepare('DELETE FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
+        $stmt->bindValue(':moduleid', $moduleId);
+        $stmt->bindValue(':array_name', $arrayName);
+        $stmt->bindValue(':position', $position, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 
-		$stmt = $libDb->prepare('DELETE FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
-		$stmt->bindValue(':moduleid', $moduleId);
-		$stmt->bindValue(':array_name', $arrayName);
-		$stmt->bindValue(':position', $position, PDO::PARAM_INT);
-		$stmt->execute();
-	}
+    public function deleteArrayValueInCurrentModule($arrayName, $position)
+    {
+        return $this->deleteArrayValue($this->getCurrentModuleId(), $arrayName, $position);
+    }
 
-	function deleteArrayValueInCurrentModule($arrayName, $position){
-		return $this->deleteArrayValue($this->getCurrentModuleId(), $arrayName, $position);
-	}
+    public function deleteArray($moduleId, $arrayName)
+    {
+        global $libDb;
 
-	function deleteArray($moduleId, $arrayName){
-		global $libDb;
+        $stmt = $libDb->prepare('DELETE FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
+        $stmt->bindValue(':moduleid', $moduleId);
+        $stmt->bindValue(':array_name', $arrayName);
+        $stmt->execute();
+    }
 
-		$stmt = $libDb->prepare('DELETE FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name');
-		$stmt->bindValue(':moduleid', $moduleId);
-		$stmt->bindValue(':array_name', $arrayName);
-		$stmt->execute();
-	}
+    public function deleteArrayInCurrentModule($arrayName)
+    {
+        return $this->deleteArray($this->getCurrentModuleId(), $arrayName);
+    }
 
-	function deleteArrayInCurrentModule($arrayName){
-		return $this->deleteArray($this->getCurrentModuleId(), $arrayName);
-	}
+    /*
+    * helper
+    */
+    public function getCurrentModuleId()
+    {
+        global $libGlobal;
 
-	/*
-	* helper
-	*/
-	function getCurrentModuleId(){
-		global $libGlobal;
-
-		return $libGlobal->module->getId();
-	}
+        return $libGlobal->module->getId();
+    }
 }

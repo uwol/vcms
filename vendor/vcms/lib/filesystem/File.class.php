@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,47 +19,53 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\filesystem;
 
-class File extends FolderElement{
-	var $size;
-	var $readGroups = array();
+class File extends FolderElement
+{
+    public $size;
+    public $readGroups = [];
 
-	function __construct($nestingFolder, $fileSystemFileName){
-		$metaInfos = $this->getFileMetaInfos($fileSystemFileName);
-		$name = $metaInfos['name'];
-		$this->readGroups = $metaInfos['readgroups'];
+    public function __construct($nestingFolder, $fileSystemFileName)
+    {
+        $metaInfos = $this->getFileMetaInfos($fileSystemFileName);
+        $name = $metaInfos['name'];
+        $this->readGroups = $metaInfos['readgroups'];
 
-		parent::__construct($nestingFolder, $name, $fileSystemFileName);
+        parent::__construct($nestingFolder, $name, $fileSystemFileName);
 
-		$this->type = 2;
-		$this->size = filesize($this->getFileSystemPath());
+        $this->type = 2;
+        $this->size = filesize($this->getFileSystemPath());
 
-		$this->owningOffice = $nestingFolder->owningOffice;
-	}
+        $this->owningOffice = $nestingFolder->owningOffice;
+    }
 
-	function getExtension(){
-		$path_parts = pathinfo($this->name);
+    public function getExtension()
+    {
+        $path_parts = pathinfo($this->name);
 
-		if(isset($path_parts['extension'])){
-			return strtolower($path_parts['extension']);
-		}
-	}
+        if (isset($path_parts['extension'])) {
+            return strtolower($path_parts['extension']);
+        }
+    }
 
-	function getFilename(){
-		$path_parts = pathinfo($this->name);
+    public function getFilename()
+    {
+        $path_parts = pathinfo($this->name);
 
-		if(isset($path_parts['filename'])){
-			return $path_parts['filename'];
-		}
-	}
+        if (isset($path_parts['filename'])) {
+            return $path_parts['filename'];
+        }
+    }
 
-	function delete(){
-		unlink($this->getFileSystemPath());
+    public function delete()
+    {
+        unlink($this->getFileSystemPath());
 
-		$this->nestingFolder->friend_removeFolderElement($this);
-		$this->nestingFolder = '';
-	}
+        $this->nestingFolder->friend_removeFolderElement($this);
+        $this->nestingFolder = '';
+    }
 
-	function getSize(){
-		return $this->size;
-	}
+    public function getSize()
+    {
+        return $this->size;
+    }
 }

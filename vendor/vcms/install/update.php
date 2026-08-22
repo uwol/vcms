@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,123 +17,129 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
-
-
-function getColumns($table){
-	global $libDb;
-
-	$stmt = $libDb->prepare('SHOW COLUMNS FROM ' .$table);
-	$stmt->execute();
-
-	$result = array();
-
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$result[] = $row['Field'];
-	}
-
-	return $result;
-}
-
-function getIndexes($table){
-	global $libDb;
-
-	$stmt = $libDb->prepare('SHOW INDEX FROM ' .$table);
-	$stmt->execute();
-
-	$result = array();
-
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$result[] = $row['Key_name'];
-	}
-
-	return $result;
-}
-
-function renameStorageKey($moduleId, $oldArrayName, $newArrayName){
-	global $libDb;
-
-	$stmt = $libDb->prepare('UPDATE sys_genericstorage SET array_name=:new_array_name WHERE moduleid=:moduleid AND array_name=:old_array_name');
-	$stmt->bindValue(':new_array_name', $newArrayName);
-	$stmt->bindValue(':moduleid', $moduleId);
-	$stmt->bindValue(':old_array_name', $oldArrayName);
-	$stmt->execute();
+if (!is_object($libGlobal)) {
+    exit();
 }
 
 
-if(!function_exists('vcmsMakeDateColumnNullable')){
-	/**
-	* Macht eine date- oder datetime-Spalte nullable ohne Default und konvertiert
-	* bestehende Zero-Dates nach NULL. Kann beliebig oft ausgeführt werden.
-	*/
-	function vcmsMakeDateColumnNullable($table, $column, $type){
-		global $libDb, $libGlobal;
+function getColumns($table)
+{
+    global $libDb;
 
-		$definition = vcmsGetColumnDefinition($table, $column);
+    $stmt = $libDb->prepare('SHOW COLUMNS FROM ' .$table);
+    $stmt->execute();
 
-		if($definition === null){
-			return;
-		}
+    $result = [];
 
-		//sql_mode entschärfen, damit bestehende Zero-Dates die Tabellenkopie überleben
-		$previousSqlMode = null;
-		$stmt = $libDb->query('SELECT @@SESSION.sql_mode AS sql_mode');
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $row['Field'];
+    }
 
-		if($stmt !== false){
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			$previousSqlMode = $row['sql_mode'];
+    return $result;
+}
 
-			$stmt = $libDb->prepare('SET SESSION sql_mode = :sql_mode');
-			$stmt->bindValue(':sql_mode', 'ALLOW_INVALID_DATES');
-			$stmt->execute();
-		}
+function getIndexes($table)
+{
+    global $libDb;
 
-		if($definition['Null'] != 'YES' || $definition['Default'] !== null){
-			$libGlobal->notificationTexts[] = 'Aktualisiere Spalte ' .$table. '.' .$column;
-			$libDb->query('ALTER TABLE ' .$table. ' MODIFY ' .$column. ' ' .$type. ' NULL DEFAULT NULL');
-		}
+    $stmt = $libDb->prepare('SHOW INDEX FROM ' .$table);
+    $stmt->execute();
 
-		//Zero-Dates nach NULL konvertieren; der Vergleich vermeidet das Zero-Literal
-		$libDb->query('UPDATE ' .$table. ' SET ' .$column. ' = NULL WHERE ' .$column. " < '1000-01-01'");
+    $result = [];
 
-		if($previousSqlMode !== null){
-			$stmt = $libDb->prepare('SET SESSION sql_mode = :sql_mode');
-			$stmt->bindValue(':sql_mode', $previousSqlMode);
-			$stmt->execute();
-		}
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $row['Key_name'];
+    }
 
-		//Ergebnis prüfen, da PDO im ERRMODE_SILENT läuft und Fehler sonst unsichtbar bleiben
-		$definition = vcmsGetColumnDefinition($table, $column);
+    return $result;
+}
 
-		if($definition !== null && $definition['Null'] != 'YES'){
-			$libGlobal->errorTexts[] = 'Spalte ' .$table. '.' .$column. ' konnte nicht auf NULL umgestellt werden.';
-		}
-	}
+function renameStorageKey($moduleId, $oldArrayName, $newArrayName)
+{
+    global $libDb;
 
-	/**
-	* Liefert die Definition einer Spalte (Field, Type, Null, Key, Default, Extra)
-	* oder null, falls Tabelle oder Spalte nicht existieren.
-	*/
-	function vcmsGetColumnDefinition($table, $column){
-		global $libDb;
+    $stmt = $libDb->prepare('UPDATE sys_genericstorage SET array_name=:new_array_name WHERE moduleid=:moduleid AND array_name=:old_array_name');
+    $stmt->bindValue(':new_array_name', $newArrayName);
+    $stmt->bindValue(':moduleid', $moduleId);
+    $stmt->bindValue(':old_array_name', $oldArrayName);
+    $stmt->execute();
+}
 
-		$stmt = $libDb->prepare('SHOW COLUMNS FROM ' .$table);
 
-		if($stmt === false || !$stmt->execute()){
-			return null;
-		}
+if (!function_exists('vcmsMakeDateColumnNullable')) {
+    /**
+    * Macht eine date- oder datetime-Spalte nullable ohne Default und konvertiert
+    * bestehende Zero-Dates nach NULL. Kann beliebig oft ausgeführt werden.
+    */
+    function vcmsMakeDateColumnNullable($table, $column, $type)
+    {
+        global $libDb, $libGlobal;
 
-		$result = null;
+        $definition = vcmsGetColumnDefinition($table, $column);
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			if($row['Field'] == $column){
-				$result = $row;
-			}
-		}
+        if ($definition === null) {
+            return;
+        }
 
-		return $result;
-	}
+        //sql_mode entschärfen, damit bestehende Zero-Dates die Tabellenkopie überleben
+        $previousSqlMode = null;
+        $stmt = $libDb->query('SELECT @@SESSION.sql_mode AS sql_mode');
+
+        if ($stmt !== false) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $previousSqlMode = $row['sql_mode'];
+
+            $stmt = $libDb->prepare('SET SESSION sql_mode = :sql_mode');
+            $stmt->bindValue(':sql_mode', 'ALLOW_INVALID_DATES');
+            $stmt->execute();
+        }
+
+        if ($definition['Null'] != 'YES' || $definition['Default'] !== null) {
+            $libGlobal->notificationTexts[] = 'Aktualisiere Spalte ' .$table. '.' .$column;
+            $libDb->query('ALTER TABLE ' .$table. ' MODIFY ' .$column. ' ' .$type. ' NULL DEFAULT NULL');
+        }
+
+        //Zero-Dates nach NULL konvertieren; der Vergleich vermeidet das Zero-Literal
+        $libDb->query('UPDATE ' .$table. ' SET ' .$column. ' = NULL WHERE ' .$column. " < '1000-01-01'");
+
+        if ($previousSqlMode !== null) {
+            $stmt = $libDb->prepare('SET SESSION sql_mode = :sql_mode');
+            $stmt->bindValue(':sql_mode', $previousSqlMode);
+            $stmt->execute();
+        }
+
+        //Ergebnis prüfen, da PDO im ERRMODE_SILENT läuft und Fehler sonst unsichtbar bleiben
+        $definition = vcmsGetColumnDefinition($table, $column);
+
+        if ($definition !== null && $definition['Null'] != 'YES') {
+            $libGlobal->errorTexts[] = 'Spalte ' .$table. '.' .$column. ' konnte nicht auf NULL umgestellt werden.';
+        }
+    }
+
+    /**
+    * Liefert die Definition einer Spalte (Field, Type, Null, Key, Default, Extra)
+    * oder null, falls Tabelle oder Spalte nicht existieren.
+    */
+    function vcmsGetColumnDefinition($table, $column)
+    {
+        global $libDb;
+
+        $stmt = $libDb->prepare('SHOW COLUMNS FROM ' .$table);
+
+        if ($stmt === false || !$stmt->execute()) {
+            return null;
+        }
+
+        $result = null;
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['Field'] == $column) {
+                $result = $row;
+            }
+        }
+
+        return $result;
+    }
 }
 
 
@@ -141,19 +148,19 @@ if(!function_exists('vcmsMakeDateColumnNullable')){
 */
 $eventColumns = getColumns('base_veranstaltung');
 
-if(!in_array('datum_ende', $eventColumns)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
-	$libDb->query('ALTER TABLE base_veranstaltung ADD datum_ende DATETIME AFTER datum');
+if (!in_array('datum_ende', $eventColumns)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
+    $libDb->query('ALTER TABLE base_veranstaltung ADD datum_ende DATETIME AFTER datum');
 }
 
-if(!in_array('fb_eventid', $eventColumns)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
-	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid varchar(255)');
+if (!in_array('fb_eventid', $eventColumns)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
+    $libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid varchar(255)');
 }
 
-if(!in_array('intern', $eventColumns)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
-	$libDb->query('ALTER TABLE base_veranstaltung ADD intern tinyint(1) NOT NULL default 0');
+if (!in_array('intern', $eventColumns)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
+    $libDb->query('ALTER TABLE base_veranstaltung ADD intern tinyint(1) NOT NULL default 0');
 }
 
 vcmsMakeDateColumnNullable('base_veranstaltung', 'datum', 'datetime');
@@ -171,54 +178,54 @@ vcmsMakeDateColumnNullable('sys_log_intranet', 'datum', 'datetime');
 $columnsBasePerson = getColumns('base_person');
 $indexesBasePerson = getIndexes('base_person');
 
-if(in_array('username', $indexesBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Index auf Tabelle base_person';
-	$libDb->query('DROP INDEX username ON base_person');
+if (in_array('username', $indexesBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Index auf Tabelle base_person';
+    $libDb->query('DROP INDEX username ON base_person');
 }
 
-if(!in_array('geburtsname', $columnsBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person ADD geburtsname varchar(255)');
+if (!in_array('geburtsname', $columnsBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person ADD geburtsname varchar(255)');
 }
 
-if(in_array('austritt_grund', $columnsBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person DROP austritt_grund');
+if (in_array('austritt_grund', $columnsBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person DROP austritt_grund');
 }
 
-if(in_array('password_salt', $columnsBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person DROP password_salt');
+if (in_array('password_salt', $columnsBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person DROP password_salt');
 }
 
-if(in_array('icq', $columnsBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person DROP icq');
+if (in_array('icq', $columnsBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person DROP icq');
 }
 
-if(in_array('msn', $columnsBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person DROP msn');
+if (in_array('msn', $columnsBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person DROP msn');
 }
 
-if(in_array('jabber', $columnsBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person DROP jabber');
+if (in_array('jabber', $columnsBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person DROP jabber');
 }
 
-if(in_array('vita_letzterautor', $columnsBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person DROP vita_letzterautor');
+if (in_array('vita_letzterautor', $columnsBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person DROP vita_letzterautor');
 }
 
-if(in_array('username', $columnsBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person DROP username');
+if (in_array('username', $columnsBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person DROP username');
 }
 
-if(!in_array('email', $indexesBasePerson)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Index auf Tabelle base_person';
-	$libDb->query('ALTER TABLE base_person ADD UNIQUE email (email)');
+if (!in_array('email', $indexesBasePerson)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Index auf Tabelle base_person';
+    $libDb->query('ALTER TABLE base_person ADD UNIQUE email (email)');
 }
 
 
@@ -227,34 +234,34 @@ if(!in_array('email', $indexesBasePerson)){
 */
 $columnsBaseSemester = getColumns('base_semester');
 
-if(!in_array('vop', $columnsBaseSemester)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vop int(11)');
+if (!in_array('vop', $columnsBaseSemester)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
+    $libDb->query('ALTER TABLE base_semester ADD vop int(11)');
 }
 
-if(!in_array('vvop', $columnsBaseSemester)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vvop int(11)');
+if (!in_array('vvop', $columnsBaseSemester)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
+    $libDb->query('ALTER TABLE base_semester ADD vvop int(11)');
 }
 
-if(!in_array('vopxx', $columnsBaseSemester)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vopxx int(11)');
+if (!in_array('vopxx', $columnsBaseSemester)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
+    $libDb->query('ALTER TABLE base_semester ADD vopxx int(11)');
 }
 
-if(!in_array('vopxxx', $columnsBaseSemester)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vopxxx int(11)');
+if (!in_array('vopxxx', $columnsBaseSemester)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
+    $libDb->query('ALTER TABLE base_semester ADD vopxxx int(11)');
 }
 
-if(!in_array('vopxxxx', $columnsBaseSemester)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD vopxxxx int(11)');
+if (!in_array('vopxxxx', $columnsBaseSemester)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
+    $libDb->query('ALTER TABLE base_semester ADD vopxxxx int(11)');
 }
 
-if(!in_array('datenpflegewart', $columnsBaseSemester)){
-	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
-	$libDb->query('ALTER TABLE base_semester ADD datenpflegewart int(11)');
+if (!in_array('datenpflegewart', $columnsBaseSemester)) {
+    $libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_semester';
+    $libDb->query('ALTER TABLE base_semester ADD datenpflegewart int(11)');
 }
 
 /*

@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 echo '<h1>Chargierkalender ' .$libTime->getSemesterString($libGlobal->semester). '</h1>';
@@ -28,18 +30,18 @@ echo $libString->getNotificationBoxText();
 /*
 * actions
 */
-if(isset($_POST["changeRegistrationState"]) && $_POST["changeRegistrationState"] != ""){
-	if($_POST["changeRegistrationState"] == "register"){
-  		$stmt = $libDb->prepare("INSERT INTO mod_chargierkalender_teilnahme (chargierveranstaltung, mitglied) VALUES (:chargierveranstaltung, :mitglied)");
-		$stmt->bindValue(':chargierveranstaltung', $_POST['eventid'], PDO::PARAM_INT);
-		$stmt->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
-		$stmt->execute();
-	} else {
-		$stmt = $libDb->prepare("DELETE FROM mod_chargierkalender_teilnahme WHERE chargierveranstaltung=:chargierveranstaltung AND mitglied=:mitglied");
-		$stmt->bindValue(':chargierveranstaltung', $_POST['eventid'], PDO::PARAM_INT);
-		$stmt->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
-		$stmt->execute();
-	}
+if (isset($_POST["changeRegistrationState"]) && $_POST["changeRegistrationState"] != "") {
+    if ($_POST["changeRegistrationState"] == "register") {
+        $stmt = $libDb->prepare("INSERT INTO mod_chargierkalender_teilnahme (chargierveranstaltung, mitglied) VALUES (:chargierveranstaltung, :mitglied)");
+        $stmt->bindValue(':chargierveranstaltung', $_POST['eventid'], PDO::PARAM_INT);
+        $stmt->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
+        $stmt->execute();
+    } else {
+        $stmt = $libDb->prepare("DELETE FROM mod_chargierkalender_teilnahme WHERE chargierveranstaltung=:chargierveranstaltung AND mitglied=:mitglied");
+        $stmt->bindValue(':chargierveranstaltung', $_POST['eventid'], PDO::PARAM_INT);
+        $stmt->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }
 
 /*
@@ -50,10 +52,10 @@ if(isset($_POST["changeRegistrationState"]) && $_POST["changeRegistrationState"]
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM mod_chargierkalender_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 
-$data = array();
+$data = [];
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$data[] = $row['datum'];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $data[] = $row['datum'];
 }
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
@@ -66,217 +68,234 @@ $stmt->bindValue(':semester_start', $period[0]);
 $stmt->bindValue(':semester_ende', $period[1]);
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	//build event
-	$event = new LibChargierCalendarEvent($row['datum']);
-	$event->setId($row['id']);
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    //build event
+    $event = new LibChargierCalendarEvent($row['datum']);
+    $event->setId($row['id']);
 
-	if(is_numeric($row['verein'])){
-		$event->setLinkUrl('index.php?pid=verein&amp;id=' .$row['verein']);
-		$event->setSummary($libAssociation->getAssociationNameString($row['verein']));
-	}
+    if (is_numeric($row['verein'])) {
+        $event->setLinkUrl('index.php?pid=verein&amp;id=' .$row['verein']);
+        $event->setSummary($libAssociation->getAssociationNameString($row['verein']));
+    }
 
-	if(substr((string) $row['datum'], 11, 8) == "00:00:00"){
-		$event->isAllDay(true);
-	}
+    if (substr((string) $row['datum'], 11, 8) == "00:00:00") {
+        $event->isAllDay(true);
+    }
 
-	$event->setDescription($row['beschreibung']);
+    $event->setDescription($row['beschreibung']);
 
-	//registered members
-	$stmt2 = $libDb->prepare("SELECT mitglied FROM mod_chargierkalender_teilnahme WHERE chargierveranstaltung=:chargierveranstaltung");
-	$stmt2->bindValue(':chargierveranstaltung', $row['id'], PDO::PARAM_INT);
-	$stmt2->execute();
+    //registered members
+    $stmt2 = $libDb->prepare("SELECT mitglied FROM mod_chargierkalender_teilnahme WHERE chargierveranstaltung=:chargierveranstaltung");
+    $stmt2->bindValue(':chargierveranstaltung', $row['id'], PDO::PARAM_INT);
+    $stmt2->execute();
 
-    $members = array();
+    $members = [];
 
-	while($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-		$members[$row2['mitglied']] = $libPerson->getNameString($row2['mitglied'], 8);
-	}
+    while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+        $members[$row2['mitglied']] = $libPerson->getNameString($row2['mitglied'], 8);
+    }
 
-	$event->setRegisteredMembers($members);
+    $event->setRegisteredMembers($members);
 
-	//registration button
-	if($row['datum'] > @date("Y-m-d h:i:s")){
-		$event->enableRegistrationButton();
+    //registration button
+    if ($row['datum'] > @date("Y-m-d h:i:s")) {
+        $event->enableRegistrationButton();
 
-		$stmt3 = $libDb->prepare("SELECT COUNT(*) AS number FROM mod_chargierkalender_teilnahme WHERE mitglied=:mitglied AND chargierveranstaltung=:chargierveranstaltung");
-		$stmt3->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
-		$stmt3->bindValue(':chargierveranstaltung', $row['id'], PDO::PARAM_INT);
-		$stmt3->execute();
-		$stmt3->bindColumn('number', $registrationsCount);
-		$stmt3->fetch();
+        $stmt3 = $libDb->prepare("SELECT COUNT(*) AS number FROM mod_chargierkalender_teilnahme WHERE mitglied=:mitglied AND chargierveranstaltung=:chargierveranstaltung");
+        $stmt3->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
+        $stmt3->bindValue(':chargierveranstaltung', $row['id'], PDO::PARAM_INT);
+        $stmt3->execute();
+        $stmt3->bindColumn('number', $registrationsCount);
+        $stmt3->fetch();
 
-    	if($registrationsCount > 0){
-			$event->setRegistered(true);
-		} else {
-			$event->setRegistered(false);
-		}
-	}
+        if ($registrationsCount > 0) {
+            $event->setRegistered(true);
+        } else {
+            $event->setRegistered(false);
+        }
+    }
 
-	$calendar->addEvent($event);
+    $calendar->addEvent($event);
 }
 
 echo $calendar->toString();
 
 
-class LibChargierCalendarEvent{
-	//time infos
-	var $startDateTime; //2008-12-24 20:15:00
-	var $allDay;
+class LibChargierCalendarEvent
+{
+    //time infos
+    public $startDateTime; //2008-12-24 20:15:00
+    public $allDay;
 
-	//event infos
-	var $id;
-	var $summary;
-	var $description;
-	var $location;
-	var $linkUrl;
+    //event infos
+    public $id;
+    public $summary;
+    public $description;
+    public $location;
+    public $linkUrl;
 
-	var $isRegistered;
-	var $registrationButtonEnabled;
-	var $registeredMembers = array();
+    public $isRegistered;
+    public $registrationButtonEnabled;
+    public $registeredMembers = [];
 
-	function __construct($startDateTime){
-		$this->startDateTime = $startDateTime;
-	}
+    public function __construct($startDateTime)
+    {
+        $this->startDateTime = $startDateTime;
+    }
 
-	function isAllDay($allDay){
-		$this->allDay = $allDay;
-	}
+    public function isAllDay($allDay)
+    {
+        $this->allDay = $allDay;
+    }
 
-	function setId($id){
-		$this->id = $id;
-	}
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-	function setSummary($summary){
-		$this->summary = $summary;
-	}
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    }
 
-	function setDescription($description){
-		$this->description = $description;
-	}
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
-	function setLocation($location){
-		$this->location = $location;
-	}
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
 
-	function setLinkUrl($linkUrl){
-		$this->linkUrl = $linkUrl;
-	}
+    public function setLinkUrl($linkUrl)
+    {
+        $this->linkUrl = $linkUrl;
+    }
 
-	function setRegistered($boolean){
-		$this->isRegistered = $boolean;
-	}
+    public function setRegistered($boolean)
+    {
+        $this->isRegistered = $boolean;
+    }
 
-	function enableRegistrationButton(){
-		$this->registrationButtonEnabled = true;
-	}
+    public function enableRegistrationButton()
+    {
+        $this->registrationButtonEnabled = true;
+    }
 
-	function setRegisteredMembers($members){
-		$this->registeredMembers = $members;
-	}
+    public function setRegisteredMembers($members)
+    {
+        $this->registeredMembers = $members;
+    }
 
-	function getStartDateTime(){
-		return $this->startDateTime;
-	}
+    public function getStartDateTime()
+    {
+        return $this->startDateTime;
+    }
 
-	function getStartDate(){
-		return $this->getDateOfDateTime($this->startDateTime);
-	}
+    public function getStartDate()
+    {
+        return $this->getDateOfDateTime($this->startDateTime);
+    }
 
-	function getEndDateTime(){
-		return '';
-	}
+    public function getEndDateTime()
+    {
+        return '';
+    }
 
-	function getEndDate(){
-		return '';
-	}
+    public function getEndDate()
+    {
+        return '';
+    }
 
-	function getDateOfDateTime($dateTime){
-		return substr((string) $dateTime, 0, 10);
-	}
+    public function getDateOfDateTime($dateTime)
+    {
+        return substr((string) $dateTime, 0, 10);
+    }
 
-	function toString($forDate = ''){
-		global $libString, $libTime, $libGlobal;
+    public function toString($forDate = '')
+    {
+        global $libString, $libTime, $libGlobal;
 
-		$retstr = '';
-		$timeString = '';
+        $retstr = '';
+        $timeString = '';
 
-		if(!$this->allDay){ //event with timeinfo?
-			$timeString = $libTime->formatTimeString($this->startDateTime);
-		}
+        if (!$this->allDay) { //event with timeinfo?
+            $timeString = $libTime->formatTimeString($this->startDateTime);
+        }
 
-		/*
-		* print event
-		*/
-		//header
-		$retstr .= '<div id="t' .$this->id. '" class="calendar-event">';
-		$retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
+        /*
+        * print event
+        */
+        //header
+        $retstr .= '<div id="t' .$this->id. '" class="calendar-event">';
+        $retstr .= '<div><time datetime="' .$libTime->formatUtcString($this->startDateTime). '">' .$timeString. '</time></div>';
 
-		//link
-		if($this->linkUrl != ''){
-			$retstr .= '<a href="' .$this->linkUrl. '">';
-		}
+        //link
+        if ($this->linkUrl != '') {
+            $retstr .= '<a href="' .$this->linkUrl. '">';
+        }
 
-		//summary
-		if($this->summary != ''){
-			$retstr .= '<div>';
-			$retstr .= $this->summary;
-			$retstr .= '</div>';
-		}
+        //summary
+        if ($this->summary != '') {
+            $retstr .= '<div>';
+            $retstr .= $this->summary;
+            $retstr .= '</div>';
+        }
 
-		if($this->linkUrl != ''){
-			$retstr .= '</a>';
-		}
+        if ($this->linkUrl != '') {
+            $retstr .= '</a>';
+        }
 
-		//description
-		if($this->description != ''){
-			$retstr .= '<div>';
-			$retstr .= $this->description;
-			$retstr .= '</div>';
-		}
+        //description
+        if ($this->description != '') {
+            $retstr .= '<div>';
+            $retstr .= $this->description;
+            $retstr .= '</div>';
+        }
 
-		//location
-		$retstr .= '<address>';
+        //location
+        $retstr .= '<address>';
 
-		if($this->location != ''){
-			$retstr .= '<span>' .$this->location. '</span>';
-		}
+        if ($this->location != '') {
+            $retstr .= '<span>' .$this->location. '</span>';
+        }
 
-		$retstr .= '</address>';
+        $retstr .= '</address>';
 
-		if(count($this->registeredMembers) > 0){
-			$memberLinks = array();
+        if (count($this->registeredMembers) > 0) {
+            $memberLinks = [];
 
-			foreach($this->registeredMembers as $key => $value){
-				$memberLinks[] = '<a href="index.php?pid=intranet_person&amp;id=' .$key. '">' .$value. '</a>';
-			}
+            foreach ($this->registeredMembers as $key => $value) {
+                $memberLinks[] = '<a href="index.php?pid=intranet_person&amp;id=' .$key. '">' .$value. '</a>';
+            }
 
-			$retstr .= '<div>';
-			$retstr .= implode(', ', $memberLinks);
-			$retstr .= '</div>';
-		}
+            $retstr .= '<div>';
+            $retstr .= implode(', ', $memberLinks);
+            $retstr .= '</div>';
+        }
 
-		if($this->registrationButtonEnabled){
-			$retstr .= '<form action="index.php?pid=intranet_chargierkalender" method="post" class="form-horizontal">';
-			$retstr .= '<input type="hidden" name="eventid" value="' .$this->id. '" />';
-			$retstr .= '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
+        if ($this->registrationButtonEnabled) {
+            $retstr .= '<form action="index.php?pid=intranet_chargierkalender" method="post" class="form-horizontal">';
+            $retstr .= '<input type="hidden" name="eventid" value="' .$this->id. '" />';
+            $retstr .= '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
 
-    		if($this->isRegistered){
-    			$retstr .= '<input type="hidden" name="changeRegistrationState" value="unregister" />';
-					$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
-					$retstr .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
-					$retstr .= '</button>';
-   			} else {
-    			$retstr .= '<input type="hidden" name="changeRegistrationState" value="register" />';
-					$retstr .= '<button type="submit" class="btn btn-default btn-xs">';
-					$retstr .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
-					$retstr .= '</button>';
-    		}
+            if ($this->isRegistered) {
+                $retstr .= '<input type="hidden" name="changeRegistrationState" value="unregister" />';
+                $retstr .= '<button type="submit" class="btn btn-default btn-xs">';
+                $retstr .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
+                $retstr .= '</button>';
+            } else {
+                $retstr .= '<input type="hidden" name="changeRegistrationState" value="register" />';
+                $retstr .= '<button type="submit" class="btn btn-default btn-xs">';
+                $retstr .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
+                $retstr .= '</button>';
+            }
 
-    		$retstr .= '</form>';
-		}
+            $retstr .= '</form>';
+        }
 
-		$retstr .= '</div>';
-		return $retstr;
-	}
+        $retstr .= '</div>';
+        return $retstr;
+    }
 }

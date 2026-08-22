@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 echo '<h1>Neuer Nachrichtenbeitrag</h1>';
@@ -36,8 +38,8 @@ echo '<div class="col-sm-9"><select id="category" name="category" class="form-co
 $stmt = $libDb->prepare('SELECT * FROM mod_news_kategorie ORDER BY bezeichnung');
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<option value="' .$row['id']. '">' .$row['bezeichnung']. '</option>';
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<option value="' .$row['id']. '">' .$row['bezeichnung']. '</option>';
 }
 
 echo '</select></div>';

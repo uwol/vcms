@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,61 +19,65 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\calendar;
 
-class LibYear{
-	var $number;
-	var $months = array();
+class LibYear
+{
+    public $number;
+    public $months = [];
 
-	function __construct($number, $startDate, $endDate){
-		$startDate = (string) $startDate;
-		$endDate = (string) $endDate;
+    public function __construct($number, $startDate, $endDate)
+    {
+        $startDate = (string) $startDate;
+        $endDate = (string) $endDate;
 
-		if($number != '0' && $number == ''){
-			$number = @date('Y');
-		}
+        if ($number != '0' && $number == '') {
+            $number = @date('Y');
+        }
 
-		$this->number = $number;
+        $this->number = $number;
 
-		//is start of year restricted?
-		if(substr($startDate, 0, 4) == $number){
-			$startMonth = max(intval(substr($startDate, 5, 2)), 1);
-		} else {
-			$startMonth = 1;
-		}
+        //is start of year restricted?
+        if (substr($startDate, 0, 4) == $number) {
+            $startMonth = max(intval(substr($startDate, 5, 2)), 1);
+        } else {
+            $startMonth = 1;
+        }
 
-		//is end of year restricted?
-		if(substr($endDate, 0, 4) == $number){
-			$endMonth = intval(substr($endDate, 5, 2));
-		} else {
-			$endMonth = 12;
-		}
+        //is end of year restricted?
+        if (substr($endDate, 0, 4) == $number) {
+            $endMonth = intval(substr($endDate, 5, 2));
+        } else {
+            $endMonth = 12;
+        }
 
-		//generate months
-		for($i=$startMonth; $i<=$endMonth; $i++){
-			$this->months[$i] = new LibMonth($this, $i, $startDate, $endDate);
-		}
-	}
+        //generate months
+        for ($i = $startMonth; $i <= $endMonth; $i++) {
+            $this->months[$i] = new LibMonth($this, $i, $startDate, $endDate);
+        }
+    }
 
-	function getNumber(){
-		return $this->number;
-	}
+    public function getNumber()
+    {
+        return $this->number;
+    }
 
-	function toString($eventSet){
-		$monthNames = array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
+    public function toString($eventSet)
+    {
+        $monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 
-		$retstr = '';
-		$retstr .= '<div class="calendar">'.PHP_EOL;
+        $retstr = '';
+        $retstr .= '<div class="calendar">'.PHP_EOL;
 
-		foreach($this->months as $month){
-			$hasEvents = $month->hasEvents($eventSet);
-			$hiddenClass = $hasEvents ? '' : ' hidden-xs';
+        foreach ($this->months as $month) {
+            $hasEvents = $month->hasEvents($eventSet);
+            $hiddenClass = $hasEvents ? '' : ' hidden-xs';
 
-			$retstr .= '<div class="calendar-month-name reveal' .$hiddenClass. '">';
-			$retstr .= '<h2>' . $monthNames[$month->getNumber()-1]. ' ' .$this->number. '</h2>';
-			$retstr .= '</div>';
-			$retstr .= $month->toString($eventSet);
-		}
+            $retstr .= '<div class="calendar-month-name reveal' .$hiddenClass. '">';
+            $retstr .= '<h2>' . $monthNames[$month->getNumber() - 1]. ' ' .$this->number. '</h2>';
+            $retstr .= '</div>';
+            $retstr .= $month->toString($eventSet);
+        }
 
-		$retstr .= '</div>';
-		return $retstr;
-	}
+        $retstr .= '</div>';
+        return $retstr;
+    }
 }

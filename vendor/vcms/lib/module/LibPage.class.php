@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,48 +19,57 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\module;
 
-class LibPage extends LibRestrictableElement{
-	var $directory;
-	var $containerEnabled;
-	var $file;
-	var $pid;
-	var $title;
+class LibPage extends LibRestrictableElement
+{
+    public $directory;
+    public $containerEnabled;
+    public $file;
+    public $pid;
+    public $title;
 
-	function __construct($pid, $directory, $file, $accessRestriction, $title, $containerEnabled){
-		parent::__construct($accessRestriction);
+    public function __construct($pid, $directory, $file, $accessRestriction, $title, $containerEnabled)
+    {
+        parent::__construct($accessRestriction);
 
-		$this->containerEnabled = $containerEnabled;
-		$this->directory = $directory;
-		$this->file = $file;
-		$this->pid = $pid;
-		$this->title = $title;
-	}
+        $this->containerEnabled = $containerEnabled;
+        $this->directory = $directory;
+        $this->file = $file;
+        $this->pid = $pid;
+        $this->title = $title;
+    }
 
-	function isContainerEnabled(){
-		return $this->containerEnabled;
-	}
+    public function isContainerEnabled()
+    {
+        return $this->containerEnabled;
+    }
 
-	function getDirectory(){
-		return $this->directory;
-	}
+    public function getDirectory()
+    {
+        return $this->directory;
+    }
 
-	function getFile(){
-		return $this->file;
-	}
+    public function getFile()
+    {
+        return $this->file;
+    }
 
-	function getPath(){
-		return $this->directory. '/' .$this->file;
-	}
+    public function getPath()
+    {
+        return $this->directory. '/' .$this->file;
+    }
 
-	function getPid(){
-		return $this->pid;
-	}
+    public function getPid()
+    {
+        return $this->pid;
+    }
 
-	function getTitle(){
-		return $this->title;
-	}
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	function setDirectory($directory){
-		$this->directory = $directory;
-	}
+    public function setDirectory($directory)
+    {
+        $this->directory = $directory;
+    }
 }

@@ -39,112 +39,111 @@ $libDb->connect();
 /*
 * check configuration
 */
-if($libConfig->mysqlServer == ''){
-	echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-Server angegeben.</p>';
+if ($libConfig->mysqlServer == '') {
+    echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-Server angegeben.</p>';
 } else {
-	echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-Server angegeben: ' .$libConfig->mysqlServer. '</p>';
+    echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-Server angegeben: ' .$libConfig->mysqlServer. '</p>';
 }
 
-if($libConfig->mysqlPort != ''){
-	echo '<p class="mb-3" style="color:green">OK: In der Konfiguration ist ein MySQL-Port angegeben: ' .$libConfig->mysqlPort. '</p>';
+if ($libConfig->mysqlPort != '') {
+    echo '<p class="mb-3" style="color:green">OK: In der Konfiguration ist ein MySQL-Port angegeben: ' .$libConfig->mysqlPort. '</p>';
 }
 
-if($libConfig->mysqlDb == ''){
-	echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist keine MySQL-Datenbank angegeben.</p>';
+if ($libConfig->mysqlDb == '') {
+    echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist keine MySQL-Datenbank angegeben.</p>';
 } else {
-	echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist eine MySQL-Datenbank angegeben: ' .$libConfig->mysqlDb. '</p>';
+    echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist eine MySQL-Datenbank angegeben: ' .$libConfig->mysqlDb. '</p>';
 }
 
-if($libConfig->mysqlUser == ''){
-	echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-User angegeben.</p>';
+if ($libConfig->mysqlUser == '') {
+    echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-User angegeben.</p>';
 } else {
-	echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-User angegeben: ' .$libConfig->mysqlUser. '</p>';
+    echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-User angegeben: ' .$libConfig->mysqlUser. '</p>';
 }
 
-if($libConfig->mysqlPass == ''){
-	echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-Passwort angegeben.</p>';
+if ($libConfig->mysqlPass == '') {
+    echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-Passwort angegeben.</p>';
 } else {
-	echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-Passwort angegeben.</p>';
+    echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-Passwort angegeben.</p>';
 }
 
 
 /*
 * actions
 */
-if(isset($_REQUEST['aktion'])){
-	$libDb->setErrModeWarning();
+if (isset($_REQUEST['aktion'])) {
+    $libDb->setErrModeWarning();
 
-	/*
-	* install all modules
-	*/
-	if($_REQUEST['aktion'] == 'installAllModules'){
-		echo '<p class="alert alert-info mb-3">Der Installer für die Engine wird gestartet.</p>';
-		include('vendor/vcms/install/install.php');
+    /*
+    * install all modules
+    */
+    if ($_REQUEST['aktion'] == 'installAllModules') {
+        echo '<p class="alert alert-info mb-3">Der Installer für die Engine wird gestartet.</p>';
+        include('vendor/vcms/install/install.php');
 
-		foreach($libModuleHandler->getModules() as $module){
-			if($module->getInstallScript() != ''){
-				echo '<p class="alert alert-info mb-3">Der Installer ' .$module->getPath().'/'.$module->getInstallScript(). ' wird gestartet.</p>';
-				include($module->getPath().'/'.$module->getInstallScript());
-			}
-		}
+        foreach ($libModuleHandler->getModules() as $module) {
+            if ($module->getInstallScript() != '') {
+                echo '<p class="alert alert-info mb-3">Der Installer ' .$module->getPath().'/'.$module->getInstallScript(). ' wird gestartet.</p>';
+                include($module->getPath().'/'.$module->getInstallScript());
+            }
+        }
 
-		echo '<p class="alert alert-info mb-3">Falls keine Fehlermeldung erschienen ist, sollte die Installation durchgeführt worden sein.</p>';
-	}
-	/*
-	* generate an internetwart
-	*/
-	elseif($_REQUEST['aktion'] == 'createInternetWart'){
-		if(isset($_REQUEST['email']) && trim($_REQUEST['email']) != '' && isset($_REQUEST['pwd1']) && trim($_REQUEST['pwd1']) != ''){
-			if($_REQUEST['pwd1'] == ($_REQUEST['pwd2'] ?? '')){
-				if($libAuth->isValidPassword($_REQUEST['pwd1'])){
-					echo '<p class="alert alert-info mb-3">Datensatz für neuen Benutzer wird angelegt</p>';
+        echo '<p class="alert alert-info mb-3">Falls keine Fehlermeldung erschienen ist, sollte die Installation durchgeführt worden sein.</p>';
+    }
+    /*
+    * generate an internetwart
+    */ elseif ($_REQUEST['aktion'] == 'createInternetWart') {
+        if (isset($_REQUEST['email']) && trim($_REQUEST['email']) != '' && isset($_REQUEST['pwd1']) && trim($_REQUEST['pwd1']) != '') {
+            if ($_REQUEST['pwd1'] == ($_REQUEST['pwd2'] ?? '')) {
+                if ($libAuth->isValidPassword($_REQUEST['pwd1'])) {
+                    echo '<p class="alert alert-info mb-3">Datensatz für neuen Benutzer wird angelegt</p>';
 
-					$stmt = $libDb->prepare('INSERT INTO base_person (name, vorname, email, gruppe) VALUES (:name, :vorname, :email, :gruppe)');
-					$stmt->bindValue(':name', trim($_REQUEST['name'] ?? ''));
-					$stmt->bindValue(':vorname', trim($_REQUEST['vorname'] ?? ''));
-					$stmt->bindValue(':email', trim($_REQUEST['email']));
-					$stmt->bindValue(':gruppe', 'B');
-					$stmt->execute();
+                    $stmt = $libDb->prepare('INSERT INTO base_person (name, vorname, email, gruppe) VALUES (:name, :vorname, :email, :gruppe)');
+                    $stmt->bindValue(':name', trim($_REQUEST['name'] ?? ''));
+                    $stmt->bindValue(':vorname', trim($_REQUEST['vorname'] ?? ''));
+                    $stmt->bindValue(':email', trim($_REQUEST['email']));
+                    $stmt->bindValue(':gruppe', 'B');
+                    $stmt->execute();
 
-					$stmt = $libDb->prepare('SELECT id FROM base_person WHERE email = :email');
-					$stmt->bindValue(':email', trim($_REQUEST['email']));
-					$stmt->execute();
-					$stmt->bindColumn('id', $id);
-					$stmt->fetch();
+                    $stmt = $libDb->prepare('SELECT id FROM base_person WHERE email = :email');
+                    $stmt->bindValue(':email', trim($_REQUEST['email']));
+                    $stmt->execute();
+                    $stmt->bindColumn('id', $id);
+                    $stmt->fetch();
 
-					$libAuth->savePassword($id, $_REQUEST['pwd1']);
+                    $libAuth->savePassword($id, $_REQUEST['pwd1']);
 
-					$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE semester = :semester');
-					$stmt->bindValue(':semester', $libTime->getSemesterName());
-					$stmt->execute();
-					$stmt->bindColumn('number', $number);
-					$stmt->fetch();
+                    $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE semester = :semester');
+                    $stmt->bindValue(':semester', $libTime->getSemesterName());
+                    $stmt->execute();
+                    $stmt->bindColumn('number', $number);
+                    $stmt->fetch();
 
-					if($number == 0){
-						echo '<p class="alert alert-info mb-3">Datensatz für das aktuelle Semester wird angelegt. Das neue Mitglied wird als Internetwart angegeben.</p>';
-						$stmt = $libDb->prepare('INSERT INTO base_semester (semester, internetwart) VALUES (:semester, :internetwart)');
-						$stmt->bindValue(':semester', $libTime->getSemesterName());
-						$stmt->bindValue(':internetwart', $id);
-						$stmt->execute();
-					} else {
-						echo '<p class="alert alert-info mb-3">Neuer Benutzer wird als Internetwart in das aktuelle Semester eingefügt. Falls bisher ein Internetwart in diesem Semester eingetragen war, wird dieser damit aus dem Semester entfernt.</p>';
-						$stmt = $libDb->prepare('UPDATE base_semester SET internetwart=:internetwart WHERE semester=:semester');
-						$stmt->bindValue(':semester', $libTime->getSemesterName());
-						$stmt->bindValue(':internetwart', $id);
-						$stmt->execute();
-					}
+                    if ($number == 0) {
+                        echo '<p class="alert alert-info mb-3">Datensatz für das aktuelle Semester wird angelegt. Das neue Mitglied wird als Internetwart angegeben.</p>';
+                        $stmt = $libDb->prepare('INSERT INTO base_semester (semester, internetwart) VALUES (:semester, :internetwart)');
+                        $stmt->bindValue(':semester', $libTime->getSemesterName());
+                        $stmt->bindValue(':internetwart', $id);
+                        $stmt->execute();
+                    } else {
+                        echo '<p class="alert alert-info mb-3">Neuer Benutzer wird als Internetwart in das aktuelle Semester eingefügt. Falls bisher ein Internetwart in diesem Semester eingetragen war, wird dieser damit aus dem Semester entfernt.</p>';
+                        $stmt = $libDb->prepare('UPDATE base_semester SET internetwart=:internetwart WHERE semester=:semester');
+                        $stmt->bindValue(':semester', $libTime->getSemesterName());
+                        $stmt->bindValue(':internetwart', $id);
+                        $stmt->execute();
+                    }
 
-					echo '<p class="alert alert-info mb-3">Fertig. Falls keine Fehlermeldung angezeigt wurde, sollte nun der Login unter dem neuen Benutzer mit Internetwart-Rechten möglich sein.</p>';
-				} else {
-					echo '<p class="alert alert-danger mb-3">Das Passwort ist nicht komplex genug.</p>';
-				}
-			} else {
-				echo '<p class="alert alert-danger mb-3">Die Passwörter stimmen nicht überein.</p>';
-			}
-		} else {
-			echo '<p class="alert alert-danger mb-3">E-Mail-Adresse oder Passwort wurden nicht angegeben.</p>';
-		}
-	}
+                    echo '<p class="alert alert-info mb-3">Fertig. Falls keine Fehlermeldung angezeigt wurde, sollte nun der Login unter dem neuen Benutzer mit Internetwart-Rechten möglich sein.</p>';
+                } else {
+                    echo '<p class="alert alert-danger mb-3">Das Passwort ist nicht komplex genug.</p>';
+                }
+            } else {
+                echo '<p class="alert alert-danger mb-3">Die Passwörter stimmen nicht überein.</p>';
+            }
+        } else {
+            echo '<p class="alert alert-danger mb-3">E-Mail-Adresse oder Passwort wurden nicht angegeben.</p>';
+        }
+    }
 }
 
 /*

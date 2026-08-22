@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 $libDb->connect();
@@ -29,15 +31,15 @@ $calendar = new vcms\LibICalendar();
 $stmt = $libDb->prepare('SELECT id, datum, datum_ende, titel, beschreibung, status, ort FROM base_veranstaltung WHERE datum >= CURDATE() ORDER BY datum DESC');
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$e = new vcms\LibICalendarEvent();
-	$e->summary = $row['titel'];
-	$e->setStartAndEndDateTime($row['datum'], $row['datum_ende']);
- 	$e->description = $row['beschreibung'];
-	$e->location = $row['ort'];
-	$e->url = $libGlobal->getSiteUrl(). '/index.php?pid=event&id='. $row['id'];
-	$e->uid = $calendarId.$row['id'];
-	$calendar->addEvent($e);
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $e = new vcms\LibICalendarEvent();
+    $e->summary = $row['titel'];
+    $e->setStartAndEndDateTime($row['datum'], $row['datum_ende']);
+    $e->description = $row['beschreibung'];
+    $e->location = $row['ort'];
+    $e->url = $libGlobal->getSiteUrl(). '/index.php?pid=event&id='. $row['id'];
+    $e->uid = $calendarId.$row['id'];
+    $calendar->addEvent($e);
 }
 
 /*

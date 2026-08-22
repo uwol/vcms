@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,91 +19,102 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\calendar;
 
-class LibDay{
-	var $month;
-	var $number;
-	var $type; //0 - sunday ... 6 - saturday
+class LibDay
+{
+    public $month;
+    public $number;
+    public $type; //0 - sunday ... 6 - saturday
 
-	function __construct($month, $number){
-		$this->month = $month;
-		$this->number = $number;
-		$this->type = $this->getDayOfWeek();
-	}
+    public function __construct($month, $number)
+    {
+        $this->month = $month;
+        $this->number = $number;
+        $this->type = $this->getDayOfWeek();
+    }
 
-	function getDayOfWeek(){
-		$year = $this->month->getYear();
-		$a = intval((14 - $this->month->getNumber()) / 12);
-		$y = $year->getNumber() - $a;
-		$m = $this->month->getNumber() + (12 * $a) - 2;
+    public function getDayOfWeek()
+    {
+        $year = $this->month->getYear();
+        $a = intval((14 - $this->month->getNumber()) / 12);
+        $y = $year->getNumber() - $a;
+        $m = $this->month->getNumber() + (12 * $a) - 2;
 
-		return ($this->number + $y + intval($y/4) - intval($y/100) + intval($y/400) + intval((31*$m)/12) ) % 7;
-	}
+        return ($this->number + $y + intval($y / 4) - intval($y / 100) + intval($y / 400) + intval((31 * $m) / 12)) % 7;
+    }
 
-	function getDayOfWeekByTimestamp(){
-		$year = $this->month->getYear();
-		return @date('w', @mktime(0, 0, 0, $this->month->getNumber(), $this->number, $year->getNumber()));
-	}
+    public function getDayOfWeekByTimestamp()
+    {
+        $year = $this->month->getYear();
+        return @date('w', @mktime(0, 0, 0, $this->month->getNumber(), $this->number, $year->getNumber()));
+    }
 
-	function getNumber(){
-		return $this->number;
-	}
+    public function getNumber()
+    {
+        return $this->number;
+    }
 
-	function getType(){
-		return $this->type;
-	}
+    public function getType()
+    {
+        return $this->type;
+    }
 
-	function getDate(){
-		$year = $this->month->getYear();
-		$yearNumber = $year->getNumber();
-		$monthNumber = str_pad($this->month->getNumber(), 2, 0, STR_PAD_LEFT);
-		$dayNumber = str_pad($this->number, 2, 0, STR_PAD_LEFT);
-		return $yearNumber.'-'.$monthNumber.'-'.$dayNumber;
-	}
+    public function getDate()
+    {
+        $year = $this->month->getYear();
+        $yearNumber = $year->getNumber();
+        $monthNumber = str_pad($this->month->getNumber(), 2, 0, STR_PAD_LEFT);
+        $dayNumber = str_pad($this->number, 2, 0, STR_PAD_LEFT);
+        return $yearNumber.'-'.$monthNumber.'-'.$dayNumber;
+    }
 
-	function getEvents($eventSet){
-		return $eventSet->getEventsOfDate($this->getDate());
-	}
+    public function getEvents($eventSet)
+    {
+        return $eventSet->getEventsOfDate($this->getDate());
+    }
 
-	function hasEvents($eventSet){
-		$events = $this->getEvents($eventSet);
-		return is_array($events) && sizeof($events) > 0;
-	}
+    public function hasEvents($eventSet)
+    {
+        $events = $this->getEvents($eventSet);
+        return is_array($events) && sizeof($events) > 0;
+    }
 
-	function isToday(){
-		$year = $this->month->getYear();
+    public function isToday()
+    {
+        $year = $this->month->getYear();
 
-		if($this->number == @date('j')){
-			if($this->month->getNumber() == @date('n')){
-				if($year->getNumber() == @date('Y')){
-					return true;
-				}
-			}
-		}
+        if ($this->number == @date('j')) {
+            if ($this->month->getNumber() == @date('n')) {
+                if ($year->getNumber() == @date('Y')) {
+                    return true;
+                }
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	function toString($eventSet){
-		//print events of day
-		$hasEvents = $this->hasEvents($eventSet);
-		$events = $this->getEvents($eventSet);
+    public function toString($eventSet)
+    {
+        //print events of day
+        $hasEvents = $this->hasEvents($eventSet);
+        $events = $this->getEvents($eventSet);
 
-		$todayClass = $this->isToday() ? ' today' : '';
-		$hiddenClass = $hasEvents ? '' : ' hidden-xs';
+        $todayClass = $this->isToday() ? ' today' : '';
+        $hiddenClass = $hasEvents ? '' : ' hidden-xs';
 
-		//header
-		$retstr = '';
-		$retstr .= '<div class="calendar-cell calendar-day reveal' .$todayClass.$hiddenClass. '">';
-		$retstr .= $this->number;
+        //header
+        $retstr = '';
+        $retstr .= '<div class="calendar-cell calendar-day reveal' .$todayClass.$hiddenClass. '">';
+        $retstr .= $this->number;
 
-		if($hasEvents){
-			foreach($events as $event){
-				$retstr .= $event->toString($this->getDate());
-			}
-		}
+        if ($hasEvents) {
+            foreach ($events as $event) {
+                $retstr .= $event->toString($this->getDate());
+            }
+        }
 
-		//footer
-		$retstr .= '</div>'.PHP_EOL;
-		return $retstr;
-	}
+        //footer
+        $retstr .= '</div>'.PHP_EOL;
+        return $retstr;
+    }
 }

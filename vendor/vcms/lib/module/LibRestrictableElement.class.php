@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,22 +19,26 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\module;
 
-class LibRestrictableElement{
-	var $accessRestriction;
+class LibRestrictableElement
+{
+    public $accessRestriction;
 
-	function __construct($accessRestriction){
-		$this->accessRestriction = $accessRestriction;
-	}
+    public function __construct($accessRestriction)
+    {
+        $this->accessRestriction = $accessRestriction;
+    }
 
-	function getAccessRestriction(){
-		return $this->accessRestriction;
-	}
+    public function getAccessRestriction()
+    {
+        return $this->accessRestriction;
+    }
 
-	function hasAccessRestriction(){
-		if(is_object($this->accessRestriction)){
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public function hasAccessRestriction()
+    {
+        if (is_object($this->accessRestriction)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

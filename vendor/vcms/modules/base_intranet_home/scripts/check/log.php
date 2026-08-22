@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,32 +17,33 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 $numberOfLoginErrorsThreshold = 14;
 $numberOfLoginErrorDaysThreshold = 14;
 
-if(in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())){
-	$stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold);
-	$stmt->execute();
-	$stmt->bindColumn('numberOfLoginErrors', $count);
-	$stmt->fetch();
+if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
+    $stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold);
+    $stmt->execute();
+    $stmt->bindColumn('numberOfLoginErrors', $count);
+    $stmt->fetch();
 
-	if($count > 0){
-		$logText = 'Personen mit erfolglosen Intranet-Anmeldungen in den letzten ' .$numberOfLoginErrorDaysThreshold. ' Tagen: ';
+    if ($count > 0) {
+        $logText = 'Personen mit erfolglosen Intranet-Anmeldungen in den letzten ' .$numberOfLoginErrorDaysThreshold. ' Tagen: ';
 
-		$stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors, mitglied FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold. ' ORDER BY numberOfLoginErrors DESC');
-		$stmt->execute();
+        $stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors, mitglied FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold. ' ORDER BY numberOfLoginErrors DESC');
+        $stmt->execute();
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$logText .= '<span class="badge">' .$row['numberOfLoginErrors']. '</span>';
-			$logText .= ' ';
-			$logText .= '<a href="index.php?pid=intranet_person&id=' .$row['mitglied']. '">' .$libPerson->getNameString($row['mitglied'], 4). '</a>';
-			$logText .= ' ';
-		}
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $logText .= '<span class="badge">' .$row['numberOfLoginErrors']. '</span>';
+            $logText .= ' ';
+            $logText .= '<a href="index.php?pid=intranet_person&id=' .$row['mitglied']. '">' .$libPerson->getNameString($row['mitglied'], 4). '</a>';
+            $logText .= ' ';
+        }
 
-		$libGlobal->errorTexts[] = $logText;
-	}
+        $libGlobal->errorTexts[] = $logText;
+    }
 }

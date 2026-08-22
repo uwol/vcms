@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,16 +19,19 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\menu;
 
-class LibMenuEntry extends LibMenuElement{
-	function __construct($pid, $name, $position){
-		parent::__construct($pid, $name, $position, 1);
-	}
+class LibMenuEntry extends LibMenuElement
+{
+    public function __construct($pid, $name, $position)
+    {
+        parent::__construct($pid, $name, $position, 1);
+    }
 
-	function copy(){
-		$menuEntry = new LibMenuEntry($this->pid, $this->name, $this->position);
-		$menuEntry->accessRestriction = $this->accessRestriction;
-		$menuEntry->type = $this->type;
-		$menuEntry->id = $this->id;
-		return $menuEntry;
-	}
+    public function copy()
+    {
+        $menuEntry = new LibMenuEntry($this->pid, $this->name, $this->position);
+        $menuEntry->accessRestriction = $this->accessRestriction;
+        $menuEntry->type = $this->type;
+        $menuEntry->id = $this->id;
+        return $menuEntry;
+    }
 }

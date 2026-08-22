@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,28 +17,29 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 /*
 * actions
 */
-if(isset($_POST['action']) && $_POST['action'] == "delete"){
-	if(isset($_POST['id']) && $_POST['id'] != ""){
-		//CASCADE deletion
+if (isset($_POST['action']) && $_POST['action'] == "delete") {
+    if (isset($_POST['id']) && $_POST['id'] != "") {
+        //CASCADE deletion
 
-		//delete event registrations
-		$stmt = $libDb->prepare("DELETE FROM mod_chargierkalender_teilnahme WHERE chargierveranstaltung=:chargierveranstaltung");
-		$stmt->bindValue(':chargierveranstaltung', $_POST['id'], PDO::PARAM_INT);
-		$stmt->execute();
+        //delete event registrations
+        $stmt = $libDb->prepare("DELETE FROM mod_chargierkalender_teilnahme WHERE chargierveranstaltung=:chargierveranstaltung");
+        $stmt->bindValue(':chargierveranstaltung', $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();
 
-		//delete event
-		$stmt = $libDb->prepare("DELETE FROM mod_chargierkalender_veranstaltung WHERE id=:id");
-		$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
-		$stmt->execute();
+        //delete event
+        $stmt = $libDb->prepare("DELETE FROM mod_chargierkalender_veranstaltung WHERE id=:id");
+        $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();
 
-		$libGlobal->notificationTexts[] = "Die Chargierveranstaltung wurde gelöscht.";
-	}
+        $libGlobal->notificationTexts[] = "Die Chargierveranstaltung wurde gelöscht.";
+    }
 }
 
 /*
@@ -62,9 +64,9 @@ echo '</div>';
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM mod_chargierkalender_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 
-$data = array();
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$data[] = $row['datum'];
+$data = [];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $data[] = $row['datum'];
 }
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
@@ -86,18 +88,18 @@ $stmt->bindValue(':semester_start', $period[0]);
 $stmt->bindValue(':semester_ende', $period[1]);
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<tr>';
-	echo '<td>' .$row['id']. '</td>';
-	echo '<td>' .$libAssociation->getAssociationNameString($row['verein']). '</td>';
-	echo '<td>' .$row['beschreibung']. '</td>';
-	echo '<td>' .$row['datum']. '</td>';
-	echo '<td class="tool-column">';
-	echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;id=' .$row['id']. '">';
-	echo '<i class="fa fa-cog" aria-hidden="true"></i>';
-	echo '</a>';
-	echo '</td>';
-	echo '</tr>';
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<tr>';
+    echo '<td>' .$row['id']. '</td>';
+    echo '<td>' .$libAssociation->getAssociationNameString($row['verein']). '</td>';
+    echo '<td>' .$row['beschreibung']. '</td>';
+    echo '<td>' .$row['datum']. '</td>';
+    echo '<td class="tool-column">';
+    echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;id=' .$row['id']. '">';
+    echo '<i class="fa fa-cog" aria-hidden="true"></i>';
+    echo '</a>';
+    echo '</td>';
+    echo '</tr>';
 }
 
 echo '</table>';

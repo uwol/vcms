@@ -62,6 +62,25 @@ Die Installationsanleitung ist in der Datei INSTALL.md gespeichert. Die technisc
 * ImageMagick oder GDlib für Fotogalerien
 
 
+Entwicklung
+-----------
+
+Der PHP-Code folgt PSR-12 und wird mit [PHP-CS-Fixer](https://cs.symfony.com) formatiert:
+
+```
+brew install php-cs-fixer
+```
+
+* `bin/format` formatiert den eigenen Code (Root-Dateien, `custom`, `modules`, `vendor/vcms`).
+* `bin/lint` prüft Syntax (`php -l`) und Code-Style, ohne Dateien zu ändern.
+
+Der Code-Style ist in `.php-cs-fixer.dist.php` konfiguriert. Die Fremd-Bibliotheken in `vendor` sind bewusst ausgenommen. Damit der einmalige Formatierungs-Commit `git blame` nicht verfälscht:
+
+```
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
+
 Lizenz
 ------
 

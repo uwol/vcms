@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,33 +17,34 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 $lastInsertId = '';
 
-if(isset($_POST["datum"]) && $_POST["datum"] < @date("Y-m-d")){
-	$libGlobal->errorTexts[] = "Das Datum liegt in der Vergangenheit.";
-} elseif(isset($_POST["datum"]) && isset($_POST["beschreibung"])){
-	$stmt = $libDb->prepare("INSERT INTO mod_reservierung_reservierung (datum, beschreibung, person) VALUES (:datum, :beschreibung, :person)");
-	$stmt->bindValue(':datum', $libTime->assureMysqlDate($_POST["datum"]));
-	$stmt->bindValue(':beschreibung', $libString->protectXss($_POST["beschreibung"]));
-	$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
-	$stmt->execute();
+if (isset($_POST["datum"]) && $_POST["datum"] < @date("Y-m-d")) {
+    $libGlobal->errorTexts[] = "Das Datum liegt in der Vergangenheit.";
+} elseif (isset($_POST["datum"]) && isset($_POST["beschreibung"])) {
+    $stmt = $libDb->prepare("INSERT INTO mod_reservierung_reservierung (datum, beschreibung, person) VALUES (:datum, :beschreibung, :person)");
+    $stmt->bindValue(':datum', $libTime->assureMysqlDate($_POST["datum"]));
+    $stmt->bindValue(':beschreibung', $libString->protectXss($_POST["beschreibung"]));
+    $stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
+    $stmt->execute();
 
-	$lastInsertId = $libDb->lastInsertId();
+    $lastInsertId = $libDb->lastInsertId();
 
-	$libGlobal->notificationTexts[] = 'Die Reservierung wurde gespeichert.';
+    $libGlobal->notificationTexts[] = 'Die Reservierung wurde gespeichert.';
 }
 
-if(isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST["id"]) && $_POST["id"] != ''){
-	$stmt = $libDb->prepare("DELETE FROM mod_reservierung_reservierung WHERE id=:id AND person=:person");
-	$stmt->bindValue(':id', $_POST["id"], PDO::PARAM_INT);
-	$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
-	$stmt->execute();
+if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST["id"]) && $_POST["id"] != '') {
+    $stmt = $libDb->prepare("DELETE FROM mod_reservierung_reservierung WHERE id=:id AND person=:person");
+    $stmt->bindValue(':id', $_POST["id"], PDO::PARAM_INT);
+    $stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
+    $stmt->execute();
 
-	$libGlobal->notificationTexts[] = "Die Reservierung wurde gelöscht.";
+    $libGlobal->notificationTexts[] = "Die Reservierung wurde gelöscht.";
 }
 
 
@@ -67,39 +69,39 @@ $stmt = $libDb->prepare("SELECT * FROM mod_reservierung_reservierung WHERE datum
 $stmt->bindValue(':datum', date('Y-m-d'));
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
-	echo '<div class="panel-heading">';
-	echo '<h3 class="panel-title d-inline">';
-	echo $libTime->formatDateString($row['datum']);
-	echo ' ';
-	echo '<a href="index.php?pid=intranet_person&amp;id=' .$row['person']. '">';
-	echo $libPerson->getNameString($row['person'], 0);
-	echo '</a>';
-	echo '</h3>';
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
+    echo '<div class="panel-heading">';
+    echo '<h3 class="panel-title d-inline">';
+    echo $libTime->formatDateString($row['datum']);
+    echo ' ';
+    echo '<a href="index.php?pid=intranet_person&amp;id=' .$row['person']. '">';
+    echo $libPerson->getNameString($row['person'], 0);
+    echo '</a>';
+    echo '</h3>';
 
-	if($libAuth->getId() == $row['person']){
-		echo ' ';
-		echo '<form method="post" action="index.php?pid=intranet_reservations" class="d-inline" onsubmit="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
-		echo '<input type="hidden" name="action" value="delete" />';
-		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
-		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
-		echo '</form>';
-	}
+    if ($libAuth->getId() == $row['person']) {
+        echo ' ';
+        echo '<form method="post" action="index.php?pid=intranet_reservations" class="d-inline" onsubmit="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
+        echo '<input type="hidden" name="action" value="delete" />';
+        echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
+        echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
+        echo '</form>';
+    }
 
-	echo '</div>';
+    echo '</div>';
 
-	echo '<div class="panel-body">';
-	echo '<div class="row">';
-	echo '<div class="col-xs-12 col-sm-9 col-md-10">';
-	echo nl2br((string) $row['beschreibung']);
-	echo '</div>';
+    echo '<div class="panel-body">';
+    echo '<div class="row">';
+    echo '<div class="col-xs-12 col-sm-9 col-md-10">';
+    echo nl2br((string) $row['beschreibung']);
+    echo '</div>';
 
-	echo '<div class="hidden-xs col-sm-3 col-md-2">';
-	echo $libPerson->getSignature($row['person']);
-	echo '</div>';
+    echo '<div class="hidden-xs col-sm-3 col-md-2">';
+    echo $libPerson->getSignature($row['person']);
+    echo '</div>';
 
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
 }

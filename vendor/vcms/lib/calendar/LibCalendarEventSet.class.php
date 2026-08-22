@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,42 +19,46 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\calendar;
 
-class LibCalendarEventSet{
-	var $events = array();
+class LibCalendarEventSet
+{
+    public $events = [];
 
-	function addEvent($event){
-		if($event->getStartDate() != '' && $event->getStartDate() != '0000-00-00'){
-			if($event->getEndDate() == '0000-00-00' || $event->getEndDate() == '' || $event->getEndDate() < $event->getStartDate()){
-				$this->events[$event->getStartDate()][] = $event;
-			} else {
-				$datesIncludingBetweenDates = $this->getDatesIncludingBetweenDates($event->getStartDate(), $event->getEndDate());
+    public function addEvent($event)
+    {
+        if ($event->getStartDate() != '' && $event->getStartDate() != '0000-00-00') {
+            if ($event->getEndDate() == '0000-00-00' || $event->getEndDate() == '' || $event->getEndDate() < $event->getStartDate()) {
+                $this->events[$event->getStartDate()][] = $event;
+            } else {
+                $datesIncludingBetweenDates = $this->getDatesIncludingBetweenDates($event->getStartDate(), $event->getEndDate());
 
-				foreach($datesIncludingBetweenDates as $date){
-					$this->events[$date][] = $event;
-				}
-			}
-		}
-	}
+                foreach ($datesIncludingBetweenDates as $date) {
+                    $this->events[$date][] = $event;
+                }
+            }
+        }
+    }
 
-	function getEventsOfDate($date){
-		if(isset($this->events[$date])){
-			return $this->events[$date];
-		}
-	}
+    public function getEventsOfDate($date)
+    {
+        if (isset($this->events[$date])) {
+            return $this->events[$date];
+        }
+    }
 
-	function getDatesIncludingBetweenDates($startDate, $endDate){
-		$startDate = (string) $startDate;
-		$endDate = (string) $endDate;
+    public function getDatesIncludingBetweenDates($startDate, $endDate)
+    {
+        $startDate = (string) $startDate;
+        $endDate = (string) $endDate;
 
-		$dates = array();
-		$dates[] = $startDate;
-		$currentDate = $startDate;
+        $dates = [];
+        $dates[] = $startDate;
+        $currentDate = $startDate;
 
-		while($currentDate < $endDate){
-			$currentDate = date('Y-m-d', strtotime('+1 day', strtotime($currentDate)));
-			$dates[] = $currentDate;
-		}
+        while ($currentDate < $endDate) {
+            $currentDate = date('Y-m-d', strtotime('+1 day', strtotime($currentDate)));
+            $dates[] = $currentDate;
+        }
 
-		return $dates;
-	}
+        return $dates;
+    }
 }

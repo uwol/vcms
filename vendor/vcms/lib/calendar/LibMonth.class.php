@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,102 +19,109 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\calendar;
 
-class LibMonth{
-	var $year;
-	var $number;
-	var $days = array();
+class LibMonth
+{
+    public $year;
+    public $number;
+    public $days = [];
 
-	function __construct($year, $number, $startDate, $endDate){
-		$startDate = (string) $startDate;
-		$endDate = (string) $endDate;
+    public function __construct($year, $number, $startDate, $endDate)
+    {
+        $startDate = (string) $startDate;
+        $endDate = (string) $endDate;
 
-		$this->year = $year;
-		$this->number = $number;
+        $this->year = $year;
+        $this->number = $number;
 
-		//is start of month restricted?
-		if(substr($startDate, 0, 4) == $year->getNumber()
-			&& substr($startDate, 5, 2) == $number){
-			$startDay = intval(substr($startDate, 8, 2));
-		} else {
-			$startDay = 1;
-		}
+        //is start of month restricted?
+        if (substr($startDate, 0, 4) == $year->getNumber()
+            && substr($startDate, 5, 2) == $number) {
+            $startDay = intval(substr($startDate, 8, 2));
+        } else {
+            $startDay = 1;
+        }
 
-		//is end of month restricted?
-		if(substr($endDate, 0, 4) == $year->getNumber()
-			&& substr($endDate, 5, 2) == $number){
-			$endDay = intval(substr($endDate, 8, 2));
-		} else {
-			$endDay = $this->getNumberOfDays();
-		}
+        //is end of month restricted?
+        if (substr($endDate, 0, 4) == $year->getNumber()
+            && substr($endDate, 5, 2) == $number) {
+            $endDay = intval(substr($endDate, 8, 2));
+        } else {
+            $endDay = $this->getNumberOfDays();
+        }
 
-		//generate days
-		for($i=$startDay; $i <= $endDay && $i <= $this->getNumberOfDays(); $i++){
-			$this->days[$i] = new LibDay($this, $i);
-		}
-	}
+        //generate days
+        for ($i = $startDay; $i <= $endDay && $i <= $this->getNumberOfDays(); $i++) {
+            $this->days[$i] = new LibDay($this, $i);
+        }
+    }
 
-	function getYear(){
-		return $this->year;
-	}
+    public function getYear()
+    {
+        return $this->year;
+    }
 
-	function getNumber(){
-		return $this->number;
-	}
+    public function getNumber()
+    {
+        return $this->number;
+    }
 
-	function getNumberOfDays(){
-		return 31 - ((($this->number - (($this->number < 8)?1:0)) % 2) + (($this->number == 2)?((!($this->year->getNumber() % ((!($this->year->getNumber() % 100))?400:4)))?1:2):0));
-	}
+    public function getNumberOfDays()
+    {
+        return 31 - ((($this->number - (($this->number < 8) ? 1 : 0)) % 2) + (($this->number == 2) ? ((!($this->year->getNumber() % ((!($this->year->getNumber() % 100)) ? 400 : 4))) ? 1 : 2) : 0));
+    }
 
-	function hasEvents($eventSet){
-		foreach($this->days as $day){
-			if($day->hasEvents($eventSet)){
-				return true;
-			}
-		}
+    public function hasEvents($eventSet)
+    {
+        foreach ($this->days as $day) {
+            if ($day->hasEvents($eventSet)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	function toString($eventSet, $weekShift=1){
-		$dayNames = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
+    public function toString($eventSet, $weekShift = 1)
+    {
+        $dayNames = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 
-		$retstr = '';
+        $retstr = '';
 
-		$weekShift = $weekShift % 7;
+        $weekShift = $weekShift % 7;
 
-		//heading with day names
-		$retstr .= '<div class="calendar-cell-container">'.PHP_EOL;
+        //heading with day names
+        $retstr .= '<div class="calendar-cell-container">'.PHP_EOL;
 
-		for($i=0+$weekShift; $i<count($dayNames)+$weekShift; $i++){
-			$retstr .= '<div class="calendar-cell calendar-day-name reveal hidden-xs">';
-			$retstr .= $dayNames[$i % 7];
-			$retstr .= '</div>'.PHP_EOL;
-		}
+        for ($i = 0 + $weekShift; $i < count($dayNames) + $weekShift; $i++) {
+            $retstr .= '<div class="calendar-cell calendar-day-name reveal hidden-xs">';
+            $retstr .= $dayNames[$i % 7];
+            $retstr .= '</div>'.PHP_EOL;
+        }
 
-		$retstr .= '</div>'.PHP_EOL;
+        $retstr .= '</div>'.PHP_EOL;
 
-		//week
-		$retstr .= '<div class="calendar-cell-container">'.PHP_EOL;
+        //week
+        $retstr .= '<div class="calendar-cell-container">'.PHP_EOL;
 
-		$dayCounter = 1;
-		$colCounter = 0 + $weekShift;
+        $dayCounter = 1;
+        $colCounter = 0 + $weekShift;
 
-		//as long, as there are columns left for output
-		while($colCounter != $weekShift || $dayCounter < count($this->days)+1){
-			$dayExists = isset($this->days[$dayCounter]);
+        //as long, as there are columns left for output
+        while ($colCounter != $weekShift || $dayCounter < count($this->days) + 1) {
+            $dayExists = isset($this->days[$dayCounter]);
 
-			//as long, as there are days left for output
-			if($dayExists && $this->days[$dayCounter]->getType() == $colCounter){
-				$retstr .= $this->days[$dayCounter]->toString($eventSet);
-				$dayCounter++;
-			} else {
-				$retstr .= '<div class="calendar-cell reveal hidden-xs"></div>'.PHP_EOL;
-			}
+            //as long, as there are days left for output
+            if ($dayExists && $this->days[$dayCounter]->getType() == $colCounter) {
+                $retstr .= $this->days[$dayCounter]->toString($eventSet);
+                $dayCounter++;
+            } else {
+                $retstr .= '<div class="calendar-cell reveal hidden-xs"></div>'.PHP_EOL;
+            }
 
-			$colCounter = ($colCounter + 1) % 7;
-		}
+            $colCounter = ($colCounter + 1) % 7;
+        }
 
-		$retstr .= '</div>'.PHP_EOL;
-		return $retstr;
-	}
+        $retstr .= '</div>'.PHP_EOL;
+        return $retstr;
+    }
 }

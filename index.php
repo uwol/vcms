@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(is_file('installer.php')){
-	die('Um das VCMS zu nutzen, muss nach der Installation die Datei installer.php entfernt werden.');
+if (is_file('installer.php')) {
+    die('Um das VCMS zu nutzen, muss nach der Installation die Datei installer.php entfernt werden.');
 }
 
 require_once('custom/systemconfig.php');
@@ -28,14 +29,14 @@ $libDb->connect();
 $libCronjobs->executeDueJobs();
 
 
-if(isset($_POST['intranet_login_email']) && isset($_POST['intranet_login_password'])){
-	$libAuth = new \vcms\LibAuth();
-	$isLoggedIn = $libAuth->login($_POST['intranet_login_email'], $_POST['intranet_login_password']);
+if (isset($_POST['intranet_login_email']) && isset($_POST['intranet_login_password'])) {
+    $libAuth = new \vcms\LibAuth();
+    $isLoggedIn = $libAuth->login($_POST['intranet_login_email'], $_POST['intranet_login_password']);
 
-	if($isLoggedIn){
-		session_start();
-		$_SESSION['libAuth'] = $libAuth;
-	}
+    if ($isLoggedIn) {
+        session_start();
+        $_SESSION['libAuth'] = $libAuth;
+    }
 }
 
 
@@ -44,24 +45,24 @@ $libMenuIntranet = $libModuleHandler->getMenuIntranet();
 $libMenuAdministration = $libModuleHandler->getMenuAdministration();
 
 
-if(!isset($_GET['pid']) || $_GET['pid'] == ''){
-	$defaultHomeExists = $libModuleHandler->pageExists($libConfig->defaultHome);
+if (!isset($_GET['pid']) || $_GET['pid'] == '') {
+    $defaultHomeExists = $libModuleHandler->pageExists($libConfig->defaultHome);
 
-	if($defaultHomeExists){
-		$libGlobal->pid = $libConfig->defaultHome;
-	} else {
-		$libGlobal->pid = 'login';
-	}
+    if ($defaultHomeExists) {
+        $libGlobal->pid = $libConfig->defaultHome;
+    } else {
+        $libGlobal->pid = 'login';
+    }
 } else {
-	$libGlobal->pid = $_GET['pid'];
+    $libGlobal->pid = $_GET['pid'];
 }
 
 
-if(!$libModuleHandler->pageExists($libGlobal->pid)){
-	http_response_code(404);
-	die('HTTP-Fehler 404: Seite nicht gefunden.');
-} elseif(!$libSecurityManager->hasAccess($libModuleHandler->getPage($libGlobal->pid), $libAuth)){
-	http_response_code(403);
+if (!$libModuleHandler->pageExists($libGlobal->pid)) {
+    http_response_code(404);
+    die('HTTP-Fehler 404: Seite nicht gefunden.');
+} elseif (!$libSecurityManager->hasAccess($libModuleHandler->getPage($libGlobal->pid), $libAuth)) {
+    http_response_code(403);
 }
 
 
@@ -71,15 +72,15 @@ $libGlobal->module = $libModuleHandler->getModuleByPageid($libGlobal->pid);
 
 require_once('vendor/vcms/layout/header.php');
 
-if(is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->page, $libAuth)){
-	if(is_file($libGlobal->page->getPath())){
-		require_once($libGlobal->page->getPath());
-	}
+if (is_object($libGlobal->page) && $libSecurityManager->hasAccess($libGlobal->page, $libAuth)) {
+    if (is_file($libGlobal->page->getPath())) {
+        require_once($libGlobal->page->getPath());
+    }
 } else {
-	echo '<h1>Zugriffsfehler</h1>';
-	echo $libString->getErrorBoxText();
-	echo $libString->getNotificationBoxText();
-	echo '<p class="mb-4">Für diese Seite ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
+    echo '<h1>Zugriffsfehler</h1>';
+    echo $libString->getErrorBoxText();
+    echo $libString->getNotificationBoxText();
+    echo '<p class="mb-4">Für diese Seite ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 }
 
 require_once('vendor/vcms/layout/footer.php');

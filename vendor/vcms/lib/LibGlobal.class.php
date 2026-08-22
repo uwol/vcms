@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -20,106 +21,116 @@ namespace vcms;
 
 use PDO;
 
-class LibGlobal{
-	var $version = '12.17';
+class LibGlobal
+{
+    public $version = '12.18';
 
-	var $semester;
-	var $module;
-	var $pid;
-	var $page;
-	var $iid;
-	var $libInclude;
+    public $semester;
+    public $module;
+    public $pid;
+    public $page;
+    public $iid;
+    public $libInclude;
 
-	var $errorTexts = array();
-	var $notificationTexts = array();
+    public $errorTexts = [];
+    public $notificationTexts = [];
 
-	var $vcmsHostname;
-	var $mkHostname;
+    public $vcmsHostname;
+    public $mkHostname;
 
-	function __construct() {
-		$this->vcmsHostname = 'ver' . 'bin' . 'dung' . 'scms' . '.' . 'de';
-		$this->mkHostname = 'www' . '.' . 'mar' . 'kom' . 'ann' . 'ia' . '.' . 'org';
-	}
+    public function __construct()
+    {
+        $this->vcmsHostname = 'ver' . 'bin' . 'dung' . 'scms' . '.' . 'de';
+        $this->mkHostname = 'www' . '.' . 'mar' . 'kom' . 'ann' . 'ia' . '.' . 'org';
+    }
 
-	function getPageCanonicalUrl(){
-		global $libGlobal, $libConfig, $libEvent;
+    public function getPageCanonicalUrl()
+    {
+        global $libGlobal, $libConfig, $libEvent;
 
-		$result = '';
+        $result = '';
 
-		if($libGlobal->pid == $libConfig->defaultHome){
-			$result = $libGlobal->getSiteUrl(). '/';
-		} else if($this->isEventPage()){
-			$result = $libEvent->getEventUrl($_REQUEST['id']);
-		} else {
-			$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid;
-		}
+        if ($libGlobal->pid == $libConfig->defaultHome) {
+            $result = $libGlobal->getSiteUrl(). '/';
+        } elseif ($this->isEventPage()) {
+            $result = $libEvent->getEventUrl($_REQUEST['id']);
+        } else {
+            $result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid;
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	function getPageOgUrl(){
-		global $libGlobal;
+    public function getPageOgUrl()
+    {
+        global $libGlobal;
 
-		$result = '';
+        $result = '';
 
-		if($this->isEventPage()){
-			$result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;id=' .$_REQUEST['id'];
-		} else {
-			$result = $libGlobal->getSiteUrl(). '/';
-		}
+        if ($this->isEventPage()) {
+            $result = $libGlobal->getSiteUrl(). '/index.php?pid=' .$libGlobal->pid. '&amp;id=' .$_REQUEST['id'];
+        } else {
+            $result = $libGlobal->getSiteUrl(). '/';
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	function getPageOgImageUrl(){
-		return $this->getSiteUrl(). '/custom/styles/og_image.jpg';
-	}
+    public function getPageOgImageUrl()
+    {
+        return $this->getSiteUrl(). '/custom/styles/og_image.jpg';
+    }
 
-	function getPageTitle(){
-		global $libGlobal, $libConfig, $libTime, $libDb;
+    public function getPageTitle()
+    {
+        global $libGlobal, $libConfig, $libTime, $libDb;
 
-		$result = '';
+        $result = '';
 
-		if($libGlobal->pid == $libConfig->defaultHome){
-			$result = $libConfig->verbindungName;
-		} else if($this->isEventPage()){
-			$stmt = $libDb->prepare("SELECT titel, datum, intern FROM base_veranstaltung WHERE id=:id");
-			$stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
-			$stmt->execute();
-			$event = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($libGlobal->pid == $libConfig->defaultHome) {
+            $result = $libConfig->verbindungName;
+        } elseif ($this->isEventPage()) {
+            $stmt = $libDb->prepare("SELECT titel, datum, intern FROM base_veranstaltung WHERE id=:id");
+            $stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+            $stmt->execute();
+            $event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			if(is_array($event) && $event['titel'] != '' && $event['intern'] == 0){
-				$result = $libConfig->verbindungName. ' - ' .$event['titel']. ' am ' .$libTime->formatDateString($event['datum']);
-			} else {
-				$result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
-			}
-		} else {
-			$result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
-		}
+            if (is_array($event) && $event['titel'] != '' && $event['intern'] == 0) {
+                $result = $libConfig->verbindungName. ' - ' .$event['titel']. ' am ' .$libTime->formatDateString($event['datum']);
+            } else {
+                $result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
+            }
+        } else {
+            $result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	function getSiteUrl(){
-		global $libGenericStorage;
+    public function getSiteUrl()
+    {
+        global $libGenericStorage;
 
-		return (string) $libGenericStorage->loadValue('base_core', 'site_url');
-	}
+        return (string) $libGenericStorage->loadValue('base_core', 'site_url');
+    }
 
-	function getSiteUrlAuthority(){
-		$siteUrl = $this->getSiteUrl();
-		return preg_replace('/https?:\/\//', '', $siteUrl);
-	}
+    public function getSiteUrlAuthority()
+    {
+        $siteUrl = $this->getSiteUrl();
+        return preg_replace('/https?:\/\//', '', $siteUrl);
+    }
 
-	function getSiteUrlHost(){
-		$siteUrl = $this->getSiteUrl();
-		return parse_url($siteUrl, PHP_URL_HOST);
-	}
+    public function getSiteUrlHost()
+    {
+        $siteUrl = $this->getSiteUrl();
+        return parse_url($siteUrl, PHP_URL_HOST);
+    }
 
-	function isEventPage(){
-		global $libGlobal;
+    public function isEventPage()
+    {
+        global $libGlobal;
 
-		return $libGlobal->page->getPid() == 'event'
-				&& isset($_REQUEST['id']) && is_numeric($_REQUEST['id']);
-	}
+        return $libGlobal->page->getPid() == 'event'
+                && isset($_REQUEST['id']) && is_numeric($_REQUEST['id']);
+    }
 }

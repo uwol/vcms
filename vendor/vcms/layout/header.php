@@ -1,4 +1,5 @@
 <?php
+
 echo '<!DOCTYPE html>' . PHP_EOL;
 echo '<html lang="de">' . PHP_EOL;
 echo '  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# business: http://ogp.me/ns/business#">' . PHP_EOL;
@@ -28,26 +29,26 @@ echo '    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>' . PHP
 echo '    <script src="vendor/vcms/styles/gallery/modal.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/vcms/styles/screen.js"></script>' . PHP_EOL;
 
-if(is_array($libGlobal->module->getHeaderStrings())){
-	foreach($libGlobal->module->getHeaderStrings() as $headerString){
-		echo '    ' .$headerString. PHP_EOL;
-	}
+if (is_array($libGlobal->module->getHeaderStrings())) {
+    foreach ($libGlobal->module->getHeaderStrings() as $headerString) {
+        echo '    ' .$headerString. PHP_EOL;
+    }
 }
 
 /*
 * robots
 */
-if($libGlobal->page->hasAccessRestriction()){
-	echo '    <meta name="robots" content="noindex, nofollow, noarchive" />' . PHP_EOL;
+if ($libGlobal->page->hasAccessRestriction()) {
+    echo '    <meta name="robots" content="noindex, nofollow, noarchive" />' . PHP_EOL;
 } else {
-	echo '    <meta name="robots" content="index, follow, noarchive" />' . PHP_EOL;
+    echo '    <meta name="robots" content="index, follow, noarchive" />' . PHP_EOL;
 }
 
 /*
 * Opengraph / Facebook meta data
 */
-if($libGenericStorage->loadValue('base_core', 'facebook_appid')){
-	echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'facebook_appid'). '"/>' . PHP_EOL;
+if ($libGenericStorage->loadValue('base_core', 'facebook_appid')) {
+    echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'facebook_appid'). '"/>' . PHP_EOL;
 }
 
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
@@ -66,8 +67,8 @@ echo '    <meta property="business:contact_data:country_name" content="' .$libCo
 
 $analyticsFilePath = $libFilesystem->getAbsolutePath('custom/analyticstracking.php');
 
-if(is_file($analyticsFilePath) && !$libAuth->isLoggedIn()){
-	include_once($analyticsFilePath);
+if (is_file($analyticsFilePath) && !$libAuth->isLoggedIn()) {
+    include_once($analyticsFilePath);
 }
 
 echo '  </head>' . PHP_EOL;
@@ -76,7 +77,7 @@ echo '  <body>' . PHP_EOL;
 $libMenuRenderer = new \vcms\LibMenuRenderer();
 $libMenuRenderer->printNavbar($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGroup(), $libAuth->getOffices());
 
-if($libGlobal->page->isContainerEnabled()){
-	echo '    <main id="content">' . PHP_EOL;
-	echo '      <div id="container" class="container">' . PHP_EOL;
+if ($libGlobal->page->isContainerEnabled()) {
+    echo '    <main id="content">' . PHP_EOL;
+    echo '      <div id="container" class="container">' . PHP_EOL;
 }

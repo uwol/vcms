@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,97 +17,98 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
-if($libAuth->isLoggedin()){
-	if(isset($_POST['action']) && $_POST['action'] == 'create'){
-		if($_POST['bezeichnung'] != ''){
-			$stmt = $libDb->prepare('INSERT INTO base_status (bezeichnung, beschreibung) VALUES (:bezeichnung, :beschreibung)');
-			$stmt->bindValue(':bezeichnung', $libString->protectXss($_POST['bezeichnung']));
-			$stmt->bindValue(':beschreibung', $libString->protectXss($_POST['beschreibung']));
-			$stmt->execute();
-		} else {
-			$libGlobal->errorTexts[] = 'Keine Bezeichnung angegeben.';
-		}
-	} elseif(isset($_POST['action']) && $_POST['action'] == 'delete'){
-		if($_POST['bezeichnung'] != ''){
-			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE status = :status');
-			$stmt->bindValue(':status', $_POST['bezeichnung']);
-			$stmt->execute();
-			$stmt->bindColumn('number', $count);
-			$stmt->fetch();
+if ($libAuth->isLoggedin()) {
+    if (isset($_POST['action']) && $_POST['action'] == 'create') {
+        if ($_POST['bezeichnung'] != '') {
+            $stmt = $libDb->prepare('INSERT INTO base_status (bezeichnung, beschreibung) VALUES (:bezeichnung, :beschreibung)');
+            $stmt->bindValue(':bezeichnung', $libString->protectXss($_POST['bezeichnung']));
+            $stmt->bindValue(':beschreibung', $libString->protectXss($_POST['beschreibung']));
+            $stmt->execute();
+        } else {
+            $libGlobal->errorTexts[] = 'Keine Bezeichnung angegeben.';
+        }
+    } elseif (isset($_POST['action']) && $_POST['action'] == 'delete') {
+        if ($_POST['bezeichnung'] != '') {
+            $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE status = :status');
+            $stmt->bindValue(':status', $_POST['bezeichnung']);
+            $stmt->execute();
+            $stmt->bindColumn('number', $count);
+            $stmt->fetch();
 
-			//wird dieser Status noch in base_person benutzt?
-			if($count > 0){
-				$libGlobal->errorTexts[] = 'Dieser Status wird von Mitgliedern verwendet.';
-			} else {
-				$stmt = $libDb->prepare('DELETE FROM base_status WHERE bezeichnung = :bezeichnung');
-				$stmt->bindValue(':bezeichnung', $_POST['bezeichnung']);
-				$stmt->execute();
+            //wird dieser Status noch in base_person benutzt?
+            if ($count > 0) {
+                $libGlobal->errorTexts[] = 'Dieser Status wird von Mitgliedern verwendet.';
+            } else {
+                $stmt = $libDb->prepare('DELETE FROM base_status WHERE bezeichnung = :bezeichnung');
+                $stmt->bindValue(':bezeichnung', $_POST['bezeichnung']);
+                $stmt->execute();
 
-				$libGlobal->notificationTexts[] = 'Status gelöscht.';
-			}
-		} else {
-			$libGlobal->errorTexts[] = 'Kein Status angegeben.';
-		}
-	}
+                $libGlobal->notificationTexts[] = 'Status gelöscht.';
+            }
+        } else {
+            $libGlobal->errorTexts[] = 'Kein Status angegeben.';
+        }
+    }
 
-	echo '<h1>Status</h1>';
+    echo '<h1>Status</h1>';
 
-	echo $libString->getErrorBoxText();
-	echo $libString->getNotificationBoxText();
+    echo $libString->getErrorBoxText();
+    echo $libString->getNotificationBoxText();
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
+    echo '<div class="panel panel-default">';
+    echo '<div class="panel-body">';
 
-	echo '<table class="table table-condensed table-striped table-hover">';
-	echo '<thead>';
-	echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';
-	echo '</thead>';
+    echo '<table class="table table-condensed table-striped table-hover">';
+    echo '<thead>';
+    echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';
+    echo '</thead>';
 
-	$stmt = $libDb->prepare('SELECT * FROM base_status');
-	$stmt->execute();
+    $stmt = $libDb->prepare('SELECT * FROM base_status');
+    $stmt->execute();
 
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		echo '<tr>';
-		echo '<td>' .$row['bezeichnung']. '</td>';
-		echo '<td>' .$row['beschreibung']. '</td>';
-		echo '<td class="tool-column">';
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo '<tr>';
+        echo '<td>' .$row['bezeichnung']. '</td>';
+        echo '<td>' .$row['beschreibung']. '</td>';
+        echo '<td class="tool-column">';
 
-		if($row['bezeichnung'] != 'A-Phil' && $row['bezeichnung'] != 'B-Phil' && $row['bezeichnung'] != 'Ehrenmitglied' && $row['bezeichnung'] != 'ex loco' && $row['bezeichnung'] != 'HV-M' && $row['bezeichnung'] != 'Inaktiv ex loco' && $row['bezeichnung'] != 'Inaktiv' && $row['bezeichnung'] != 'VG'){
-			echo '<form method="post" action="index.php?pid=intranet_admin_status" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-			echo '<input type="hidden" name="action" value="delete" />';
-			echo '<input type="hidden" name="bezeichnung" value="' .$row['bezeichnung']. '" />';
-			echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-			echo '</form>';
-		}
+        if ($row['bezeichnung'] != 'A-Phil' && $row['bezeichnung'] != 'B-Phil' && $row['bezeichnung'] != 'Ehrenmitglied' && $row['bezeichnung'] != 'ex loco' && $row['bezeichnung'] != 'HV-M' && $row['bezeichnung'] != 'Inaktiv ex loco' && $row['bezeichnung'] != 'Inaktiv' && $row['bezeichnung'] != 'VG') {
+            echo '<form method="post" action="index.php?pid=intranet_admin_status" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+            echo '<input type="hidden" name="action" value="delete" />';
+            echo '<input type="hidden" name="bezeichnung" value="' .$row['bezeichnung']. '" />';
+            echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+            echo '</form>';
+        }
 
-		echo '</td>';
-		echo '</tr>';
-	}
+        echo '</td>';
+        echo '</tr>';
+    }
 
-	echo '</table>';
+    echo '</table>';
 
-	echo '</div>';
-	echo '</div>';
-	
+    echo '</div>';
+    echo '</div>';
 
-	echo '<h2>Neuen Status anlegen</h2>';
 
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-body">';
-	echo '<form action="index.php?pid=intranet_admin_status" method="post" class="form-horizontal">';
-	echo '<fieldset>';
-	echo '<input type="hidden" name="action" value="create" />';
+    echo '<h2>Neuen Status anlegen</h2>';
 
-	$libForm->printTextInput('bezeichnung', 'Bezeichnung (maximal 20 Buchstaben)', '');
-	$libForm->printTextInput('beschreibung', 'Beschreibung', '');
-	$libForm->printSubmitButton('Anlegen');
+    echo '<div class="panel panel-default">';
+    echo '<div class="panel-body">';
+    echo '<form action="index.php?pid=intranet_admin_status" method="post" class="form-horizontal">';
+    echo '<fieldset>';
+    echo '<input type="hidden" name="action" value="create" />';
 
-	echo '</fieldset>';
-	echo '</form>';
-	echo '</div>';
-	echo '</div>';
+    $libForm->printTextInput('bezeichnung', 'Bezeichnung (maximal 20 Buchstaben)', '');
+    $libForm->printTextInput('beschreibung', 'Beschreibung', '');
+    $libForm->printSubmitButton('Anlegen');
+
+    echo '</fieldset>';
+    echo '</form>';
+    echo '</div>';
+    echo '</div>';
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,92 +19,102 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms;
 
-class LibString{
-	function xmlentities($string){
-		$string = (string) $string;
+class LibString
+{
+    public function xmlentities($string)
+    {
+        $string = (string) $string;
 
-		return str_replace(array('&', '"', "'", '<', '>'), array('&amp;' , '&quot;', '&apos;' , '&lt;' , '&gt;'), $string);
-	}
+        return str_replace(['&', '"', "'", '<', '>'], ['&amp;' , '&quot;', '&apos;' , '&lt;' , '&gt;'], $string);
+    }
 
-	function protectXSS($value){
-		return htmlspecialchars((string) $value, ENT_NOQUOTES, 'UTF-8');
-	}
+    public function protectXSS($value)
+    {
+        return htmlspecialchars((string) $value, ENT_NOQUOTES, 'UTF-8');
+    }
 
-	function randomAlphaNumericString($len, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'){
-		$string = '';
+    public function randomAlphaNumericString($len, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    {
+        $string = '';
 
-		for ($i = 0; $i < $len; $i++){
-			$pos = random_int(0, strlen($chars)-1);
-			$string .= $chars[$pos];
-		}
+        for ($i = 0; $i < $len; $i++) {
+            $pos = random_int(0, strlen($chars) - 1);
+            $string .= $chars[$pos];
+        }
 
-		return $string;
-	}
+        return $string;
+    }
 
-	function isValidEmail($email){
-		$email = (string) $email;
+    public function isValidEmail($email)
+    {
+        $email = (string) $email;
 
-		if($email != ''){
-			if(preg_match('/^([a-zA-Z0-9\.\_\-]+)@([a-zA-Z0-9\.\-]+\.[A-Za-z][A-Za-z]+)$/', $email)){
-				return true;
-			}
-		} else {
-			return false;
-		}
-	}
+        if ($email != '') {
+            if (preg_match('/^([a-zA-Z0-9\.\_\-]+)@([a-zA-Z0-9\.\-]+\.[A-Za-z][A-Za-z]+)$/', $email)) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
 
-	function isValidURL($string){
-		$string = (string) $string;
+    public function isValidURL($string)
+    {
+        $string = (string) $string;
 
-		$urlRegEx =
-			"/^" .
-			"http:\/\/" .           // http-protocol
-			"([0-9a-zA-Z-]+\.)+" .  // hostname and subdomains
-			"[a-zA-Z]{1,4}" .       // toplevel domain
-			"(\/.*)*" .             // anything with a leading / as rest of path
-			"$/";
+        $urlRegEx =
+            "/^" .
+            "http:\/\/" .           // http-protocol
+            "([0-9a-zA-Z-]+\.)+" .  // hostname and subdomains
+            "[a-zA-Z]{1,4}" .       // toplevel domain
+            "(\/.*)*" .             // anything with a leading / as rest of path
+            "$/";
 
-		if(preg_match($urlRegEx, $string)){
-			return true;
-		} else {
-			return false;
-		}
-	}
+        if (preg_match($urlRegEx, $string)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	function getNotificationBoxText(){
-		global $libGlobal;
+    public function getNotificationBoxText()
+    {
+        global $libGlobal;
 
-		if(isset($libGlobal->notificationTexts) && is_array($libGlobal->notificationTexts)){
-			if(count($libGlobal->notificationTexts) > 0){
-				return '<div class="alert alert-success" role="alert">'. implode('<br />', $libGlobal->notificationTexts). '</div>';
-			}
-		}
-	}
+        if (isset($libGlobal->notificationTexts) && is_array($libGlobal->notificationTexts)) {
+            if (count($libGlobal->notificationTexts) > 0) {
+                return '<div class="alert alert-success" role="alert">'. implode('<br />', $libGlobal->notificationTexts). '</div>';
+            }
+        }
+    }
 
-	function getErrorBoxText(){
-		global $libGlobal;
+    public function getErrorBoxText()
+    {
+        global $libGlobal;
 
-		if(isset($libGlobal->errorTexts) && is_array($libGlobal->errorTexts)){
-			if(count($libGlobal->errorTexts) > 0){
-				return '<div class="alert alert-danger" role="alert">'. implode('<br />', $libGlobal->errorTexts). '</div>';
-			}
-		}
-	}
+        if (isset($libGlobal->errorTexts) && is_array($libGlobal->errorTexts)) {
+            if (count($libGlobal->errorTexts) > 0) {
+                return '<div class="alert alert-danger" role="alert">'. implode('<br />', $libGlobal->errorTexts). '</div>';
+            }
+        }
+    }
 
-	function getLastInsertId($lastInsertId, $id){
-		if($lastInsertId == $id){
-			return ' last-insert-id ';
-		}
-	}
+    public function getLastInsertId($lastInsertId, $id)
+    {
+        if ($lastInsertId == $id) {
+            return ' last-insert-id ';
+        }
+    }
 
-	function normalizeStreet($street){
-		$street = (string) $street;
+    public function normalizeStreet($street)
+    {
+        $street = (string) $street;
 
-		$street = str_replace('str.', 'str', $street);
-	 	$street = str_replace('straße', 'str', $street);
-		$street = str_replace('Straße', 'str', $street);
-		$street = preg_replace('/[^a-zA-ZäöüÄÖÜß\s]/i', '', $street);
-		$street = trim($street);
-		return $street;
-	}
+        $street = str_replace('str.', 'str', $street);
+        $street = str_replace('straße', 'str', $street);
+        $street = str_replace('Straße', 'str', $street);
+        $street = preg_replace('/[^a-zA-ZäöüÄÖÜß\s]/i', '', $street);
+        $street = trim($street);
+        return $street;
+    }
 }

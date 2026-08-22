@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 // synchronize tables
@@ -75,8 +77,8 @@ $stmt->fetch();
 * configuration
 */
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('preselect_int_ahah')){
-	$libGenericStorage->saveValueInCurrentModule('preselect_int_ahah', 1);
+if (!$libGenericStorage->attributeExistsInCurrentModule('preselect_int_ahah')) {
+    $libGenericStorage->saveValueInCurrentModule('preselect_int_ahah', 1);
 }
 
 
@@ -105,8 +107,8 @@ echo '</label></div>';
 
 $ahahInterestedChecked = '';
 
-if($libGenericStorage->loadValueInCurrentModule('preselect_int_ahah') == 1){
-	$ahahInterestedChecked = 'checked="checked"';
+if ($libGenericStorage->loadValueInCurrentModule('preselect_int_ahah') == 1) {
+    $ahahInterestedChecked = 'checked="checked"';
 }
 
 echo '<div class="checkbox"><label><input type="checkbox" name="ahah_interested" ' .$ahahInterestedChecked. '>';

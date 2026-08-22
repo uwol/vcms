@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,25 +17,26 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 /*
 * deletion
 */
-if(isset($_POST['action']) && $_POST['action'] == 'delete'){
-	if($libGallery->hasFotowartPrivilege($libAuth->getOffices())){
-		if(isset($_POST['id']) && is_numeric($_POST['id'])){
-			$pictures = $libGallery->getPictures($_POST['id'], 2);
+if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+    if ($libGallery->hasFotowartPrivilege($libAuth->getOffices())) {
+        if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+            $pictures = $libGallery->getPictures($_POST['id'], 2);
 
-			foreach($pictures as $picture){
-				$libImage->deleteEventPhoto($_POST['id'], $picture);
-			}
+            foreach ($pictures as $picture) {
+                $libImage->deleteEventPhoto($_POST['id'], $picture);
+            }
 
-			$libGlobal->notificationTexts[] = 'Die Galerie wurde gelöscht.';
-		}
-	}
+            $libGlobal->notificationTexts[] = 'Die Galerie wurde gelöscht.';
+        }
+    }
 }
 
 
@@ -63,13 +65,13 @@ echo '<h2>Bestehende Galerien</h2>';
 
 $eventPhotosDir = 'custom/veranstaltungsfotos';
 
-$files = array_diff(scandir($eventPhotosDir), array('.', '..'));
-$folders = array();
+$files = array_diff(scandir($eventPhotosDir), ['.', '..']);
+$folders = [];
 
-foreach($files as $file){
-	if(is_dir($eventPhotosDir. '/' .$file)){
-		$folders[] = $file;
-	}
+foreach ($files as $file) {
+    if (is_dir($eventPhotosDir. '/' .$file)) {
+        $folders[] = $file;
+    }
 }
 
 rsort($folders);
@@ -79,12 +81,12 @@ reset($folders);
 $stmt = $libDb->prepare("SELECT id, DATE_FORMAT(datum, '%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL ORDER BY datum DESC");
 $stmt->execute();
 
-$data = array();
+$data = [];
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	if(in_array($row['id'], $folders)){
-		$data[] = $row['datum'];
-	}
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if (in_array($row['id'], $folders)) {
+        $data[] = $row['datum'];
+    }
 }
 
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
@@ -104,40 +106,40 @@ $stmt->bindValue(':semester_start', $period[0]);
 $stmt->bindValue(':semester_ende', $period[1]);
 $stmt->execute();
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	// is there a gallery for the event?
-	if(in_array($row['id'], $folders)){
-		echo '<tr>';
-		echo '<td class="img-column">';
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    // is there a gallery for the event?
+    if (in_array($row['id'], $folders)) {
+        echo '<tr>';
+        echo '<td class="img-column">';
 
-		//are there images?
-		if($libGallery->hasPictures($row['id'], 2)){
-			echo '<div class="thumbnail">';
-			echo '<div class="img-frame">';
-			echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
-			echo '<img ';
+        //are there images?
+        if ($libGallery->hasPictures($row['id'], 2)) {
+            echo '<div class="thumbnail">';
+            echo '<div class="img-frame">';
+            echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
+            echo '<img ';
 
-			//are there pooled images?
-    		if($libGallery->getPictures($row['id'], 2) > $libGallery->getPictures($row['id'], 1)){
-    			echo 'class="private"';
-    		}
+            //are there pooled images?
+            if ($libGallery->getPictures($row['id'], 2) > $libGallery->getPictures($row['id'], 1)) {
+                echo 'class="private"';
+            }
 
-    		echo ' src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
-    		echo '</a>';
-    		echo '</div>';
-    		echo '</div>';
-		}
+            echo ' src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 2). '" alt="Foto" />';
+            echo '</a>';
+            echo '</div>';
+            echo '</div>';
+        }
 
-		echo '</td>';
-		echo '<td>' .$row['titel']. '</td>';
-		echo '<td>' .$row['datum']. '</td>';
-		echo '<td class="tool-column">';
-		echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
-		echo '<i class="fa fa-cog" aria-hidden="true"></i>';
-		echo '</a>';
-		echo '</td>';
-		echo '</tr>';
-	}
+        echo '</td>';
+        echo '<td>' .$row['titel']. '</td>';
+        echo '<td>' .$row['datum']. '</td>';
+        echo '<td class="tool-column">';
+        echo '<a href="index.php?pid=event_admin_galerie&amp;id=' .$row['id']. '">';
+        echo '<i class="fa fa-cog" aria-hidden="true"></i>';
+        echo '</a>';
+        echo '</td>';
+        echo '</tr>';
+    }
 }
 
 echo '</table>';

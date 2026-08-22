@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,21 +17,22 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
-
-
-if(!$libGenericStorage->attributeExistsInCurrentModule('icalendar_username') || !$libGenericStorage->attributeExistsInCurrentModule('icalendar_password')){
-	$libGenericStorage->saveValueInCurrentModule('icalendar_username', $libString->randomAlphaNumericString(40));
-	$libGenericStorage->saveValueInCurrentModule('icalendar_password', $libString->randomAlphaNumericString(40));
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('show_reservations')){
-	$libGenericStorage->saveValueInCurrentModule('show_reservations', '1');
+
+if (!$libGenericStorage->attributeExistsInCurrentModule('icalendar_username') || !$libGenericStorage->attributeExistsInCurrentModule('icalendar_password')) {
+    $libGenericStorage->saveValueInCurrentModule('icalendar_username', $libString->randomAlphaNumericString(40));
+    $libGenericStorage->saveValueInCurrentModule('icalendar_password', $libString->randomAlphaNumericString(40));
 }
 
-if(!$libGenericStorage->attributeExistsInCurrentModule('show_chargierevents')){
-	$libGenericStorage->saveValueInCurrentModule('show_chargierevents', '1');
+if (!$libGenericStorage->attributeExistsInCurrentModule('show_reservations')) {
+    $libGenericStorage->saveValueInCurrentModule('show_reservations', '1');
+}
+
+if (!$libGenericStorage->attributeExistsInCurrentModule('show_chargierevents')) {
+    $libGenericStorage->saveValueInCurrentModule('show_chargierevents', '1');
 }
 
 
@@ -52,10 +54,10 @@ echo $libString->getNotificationBoxText();
 $stmt = $libDb->prepare('SELECT * FROM base_semester ORDER BY SUBSTRING(semester, 3) DESC');
 $stmt->execute();
 
-$semesters = array();
+$semesters = [];
 
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$semesters[] = $row['semester'];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $semesters[] = $row['semester'];
 }
 
 echo $libTime->getSemesterMenu($semesters, $libGlobal->semester);
@@ -77,18 +79,18 @@ require_once('timeline/deceased.php');
 require_once('timeline/wedding.php');
 require_once('timeline/events.php');
 
-if($libModuleHandler->moduleIsAvailable('mod_intranet_news')){
-	require_once('timeline/news.php');
+if ($libModuleHandler->moduleIsAvailable('mod_intranet_news')) {
+    require_once('timeline/news.php');
 }
 
-if($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')
-		&& $libGenericStorage->loadValueInCurrentModule('show_chargierevents')){
-	require_once('timeline/chargierkalender.php');
+if ($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')
+        && $libGenericStorage->loadValueInCurrentModule('show_chargierevents')) {
+    require_once('timeline/chargierkalender.php');
 }
 
-if($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')
-		&& $libGenericStorage->loadValueInCurrentModule('show_reservations')){
-	require_once('timeline/reservations.php');
+if ($libModuleHandler->moduleIsAvailable('mod_intranet_reservierungen')
+        && $libGenericStorage->loadValueInCurrentModule('show_reservations')) {
+    require_once('timeline/reservations.php');
 }
 
 $timelineEventSet->sortEvents();
@@ -104,8 +106,8 @@ echo '<div class="timeline-body">';
 
 $timelineEvents = $timelineEventSet->getEvents();
 
-foreach($timelineEvents as $timelineEvent){
-	echo $timelineEvent->toString();
+foreach ($timelineEvents as $timelineEvent) {
+    echo $timelineEvent->toString();
 }
 
 echo '</div>';

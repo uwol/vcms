@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal))
-	exit();
+if (!is_object($libGlobal)) {
+    exit();
+}
 
 
 $stmtCount = $libDb->prepare('SELECT COUNT(*) AS number FROM base_veranstaltung WHERE intern = 0 AND datum > NOW()');
@@ -27,95 +29,95 @@ $stmtCount->fetch();
 
 $semesterCoverAvailable = false;
 
-if($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')){
-	$semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
-	$semesterCoverAvailable = $semesterCoverString != '';
+if ($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')) {
+    $semesterCoverString = $libTime->getSemesterCoverString($libGlobal->semester);
+    $semesterCoverAvailable = $semesterCoverString != '';
 }
 
-if($semesterCoverAvailable || $numberOfNextEvents > 0){
-	echo '<section class="nextevents-box">';
-	echo '<div class="container">';
+if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
+    echo '<section class="nextevents-box">';
+    echo '<div class="container">';
 
-	echo '<div class="row">';
-	echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
-	echo '<h1 class="section-heading">Nächste Veranstaltungen</h1>';
-	echo '</div>';
-	echo '</div>';
+    echo '<div class="row">';
+    echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
+    echo '<h1 class="section-heading">Nächste Veranstaltungen</h1>';
+    echo '</div>';
+    echo '</div>';
 
-	echo '<div class="row">';
+    echo '<div class="row">';
 
-	if($numberOfNextEvents > 0){
-		if($semesterCoverAvailable){
-			$maxNumberOfEvents = 2;
-		} else {
-			$maxNumberOfEvents = 3;
-		}
+    if ($numberOfNextEvents > 0) {
+        if ($semesterCoverAvailable) {
+            $maxNumberOfEvents = 2;
+        } else {
+            $maxNumberOfEvents = 3;
+        }
 
-		$stmt = $libDb->prepare('SELECT id, titel, datum, ort, fb_eventid, intern FROM base_veranstaltung WHERE intern = 0 AND datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfEvents);
-		$stmt->execute();
+        $stmt = $libDb->prepare('SELECT id, titel, datum, ort, fb_eventid, intern FROM base_veranstaltung WHERE intern = 0 AND datum > NOW() ORDER BY datum LIMIT 0,' .$maxNumberOfEvents);
+        $stmt->execute();
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			echo '<div class="col-sm-4">';
-			echo '<div class="panel panel-default reveal">';
-			echo '<div class="panel-body">';
-			echo '<div class="thumbnail">';
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo '<div class="col-sm-4">';
+            echo '<div class="panel panel-default reveal">';
+            echo '<div class="panel-body">';
+            echo '<div class="thumbnail">';
 
-			echo '<div class="caption">';
-			echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
+            echo '<div class="caption">';
+            echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 
-			printEventTitle($row);
+            printEventTitle($row);
 
-			echo '</a></h3>';
+            echo '</a></h3>';
 
-			printEventDateTime($row);
+            printEventDateTime($row);
 
-			echo '<address>';
+            echo '<address>';
 
-			if ($row['ort'] != ''){
-				echo '<span>' .$row['ort']. '</span>';
-			}
+            if ($row['ort'] != '') {
+                echo '<span>' .$row['ort']. '</span>';
+            }
 
-			echo '</address>';
-			echo '<p class="social-buttons mb-0 mt-0">';
+            echo '</address>';
+            echo '<p class="social-buttons mb-0 mt-0">';
 
-			$libEvent->printFacebookShareButton($row['id']);
-			$libEvent->printTwitterShareButton($row['id']);
-			$libEvent->printWhatsAppShareButton($row['id']);
+            $libEvent->printFacebookShareButton($row['id']);
+            $libEvent->printTwitterShareButton($row['id']);
+            $libEvent->printWhatsAppShareButton($row['id']);
 
-			echo '</p>';
+            echo '</p>';
 
-			echo '</div>';
-			echo '</div>';
-			echo '</div>';
-			echo '</div>';
-			echo '</div>';
-		}
-	}
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+    }
 
-	if($semesterCoverAvailable){
-		echo '<div class="col-sm-4">';
-		echo '<div class="panel panel-default reveal">';
-		echo '<div class="panel-body">';
-		echo '<div class="thumbnail">';
+    if ($semesterCoverAvailable) {
+        echo '<div class="col-sm-4">';
+        echo '<div class="panel panel-default reveal">';
+        echo '<div class="panel-body">';
+        echo '<div class="thumbnail">';
 
-		echo '<div class="semestercover-box center-block">';
-		echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">';
-		echo $semesterCoverString;
-		echo '</a>';
-		echo '</div>';
+        echo '<div class="semestercover-box center-block">';
+        echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">';
+        echo $semesterCoverString;
+        echo '</a>';
+        echo '</div>';
 
-		echo '<div class="caption">';
-		echo '<h3><i class="fa fa-calendar" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
-		echo '<p class="mb-4">Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
-		echo '</div>';
+        echo '<div class="caption">';
+        echo '<h3><i class="fa fa-calendar" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
+        echo '<p class="mb-4">Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
+        echo '</div>';
 
-		echo '</div>';
-		echo '</div>';
-		echo '</div>';
-		echo '</div>';
-	}
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+    }
 
-	echo '</div>';
-	echo '</div>';
-	echo '</section>';
+    echo '</div>';
+    echo '</div>';
+    echo '</section>';
 }

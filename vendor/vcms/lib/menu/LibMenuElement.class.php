@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,59 +19,70 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms\menu;
 
-class LibMenuElement{
-	var $id;
-	var $name;
-	var $pid;
-	var $position;
-	var $type;
-	var $accessRestriction;
+class LibMenuElement
+{
+    public $id;
+    public $name;
+    public $pid;
+    public $position;
+    public $type;
+    public $accessRestriction;
 
-	function __construct($pid, $name, $position, $type){
-		$this->name = $name;
-		$this->position = $position;
-		$this->type = $type;
-		$this->pid = $pid;
-		$this->id = substr(sha1($name.$position.$type.$pid), 0, 8);
-	}
+    public function __construct($pid, $name, $position, $type)
+    {
+        $this->name = $name;
+        $this->position = $position;
+        $this->type = $type;
+        $this->pid = $pid;
+        $this->id = substr(sha1($name.$position.$type.$pid), 0, 8);
+    }
 
-	function setAccessRestriction($accessRestriction){
-		$this->accessRestriction = $accessRestriction;
-	}
+    public function setAccessRestriction($accessRestriction)
+    {
+        $this->accessRestriction = $accessRestriction;
+    }
 
-	function hasAccessRestriction(){
-		if(is_object($this->accessRestriction)){
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public function hasAccessRestriction()
+    {
+        if (is_object($this->accessRestriction)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	function getId(){
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	function getPid(){
-		return $this->pid;
-	}
+    public function getPid()
+    {
+        return $this->pid;
+    }
 
-	function getName(){
-		return $this->name;
-	}
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	function getPosition(){
-		return $this->position;
-	}
+    public function getPosition()
+    {
+        return $this->position;
+    }
 
-	function getType(){
-		return $this->type;
-	}
+    public function getType()
+    {
+        return $this->type;
+    }
 
-	function getAccessRestriction(){
-		return $this->accessRestriction;
-	}
+    public function getAccessRestriction()
+    {
+        return $this->accessRestriction;
+    }
 
-	function setPosition($position){
-		$this->position = $position;
-	}
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
 }

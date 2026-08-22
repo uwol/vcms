@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -18,19 +19,20 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 namespace vcms;
 
-class LibHttp{
+class LibHttp
+{
+    public function get($url, $destinationFile = false)
+    {
+        global $libGlobal;
 
-	function get($url, $destinationFile = false){
-		global $libGlobal;
+        $response = \Httpful\Request::get($url)
+            ->addHeader('Referer', $libGlobal->getSiteUrl())
+            ->send();
 
-		$response = \Httpful\Request::get($url)
-			->addHeader('Referer', $libGlobal->getSiteUrl())
-			->send();
-
-		if(!$destinationFile){
-			return $response;
-		} else{
-			file_put_contents($destinationFile, $response);
-		}
-	}
+        if (!$destinationFile) {
+            return $response;
+        } else {
+            file_put_contents($destinationFile, $response);
+        }
+    }
 }

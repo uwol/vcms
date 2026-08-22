@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -16,42 +17,43 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_object($libGlobal) || !$libAuth->isLoggedin())
-	exit();
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
 
 
 //the delete buttons are part of the surrounding save form, so deletion has to be checked first
-if(isset($_POST['delete_target']) && $_POST['delete_target'] != ''){
-	$target = explode('#', $_POST['delete_target']);
+if (isset($_POST['delete_target']) && $_POST['delete_target'] != '') {
+    $target = explode('#', $_POST['delete_target']);
 
-	if(count($target) == 3 && $target[0] != '' && $target[1] != '' && $target[2] != ''){
-		$libGenericStorage->deleteArrayValue($target[0], $target[1], $target[2]);
-		$libGlobal->notificationTexts[] = 'Der Wert wurde gelöscht.';
-	}
-} elseif(isset($_POST['form_complete']) && $_POST['form_complete'] && isset($_POST['action']) && $_POST['action'] == "save"){
-	foreach($_POST as $key => $value){
-		if($key != 'form_complete'){
-			$array = explode('#', $key);
+    if (count($target) == 3 && $target[0] != '' && $target[1] != '' && $target[2] != '') {
+        $libGenericStorage->deleteArrayValue($target[0], $target[1], $target[2]);
+        $libGlobal->notificationTexts[] = 'Der Wert wurde gelöscht.';
+    }
+} elseif (isset($_POST['form_complete']) && $_POST['form_complete'] && isset($_POST['action']) && $_POST['action'] == "save") {
+    foreach ($_POST as $key => $value) {
+        if ($key != 'form_complete') {
+            $array = explode('#', $key);
 
-			$moduleid = $array[0];
+            $moduleid = $array[0];
 
-			$array_name = '';
+            $array_name = '';
 
-			if(isset($array[1])){
-				$array_name = $array[1];
-			}
+            if (isset($array[1])) {
+                $array_name = $array[1];
+            }
 
-			$position = '';
+            $position = '';
 
-			if(isset($array[2])){
-				$position = $array[2];
-			}
+            if (isset($array[2])) {
+                $position = $array[2];
+            }
 
-			if($moduleid != "" && $array_name != "" && $position != ""){
-				$libGenericStorage->saveArrayValue($moduleid, $array_name, $position, $value);
-			}
-		}
-	}
+            if ($moduleid != "" && $array_name != "" && $position != "") {
+                $libGenericStorage->saveArrayValue($moduleid, $array_name, $position, $value);
+            }
+        }
+    }
 }
 
 echo '<h1>Konfiguration</h1>';
@@ -67,33 +69,33 @@ echo '<form action="index.php?pid=configuration" method="post" class="form-horiz
 echo '<fieldset>';
 
 //modules
-foreach($storage as $moduleid => $arrays){
-	echo '<h2>' .$moduleid. '</h2>';
+foreach ($storage as $moduleid => $arrays) {
+    echo '<h2>' .$moduleid. '</h2>';
 
-	//arrays
-	foreach($arrays as $array_name => $positionen){
-		//positions and values at that positions
-		foreach($positionen as $position => $value){
-			echo '<div class="form-group">';
-			echo '<label class="col-sm-4 control-label">' .$array_name. '</label>';
+    //arrays
+    foreach ($arrays as $array_name => $positionen) {
+        //positions and values at that positions
+        foreach ($positionen as $position => $value) {
+            echo '<div class="form-group">';
+            echo '<label class="col-sm-4 control-label">' .$array_name. '</label>';
 
-			echo '<div class="col-sm-1">';
-			echo '<input type="text" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" class="form-control input-sm" />';
-			echo '</div>';
+            echo '<div class="col-sm-1">';
+            echo '<input type="text" name="' . $moduleid .'#'. $array_name .'#position' . '" value="' .$position. '" disabled="disabled" class="form-control input-sm" />';
+            echo '</div>';
 
-			echo '<div class="col-sm-6">';
-			echo '<input type="text" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" class="form-control input-sm" />';
-			echo '</div>';
+            echo '<div class="col-sm-6">';
+            echo '<input type="text" name="'. $moduleid .'#'. $array_name .'#'. $position .'#value" value="' .$value. '" class="form-control input-sm" />';
+            echo '</div>';
 
-			echo '<div class="col-sm-1">';
-			echo '<div class="form-control-static p-0">';
-			echo '<button type="submit" name="delete_target" value="' .$moduleid.'#'.$array_name.'#'.$position. '" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du den Eintrag wirklich löschen?\')"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>';
-			echo '</div>';
-			echo '</div>';
+            echo '<div class="col-sm-1">';
+            echo '<div class="form-control-static p-0">';
+            echo '<button type="submit" name="delete_target" value="' .$moduleid.'#'.$array_name.'#'.$position. '" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du den Eintrag wirklich löschen?\')"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>';
+            echo '</div>';
+            echo '</div>';
 
-			echo '</div>';
-		}
-	}
+            echo '</div>';
+        }
+    }
 }
 
 echo '<input type="hidden" name="action" value="save" />';

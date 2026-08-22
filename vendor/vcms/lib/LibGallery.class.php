@@ -1,4 +1,5 @@
 <?php
+
 /*
 This file is part of VCMS.
 
@@ -20,242 +21,256 @@ namespace vcms;
 
 use PDO;
 
-class LibGallery{
+class LibGallery
+{
+    /*
+    * external, internal, pooled, main
+    */
+    public $validAccessStrings = ['E', 'I', 'P', 'M'];
 
-	/*
-	* external, internal, pooled, main
-	*/
-	var $validAccessStrings = array('E', 'I', 'P', 'M');
+    public function hasPictures($eventid, $level)
+    {
+        $numberOfPictures = $this->getNumberOfPictures($eventid, $level);
 
-	function hasPictures($eventid, $level){
-		$numberOfPictures = $this->getNumberOfPictures($eventid, $level);
+        if ($numberOfPictures > 0) {
+            return true;
+        }
 
-		if($numberOfPictures > 0){
-			return true;
-		}
+        return false;
+    }
 
-		return false;
-	}
+    public function getMainPictureId($eventId)
+    {
+        return $this->getFirstVisiblePictureId($eventId, 0);
+    }
 
-	function getMainPictureId($eventId){
-		return $this->getFirstVisiblePictureId($eventId, 0);
-	}
+    public function getFirstVisiblePictureId($eventId, $level)
+    {
+        $pictures = $this->getPictures($eventId, $level);
 
-	function getFirstVisiblePictureId($eventId, $level){
-		$pictures = $this->getPictures($eventId, $level);
+        $firstPictureId = -1;
+        $firstMainPictureId = -1;
 
-		$firstPictureId = -1;
-		$firstMainPictureId = -1;
+        foreach ($pictures as $key => $picture) {
+            if ($firstPictureId == -1) {
+                $firstPictureId = $key;
+            }
 
-		foreach($pictures as $key => $picture){
-			if($firstPictureId == -1){
-				$firstPictureId = $key;
-			}
+            $accessString = $this->parseAccessString($picture);
 
-			$accessString = $this->parseAccessString($picture);
+            if ($firstMainPictureId == -1 && $accessString == 'M') {
+                $firstMainPictureId = $key;
+                break;
+            }
+        }
 
-			if($firstMainPictureId == -1 && $accessString == 'M'){
-				$firstMainPictureId = $key;
-				break;
-			}
-		}
+        if ($firstMainPictureId != -1) {
+            return $firstMainPictureId;
+        }
 
-		if($firstMainPictureId != -1){
-			return $firstMainPictureId;
-		}
+        return $firstPictureId;
+    }
 
-		return $firstPictureId;
-	}
+    public function getPictures($eventId, $level)
+    {
+        if ($eventId != '' && !is_numeric($eventId)) {
+            exit();
+        }
 
-	function getPictures($eventId, $level){
-		if($eventId != '' && !is_numeric($eventId)){
-			exit();
-		}
+        $path = 'custom/veranstaltungsfotos/' .$eventId;
 
-		$path = 'custom/veranstaltungsfotos/' .$eventId;
+        //escape prevention
+        if (preg_match("/\.\./", $path)) {
+            exit();
+        }
 
-		//escape prevention
-		if(preg_match("/\.\./", $path)){
-			exit();
-		}
+        $pictures = [];
 
-		$pictures = array();
+        if (is_dir($path)) {
+            $files = array_diff(scandir($path), ['.', '..', 'thumbs']);
 
-		if(is_dir($path)){
-			$files = array_diff(scandir($path), array('.', '..', 'thumbs'));
+            foreach ($files as $file) {
+                $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                $basename = pathinfo($file, PATHINFO_BASENAME);
 
-			foreach($files as $file){
-				$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-				$basename = pathinfo($file, PATHINFO_BASENAME);
+                if (substr($basename, 0, 1) != '.') {
+                    if ($extension == 'jpg' || $extension == 'jpeg') {
+                        $pictures[] = $file;
+                    }
+                }
+            }
+        }
 
-				if(substr($basename, 0, 1) != '.'){
-					if($extension == 'jpg' || $extension == 'jpeg'){
-						$pictures[] = $file;
-					}
-				}
-			}
-		}
+        sort($pictures);
+        reset($pictures);
 
-		sort($pictures);
-		reset($pictures);
+        $visiblePictures = [];
+        $i = 0;
 
-		$visiblePictures = array();
-		$i = 0;
+        foreach ($pictures as $picture) {
+            $levelOfPicture = $this->getPublicityLevel($picture);
 
-		foreach($pictures as $picture){
-			$levelOfPicture = $this->getPublicityLevel($picture);
+            if ($levelOfPicture <= $level) {
+                $visiblePictures[$i] = $picture;
+            }
 
-			if($levelOfPicture <= $level){
-				$visiblePictures[$i] = $picture;
-			}
+            $i++;
+        }
 
-			$i++;
-		}
+        return $visiblePictures;
+    }
 
-		return $visiblePictures;
-	}
+    public function getNumberOfPictures($eventId, $level)
+    {
+        return count($this->getPictures($eventId, $level));
+    }
 
-	function getNumberOfPictures($eventId, $level){
-		return count($this->getPictures($eventId, $level));
-	}
+    public function parseAccessString($file)
+    {
+        $filename = pathinfo((string) $file, PATHINFO_FILENAME);
+        $accessSuffix = substr($filename, -2);
 
-	function parseAccessString($file){
-		$filename = pathinfo((string) $file, PATHINFO_FILENAME);
-		$accessSuffix = substr($filename, -2);
+        foreach ($this->validAccessStrings as $validAccessString) {
+            $validAccessSuffix = '-' .$validAccessString;
 
-		foreach($this->validAccessStrings as $validAccessString){
-			$validAccessSuffix = '-' .$validAccessString;
+            if ($accessSuffix == $validAccessSuffix) {
+                return $validAccessString;
+            }
+        }
+    }
 
-			if($accessSuffix == $validAccessSuffix){
-				return $validAccessString;
-			}
-		}
-	}
+    public function getPublicityLevel($file)
+    {
+        $accessString = $this->parseAccessString($file);
 
-	function getPublicityLevel($file){
-		$accessString = $this->parseAccessString($file);
+        if ($accessString == 'E') {
+            return 0;
+        } elseif ($accessString == 'I') {
+            return 1;
+        } elseif ($accessString == 'P') {
+            return 2;
+        } elseif ($accessString == 'M') {
+            return 0;
+        } else {
+            return 2;
+        }
+    }
 
-		if($accessString == 'E'){
-			return 0;
-		} elseif($accessString == 'I'){
-			return 1;
-		} elseif($accessString == 'P'){
-			return 2;
-		} elseif($accessString == 'M'){
-			return 0;
-		} else {
-			return 2;
-		}
-	}
+    public function hasPublicityLevel($file)
+    {
+        $accessString = $this->parseAccessString($file);
+        $result = in_array($accessString, $this->validAccessStrings);
+        return $result;
+    }
 
-	function hasPublicityLevel($file){
-		$accessString = $this->parseAccessString($file);
-		$result = in_array($accessString, $this->validAccessStrings);
-		return $result;
-	}
+    public function getPublicityFilename($file, $accessString)
+    {
+        $file = (string) $file;
+        $filename = pathinfo($file, PATHINFO_FILENAME);
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+        $hasPublicityLevel = $this->hasPublicityLevel($file);
 
-	function getPublicityFilename($file, $accessString){
-		$file = (string) $file;
-		$filename = pathinfo($file, PATHINFO_FILENAME);
-		$extension = pathinfo($file, PATHINFO_EXTENSION);
-		$hasPublicityLevel = $this->hasPublicityLevel($file);
+        if ($hasPublicityLevel) {
+            $filename = substr($filename, 0, -2);
+        }
 
-		if($hasPublicityLevel){
-			$filename = substr($filename, 0, -2);
-		}
+        $result = $filename. '-' .$accessString;
 
-		$result = $filename. '-' .$accessString;
+        if ($extension != '') {
+            $result .= '.' .$extension;
+        }
 
-		if($extension != ''){
-			$result .= '.' .$extension;
-		}
+        return $result;
+    }
 
-		return $result;
-	}
+    public function hasFotowartPrivilege($officesArrayOfUser)
+    {
+        $privilegedOffices = ['fotowart', 'internetwart', 'datenpflegewart', 'senior', 'consenior',
+            'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior'];
+        $privilegedOfficesOfUser = array_intersect($privilegedOffices, $officesArrayOfUser);
+        $numberOfPrivilegedOfficesOfUser = count($privilegedOfficesOfUser);
 
-	function hasFotowartPrivilege($officesArrayOfUser){
-		$privilegedOffices = array('fotowart', 'internetwart', 'datenpflegewart', 'senior', 'consenior',
-			'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior');
-		$privilegedOfficesOfUser = array_intersect($privilegedOffices, $officesArrayOfUser);
-		$numberOfPrivilegedOfficesOfUser = count($privilegedOfficesOfUser);
+        return $numberOfPrivilegedOfficesOfUser > 0;
+    }
 
-		return $numberOfPrivilegedOfficesOfUser > 0;
-	}
+    public function setPublicityLevel($eventId, $pictureId, $accessString)
+    {
+        global $libGlobal;
 
-	function setPublicityLevel($eventId, $pictureId, $accessString){
-		global $libGlobal;
+        if ($accessString == 'M') {
+            $this->resetPublicityLevelMain($eventId);
+        }
 
-		if($accessString == 'M'){
-			$this->resetPublicityLevelMain($eventId);
-		}
+        $pictures = $this->getPictures($eventId, 2);
 
-		$pictures = $this->getPictures($eventId, 2);
+        if (!isset($pictures[$pictureId])) {
+            return;
+        }
 
-		if(!isset($pictures[$pictureId])){
-			return;
-		}
+        $filename = $pictures[$pictureId];
+        $currentAccessString = $this->parseAccessString($filename);
 
-		$filename = $pictures[$pictureId];
-		$currentAccessString = $this->parseAccessString($filename);
+        if ($currentAccessString != $accessString) {
+            $notificationText = '';
 
-		if($currentAccessString != $accessString){
-			$notificationText = '';
+            switch ($accessString) {
+                case 'E':
+                    $notificationText = 'Gebe Bild ' .($pictureId + 1). ' für das Internet frei.';
+                    break;
+                case 'I':
+                    $notificationText = 'Gebe Bild ' .($pictureId + 1). ' für das Intranet frei.';
+                    break;
+                case 'P':
+                    $notificationText = 'Lege Bild in ' .($pictureId + 1). ' den Pool zurück.';
+                    break;
+                case 'M':
+                    $notificationText = 'Gebe Bild ' .($pictureId + 1). ' als Hauptbild für das Internet frei.';
+                    break;
+            }
 
-			switch($accessString){
-				case 'E':
-					$notificationText = 'Gebe Bild ' .($pictureId + 1). ' für das Internet frei.';
-					break;
-				case 'I':
-					$notificationText = 'Gebe Bild ' .($pictureId + 1). ' für das Intranet frei.';
-					break;
-				case 'P':
-					$notificationText = 'Lege Bild in ' .($pictureId + 1). ' den Pool zurück.';
-					break;
-				case 'M':
-					$notificationText = 'Gebe Bild ' .($pictureId + 1). ' als Hauptbild für das Internet frei.';
-					break;
-			}
+            $libGlobal->notificationTexts[] = $notificationText;
 
-			$libGlobal->notificationTexts[] = $notificationText;
+            $publicityFilename = $this->getPublicityFilename($filename, $accessString);
+            rename('custom/veranstaltungsfotos/' .$eventId. '/' .$filename, 'custom/veranstaltungsfotos/' .$eventId. '/' .$publicityFilename);
+        }
+    }
 
-			$publicityFilename = $this->getPublicityFilename($filename, $accessString);
-			rename('custom/veranstaltungsfotos/' .$eventId. '/' .$filename, 'custom/veranstaltungsfotos/' .$eventId. '/' .$publicityFilename);
-		}
-	}
+    public function setPublicityLevels($eventId, $accessString)
+    {
+        $pictures = $this->getPictures($eventId, 2);
 
-	function setPublicityLevels($eventId, $accessString){
-		$pictures = $this->getPictures($eventId, 2);
+        foreach ($pictures as $key => $value) {
+            $this->setPublicityLevel($eventId, $key, $accessString);
+        }
+    }
 
-		foreach($pictures as $key => $value){
-			$this->setPublicityLevel($eventId, $key, $accessString);
-		}
-	}
+    public function setPublicityLevelsUntilSemester($semesterString, $accessString)
+    {
+        global $libTime, $libDb, $libGlobal;
 
-	function setPublicityLevelsUntilSemester($semesterString, $accessString){
-		global $libTime, $libDb, $libGlobal;
+        $period = $libTime->getPeriod($semesterString);
 
-		$period = $libTime->getPeriod($semesterString);
+        $stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(datum, :semester_ende) <= 0 ORDER BY datum DESC');
+        $stmt->bindValue(':semester_ende', $period[1]);
+        $stmt->execute();
 
-		$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(datum, :semester_ende) <= 0 ORDER BY datum DESC');
-		$stmt->bindValue(':semester_ende', $period[1]);
-		$stmt->execute();
+        $libGlobal->notificationTexts[] = 'Gebe Bilder aller Veranstaltungen bis ' .$semesterString. ' für das Intranet frei.';
 
-		$libGlobal->notificationTexts[] = 'Gebe Bilder aller Veranstaltungen bis ' .$semesterString. ' für das Intranet frei.';
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->setPublicityLevels($row['id'], $accessString);
+        }
+    }
 
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$this->setPublicityLevels($row['id'], $accessString);
-		}
-	}
+    public function resetPublicityLevelMain($eventId)
+    {
+        $pictures = $this->getPictures($eventId, 0);
 
-	function resetPublicityLevelMain($eventId){
-		$pictures = $this->getPictures($eventId, 0);
+        foreach ($pictures as $key => $file) {
+            $accessString = $this->parseAccessString($file);
 
-		foreach($pictures as $key => $file){
-			$accessString = $this->parseAccessString($file);
-
-			if($accessString == 'M'){
-				$this->setPublicityLevel($eventId, $key, 'E');
-			}
-		}
-	}
+            if ($accessString == 'M') {
+                $this->setPublicityLevel($eventId, $key, 'E');
+            }
+        }
+    }
 }
