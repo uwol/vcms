@@ -230,7 +230,7 @@ class LibForm{
 		echo '">' .$label. '</button>';
 	}
 
-	function printMitgliederDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
+	function printMembersDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
 		global $libDb, $libPerson;
 
 		echo '<div class="form-group">';
@@ -262,7 +262,7 @@ class LibForm{
 		echo '</div>';
 	}
 
-	function printVereineDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
+	function printAssociationsDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
 		echo '<div class="form-group">';
@@ -358,7 +358,7 @@ class LibForm{
 		echo '</div>';
 	}
 
-	function printGruppeDropDownBox($name, $label, $selectedGruppe = '', $allowNull = true, $disabled = false){
+	function printGroupDropDownBox($name, $label, $selectedGroup = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
 		echo '<div class="form-group">';
@@ -379,7 +379,7 @@ class LibForm{
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			echo '<option value="' .$row['bezeichnung']. '"';
 
-			if($selectedGruppe == $row['bezeichnung']){
+			if($selectedGroup == $row['bezeichnung']){
 				echo ' selected="selected"';
 			}
 
@@ -413,7 +413,7 @@ class LibForm{
 			$stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
 			$stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
 			$stmt2->execute();
-			$stmt2->bindColumn('number', $anzahl);
+			$stmt2->bindColumn('number', $count);
 			$stmt2->fetch();
 
 			echo '<option value="' .$row['id']. '"';
@@ -422,14 +422,14 @@ class LibForm{
 				echo ' selected="selected"';
 			}
 
-			echo '>' .$row['bezeichnung']. ' [' .$anzahl. ' Personen]</option>';
+			echo '>' .$row['bezeichnung']. ' [' .$count. ' Personen]</option>';
 		}
 
 		echo '</select></div>';
 		echo '</div>';
 	}
 
-	function printVeranstaltungDropDownBox($name, $label, $selectedVeranstaltung = '', $allowNull = true, $disabled = false){
+	function printEventDropDownBox($name, $label, $selectedEvent = '', $allowNull = true, $disabled = false){
 		global $libDb;
 
 		echo '<div class="form-group">';
@@ -450,7 +450,7 @@ class LibForm{
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			echo '<option value="' .$row['id']. '"';
 
-			if($selectedVeranstaltung == $row['id']){
+			if($selectedEvent == $row['id']){
 				echo ' selected="selected"';
 			}
 

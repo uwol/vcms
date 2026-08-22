@@ -21,7 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	if(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if(isset($_POST['id']) && $_POST['id'] != ''){
 			// aus Datenbank löschen
 			$stmt = $libDb->prepare('DELETE FROM base_vip WHERE id=:id');
@@ -41,7 +41,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_vip&amp;aktion=blank" class="btn btn-default">Einen neuen Vip anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_vip&amp;action=blank" class="btn btn-default">Einen neuen Vip anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';

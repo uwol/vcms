@@ -24,9 +24,9 @@ if(isset($_GET['id'])){
 	$stmt = $libDb->prepare('SELECT * FROM base_verein WHERE id=:id');
 	$stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
 	$stmt->execute();
-	$vereinarray = $stmt->fetch(PDO::FETCH_ASSOC);
+	$associationRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
-	echo '<h1>' .$libAssociation->getVereinNameString($vereinarray['id']). '</h1>';
+	echo '<h1>' .$libAssociation->getAssociationNameString($associationRow['id']). '</h1>';
 
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
@@ -38,28 +38,28 @@ if(isset($_GET['id'])){
 	echo '<div class="panel-body">';
 	echo '<address>';
 
-	if($vereinarray['zusatz1']){
-		echo $vereinarray['zusatz1']. '<br />';
+	if($associationRow['zusatz1']){
+		echo $associationRow['zusatz1']. '<br />';
 	}
 
-	if($vereinarray['strasse1']){
-		echo $vereinarray['strasse1']. '<br />';
+	if($associationRow['strasse1']){
+		echo $associationRow['strasse1']. '<br />';
 	}
 
-	if($vereinarray['ort1']){
-		echo $vereinarray['plz1']. ' ' .$vereinarray['ort1']. '<br />';
+	if($associationRow['ort1']){
+		echo $associationRow['plz1']. ' ' .$associationRow['ort1']. '<br />';
 	}
 
-	if($vereinarray['land1']){
-		echo $vereinarray['land1']. '<br />';
+	if($associationRow['land1']){
+		echo $associationRow['land1']. '<br />';
 	}
 
-	if($vereinarray['telefon1']){
-		echo $vereinarray['telefon1']. '<br />';
+	if($associationRow['telefon1']){
+		echo $associationRow['telefon1']. '<br />';
 	}
 
-	if($vereinarray['webseite']){
-		echo '<a href="' .$vereinarray['webseite']. '">' .$vereinarray['webseite']. '</a><br />';
+	if($associationRow['webseite']){
+		echo '<a href="' .$associationRow['webseite']. '">' .$associationRow['webseite']. '</a><br />';
 	}
 
 	echo '</address>';
@@ -70,98 +70,98 @@ if(isset($_GET['id'])){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 
-	if($vereinarray['farbe1']){
+	if($associationRow['farbe1']){
 		echo '<div style="width:50px">';
 
-		if($vereinarray['farbe1']){
-			echo '<div style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe1']). '"></div>';
+		if($associationRow['farbe1']){
+			echo '<div style="height:10px;background-color:' .$libAssociation->getColor($associationRow['farbe1']). '"></div>';
 		}
 
-		if($vereinarray['farbe2']){
-			echo '<div style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe2']). '"></div>';
+		if($associationRow['farbe2']){
+			echo '<div style="height:10px;background-color:' .$libAssociation->getColor($associationRow['farbe2']). '"></div>';
 		}
 
-		if($vereinarray['farbe3']){
-			echo '<div style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe3']). '"></div>';
+		if($associationRow['farbe3']){
+			echo '<div style="height:10px;background-color:' .$libAssociation->getColor($associationRow['farbe3']). '"></div>';
 		}
 
-		if($vereinarray['farbe4']){
-			echo '<div style="height:10px;background-color:' .$libAssociation->getFarbe($vereinarray['farbe4']). '"></div>';
+		if($associationRow['farbe4']){
+			echo '<div style="height:10px;background-color:' .$libAssociation->getColor($associationRow['farbe4']). '"></div>';
 		}
 
 		echo '</div>';
 
 		echo '<p class="mb-4">';
-		echo $vereinarray['farbe1']. ' ' .$vereinarray['farbe2']. ' ' .$vereinarray['farbe3']. '<br />';
+		echo $associationRow['farbe1']. ' ' .$associationRow['farbe2']. ' ' .$associationRow['farbe3']. '<br />';
 		echo '</p>';
 	}
 
 	echo '<p class="mb-4">';
 
-	if($vereinarray['datum_gruendung']){
+	if($associationRow['datum_gruendung']){
 		echo 'Gründung ';
-		echo $libAssociation->getGruendungString($vereinarray['datum_gruendung']);
+		echo $libAssociation->getFoundationString($associationRow['datum_gruendung']);
 		echo '<br />';
 	}
 
-	if($vereinarray['dachverband']){
-		echo 'Dachverband: ' .$vereinarray['dachverband']. '<br />';
+	if($associationRow['dachverband']){
+		echo 'Dachverband: ' .$associationRow['dachverband']. '<br />';
 	}
 
-	if($vereinarray['dachverbandnr']){
-		echo 'Nr.: ' .$vereinarray['dachverbandnr']. '<br />';
+	if($associationRow['dachverbandnr']){
+		echo 'Nr.: ' .$associationRow['dachverbandnr']. '<br />';
 	}
 
-	$aktivstring = '';
+	$activeString = '';
 
-	if($vereinarray['aktivitas'] == 1){
-		$aktivstring = ' !';
+	if($associationRow['aktivitas'] == 1){
+		$activeString = ' !';
 	}
 
-	if($vereinarray['kuerzel']){
-		echo 'Kürzel: ' .$vereinarray['kuerzel'] . $aktivstring. '<br />';
+	if($associationRow['kuerzel']){
+		echo 'Kürzel: ' .$associationRow['kuerzel'] . $activeString. '<br />';
 	}
 
-	if($vereinarray['aktivitas'] == 1){
+	if($associationRow['aktivitas'] == 1){
 		echo 'Aktivitas: Ja<br />';
 	} else {
 		echo 'Aktivitas: Nein<br />';
 	}
 
-	if($vereinarray['ahahschaft'] == 1){
+	if($associationRow['ahahschaft'] == 1){
 		echo 'Altherrenschaft: Ja<br />';
 	} else {
 		echo 'Altherrenschaft: Nein<br />';
 	}
 
-	if($vereinarray['mutterverein']){
+	if($associationRow['mutterverein']){
 		echo 'Mutter: ';
-		echo '<a href="index.php?pid=verein&amp;id=' .$vereinarray['mutterverein']. '">';
-		echo $libAssociation->getVereinNameString($vereinarray['mutterverein']). '</a>';
+		echo '<a href="index.php?pid=verein&amp;id=' .$associationRow['mutterverein']. '">';
+		echo $libAssociation->getAssociationNameString($associationRow['mutterverein']). '</a>';
 		echo '<br />';
 	}
 
-	if($vereinarray['fusioniertin']){
+	if($associationRow['fusioniertin']){
 		echo 'Fusioniert in: ';
-		echo '<a href="index.php?pid=verein&amp;id=' .$vereinarray['fusioniertin']. '">';
-		echo $libAssociation->getVereinNameString($vereinarray['fusioniertin']). '</a>';
+		echo '<a href="index.php?pid=verein&amp;id=' .$associationRow['fusioniertin']. '">';
+		echo $libAssociation->getAssociationNameString($associationRow['fusioniertin']). '</a>';
 		echo '<br />';
 	}
 
-	$toechterstr = $libAssociation->getToechterString($vereinarray['id'], 'verein');
+	$daughtersString = $libAssociation->getDaughtersString($associationRow['id'], 'verein');
 
-	if($toechterstr){
-		echo 'Töchter: ' .$toechterstr. '<br />';
+	if($daughtersString){
+		echo 'Töchter: ' .$daughtersString. '<br />';
 	}
 
-	$fusionersstr = $libAssociation->getFusioniertString($vereinarray['id'], 'verein');
+	$mergedString = $libAssociation->getMergedString($associationRow['id'], 'verein');
 
-	if($fusionersstr){
-		echo 'Fusioniert aus: ' .$fusionersstr. '<br />';
+	if($mergedString){
+		echo 'Fusioniert aus: ' .$mergedString. '<br />';
 	}
 
-	if($vereinarray['wahlspruch']){
-		echo 'Wahlspruch: ' .$vereinarray['wahlspruch']. '<br />';
+	if($associationRow['wahlspruch']){
+		echo 'Wahlspruch: ' .$associationRow['wahlspruch']. '<br />';
 	}
 
 	echo '</p>';
@@ -169,59 +169,59 @@ if(isset($_GET['id'])){
 	echo '</div>';
 
 
-	if($vereinarray['farbenstrophe']){
+	if($associationRow['farbenstrophe']){
 		echo '<h3>Farbenstrophe</h3>';
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($vereinarray['farbenstrophe']);
+		echo nl2br($associationRow['farbenstrophe']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	if($vereinarray['farbenstrophe_inoffiziell']){
+	if($associationRow['farbenstrophe_inoffiziell']){
 		echo '<h3>Inoffizielle Farbenstrophe</h3>';
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($vereinarray['farbenstrophe_inoffiziell']);
+		echo nl2br($associationRow['farbenstrophe_inoffiziell']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	if($vereinarray['fuchsenstrophe']){
+	if($associationRow['fuchsenstrophe']){
 		echo '<h3>Fuchsenstrophe</h3>';
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($vereinarray['fuchsenstrophe']);
+		echo nl2br($associationRow['fuchsenstrophe']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	if($vereinarray['bundeslied']){
+	if($associationRow['bundeslied']){
 		echo '<h3>Bundeslied</h3>';
 
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($vereinarray['bundeslied']);
+		echo nl2br($associationRow['bundeslied']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
 	}
 
-	if($vereinarray['beschreibung']){
+	if($associationRow['beschreibung']){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($vereinarray['beschreibung']);
+		echo nl2br($associationRow['beschreibung']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
@@ -233,8 +233,8 @@ if(isset($_GET['id'])){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 
-	$filePathZirkelSvg = 'custom/vereine/zirkel/' .$vereinarray['id']. '.svg';
-	$filePathZirkelGif = 'custom/vereine/zirkel/' .$vereinarray['id']. '.gif';
+	$filePathZirkelSvg = 'custom/vereine/zirkel/' .$associationRow['id']. '.svg';
+	$filePathZirkelGif = 'custom/vereine/zirkel/' .$associationRow['id']. '.gif';
 
 	if(is_file($filePathZirkelSvg)){
 		echo '<p class="mb-4"><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></p>';
@@ -242,8 +242,8 @@ if(isset($_GET['id'])){
 		echo '<p class="mb-4"><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></p>';
 	}
 
-	$filePathWappenSvg = 'custom/vereine/wappen/' .$vereinarray['id']. '.svg';
-	$filePathWappenJpg = 'custom/vereine/wappen/' .$vereinarray['id']. '.jpg';
+	$filePathWappenSvg = 'custom/vereine/wappen/' .$associationRow['id']. '.svg';
+	$filePathWappenJpg = 'custom/vereine/wappen/' .$associationRow['id']. '.jpg';
 
 	if(is_file($filePathWappenSvg)){
 		echo '<p class="mb-4"><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-responsive center-block" /></p>';
@@ -251,7 +251,7 @@ if(isset($_GET['id'])){
 		echo '<p class="mb-4"><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></p>';
 	}
 
-	$filePathHausJpg = 'custom/vereine/haus/' .$vereinarray['id']. '.jpg';
+	$filePathHausJpg = 'custom/vereine/haus/' .$associationRow['id']. '.jpg';
 
 	if(is_file($filePathHausJpg)){
 		echo '<p class="mb-4"><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></p>';
@@ -265,12 +265,12 @@ if(isset($_GET['id'])){
 
 
 	$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id');
-	$stmt->bindValue(':verein', $vereinarray['id'], PDO::PARAM_INT);
+	$stmt->bindValue(':verein', $associationRow['id'], PDO::PARAM_INT);
 	$stmt->execute();
-	$stmt->bindColumn('number', $anzahl);
+	$stmt->bindColumn('number', $count);
 	$stmt->fetch();
 
-	if($anzahl > 0){
+	if($count > 0){
 		echo '<h2>Mitglieder</h2>';
 
 		echo '<div class="panel panel-default">';
@@ -278,7 +278,7 @@ if(isset($_GET['id'])){
 		echo '<div class="persons-grid">';
 
 		$stmt = $libDb->prepare('SELECT base_verein_mitgliedschaft.mitglied, base_verein_mitgliedschaft.ehrenmitglied, base_person.gruppe FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id ORDER BY base_verein_mitgliedschaft.ehrenmitglied DESC, base_person.name ASC');
-		$stmt->bindValue(':verein', $vereinarray['id'], PDO::PARAM_INT);
+		$stmt->bindValue(':verein', $associationRow['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

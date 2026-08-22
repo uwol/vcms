@@ -63,10 +63,10 @@ if(count($eventIds) > 0){
 		echo '<div class="event-box-caption">';
 		echo '<div class="event-box-caption-content">';
 		echo '<div class="event-name text-faded">';
-		printVeranstaltungTitle($row);
+		printEventTitle($row);
 		echo '</div>';
     echo '<div class="event-time">';
-    printVeranstaltungDateTime($row);
+    printEventDateTime($row);
     echo '</div>';
     echo '</div>';
     echo '</div>';

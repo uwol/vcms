@@ -22,17 +22,17 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 $lastInsertId = '';
 
-if(isset($_POST['kategorie']) && isset($_POST['betroffenesmitglied']) && isset($_POST['text']) && trim($_POST['text']) != ''){
-	$betroffenesmitglied = null;
+if(isset($_POST['category']) && isset($_POST['betroffenesmitglied']) && isset($_POST['text']) && trim($_POST['text']) != ''){
+	$affectedMember = null;
 
 	if(is_numeric($_POST['betroffenesmitglied']) && $_POST['betroffenesmitglied'] > 0){
-		$betroffenesmitglied = $_POST['betroffenesmitglied'];
+		$affectedMember = $_POST['betroffenesmitglied'];
 	}
 
 	$stmt = $libDb->prepare('INSERT INTO mod_news_news (kategorieid, eingabedatum, text, betroffenesmitglied, autor) VALUES (:kategorieid, NOW(), :text, :betroffenesmitglied, :autor)');
-	$stmt->bindValue(':kategorieid', $_POST['kategorie'], PDO::PARAM_INT);
+	$stmt->bindValue(':kategorieid', $_POST['category'], PDO::PARAM_INT);
 	$stmt->bindValue(':text', $libString->protectXss(trim($_POST['text'])));
-	$stmt->bindValue(':betroffenesmitglied', $betroffenesmitglied, PDO::PARAM_INT);
+	$stmt->bindValue(':betroffenesmitglied', $affectedMember, PDO::PARAM_INT);
 	$stmt->bindValue(':autor', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt->execute();
 
@@ -46,11 +46,11 @@ if(isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id']
 	$stmt = $libDb->prepare('SELECT *, DATEDIFF(NOW(), eingabedatum) AS datediff FROM mod_news_news WHERE id=:id');
 	$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 	$stmt->execute();
-	$news_array = $stmt->fetch(PDO::FETCH_ASSOC);
+	$newsRows = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	//can the news be deleted?
-	if((in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter()))
-		|| ($news_array['autor'] == $libAuth->getId() && $news_array['datediff'] < 7)){
+	if((in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices()))
+		|| ($newsRows['autor'] == $libAuth->getId() && $newsRows['datediff'] < 7)){
 
 		$stmt = $libDb->prepare('DELETE FROM mod_news_news WHERE id = :id');
 		$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
@@ -77,13 +77,13 @@ echo '<div class="col-md-6">';
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(eingabedatum,'%Y-%m-01') AS eingabedatum FROM mod_news_news WHERE eingabedatum IS NOT NULL GROUP BY eingabedatum ORDER BY eingabedatum DESC");
 $stmt->execute();
 
-$daten = array();
+$data = array();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$daten[] = $row['eingabedatum'];
+	$data[] = $row['eingabedatum'];
 }
 
-echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
+echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
 
 echo '</div>';
 echo '<div class="col-md-6">';
@@ -100,20 +100,20 @@ echo '</div>';
 echo '</div>';
 
 
-$zeitraum = $libTime->getZeitraum($libGlobal->semester);
+$period = $libTime->getPeriod($libGlobal->semester);
 
 $stmt = $libDb->prepare('SELECT mod_news_news.eingabedatum, mod_news_news.id, mod_news_kategorie.bezeichnung, mod_news_news.text, mod_news_news.betroffenesmitglied, mod_news_news.autor, DATEDIFF(NOW(), mod_news_news.eingabedatum) AS datediff FROM mod_news_news LEFT JOIN mod_news_kategorie ON mod_news_news.kategorieid = mod_news_kategorie.id WHERE DATEDIFF(mod_news_news.eingabedatum, :semesterstart) >= 0 AND DATEDIFF(mod_news_news.eingabedatum, :semesterende) <= 0 ORDER BY eingabedatum DESC');
-$stmt->bindValue(':semesterstart', $zeitraum[0]);
-$stmt->bindValue(':semesterende', $zeitraum[1]);
+$stmt->bindValue(':semesterstart', $period[0]);
+$stmt->bindValue(':semesterende', $period[1]);
 $stmt->execute();
 
-$lastsetmonth = '';
+$lastSetMonth = '';
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	//month name
-	if($lastsetmonth != substr($row['eingabedatum'], 0, 7)){
+	if($lastSetMonth != substr($row['eingabedatum'], 0, 7)){
 		echo '<h2>' .$libTime->getMonth($libTime->formatMonthString($row['eingabedatum'])). ' ' .substr($row['eingabedatum'], 0, 4). '</h2>';
-		$lastsetmonth = substr($row['eingabedatum'], 0, 7);
+		$lastSetMonth = substr($row['eingabedatum'], 0, 7);
 	}
 
 	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
@@ -124,7 +124,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo $row['bezeichnung'];
 	echo '</h3>';
 
-	if((in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter()))
+	if((in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices()))
 			|| ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)){
 		echo ' <form method="post" action="index.php?pid=intranet_news" class="d-inline" onsubmit="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
 		echo '<input type="hidden" name="action" value="delete" />';

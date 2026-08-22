@@ -21,40 +21,40 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	$aktion = '';
-	if(isset($_REQUEST['aktion'])){
-		$aktion = $_REQUEST['aktion'];
+	$action = '';
+	if(isset($_REQUEST['action'])){
+		$action = $_REQUEST['action'];
 	}
 
-	$verein = '';
+	$association = '';
 	if(isset($_REQUEST['verein'])){
-		$verein = $_REQUEST['verein'];
+		$association = $_REQUEST['verein'];
 	}
 
-	$mitglied = '';
+	$member = '';
 	if(isset($_REQUEST['mitglied'])){
-		$mitglied = $_REQUEST['mitglied'];
+		$member = $_REQUEST['mitglied'];
 	}
 
-	$vmarray = array();
+	$membershipRow = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array('mitglied', 'verein', 'ehrenmitglied', 'semester_reception', 'semester_philistrierung');
+	$fields = array('mitglied', 'verein', 'ehrenmitglied', 'semester_reception', 'semester_philistrierung');
 
 	/**
 	*
 	* Verschiedene Aktionen auf der Datenbank durchführen, je nach Kontext
-	* der durch aktion definiert wird
+	* der durch action definiert wird
 	*
 	*/
 
 	//neues Mitglied, leerer Datensatz
-	if($aktion == 'blank'){
-		foreach($felder as $feld){
-			$vmarray[$feld] = '';
+	if($action == 'blank'){
+		foreach($fields as $field){
+			$membershipRow[$field] = '';
 		}
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
-	elseif($aktion == 'insert'){
+	elseif($action == 'insert'){
 		if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
@@ -72,13 +72,13 @@ if($libAuth->isLoggedin()){
 		}
 
 		if($error){
-			$vmarray = $_REQUEST;
+			$membershipRow = $_REQUEST;
 		} else {
-			$vmarray = $libDb->insertRow($felder,$_REQUEST, 'base_verein_mitgliedschaft', array('verein' => $verein, 'mitglied' => $mitglied));
+			$membershipRow = $libDb->insertRow($fields,$_REQUEST, 'base_verein_mitgliedschaft', array('verein' => $association, 'mitglied' => $member));
 		}
 	}
 	//bestehende Daten werden modifiziert
-	elseif($aktion == 'update'){
+	elseif($action == 'update'){
 		if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
@@ -96,16 +96,16 @@ if($libAuth->isLoggedin()){
 		}
 
 		if($error){
-			$vmarray = $_REQUEST;
+			$membershipRow = $_REQUEST;
 		} else {
-			$vmarray = $libDb->updateRow($felder,$_REQUEST, 'base_verein_mitgliedschaft', array('verein' => $verein, 'mitglied' => $mitglied));
+			$membershipRow = $libDb->updateRow($fields,$_REQUEST, 'base_verein_mitgliedschaft', array('verein' => $association, 'mitglied' => $member));
 		}
 	} else {
 		$stmt = $libDb->prepare('SELECT * FROM base_verein_mitgliedschaft WHERE verein=:verein AND mitglied=:mitglied');
-		$stmt->bindValue(':verein', $verein, PDO::PARAM_INT);
-		$stmt->bindValue(':mitglied', $mitglied, PDO::PARAM_INT);
+		$stmt->bindValue(':verein', $association, PDO::PARAM_INT);
+		$stmt->bindValue(':mitglied', $member, PDO::PARAM_INT);
 		$stmt->execute();
-		$vmarray = $stmt->fetch(PDO::FETCH_ASSOC);
+		$membershipRow = $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -124,11 +124,11 @@ if($libAuth->isLoggedin()){
 	* Löschoption
 	*
 	*/
-	if($vmarray['mitglied'] != '' && $vmarray['verein'] != ''){
+	if($membershipRow['mitglied'] != '' && $membershipRow['verein'] != ''){
 		echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_memberships" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-		echo '<input type="hidden" name="aktion" value="delete" />';
-		echo '<input type="hidden" name="mitglied" value="' .$vmarray['mitglied']. '" />';
-		echo '<input type="hidden" name="verein" value="' .$vmarray['verein']. '" />';
+		echo '<input type="hidden" name="action" value="delete" />';
+		echo '<input type="hidden" name="mitglied" value="' .$membershipRow['mitglied']. '" />';
+		echo '<input type="hidden" name="verein" value="' .$membershipRow['verein']. '" />';
 		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
 		echo '</form>';
 	}
@@ -138,31 +138,31 @@ if($libAuth->isLoggedin()){
 	* Ausgabe des Forms starten
 	*
 	*/
-	if($aktion == 'blank'){
-		$extraActionParam = '&amp;aktion=insert';
+	if($action == 'blank'){
+		$extraActionParam = '&amp;action=insert';
 	} else {
-		$extraActionParam = '&amp;aktion=update';
+		$extraActionParam = '&amp;action=update';
 	}
 
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_admin_membership' .$extraActionParam. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="hidden" name="verein" value="' .$vmarray['verein']. '" />';
-	echo '<input type="hidden" name="mitglied" value="' .$vmarray['mitglied']. '" />';
+	echo '<input type="hidden" name="verein" value="' .$membershipRow['verein']. '" />';
+	echo '<input type="hidden" name="mitglied" value="' .$membershipRow['mitglied']. '" />';
 
-	if($aktion == 'blank'){
-		$libForm->printMitgliederDropDownBox('mitglied', 'Mitglied', $vmarray['mitglied'], false, false);
-		$libForm->printVereineDropDownBox('verein', 'Verein', $vmarray['verein'], false, false);
+	if($action == 'blank'){
+		$libForm->printMembersDropDownBox('mitglied', 'Mitglied', $membershipRow['mitglied'], false, false);
+		$libForm->printAssociationsDropDownBox('verein', 'Verein', $membershipRow['verein'], false, false);
 	} else {
-		$libForm->printMitgliederDropDownBox('mitglied', 'Mitglied', $vmarray['mitglied'], false, true);
-		$libForm->printVereineDropDownBox('verein', 'Verein', $vmarray['verein'], false, true);
+		$libForm->printMembersDropDownBox('mitglied', 'Mitglied', $membershipRow['mitglied'], false, true);
+		$libForm->printAssociationsDropDownBox('verein', 'Verein', $membershipRow['verein'], false, true);
 	}
 
-	$libForm->printBoolSelectBox('ehrenmitglied', 'Ehrenmitglied', $vmarray['ehrenmitglied']);
+	$libForm->printBoolSelectBox('ehrenmitglied', 'Ehrenmitglied', $membershipRow['ehrenmitglied']);
 
-	$libForm->printTextInput('semester_reception', 'Semester Reception', $vmarray['semester_reception']);
-	$libForm->printTextInput('semester_philistrierung', 'Semester Philistrierung', $vmarray['semester_philistrierung']);
+	$libForm->printTextInput('semester_reception', 'Semester Reception', $membershipRow['semester_reception']);
+	$libForm->printTextInput('semester_philistrierung', 'Semester Philistrierung', $membershipRow['semester_philistrierung']);
 
 	echo '<input type="hidden" name="form_complete" value="1" />';
 

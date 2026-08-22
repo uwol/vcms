@@ -41,11 +41,11 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('show_facebook_plugin')){
 }
 
 
-function printVeranstaltungTitle($row){
+function printEventTitle($row){
 	echo $row['titel'];
 }
 
-function printVeranstaltungDateTime($row){
+function printEventDateTime($row){
 	global $libTime;
 
 	echo '<time datetime="' .$libTime->formatUtcString($row['datum']). '">';

@@ -23,19 +23,19 @@ use PDO;
 class LibGenealogyElement{
 	var $leibvater;
 	var $id;
-	var $mitgliedid;
-	var $titel;
-	var $vorname;
-	var $praefix;
-	var $nachname;
+	var $memberId;
+	var $title;
+	var $firstName;
+	var $prefix;
+	var $lastName;
 	var $suffix;
-	var $gruppe;
+	var $group;
 
-	function __construct($id, $mitgliedid){
+	function __construct($id, $memberId){
 		global $libDb;
 
 		$this->id = $id;
-		$this->mitgliedid = $mitgliedid;
+		$this->memberId = $memberId;
 
 		$stmt = $libDb->prepare('SELECT leibmitglied, titel, vorname, praefix, name, suffix, gruppe FROM base_person WHERE id=:id');
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -43,18 +43,18 @@ class LibGenealogyElement{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		$this->leibvater = $row['leibmitglied'];
-		$this->titel = $row['titel'];
-		$this->vorname = $row['vorname'];
-		$this->praefix = $row['praefix'];
-		$this->nachname = $row['name'];
+		$this->title = $row['titel'];
+		$this->firstName = $row['vorname'];
+		$this->prefix = $row['praefix'];
+		$this->lastName = $row['name'];
 		$this->suffix = $row['suffix'];
-		$this->gruppe = $row['gruppe'];
+		$this->group = $row['gruppe'];
 	}
 
 	function searchFirstLeibvater(){
 		if($this->leibvater != ''){
-			$Leibvater = new LibGenealogyElement($this->leibvater, '');
-			return $Leibvater->searchFirstLeibvater();
+			$leibvaterElement = new LibGenealogyElement($this->leibvater, '');
+			return $leibvaterElement->searchFirstLeibvater();
 		} else {
 			return $this->id;
 		}
@@ -76,31 +76,31 @@ class LibGenealogyElement{
 		return $leibsoehne;
 	}
 
-	function getString($tiefe){
+	function getString($depth){
 		$retstr = '';
 
-		for($i=0; $i < $tiefe-1; $i++){
+		for($i=0; $i < $depth-1; $i++){
 			$retstr .= '&#124;&nbsp;&nbsp;';
 		}
 
-		if($tiefe > 0){
+		if($depth > 0){
 			$retstr .= '&#124;-';
 		}
 
 		$retstr .= '<a href="index.php?pid=intranet_person&amp;id=' .$this->id. '">';
 		$retstr .= '<span style="';
 
-		if($this->id == $this->mitgliedid){
+		if($this->id == $this->memberId){
 			$retstr .= 'background-color:red;';
 		}
 
-		if($this->gruppe == 'B' || $this->gruppe == 'F'){
+		if($this->group == 'B' || $this->group == 'F'){
 			$retstr .= 'color:#0000FF';
-		} elseif($this->gruppe == 'P'){
+		} elseif($this->group == 'P'){
 			$retstr .= 'color:#000000';
-		} elseif($this->gruppe == 'T'){
+		} elseif($this->group == 'T'){
 			$retstr .= 'color:#660000';
-		} elseif($this->gruppe == 'X'){
+		} elseif($this->group == 'X'){
 			$retstr .= 'color:#C0C0C0';
 		} else {
 			$retstr .= 'color:#669933';
@@ -108,11 +108,11 @@ class LibGenealogyElement{
 
 		$retstr .= '">';
 
-		if($this->titel != ''){
-			$retstr .= $this->titel. ' ';
+		if($this->title != ''){
+			$retstr .= $this->title. ' ';
 		}
 
-		$retstr .= $this->vorname. ' ' .$this->praefix. ' ' .$this->nachname. ' ' .$this->suffix;
+		$retstr .= $this->firstName. ' ' .$this->prefix. ' ' .$this->lastName. ' ' .$this->suffix;
 
 		$retstr .= '</span>';
 		$retstr .= '</a>';

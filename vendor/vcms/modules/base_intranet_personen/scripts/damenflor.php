@@ -29,11 +29,11 @@ echo $libString->getNotificationBoxText();
 
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'C'");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahl);
+$stmt->bindColumn('number', $count);
 $stmt->fetch();
 
-if($anzahl > 0){
-	echo '<h2>Die Couleurdamen (' .$anzahl. ')</h2>';
+if($count > 0){
+	echo '<h2>Die Couleurdamen (' .$count. ')</h2>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'C' ORDER BY name");
 	printPersons($stmt);
@@ -42,11 +42,11 @@ if($anzahl > 0){
 
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'G' OR gruppe = 'W'");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahl);
+$stmt->bindColumn('number', $count);
 $stmt->fetch();
 
-if($anzahl > 0){
-	echo '<h2>Die Gattinnen (' .$anzahl. ')</h2>';
+if($count > 0){
+	echo '<h2>Die Gattinnen (' .$count. ')</h2>';
 
 	$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'G' OR gruppe = 'W' ORDER BY name");
 	printPersons($stmt);

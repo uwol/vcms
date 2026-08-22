@@ -74,7 +74,7 @@ echo '  </head>' . PHP_EOL;
 echo '  <body>' . PHP_EOL;
 
 $libMenuRenderer = new \vcms\LibMenuRenderer();
-$libMenuRenderer->printNavbar($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGruppe(), $libAuth->getAemter());
+$libMenuRenderer->printNavbar($libMenuInternet, $libMenuIntranet, $libMenuAdministration, $libGlobal->pid, $libAuth->getGroup(), $libAuth->getOffices());
 
 if($libGlobal->page->isContainerEnabled()){
 	echo '    <main id="content">' . PHP_EOL;

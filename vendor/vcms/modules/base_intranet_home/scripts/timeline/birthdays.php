@@ -20,7 +20,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-class LibBirtdayTimelineEvent extends \vcms\timeline\LibTimelineEvent{
+class LibBirthdayTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 	function getBadgeClass(){
 		return 'birthday';
 	}
@@ -31,21 +31,21 @@ class LibBirtdayTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 }
 
 
-$dateTimeStart = new DateTime($zeitraum[0]);
-$dateTimeEnd = new DateTime($zeitraum[1]);
+$dateTimeStart = new DateTime($period[0]);
+$dateTimeEnd = new DateTime($period[1]);
 
-$period = new DatePeriod($dateTimeStart, new DateInterval('P1Y'), $dateTimeEnd);
+$datePeriod = new DatePeriod($dateTimeStart, new DateInterval('P1Y'), $dateTimeEnd);
 $years = array();
 
-foreach($period as $date){
+foreach($datePeriod as $date){
     $years[] = $date->format('Y');
 }
 
 foreach($years as $year){
-	addBirthdayTimelineEvents($year, $zeitraum);
+	addBirthdayTimelineEvents($year, $period);
 }
 
-function addBirthdayTimelineEvents($year, $zeitraum){
+function addBirthdayTimelineEvents($year, $period){
 	global $libDb, $libTime;
 
 	$stmt = $libDb->prepare("SELECT id, datum_geburtstag FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND datum_geburtstag != '' AND datum_geburtstag != '0000-00-00'");
@@ -60,7 +60,7 @@ function addBirthdayTimelineEvents($year, $zeitraum){
 			$dateObject->add(new DateInterval('P' .$age. 'Y'));
 			$date = $dateObject->format('Y-m-d');
 
-			if($zeitraum[0] <= $date && $date <= $zeitraum[1] && $date <= date('Y-m-d')){
+			if($period[0] <= $date && $date <= $period[1] && $date <= date('Y-m-d')){
 				addBirthdayTimelineEvent($row, $date, $age);
 			}
 		}
@@ -79,7 +79,7 @@ function addBirthdayTimelineEvent($row, $date, $age){
 
 	$url = 'index.php?pid=intranet_person&amp;id=' .$row['id'];
 
-	$timelineEvent = new LibBirtdayTimelineEvent();
+	$timelineEvent = new LibBirthdayTimelineEvent();
 
 	$timelineEvent->setTitle($title);
 	$timelineEvent->setDatetime($date);

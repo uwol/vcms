@@ -36,7 +36,7 @@ if(!is_object($libGlobal) || !is_object($libAuth)){
 		$outputFileName = $file->name;
 		$outputFilePathString = $file->getFileSystemPath();
 
-		if(!in_array($libAuth->getGruppe(), $file->readGroups)){
+		if(!in_array($libAuth->getGroup(), $file->readGroups)){
 			http_response_code(403);
 		} else {
 			$libMime = new \vcms\LibMime();

@@ -19,57 +19,57 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 namespace vcms\module;
 
 class LibAccessRestriction{
-	var $gruppen;
-	var $aemter;
+	var $groups;
+	var $offices;
 
-	function __construct($gruppen, $aemter){
-		$this->gruppen = $gruppen;
-		$this->aemter = $aemter;
+	function __construct($groups, $offices){
+		$this->groups = $groups;
+		$this->offices = $offices;
 	}
 
-	function getGruppen(){
-		return $this->gruppen;
+	function getGroups(){
+		return $this->groups;
 	}
 
-	function getAemter(){
-		return $this->aemter;
+	function getOffices(){
+		return $this->offices;
 	}
 
-	function hasGruppenRestriction(){
-		return is_array($this->gruppen) && count($this->gruppen) > 0;
+	function hasGroupsRestriction(){
+		return is_array($this->groups) && count($this->groups) > 0;
 	}
 
-	function hasAemterRestriction(){
-		return is_array($this->aemter) && count($this->aemter) > 0;
+	function hasOfficesRestriction(){
+		return is_array($this->offices) && count($this->offices) > 0;
 	}
 
-	function isFulfilledBy($gruppe, $aemter){
-		$gruppenOk = false;
+	function isFulfilledBy($group, $offices){
+		$groupsOk = false;
 
 		//should this restriction be restricted by group membership?
-		if(is_array($this->gruppen) && count($this->gruppen) > 0){
-			if(in_array($gruppe, $this->gruppen)){
-				$gruppenOk = true;
+		if(is_array($this->groups) && count($this->groups) > 0){
+			if(in_array($group, $this->groups)){
+				$groupsOk = true;
 			}
 		} else {
-			$gruppenOk = true;
+			$groupsOk = true;
 		}
 
-		$aemterOk = false;
+		$officesOk = false;
 
 		//should this restriction be restricted by function?
-		if(is_array($this->aemter) && count($this->aemter) > 0){
-			if(is_array($aemter)){
-				foreach($aemter as $amt){
-					if(in_array($amt, $this->aemter)){
-						$aemterOk = true;
+		if(is_array($this->offices) && count($this->offices) > 0){
+			if(is_array($offices)){
+				foreach($offices as $office){
+					if(in_array($office, $this->offices)){
+						$officesOk = true;
 					}
 				}
 			}
 		} else {
-			$aemterOk = true;
+			$officesOk = true;
 		}
 
-		return $gruppenOk && $aemterOk;
+		return $groupsOk && $officesOk;
 	}
 }

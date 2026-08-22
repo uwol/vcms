@@ -20,29 +20,29 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 	exit();
 
 
-$aktion = '';
+$action = '';
 
-if(isset($_REQUEST['aktion'])){
-	$aktion = $_REQUEST['aktion'];
+if(isset($_REQUEST['action'])){
+	$action = $_REQUEST['action'];
 }
 
 $array = array();
 $array['id'] = '';
 //fields
-$felder = array('startdatum', 'verfallsdatum', 'text');
+$fields = array('startdatum', 'verfallsdatum', 'text');
 
 /*
 * actions
 */
 
 //new event
-if($aktion == 'blank'){
+if($action == 'blank'){
 	$array['startdatum'] = date('Y-m-d H:i:s');
 	$array['verfallsdatum'] = '';
 	$array['text'] = '';
 }
 //blank data to be saved
-elseif($aktion == 'insert'){
+elseif($action == 'insert'){
 	if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 		die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 	}
@@ -55,11 +55,11 @@ elseif($aktion == 'insert'){
 	}
 
 	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum']);
-	$array = $libDb->insertRow($felder, $valueArray, 'mod_internethome_nachricht', array('id'=>''));
+	$array = $libDb->insertRow($fields, $valueArray, 'mod_internethome_nachricht', array('id'=>''));
 	$libGlobal->notificationTexts[] = 'Die Ankündigung wurde gespeichert.';
 }
 //modification
-elseif($aktion == 'update'){
+elseif($action == 'update'){
 	if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 		die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 	}
@@ -72,7 +72,7 @@ elseif($aktion == 'update'){
 	}
 
 	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum']);
-	$array = $libDb->updateRow($felder, $valueArray, 'mod_internethome_nachricht', array('id' => $_REQUEST['id']));
+	$array = $libDb->updateRow($fields, $valueArray, 'mod_internethome_nachricht', array('id' => $_REQUEST['id']));
 	$libGlobal->notificationTexts[] = 'Die Ankündigung wurde gespeichert.';
 }
 // select
@@ -84,12 +84,12 @@ else{
 }
 
 //images
-if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'bildupload'){
+if(isset($_POST['formType']) && $_POST['formType'] == 'imageUpload'){
 	if($_FILES['bilddatei']['tmp_name'] != ''){
-		$libImage->saveStartseitenBildByFilesArray($_REQUEST['id'], 'bilddatei');
+		$libImage->saveHomeImageByFilesArray($_REQUEST['id'], 'bilddatei');
 	}
-} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'bilddelete'){
-	$libImage->deleteStartseitenBild($_POST['id']);
+} elseif(isset($_POST['action']) && $_POST['action'] == 'imageDelete'){
+	$libImage->deleteHomeImage($_POST['id']);
 }
 
 
@@ -111,7 +111,7 @@ echo '<p class="mb-4">Hier können die Daten einer Ankündigung für die Startse
 */
 if($array['id'] != ''){
 	echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_announcements" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-	echo '<input type="hidden" name="aktion" value="delete" />';
+	echo '<input type="hidden" name="action" value="delete" />';
 	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 	echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
 	echo '</form>';
@@ -125,10 +125,10 @@ echo '<div class="col-sm-9">';
 /*
 * form
 */
-if($aktion == 'blank'){
-	$extraActionParam = '&amp;aktion=insert';
+if($action == 'blank'){
+	$extraActionParam = '&amp;action=insert';
 } else {
-	$extraActionParam = '&amp;aktion=update';
+	$extraActionParam = '&amp;action=update';
 }
 
 echo '<div class="panel panel-default">';
@@ -136,7 +136,7 @@ echo '<div class="panel-body">';
 echo '<form action="index.php?pid=intranet_admin_announcement' .$extraActionParam. '" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-echo '<input type="hidden" name="formtyp" value="newsdaten" />';
+echo '<input type="hidden" name="formType" value="newsData" />';
 echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 
 $libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
@@ -169,7 +169,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 
 		echo '<span class="delete-icon-box">';
 		echo '<form method="post" action="index.php?pid=intranet_admin_announcement" class="d-inline">';
-		echo '<input type="hidden" name="aktion" value="bilddelete" />';
+		echo '<input type="hidden" name="action" value="imageDelete" />';
 		echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
@@ -182,7 +182,7 @@ if((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != ''){
 
 	//image upload form
 	echo '<form action="index.php?pid=intranet_admin_announcement&amp;id=' .$array['id']. '" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
-	echo '<input type="hidden" name="formtyp" value="bildupload" />';
+	echo '<input type="hidden" name="formType" value="imageUpload" />';
 	$libForm->printFileUpload('bilddatei', 'Bild hochladen', false, false, array(), array('image/jpeg'));
 	echo '</form>';
 }

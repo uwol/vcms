@@ -36,10 +36,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$stmt2->bindValue(':region1', $row['id'], PDO::PARAM_INT);
 	$stmt2->bindValue(':region2', $row['id'], PDO::PARAM_INT);
 	$stmt2->execute();
-	$stmt2->bindColumn('number', $anzahl);
+	$stmt2->bindColumn('number', $count);
 	$stmt2->fetch();
 
-	if($anzahl > 0){
+	if($count > 0){
 		echo '<h2>'.$row['bezeichnung'].'</h2>';
 
 		$stmt2 = $libDb->prepare("SELECT * FROM base_person WHERE (base_person.region1 = :region1 OR base_person.region2 = :region2) AND gruppe != 'X' AND gruppe != 'T' AND gruppe != 'V' ORDER BY name");

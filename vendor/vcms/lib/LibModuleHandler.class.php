@@ -108,12 +108,12 @@ class LibModuleHandler{
 				$accessRestriction = $page->getAccessRestriction();
 
 				//does the page have a function restriction?
-				if($accessRestriction->hasAemterRestriction()){
-					$impossibleAemter = array_diff($accessRestriction->getAemter(),
-						$libSecurityManager->getPossibleAemter());
+				if($accessRestriction->hasOfficesRestriction()){
+					$impossibleOffices = array_diff($accessRestriction->getOffices(),
+						$libSecurityManager->getPossibleOffices());
 
-					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
-						$libGlobal->errorTexts[] = 'Seite ' .$page->getPid(). ' in Modul ' .$module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter);
+					if(is_array($impossibleOffices) && count($impossibleOffices) > 0){
+						$libGlobal->errorTexts[] = 'Seite ' .$page->getPid(). ' in Modul ' .$module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleOffices);
 						$result = false;
 					}
 				}
@@ -126,12 +126,12 @@ class LibModuleHandler{
 				$accessRestriction = $include->getAccessRestriction();
 
 				// does the include haven a function restriction?
-				if($accessRestriction->hasAemterRestriction()){
-					$impossibleAemter = array_diff($accessRestriction->getAemter(),
-						$libSecurityManager->getPossibleAemter());
+				if($accessRestriction->hasOfficesRestriction()){
+					$impossibleOffices = array_diff($accessRestriction->getOffices(),
+						$libSecurityManager->getPossibleOffices());
 
-					if(is_array($impossibleAemter) && count($impossibleAemter) > 0){
-						$libGlobal->errorTexts[] = 'Include ' .$include->getPid(). ' in Modul ' . $module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleAemter);
+					if(is_array($impossibleOffices) && count($impossibleOffices) > 0){
+						$libGlobal->errorTexts[] = 'Include ' .$include->getPid(). ' in Modul ' . $module->name. ' hat eine Restriktion mit den folgenden nicht vorgesehenen Ämtern: ' .implode(', ', $impossibleOffices);
 						$result = false;
 					}
 				}

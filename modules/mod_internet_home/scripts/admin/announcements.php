@@ -22,14 +22,14 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 /*
 * actions
 */
-if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+if(isset($_POST['action']) && $_POST['action'] == 'delete'){
 	if(isset($_POST['id']) && $_POST['id'] != ''){
 		$stmt = $libDb->prepare('DELETE FROM mod_internethome_nachricht WHERE id=:id');
 		$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
 		$libGlobal->notificationTexts[] = 'Ankündigung gelöscht.';
-		$libImage->deleteStartseitenBild($_POST['id']);
+		$libImage->deleteHomeImage($_POST['id']);
 	} else {
 		$libGlobal->errorTexts[] = 'Keine Ankündigung angegeben.';
 	}
@@ -49,7 +49,7 @@ echo $libString->getNotificationBoxText();
 echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_admin_announcement&amp;aktion=blank" class="btn btn-default">Eine neue Ankündigung anlegen</a>';
+echo '<a href="index.php?pid=intranet_admin_announcement&amp;action=blank" class="btn btn-default">Eine neue Ankündigung anlegen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -61,13 +61,13 @@ echo '</div>';
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(startdatum,'%Y-%m-01') AS datum FROM mod_internethome_nachricht WHERE startdatum IS NOT NULL GROUP BY startdatum ORDER BY startdatum DESC");
 $stmt->execute();
 
-$daten = array();
+$data = array();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$daten[] = $row['datum'];
+	$data[] = $row['datum'];
 }
 
-echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
+echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
 
 
 echo '<table class="table table-condensed table-striped table-hover">';
@@ -75,12 +75,12 @@ echo '<thead>';
 echo '<tr><th>Bild</th><th>Start</th><th>Text</th><th></th></tr>';
 echo '</thead>';
 
-$zeitraum = $libTime->getZeitraum($libGlobal->semester);
+$period = $libTime->getPeriod($libGlobal->semester);
 
 $stmt = $libDb->prepare('SELECT * FROM mod_internethome_nachricht WHERE startdatum IS NULL OR startdatum = :startdatum_equal OR (DATEDIFF(startdatum, :startdatum) >= 0 AND DATEDIFF(startdatum , :enddatum) < 0) ORDER BY startdatum DESC');
-$stmt->bindValue(':startdatum_equal', $zeitraum[0]);
-$stmt->bindValue(':startdatum', $zeitraum[0]);
-$stmt->bindValue(':enddatum', $zeitraum[1]);
+$stmt->bindValue(':startdatum_equal', $period[0]);
+$stmt->bindValue(':startdatum', $period[0]);
+$stmt->bindValue(':enddatum', $period[1]);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

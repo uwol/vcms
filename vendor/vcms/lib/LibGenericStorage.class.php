@@ -84,10 +84,10 @@ class LibGenericStorage{
 		$stmt->bindValue(':moduleid', $moduleId);
 		$stmt->bindValue(':array_name', $arrayName);
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahl);
+		$stmt->bindColumn('number', $count);
 		$stmt->fetch();
 
-		if($anzahl > 0){
+		if($count > 0){
 			return true;
 		} else {
 			return false;
@@ -173,10 +173,10 @@ class LibGenericStorage{
 		$stmt->bindValue(':array_name', $arrayName);
 		$stmt->bindValue(':position', $position, PDO::PARAM_INT);
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahl);
+		$stmt->bindColumn('number', $count);
 		$stmt->fetch();
 
-		if($anzahl > 0){
+		if($count > 0){
 			$stmt = $libDb->prepare('UPDATE sys_genericstorage SET value = :value WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
 			$stmt->bindValue(':value', $libString->protectXss($value));
 			$stmt->bindValue(':moduleid', $moduleId);

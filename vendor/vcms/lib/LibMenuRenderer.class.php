@@ -22,17 +22,17 @@ class LibMenuRenderer{
 
 	var $defaultIndent = '            ';
 
-	function printNavbar($menuInternet, $menuIntranet, $menuAdministration, $aktivesPid, $gruppe, $aemter){
+	function printNavbar($menuInternet, $menuIntranet, $menuAdministration, $activePid, $group, $offices){
 		global $libGlobal;
 
 		$menuInternet = $menuInternet->copy();
-		$menuInternet->reduceByAccessRestriction($gruppe, $aemter);
+		$menuInternet->reduceByAccessRestriction($group, $offices);
 
 		$menuIntranet = $menuIntranet->copy();
-		$menuIntranet->reduceByAccessRestriction($gruppe, $aemter);
+		$menuIntranet->reduceByAccessRestriction($group, $offices);
 
 		$menuAdministration = $menuAdministration->copy();
-		$menuAdministration->reduceByAccessRestriction($gruppe, $aemter);
+		$menuAdministration->reduceByAccessRestriction($group, $offices);
 
 		$navbarClass = $this->getNavbarClass();
 
@@ -40,8 +40,8 @@ class LibMenuRenderer{
     echo '      <div class="container">' . PHP_EOL;
 		echo '        <div id="logo"></div>' . PHP_EOL;
     echo $this->printNavbarCollapsed();
-    echo $this->printNavbarInternet($menuInternet, $aktivesPid);
-    echo $this->printNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid);
+    echo $this->printNavbarInternet($menuInternet, $activePid);
+    echo $this->printNavbarIntranet($menuIntranet, $menuAdministration, $activePid);
 		echo '      </div>' . PHP_EOL;
 		echo '    </nav>' . PHP_EOL;
 	}
@@ -65,7 +65,7 @@ class LibMenuRenderer{
 		echo '        </div>' . PHP_EOL;
 	}
 
-	function printNavbarInternet($menuInternet, $aktivesPid){
+	function printNavbarInternet($menuInternet, $activePid){
 		global $libAuth, $libPerson;
 
 		$rootMenuFolderInternet = $menuInternet->getRootMenuFolder();
@@ -73,7 +73,7 @@ class LibMenuRenderer{
 		if($rootMenuFolderInternet->hasElements()){
 			echo '        <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
 			echo '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
-			echo $this->printNavbarLevel($rootMenuFolderInternet, 0, $aktivesPid);
+			echo $this->printNavbarLevel($rootMenuFolderInternet, 0, $activePid);
 
 			if($libAuth->isLoggedin() && $libPerson->hasImageFile($libAuth->getId())){
 				echo '            <li class="visible-lg">' .$libPerson->getImage($libAuth->getId(), 'xs'). '</li>' . PHP_EOL;
@@ -84,15 +84,15 @@ class LibMenuRenderer{
 		}
 	}
 
-	function printNavbarIntranet($menuIntranet, $menuAdministration, $aktivesPid){
+	function printNavbarIntranet($menuIntranet, $menuAdministration, $activePid){
 		$rootMenuFolderIntranet = $menuIntranet->getRootMenuFolder();
 		$rootMenuFolderAdministration = $menuAdministration->getRootMenuFolder();
 
 		if($rootMenuFolderIntranet->hasElements()){
 			echo '        <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . PHP_EOL;
 			echo '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
-			echo $this->printNavbarLevel($rootMenuFolderIntranet, 0, $aktivesPid);
-			echo $this->printNavbarLevel($rootMenuFolderAdministration, 0, $aktivesPid);
+			echo $this->printNavbarLevel($rootMenuFolderIntranet, 0, $activePid);
+			echo $this->printNavbarLevel($rootMenuFolderAdministration, 0, $activePid);
 			echo '          </ul>' . PHP_EOL;
 			echo '        </div>' . PHP_EOL;
 		}

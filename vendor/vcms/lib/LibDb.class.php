@@ -70,12 +70,12 @@ class LibDb{
 		$setString = '';
 
 		// build string of values to set
-		foreach($fieldsArray as $feld){
+		foreach($fieldsArray as $field){
 			if($setString != ''){
 				$setString .= ',';
 			}
 
-			$setString .= $feld.' = :'.$feld;
+			$setString .= $field.' = :'.$field;
 		}
 
 		// build string of ids
@@ -93,14 +93,14 @@ class LibDb{
 		$stmt = $this->prepare('UPDATE '.$table.' SET ' .$setString. ' WHERE '.$idString);
 
 		// bind values
-		foreach($fieldsArray as $feld){
-			if(!isset($valueArray[$feld]) || $valueArray[$feld] == ''){
+		foreach($fieldsArray as $field){
+			if(!isset($valueArray[$field]) || $valueArray[$field] == ''){
 				$value = null;
 			} else {
-				$value = $libString->protectXSS($valueArray[$feld]);
+				$value = $libString->protectXSS($valueArray[$field]);
 			}
 
-			$stmt->bindValue(':'.$feld, $value, $this->determinePdoType($value));
+			$stmt->bindValue(':'.$field, $value, $this->determinePdoType($value));
 		}
 
 		// bind ids
@@ -126,31 +126,31 @@ class LibDb{
 	function insertRow($fieldsArray, $valueArray, $table, $idArray){
 		global $libString;
 
-		$felderString = implode(',', $fieldsArray);
+		$fieldsString = implode(',', $fieldsArray);
 
-		$werteString = '';
+		$valuesString = '';
 
 		// build string of values
-		foreach($fieldsArray as $feld){
-			if($werteString != ''){
-				$werteString .= ', ';
+		foreach($fieldsArray as $field){
+			if($valuesString != ''){
+				$valuesString .= ', ';
 			}
 
-			$werteString .= ':'.$feld;
+			$valuesString .= ':'.$field;
 		}
 
 		// build insert command
-		$stmt = $this->prepare('INSERT INTO '.$table.' (' .$felderString. ') VALUES ('.$werteString.')');
+		$stmt = $this->prepare('INSERT INTO '.$table.' (' .$fieldsString. ') VALUES ('.$valuesString.')');
 
 		// bind values
-		foreach($fieldsArray as $feld){
-			if(!isset($valueArray[$feld]) || $valueArray[$feld] == ''){
+		foreach($fieldsArray as $field){
+			if(!isset($valueArray[$field]) || $valueArray[$field] == ''){
 				$value = null;
 			} else {
-				$value = $libString->protectXSS($valueArray[$feld]);
+				$value = $libString->protectXSS($valueArray[$field]);
 			}
 
-			$stmt->bindValue(':'.$feld, $value, $this->determinePdoType($value));
+			$stmt->bindValue(':'.$field, $value, $this->determinePdoType($value));
 		}
 
 		// execute

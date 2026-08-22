@@ -349,7 +349,7 @@ class LibTime{
 		}
 	}
 
-	function getSemesterMonate($semesterString){
+	function getSemesterMonths($semesterString){
 		if(!$this->isValidSemesterString($semesterString)){
 			return array();
 		}
@@ -358,7 +358,7 @@ class LibTime{
 		return $semester['months'];
 	}
 
-	function getZeitraum($semesterString){
+	function getPeriod($semesterString){
 		if(!$this->isValidSemesterString($semesterString)){
 			return array();
 		}
@@ -414,8 +414,8 @@ class LibTime{
 
 	//-------------------------------- operations on semester string giving semester string -------------------------------------------------
 
-	function getSemesterNameAtDate($datum){
-		$semester = $this->getSemesterAtDate($datum);
+	function getSemesterNameAtDate($date){
+		$semester = $this->getSemesterAtDate($date);
 
 		if(!is_array($semester)){
 			return '';
@@ -464,10 +464,10 @@ class LibTime{
 		return $semester['prefix'].$semester['startyear'];
 	}
 
-	function getWeekday($datum){
-		$wochentage = array('So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.');
-		$wochentag = $wochentage[@date('w', strtotime($datum))];
-		return $wochentag;
+	function getWeekday($date){
+		$weekdays = array('So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.');
+		$weekday = $weekdays[@date('w', strtotime($date))];
+		return $weekday;
 	}
 
 	function getMonth($i){
@@ -478,11 +478,11 @@ class LibTime{
 		return $result;
 	}
 
-	function getSemestersFromDates($daten){
+	function getSemestersFromDates($data){
 		$semesters = array();
 
-		for($i = 0; $i<count($daten); $i++){
-			$semester = $this->getSemesterNameAtDate($daten[$i]);
+		for($i = 0; $i<count($data); $i++){
+			$semester = $this->getSemesterNameAtDate($data[$i]);
 
 			if($semester != ''){
 				$semesters[] = $semester;
@@ -569,47 +569,47 @@ class LibTime{
 			return false;
 		}
 
-		$ssAbk = 'SS';
-		$wsAbk = 'WS';
+		$ssAbbr = 'SS';
+		$wsAbbr = 'WS';
 
 		if($enableAbbr){
-			$ssAbk = "<abbr title=\"Sommersemester\">SS</abbr>"; // \xc2\xa0 is non-breaking space
+			$ssAbbr = "<abbr title=\"Sommersemester\">SS</abbr>"; // \xc2\xa0 is non-breaking space
 		}
 
 		if($enableAbbr){
-			$wsAbk = "<abbr title=\"Wintersemester\">WS</abbr>"; // \xc2\xa0 is non-breaking space
+			$wsAbbr = "<abbr title=\"Wintersemester\">WS</abbr>"; // \xc2\xa0 is non-breaking space
 		}
 
 		$ssRegexp = '/SS[0-9]{4}/';
 		$wsRegexp = '/WS[0-9]{8}/';
 
-		$jahrestrenner  = '/';
+		$yearSeparator  = '/';
 		$space = '&nbsp;';
 
 		$matches = array();
 
 		//summer semester?
 		if(preg_match($ssRegexp, $semester['name'], $matches)){
-			return $ssAbk.$space.$semester['startyear'];
+			return $ssAbbr.$space.$semester['startyear'];
 		}
 		//winter semester?
 		elseif(preg_match($wsRegexp, $semester['name'], $matches)){
-			return $wsAbk.$space.$semester['startyear'].$jahrestrenner.substr($semester['endyear'], 2, 2);
+			return $wsAbbr.$space.$semester['startyear'].$yearSeparator.substr($semester['endyear'], 2, 2);
 		} else {
 			if($semester['overlapping']){
-				return $semester['prefix'].$space.$semester['startyear'].$jahrestrenner.substr($semester['endyear'], 2, 2);
+				return $semester['prefix'].$space.$semester['startyear'].$yearSeparator.substr($semester['endyear'], 2, 2);
 			} else {
 				return $semester['prefix'].$space.$semester['startyear'];
 			}
 		}
 	}
 
-	function getSemesterMenu($semesters, $globalsemester){
+	function getSemesterMenu($semesters, $globalSemester){
 		global $libGlobal;
 
 		$retstr = '';
 
-		if(count($semesters) > 1 || (count($semesters) == 1 && ($semesters[0] != $globalsemester))){
+		if(count($semesters) > 1 || (count($semesters) == 1 && ($semesters[0] != $globalSemester))){
 			$retstr .= '<div class="panel panel-default">';
 			$retstr .= '<div class="panel-body">';
 			$retstr .= '<form action="index.php" class="form-inline">';
@@ -622,7 +622,7 @@ class LibTime{
 				if($semester != '' && $this->isValidSemesterString($semester)){
 					$retstr .= '<option value="' .$semester. '"';
 
-					if($semester == $globalsemester){
+					if($semester == $globalSemester){
 						$retstr .= ' selected="selected"';
 					}
 
@@ -758,34 +758,34 @@ class LibTime{
 	function assureMysqlDateTime($dateTime){
 		$dateTime = trim((string) $dateTime);
 
-		$regexpDatumComplete					= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/";
-		$regexpDatumWithoutSeconds 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2}):([0-9]{1,2})/";
-		$regexpDatumWithoutMinutes 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2})/";
-		$regexpDatumWithoutHour 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/";
+		$datePatternComplete					= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/";
+		$datePatternWithoutSeconds 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2}):([0-9]{1,2})/";
+		$datePatternWithoutMinutes 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4}) ([0-9]{1,2})/";
+		$datePatternWithoutHour 				= "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/";
 
 		$regexpMysqlDateTimeComplete			= "/([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})/";
 		$regexpMysqlDateTimeWithoutSeconds		= "/([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2})/";
 		$regexpMysqlDateTimeWithoutMinutes		= "/([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2})/";
 		$regexpMysqlDate 						= "/([0-9]{4})-([0-9]{2})-([0-9]{2})/";
 
-		$matchesDatum = array();
+		$dateMatches = array();
 
-		if(preg_match($regexpDatumComplete, $dateTime, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[3], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[1]).' '.$this->zeroFill($matchesDatum[4]).':'.$this->zeroFill($matchesDatum[5]).':'.$this->zeroFill($matchesDatum[6]);
-		} elseif(preg_match($regexpDatumWithoutSeconds, $dateTime, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[3], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[1]).' '.$this->zeroFill($matchesDatum[4]).':'.$this->zeroFill($matchesDatum[5]).':00';
-		} elseif(preg_match($regexpDatumWithoutMinutes, $dateTime, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[3], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[1]).' '.$this->zeroFill($matchesDatum[4]).':00:00';
-		} elseif(preg_match($regexpDatumWithoutHour, $dateTime, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[3], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[1]).' 00:00:00';
-		} elseif(preg_match($regexpMysqlDateTimeComplete, $dateTime, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[1], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[3]).' '.$this->zeroFill($matchesDatum[4]).':'.$this->zeroFill($matchesDatum[5]).':'.$this->zeroFill($matchesDatum[6]);
-		} elseif(preg_match($regexpMysqlDateTimeWithoutSeconds, $dateTime, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[1], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[3]).' '.$this->zeroFill($matchesDatum[4]).':'.$this->zeroFill($matchesDatum[5]).':00';
-		} elseif(preg_match($regexpMysqlDateTimeWithoutMinutes, $dateTime, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[1], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[3]).' '.$this->zeroFill($matchesDatum[4]).':00:00';
-		} elseif(preg_match($regexpMysqlDate, $dateTime, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[1], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[3]).' 00:00:00';
+		if(preg_match($datePatternComplete, $dateTime, $dateMatches)){
+			return $this->zeroFill($dateMatches[3], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[1]).' '.$this->zeroFill($dateMatches[4]).':'.$this->zeroFill($dateMatches[5]).':'.$this->zeroFill($dateMatches[6]);
+		} elseif(preg_match($datePatternWithoutSeconds, $dateTime, $dateMatches)){
+			return $this->zeroFill($dateMatches[3], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[1]).' '.$this->zeroFill($dateMatches[4]).':'.$this->zeroFill($dateMatches[5]).':00';
+		} elseif(preg_match($datePatternWithoutMinutes, $dateTime, $dateMatches)){
+			return $this->zeroFill($dateMatches[3], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[1]).' '.$this->zeroFill($dateMatches[4]).':00:00';
+		} elseif(preg_match($datePatternWithoutHour, $dateTime, $dateMatches)){
+			return $this->zeroFill($dateMatches[3], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[1]).' 00:00:00';
+		} elseif(preg_match($regexpMysqlDateTimeComplete, $dateTime, $dateMatches)){
+			return $this->zeroFill($dateMatches[1], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[3]).' '.$this->zeroFill($dateMatches[4]).':'.$this->zeroFill($dateMatches[5]).':'.$this->zeroFill($dateMatches[6]);
+		} elseif(preg_match($regexpMysqlDateTimeWithoutSeconds, $dateTime, $dateMatches)){
+			return $this->zeroFill($dateMatches[1], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[3]).' '.$this->zeroFill($dateMatches[4]).':'.$this->zeroFill($dateMatches[5]).':00';
+		} elseif(preg_match($regexpMysqlDateTimeWithoutMinutes, $dateTime, $dateMatches)){
+			return $this->zeroFill($dateMatches[1], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[3]).' '.$this->zeroFill($dateMatches[4]).':00:00';
+		} elseif(preg_match($regexpMysqlDate, $dateTime, $dateMatches)){
+			return $this->zeroFill($dateMatches[1], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[3]).' 00:00:00';
 		} else {
 			return '';
 		}
@@ -793,25 +793,25 @@ class LibTime{
 
 	function assureMysqlDate($date){
 		$date = trim((string) $date);
-		$regexpDatum = "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/";
+		$datePattern = "/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/";
 		$regexpMysqlDate = "/([0-9]{4})-([0-9]{2})-([0-9]{2})/";
-		$regexpJahr = "/([0-9]{4})/";
+		$yearPattern = "/([0-9]{4})/";
 
-		$matchesDatum = array();
+		$dateMatches = array();
 
-		if(preg_match($regexpDatum, $date, $matchesDatum)){
-			return $this->zeroFill($matchesDatum[3], 4).'-'.$this->zeroFill($matchesDatum[2]).'-'.$this->zeroFill($matchesDatum[1]);
+		if(preg_match($datePattern, $date, $dateMatches)){
+			return $this->zeroFill($dateMatches[3], 4).'-'.$this->zeroFill($dateMatches[2]).'-'.$this->zeroFill($dateMatches[1]);
 		} elseif(preg_match($regexpMysqlDate, $date)){
 			return $date;
-		} elseif(preg_match($regexpJahr, $date)){
+		} elseif(preg_match($yearPattern, $date)){
 			return $date.'-00-00';
 		} else {
 			return '';
 		}
 	}
 
-	function zeroFill($number, $stellen=2){
-		return str_pad((int) $number, $stellen, '0', STR_PAD_LEFT);
+	function zeroFill($number, $digits=2){
+		return str_pad((int) $number, $digits, '0', STR_PAD_LEFT);
 	}
 
 	function getNumberOfDaysInMonth($year, $month){

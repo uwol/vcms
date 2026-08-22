@@ -32,8 +32,8 @@ class LibDeceasedTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 
 
 $stmt = $libDb->prepare("SELECT id, tod_datum, datum_geburtstag FROM base_person WHERE tod_datum != '' AND tod_datum != '0000-00-00' AND DATEDIFF(tod_datum, :semesterstart) >= 0 AND DATEDIFF(tod_datum, :semesterende) <= 0 ORDER BY tod_datum");
-$stmt->bindValue(':semesterstart', $zeitraum[0]);
-$stmt->bindValue(':semesterende', $zeitraum[1]);
+$stmt->bindValue(':semesterstart', $period[0]);
+$stmt->bindValue(':semesterende', $period[1]);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

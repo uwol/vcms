@@ -22,7 +22,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 if($libAuth->isLoggedin()){
 
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	if(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if(isset($_POST['id']) && $_POST['id'] != ''){
 			// Verwendung der Veranstaltung in anderen Tabellen prüfen
 			// diese Einträge vorher löschen, da kein InnoDB und somit kein CASCADE ALL
@@ -49,7 +49,7 @@ if($libAuth->isLoggedin()){
 
 			$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 		}
-	} else if(isset($_POST['aktion']) && $_POST['aktion'] == 'import'){
+	} else if(isset($_POST['action']) && $_POST['action'] == 'import'){
 		$libAssociation->importAssociations();
 	}
 
@@ -63,10 +63,10 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
 	echo '<form method="post" action="index.php?pid=intranet_admin_associations" class="float-left ml-1" onsubmit="return confirm(\'Willst den Import wirklich durchführen?\')">';
-	echo '<input type="hidden" name="aktion" value="import" />';
+	echo '<input type="hidden" name="action" value="import" />';
 	echo '<button type="submit" class="btn btn-default"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</button>';
 	echo '</form>';
-	echo '<a href="index.php?pid=intranet_admin_association&amp;aktion=blank" class="btn btn-default">Einen neuen Verein anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_association&amp;action=blank" class="btn btn-default">Einen neuen Verein anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';

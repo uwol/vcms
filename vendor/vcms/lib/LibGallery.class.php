@@ -172,13 +172,13 @@ class LibGallery{
 		return $result;
 	}
 
-	function hasFotowartPrivilege($aemterArrayOfUser){
-		$priviliegedAemter = array('fotowart', 'internetwart', 'datenpflegewart', 'senior', 'consenior',
+	function hasFotowartPrivilege($officesArrayOfUser){
+		$privilegedOffices = array('fotowart', 'internetwart', 'datenpflegewart', 'senior', 'consenior',
 			'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior');
-		$privilegedAemterOfUser = array_intersect($priviliegedAemter, $aemterArrayOfUser);
-		$numberOfPrivilegedAemterOfUser = count($privilegedAemterOfUser);
+		$privilegedOfficesOfUser = array_intersect($privilegedOffices, $officesArrayOfUser);
+		$numberOfPrivilegedOfficesOfUser = count($privilegedOfficesOfUser);
 
-		return $numberOfPrivilegedAemterOfUser > 0;
+		return $numberOfPrivilegedOfficesOfUser > 0;
 	}
 
 	function setPublicityLevel($eventId, $pictureId, $accessString){
@@ -228,10 +228,10 @@ class LibGallery{
 	function setPublicityLevelsUntilSemester($semesterString, $accessString){
 		global $libTime, $libDb, $libGlobal;
 
-		$zeitraum = $libTime->getZeitraum($semesterString);
+		$period = $libTime->getPeriod($semesterString);
 
 		$stmt = $libDb->prepare('SELECT id FROM base_veranstaltung WHERE DATEDIFF(datum, :semester_ende) <= 0 ORDER BY datum DESC');
-		$stmt->bindValue(':semester_ende', $zeitraum[1]);
+		$stmt->bindValue(':semester_ende', $period[1]);
 		$stmt->execute();
 
 		$libGlobal->notificationTexts[] = 'Gebe Bilder aller Veranstaltungen bis ' .$semesterString. ' für das Intranet frei.';

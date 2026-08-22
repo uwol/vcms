@@ -27,10 +27,10 @@ if($libAuth->isLoggedin()){
 		$orderby = $_POST['orderby'];
 	}
 
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	if(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if(isset($_POST['id']) && $_POST['id'] != ''){
 			//Ist der Bearbeiter kein Internetwart?
-			if(!in_array('internetwart', $libAuth->getAemter()) && !in_array('datenpflegewart', $libAuth->getAemter())){
+			if(!in_array('internetwart', $libAuth->getOffices()) && !in_array('datenpflegewart', $libAuth->getOffices())){
 				die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
 			}
 
@@ -38,10 +38,10 @@ if($libAuth->isLoggedin()){
 			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
 			$stmt->bindValue(':internetwart', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
-			$stmt->bindColumn('number', $anzahl);
+			$stmt->bindColumn('number', $count);
 			$stmt->fetch();
 
-			if($anzahl > 0){
+			if($count > 0){
 				$libGlobal->errorTexts[] = 'Die Person kann nicht gelöscht werden, weil sie ein Internetwart in mindestens einem Semester ist. Internetwarte können nicht gelöscht werden, weil sie die Administratoren sind und im Extremfall somit kein Administrator im System existiert. Falls diese Person gelöscht werden soll, so muss sie erst manuell von einem Internetwart in allen Semestern aus den Internetwartsposten entfernt werden.';
 			} else {
 				//Verwendung der Person in anderen Tabellen prüfen
@@ -58,8 +58,8 @@ if($libAuth->isLoggedin()){
 				$stmt->execute();
 
 				//Semesterämter löschen
-				foreach($libSecurityManager->getPossibleAemter() as $amt){
-					$stmt = $libDb->prepare('UPDATE base_semester SET '.$amt.' = NULL WHERE '.$amt.'=:id');
+				foreach($libSecurityManager->getPossibleOffices() as $office){
+					$stmt = $libDb->prepare('UPDATE base_semester SET '.$office.' = NULL WHERE '.$office.'=:id');
 					$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
 					$stmt->execute();
 				}
@@ -82,7 +82,7 @@ if($libAuth->isLoggedin()){
 				$libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 
 				//Fotodatei löschen
-				$libImage->deletePersonFoto($_POST['id']);
+				$libImage->deletePersonPhoto($_POST['id']);
 			}
 		}
 	}
@@ -109,11 +109,11 @@ if($libAuth->isLoggedin()){
 	echo $libString->getErrorBoxText();
 	echo $libString->getNotificationBoxText();
 
-	if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
+	if(in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<div class="btn-toolbar">';
-		echo '<a href="index.php?pid=intranet_admin_person&amp;aktion=blank" class="btn btn-default">Eine neue Person anlegen</a>';
+		echo '<a href="index.php?pid=intranet_admin_person&amp;action=blank" class="btn btn-default">Eine neue Person anlegen</a>';
 		echo '</div>';
 		echo '</div>';
 		echo '</div>';
@@ -125,7 +125,7 @@ if($libAuth->isLoggedin()){
 	echo '<fieldset>';
 	echo '<div class="form-group">';
 
-	echo '<label class="sr-only" for="sortierung">Sortierung</label>';
+	echo '<label class="sr-only" for="orderby">Sortierung</label>';
 	echo '<select id="orderby" name="orderby" class="form-control" onchange="this.form.submit()">';
 	echo '<option value="0" ';
 

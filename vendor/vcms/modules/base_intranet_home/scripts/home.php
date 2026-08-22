@@ -60,8 +60,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 echo $libTime->getSemesterMenu($semesters, $libGlobal->semester);
 
-$zeitraum = $libTime->getZeitraum($libGlobal->semester);
-$zeitraumLimit = 7;
+$period = $libTime->getPeriod($libGlobal->semester);
+$periodLimit = 7;
 
 
 // -----------------------------------------------------------------------

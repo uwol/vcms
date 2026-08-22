@@ -25,11 +25,11 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('check_file_permissions')
 }
 
 
-if(in_array('internetwart', $libAuth->getAemter())){
+if(in_array('internetwart', $libAuth->getOffices())){
 	/*
 	* output
 	*/
-	$oks = array();
+	$checks = array();
 	$errors = array();
 
 	$securedFolders = array();
@@ -43,7 +43,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 	if(version_compare(PHP_VERSION, '5.5') < 0){
 		$errors[] = 'Die PHP-Version ist ' .PHP_VERSION. '.';
 	} else {
-		$oks[] = 'PHP-Version=' .PHP_VERSION. '.';
+		$checks[] = 'PHP-Version=' .PHP_VERSION. '.';
 	}
 
 	/*
@@ -57,7 +57,7 @@ if(in_array('internetwart', $libAuth->getAemter())){
 		if(!is_dir($directoryAbsolutePath)){
 			$errors[] = 'Ordner ' .$directoryRelativePath. ' fehlt.';
 		} else {
-			$oks[] = 'Ordner ' .$directoryRelativePath. ' vorhanden.';
+			$checks[] = 'Ordner ' .$directoryRelativePath. ' vorhanden.';
 		}
 	}
 

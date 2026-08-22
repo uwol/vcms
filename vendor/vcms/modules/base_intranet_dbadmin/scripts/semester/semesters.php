@@ -24,7 +24,7 @@ if($libAuth->isLoggedin()){
 	/**
 	* Löschvorgang durchführen
 	*/
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	if(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if(isset($_POST['semester']) && $_POST['semester'] != ''){
 			$stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester');
 			$stmt->bindValue(':semester', $_POST['semester']);
@@ -58,7 +58,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_semester&amp;aktion=blank" class="btn btn-default">Ein neues Semester anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_semester&amp;action=blank" class="btn btn-default">Ein neues Semester anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';

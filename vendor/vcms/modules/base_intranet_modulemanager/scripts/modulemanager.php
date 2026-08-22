@@ -28,8 +28,8 @@ if(isset($_POST['action'])){
 		$libRepositoryClient->updateEngine();
 	}
 
-	if(isset($_POST['modul']) && $_POST['modul'] != '' && $_POST['modul'] != 'engine'){
-		$module = $_POST['modul'];
+	if(isset($_POST['module']) && $_POST['module'] != '' && $_POST['module'] != 'engine'){
+		$module = $_POST['module'];
 
 		if($_POST['action'] == 'installModule' && $module != ''){
 			$libRepositoryClient->installModule($module);
@@ -152,7 +152,7 @@ if(isset($_POST['action'])){
 			if(!$engineIsOld && !$libModuleHandler->moduleIsAvailable($key)){
 				echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
 				echo '<input type="hidden" name="action" value="installModule" />';
-				echo '<input type="hidden" name="modul" value="' .$key. '" />';
+				echo '<input type="hidden" name="module" value="' .$key. '" />';
 				echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
 				echo '</form>';
 			}
@@ -177,7 +177,7 @@ if(isset($_POST['action'])){
 				if(!$engineIsOld && $newVersion > $actualVersion){
 					echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
 					echo '<input type="hidden" name="action" value="installModule" />';
-					echo '<input type="hidden" name="modul" value="' .$key. '" />';
+					echo '<input type="hidden" name="module" value="' .$key. '" />';
 					echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-cloud-download" aria-hidden="true"></i></button>';
 					echo '</form>';
 				}
@@ -198,7 +198,7 @@ if(isset($_POST['action'])){
 
 				echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
 				echo '<input type="hidden" name="action" value="uninstallModule" />';
-				echo '<input type="hidden" name="modul" value="' .$key. '" />';
+				echo '<input type="hidden" name="module" value="' .$key. '" />';
 				echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 				echo '</form>';
 			}

@@ -26,17 +26,17 @@ for($i=0; $i<50; $i++){
 	$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
 }
 
-$semester50zurueck = $semesterIterator;
-$semester49zurueck = $libTime->getFollowingSemesterNameOfSemester($semester50zurueck);
-$semester51zurueck = $libTime->getPreviousSemesterNameOfSemester($semester50zurueck);
+$semester50Back = $semesterIterator;
+$semester49Back = $libTime->getFollowingSemesterNameOfSemester($semester50Back);
+$semester51Back = $libTime->getPreviousSemesterNameOfSemester($semester50Back);
 
 for($i=0; $i<50; $i++){
 	$semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
 }
 
-$semester100zurueck = $semesterIterator;
-$semester99zurueck = $libTime->getFollowingSemesterNameOfSemester($semester100zurueck);
-$semester101zurueck = $libTime->getPreviousSemesterNameOfSemester($semester100zurueck);
+$semester100Back = $semesterIterator;
+$semester99Back = $libTime->getFollowingSemesterNameOfSemester($semester100Back);
+$semester101Back = $libTime->getPreviousSemesterNameOfSemester($semester100Back);
 ?>
 <h1>Export</h1>
 <p class="mb-4">Das VCMS kann Datenbestände als CSV- und HTML-Tabellen exportieren. Die Dateien können in Word und LibreOffice/OpenOffice in der Serienbrieffunktion verwendet werden. Bitte behandle diese Dateien vertraulich, verschicke sie nicht per E-Mail und lösche sie nach der Verwendung.</p>
@@ -49,23 +49,23 @@ $semester101zurueck = $libTime->getPreviousSemesterNameOfSemester($semester100zu
 			</tr>
 			<tr>
 				<td rowspan="4">Adressen für Anschreiben:</td>
-				<td>Mitglieder (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_anschreiben&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_anschreiben&amp;type=html">HTML</a>)</td>
+				<td>Mitglieder (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=mitglieder_anschreiben&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=mitglieder_anschreiben&amp;type=html">HTML</a>)</td>
 			</tr>
 			<tr>
-				<td>Damen (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=damenflor_anschreiben&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=damenflor_anschreiben&amp;type=html">HTML</a>)</td>
+				<td>Damen (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=damenflor_anschreiben&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=damenflor_anschreiben&amp;type=html">HTML</a>)</td>
 			</tr>
 			<tr>
-				<td>Vips (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=vips&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=vips&amp;type=html">HTML</a>)</td>
+				<td>Vips (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=vips&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=vips&amp;type=html">HTML</a>)</td>
 			</tr>
 			<tr>
-				<td>Vereine (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=vereine&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=vereine&amp;type=html">HTML</a>)</td>
+				<td>Vereine (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=vereine&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=vereine&amp;type=html">HTML</a>)</td>
 			</tr>
 			<tr>
 				<td rowspan="2">Adressen für Spendenquittungen:</td>
-				<td>Spendenquittungsanschriften der Mitglieder (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_spendenquittung&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=mitglieder_spendenquittung&amp;type=html">HTML</a>)</td>
+				<td>Spendenquittungsanschriften der Mitglieder (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=mitglieder_spendenquittung&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=mitglieder_spendenquittung&amp;type=html">HTML</a>)</td>
 			</tr>
 			<tr>
-				<td>Spendenquittungsanschriften des Damenflors (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=damenflor_spendenquittung&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;datenart=damenflor_spendenquittung&amp;type=html">HTML</a>)</td>
+				<td>Spendenquittungsanschriften des Damenflors (<a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=damenflor_spendenquittung&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_adressen&amp;dataType=damenflor_spendenquittung&amp;type=html">HTML</a>)</td>
 			</tr>
 			<tr>
 				<th colspan="2">Geburtstage</th>
@@ -94,17 +94,17 @@ $semester101zurueck = $libTime->getPreviousSemesterNameOfSemester($semester100zu
 			<tr>
 				<td>50-semestrige:</td>
 				<td>
-					<?php echo $libTime->getSemesterString($semester49zurueck);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester49zurueck ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester49zurueck ;?>&amp;type=html">HTML</a>),
-					<?php echo $libTime->getSemesterString($semester50zurueck);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester50zurueck ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester50zurueck ;?>&amp;type=html">HTML</a>), <br />
-					<?php echo $libTime->getSemesterString($semester51zurueck);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester51zurueck ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester51zurueck ;?>&amp;type=html">HTML</a>)
+					<?php echo $libTime->getSemesterString($semester49Back);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester49Back ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester49Back ;?>&amp;type=html">HTML</a>),
+					<?php echo $libTime->getSemesterString($semester50Back);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester50Back ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester50Back ;?>&amp;type=html">HTML</a>), <br />
+					<?php echo $libTime->getSemesterString($semester51Back);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester51Back ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester51Back ;?>&amp;type=html">HTML</a>)
 				</td>
 			</tr>
 			<tr>
 				<td rowspan="3">100-semestrige:</td>
 				<td>
-					<?php echo $libTime->getSemesterString($semester99zurueck);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester99zurueck ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester99zurueck ;?>&amp;type=html">HTML</a>),
-					<?php echo $libTime->getSemesterString($semester100zurueck);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester100zurueck ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester100zurueck ;?>&amp;type=html">HTML</a>), <br />
-					<?php echo $libTime->getSemesterString($semester101zurueck);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester101zurueck ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester101zurueck ;?>&amp;type=html">HTML</a>)
+					<?php echo $libTime->getSemesterString($semester99Back);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester99Back ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester99Back ;?>&amp;type=html">HTML</a>),
+					<?php echo $libTime->getSemesterString($semester100Back);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester100Back ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester100Back ;?>&amp;type=html">HTML</a>), <br />
+					<?php echo $libTime->getSemesterString($semester101Back);?> (<a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester101Back ;?>&amp;type=csv">CSV</a>, <a href="api.php?iid=intranet_admin_export_daten_jubilaeen&amp;semester=<?php echo $semester101Back ;?>&amp;type=html">HTML</a>)
 				</td>
 			</tr>
 		</table>

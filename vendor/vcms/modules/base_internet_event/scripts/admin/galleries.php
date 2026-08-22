@@ -23,13 +23,13 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 /*
 * deletion
 */
-if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
-	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
+if(isset($_POST['action']) && $_POST['action'] == 'delete'){
+	if($libGallery->hasFotowartPrivilege($libAuth->getOffices())){
 		if(isset($_POST['id']) && is_numeric($_POST['id'])){
 			$pictures = $libGallery->getPictures($_POST['id'], 2);
 
 			foreach($pictures as $picture){
-				$libImage->deleteVeranstaltungsFoto($_POST['id'], $picture);
+				$libImage->deleteEventPhoto($_POST['id'], $picture);
 			}
 
 			$libGlobal->notificationTexts[] = 'Die Galerie wurde gelöscht.';
@@ -50,7 +50,7 @@ echo '<div class="panel-body">';
 echo '<form action="index.php?pid=event_admin_galerie" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-$libForm->printVeranstaltungDropDownBox('id', 'Veranstaltung', '', false);
+$libForm->printEventDropDownBox('id', 'Veranstaltung', '', false);
 $libForm->printSubmitButton('Galerie anlegen &frasl; bearbeiten');
 
 echo '</fieldset>';
@@ -61,13 +61,13 @@ echo '</div>';
 
 echo '<h2>Bestehende Galerien</h2>';
 
-$veranstaltungsFotosDir = 'custom/veranstaltungsfotos';
+$eventPhotosDir = 'custom/veranstaltungsfotos';
 
-$files = array_diff(scandir($veranstaltungsFotosDir), array('.', '..'));
+$files = array_diff(scandir($eventPhotosDir), array('.', '..'));
 $folders = array();
 
 foreach($files as $file){
-	if(is_dir($veranstaltungsFotosDir. '/' .$file)){
+	if(is_dir($eventPhotosDir. '/' .$file)){
 		$folders[] = $file;
 	}
 }
@@ -79,15 +79,15 @@ reset($folders);
 $stmt = $libDb->prepare("SELECT id, DATE_FORMAT(datum, '%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL ORDER BY datum DESC");
 $stmt->execute();
 
-$daten = array();
+$data = array();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if(in_array($row['id'], $folders)){
-		$daten[] = $row['datum'];
+		$data[] = $row['datum'];
 	}
 }
 
-echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
+echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
 
 
 //list events
@@ -96,12 +96,12 @@ echo '<thead>';
 echo '<tr><th>Bild</th><th>Titel</th><th>Datum</th><th></th></tr>';
 echo '</thead>';
 
-$zeitraum = $libTime->getZeitraum($libGlobal->semester);
+$period = $libTime->getPeriod($libGlobal->semester);
 
 $stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum IS NULL OR datum = :datum_equal OR (DATEDIFF(datum, :semester_start) >= 0 AND DATEDIFF(datum, :semester_ende) < 0) ORDER BY datum DESC');
-$stmt->bindValue(':datum_equal', $zeitraum[0]);
-$stmt->bindValue(':semester_start', $zeitraum[0]);
-$stmt->bindValue(':semester_ende', $zeitraum[1]);
+$stmt->bindValue(':datum_equal', $period[0]);
+$stmt->bindValue(':semester_start', $period[0]);
+$stmt->bindValue(':semester_ende', $period[1]);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

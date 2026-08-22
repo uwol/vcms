@@ -32,8 +32,8 @@ class LibNewsTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 
 
 $stmt = $libDb->prepare('SELECT mod_news_kategorie.bezeichnung, mod_news_news.eingabedatum, mod_news_news.id, mod_news_news.text, mod_news_news.betroffenesmitglied, mod_news_news.autor FROM mod_news_news LEFT JOIN mod_news_kategorie ON mod_news_news.kategorieid=mod_news_kategorie.id WHERE DATEDIFF(mod_news_news.eingabedatum, :semesterstart) >= 0 AND DATEDIFF(mod_news_news.eingabedatum, :semesterende) <= 0 ORDER BY mod_news_news.eingabedatum DESC');
-$stmt->bindValue(':semesterstart', $zeitraum[0]);
-$stmt->bindValue(':semesterende', $zeitraum[1]);
+$stmt->bindValue(':semesterstart', $period[0]);
+$stmt->bindValue(':semesterende', $period[1]);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

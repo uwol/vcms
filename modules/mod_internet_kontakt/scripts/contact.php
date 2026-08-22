@@ -63,7 +63,7 @@ if(!$libGenericStorage->attributeExistsInCurrentModule('show_haftungshinweis')){
 $mailsent = false;
 
 if($libGenericStorage->loadValueInCurrentModule('show_form')){
-	if(isset($_POST['name']) && isset($_POST['telefon']) && isset($_POST['emailaddress']) && isset($_POST['nachricht'])){
+	if(isset($_POST['name']) && isset($_POST['phone']) && isset($_POST['emailaddress']) && isset($_POST['message'])){
 		$error_emailaddress = false;
 		$error_message = false;
 
@@ -72,21 +72,21 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 			$libGlobal->errorTexts[] = 'Die angegebene E-Mail-Adresse ist nicht korrekt.';
 		}
 
-		if(trim($_POST['nachricht']) == ''){
+		if(trim($_POST['message']) == ''){
 			$error_message = true;
 			$libGlobal->errorTexts[] = 'Es wurde keine Nachricht eingegeben.';
 		}
 
 		if(!$error_emailaddress && !$error_message) {
-			$nachricht = $_POST['name']. ' mit der Telefonnummer ' .$_POST['telefon']. ' und der E-Mail-Adresse ' .$_POST['emailaddress']. ' hat über das Kontaktformular folgende Nachricht geschrieben:' . PHP_EOL;
-			$nachricht .= PHP_EOL;
-			$nachricht .= $_POST['nachricht'];
+			$message = $_POST['name']. ' mit der Telefonnummer ' .$_POST['phone']. ' und der E-Mail-Adresse ' .$_POST['emailaddress']. ' hat über das Kontaktformular folgende Nachricht geschrieben:' . PHP_EOL;
+			$message .= PHP_EOL;
+			$message .= $_POST['message'];
 
 			$mail = $libMail->createPHPMailer();
 
 			$mail->addAddress($libConfig->emailInfo);
 			$mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libGlobal->getSiteUrl();
-			$mail->Body = $libString->protectXSS($nachricht);
+			$mail->Body = $libString->protectXSS($message);
 			$mail->addReplyTo($_POST['emailaddress']);
 
 			if($mail->send()){
@@ -134,34 +134,34 @@ echo '</address>';
 
 echo '<p class="contact-vorstand mb-4">';
 
-$vorstand = $libAssociation->getAnsprechbarerAktivenVorstandIds();
+$board = $libAssociation->getContactableActiveBoardIds();
 
-if($libGenericStorage->loadValueInCurrentModule('show_senior') && $vorstand['senior']){
-	echo 'Senior: ' .$libPerson->getNameString($vorstand['senior'], 0). '<br />';
+if($libGenericStorage->loadValueInCurrentModule('show_senior') && $board['senior']){
+	echo 'Senior: ' .$libPerson->getNameString($board['senior'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('show_jubelsenior') && $vorstand['jubelsenior']){
-	echo 'Jubelsenior: ' .$libPerson->getNameString($vorstand['jubelsenior'], 0). '<br />';
+if($libGenericStorage->loadValueInCurrentModule('show_jubelsenior') && $board['jubelsenior']){
+	echo 'Jubelsenior: ' .$libPerson->getNameString($board['jubelsenior'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('show_consenior') && $vorstand['consenior']){
-	echo 'Consenior: ' .$libPerson->getNameString($vorstand['consenior'], 0). '<br />';
+if($libGenericStorage->loadValueInCurrentModule('show_consenior') && $board['consenior']){
+	echo 'Consenior: ' .$libPerson->getNameString($board['consenior'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('show_fuchsmajor') && $vorstand['fuchsmajor']){
-	echo 'Fuchsmajor: ' .$libPerson->getNameString($vorstand['fuchsmajor'], 0). '<br />';
+if($libGenericStorage->loadValueInCurrentModule('show_fuchsmajor') && $board['fuchsmajor']){
+	echo 'Fuchsmajor: ' .$libPerson->getNameString($board['fuchsmajor'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('show_fuchsmajor2') && $vorstand['fuchsmajor2']){
-	echo 'Fuchsmajor 2: ' .$libPerson->getNameString($vorstand['fuchsmajor2'], 0). '<br />';
+if($libGenericStorage->loadValueInCurrentModule('show_fuchsmajor2') && $board['fuchsmajor2']){
+	echo 'Fuchsmajor 2: ' .$libPerson->getNameString($board['fuchsmajor2'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('show_scriptor') && $vorstand['scriptor']){
-	echo 'Scriptor: ' .$libPerson->getNameString($vorstand['scriptor'], 0). '<br />';
+if($libGenericStorage->loadValueInCurrentModule('show_scriptor') && $board['scriptor']){
+	echo 'Scriptor: ' .$libPerson->getNameString($board['scriptor'], 0). '<br />';
 }
 
-if($libGenericStorage->loadValueInCurrentModule('show_quaestor') && $vorstand['quaestor']){
-	echo 'Quaestor: ' .$libPerson->getNameString($vorstand['quaestor'], 0). '<br />';
+if($libGenericStorage->loadValueInCurrentModule('show_quaestor') && $board['quaestor']){
+	echo 'Quaestor: ' .$libPerson->getNameString($board['quaestor'], 0). '<br />';
 }
 
 echo '</p>';
@@ -200,16 +200,16 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 			$email = $_POST['emailaddress'];
 		}
 
-		$telefon = '';
+		$phone = '';
 
-		if(isset($_POST['telefon']) && $_POST['telefon'] != ''){
-			$telefon = $_POST['telefon'];
+		if(isset($_POST['phone']) && $_POST['phone'] != ''){
+			$phone = $_POST['phone'];
 		}
 
-		$nachricht = '';
+		$message = '';
 
-		if(isset($_POST['nachricht']) && $_POST['nachricht'] != ''){
-			$nachricht = $_POST['nachricht'];
+		if(isset($_POST['message']) && $_POST['message'] != ''){
+			$message = $_POST['message'];
 		}
 
 		echo '<div class="panel panel-default">';
@@ -219,8 +219,8 @@ if($libGenericStorage->loadValueInCurrentModule('show_form')){
 
 		$libForm->printTextInput('name', 'Name', $libString->protectXSS($name), 'text', false, true);
 		$libForm->printTextInput('emailaddress', 'E-Mail-Adresse', $libString->protectXSS($email), 'email', false, true);
-		$libForm->printTextInput('telefon', 'Telefonnummer', $libString->protectXSS($telefon), 'tel', false, true);
-		$libForm->printTextarea('nachricht', 'Nachricht', $libString->protectXSS($nachricht), false, true);
+		$libForm->printTextInput('phone', 'Telefonnummer', $libString->protectXSS($phone), 'tel', false, true);
+		$libForm->printTextarea('message', 'Nachricht', $libString->protectXSS($message), false, true);
 		$libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i> Abschicken');
 
 		echo '</fieldset>';

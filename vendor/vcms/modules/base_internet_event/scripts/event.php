@@ -45,10 +45,10 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '<p class="mb-4">Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 } else {
 	if($libAuth->isLoggedIn()){
-		if(isset($_POST['changeanmeldenstate']) && $_POST['changeanmeldenstate'] != ''){
+		if(isset($_POST['changeRegistrationState']) && $_POST['changeRegistrationState'] != ''){
 			// event in future?
 			if(date('Y-m-d H:i:s') < $row['datum']){
-				if($_POST['changeanmeldenstate'] == 'anmelden'){
+				if($_POST['changeRegistrationState'] == 'register'){
 					$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)');
 					$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
 					$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
@@ -101,7 +101,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '<div class="panel panel-default reveal">';
 	echo '<div class="panel-body">';
 
-	printEventDateTime($row);
+	printEventDetailDateTime($row);
 
 	echo '<hr />';
 
@@ -117,7 +117,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 		echo '<div><i class="fa fa-fw fa-info" aria-hidden="true"></i> ' .$status. '</div>';
 	}
 
-	printAnmeldeStatus($row);
+	printRegistrationStatus($row);
 	printSocialButtons($row);
 
 	echo '</div>';
@@ -125,9 +125,9 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 	echo '</div>';
 
 	// description
-	$descriptionText = printSpruch($row);
+	$descriptionText = printMotto($row);
 	$descriptionText .= printDescription($row);
-	$descriptionText .= printAnmeldungen($row);
+	$descriptionText .= printRegistrations($row);
 
 	if($hasPictures){
 		if($descriptionText){
@@ -172,7 +172,7 @@ if($row['intern'] && !$libAuth->isLoggedIn()){
 
 // -----------------------------------------------------------
 
-function printEventDateTime($row){
+function printEventDetailDateTime($row){
 	global $libTime, $libEvent;
 
 	/*
@@ -216,7 +216,7 @@ function printSocialButtons($row){
 	echo '</p>';
 }
 
-function printAnmeldeStatus($row){
+function printRegistrationStatus($row){
 	global $libAuth, $libDb, $libForm;
 
 	if($libAuth->isLoggedin()){
@@ -224,23 +224,23 @@ function printAnmeldeStatus($row){
 		$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 		$stmt->bindValue(':veranstaltung', $row["id"], PDO::PARAM_INT);
 		$stmt->execute();
-		$stmt->bindColumn('number', $angemeldet);
+		$stmt->bindColumn('number', $isRegistered);
 		$stmt->fetch();
 
 		if(date('Y-m-d H:i:s') < $row['datum']){
 			echo '<form action="index.php?pid=event&amp;id=' .$row['id']. '" method="post" class="form-inline">';
 
-			if($angemeldet){
-				echo '<input type="hidden" name="changeanmeldenstate" value="abmelden" />';
+			if($isRegistered){
+				echo '<input type="hidden" name="changeRegistrationState" value="unregister" />';
 				$libForm->printSubmitButtonInline('<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> Abmelden', array('btn-sm'));
 			} else {
-				echo '<input type="hidden" name="changeanmeldenstate" value="anmelden" />';
+				echo '<input type="hidden" name="changeRegistrationState" value="register" />';
 				$libForm->printSubmitButtonInline('<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> Anmelden', array('btn-sm'));
 			}
 
 			echo '</form>';
 		} else {
-			if($angemeldet){
+			if($isRegistered){
 				echo '<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> angemeldet';
 			} else {
 				echo '<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> nicht angemeldet';
@@ -259,13 +259,13 @@ function printDescription($row){
 	}
 }
 
-function printSpruch($row){
+function printMotto($row){
 	if(trim($row['spruch'])){
 		return '<p>' .nl2br($row['spruch']). '</p>';
 	}
 }
 
-function printAnmeldungen($row){
+function printRegistrations($row){
 	global $libAuth, $libDb, $libGallery, $libPerson;
 
 	$retstr = '';
@@ -275,17 +275,17 @@ function printAnmeldungen($row){
 		$stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
 		$stmt->execute();
 
-		$anmeldungWritten = false;
+		$registrationWritten = false;
 
 		$retstr .= '<p>';
 
 		while($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)){
-			if($anmeldungWritten){
+			if($registrationWritten){
 				$retstr .= ', ';
 			}
 
 			$retstr .= '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getNameString($eventrow['person'], 0). '</a></span>';
-			$anmeldungWritten = true;
+			$registrationWritten = true;
 		}
 
 		$retstr .= '</p>';

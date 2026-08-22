@@ -22,11 +22,11 @@ class LibImage{
 	var $galleryImageWidth = 1280;
 	var $galleryImageHeight = 960;
 
-	var $personFotoWidth = 480;
-	var $personFotoHeight = 640;
+	var $personPhotoWidth = 480;
+	var $personPhotoHeight = 640;
 
-	var $startseiteFotoWidth = 1280;
-	var $startseiteFotoHeight = 960;
+	var $homeImageWidth = 1280;
+	var $homeImageHeight = 960;
 
 	var $semesterCoverWidth = 1440;
 	var $semesterCoverHeight = 1080;
@@ -358,95 +358,95 @@ class LibImage{
 		$this->deleteImage('custom/semestercover', $semesterCoverFilename);
 	}
 
-	function savePersonFotoByFilesArray($personId, $tmpFileVarName){
+	function savePersonPhotoByFilesArray($personId, $tmpFileVarName){
 		//parameter check
 		if(!is_numeric($personId) || !preg_match('/^[0-9]+$/', $personId)){
 			return;
 		}
 
-		$personFotoFilename = $personId. '.jpg';
+		$personPhotoFilename = $personId. '.jpg';
 
 		//delete old image
-		$this->deletePersonFoto($personId);
+		$this->deletePersonPhoto($personId);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'custom/intranet/mitgliederfotos', $personFotoFilename, $this->personFotoWidth, $this->personFotoHeight);
+		$this->saveImageByFilesArray($tmpFileVarName, 'custom/intranet/mitgliederfotos', $personPhotoFilename, $this->personPhotoWidth, $this->personPhotoHeight);
 	}
 
-	function deletePersonFoto($personId){
+	function deletePersonPhoto($personId){
 		//parameter check
 		if(!is_numeric($personId) || !preg_match('/^[0-9]+$/', $personId)){
 			return;
 		}
 
-		$personFotoFilename = $personId.'.jpg';
-		$this->deleteImage('custom/intranet/mitgliederfotos', $personFotoFilename);
+		$personPhotoFilename = $personId.'.jpg';
+		$this->deleteImage('custom/intranet/mitgliederfotos', $personPhotoFilename);
 	}
 
-	function saveStartseitenBildByFilesArray($nachrichtId, $tmpFileVarName){
+	function saveHomeImageByFilesArray($announcementId, $tmpFileVarName){
 		//parameter check
-		if(!is_numeric($nachrichtId) || !preg_match('/^[0-9]+$/', $nachrichtId)){
+		if(!is_numeric($announcementId) || !preg_match('/^[0-9]+$/', $announcementId)){
 			return;
 		}
 
-		$nachrichtFotoFilename = $nachrichtId. '.jpg';
+		$announcementPhotoFilename = $announcementId. '.jpg';
 
 		//delete old image
-		$this->deleteStartseitenBild($nachrichtId);
+		$this->deleteHomeImage($announcementId);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'modules/mod_internet_home/custom/img', $nachrichtFotoFilename, $this->startseiteFotoWidth, $this->startseiteFotoHeight);
+		$this->saveImageByFilesArray($tmpFileVarName, 'modules/mod_internet_home/custom/img', $announcementPhotoFilename, $this->homeImageWidth, $this->homeImageHeight);
 	}
 
-	function deleteStartseitenBild($nachrichtId){
+	function deleteHomeImage($announcementId){
 		//parameter check
-		if(!is_numeric($nachrichtId) || !preg_match('/^[0-9]+$/', $nachrichtId)){
+		if(!is_numeric($announcementId) || !preg_match('/^[0-9]+$/', $announcementId)){
 			return;
 		}
 
-		$nachrichtFotoFilename = $nachrichtId.'.jpg';
-		$this->deleteImage('modules/mod_internet_home/custom/img', $nachrichtFotoFilename);
+		$announcementPhotoFilename = $announcementId.'.jpg';
+		$this->deleteImage('modules/mod_internet_home/custom/img', $announcementPhotoFilename);
 	}
 
 
-	function saveVeranstaltungsFotoByFilesArray($veranstaltungId, $tmpFileVarName){
+	function saveEventPhotoByFilesArray($eventId, $tmpFileVarName){
 		//parameter check
-		if(!is_numeric($veranstaltungId) || !preg_match('/^[0-9]+$/', $veranstaltungId) ||
+		if(!is_numeric($eventId) || !preg_match('/^[0-9]+$/', $eventId) ||
 				$tmpFileVarName == '' || !isset($_FILES[$tmpFileVarName]) ||
 				substr($_FILES[$tmpFileVarName]['name'], 0, 1) == '.'){
 			return;
 		}
 
-		$fotoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $_FILES[$tmpFileVarName]['name']);
+		$photoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $_FILES[$tmpFileVarName]['name']);
 
-		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/' .$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
+		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/' .$eventId, $photoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
 	}
 
-	function saveVeranstaltungsFotoByAjax($veranstaltungId, $targetFilename, $tmpFilename){
+	function saveEventPhotoByAjax($eventId, $targetFilename, $tmpFilename){
 		//parameter check
-		if(!is_numeric($veranstaltungId) || !preg_match('/^[0-9]+$/', $veranstaltungId) ||
+		if(!is_numeric($eventId) || !preg_match('/^[0-9]+$/', $eventId) ||
 				$tmpFilename == '' ||
 				substr($targetFilename, 0, 1) == '.'){
 			return;
 		}
 
-		$fotoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $targetFilename);
+		$photoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $targetFilename);
 
-		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/' .$veranstaltungId, $fotoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
+		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/' .$eventId, $photoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
 	}
 
 
-	function deleteVeranstaltungsFoto($veranstaltungId, $fotoFileName){
+	function deleteEventPhoto($eventId, $photoFileName){
 		//parameter check
-		if(!is_numeric($veranstaltungId) || !preg_match('/^[0-9]+$/', $veranstaltungId) ||
-				preg_match('/[^A-Za-z0-9\._-]/', $fotoFileName)){
+		if(!is_numeric($eventId) || !preg_match('/^[0-9]+$/', $eventId) ||
+				preg_match('/[^A-Za-z0-9\._-]/', $photoFileName)){
 			return;
 		}
 
-		$this->deleteImage('custom/veranstaltungsfotos/' .$veranstaltungId, $fotoFileName);
+		$this->deleteImage('custom/veranstaltungsfotos/' .$eventId, $photoFileName);
 
-		$fotos = array_diff(scandir('custom/veranstaltungsfotos/' .$veranstaltungId), array('.', '..'));
+		$photos = array_diff(scandir('custom/veranstaltungsfotos/' .$eventId), array('.', '..'));
 
-		if(empty($fotos)){
-			rmdir('custom/veranstaltungsfotos/' .$veranstaltungId);
+		if(empty($photos)){
+			rmdir('custom/veranstaltungsfotos/' .$eventId);
 		}
 	}
 }

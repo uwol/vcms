@@ -32,13 +32,13 @@ echo '<div class="col-xs-12 col-sm-6">';
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
 
-$daten = array();
+$data = array();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$daten[] = $row['datum'];
+	$data[] = $row['datum'];
 }
 
-echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten), $libGlobal->semester);
+echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
 
 echo '</div>';
 
@@ -57,15 +57,15 @@ echo '</div>';
 
 echo '<div>';
 
-$zeitraum = $libTime->getZeitraum($libGlobal->semester);
-$calendar = new \vcms\calendar\LibCalendar($zeitraum[0], $zeitraum[1]);
+$period = $libTime->getPeriod($libGlobal->semester);
+$calendar = new \vcms\calendar\LibCalendar($period[0], $period[1]);
 $intern = $libAuth->isLoggedin() ? 1 : 0;
 
 $stmt = $libDb->prepare("SELECT * FROM base_veranstaltung WHERE intern <= :intern AND ((DATEDIFF(datum, :startdatum1) >= 0 AND DATEDIFF(datum, :startdatum2) <= 0) OR (DATEDIFF(datum_ende, :enddatum1) >= 0 AND DATEDIFF(datum_ende, :enddatum2) <= 0)) ORDER BY datum");
-$stmt->bindValue(':startdatum1', $zeitraum[0]);
-$stmt->bindValue(':startdatum2', $zeitraum[1]);
-$stmt->bindValue(':enddatum1', $zeitraum[0]);
-$stmt->bindValue(':enddatum2', $zeitraum[1]);
+$stmt->bindValue(':startdatum1', $period[0]);
+$stmt->bindValue(':startdatum2', $period[1]);
+$stmt->bindValue(':enddatum1', $period[0]);
+$stmt->bindValue(':enddatum2', $period[1]);
 $stmt->bindValue(':intern', $intern);
 $stmt->execute();
 
@@ -99,10 +99,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$stmt2->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt2->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
 	$stmt2->execute();
-	$stmt2->bindColumn('number', $anzahl);
+	$stmt2->bindColumn('number', $count);
 	$stmt2->fetch();
 
-	if($libAuth->isloggedin() == true && $anzahl > 0){
+	if($libAuth->isloggedin() == true && $count > 0){
 		$event->isAttended(true);
 		$event->setAttendedIcon('<i class="fa fa-check-square-o" aria-hidden="true"></i>');
 	}

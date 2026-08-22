@@ -45,8 +45,8 @@ class LibMenu{
 		$this->rootMenuFolder->canonizeElements();
 	}
 
-	function reduceByAccessRestriction($gruppe, $aemter){
-		$this->rootMenuFolder->reduceByAccessRestriction($gruppe, $aemter);
+	function reduceByAccessRestriction($group, $offices){
+		$this->rootMenuFolder->reduceByAccessRestriction($group, $offices);
 	}
 
 	function sortElementsByPosition(){

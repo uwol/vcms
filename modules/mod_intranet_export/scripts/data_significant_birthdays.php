@@ -35,10 +35,10 @@ if($libAuth->isLoggedin()){
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$year = $libTime->formatYearString($row['datum_geburtstag']);
-		$rundesAlter = $libTime->checkSignificantBirthdayYear($year, $_GET['jahr']);
+		$significantAge = $libTime->checkSignificantBirthdayYear($year, $_GET['jahr']);
 
-		if($rundesAlter){
-			$table->addRowByArray(array($row['datum_geburtstag'], $rundesAlter, $row['anrede'], $row['rang'], $row['titel'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], $row['zusatz1'], $row['strasse1'], $row['ort1'], $row['plz1'], $row['land1'], $row['telefon1'], $row['email'], $row['status'], $row['gruppe']));
+		if($significantAge){
+			$table->addRowByArray(array($row['datum_geburtstag'], $significantAge, $row['anrede'], $row['rang'], $row['titel'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], $row['zusatz1'], $row['strasse1'], $row['ort1'], $row['plz1'], $row['land1'], $row['telefon1'], $row['email'], $row['status'], $row['gruppe']));
 		}
 	}
 

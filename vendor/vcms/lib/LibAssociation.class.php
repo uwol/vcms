@@ -22,48 +22,48 @@ use PDO;
 
 class LibAssociation{
 
-	function getFarbe($farbe){
-		$farben['blau']          = '0E65A8';
-		$farben['dunkelblau']    = '000033';
-		$farben['dunkelgrün']    = '003300';
-		$farben['flieder']       = '336699';
-		$farben['gelb']          = 'ffff00';
-		$farben['gold']          = 'ffd700';
-		$farben['grün']          = '009900';
-		$farben['hellblau']      = '6392bf';
-		$farben['hellgrün']      = '00ff00';
-		$farben['hellrot']       = 'ff0000';
-		$farben['himmelblau']    = '0066ff';
-		$farben['moosgrün']      = '66ff66';
-		$farben['orange']        = 'ff6600';
-		$farben['purpur']        = '660066';
-		$farben['rosa']          = 'ff99cc';
-		$farben['rot']           = 'ff0000';
-		$farben['schwarz']       = '000000';
-		$farben['silber']        = 'C0C0C0';
-		$farben['violett']       = 'B200CC';
-		$farben['weinrot']       = '660000';
-		$farben['weiß']          = 'FFFFFF';
-		$farben['weiss']         = $farben['weiß'];
-		$farben['zinnoberrot']   = 'cc0000';
-		$farben['karmesinrot']   = '960018';
-		$farben['grau']          = '808080';
-		$farben['braun']         = 'A52A2A';
-		$farben['saatgrün']      = '00FF00';
-		$farben['kirschrot']     = 'FF0000';
-		$farben['stahlblau']     = '30406A';
-		$farben['purpur']        = 'FF0033';
+	function getColor($color){
+		$colors['blau']          = '0E65A8';
+		$colors['dunkelblau']    = '000033';
+		$colors['dunkelgrün']    = '003300';
+		$colors['flieder']       = '336699';
+		$colors['gelb']          = 'ffff00';
+		$colors['gold']          = 'ffd700';
+		$colors['grün']          = '009900';
+		$colors['hellblau']      = '6392bf';
+		$colors['hellgrün']      = '00ff00';
+		$colors['hellrot']       = 'ff0000';
+		$colors['himmelblau']    = '0066ff';
+		$colors['moosgrün']      = '66ff66';
+		$colors['orange']        = 'ff6600';
+		$colors['purpur']        = '660066';
+		$colors['rosa']          = 'ff99cc';
+		$colors['rot']           = 'ff0000';
+		$colors['schwarz']       = '000000';
+		$colors['silber']        = 'C0C0C0';
+		$colors['violett']       = 'B200CC';
+		$colors['weinrot']       = '660000';
+		$colors['weiß']          = 'FFFFFF';
+		$colors['weiss']         = $colors['weiß'];
+		$colors['zinnoberrot']   = 'cc0000';
+		$colors['karmesinrot']   = '960018';
+		$colors['grau']          = '808080';
+		$colors['braun']         = 'A52A2A';
+		$colors['saatgrün']      = '00FF00';
+		$colors['kirschrot']     = 'FF0000';
+		$colors['stahlblau']     = '30406A';
+		$colors['purpur']        = 'FF0033';
 
-		$farbe = strtolower($farbe);
+		$color = strtolower($color);
 
-		if($farben[$farbe] != ''){
-			return '#'.$farben[$farbe];
+		if($colors[$color] != ''){
+			return '#'.$colors[$color];
 		} else {
 			return '#000000';
 		}
 	}
 
-	function getGruendungString($date){
+	function getFoundationString($date){
 		$retstr = '';
 
 		if($date != ''){
@@ -83,7 +83,7 @@ class LibAssociation{
 		return $retstr;
 	}
 
-	function getVereinNameString($associationId){
+	function getAssociationNameString($associationId){
 		global $libDb;
 
 		$stmt = $libDb->prepare("SELECT titel, name FROM base_verein WHERE id = :id");
@@ -94,7 +94,7 @@ class LibAssociation{
 		return $row['titel']. ' ' .$row['name'];
 	}
 
-	function getToechterString($associationId, $pid){
+	function getDaughtersString($associationId, $pid){
 		global $libDb;
 
 		$stmt = $libDb->prepare("SELECT tochter.id, tochter.titel, tochter.name FROM base_verein AS mutter, base_verein AS tochter WHERE mutter.id = tochter.mutterverein AND mutter.id = :id");
@@ -122,7 +122,7 @@ class LibAssociation{
 		return $retstr;
 	}
 
-	function getFusioniertString($associationId, $pid){
+	function getMergedString($associationId, $pid){
 		global $libDb;
 
 		$stmt = $libDb->prepare("SELECT fusionierend.id, fusionierend.titel, fusionierend.name FROM base_verein AS fusionierend, base_verein AS fusioniert WHERE fusioniert.id = fusionierend.fusioniertin AND fusioniert.id = :id");
@@ -150,25 +150,25 @@ class LibAssociation{
 		return $retstr;
 	}
 
-	function getAnsprechbarerAktivenVorstandIds(){
+	function getContactableActiveBoardIds(){
 		global $libDb, $libTime;
 
-		$aktuellermonat = @date('m');
+		$currentMonth = @date('m');
 
-		if($aktuellermonat == 2 || $aktuellermonat == 3 || $aktuellermonat == 8 || $aktuellermonat == 9){
-			$vorstandssemester = $libTime->getFollowingSemesterName();
+		if($currentMonth == 2 || $currentMonth == 3 || $currentMonth == 8 || $currentMonth == 9){
+			$boardSemester = $libTime->getFollowingSemesterName();
 		} else {
-			$vorstandssemester = $libTime->getSemesterName();
+			$boardSemester = $libTime->getSemesterName();
 		}
 
 		$stmt = $libDb->prepare("SELECT senior, jubelsenior, consenior, fuchsmajor, fuchsmajor2, scriptor, quaestor FROM base_semester WHERE semester = :semester");
-		$stmt->bindValue(':semester', $vorstandssemester);
+		$stmt->bindValue(':semester', $boardSemester);
 		$stmt->execute();
 
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
-	function getValideInternetWarte(){
+	function getValidInternetwarte(){
 		global $libDb;
 
 		// ein valider Internetwart

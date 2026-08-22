@@ -21,7 +21,7 @@ namespace vcms\filesystem;
 class FolderElement{
 	var $name;
 	var $nestingFolder;
-	var $owningAmt;
+	var $owningOffice;
 	var $type;
 	var $fileSystemFileName;
 

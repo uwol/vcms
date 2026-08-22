@@ -32,7 +32,7 @@ class File extends FolderElement{
 		$this->type = 2;
 		$this->size = filesize($this->getFileSystemPath());
 
-		$this->owningAmt = $nestingFolder->owningAmt;
+		$this->owningOffice = $nestingFolder->owningOffice;
 	}
 
 	function getExtension(){

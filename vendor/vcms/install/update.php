@@ -139,19 +139,19 @@ if(!function_exists('vcmsMakeDateColumnNullable')){
 /*
 * Update base_veranstaltung
 */
-$columnsBaseVeranstaltung = getColumns('base_veranstaltung');
+$eventColumns = getColumns('base_veranstaltung');
 
-if(!in_array('datum_ende', $columnsBaseVeranstaltung)){
+if(!in_array('datum_ende', $eventColumns)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
 	$libDb->query('ALTER TABLE base_veranstaltung ADD datum_ende DATETIME AFTER datum');
 }
 
-if(!in_array('fb_eventid', $columnsBaseVeranstaltung)){
+if(!in_array('fb_eventid', $eventColumns)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
 	$libDb->query('ALTER TABLE base_veranstaltung ADD fb_eventid varchar(255)');
 }
 
-if(!in_array('intern', $columnsBaseVeranstaltung)){
+if(!in_array('intern', $eventColumns)){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle base_veranstaltung';
 	$libDb->query('ALTER TABLE base_veranstaltung ADD intern tinyint(1) NOT NULL default 0');
 }

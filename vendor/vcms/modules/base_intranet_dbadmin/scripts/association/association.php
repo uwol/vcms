@@ -26,26 +26,26 @@ if($libAuth->isLoggedin()){
 		$id = $_REQUEST['id'];
 	}
 
-	$aktion = '';
-	if(isset($_REQUEST['aktion'])){
-		$aktion = $_REQUEST['aktion'];
+	$action = '';
+	if(isset($_REQUEST['action'])){
+		$action = $_REQUEST['action'];
 	}
 
 	$array = array();
 	//Felder in der Tabelle angeben -> Metadaten
-	$felder = array('name', 'kuerzel', 'aktivitas', 'ahahschaft', 'titel', 'rang', 'dachverband', 'dachverbandnr', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'telefon1', 'anschreiben_zusenden', 'mutterverein', 'fusioniertin', 'datum_gruendung', 'webseite', 'wahlspruch', 'farbenstrophe', 'farbenstrophe_inoffiziell', 'fuchsenstrophe', 'bundeslied', 'farbe1', 'farbe2', 'farbe3', 'farbe4', 'beschreibung');
+	$fields = array('name', 'kuerzel', 'aktivitas', 'ahahschaft', 'titel', 'rang', 'dachverband', 'dachverbandnr', 'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1', 'telefon1', 'anschreiben_zusenden', 'mutterverein', 'fusioniertin', 'datum_gruendung', 'webseite', 'wahlspruch', 'farbenstrophe', 'farbenstrophe_inoffiziell', 'fuchsenstrophe', 'bundeslied', 'farbe1', 'farbe2', 'farbe3', 'farbe4', 'beschreibung');
 
 	/**
 	*
 	* Verschiedene Aktionen auf der Datenbank durchführen, je nach Kontext
-	* der durch aktion definiert wird
+	* der durch action definiert wird
 	*
 	*/
 
 	//neuer Verein, leerer Datensatz
-	if($aktion == 'blank'){
-		foreach($felder as $feld){
-			$array[$feld] = '';
+	if($action == 'blank'){
+		foreach($fields as $field){
+			$array[$field] = '';
 		}
 
 		$array['id'] = '';
@@ -56,17 +56,17 @@ if($libAuth->isLoggedin()){
 		$array['datum_adresse1_stand'] = '';
 	}
 	//Daten wurden mit blank eingegeben, werden nun gespeichert
-	elseif($aktion == 'insert'){
+	elseif($action == 'insert'){
 		if(!isset($_POST['form_complete']) || !$_POST['form_complete'])
 			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 
 		$valueArray = $_REQUEST;
 		$valueArray['datum_gruendung'] = $libTime->assureMysqlDate($valueArray['datum_gruendung']);
-		$array = $libDb->insertRow($felder, $valueArray, 'base_verein', array('id' => ''));
-		updateAdresseStand('base_verein', 'datum_adresse1_stand', $array['id']);
+		$array = $libDb->insertRow($fields, $valueArray, 'base_verein', array('id' => ''));
+		updateAddressAsOf('base_verein', 'datum_adresse1_stand', $array['id']);
 	}
 	//bestehende Daten werden modifiziert
-	elseif($aktion == 'update'){
+	elseif($action == 'update'){
 		if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 			die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
 		}
@@ -78,12 +78,12 @@ if($libAuth->isLoggedin()){
 
 		//Adressänderungen prüfen und vermerken im Stand
 		if($_REQUEST['strasse1'] != $array['strasse1'] || $_REQUEST['ort1'] != $array['ort1'] || $_REQUEST['plz1'] != $array['plz1']){
-			updateAdresseStand('base_verein', 'datum_adresse1_stand', $array['id']);
+			updateAddressAsOf('base_verein', 'datum_adresse1_stand', $array['id']);
 		}
 
 		$valueArray = $_REQUEST;
 		$valueArray['datum_gruendung'] = $libTime->assureMysqlDate($valueArray['datum_gruendung']);
-		$array = $libDb->updateRow($felder, $valueArray, 'base_verein', array('id' => $id));
+		$array = $libDb->updateRow($fields, $valueArray, 'base_verein', array('id' => $id));
 	} else {
 		$stmt = $libDb->prepare('SELECT * FROM base_verein WHERE id=:id');
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -111,7 +111,7 @@ if($libAuth->isLoggedin()){
 	*/
 	if($array['id'] != ''){
 		echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_associations" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-		echo '<input type="hidden" name="aktion" value="delete" />';
+		echo '<input type="hidden" name="action" value="delete" />';
 		echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
 		echo '</form>';
@@ -122,17 +122,17 @@ if($libAuth->isLoggedin()){
 	* Ausgabe des Forms starten
 	*
 	*/
-	if($aktion == 'blank'){
-		$extraActionParam = '&amp;aktion=insert';
+	if($action == 'blank'){
+		$extraActionParam = '&amp;action=insert';
 	} else {
-		$extraActionParam = '&amp;aktion=update';
+		$extraActionParam = '&amp;action=update';
 	}
 
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_admin_association' .$extraActionParam. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="hidden" name="formtyp" value="vereinsdaten" />';
+	echo '<input type="hidden" name="formType" value="associationData" />';
 	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 
 	$libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
@@ -155,8 +155,8 @@ if($libAuth->isLoggedin()){
 	$libForm->printTextInput('telefon1', 'Telefon 1', $array['telefon1']);
 
 	$libForm->printBoolSelectBox('anschreiben_zusenden', 'Anschreiben zusenden', $array['anschreiben_zusenden']);
-	$libForm->printVereineDropDownBox('mutterverein', 'Mutterverein', $array['mutterverein']);
-	$libForm->printVereineDropDownBox('fusioniertin', 'Fusioniert in', $array['fusioniertin']);
+	$libForm->printAssociationsDropDownBox('mutterverein', 'Mutterverein', $array['mutterverein']);
+	$libForm->printAssociationsDropDownBox('fusioniertin', 'Fusioniert in', $array['fusioniertin']);
 
 	$libForm->printDateInput('datum_gruendung', 'Gründungsdatum', $array['datum_gruendung']);
 	$libForm->printTextInput('webseite', 'Webseite', $array['webseite']);
@@ -183,7 +183,7 @@ if($libAuth->isLoggedin()){
 	echo '</div>';
 }
 
-function updateAdresseStand($table, $field, $id){
+function updateAddressAsOf($table, $field, $id){
 	global $libDb;
 
 	$stmt = $libDb->prepare('UPDATE ' .$table. ' SET ' .$field. '=NOW() WHERE id=:id');

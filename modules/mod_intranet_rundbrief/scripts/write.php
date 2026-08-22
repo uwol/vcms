@@ -28,12 +28,12 @@ $libDb->query("INSERT INTO mod_rundbrief_empfaenger (id, empfaenger) SELECT id, 
 */
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='F'");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahlFuechse);
+$stmt->bindColumn('number', $countFuechse);
 $stmt->fetch();
 
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='B'");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahlBurschen);
+$stmt->bindColumn('number', $countBurschen);
 $stmt->fetch();
 
 $streetNormalized = $libString->normalizeStreet($libConfig->verbindungStrasse);
@@ -42,32 +42,32 @@ $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbri
 $stmt->bindValue(':plz', $libConfig->verbindungPlz);
 $stmt->bindValue(':street', '%' .$streetNormalized. '%');
 $stmt->execute();
-$stmt->bindColumn('number', $anzahlHausbewohner);
+$stmt->bindColumn('number', $countResidents);
 $stmt->fetch();
 
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='P'");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahlAhah);
+$stmt->bindColumn('number', $countAhah);
 $stmt->fetch();
 
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='P' AND interessiert= 1");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahlBesondersInteressierteAhah);
+$stmt->bindColumn('number', $countParticularlyInterestedAhah);
 $stmt->fetch();
 
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND gruppe='C'");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahlCouleurdamen);
+$stmt->bindColumn('number', $countCouleurdamen);
 $stmt->fetch();
 
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND (gruppe='G' OR gruppe='W')");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahlGattinnen);
+$stmt->bindColumn('number', $countGattinnen);
 $stmt->fetch();
 
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, mod_rundbrief_empfaenger WHERE base_person.id = mod_rundbrief_empfaenger.id AND email != '' AND email IS NOT NULL AND empfaenger=1 AND (gruppe='G' OR gruppe='W') AND interessiert=1");
 $stmt->execute();
-$stmt->bindColumn('number', $anzahlBesondersInteressierteGattinnen);
+$stmt->bindColumn('number', $countParticularlyInterestedGattinnen);
 $stmt->fetch();
 
 
@@ -96,44 +96,44 @@ echo '<label class="col-sm-3 control-label">Adressaten</label>';
 echo '<div class="col-sm-4">';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="fuchsia" checked="checked">';
-echo $anzahlFuechse. ' Füchse &amp; Fuchsmajor';
+echo $countFuechse. ' Füchse &amp; Fuchsmajor';
 echo '</label></div>';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="burschen" checked="checked">';
-echo $anzahlBurschen. ' Burschen';
+echo $countBurschen. ' Burschen';
 echo '</label></div>';
 
-$ahahInteressiertChecked = '';
+$ahahInterestedChecked = '';
 
 if($libGenericStorage->loadValueInCurrentModule('preselect_int_ahah') == 1){
-	$ahahInteressiertChecked = 'checked="checked"';
+	$ahahInterestedChecked = 'checked="checked"';
 }
 
-echo '<div class="checkbox"><label><input type="checkbox" name="ahah_interessiert" ' .$ahahInteressiertChecked. '>';
-echo $anzahlBesondersInteressierteAhah. ' besonders interessierte alte Herren';
+echo '<div class="checkbox"><label><input type="checkbox" name="ahah_interested" ' .$ahahInterestedChecked. '>';
+echo $countParticularlyInterestedAhah. ' besonders interessierte alte Herren';
 echo '</label></div>';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="ahah">';
-echo $anzahlAhah. ' alte Herren';
+echo $countAhah. ' alte Herren';
 echo '</label></div>';
 
 echo '</div>';
 echo '<div class="col-sm-4">';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="hausbewohner">';
-echo $anzahlHausbewohner. ' Hausbewohner';
+echo '<div class="checkbox"><label><input type="checkbox" name="residents">';
+echo $countResidents. ' Hausbewohner';
 echo '</label></div>';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="couleurdamen">';
-echo $anzahlCouleurdamen. ' Couleurdamen';
+echo $countCouleurdamen. ' Couleurdamen';
 echo '</label></div>';
 
-echo '<div class="checkbox"><label><input type="checkbox" name="gattinnen_interessiert">';
-echo $anzahlBesondersInteressierteGattinnen. ' besonders interessierte Gattinnen';
+echo '<div class="checkbox"><label><input type="checkbox" name="gattinnen_interested">';
+echo $countParticularlyInterestedGattinnen. ' besonders interessierte Gattinnen';
 echo '</label></div>';
 
 echo '<div class="checkbox"><label><input type="checkbox" name="gattinnen">';
-echo $anzahlGattinnen. ' Gattinnen';
+echo $countGattinnen. ' Gattinnen';
 echo '</label></div>';
 
 echo '</div></div>';
@@ -142,7 +142,7 @@ $libForm->printRegionDropDownBox("region", "Nach Region", "");
 
 echo '<hr />';
 
-$formattedMitgliedNameString = $libPerson->formatNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4);
+$formattedMemberNameString = $libPerson->formatNameString($libAuth->getSalutation(), $libAuth->getTitle(), '', $libAuth->getFirstName(), $libAuth->getPrefix(), $libAuth->getLastName(), $libAuth->getSuffix(), 4);
 
 $stmt = $libDb->prepare("SELECT email FROM base_person WHERE id=:id");
 $stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
@@ -150,12 +150,12 @@ $stmt->execute();
 $stmt->bindColumn('email', $email);
 $stmt->fetch();
 
-$formattedSenderString = $formattedMitgliedNameString. ' &lt;' .$email. '&gt;';
+$formattedSenderString = $formattedMemberNameString. ' &lt;' .$email. '&gt;';
 
 $libForm->printStaticText('Absender', $formattedSenderString);
 $libForm->printTextInput('subject', 'Betreff', '');
 $libForm->printFileInput('anhang', 'Anhang');
-$libForm->printTextarea('nachricht', 'Nachricht', '');
+$libForm->printTextarea('message', 'Nachricht', '');
 $libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i> Nachricht verschicken');
 
 echo '</fieldset>';

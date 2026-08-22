@@ -21,14 +21,14 @@ namespace vcms\genealogy;
 class LibGenealogy{
 	var $retstr;
 
-	function __construct($root, $tiefe, $mitgliedid){
+	function __construct($root, $depth, $memberId){
 		$retstr = '';
-		$genealogyRoot = new LibGenealogyElement($root, $mitgliedid);
-		$retstr .= $genealogyRoot->getString($tiefe);
+		$genealogyRoot = new LibGenealogyElement($root, $memberId);
+		$retstr .= $genealogyRoot->getString($depth);
 		$leibsoehne = $genealogyRoot->searchLeibSoehne();
 
 		for($i=0; $i<count($leibsoehne); $i++){
-			$genealogy = new LibGenealogy($leibsoehne[$i], $tiefe + 1, $mitgliedid);
+			$genealogy = new LibGenealogy($leibsoehne[$i], $depth + 1, $memberId);
 			$retstr .= $genealogy->getString();
 		}
 

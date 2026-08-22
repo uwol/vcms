@@ -34,7 +34,7 @@ function printPersons($stmt){
 
 		echo '<div class="persons-grid-description">';
 		echo '<b>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
-		echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getVereineString($row['id']);
+		echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getAssociationsString($row['id']);
 
 		if($row['tod_datum'] != '' && $row['tod_datum'] != '0000-00-00'){
 			echo '<br />';

@@ -42,13 +42,13 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if(isset($row['semester_reception']) && isset($tArray[$row['semester_reception']]) && is_array($tArray[$row['semester_reception']])){
-		$vornameArray = explode(" ", $row['vorname']);
-		$vorname = $vornameArray[0];
+		$firstNameArray = explode(" ", $row['vorname']);
+		$firstName = $firstNameArray[0];
 
 		$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, base_semester WHERE id = :id AND (base_semester.senior = base_person.id OR base_semester.consenior = base_person.id OR base_semester.fuchsmajor = base_person.id OR base_semester.fuchsmajor2 = base_person.id OR base_semester.scriptor = base_person.id OR base_semester.quaestor = base_person.id OR base_semester.jubelsenior = base_person.id OR base_semester.vop = base_person.id OR base_semester.vvop = base_person.id OR base_semester.vopxx = base_person.id OR base_semester.vopxxx = base_person.id OR base_semester.vopxxxx = base_person.id)");
 		$stmt2->bindValue(':id', $row['id'], PDO::PARAM_INT);
 		$stmt2->execute();
-		$stmt2->bindColumn('number', $anzahlChargen);
+		$stmt2->bindColumn('number', $countChargen);
 		$stmt2->fetch();
 
 		$tArray[$row['semester_reception']][$row['id']]['gruppe'] = $row['gruppe'];
@@ -58,10 +58,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			$tArray[$row['semester_reception']][$row['id']]['alter'] = $row['age'];
 		}
 
-		$tArray[$row['semester_reception']][$row['id']]['vorname'] = trim($vorname);
+		$tArray[$row['semester_reception']][$row['id']]['vorname'] = trim($firstName);
 		$tArray[$row['semester_reception']][$row['id']]['name'] = $row['name'];
 		$tArray[$row['semester_reception']][$row['id']]['praefix'] = $row['praefix'];
-		$tArray[$row['semester_reception']][$row['id']]['anzahlChargen'] = $anzahlChargen;
+		$tArray[$row['semester_reception']][$row['id']]['anzahlChargen'] = $countChargen;
 	}
 }
 
@@ -240,11 +240,11 @@ echo '</div>';
 echo '</div>';
 
 
-function fetchAges($gruppe){
+function fetchAges($group){
 	global $libDb;
 
 	$stmt = $libDb->prepare("SELECT YEAR(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(datum_geburtstag) + 1)) AS age FROM base_person WHERE gruppe=:gruppe HAVING age > 0 ORDER BY datum_geburtstag DESC");
-	$stmt->bindValue(':gruppe', $gruppe);
+	$stmt->bindValue(':gruppe', $group);
 	$stmt->execute();
 
 	$ageArray = array();

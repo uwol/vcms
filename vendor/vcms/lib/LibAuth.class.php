@@ -22,16 +22,16 @@ use PDO;
 
 class LibAuth{
 	var $id;
-	var $anrede;
-	var $titel;
-	var $praefix;
-	var $vorname;
+	var $salutation;
+	var $title;
+	var $prefix;
+	var $firstName;
 	var $suffix;
-	var $nachname;
+	var $lastName;
 
-	var $gruppe;
-	var $aemter = array();
-	var $possibleGruppen = array();
+	var $group;
+	var $offices = array();
+	var $possibleGroups = array();
 
 	var $isLoggedIn = false;
 
@@ -46,16 +46,16 @@ class LibAuth{
 
 		//clean memory
 		$this->id = '';
-		$this->anrede = '';
-		$this->titel = '';
-		$this->praefix = '';
-		$this->vorname = '';
+		$this->salutation = '';
+		$this->title = '';
+		$this->prefix = '';
+		$this->firstName = '';
 		$this->suffix = '';
-		$this->nachname = '';
+		$this->lastName = '';
 
-		$this->gruppe = '';
-		$this->aemter = array();
-		$this->possibleGruppen = array();
+		$this->group = '';
+		$this->offices = array();
+		$this->possibleGroups = array();
 
 		$this->isLoggedIn = false;
 
@@ -65,7 +65,7 @@ class LibAuth{
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			if($row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'V'){
-				$this->possibleGruppen[] = $row['bezeichnung'];
+				$this->possibleGroups[] = $row['bezeichnung'];
 			}
 		}
 
@@ -98,7 +98,7 @@ class LibAuth{
 		}
 
 		//4. user is in an invalid group
-		if(!in_array($row['gruppe'], $this->possibleGruppen)){
+		if(!in_array($row['gruppe'], $this->possibleGroups)){
 			$libGlobal->errorTexts[] = 'Gruppe falsch.';
 			return false;
 		}
@@ -144,13 +144,13 @@ class LibAuth{
 			$this->isLoggedIn = true;
 
 			$this->id = $row['id'];
-			$this->anrede = $row['anrede'];
-			$this->titel = $row['titel'];
-			$this->praefix = $row['praefix'];
-			$this->vorname = $row['vorname'];
+			$this->salutation = $row['anrede'];
+			$this->title = $row['titel'];
+			$this->prefix = $row['praefix'];
+			$this->firstName = $row['vorname'];
 			$this->suffix = $row['suffix'];
-			$this->nachname = $row['name'];
-			$this->gruppe = $row['gruppe'];
+			$this->lastName = $row['name'];
+			$this->group = $row['gruppe'];
 
 			//b. determine functions
 			$stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester OR semester=:semester_next');
@@ -160,14 +160,14 @@ class LibAuth{
 
 			//for all semesters
 			while($semesterRow = $stmt->fetch(PDO::FETCH_ASSOC)){
-				$possibleAemter = $libSecurityManager->getPossibleAemter();
+				$possibleOffices = $libSecurityManager->getPossibleOffices();
 
 				//for all functions
-				foreach($possibleAemter as $amt){
+				foreach($possibleOffices as $office){
 					//does the member have the function in the semester?
-					if($semesterRow[$amt] == $row['id']){
+					if($semesterRow[$office] == $row['id']){
 						//save this function
-						$this->aemter[] = $amt;
+						$this->offices[] = $office;
 					}
 				}
 			}
@@ -190,7 +190,7 @@ class LibAuth{
 					//if the authenticating user is this internetwart
 					if($internetwart == $row['id']){
 						//save this function
-						$this->aemter[] = 'internetwart';
+						$this->offices[] = 'internetwart';
 					}
 
 					//we only want to do this for the most recent internetwart -> break
@@ -199,7 +199,7 @@ class LibAuth{
 			}
 
 			//remove redundant functions from multiple semesters
-			$this->aemter = array_unique($this->aemter);
+			$this->offices = array_unique($this->offices);
 
 			//c. log successful login attempt
 			$stmt = $libDb->prepare('INSERT INTO sys_log_intranet (mitglied, aktion, datum, punkte, ipadresse) VALUES (:mitglied, :aktion, NOW(), :punkte, :ipadresse)');
@@ -322,42 +322,42 @@ class LibAuth{
 		return $this->id;
 	}
 
-	function getAnrede(){
-		return $this->anrede;
+	function getSalutation(){
+		return $this->salutation;
 	}
 
-	function getTitel(){
-		return $this->titel;
+	function getTitle(){
+		return $this->title;
 	}
 
-	function getVorname(){
-		return $this->vorname;
+	function getFirstName(){
+		return $this->firstName;
 	}
 
-	function getPraefix(){
-		return $this->praefix;
+	function getPrefix(){
+		return $this->prefix;
 	}
 
-	function getNachname(){
-		return $this->nachname;
+	function getLastName(){
+		return $this->lastName;
 	}
 
 	function getSuffix(){
 		return $this->suffix;
 	}
 
-	function getGruppe(){
-		return $this->gruppe;
+	function getGroup(){
+		return $this->group;
 	}
 
-	function getAemter(){
-		return $this->aemter;
+	function getOffices(){
+		return $this->offices;
 	}
 
 	function isLoggedin(){
 		if($this->isLoggedIn && is_numeric($this->id) &&
-				$this->id > 0 && $this->gruppe != '' &&
-				in_array($this->gruppe, $this->possibleGruppen)){
+				$this->id > 0 && $this->group != '' &&
+				in_array($this->group, $this->possibleGroups)){
 			return true;
 		} else {
 			return false;

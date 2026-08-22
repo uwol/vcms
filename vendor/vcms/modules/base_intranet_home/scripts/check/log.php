@@ -23,13 +23,13 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 $numberOfLoginErrorsThreshold = 14;
 $numberOfLoginErrorDaysThreshold = 14;
 
-if(in_array('internetwart', $libAuth->getAemter()) || in_array('datenpflegewart', $libAuth->getAemter())){
+if(in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())){
 	$stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold);
 	$stmt->execute();
-	$stmt->bindColumn('numberOfLoginErrors', $anzahl);
+	$stmt->bindColumn('numberOfLoginErrors', $count);
 	$stmt->fetch();
 
-	if($anzahl > 0){
+	if($count > 0){
 		$logText = 'Personen mit erfolglosen Intranet-Anmeldungen in den letzten ' .$numberOfLoginErrorDaysThreshold. ' Tagen: ';
 
 		$stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors, mitglied FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold. ' ORDER BY numberOfLoginErrors DESC');

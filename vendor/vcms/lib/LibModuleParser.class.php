@@ -125,10 +125,10 @@ class LibModuleParser{
 	}
 
 	function parseAccessRestrictionJson($accessRestrictionJson){
-		$aemter = isset($accessRestrictionJson['aemter']) ? $accessRestrictionJson['aemter'] : '';
-		$gruppen = isset($accessRestrictionJson['gruppen']) ? $accessRestrictionJson['gruppen'] : '';
+		$offices = isset($accessRestrictionJson['aemter']) ? $accessRestrictionJson['aemter'] : '';
+		$groups = isset($accessRestrictionJson['gruppen']) ? $accessRestrictionJson['gruppen'] : '';
 
-		$accessRestriction = new \vcms\module\LibAccessRestriction($gruppen, $aemter);
+		$accessRestriction = new \vcms\module\LibAccessRestriction($groups, $offices);
 		return $accessRestriction;
 	}
 

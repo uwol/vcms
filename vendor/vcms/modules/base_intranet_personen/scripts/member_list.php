@@ -97,10 +97,10 @@ else {
 	//without group
 	$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE gruppe = "" OR gruppe IS NULL');
 	$stmt->execute();
-	$stmt->bindColumn('number', $anzahl);
+	$stmt->bindColumn('number', $count);
 	$stmt->fetch();
 
-	if($anzahl > 0){
+	if($count > 0){
 		echo '<h2>Mitglieder ohne Zuordnung</h2>';
 		echo '<p class="mb-4">Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
 
@@ -111,11 +111,11 @@ else {
 	//Füchse
 	$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'F'");
 	$stmt->execute();
-	$stmt->bindColumn('number', $anzahl);
+	$stmt->bindColumn('number', $count);
 	$stmt->fetch();
 
-	if($anzahl > 0){
-		echo '<h2>Die Fuchsia (' .$anzahl. ')</h2>';
+	if($count > 0){
+		echo '<h2>Die Fuchsia (' .$count. ')</h2>';
 
 		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'F' ORDER BY name");
 		printPersons($stmt);
@@ -124,19 +124,19 @@ else {
 	//Burschen
 	$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'B'");
 	$stmt->execute();
-	$stmt->bindColumn('number', $anzahl);
+	$stmt->bindColumn('number', $count);
 	$stmt->fetch();
 
-	if($anzahl > 0){
-		echo '<h2>Die Burschen (' .$anzahl. ')</h2>';
+	if($count > 0){
+		echo '<h2>Die Burschen (' .$count. ')</h2>';
 
 		//aktive Burschen
 		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'B' AND (status IS NULL OR (status NOT LIKE '%ex loco%' AND status NOT LIKE '%Inaktiv%'))");
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahlAktiv);
+		$stmt->bindColumn('number', $countActive);
 		$stmt->fetch();
 
-		if($anzahlAktiv > 0){
+		if($countActive > 0){
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status IS NULL OR (status NOT LIKE '%ex loco%' AND status NOT LIKE '%Inaktiv%')) ORDER BY name");
 			printPersons($stmt);
 		}
@@ -144,10 +144,10 @@ else {
 		//inaktive Burschen
 		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%')");
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahlInaktivExLoco);
+		$stmt->bindColumn('number', $countInactiveExLoco);
 		$stmt->fetch();
 
-		if($anzahlInaktivExLoco > 0){
+		if($countInactiveExLoco > 0){
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%') ORDER BY name");
 			printPersons($stmt);
 		}
@@ -156,11 +156,11 @@ else {
 	//Philister
 	$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'P'");
 	$stmt->execute();
-	$stmt->bindColumn('number', $anzahl);
+	$stmt->bindColumn('number', $count);
 	$stmt->fetch();
 
-	if($anzahl > 0){
-		echo '<h2>Die alten Herren (' .$anzahl. ')</h2>';
+	if($count > 0){
+		echo '<h2>Die alten Herren (' .$count. ')</h2>';
 
 		$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'P' ORDER BY name");
 		printPersons($stmt);
@@ -170,11 +170,11 @@ else {
 		//Vereinsfreunde
 		$stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'Y'");
 		$stmt->execute();
-		$stmt->bindColumn('number', $anzahl);
+		$stmt->bindColumn('number', $count);
 		$stmt->fetch();
 
-		if($anzahl > 0){
-			echo '<h2>Vereinsfreunde (' .$anzahl. ')</h2>';
+		if($count > 0){
+			echo '<h2>Vereinsfreunde (' .$count. ')</h2>';
 
 			$stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'Y' ORDER BY name");
 			printPersons($stmt);

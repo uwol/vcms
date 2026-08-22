@@ -194,8 +194,8 @@ $description .= '<div class="row">';
 $description .= '<div class="col-md-6">';
 
 $description .= '<p class="mb-4">';
-$description .= getAmt('Jubelsenior', $row['jubelsenior']);
-$description .= getAmt('Fuchsmajor 2', $row['fuchsmajor2']);
+$description .= getOffice('Jubelsenior', $row['jubelsenior']);
+$description .= getOffice('Fuchsmajor 2', $row['fuchsmajor2']);
 $description .= '</p>';
 
 $description .= '<p class="mb-4">';
@@ -206,7 +206,7 @@ $description .= '<p class="mb-4">';
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_reception=:semester");
 $stmt2->bindValue(':semester', $row['semester']);
 
-$description .= getVereinsGruppe($stmt2, 'Receptionen');
+$description .= getAssociationGroup($stmt2, 'Receptionen');
 
 
 /**
@@ -215,7 +215,7 @@ $description .= getVereinsGruppe($stmt2, 'Receptionen');
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_promotion = :semester");
 $stmt2->bindValue(':semester', $row['semester']);
 
-$description .= getVereinsGruppe($stmt2, 'Promotionen');
+$description .= getAssociationGroup($stmt2, 'Promotionen');
 
 
 /**
@@ -224,7 +224,7 @@ $description .= getVereinsGruppe($stmt2, 'Promotionen');
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_philistrierung = :semester");
 $stmt2->bindValue(':semester', $row['semester']);
 
-$description .= getVereinsGruppe($stmt2, 'Philistrierungen');
+$description .= getAssociationGroup($stmt2, 'Philistrierungen');
 
 
 /**
@@ -233,7 +233,7 @@ $description .= getVereinsGruppe($stmt2, 'Philistrierungen');
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_aufnahme = :semester");
 $stmt2->bindValue(':semester', $row['semester']);
 
-$description .= getVereinsGruppe($stmt2, 'Aufnahmen');
+$description .= getAssociationGroup($stmt2, 'Aufnahmen');
 
 
 /**
@@ -242,7 +242,7 @@ $description .= getVereinsGruppe($stmt2, 'Aufnahmen');
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_fusion = :semester");
 $stmt2->bindValue(':semester', $row['semester']);
 
-$description .= getVereinsGruppe($stmt2, 'Fusionierte');
+$description .= getAssociationGroup($stmt2, 'Fusionierte');
 
 $description .= '</p>';
 
@@ -251,57 +251,57 @@ $description .= '</p>';
 * other functions
 */
 $description .= '<p class="mb-4">';
-$description .= getAmt('VOP', $row['vop']);
-$description .= getAmt('VVOP', $row['vvop']);
-$description .= getAmt('VOPxx', $row['vopxx']);
-$description .= getAmt('VOPxxx', $row['vopxxx']);
-$description .= getAmt('VOPxxxx', $row['vopxxxx']);
+$description .= getOffice('VOP', $row['vop']);
+$description .= getOffice('VVOP', $row['vvop']);
+$description .= getOffice('VOPxx', $row['vopxx']);
+$description .= getOffice('VOPxxx', $row['vopxxx']);
+$description .= getOffice('VOPxxxx', $row['vopxxxx']);
 $description .= '</p>';
 
 $description .= '<p class="mb-4">';
-$description .= getAmt('Senior Altherrenvorstand', $row['ahv_senior']);
-$description .= getAmt('Consenior Altherrenvorstand', $row['ahv_consenior']);
-$description .= getAmt('Keilbeauftragter', $row['ahv_keilbeauftragter']);
-$description .= getAmt('Scriptor Altherrenvorstand', $row['ahv_scriptor']);
-$description .= getAmt('Quaestor Altherrenvorstand', $row['ahv_quaestor']);
-$description .= getAmt('Beisitzer 1 Altherrenvorstand', $row['ahv_beisitzer1']);
-$description .= getAmt('Beisitzer 2 Altherrenvorstand', $row['ahv_beisitzer2']);
+$description .= getOffice('Senior Altherrenvorstand', $row['ahv_senior']);
+$description .= getOffice('Consenior Altherrenvorstand', $row['ahv_consenior']);
+$description .= getOffice('Keilbeauftragter', $row['ahv_keilbeauftragter']);
+$description .= getOffice('Scriptor Altherrenvorstand', $row['ahv_scriptor']);
+$description .= getOffice('Quaestor Altherrenvorstand', $row['ahv_quaestor']);
+$description .= getOffice('Beisitzer 1 Altherrenvorstand', $row['ahv_beisitzer1']);
+$description .= getOffice('Beisitzer 2 Altherrenvorstand', $row['ahv_beisitzer2']);
 $description .= '</p>';
 
 $description .= '<p class="mb-4">';
-$description .= getAmt('Vorsitzender Hausverein', $row['hv_vorsitzender']);
-$description .= getAmt('Kassierer Hausverein', $row['hv_kassierer']);
-$description .= getAmt('Beisitzender 1 Hausverein', $row['hv_beisitzer1']);
-$description .= getAmt('Beisitzender 2 Hausverein', $row['hv_beisitzer2']);
+$description .= getOffice('Vorsitzender Hausverein', $row['hv_vorsitzender']);
+$description .= getOffice('Kassierer Hausverein', $row['hv_kassierer']);
+$description .= getOffice('Beisitzender 1 Hausverein', $row['hv_beisitzer1']);
+$description .= getOffice('Beisitzender 2 Hausverein', $row['hv_beisitzer2']);
 $description .= '</p>';
 
 $description .= '</div>';
 $description .= '<div class="col-md-6">';
 
 $description .= '<p class="mb-4">';
-$description .= getAmt('Ausflugswart', $row['ausflugswart']);
-$description .= getAmt('Bierwart', $row['bierwart']);
-$description .= getAmt('Bootshauswart', $row['bootshauswart']);
-$description .= getAmt('Couleurartikelwart', $row['couleurartikelwart']);
-$description .= getAmt('Datenpflegewart', $row['datenpflegewart']);
-$description .= getAmt('Fechtwart', $row['fechtwart']);
-$description .= getAmt('Fotowart', $row['fotowart']);
-$description .= getAmt('Hauswart', $row['hauswart']);
-$description .= getAmt('Hüttenwart', $row['huettenwart']);
-$description .= getAmt('Internetwart', $row['internetwart']);
-$description .= getAmt('Kühlschrankwart', $row['kuehlschrankwart']);
-$description .= getAmt('Musikwart', $row['musikwart']);
-$description .= getAmt('Redaktionswart', $row['redaktionswart']);
-$description .= getAmt('Sportwart', $row['sportwart']);
-$description .= getAmt('Stammtischwart', $row['stammtischwart']);
-$description .= getAmt('Technikwart', $row['technikwart']);
-$description .= getAmt('Thekenwart', $row['thekenwart']);
-$description .= getAmt('Wichswart', $row['wichswart']);
-$description .= getAmt('Wirtschaftskassenwart', $row['wirtschaftskassenwart']);
+$description .= getOffice('Ausflugswart', $row['ausflugswart']);
+$description .= getOffice('Bierwart', $row['bierwart']);
+$description .= getOffice('Bootshauswart', $row['bootshauswart']);
+$description .= getOffice('Couleurartikelwart', $row['couleurartikelwart']);
+$description .= getOffice('Datenpflegewart', $row['datenpflegewart']);
+$description .= getOffice('Fechtwart', $row['fechtwart']);
+$description .= getOffice('Fotowart', $row['fotowart']);
+$description .= getOffice('Hauswart', $row['hauswart']);
+$description .= getOffice('Hüttenwart', $row['huettenwart']);
+$description .= getOffice('Internetwart', $row['internetwart']);
+$description .= getOffice('Kühlschrankwart', $row['kuehlschrankwart']);
+$description .= getOffice('Musikwart', $row['musikwart']);
+$description .= getOffice('Redaktionswart', $row['redaktionswart']);
+$description .= getOffice('Sportwart', $row['sportwart']);
+$description .= getOffice('Stammtischwart', $row['stammtischwart']);
+$description .= getOffice('Technikwart', $row['technikwart']);
+$description .= getOffice('Thekenwart', $row['thekenwart']);
+$description .= getOffice('Wichswart', $row['wichswart']);
+$description .= getOffice('Wirtschaftskassenwart', $row['wirtschaftskassenwart']);
 
-$description .= getAmt('Archivar', $row['archivar']);
-$description .= getAmt('Dachverbandsberichterstatter', $row['dachverbandsberichterstatter']);
-$description .= getAmt('Ferienordner', $row['ferienordner']);
+$description .= getOffice('Archivar', $row['archivar']);
+$description .= getOffice('Dachverbandsberichterstatter', $row['dachverbandsberichterstatter']);
+$description .= getOffice('Ferienordner', $row['ferienordner']);
 $description .= '</p>';
 
 $description .= '</div>';
@@ -312,44 +312,44 @@ $description .= '</div>';
 $timelineEvent = new LibSemesterTimelineEvent();
 
 $timelineEvent->setTitle($title);
-$timelineEvent->setDatetime($zeitraum[0]);
+$timelineEvent->setDatetime($period[0]);
 $timelineEvent->setDescription($description);
 $timelineEvent->setUrl($url);
 
 $timelineEventSet->addEvent($timelineEvent);
 
 
-function getVereinsGruppe($stmt, $title){
+function getAssociationGroup($stmt, $title){
 	global $libPerson;
 
-	$namensStrings = array();
+	$nameStrings = array();
 
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$namensStrings[] = '<a href="index.php?pid=intranet_person&amp;id=' .$row['id']. '">' .$libPerson->getNameString($row['id'], 0). '</a>';
+		$nameStrings[] = '<a href="index.php?pid=intranet_person&amp;id=' .$row['id']. '">' .$libPerson->getNameString($row['id'], 0). '</a>';
 	}
 
 	$retstr = '';
 
-	if(count($namensStrings) > 0){
+	if(count($nameStrings) > 0){
 		$retstr .= '<p class="mb-4">';
   	$retstr .= $title. '<br/>';
-  	$retstr .= implode(', ', $namensStrings);
+  	$retstr .= implode(', ', $nameStrings);
   	$retstr .= '</p>';
 	}
 
 	return $retstr;
 }
 
-function getAmt($amtsname, $id){
+function getOffice($officeName, $id){
 	global $libPerson;
 
 	$retstr = '';
 
 	if($id != ''){
 		$retstr .= '<p class="mb-4">';
-		$retstr .= $amtsname. '<br/>';
+		$retstr .= $officeName. '<br/>';
 		$retstr .= '<a href="index.php?pid=intranet_person&amp;id=' .$id. '">' .$libPerson->getNameString($id, 0). '</a>';
 		$retstr .= '</p>';
 	}

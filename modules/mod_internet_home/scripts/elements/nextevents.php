@@ -63,11 +63,11 @@ if($semesterCoverAvailable || $numberOfNextEvents > 0){
 			echo '<div class="caption">';
 			echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 
-			printVeranstaltungTitle($row);
+			printEventTitle($row);
 
 			echo '</a></h3>';
 
-			printVeranstaltungDateTime($row);
+			printEventDateTime($row);
 
 			echo '<address>';
 

@@ -53,14 +53,14 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 * actions
 */
 if($ownprofile){
-	if(isset($_POST['formtyp']) && $_POST['formtyp'] == 'person_data'){
-		$leibMitglied = '';
+	if(isset($_POST['formType']) && $_POST['formType'] == 'personData'){
+		$leibMember = '';
 
 		if(isset($_POST['leibmitglied'])){
-			$leibMitglied = $_POST['leibmitglied'];
+			$leibMember = $_POST['leibmitglied'];
 		}
 
-		if($leibMitglied == $id) {
+		if($leibMember == $id) {
 			$libGlobal->errorTexts[] = 'Das Mitglied darf nicht von sich selbst der Leibbursch sein.';
 		} else {
 			$stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
@@ -87,7 +87,7 @@ if($ownprofile){
 			$stmt->bindValue(':webseite', $libString->protectXss(trim($_POST['webseite'])));
 			$stmt->bindValue(':spitzname', $libString->protectXss(trim($_POST['spitzname'])));
 			$stmt->bindValue(':beruf', $libString->protectXss(trim($_POST['beruf'])));
-			$stmt->bindValue(':leibmitglied', $leibMitglied, PDO::PARAM_INT);
+			$stmt->bindValue(':leibmitglied', $leibMember, PDO::PARAM_INT);
 			$stmt->bindValue(':region1', $_POST['region1'], PDO::PARAM_INT);
 			$stmt->bindValue(':region2', $_POST['region2'], PDO::PARAM_INT);
 			$stmt->bindValue(':vita', $libString->protectXss(trim($_POST['vita'])));
@@ -140,11 +140,11 @@ if($ownprofile){
 			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->execute();
 		}
-	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'fotodatenupload'){
+	} elseif(isset($_POST['formType']) && $_POST['formType'] == 'photoDataUpload'){
 		if($_FILES['bilddatei']['tmp_name'] != ''){
-			$libImage->savePersonFotoByFilesArray($libAuth->getId(), 'bilddatei');
+			$libImage->savePersonPhotoByFilesArray($libAuth->getId(), 'bilddatei');
 		}
-	} elseif(isset($_POST['formtyp']) && $_POST['formtyp'] == 'personpasswort'){
+	} elseif(isset($_POST['formType']) && $_POST['formType'] == 'personPassword'){
 		if(!$libAuth->checkPasswordForPerson($libAuth->getId(), $_POST['oldpwd'])){
 			$libGlobal->errorTexts[] = 'Das alte Passwort ist nicht korrekt.';
 		} elseif(trim($_POST['newpwd1']) == ''){
@@ -154,8 +154,8 @@ if($ownprofile){
 		} else {
 			$libAuth->savePassword($libAuth->getId(), $_POST['newpwd1']);
 		}
-	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'fotodelete'){
-		$libImage->deletePersonFoto($libAuth->getId());
+	} elseif(isset($_POST['action']) && $_POST['action'] == 'photoDelete'){
+		$libImage->deletePersonPhoto($libAuth->getId());
 	}
 }
 
@@ -231,7 +231,7 @@ if($ownprofile){
 	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_person&amp;id=' .$id. '" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="hidden" name="formtyp" value="personpasswort" />';
+	echo '<input type="hidden" name="formType" value="personPassword" />';
 
 	$libForm->printTextInput('oldpwd', 'Altes Passwort', '', 'password', false, true);
 	$libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password', false, true);
@@ -255,7 +255,7 @@ if($ownprofile){
 	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_person" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="hidden" name="formtyp" value="person_data" />';
+	echo '<input type="hidden" name="formType" value="personData" />';
 
 	$stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 	$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
@@ -273,7 +273,7 @@ if($ownprofile){
 	$libForm->printTextInput('beruf', 'Beruf', $row2['beruf']);
 
 	if($row['gruppe'] != 'C' && $row['gruppe'] != 'G' && $row['gruppe'] != 'W' && $row['gruppe'] != 'Y'){
-		$libForm->printMitgliederDropDownBox('leibmitglied', 'Leibbursch', $row2['leibmitglied'], true);
+		$libForm->printMembersDropDownBox('leibmitglied', 'Leibbursch', $row2['leibmitglied'], true);
 	}
 
 	echo '<hr />';
@@ -310,19 +310,19 @@ if($ownprofile){
 		$stmt = $libDb->prepare("SELECT empfaenger FROM mod_rundbrief_empfaenger WHERE id=:id");
 		$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 		$stmt->execute();
-		$stmt->bindColumn('empfaenger', $empfaenger);
+		$stmt->bindColumn('empfaenger', $recipient);
 		$stmt->fetch();
 
-		$libForm->printBoolSelectBox('empfaenger', 'Rundbriefe erhalten', $empfaenger);
+		$libForm->printBoolSelectBox('empfaenger', 'Rundbriefe erhalten', $recipient);
 
 		if($row['gruppe'] == 'P' || $row['gruppe'] == 'G' || $row['gruppe'] == 'W'){
 			$stmt = $libDb->prepare("SELECT interessiert FROM mod_rundbrief_empfaenger WHERE id=:id");
 			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->execute();
-			$stmt->bindColumn('interessiert', $interessiert);
+			$stmt->bindColumn('interessiert', $interested);
 			$stmt->fetch();
 
-			$libForm->printBoolSelectBox('interessiert', 'Rundbriefe aus Aktivenleben erhalten', $interessiert);
+			$libForm->printBoolSelectBox('interessiert', 'Rundbriefe aus Aktivenleben erhalten', $interested);
 		}
 	}
 
@@ -330,10 +330,10 @@ if($ownprofile){
 		$stmt = $libDb->prepare("SELECT anzahlzipfel FROM mod_zipfelranking_anzahl WHERE id=:id");
 		$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 		$stmt->execute();
-		$stmt->bindColumn('anzahlzipfel', $anzahlzipfel);
+		$stmt->bindColumn('anzahlzipfel', $zipfelCount);
 		$stmt->fetch();
 
-		$libForm->printTextInput('anzahlzipfel', 'Zipfelanzahl', $anzahlzipfel);
+		$libForm->printTextInput('anzahlzipfel', 'Zipfelanzahl', $zipfelCount);
 	}
 
 	$libForm->printTextarea('vita', 'Vita', $row['vita']);
@@ -353,10 +353,10 @@ if($ownprofile){
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS bs, base_person AS bv WHERE bs.id=:id AND bs.leibmitglied = bv.id");
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
-$stmt->bindColumn('number', $anzahl);
+$stmt->bindColumn('number', $count);
 $stmt->fetch();
 
-if($anzahl > 0){
+if($count > 0){
 	echo '<h2>Leibbursche</h2>';
 
 	$stmt = $libDb->prepare("SELECT bv.id, bv.anrede, bv.titel, bv.rang, bv.vorname, bv.praefix, bv.name, bv.suffix, bv.status, bv.beruf, bv.ort1, bv.tod_datum, bv.datum_geburtstag, bv.gruppe, bv.leibmitglied FROM base_person AS bs, base_person AS bv WHERE bs.id=:id AND bs.leibmitglied=bv.id");
@@ -371,10 +371,10 @@ if($anzahl > 0){
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS bs WHERE bs.leibmitglied = :leibmitglied");
 $stmt->bindValue(':leibmitglied', $id, PDO::PARAM_INT);
 $stmt->execute();
-$stmt->bindColumn('number', $anzahl);
+$stmt->bindColumn('number', $count);
 $stmt->fetch();
 
-if($anzahl > 0){
+if($count > 0){
 	echo '<h2>Leibverhältnisse</h2>';
 
 	$stmt = $libDb->prepare("SELECT bs.id, bs.anrede, bs.titel, bs.rang, bs.vorname, bs.praefix, bs.name, bs.suffix, bs.status, bs.beruf, bs.ort1, bs.tod_datum, bs.datum_geburtstag, bs.gruppe, bs.leibmitglied FROM base_person AS bs WHERE bs.leibmitglied=:leibmitglied");
@@ -390,10 +390,10 @@ $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS confuchs,
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->bindValue(':id2', $id, PDO::PARAM_INT);
 $stmt->execute();
-$stmt->bindColumn('number', $anzahl);
+$stmt->bindColumn('number', $count);
 $stmt->fetch();
 
-if($anzahl > 0){
+if($count > 0){
 	echo '<h2>Confuchsen</h2>';
 
 	$stmt = $libDb->prepare("SELECT confuchs.id, confuchs.anrede, confuchs.titel, confuchs.rang, confuchs.vorname, confuchs.praefix, confuchs.name, confuchs.suffix, confuchs.status, confuchs.beruf, confuchs.ort1, confuchs.tod_datum, confuchs.datum_geburtstag, confuchs.gruppe, confuchs.leibmitglied FROM base_person AS confuchs, base_person AS ich WHERE confuchs.semester_reception = ich.semester_reception AND ich.id=:id1 AND confuchs.id!=:id2");
@@ -424,11 +424,11 @@ $stmt->bindValue(':vopxx', $id, PDO::PARAM_INT);
 $stmt->bindValue(':vopxxx', $id, PDO::PARAM_INT);
 $stmt->bindValue(':vopxxxx', $id, PDO::PARAM_INT);
 $stmt->execute();
-$stmt->bindColumn('number', $anzahl);
+$stmt->bindColumn('number', $count);
 $stmt->fetch();
 
 
-if($anzahl > 0){
+if($count > 0){
 	echo '<h2>Conchargen</h2>';
 
 	$stmt = $libDb->prepare("
@@ -471,7 +471,7 @@ function printPersonSignature($row, $ownprofile){
 	if($ownprofile){
 		echo '<span class="delete-icon-box">';
 		echo '<form method="post" action="index.php?pid=intranet_person" class="d-inline" onsubmit="return confirm(\'Willst Du Dein Foto wirklich löschen?\')">';
-		echo '<input type="hidden" name="aktion" value="fotodelete" />';
+		echo '<input type="hidden" name="action" value="photoDelete" />';
 		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
 		echo '</span>';
@@ -486,7 +486,7 @@ function printPersonSignature($row, $ownprofile){
 	if($ownprofile){
 		//image upload form
 		echo '<form action="index.php?pid=intranet_person" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
-		echo '<input type="hidden" name="formtyp" value="fotodatenupload" />';
+		echo '<input type="hidden" name="formType" value="photoDataUpload" />';
 		$libForm->printFileUpload('bilddatei', 'Foto (4x3) hochladen', false, false, array(), array('image/jpeg'));
 		echo '</form>';
 	}
@@ -544,10 +544,10 @@ function printPersonData($row){
 		$stmt = $libDb->prepare('SELECT beschreibung FROM base_gruppe WHERE bezeichnung=:bezeichnung');
 		$stmt->bindValue(':bezeichnung', $row['gruppe']);
 		$stmt->execute();
-		$stmt->bindColumn('beschreibung', $beschreibung);
+		$stmt->bindColumn('beschreibung', $description);
 		$stmt->fetch();
 
-		echo $beschreibung;
+		echo $description;
 
 		if($row['status'] != ''){
 			echo ', ' .$row['status'];
@@ -674,34 +674,34 @@ function printCommunication($row){
 		}
 
 		if($row['webseite'] != ''){
-			$webseite = $row['webseite'];
+			$website = $row['webseite'];
 
-			if(substr($webseite, 0, 7) != 'http://' && substr($webseite, 0, 8) != 'https://'){
-				$webseite = 'http://' .$webseite;
+			if(substr($website, 0, 7) != 'http://' && substr($website, 0, 8) != 'https://'){
+				$website = 'http://' .$website;
 			}
 
 			$icon = '';
 
-			if(strstr($webseite, 'linkedin')){
+			if(strstr($website, 'linkedin')){
 				$icon = '<i class="fa fa-linkedin-square fa-fw" aria-hidden="true"></i>';
-			} elseif(strstr($webseite, 'xing')){
+			} elseif(strstr($website, 'xing')){
 				$icon = '<i class="fa fa-xing-square fa-fw" aria-hidden="true"></i>';
-			} elseif(strstr($webseite, 'twitter')){
+			} elseif(strstr($website, 'twitter')){
 				$icon = '<i class="fa fa-twitter-square fa-fw" aria-hidden="true"></i>';
-			} elseif(strstr($webseite, 'facebook')){
+			} elseif(strstr($website, 'facebook')){
 				$icon = '<i class="fa fa-facebook-official fa-fw" aria-hidden="true"></i>';
-			} elseif(strstr($webseite, 'wikipedia')){
+			} elseif(strstr($website, 'wikipedia')){
 				$icon = '<i class="fa fa-wikipedia-w fa-fw" aria-hidden="true"></i>';
-			} elseif(strstr($webseite, 'instagram')){
+			} elseif(strstr($website, 'instagram')){
 				$icon = '<i class="fa fa-instagram fa-fw" aria-hidden="true"></i>';
-			} elseif(strstr($webseite, 'github')){
+			} elseif(strstr($website, 'github')){
 				$icon = '<i class="fa fa-github fa-fw" aria-hidden="true"></i>';
 			} else {
 				$icon = '<i class="fa fa-globe fa-fw" aria-hidden="true"></i>';
 			}
 
 			echo '<div>';
-			echo $icon. ' <a href="' .$webseite. '">' .$webseite. '</a>';
+			echo $icon. ' <a href="' .$website. '">' .$website. '</a>';
 			echo '</div>';
 		}
 
@@ -761,23 +761,23 @@ function printAssociationDetails($row){
 	$stmt->bindValue(':mitglied', $row['id'], PDO::PARAM_INT);
 	$stmt->execute();
 
-	$vereine = array();
+	$associations = array();
 
-	while($rowVerein = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$vereinStr = '<a href="index.php?pid=verein&amp;id=' .$rowVerein['id']. '">';
-		$vereinStr .= $rowVerein['titel']. ' ' .$rowVerein['name'];
-		$vereinStr .= '</a>';
+	while($associationRow = $stmt->fetch(PDO::FETCH_ASSOC)){
+		$associationString = '<a href="index.php?pid=verein&amp;id=' .$associationRow['id']. '">';
+		$associationString .= $associationRow['titel']. ' ' .$associationRow['name'];
+		$associationString .= '</a>';
 
-		$vereine[] = $vereinStr;
+		$associations[] = $associationString;
 	}
 
-	$vereineAnzahl = count($vereine);
+	$associationsCount = count($associations);
 
-	if($vereineAnzahl > 0){
+	if($associationsCount > 0){
 		echo '<p class="mb-4">';
-		echo '<span class="badge">' .$vereineAnzahl. '</span>';
+		echo '<span class="badge">' .$associationsCount. '</span>';
 		echo ' ';
-		echo 'Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $vereine);
+		echo 'Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $associations);
 		echo '</p>';
 	}
 
@@ -788,12 +788,12 @@ function printAssociationDetails($row){
 		$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM mod_chargierkalender_teilnahme WHERE mitglied = :mitglied');
 		$stmt->bindValue(':mitglied', $row['id'], PDO::PARAM_INT);
 		$stmt->execute();
-		$stmt->bindColumn('number', $chargierAnzahl);
+		$stmt->bindColumn('number', $chargierCount);
 		$stmt->fetch();
 
-		if($chargierAnzahl > 0){
+		if($chargierCount > 0){
 			echo '<p class="mb-4">';
-			echo '<span class="badge badge-default">' .$chargierAnzahl. '</span>';
+			echo '<span class="badge badge-default">' .$chargierCount. '</span>';
 			echo ' ';
 			echo 'Chargierter bei ';
 
@@ -808,7 +808,7 @@ function printAssociationDetails($row){
 
 				if(isset($rowEvent['verein']) && is_numeric($rowEvent['verein'])){
 					$chargierEventStr .= '<a href="index.php?pid=verein&amp;id=' .$rowEvent['verein']. '">';
-					$chargierEventStr .= $libAssociation->getVereinNameString($rowEvent['verein']);
+					$chargierEventStr .= $libAssociation->getAssociationNameString($rowEvent['verein']);
 					$chargierEventStr .= '</a>';
 				} else {
 					$chargierEventStr .= $rowEvent['beschreibung'];

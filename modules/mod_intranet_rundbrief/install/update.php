@@ -46,44 +46,44 @@ if($tableExists){
 /**
 * Tabelle mod_rundbrief_empfaenger aktualisieren
 */
-$fieldExistsEmpfaenger = false;
-$fieldExistsInteressiert = false;
-$fieldExistsSollEmpfangen = false;
-$fieldExistsSollEmpfangenInteressierteAhAh = false;
+$fieldExistsRecipient = false;
+$fieldExistsInterested = false;
+$fieldExistsShouldReceive = false;
+$fieldExistsShouldReceiveInterestedAhAh = false;
 
 $stmt = $libDb->prepare('SHOW COLUMNS FROM mod_rundbrief_empfaenger');
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if($row['Field'] == 'sollempfangen'){
-		$fieldExistsSollEmpfangen = true;
+		$fieldExistsShouldReceive = true;
 	} elseif($row['Field'] == 'empfaenger'){
-		$fieldExistsEmpfaenger = true;
+		$fieldExistsRecipient = true;
 	} elseif($row['Field'] == 'sollempfangen_interessierteahah'){
-		$fieldExistsSollEmpfangenInteressierteAhAh = true;
+		$fieldExistsShouldReceiveInterestedAhAh = true;
 	} elseif($row['Field'] == 'interessiert'){
-		$fieldExistsInteressiert = true;
+		$fieldExistsInterested = true;
 	}
 }
 
-if($fieldExistsSollEmpfangen){
+if($fieldExistsShouldReceive){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, benenne Spalte um';
 
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger CHANGE sollempfangen empfaenger tinyint(1) NOT NULL default '1'";
 	$libDb->query($sql);
-} elseif(!$fieldExistsEmpfaenger){
+} elseif(!$fieldExistsRecipient){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, füge Spalte hinzu';
 
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger ADD empfaenger tinyint(1) NOT NULL default '1'";
 	$libDb->query($sql);
 }
 
-if($fieldExistsSollEmpfangenInteressierteAhAh){
+if($fieldExistsShouldReceiveInterestedAhAh){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, benenne Spalte um';
 
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger CHANGE sollempfangen_interessierteahah interessiert tinyint(1) NOT NULL default '0'";
 	$libDb->query($sql);
-} elseif(!$fieldExistsInteressiert){
+} elseif(!$fieldExistsInterested){
 	$libGlobal->notificationTexts[] = 'Aktualisiere Tabelle: mod_rundbrief_empfaenger, füge Spalte hinzu';
 
 	$sql = "ALTER TABLE mod_rundbrief_empfaenger ADD interessiert tinyint(1) NOT NULL default '0'";

@@ -30,8 +30,8 @@ echo '<fieldset>';
 $libForm->printTextarea('text', 'Nachricht', '');
 
 echo '<div class="form-group">';
-echo '<label for="kategorie" class="col-sm-3 control-label">Kategorie</label>';
-echo '<div class="col-sm-9"><select id="kategorie" name="kategorie" class="form-control">';
+echo '<label for="category" class="col-sm-3 control-label">Kategorie</label>';
+echo '<div class="col-sm-9"><select id="category" name="category" class="form-control">';
 
 $stmt = $libDb->prepare('SELECT * FROM mod_news_kategorie ORDER BY bezeichnung');
 $stmt->execute();
@@ -43,7 +43,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 echo '</select></div>';
 echo '</div>';
 
-$libForm->printMitgliederDropDownBox('betroffenesmitglied', 'Betroffenes Mitglied', '');
+$libForm->printMembersDropDownBox('betroffenesmitglied', 'Betroffenes Mitglied', '');
 $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Beitrag speichern');
 
 echo '</fieldset>';

@@ -60,7 +60,7 @@ function handleFileUpload($i, $allowedExtensions){
 		$allowedExtensionsString = implode(', ', $allowedExtensions);
 		$result['error'] = 'Die Dateiendung ist nicht korrekt. Erlaubt sind ' .$allowedExtensionsString. '.';
 	} else {
-		$libImage->saveVeranstaltungsFotoByAjax($_REQUEST['veranstaltungId'], $filename. '.' .$ext, $tmp_name);
+		$libImage->saveEventPhotoByAjax($_REQUEST['veranstaltungId'], $filename. '.' .$ext, $tmp_name);
 
 		if(count($libGlobal->errorTexts) > 0){
 			$result['error'] = implode(' ', $libGlobal->errorTexts);

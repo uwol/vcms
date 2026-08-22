@@ -26,7 +26,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 $array = array();
 //table fields
-$felder = array("datum", "beschreibung", "verein");
+$fields = array("datum", "beschreibung", "verein");
 
 $id = '';
 
@@ -35,16 +35,16 @@ if(isset($_REQUEST['id'])){
 }
 
 //new event, empty row
-if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "blank"){
-	foreach($felder as $feld){
-		$array[$feld] = '';
+if(isset($_REQUEST['action']) && $_REQUEST['action'] == "blank"){
+	foreach($fields as $field){
+		$array[$field] = '';
 	}
 
 	$array['id'] = '';
 	$array['datum'] = @date("Y-m-d H:i:s");
 }
 //blank data to save
-elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "insert"){
+elseif(isset($_REQUEST['action']) && $_REQUEST['action'] == "insert"){
 	if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 		die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
 	}
@@ -52,11 +52,11 @@ elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "insert"){
 	$valueArray = $_REQUEST;
 	$valueArray['datum'] = $libTime->assureMysqlDateTime($valueArray['datum']);
 
-	$array = $libDb->insertRow($felder, $valueArray, "mod_chargierkalender_veranstaltung", array("id"=>''));
+	$array = $libDb->insertRow($fields, $valueArray, "mod_chargierkalender_veranstaltung", array("id"=>''));
 	$libGlobal->notificationTexts[] = 'Die Chargierveranstaltung wurde gespeichert.';
 }
 //data modification
-elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "update"){
+elseif(isset($_REQUEST['action']) && $_REQUEST['action'] == "update"){
 	if(!isset($_POST['form_complete']) || !$_POST['form_complete']){
 		die("Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.");
 	}
@@ -64,7 +64,7 @@ elseif(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "update"){
 	$valueArray = $_REQUEST;
 	$valueArray['datum'] = $libTime->assureMysqlDateTime($valueArray['datum']);
 
-	$array = $libDb->updateRow($felder, $valueArray, "mod_chargierkalender_veranstaltung", array("id" => $id));
+	$array = $libDb->updateRow($fields, $valueArray, "mod_chargierkalender_veranstaltung", array("id" => $id));
 	$libGlobal->notificationTexts[] = 'Die Chargierveranstaltung wurde gespeichert.';
 }
 // select
@@ -92,7 +92,7 @@ echo $libString->getNotificationBoxText();
 */
 if($array['id'] != ''){
 	echo '<form class="mb-4" method="post" action="index.php?pid=intranet_chargierkalender_adminliste" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-	echo '<input type="hidden" name="aktion" value="delete" />';
+	echo '<input type="hidden" name="action" value="delete" />';
 	echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 	echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
 	echo '</form>';
@@ -101,10 +101,10 @@ if($array['id'] != ''){
 /*
 * form
 */
-if(isset($_REQUEST['aktion']) && $_REQUEST['aktion'] == "blank"){
-	$extraActionParam = "&amp;aktion=insert";
+if(isset($_REQUEST['action']) && $_REQUEST['action'] == "blank"){
+	$extraActionParam = "&amp;action=insert";
 } else {
-	$extraActionParam = "&amp;aktion=update";
+	$extraActionParam = "&amp;action=update";
 }
 
 echo '<div class="panel panel-default">';
@@ -112,12 +112,12 @@ echo '<div class="panel-body">';
 echo '<form action="index.php?pid=intranet_chargierkalender_adminveranstaltung' .$extraActionParam. '" method="post" class="form-horizontal">';
 echo '<fieldset>';
 
-echo '<input type="hidden" name="formtyp" value="veranstaltungsdaten" />';
+echo '<input type="hidden" name="formType" value="eventData" />';
 echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
 
 $libForm->printTextInput('id', 'Id', $array['id'], 'text', true);
 $libForm->printDateTimeInput('datum', 'Datum und Uhrzeit (00:00 = ganztägig)', $array['datum']);
-$libForm->printVereineDropDownBox("verein", "Verein", $array['verein'], true, false);
+$libForm->printAssociationsDropDownBox("verein", "Verein", $array['verein'], true, false);
 $libForm->printTextInput('beschreibung', 'Beschreibung', $array['beschreibung']);
 
 echo '<input type="hidden" name="form_complete" value="1" />';

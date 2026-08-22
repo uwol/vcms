@@ -29,7 +29,7 @@ $stmt->bindColumn('email', $email);
 $stmt->fetch();
 
 
-if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['subject'])){
+if(!isset($_POST['message']) || $_POST['message'] == '' || !isset($_POST['subject'])){
 	$libGlobal->errorTexts[] = 'Es wurde kein Nachrichtentext eingegeben.';
 } else {
 	$subjectGroups = array();
@@ -42,7 +42,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$subjectGroups[] = 'Burschen';
 	}
 
-	if(isset($_POST['ahah_interessiert']) && $_POST['ahah_interessiert'] == 'on' && (!isset($_POST['ahah']) || $_POST['ahah'] != 'on')){
+	if(isset($_POST['ahah_interested']) && $_POST['ahah_interested'] == 'on' && (!isset($_POST['ahah']) || $_POST['ahah'] != 'on')){
 		$subjectGroups[] = 'Int. AHAH';
 	}
 
@@ -50,7 +50,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$subjectGroups[] = 'AHAH';
 	}
 
-	if(isset($_POST['hausbewohner']) && $_POST['hausbewohner'] == 'on'){
+	if(isset($_POST['residents']) && $_POST['residents'] == 'on'){
 		$subjectGroups[] = 'Hausbewohner';
 	}
 
@@ -58,7 +58,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$subjectGroups[] = 'Couleurdamen';
 	}
 
-	if(isset($_POST['gattinnen_interessiert']) && $_POST['gattinnen_interessiert'] == 'on' && (!isset($_POST['gattinnen']) || $_POST['gattinnen'] != 'on')){
+	if(isset($_POST['gattinnen_interested']) && $_POST['gattinnen_interested'] == 'on' && (!isset($_POST['gattinnen']) || $_POST['gattinnen'] != 'on')){
 		$subjectGroups[] = 'Int. Gattinnen';
 	}
 
@@ -94,7 +94,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 	* start output
 	*/
 	echo '<p class="mb-4">' .$libString->protectXss($subject). '</p>';
-	echo '<p class="mb-4">' .nl2br($libString->protectXss($_POST['nachricht'])). '</p>';
+	echo '<p class="mb-4">' .nl2br($libString->protectXss($_POST['message'])). '</p>';
 
 	/*
 	* build and send mail
@@ -109,7 +109,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$sqlGroups[] = "gruppe='B'";
 	}
 
-	if(isset($_POST['ahah_interessiert']) && $_POST['ahah_interessiert'] == 'on'){
+	if(isset($_POST['ahah_interested']) && $_POST['ahah_interested'] == 'on'){
 		$sqlGroups[] = "(gruppe = 'P' AND interessiert = 1)";
 	}
 
@@ -117,7 +117,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$sqlGroups[] = "gruppe='P'";
 	}
 
-	if(isset($_POST['hausbewohner']) && $_POST['hausbewohner'] == 'on'){
+	if(isset($_POST['residents']) && $_POST['residents'] == 'on'){
 		$sqlGroups[] = "((gruppe='F' OR gruppe='B') AND plz1=:plz AND strasse1 LIKE :street)";
 	}
 
@@ -125,7 +125,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$sqlGroups[] = "gruppe='C'";
 	}
 
-	if(isset($_POST['gattinnen_interessiert']) && $_POST['gattinnen_interessiert'] == 'on'){
+	if(isset($_POST['gattinnen_interested']) && $_POST['gattinnen_interested'] == 'on'){
 		$sqlGroups[] = "((gruppe='G' OR gruppe='W') AND interessiert = 1)";
 	}
 
@@ -153,7 +153,7 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		$stmt->bindValue(':region', $_POST['region'], PDO::PARAM_INT);
 	}
 
-	if(isset($_POST['hausbewohner']) && $_POST['hausbewohner'] == 'on'){
+	if(isset($_POST['residents']) && $_POST['residents'] == 'on'){
 		$streetNormalized = $libString->normalizeStreet($libConfig->verbindungStrasse);
 
 		$stmt->bindValue(':plz', $libConfig->verbindungPlz);
@@ -172,11 +172,11 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 
 	//add Fuchsmajor
 	if(isset($_POST['fuchsia']) && $_POST['fuchsia'] == 'on' && (!isset($_POST['burschen']) || $_POST['burschen'] != 'on')){
-		$vorstand = $libAssociation->getAnsprechbarerAktivenVorstandIds();
+		$board = $libAssociation->getContactableActiveBoardIds();
 
 		$stmt = $libDb->prepare("SELECT anrede, titel, rang, vorname, praefix, name, suffix, email FROM base_person, mod_rundbrief_empfaenger WHERE (base_person.id = :fuchsmajor OR base_person.id = :fuchsmajor2) AND base_person.id = mod_rundbrief_empfaenger.id AND gruppe != 'X' AND gruppe != 'T' AND gruppe != 'V' AND empfaenger=1");
-		$stmt->bindValue(':fuchsmajor', $vorstand['fuchsmajor'], PDO::PARAM_INT);
-		$stmt->bindValue(':fuchsmajor2', $vorstand['fuchsmajor2'], PDO::PARAM_INT);
+		$stmt->bindValue(':fuchsmajor', $board['fuchsmajor'], PDO::PARAM_INT);
+		$stmt->bindValue(':fuchsmajor2', $board['fuchsmajor2'], PDO::PARAM_INT);
 		$stmt->execute();
 
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -221,8 +221,8 @@ if(!isset($_POST['nachricht']) || $_POST['nachricht'] == '' || !isset($_POST['su
 		echo '</p>';
 
 		sendMail(
-			$libPerson->formatNameString($libAuth->getAnrede(), $libAuth->getTitel(), '', $libAuth->getVorname(), $libAuth->getPraefix(), $libAuth->getNachname(), $libAuth->getSuffix(), 4),
-			$subject, $email, $_POST['nachricht'], $subRecipientsArray, $attachementFile, $attachementName);
+			$libPerson->formatNameString($libAuth->getSalutation(), $libAuth->getTitle(), '', $libAuth->getFirstName(), $libAuth->getPrefix(), $libAuth->getLastName(), $libAuth->getSuffix(), 4),
+			$subject, $email, $_POST['message'], $subRecipientsArray, $attachementFile, $attachementName);
 	}
 }
 
@@ -240,7 +240,7 @@ function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, 
 	$mail->addReplyTo($replyEmail);
 	$mail->Body = stripslashes($message);
 
-	if(!istImVorstand($libAuth->getAemter())){
+	if(!isOnBoard($libAuth->getOffices())){
 		// low priority
 		$mail->Priority = 5;
 	}
@@ -258,15 +258,15 @@ function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, 
 	}
 }
 
-function istImVorstand($aemter){
-	if(!is_array($aemter)){
+function isOnBoard($offices){
+	if(!is_array($offices)){
 		return false;
 	}
 
-	$vorstandsAemter = array('senior', 'consenior', 'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior', 'ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor');
-	$vorstandsAemterOfPerson = array_intersect($aemter, $vorstandsAemter);
+	$boardOffices = array('senior', 'consenior', 'fuchsmajor', 'fuchsmajor2', 'scriptor', 'quaestor', 'jubelsenior', 'ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor');
+	$boardOfficesOfPerson = array_intersect($offices, $boardOffices);
 
-	if(count($vorstandsAemterOfPerson) > 0){
+	if(count($boardOfficesOfPerson) > 0){
 		return true;
 	} else {
 		return false;

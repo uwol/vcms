@@ -22,7 +22,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 if($libAuth->isLoggedin()){
 
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	if(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if(isset($_POST['verein']) && $_POST['verein'] != '' && isset($_POST['mitglied']) && $_POST['mitglied'] != ''){
 			// Veranstaltung aus Datenbank löschen
 			$stmt = $libDb->prepare('DELETE FROM base_verein_mitgliedschaft WHERE verein=:verein AND mitglied=:mitglied');
@@ -43,7 +43,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_membership&amp;aktion=blank" class="btn btn-default">Eine neue Vereinsmitgliedschaft anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_membership&amp;action=blank" class="btn btn-default">Eine neue Vereinsmitgliedschaft anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';

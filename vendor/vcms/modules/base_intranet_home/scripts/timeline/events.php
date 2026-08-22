@@ -24,7 +24,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 * actions
 */
 
-if(isset($_REQUEST['veranstaltungenchangeanmeldenstate']) && $_REQUEST['veranstaltungenchangeanmeldenstate'] != '' && isset($_REQUEST['eventid']) && $_REQUEST['eventid'] != ''){
+if(isset($_REQUEST['eventsChangeRegistrationState']) && $_REQUEST['eventsChangeRegistrationState'] != '' && isset($_REQUEST['eventid']) && $_REQUEST['eventid'] != ''){
 	$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE id=:id');
 	$stmt->bindValue(':id', $_REQUEST['eventid'], PDO::PARAM_INT);
 	$stmt->execute();
@@ -32,7 +32,7 @@ if(isset($_REQUEST['veranstaltungenchangeanmeldenstate']) && $_REQUEST['veransta
 
 	//event in future?
 	if(date('Y-m-d H:i:s') < $row['datum']){
-		if($_REQUEST['veranstaltungenchangeanmeldenstate'] == 'anmelden'){
+		if($_REQUEST['eventsChangeRegistrationState'] == 'register'){
 			$stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)');
 			$stmt->bindValue(':veranstaltung', $_REQUEST['eventid'], PDO::PARAM_INT);
 			$stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
@@ -63,9 +63,9 @@ class LibEventTimelineEvent extends \vcms\timeline\LibTimelineEvent{
 
 
 $stmt = $libDb->prepare('SELECT id, datum, titel FROM base_veranstaltung WHERE DATEDIFF(datum, NOW()) <= :zeitraumlimit AND DATEDIFF(datum, :semesterstart) >= 0 AND DATEDIFF(datum, :semesterende) <= 0 ORDER BY datum');
-$stmt->bindValue(':semesterstart', $zeitraum[0]);
-$stmt->bindValue(':semesterende', $zeitraum[1]);
-$stmt->bindValue(':zeitraumlimit', $zeitraumLimit, PDO::PARAM_INT);
+$stmt->bindValue(':semesterstart', $period[0]);
+$stmt->bindValue(':semesterende', $period[1]);
+$stmt->bindValue(':zeitraumlimit', $periodLimit, PDO::PARAM_INT);
 $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -73,7 +73,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$stmt2->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
 	$stmt2->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
 	$stmt2->execute();
-	$stmt2->bindColumn('number', $angemeldet);
+	$stmt2->bindColumn('number', $isRegistered);
 	$stmt2->fetch();
 
 	$title = $row['titel'];
@@ -102,13 +102,13 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		$form .= '<input type="hidden" name="eventid" value="' .$row['id']. '" />';
 		$form .= '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
 
-		if($angemeldet){
-			$form .= '<input type="hidden" name="veranstaltungenchangeanmeldenstate" value="abmelden" />';
+		if($isRegistered){
+			$form .= '<input type="hidden" name="eventsChangeRegistrationState" value="unregister" />';
 			$form .= '<button type="submit" class="btn btn-default btn-sm">';
 			$form .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
 			$form .= '</button>';
 		} else {
-			$form .= '<input type="hidden" name="veranstaltungenchangeanmeldenstate" value="anmelden" />';
+			$form .= '<input type="hidden" name="eventsChangeRegistrationState" value="register" />';
 			$form .= '<button type="submit" class="btn btn-default btn-sm">';
 			$form .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
 			$form .= '</button>';
@@ -116,7 +116,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		$form .= '</form>';
 	} else {
-		if($angemeldet){
+		if($isRegistered){
 			$description .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> angemeldet';
 		} else {
 			$description .= '<i class="fa fa-square-o" aria-hidden="true"></i> nicht angemeldet';

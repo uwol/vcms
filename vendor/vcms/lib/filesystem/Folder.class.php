@@ -19,7 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 namespace vcms\filesystem;
 
 class Folder extends FolderElement{
-	var $isAmtsRootFolder = false;
+	var $isOfficeRootFolder = false;
 	var $isOpen = false;
 	var $nestedFolderElements = array();
 
@@ -29,13 +29,13 @@ class Folder extends FolderElement{
 		$this->type = 1;
 
 		if(is_object($nestingFolder) && !is_object($nestingFolder->nestingFolder)){
-			$this->isAmtsRootFolder = true;
+			$this->isOfficeRootFolder = true;
 		}
 
-		if($this->isAmtsRootFolder){
-			$this->owningAmt = $fileSystemFileName;
+		if($this->isOfficeRootFolder){
+			$this->owningOffice = $fileSystemFileName;
 		} elseif(is_object($nestingFolder)){
-			$this->owningAmt = $nestingFolder->owningAmt;
+			$this->owningOffice = $nestingFolder->owningOffice;
 		}
 
 		if(isset($_SESSION['openFolders']) && is_array($_SESSION['openFolders'])){
@@ -164,12 +164,12 @@ class Folder extends FolderElement{
 		return count($this->nestedFolderElements) > 0;
 	}
 
-	function isAmtsRootFolder(){
-		return $this->isAmtsRootFolder;
+	function isOfficeRootFolder(){
+		return $this->isOfficeRootFolder;
 	}
 
 	function isDeleteable(){
-		if($this->isAmtsRootFolder){
+		if($this->isOfficeRootFolder){
 			return false;
 		}
 

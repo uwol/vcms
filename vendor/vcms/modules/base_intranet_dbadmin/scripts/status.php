@@ -21,7 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'create'){
+	if(isset($_POST['action']) && $_POST['action'] == 'create'){
 		if($_POST['bezeichnung'] != ''){
 			$stmt = $libDb->prepare('INSERT INTO base_status (bezeichnung, beschreibung) VALUES (:bezeichnung, :beschreibung)');
 			$stmt->bindValue(':bezeichnung', $libString->protectXss($_POST['bezeichnung']));
@@ -30,16 +30,16 @@ if($libAuth->isLoggedin()){
 		} else {
 			$libGlobal->errorTexts[] = 'Keine Bezeichnung angegeben.';
 		}
-	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	} elseif(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if($_POST['bezeichnung'] != ''){
 			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE status = :status');
 			$stmt->bindValue(':status', $_POST['bezeichnung']);
 			$stmt->execute();
-			$stmt->bindColumn('number', $anzahl);
+			$stmt->bindColumn('number', $count);
 			$stmt->fetch();
 
 			//wird dieser Status noch in base_person benutzt?
-			if($anzahl > 0){
+			if($count > 0){
 				$libGlobal->errorTexts[] = 'Dieser Status wird von Mitgliedern verwendet.';
 			} else {
 				$stmt = $libDb->prepare('DELETE FROM base_status WHERE bezeichnung = :bezeichnung');
@@ -77,7 +77,7 @@ if($libAuth->isLoggedin()){
 
 		if($row['bezeichnung'] != 'A-Phil' && $row['bezeichnung'] != 'B-Phil' && $row['bezeichnung'] != 'Ehrenmitglied' && $row['bezeichnung'] != 'ex loco' && $row['bezeichnung'] != 'HV-M' && $row['bezeichnung'] != 'Inaktiv ex loco' && $row['bezeichnung'] != 'Inaktiv' && $row['bezeichnung'] != 'VG'){
 			echo '<form method="post" action="index.php?pid=intranet_admin_status" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-			echo '<input type="hidden" name="aktion" value="delete" />';
+			echo '<input type="hidden" name="action" value="delete" />';
 			echo '<input type="hidden" name="bezeichnung" value="' .$row['bezeichnung']. '" />';
 			echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 			echo '</form>';
@@ -99,7 +99,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_admin_status" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="hidden" name="aktion" value="create" />';
+	echo '<input type="hidden" name="action" value="create" />';
 
 	$libForm->printTextInput('bezeichnung', 'Bezeichnung (maximal 20 Buchstaben)', '');
 	$libForm->printTextInput('beschreibung', 'Beschreibung', '');

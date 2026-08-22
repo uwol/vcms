@@ -31,22 +31,22 @@ if(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])){
 }
 
 
-if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
+if($libGallery->hasFotowartPrivilege($libAuth->getOffices())){
 	//delete image
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'deleteFoto'){
+	if(isset($_POST['action']) && $_POST['action'] == 'deletePhoto'){
 		if(is_numeric($id) && isset($_POST['bildnr']) && is_numeric($_POST['bildnr'])){
 			$pictures = $libGallery->getPictures($id, 2);
 
 			if(isset($pictures[$_POST['bildnr']])){
-				$libImage->deleteVeranstaltungsFoto($id, $pictures[$_POST['bildnr']]);
+				$libImage->deleteEventPhoto($id, $pictures[$_POST['bildnr']]);
 			}
 		}
 	}
 	//rotate image
-	elseif(isset($_POST['aktion']) && ($_POST['aktion'] == 'rotateFotoRechts' || $_POST['aktion'] == 'rotateFotoLinks')){
+	elseif(isset($_POST['action']) && ($_POST['action'] == 'rotatePhotoRight' || $_POST['action'] == 'rotatePhotoLeft')){
 		if(is_numeric($id) && isset($_POST['bildnr']) && is_numeric($_POST['bildnr'])){
 			//rotation direction
-			if($_POST['aktion'] == 'rotateFotoLinks'){
+			if($_POST['action'] == 'rotatePhotoLeft'){
 				$degree = 270;
 			} else {
 				$degree = 90;
@@ -61,43 +61,43 @@ if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
 		}
 	}
 	//set as main image
-	elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'main'){
+	elseif(isset($_POST['action']) && $_POST['action'] == 'main'){
 		if(is_numeric($id) && isset($_POST['bildnr']) && is_numeric($_POST['bildnr'])){
 			$libGallery->setPublicityLevel($id, $_POST['bildnr'], 'M');
 		}
 	}
 	//publish image in internet
-	elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'oeffentlich'){
+	elseif(isset($_POST['action']) && $_POST['action'] == 'public'){
 		if(is_numeric($id) && isset($_POST['bildnr']) && is_numeric($_POST['bildnr'])){
 			$libGallery->setPublicityLevel($id, $_POST['bildnr'], 'E');
 		}
 	}
 	//publish image in intranet
-	elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'intranet'){
+	elseif(isset($_POST['action']) && $_POST['action'] == 'intranet'){
 		if(is_numeric($id) && isset($_POST['bildnr']) && is_numeric($_POST['bildnr'])){
 			$libGallery->setPublicityLevel($id, $_POST['bildnr'], 'I');
 		}
 	}
 	//put image back in pool
-	elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'pool'){
+	elseif(isset($_POST['action']) && $_POST['action'] == 'pool'){
 		if(is_numeric($id) && isset($_POST['bildnr']) && is_numeric($_POST['bildnr'])){
 			$libGallery->setPublicityLevel($id, $_POST['bildnr'], 'P');
 		}
 	}
 	//publish all images in internet
-	elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'oeffentlichalle'){
+	elseif(isset($_POST['action']) && $_POST['action'] == 'publicAll'){
 		if(is_numeric($id)){
 			$libGallery->setPublicityLevels($id, 'E');
 		}
 	}
 	// publish all images in intranet
-	elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'intranetalle'){
+	elseif(isset($_POST['action']) && $_POST['action'] == 'intranetAll'){
 		if(is_numeric($id)){
 			$libGallery->setPublicityLevels($id, 'I');
 		}
 	}
 	//put all images back into pool
-	elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'poolalle'){
+	elseif(isset($_POST['action']) && $_POST['action'] == 'poolAll'){
 		if(is_numeric($id)){
 			$libGallery->setPublicityLevels($id, 'P');
 		}
@@ -169,20 +169,20 @@ echo '<p class="mb-4">Hochgeladene Fotos sind nach einer <a href="index.php?pid=
 
 
 if(is_dir('custom/veranstaltungsfotos/' .$id)){
-	if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
+	if($libGallery->hasFotowartPrivilege($libAuth->getOffices())){
 		echo '<hr />';
 
 		echo '<form method="post" action="index.php?pid=event_admin_galerien" onsubmit="return confirm(\'Willst Du die Galerie wirklich löschen?\')">';
-		echo '<input type="hidden" name="aktion" value="delete" />';
+		echo '<input type="hidden" name="action" value="delete" />';
 		echo '<input type="hidden" name="id" value="' .$id. '" />';
 		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Komplette Galerie löschen</button>';
 		echo '</form>';
 
 		echo '<form method="post" action="index.php?pid=event_admin_galerie" class="mb-4">';
 		echo '<input type="hidden" name="id" value="' .$id. '" />';
-		echo '<button type="submit" name="aktion" value="oeffentlichalle" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><i class="fa fa-users public" aria-hidden="true"></i> Sämtliche Bilder veröffentlichen</button><br />';
-		echo '<button type="submit" name="aktion" value="intranetalle" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><i class="fa fa-users internal" aria-hidden="true"></i> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken</button><br />';
-		echo '<button type="submit" name="aktion" value="poolalle" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><i class="fa fa-users private" aria-hidden="true"></i> Sämtliche Bilder in Ablage zurücklegen</button>';
+		echo '<button type="submit" name="action" value="publicAll" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><i class="fa fa-users public" aria-hidden="true"></i> Sämtliche Bilder veröffentlichen</button><br />';
+		echo '<button type="submit" name="action" value="intranetAll" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><i class="fa fa-users internal" aria-hidden="true"></i> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken</button><br />';
+		echo '<button type="submit" name="action" value="poolAll" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du die Galerie wirklich komplett in die Ablage zurücklegen?\')"><i class="fa fa-users private" aria-hidden="true"></i> Sämtliche Bilder in Ablage zurücklegen</button>';
 		echo '</form>';
 	}
 
@@ -232,21 +232,21 @@ if(is_dir('custom/veranstaltungsfotos/' .$id)){
 
 		echo '</div>';
 
-		if($libGallery->hasFotowartPrivilege($libAuth->getAemter())){
+		if($libGallery->hasFotowartPrivilege($libAuth->getOffices())){
 			echo '<div class="controls mb-3">';
 
 			echo '<form method="post" action="index.php?pid=event_admin_galerie">';
 			echo '<input type="hidden" name="id" value="' .$id. '" />';
 			echo '<input type="hidden" name="bildnr" value="' .$key. '" />';
-			echo '<button type="submit" name="aktion" value="main" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Als Hauptbild verwenden"><i class="fa fa-home public" aria-hidden="true"></i></button> ';
+			echo '<button type="submit" name="action" value="main" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Als Hauptbild verwenden"><i class="fa fa-home public" aria-hidden="true"></i></button> ';
 			echo '| ';
-			echo '<button type="submit" name="aktion" value="oeffentlich" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Veröffentlichen"><i class="fa fa-users public" aria-hidden="true"></i></button> ';
-			echo '<button type="submit" name="aktion" value="intranet" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Zugriff auf das Intranet beschränken"><i class="fa fa-users internal" aria-hidden="true"></i></button> ';
-			echo '<button type="submit" name="aktion" value="pool" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="In die Ablage zurücklegen"><i class="fa fa-users private" aria-hidden="true"></i></button> ';
+			echo '<button type="submit" name="action" value="public" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Veröffentlichen"><i class="fa fa-users public" aria-hidden="true"></i></button> ';
+			echo '<button type="submit" name="action" value="intranet" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Zugriff auf das Intranet beschränken"><i class="fa fa-users internal" aria-hidden="true"></i></button> ';
+			echo '<button type="submit" name="action" value="pool" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="In die Ablage zurücklegen"><i class="fa fa-users private" aria-hidden="true"></i></button> ';
 			echo '| ';
-			echo '<button type="submit" name="aktion" value="rotateFotoLinks" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Nach links drehen"><i class="fa fa-undo" aria-hidden="true"></i></button> ';
-			echo '<button type="submit" name="aktion" value="rotateFotoRechts" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Nach rechts drehen"><i class="fa fa-repeat" aria-hidden="true"></i></button> ';
-			echo '<button type="submit" name="aktion" value="deleteFoto" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Löschen" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+			echo '<button type="submit" name="action" value="rotatePhotoLeft" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Nach links drehen"><i class="fa fa-undo" aria-hidden="true"></i></button> ';
+			echo '<button type="submit" name="action" value="rotatePhotoRight" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Nach rechts drehen"><i class="fa fa-repeat" aria-hidden="true"></i></button> ';
+			echo '<button type="submit" name="action" value="deletePhoto" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" title="Löschen" onclick="return confirm(\'Willst Du das Bild wirklich löschen?\')"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 			echo '</form>';
 
 			echo '</div>';

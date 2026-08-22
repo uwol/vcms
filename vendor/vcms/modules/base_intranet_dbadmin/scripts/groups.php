@@ -21,7 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'create'){
+	if(isset($_POST['action']) && $_POST['action'] == 'create'){
 		if(isset($_POST['bezeichnung']) && $_POST['bezeichnung'] != ''){
 			$stmt = $libDb->prepare('INSERT INTO base_gruppe (bezeichnung, beschreibung) VALUES (:bezeichnung, :beschreibung)');
 			$stmt->bindValue(':bezeichnung', $libString->protectXss($_POST['bezeichnung']));
@@ -30,16 +30,16 @@ if($libAuth->isLoggedin()){
 		} else {
 			$libGlobal->errorTexts[] = 'Keine Gruppe angegeben.';
 		}
-	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	} elseif(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if($_POST['bezeichnung'] != '' && $_POST['bezeichnung'] != 'F' && $_POST['bezeichnung'] != 'B' && $_POST['bezeichnung'] != 'P' && $_POST['bezeichnung'] != 'C' && $_POST['bezeichnung'] != 'X' && $_POST['bezeichnung'] != 'T' && $_POST['bezeichnung'] != 'G' && $_POST['bezeichnung'] != 'W' && $_POST['bezeichnung'] != 'V' && $_POST['bezeichnung'] != 'Y'){
 			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE gruppe = :gruppe');
 			$stmt->bindValue(':gruppe', $libString->protectXss($_POST['bezeichnung']));
 			$stmt->execute();
-			$stmt->bindColumn('number', $anzahl);
+			$stmt->bindColumn('number', $count);
 			$stmt->fetch();
 
 			//wird diese Gruppe noch in base_person benutzt?
-			if($anzahl > 0){
+			if($count > 0){
 				$libGlobal->errorTexts[] = 'Diese Gruppe wird von Mitgliedern verwendet.';
 			} else {
 				$stmt = $libDb->prepare('DELETE FROM base_gruppe WHERE bezeichnung = :bezeichnung');
@@ -77,7 +77,7 @@ if($libAuth->isLoggedin()){
 
 		if($row['bezeichnung'] != 'F' && $row['bezeichnung'] != 'B' && $row['bezeichnung'] != 'P' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'C' && $row['bezeichnung'] != 'G' && $row['bezeichnung'] != 'W' && $row['bezeichnung'] != 'V' && $row['bezeichnung'] != 'Y'){
 			echo '<form method="post" action="index.php?pid=intranet_admin_groups" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-			echo '<input type="hidden" name="aktion" value="delete" />';
+			echo '<input type="hidden" name="action" value="delete" />';
 			echo '<input type="hidden" name="bezeichnung" value="' .$row['bezeichnung']. '" />';
 			echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 			echo '</form>';
@@ -99,7 +99,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_admin_groups" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="hidden" name="aktion" value="create" />';
+	echo '<input type="hidden" name="action" value="create" />';
 
 	$libForm->printTextInput('bezeichnung', 'Bezeichnung (1 Buchstabe)', '');
 	$libForm->printTextInput('beschreibung', 'Beschreibung', '');

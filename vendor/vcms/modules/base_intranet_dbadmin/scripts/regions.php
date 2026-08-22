@@ -21,7 +21,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 
 if($libAuth->isLoggedin()){
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'create'){
+	if(isset($_POST['action']) && $_POST['action'] == 'create'){
 		if($_POST['bezeichnung'] != ''){
 			$stmt = $libDb->prepare('INSERT INTO base_region (bezeichnung) VALUES (:bezeichnung)');
 			$stmt->bindValue(':bezeichnung', $libString->protectXss($_POST['bezeichnung']));
@@ -29,16 +29,16 @@ if($libAuth->isLoggedin()){
 		} else {
 			$libGlobal->errorTexts[] = 'Keine Bezeichnung angegeben.';
 		}
-	} elseif(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	} elseif(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if(isset($_POST['id']) && $_POST['id'] != ''){
 			$stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE region1 = :region OR region2 = :region');
 			$stmt->bindValue(':region', $_POST['id'], PDO::PARAM_INT);
 			$stmt->execute();
-			$stmt->bindColumn('number', $anzahl);
+			$stmt->bindColumn('number', $count);
 			$stmt->fetch();
 
 			//wird diese Region noch in base_person benutzt?
-			if($anzahl > 0){
+			if($count > 0){
 				$libGlobal->errorTexts[] = 'Diese Region ist bei Personen angegeben.';
 			} else {
 				$stmt = $libDb->prepare('DELETE FROM base_region WHERE id = :id');
@@ -72,15 +72,15 @@ if($libAuth->isLoggedin()){
 		$stmt2 = $libDb->prepare('SELECT COUNT(*) AS number FROM base_person WHERE region1 = :region OR region2 = :region');
 		$stmt2->bindValue(':region', $row['id'], PDO::PARAM_INT);
 		$stmt2->execute();
-		$stmt2->bindColumn('number', $anzahl);
+		$stmt2->bindColumn('number', $count);
 		$stmt2->fetch();
 
 		echo '<tr>';
 		echo '<td>' .$row['bezeichnung']. '</td>';
-		echo '<td>' .$anzahl. ' Personen</td>';
+		echo '<td>' .$count. ' Personen</td>';
 		echo '<td class="tool-column">';
 		echo '<form method="post" action="index.php?pid=intranet_admin_regions" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
-		echo '<input type="hidden" name="aktion" value="delete" />';
+		echo '<input type="hidden" name="action" value="delete" />';
 		echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
 		echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 		echo '</form>';
@@ -100,7 +100,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel-body">';
 	echo '<form action="index.php?pid=intranet_admin_regions" method="post" class="form-horizontal">';
 	echo '<fieldset>';
-	echo '<input type="hidden" name="aktion" value="create" />';
+	echo '<input type="hidden" name="action" value="create" />';
 
 	$libForm->printTextInput('bezeichnung', 'Bezeichnung', '');
 	$libForm->printSubmitButton('Anlegen');

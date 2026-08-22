@@ -22,7 +22,7 @@ if(!is_object($libGlobal) || !$libAuth->isLoggedin())
 
 if($libAuth->isLoggedin()){
 
-	if(isset($_POST['aktion']) && $_POST['aktion'] == 'delete'){
+	if(isset($_POST['action']) && $_POST['action'] == 'delete'){
 		if(isset($_POST['id']) && $_POST['id'] != ''){
 			//Verwendung der Veranstaltung in anderen Tabellen prüfen
 			//diese Einträge vorher löschen
@@ -50,7 +50,7 @@ if($libAuth->isLoggedin()){
 	echo '<div class="panel panel-default">';
 	echo '<div class="panel-body">';
 	echo '<div class="btn-toolbar">';
-	echo '<a href="index.php?pid=intranet_admin_event&amp;aktion=blank" class="btn btn-default">Eine neue Veranstaltung anlegen</a>';
+	echo '<a href="index.php?pid=intranet_admin_event&amp;action=blank" class="btn btn-default">Eine neue Veranstaltung anlegen</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
@@ -60,13 +60,13 @@ if($libAuth->isLoggedin()){
 	$stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 	$stmt->execute();
 
-	$daten = array();
+	$data = array();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-		$daten[] = $row['datum'];
+		$data[] = $row['datum'];
 	}
 
-	echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($daten),$libGlobal->semester);
+	echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data),$libGlobal->semester);
 
 
 	echo '<div class="panel panel-default">';
@@ -77,12 +77,12 @@ if($libAuth->isLoggedin()){
 	echo '<tr><th>Id</th><th>Datum</th><th>Titel</th><th>Status</th><th>Intern</th><th></th></tr>';
 	echo '</thead>';
 
-	$zeitraum = $libTime->getZeitraum($libGlobal->semester);
+	$period = $libTime->getPeriod($libGlobal->semester);
 
 	$stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE datum IS NULL OR datum = :datum OR (DATEDIFF(datum, :semester_start) >= 0 AND DATEDIFF(datum, :semester_ende) <= 0) ORDER BY datum DESC');
-	$stmt->bindValue(':datum', $zeitraum[0]);
-	$stmt->bindValue(':semester_start', $zeitraum[0]);
-	$stmt->bindValue(':semester_ende', $zeitraum[1]);
+	$stmt->bindValue(':datum', $period[0]);
+	$stmt->bindValue(':semester_start', $period[0]);
+	$stmt->bindValue(':semester_ende', $period[1]);
 	$stmt->execute();
 
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
