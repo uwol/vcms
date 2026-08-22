@@ -120,6 +120,7 @@ class Response
 
     public function _parseCode($headers)
     {
+        $headers = (string) $headers;
         $end = strpos($headers, "\r\n");
         if ($end === false) $end = strlen($headers);
         $parts = explode(' ', substr($headers, 0, $end));

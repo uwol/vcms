@@ -92,7 +92,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="panel-body">';
 	echo '<div class="row">';
 	echo '<div class="col-xs-12 col-sm-9 col-md-10">';
-	echo nl2br($row['beschreibung']);
+	echo nl2br((string) $row['beschreibung']);
 	echo '</div>';
 
 	echo '<div class="hidden-xs col-sm-3 col-md-2">';

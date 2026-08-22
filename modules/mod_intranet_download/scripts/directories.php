@@ -41,9 +41,9 @@ foreach($libAuth->getOffices() as $office){
 	}
 }
 
-if(isset($_GET['action']) && $_GET['action'] == 'open'){
+if(isset($_GET['action']) && isset($_GET['hash']) && $_GET['action'] == 'open'){
 	$_SESSION['openFolders'][$_GET['hash']] = 1;
-} elseif(isset($_GET['action']) && $_GET['action'] == 'close'){
+} elseif(isset($_GET['action']) && isset($_GET['hash']) && $_GET['action'] == 'close'){
 	unset($_SESSION['openFolders'][$_GET['hash']]);
 }
 
@@ -56,7 +56,7 @@ $hashes = $rootFolderObject->getHashMap();
 */
 
 //delete file
-if(isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['hash'])){
+if(isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['hash']) && isset($hashes[$_POST['hash']])){
 	$element = $hashes[$_POST['hash']];
 
 	if(in_array($element->owningOffice, $libAuth->getOffices())){
@@ -67,12 +67,12 @@ if(isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['hash
 	}
 }
 //upload file
-elseif(isset($_POST['action']) && $_POST['action'] == 'upload' && isset($_POST['hash'])){
+elseif(isset($_POST['action']) && $_POST['action'] == 'upload' && isset($_POST['hash']) && isset($hashes[$_POST['hash']])){
 	$folder = $hashes[$_POST['hash']];
 
 	if(in_array($folder->owningOffice, $libAuth->getOffices())){
 		if(isset($_POST['gruppen']) && count($_POST['gruppen']) > 0){
-			if($_FILES['file']['tmp_name'] != ''){
+			if(isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name'] != ''){
 				$groupArray = array_merge($_POST['gruppen'], array($libAuth->getGroup()));
 				if($folder->addFile($_FILES['file']['tmp_name'], $_FILES['file']['name'], $groupArray)){
 					$libGlobal->notificationTexts[] = 'Die Datei wurde hochgeladen.';
@@ -89,11 +89,11 @@ elseif(isset($_POST['action']) && $_POST['action'] == 'upload' && isset($_POST['
 	}
 }
 // new folder
-elseif(isset($_POST['action']) && $_POST['action'] == "newFolder" && isset($_POST['hash'])){
+elseif(isset($_POST['action']) && $_POST['action'] == "newFolder" && isset($_POST['hash']) && isset($hashes[$_POST['hash']])){
 	$folder = $hashes[$_POST['hash']];
 
 	if(in_array($folder->owningOffice, $libAuth->getOffices())){
-		$folder->addFolder($_POST['foldername']);
+		$folder->addFolder($_POST['foldername'] ?? '');
 		$libGlobal->notificationTexts[] = 'Der Ordner wurde angelegt.';
 	} else {
 		$libGlobal->errorTexts[] = 'Du darfst in diesem Ordner keinen Unterordner anlegen.';

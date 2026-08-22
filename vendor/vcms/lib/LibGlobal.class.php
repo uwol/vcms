@@ -21,7 +21,7 @@ namespace vcms;
 use PDO;
 
 class LibGlobal{
-	var $version = '12.15';
+	var $version = '12.17';
 
 	var $semester;
 	var $module;
@@ -88,7 +88,7 @@ class LibGlobal{
 			$stmt->execute();
 			$event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			if($event['titel'] != '' && $event['intern'] == 0){
+			if(is_array($event) && $event['titel'] != '' && $event['intern'] == 0){
 				$result = $libConfig->verbindungName. ' - ' .$event['titel']. ' am ' .$libTime->formatDateString($event['datum']);
 			} else {
 				$result = $libConfig->verbindungName. ' - ' .$libGlobal->page->getTitle();
@@ -103,7 +103,7 @@ class LibGlobal{
 	function getSiteUrl(){
 		global $libGenericStorage;
 
-		return $libGenericStorage->loadValue('base_core', 'site_url');
+		return (string) $libGenericStorage->loadValue('base_core', 'site_url');
 	}
 
 	function getSiteUrlAuthority(){

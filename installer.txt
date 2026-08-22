@@ -95,13 +95,13 @@ if(isset($_REQUEST['aktion'])){
 	*/
 	elseif($_REQUEST['aktion'] == 'createInternetWart'){
 		if(isset($_REQUEST['email']) && trim($_REQUEST['email']) != '' && isset($_REQUEST['pwd1']) && trim($_REQUEST['pwd1']) != ''){
-			if($_REQUEST['pwd1'] == $_REQUEST['pwd2']){
+			if($_REQUEST['pwd1'] == ($_REQUEST['pwd2'] ?? '')){
 				if($libAuth->isValidPassword($_REQUEST['pwd1'])){
 					echo '<p class="alert alert-info mb-3">Datensatz für neuen Benutzer wird angelegt</p>';
 
 					$stmt = $libDb->prepare('INSERT INTO base_person (name, vorname, email, gruppe) VALUES (:name, :vorname, :email, :gruppe)');
-					$stmt->bindValue(':name', trim($_REQUEST['name']));
-					$stmt->bindValue(':vorname', trim($_REQUEST['vorname']));
+					$stmt->bindValue(':name', trim($_REQUEST['name'] ?? ''));
+					$stmt->bindValue(':vorname', trim($_REQUEST['vorname'] ?? ''));
 					$stmt->bindValue(':email', trim($_REQUEST['email']));
 					$stmt->bindValue(':gruppe', 'B');
 					$stmt->execute();

@@ -37,6 +37,10 @@ class LibEvent{
 
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+		if(!is_array($row)){
+			return $libConfig->verbindungName;
+		}
+
 		$result = $libConfig->verbindungName. ' - ' .$row['titel']. ' am ' .$libTime->formatDateString($row['datum']);
 		return $result;
 	}
@@ -76,7 +80,7 @@ class LibEvent{
 	function hasBannedTitle($id){
 		global $libDb, $libGenericStorage;
 
-		$bannedTitlesString = $libGenericStorage->loadValue('base_core', 'event_banned_titles');
+		$bannedTitlesString = (string) $libGenericStorage->loadValue('base_core', 'event_banned_titles');
 		$bannedTitles = explode(',', $bannedTitlesString);
 		$bannedTitlesCleaned = array();
 
@@ -85,7 +89,7 @@ class LibEvent{
 		}
 
 		$title = $this->getTitle($id);
-		$titleCleaned = strtolower(trim($title));
+		$titleCleaned = strtolower(trim((string) $title));
 		$result = in_array($titleCleaned, $bannedTitlesCleaned);
 		return $result;
 	}

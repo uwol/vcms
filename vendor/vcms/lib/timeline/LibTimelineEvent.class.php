@@ -130,7 +130,7 @@ class LibTimelineEvent {
 
 		if($this->description != ''){
 			$retstr .= $hasPersonColumn ? '<div class="col-xs-12 col-sm-9">' : '<div class="col-xs-12">';
-			$retstr .= trim($this->description);
+			$retstr .= trim((string) $this->description);
 			$retstr .= '</div>';
 		}
 

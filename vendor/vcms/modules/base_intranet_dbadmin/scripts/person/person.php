@@ -88,12 +88,11 @@ if($libAuth->isLoggedin()){
 		}
 
 		$valueArray = $_REQUEST;
-		$valueArray['email'] = strtolower($valueArray['email']);
-		$valueArray['webseite'] = $valueArray['webseite'];
-		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
-		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
-		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);
-		$valueArray['austritt_datum'] = $libTime->assureMysqlDate($valueArray['austritt_datum']);
+		$valueArray['email'] = strtolower((string) ($valueArray['email'] ?? ''));
+		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag'] ?? '');
+		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum'] ?? '');
+		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum'] ?? '');
+		$valueArray['austritt_datum'] = $libTime->assureMysqlDate($valueArray['austritt_datum'] ?? '');
 		$personRow = $libDb->insertRow($fields, $valueArray, 'base_person', array('id' => ''));
 
 		updateAddressAsOf('base_person', 'datum_adresse1_stand', $personRow['id']);
@@ -134,12 +133,11 @@ if($libAuth->isLoggedin()){
 		}
 
 		$valueArray = $_REQUEST;
-		$valueArray['email'] = strtolower($valueArray['email']);
-		$valueArray['webseite'] = $valueArray['webseite'];
-		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag']);
-		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum']);
-		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum']);
-		$valueArray['austritt_datum'] = $libTime->assureMysqlDate($valueArray['austritt_datum']);
+		$valueArray['email'] = strtolower((string) ($valueArray['email'] ?? ''));
+		$valueArray['datum_geburtstag'] = $libTime->assureMysqlDate($valueArray['datum_geburtstag'] ?? '');
+		$valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum'] ?? '');
+		$valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum'] ?? '');
+		$valueArray['austritt_datum'] = $libTime->assureMysqlDate($valueArray['austritt_datum'] ?? '');
 		$personRow = $libDb->updateRow($fields, $valueArray, 'base_person', array('id' => $id));
 	} else {
 		$stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');

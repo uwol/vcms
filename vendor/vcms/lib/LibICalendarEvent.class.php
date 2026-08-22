@@ -35,6 +35,9 @@ class LibICalendarEvent{
 	var $allDay = false;
 
 	function setStartAndEndDateTime($startDateTime, $endDateTime){
+		$startDateTime = (string) $startDateTime;
+		$endDateTime = (string) $endDateTime;
+
 		if($startDateTime != '' && $startDateTime != '0000-00-00 00:00:00'){
 			if($endDateTime < $startDateTime){
 				$endDateTime = '';
@@ -166,7 +169,7 @@ class LibICalendarEvent{
 	}
 
 	function format($string){
-		$string = html_entity_decode($string, ENT_COMPAT, 'UTF-8');
+		$string = html_entity_decode((string) $string, ENT_COMPAT, 'UTF-8');
 
 		$string = str_replace('\\', '\\\\', $string); //RFC 5545 chapter 3.3.11
 		$string = str_replace(',', '\,', $string); //RFC 5545 chapter 3.3.11

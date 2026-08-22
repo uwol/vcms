@@ -20,7 +20,7 @@ namespace vcms;
 
 class LibMime{
 	function detectMime($filename){
-		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+		$extension = pathinfo((string) $filename, PATHINFO_EXTENSION);
 		$mime = '';
 
 		switch ($extension) {

@@ -91,7 +91,14 @@ class LibImage{
 			return;
 		}
 
-		list($imageWidth, $imageHeight) = getimagesize($imagePath);
+		$imageInfoArray = getimagesize($imagePath);
+
+		if(!is_array($imageInfoArray)){
+			return;
+		}
+
+		$imageWidth = $imageInfoArray[0];
+		$imageHeight = $imageInfoArray[1];
 
 		if($this->imageRatioIsOk($imageWidth, $imageHeight, $newWidth, $newHeight)){
 			switch($this->determineImageLib()){
@@ -117,7 +124,14 @@ class LibImage{
 
 		//$libGlobal->notificationTexts[] = 'Modifiziere Foto mit GDLib.';
 
-		list($imageWidth, $imageHeight) = getimagesize($imagePath);
+		$imageInfoArray = getimagesize($imagePath);
+
+		if(!is_array($imageInfoArray)){
+			return;
+		}
+
+		$imageWidth = $imageInfoArray[0];
+		$imageHeight = $imageInfoArray[1];
 
 		// resample
 		$newImage = imagecreatetruecolor($newWidth, $newHeight);
@@ -126,8 +140,6 @@ class LibImage{
 
 		// output
 		imagejpeg($newImage, $imagePath, 80);
-		ImageDestroy($newImage);
-		ImageDestroy($image);
 	}
 
 	function resizeImage_ImageMagick($imagePath, $newWidth, $newHeight){
@@ -167,8 +179,15 @@ class LibImage{
 
 		//$libGlobal->notificationTexts[] = 'Rotiere Foto mit GDLib.';
 
+		$imageInfoArray = getimagesize($imagePath);
+
+		if(!is_array($imageInfoArray)){
+			return;
+		}
+
 		$image = imagecreatefromjpeg($imagePath);
-		list($imageWidth, $imageHeight) = getimagesize($imagePath);
+		$imageWidth = $imageInfoArray[0];
+		$imageHeight = $imageInfoArray[1];
 
 		if($degree == 90 || $degree == 270){
         	$newWidth = $imageHeight;
@@ -210,8 +229,6 @@ class LibImage{
 		}
 
 		imagejpeg($newImage, $imagePath, 80);
-		ImageDestroy($newImage);
-		ImageDestroy($image);
 	}
 
 	function rotateImage_ImageMagick($imagePath, $degree){
@@ -262,6 +279,13 @@ class LibImage{
 		}
 
 		$imageInfoArray = getimagesize($tmpFilename);
+
+		//check for a readable image
+		if(!is_array($imageInfoArray)){
+			$libGlobal->errorTexts[] = 'Das Bild konnte nicht gelesen werden.';
+			return;
+		}
+
 		$imageType = $imageInfoArray[2];
 		$width = $imageInfoArray[0];
 		$height = $imageInfoArray[1];
@@ -410,12 +434,12 @@ class LibImage{
 	function saveEventPhotoByFilesArray($eventId, $tmpFileVarName){
 		//parameter check
 		if(!is_numeric($eventId) || !preg_match('/^[0-9]+$/', $eventId) ||
-				$tmpFileVarName == '' || !isset($_FILES[$tmpFileVarName]) ||
-				substr($_FILES[$tmpFileVarName]['name'], 0, 1) == '.'){
+				$tmpFileVarName == '' || !isset($_FILES[$tmpFileVarName]['name']) ||
+				substr((string) $_FILES[$tmpFileVarName]['name'], 0, 1) == '.'){
 			return;
 		}
 
-		$photoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $_FILES[$tmpFileVarName]['name']);
+		$photoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', (string) $_FILES[$tmpFileVarName]['name']);
 
 		$this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/' .$eventId, $photoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
 	}
@@ -424,11 +448,11 @@ class LibImage{
 		//parameter check
 		if(!is_numeric($eventId) || !preg_match('/^[0-9]+$/', $eventId) ||
 				$tmpFilename == '' ||
-				substr($targetFilename, 0, 1) == '.'){
+				substr((string) $targetFilename, 0, 1) == '.'){
 			return;
 		}
 
-		$photoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', $targetFilename);
+		$photoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', (string) $targetFilename);
 
 		$this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/' .$eventId, $photoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
 	}

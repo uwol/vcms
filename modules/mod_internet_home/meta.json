@@ -1,6 +1,6 @@
 {
 	"moduleName": "Home",
-	"version": 3.92,
+	"version": 3.94,
 	"installScript": "install/install.php",
 	"updateScript": "install/update.php",
 	"pages": [

@@ -61,7 +61,7 @@ class LibModuleHandler{
 
 		$modModuleFiles = $this->getModModuleFiles();
 		$baseModuleFiles = $this->getBaseModuleFiles();
-		$moduleAbsolutePaths = array();
+		$moduleRelativePaths = array();
 
 		foreach($modModuleFiles as $moduleFile){
 			$moduleRelativePaths[$moduleFile] = $this->modModulesRelativePath. '/' .$moduleFile;

@@ -72,8 +72,8 @@ if(isset($_POST['action'])){
 	$gitHubRepoUrl = 'https://github.com/uwol/vcms/tree/master';
 	$modules = $libRepositoryClient->getModuleVersions();
 
-	$actualEngineVersion = (double) $libGlobal->version;
-	$newEngineVersion = (double) $modules['engine'];
+	$actualEngineVersion = (float) $libGlobal->version;
+	$newEngineVersion = (float) ($modules['engine'] ?? 0);
 
 	$engineIsOld = false;
 
@@ -171,8 +171,8 @@ if(isset($_POST['action'])){
 		} else {
 			if($libModuleHandler->moduleIsAvailable($key)){
 				$module = $libModuleHandler->getModuleByModuleid($key);
-				$actualVersion = (double) $module->getVersion();
-				$newVersion = (double) $value;
+				$actualVersion = (float) $module->getVersion();
+				$newVersion = (float) $value;
 
 				if(!$engineIsOld && $newVersion > $actualVersion){
 					echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
@@ -193,8 +193,8 @@ if(isset($_POST['action'])){
 		if($key != 'engine'){
 			if(!$engineIsOld && $libModuleHandler->moduleIsAvailable($key)){
 				$module = $libModuleHandler->getModuleByModuleid($key);
-				$actualVersion = (double) $module->getVersion();
-				$newVersion = (double) $value;
+				$actualVersion = (float) $module->getVersion();
+				$newVersion = (float) $value;
 
 				echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
 				echo '<input type="hidden" name="action" value="uninstallModule" />';

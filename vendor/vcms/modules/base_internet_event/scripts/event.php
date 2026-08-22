@@ -254,14 +254,18 @@ function printFacebookEvent($row){
 }
 
 function printDescription($row){
-	if(trim($row['beschreibung'])){
-		return '<p>' .nl2br($row['beschreibung']). '</p>';
+	$description = (string) $row['beschreibung'];
+
+	if(trim($description)){
+		return '<p>' .nl2br($description). '</p>';
 	}
 }
 
 function printMotto($row){
-	if(trim($row['spruch'])){
-		return '<p>' .nl2br($row['spruch']). '</p>';
+	$motto = (string) $row['spruch'];
+
+	if(trim($motto)){
+		return '<p>' .nl2br($motto). '</p>';
 	}
 }
 

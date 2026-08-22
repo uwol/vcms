@@ -73,7 +73,7 @@ if(!isset($_POST['message']) || $_POST['message'] == '' || !isset($_POST['subjec
 	$subjectGroupsString = '[' .implode(', ', $subjectGroups). '] ';
 	$subjectRegionsString = '';
 
-	if($_POST['region'] != '' && $_POST['region'] != 'NULL'){
+	if(isset($_POST['region']) && $_POST['region'] != '' && $_POST['region'] != 'NULL'){
 		$stmt = $libDb->prepare('SELECT bezeichnung FROM base_region WHERE id=:id');
 		$stmt->bindValue(':id', $_POST['region'], PDO::PARAM_INT);
 		$stmt->execute();
@@ -138,7 +138,7 @@ if(!isset($_POST['message']) || $_POST['message'] == '' || !isset($_POST['subjec
 	//evaluate regional restrictions
 	$regionString = '';
 
-	if($_POST['region'] != '' && $_POST['region'] != 'NULL'){
+	if(isset($_POST['region']) && $_POST['region'] != '' && $_POST['region'] != 'NULL'){
 		$regionString = " AND (region1=:region OR region2=:region) ";
 	}
 

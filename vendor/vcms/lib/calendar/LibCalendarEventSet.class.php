@@ -42,6 +42,9 @@ class LibCalendarEventSet{
 	}
 
 	function getDatesIncludingBetweenDates($startDate, $endDate){
+		$startDate = (string) $startDate;
+		$endDate = (string) $endDate;
+
 		$dates = array();
 		$dates[] = $startDate;
 		$currentDate = $startDate;

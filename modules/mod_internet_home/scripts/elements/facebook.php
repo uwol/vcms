@@ -20,7 +20,7 @@ if(!is_object($libGlobal))
 	exit();
 
 
-$facebookUrl = $libGenericStorage->loadValueInCurrentModule('facebook_url');
+$facebookUrl = (string) $libGenericStorage->loadValueInCurrentModule('facebook_url');
 $showFacebookPlugin = $libGenericStorage->loadValueInCurrentModule('show_facebook_plugin');
 $fbPagePluginEnabled = $showFacebookPlugin && $facebookUrl != '';
 

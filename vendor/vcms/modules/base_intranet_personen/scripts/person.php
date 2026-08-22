@@ -66,31 +66,31 @@ if($ownprofile){
 			$stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
 				telefon1=:telefon1, zusatz2=:zusatz2, strasse2=:strasse2, ort2=:ort2, plz2=:plz2, land2=:land2,telefon2=:telefon2, mobiltelefon=:mobiltelefon,
 				email=:email, skype=:skype, webseite=:webseite, spitzname=:spitzname, beruf=:beruf, leibmitglied=:leibmitglied, region1=:region1, region2=:region2, vita=:vita WHERE id=:id');
-			$stmt->bindValue(':anrede', $libString->protectXss(trim($_POST['anrede'])));
-			$stmt->bindValue(':titel', $libString->protectXss(trim($_POST['titel'])));
-			$stmt->bindValue(':rang', $libString->protectXss(trim($_POST['rang'])));
-			$stmt->bindValue(':zusatz1', $libString->protectXss(trim($_POST['zusatz1'])));
-			$stmt->bindValue(':strasse1', $libString->protectXss(trim($_POST['strasse1'])));
-			$stmt->bindValue(':ort1', $libString->protectXss(trim($_POST['ort1'])));
-			$stmt->bindValue(':plz1', $libString->protectXss(trim($_POST['plz1'])));
-			$stmt->bindValue(':land1', $libString->protectXss(trim($_POST['land1'])));
-			$stmt->bindValue(':telefon1', $libString->protectXss(trim($_POST['telefon1'])));
-			$stmt->bindValue(':zusatz2', $libString->protectXss(trim($_POST['zusatz2'])));
-			$stmt->bindValue(':strasse2', $libString->protectXss(trim($_POST['strasse2'])));
-			$stmt->bindValue(':ort2', $libString->protectXss(trim($_POST['ort2'])));
-			$stmt->bindValue(':plz2', $libString->protectXss(trim($_POST['plz2'])));
-			$stmt->bindValue(':land2', $libString->protectXss(trim($_POST['land2'])));
-			$stmt->bindValue(':telefon2', $libString->protectXss(trim($_POST['telefon2'])));
-			$stmt->bindValue(':mobiltelefon', $libString->protectXss(trim($_POST['mobiltelefon'])));
-			$stmt->bindValue(':email', $libString->protectXss(strtolower(trim($_POST['email']))));
-			$stmt->bindValue(':skype', $libString->protectXss(trim($_POST['skype'])));
-			$stmt->bindValue(':webseite', $libString->protectXss(trim($_POST['webseite'])));
-			$stmt->bindValue(':spitzname', $libString->protectXss(trim($_POST['spitzname'])));
-			$stmt->bindValue(':beruf', $libString->protectXss(trim($_POST['beruf'])));
+			$stmt->bindValue(':anrede', $libString->protectXss(trim($_POST['anrede'] ?? '')));
+			$stmt->bindValue(':titel', $libString->protectXss(trim($_POST['titel'] ?? '')));
+			$stmt->bindValue(':rang', $libString->protectXss(trim($_POST['rang'] ?? '')));
+			$stmt->bindValue(':zusatz1', $libString->protectXss(trim($_POST['zusatz1'] ?? '')));
+			$stmt->bindValue(':strasse1', $libString->protectXss(trim($_POST['strasse1'] ?? '')));
+			$stmt->bindValue(':ort1', $libString->protectXss(trim($_POST['ort1'] ?? '')));
+			$stmt->bindValue(':plz1', $libString->protectXss(trim($_POST['plz1'] ?? '')));
+			$stmt->bindValue(':land1', $libString->protectXss(trim($_POST['land1'] ?? '')));
+			$stmt->bindValue(':telefon1', $libString->protectXss(trim($_POST['telefon1'] ?? '')));
+			$stmt->bindValue(':zusatz2', $libString->protectXss(trim($_POST['zusatz2'] ?? '')));
+			$stmt->bindValue(':strasse2', $libString->protectXss(trim($_POST['strasse2'] ?? '')));
+			$stmt->bindValue(':ort2', $libString->protectXss(trim($_POST['ort2'] ?? '')));
+			$stmt->bindValue(':plz2', $libString->protectXss(trim($_POST['plz2'] ?? '')));
+			$stmt->bindValue(':land2', $libString->protectXss(trim($_POST['land2'] ?? '')));
+			$stmt->bindValue(':telefon2', $libString->protectXss(trim($_POST['telefon2'] ?? '')));
+			$stmt->bindValue(':mobiltelefon', $libString->protectXss(trim($_POST['mobiltelefon'] ?? '')));
+			$stmt->bindValue(':email', $libString->protectXss(strtolower(trim($_POST['email'] ?? ''))));
+			$stmt->bindValue(':skype', $libString->protectXss(trim($_POST['skype'] ?? '')));
+			$stmt->bindValue(':webseite', $libString->protectXss(trim($_POST['webseite'] ?? '')));
+			$stmt->bindValue(':spitzname', $libString->protectXss(trim($_POST['spitzname'] ?? '')));
+			$stmt->bindValue(':beruf', $libString->protectXss(trim($_POST['beruf'] ?? '')));
 			$stmt->bindValue(':leibmitglied', $leibMember, PDO::PARAM_INT);
-			$stmt->bindValue(':region1', $_POST['region1'], PDO::PARAM_INT);
-			$stmt->bindValue(':region2', $_POST['region2'], PDO::PARAM_INT);
-			$stmt->bindValue(':vita', $libString->protectXss(trim($_POST['vita'])));
+			$stmt->bindValue(':region1', $_POST['region1'] ?? '', PDO::PARAM_INT);
+			$stmt->bindValue(':region2', $_POST['region2'] ?? '', PDO::PARAM_INT);
+			$stmt->bindValue(':vita', $libString->protectXss(trim($_POST['vita'] ?? '')));
 			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->execute();
 		}
@@ -129,30 +129,34 @@ if($ownprofile){
 			}
 		}
 
-		if($_POST['strasse1'] != $row['strasse1'] || $_POST['ort1'] != $row['ort1'] || $_POST['plz1'] != $row['plz1'] || $_POST['land1'] != $row['land1'] || $_POST['telefon1'] != $row['telefon1']){
+		if(($_POST['strasse1'] ?? '') != $row['strasse1'] || ($_POST['ort1'] ?? '') != $row['ort1'] || ($_POST['plz1'] ?? '') != $row['plz1'] || ($_POST['land1'] ?? '') != $row['land1'] || ($_POST['telefon1'] ?? '') != $row['telefon1']){
 			$stmt = $libDb->prepare('UPDATE base_person SET datum_adresse1_stand=NOW() WHERE id = :id');
 			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->execute();
 		}
 
-		if($_POST['strasse2'] != $row['strasse2'] || $_POST['ort2'] != $row['ort2'] || $_POST['plz2'] != $row['plz2'] || $_POST['land2'] != $row['land2'] || $_POST['telefon2'] != $row['telefon2']){
+		if(($_POST['strasse2'] ?? '') != $row['strasse2'] || ($_POST['ort2'] ?? '') != $row['ort2'] || ($_POST['plz2'] ?? '') != $row['plz2'] || ($_POST['land2'] ?? '') != $row['land2'] || ($_POST['telefon2'] ?? '') != $row['telefon2']){
 			$stmt = $libDb->prepare('UPDATE base_person SET datum_adresse2_stand=NOW() WHERE id = :id');
 			$stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
 			$stmt->execute();
 		}
 	} elseif(isset($_POST['formType']) && $_POST['formType'] == 'photoDataUpload'){
-		if($_FILES['bilddatei']['tmp_name'] != ''){
+		if(isset($_FILES['bilddatei']['tmp_name']) && $_FILES['bilddatei']['tmp_name'] != ''){
 			$libImage->savePersonPhotoByFilesArray($libAuth->getId(), 'bilddatei');
 		}
 	} elseif(isset($_POST['formType']) && $_POST['formType'] == 'personPassword'){
-		if(!$libAuth->checkPasswordForPerson($libAuth->getId(), $_POST['oldpwd'])){
+		$oldPassword = $_POST['oldpwd'] ?? '';
+		$newPassword1 = $_POST['newpwd1'] ?? '';
+		$newPassword2 = $_POST['newpwd2'] ?? '';
+
+		if(!$libAuth->checkPasswordForPerson($libAuth->getId(), $oldPassword)){
 			$libGlobal->errorTexts[] = 'Das alte Passwort ist nicht korrekt.';
-		} elseif(trim($_POST['newpwd1']) == ''){
+		} elseif(trim($newPassword1) == ''){
 			$libGlobal->errorTexts[] = 'Es wurde kein neues Passwort angegeben.';
-		} elseif($_POST['newpwd2'] != $_POST['newpwd1']){
+		} elseif($newPassword2 != $newPassword1){
 			$libGlobal->errorTexts[] = 'Das neue Passwort und die Passwortwiederholung stimmen nicht überein.';
 		} else {
-			$libAuth->savePassword($libAuth->getId(), $_POST['newpwd1']);
+			$libAuth->savePassword($libAuth->getId(), $newPassword1);
 		}
 	} elseif(isset($_POST['action']) && $_POST['action'] == 'photoDelete'){
 		$libImage->deletePersonPhoto($libAuth->getId());
@@ -169,6 +173,14 @@ $stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if(!is_array($row)){
+	echo '<h1>Mitglied</h1>';
+	echo $libString->getErrorBoxText();
+	echo $libString->getNotificationBoxText();
+	echo '<p class="mb-4">Das Mitglied existiert nicht.</p>';
+	return;
+}
 
 /*
 * header
@@ -828,7 +840,7 @@ function printAssociationDetails($row){
 function printVita($row){
 	echo '<article>';
 
-	$vita = trim($row['vita']);
+	$vita = trim((string) $row['vita']);
 
 	if($vita != ''){
 		echo nl2br($vita);

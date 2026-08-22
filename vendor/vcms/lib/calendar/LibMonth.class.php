@@ -24,6 +24,9 @@ class LibMonth{
 	var $days = array();
 
 	function __construct($year, $number, $startDate, $endDate){
+		$startDate = (string) $startDate;
+		$endDate = (string) $endDate;
+
 		$this->year = $year;
 		$this->number = $number;
 

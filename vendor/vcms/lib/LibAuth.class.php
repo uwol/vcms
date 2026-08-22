@@ -41,8 +41,8 @@ class LibAuth{
 	function login($email, $password){
 		global $libGlobal, $libDb, $libPerson, $libTime, $libSecurityManager, $libString;
 
-		$email = trim(strtolower($email));
-		$password = trim($password);
+		$email = trim(strtolower((string) $email));
+		$password = trim((string) $password);
 
 		//clean memory
 		$this->id = '';
@@ -104,7 +104,7 @@ class LibAuth{
 		}
 
 		//5. missing password hash
-		if(trim($row['password_hash'] == '')){
+		if(trim((string) $row['password_hash']) == ''){
 			$libGlobal->errorTexts[] = 'In der Datenbank ist kein Passwort-Hash vorhanden.';
 			return false;
 		}
@@ -123,7 +123,7 @@ class LibAuth{
 			$stmt->bindColumn('datum', $lastMistakenLoginToday);
 			$stmt->fetch();
 
-			$nextPossibleLoginTimeStamp = strtotime($lastMistakenLoginToday) + pow(2, $numberOfMistakenLoginsToday);
+			$nextPossibleLoginTimeStamp = strtotime((string) $lastMistakenLoginToday) + pow(2, $numberOfMistakenLoginsToday);
 			$secondsToNextPossibleLogin = $nextPossibleLoginTimeStamp - time();
 
 			if($secondsToNextPossibleLogin > 0){
@@ -241,7 +241,7 @@ class LibAuth{
 		}
 
 		//2. validation of password
-		$newPassword = trim($newPassword);
+		$newPassword = trim((string) $newPassword);
 
 		//a. empty password
 		if($newPassword == ''){
@@ -280,8 +280,8 @@ class LibAuth{
 	}
 
 	function checkPassword($password, $storedHash){
-		$password = trim($password);
-		$storedHash = trim($storedHash);
+		$password = trim((string) $password);
+		$storedHash = trim((string) $storedHash);
 
 		// check by BCrypt
 		if($password != '' && $storedHash != ''){
@@ -304,12 +304,16 @@ class LibAuth{
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+		if(!is_array($row)){
+			return false;
+		}
+
 		return $this->checkPassword($password, $row['password_hash']);
 	}
 
 	function isValidPassword($password){
 		//min 1 Ziffer, min 1 Kleinbuchstabe, min 1 Großbuchstabe, kein Leerzeichen, min 10 Zeichen
-		return preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{10,}$/", trim($password));
+		return preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{10,}$/", trim((string) $password));
 	}
 
 	function getPasswordRequirements(){

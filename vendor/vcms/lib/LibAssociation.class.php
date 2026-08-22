@@ -54,9 +54,9 @@ class LibAssociation{
 		$colors['stahlblau']     = '30406A';
 		$colors['purpur']        = 'FF0033';
 
-		$color = strtolower($color);
+		$color = strtolower((string) $color);
 
-		if($colors[$color] != ''){
+		if(isset($colors[$color]) && $colors[$color] != ''){
 			return '#'.$colors[$color];
 		} else {
 			return '#000000';
@@ -64,6 +64,7 @@ class LibAssociation{
 	}
 
 	function getFoundationString($date){
+		$date = (string) $date;
 		$retstr = '';
 
 		if($date != ''){
@@ -90,6 +91,10 @@ class LibAssociation{
 		$stmt->bindValue(':id', $associationId, PDO::PARAM_INT);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		if(!is_array($row)){
+			return '';
+		}
 
 		return $row['titel']. ' ' .$row['name'];
 	}

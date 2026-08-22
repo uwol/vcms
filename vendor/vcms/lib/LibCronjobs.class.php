@@ -268,6 +268,11 @@ class LibCronjobs{
 
     	$fileAbsolutePath = $directoryAbsolutePath. '/.htaccess';
 	    $handle = @fopen($fileAbsolutePath, 'w');
+
+	    if($handle === false){
+	    	return;
+	    }
+
     	@fwrite($handle, $content);
     	@fclose($handle);
     }
@@ -282,7 +287,13 @@ class LibCronjobs{
     	}
 
     	$handle = @fopen($fileAbsolutePath, 'r');
-    	$content = @fread($handle, @filesize($fileAbsolutePath));
+
+    	if($handle === false){
+    		return false;
+    	}
+
+    	$fileSize = @filesize($fileAbsolutePath);
+    	$content = $fileSize > 0 ? @fread($handle, $fileSize) : '';
     	@fclose($handle);
 
     	if($content == 'deny from all'){

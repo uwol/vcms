@@ -43,6 +43,10 @@ class LibRepositoryClient{
   		$modules = json_decode($modules, true);
   	}
 
+  	if(!is_array($modules)){
+  		$modules = array();
+  	}
+
   	foreach($libModuleHandler->getModules() as $module){
   		$isBaseModule = substr($module->getId(), 0, 5) == 'base_';
 
@@ -66,10 +70,10 @@ class LibRepositoryClient{
 
     foreach($moduleVersions as $key => $newVersion){
       if($key == 'engine'){
-        $result['engine'] = ((double) $newVersion) > ((double) $libGlobal->version);
+        $result['engine'] = ((float) $newVersion) > ((float) $libGlobal->version);
       } elseif($libModuleHandler->moduleIsAvailable($key)){
         $module = $libModuleHandler->getModuleByModuleid($key);
-        $result[$key] = ((double) $newVersion) > ((double) $module->getVersion());
+        $result[$key] = ((float) $newVersion) > ((float) $module->getVersion());
       }
     }
 

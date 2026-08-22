@@ -50,9 +50,9 @@ function handleFileUpload($i, $allowedExtensions){
 	$tmp_name = $_FILES['files']['tmp_name'][$i];
 	$size = $_FILES['files']['size'][$i];
 
-	$pathinfo = pathinfo($name);
-	$filename = $pathinfo['filename'];
-	$ext = $pathinfo['extension'];
+	$pathinfo = pathinfo((string) $name);
+	$filename = isset($pathinfo['filename']) ? $pathinfo['filename'] : '';
+	$ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
 
 	$result = array();
 

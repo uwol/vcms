@@ -23,6 +23,9 @@ class LibYear{
 	var $months = array();
 
 	function __construct($number, $startDate, $endDate){
+		$startDate = (string) $startDate;
+		$endDate = (string) $endDate;
+
 		if($number != '0' && $number == ''){
 			$number = @date('Y');
 		}

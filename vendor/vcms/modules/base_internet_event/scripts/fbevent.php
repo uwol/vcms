@@ -54,9 +54,13 @@ if($libEvent->isFacebookEvent($row)){
 	if(!empty($eventJson)){
 		$eventObject = json_decode($eventJson, true);
 
-		$eventCoverSource = $eventObject['cover']['source'];
-		$eventAttendingCount = $eventObject['attending_count'];
-		$eventInterestedCount = $eventObject['interested_count'];
+		if(!is_array($eventObject)){
+			return;
+		}
+
+		$eventCoverSource = isset($eventObject['cover']['source']) ? $eventObject['cover']['source'] : '';
+		$eventAttendingCount = isset($eventObject['attending_count']) ? $eventObject['attending_count'] : 0;
+		$eventInterestedCount = isset($eventObject['interested_count']) ? $eventObject['interested_count'] : 0;
 
 		echo '<div class="panel panel-default">';
 		// no panel-body here!

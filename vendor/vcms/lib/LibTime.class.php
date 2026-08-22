@@ -279,7 +279,7 @@ class LibTime{
 		$firstYearInSemestersConfig = $yearsInSemestersConfig[0];
 
 		//first year ever?
-		if($year == ((int) $firstYearInSemestersConfig)){
+		if($year == ((int) $firstYearInSemestersConfig) && count($semesters) > 0){
 			$semesterKeys = array_keys($semesters);
 			$firstSemesterKey = $semesterKeys[0];
 			$semesters[$firstSemesterKey]['startdate'] = '0000-00-00';
@@ -316,6 +316,7 @@ class LibTime{
 	//--------------------------- operations on semester string giving semester array --------------------------------------------
 
 	function isValidSemesterString($semesterString){
+		$semesterString = (string) $semesterString;
 		$regexp = "/([a-zA-Z]+)([0-9]{4})([0-9]{4})?/";
 		$matches = array();
 
@@ -333,6 +334,7 @@ class LibTime{
 	}
 
 	function getSemesterFromSemesterString($semesterString){
+		$semesterString = (string) $semesterString;
 		$regexp = "/[a-zA-Z]+([0-9]{4})[0-9]*/";
 		$matches = array();
 
@@ -355,12 +357,17 @@ class LibTime{
 		}
 
 		$semester = $this->getSemesterFromSemesterString($semesterString);
+
+		if(!is_array($semester)){
+			return array();
+		}
+
 		return $semester['months'];
 	}
 
 	function getPeriod($semesterString){
 		if(!$this->isValidSemesterString($semesterString)){
-			return array();
+			return array('', '');
 		}
 
 		$semester = $this->getSemesterFromSemesterString($semesterString);
@@ -426,12 +433,22 @@ class LibTime{
 
 	function getSemesterName(){
 		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
+
+		if(!is_array($semester)){
+			return '';
+		}
+
 		return $semester['name'];
 	}
 
 	function getPreviousSemesterName(){
 		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
 		$previousSemester = $this->getPreviousSemester($semester);
+
+		if(!is_array($previousSemester)){
+			return '';
+		}
+
 		return $previousSemester['name'];
 	}
 
@@ -441,12 +458,22 @@ class LibTime{
 		}
 
 		$semester = $this->getPreviousSemester($this->getSemesterFromSemesterString($semesterString));
+
+		if(!is_array($semester)){
+			return '';
+		}
+
 		return $semester['name'];
 	}
 
 	function getFollowingSemesterName(){
 		$semester = $this->getSemesterAtDate(@date('Y-m-d'));
 		$followingSemester = $this->getFollowingSemester($semester);
+
+		if(!is_array($followingSemester)){
+			return '';
+		}
+
 		return $followingSemester['name'];
 	}
 
@@ -456,17 +483,33 @@ class LibTime{
 		}
 
 		$semester = $this->getFollowingSemester($this->getSemesterFromSemesterString($semesterString));
+
+		if(!is_array($semester)){
+			return '';
+		}
+
 		return $semester['name'];
 	}
 
 	function getShortSemester($semesterString){
 		$semester = $this->getSemesterFromSemesterString($semesterString);
+
+		if(!is_array($semester)){
+			return '';
+		}
+
 		return $semester['prefix'].$semester['startyear'];
 	}
 
 	function getWeekday($date){
+		$timestamp = strtotime((string) $date);
+
+		if($timestamp === false){
+			return '';
+		}
+
 		$weekdays = array('So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.');
-		$weekday = $weekdays[@date('w', strtotime($date))];
+		$weekday = $weekdays[@date('w', $timestamp)];
 		return $weekday;
 	}
 
@@ -609,7 +652,7 @@ class LibTime{
 
 		$retstr = '';
 
-		if(count($semesters) > 1 || (count($semesters) == 1 && ($semesters[0] != $globalSemester))){
+		if(count($semesters) > 1 || (count($semesters) == 1 && (reset($semesters) != $globalSemester))){
 			$retstr .= '<div class="panel panel-default">';
 			$retstr .= '<div class="panel-body">';
 			$retstr .= '<form action="index.php" class="form-inline">';

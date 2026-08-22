@@ -42,6 +42,10 @@ class LibGenealogyElement{
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+		if(!is_array($row)){
+			return;
+		}
+
 		$this->leibvater = $row['leibmitglied'];
 		$this->title = $row['titel'];
 		$this->firstName = $row['vorname'];

@@ -69,8 +69,8 @@ class LibICalendar{
 		}
 		//Thunderbird: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23
 		elseif(stristr($_SERVER['HTTP_USER_AGENT'], 'Lightning') || strstr($_SERVER['HTTP_USER_AGENT'], 'Thunderbird')){
-			header('Content-Type: text/calendar');
-			echo utf8_encode(utf8_decode($retstr));
+			header('Content-Type: text/calendar; charset=UTF-8');
+			echo $retstr;
 		}
 		//remaining client types
 		else {

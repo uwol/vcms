@@ -38,7 +38,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	}
 
 	echo '<p class="caption mb-3">';
-	echo nl2br(trim($row['text']));
+	echo nl2br(trim((string) $row['text']));
 	echo '</p>';
 
 	echo '</div>';

@@ -203,7 +203,8 @@ class Request
 
         $response = $this->buildResponse($result);
 
-        curl_close($this->_ch);
+        // the CurlHandle is freed automatically; unsetting keeps hasBeenInitialized() correct
+        $this->_ch = null;
 
         return $response;
     }
@@ -1044,6 +1045,10 @@ class Request
 
         $body = array_pop($response);
         $headers = array_pop($response);
+
+        if ($headers === null) {
+            $headers = '';
+        }
 
         return new Response($body, $headers, $this, $info);
     }

@@ -454,7 +454,7 @@ class LibForm{
 				echo ' selected="selected"';
 			}
 
-			echo '>' .substr($row['titel'], 0, 25). ' [' .$row['datum']. ']</option>';
+			echo '>' .substr((string) $row['titel'], 0, 25). ' [' .$row['datum']. ']</option>';
 		}
 
 		echo '</select></div>';

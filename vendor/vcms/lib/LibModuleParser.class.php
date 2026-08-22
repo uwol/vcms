@@ -30,7 +30,13 @@ class LibModuleParser{
 		$moduleAbsolutePath = $libFilesystem->getAbsolutePath($moduleRelativePath);
 		$jsonAbsolutePath = $moduleAbsolutePath. '/meta.json';
 
-		$jsonFileContents = file_get_contents($jsonAbsolutePath);
+		$jsonFileContents = @file_get_contents($jsonAbsolutePath);
+
+		if($jsonFileContents === false){
+			$libGlobal->errorTexts[] = 'Die Datei ' .$jsonAbsolutePath. ' konnte nicht gelesen werden.';
+			return;
+		}
+
 		$json = json_decode($jsonFileContents, true);
 
 		if(json_last_error()){
@@ -134,6 +140,7 @@ class LibModuleParser{
 
 	function parseMenuElement($menuElementJson){
 		$type = isset($menuElementJson['type']) ? $menuElementJson['type'] : '';
+		$menuElement = null;
 
 		switch($type){
 			case 'menu_entry':

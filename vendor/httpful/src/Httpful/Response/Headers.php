@@ -20,12 +20,17 @@ final class Headers implements \ArrayAccess, \Countable {
      */
     public static function fromString($string)
     {
-        $headers = preg_split("/(\r|\n)+/", $string, -1, \PREG_SPLIT_NO_EMPTY);
+        $headers = preg_split("/(\r|\n)+/", (string) $string, -1, \PREG_SPLIT_NO_EMPTY);
         $parse_headers = array();
         for ($i = 1; $i < count($headers); $i++) {
-            list($key, $raw_value) = explode(':', $headers[$i], 2);
-            $key = trim($key);
-            $value = trim($raw_value);
+            $header_parts = explode(':', $headers[$i], 2);
+
+            if (count($header_parts) < 2) {
+                continue;
+            }
+
+            $key = trim($header_parts[0]);
+            $value = trim($header_parts[1]);
             if (array_key_exists($key, $parse_headers)) {
                 // See HTTP RFC Sec 4.2 Paragraph 5
                 // http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
@@ -44,7 +49,7 @@ final class Headers implements \ArrayAccess, \Countable {
      * @param string $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->headers[$offset]);
     }
@@ -53,7 +58,7 @@ final class Headers implements \ArrayAccess, \Countable {
      * @param string $offset
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         if (isset($this->headers[$offset])) {
             return $this->headers[$offset];
@@ -65,7 +70,7 @@ final class Headers implements \ArrayAccess, \Countable {
      * @param string $value
      * @throws \Exception
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new \Exception("Headers are read-only.");
     }
@@ -74,7 +79,7 @@ final class Headers implements \ArrayAccess, \Countable {
      * @param string $offset
      * @throws \Exception
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new \Exception("Headers are read-only.");
     }
@@ -82,7 +87,7 @@ final class Headers implements \ArrayAccess, \Countable {
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->headers);
     }

@@ -48,13 +48,13 @@ elseif($action == 'insert'){
 	}
 
 	$valueArray = $_REQUEST;
-	$valueArray['startdatum'] = $libTime->assureMysqlDateTime($valueArray['startdatum']);
+	$valueArray['startdatum'] = $libTime->assureMysqlDateTime($valueArray['startdatum'] ?? '');
 
 	if(((int) substr($valueArray['startdatum'], 0, 4)) < 1){
 		$valueArray['startdatum'] = date('Y-m-d H:i:s');
 	}
 
-	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum']);
+	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum'] ?? '');
 	$array = $libDb->insertRow($fields, $valueArray, 'mod_internethome_nachricht', array('id'=>''));
 	$libGlobal->notificationTexts[] = 'Die Ankündigung wurde gespeichert.';
 }
@@ -65,13 +65,13 @@ elseif($action == 'update'){
 	}
 
 	$valueArray = $_REQUEST;
-	$valueArray['startdatum'] = $libTime->assureMysqlDateTime($valueArray['startdatum']);
+	$valueArray['startdatum'] = $libTime->assureMysqlDateTime($valueArray['startdatum'] ?? '');
 
 	if(((int) substr($valueArray['startdatum'], 0, 4)) < 1){
 		$valueArray['startdatum'] = date('Y-m-d H:i:s');
 	}
 
-	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum']);
+	$valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum'] ?? '');
 	$array = $libDb->updateRow($fields, $valueArray, 'mod_internethome_nachricht', array('id' => $_REQUEST['id']));
 	$libGlobal->notificationTexts[] = 'Die Ankündigung wurde gespeichert.';
 }

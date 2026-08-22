@@ -80,7 +80,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	$event->setLinkUrl('index.php?pid=event&amp;id=' .$row['id']);
 	$event->setStatus($row['status']);
 
-	if(substr($row['datum'], 11, 8) == "00:00:00"){
+	if(substr((string) $row['datum'], 11, 8) == "00:00:00"){
 		$event->isAllDay(true);
 	}
 

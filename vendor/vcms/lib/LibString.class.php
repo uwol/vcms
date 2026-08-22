@@ -20,11 +20,13 @@ namespace vcms;
 
 class LibString{
 	function xmlentities($string){
+		$string = (string) $string;
+
 		return str_replace(array('&', '"', "'", '<', '>'), array('&amp;' , '&quot;', '&apos;' , '&lt;' , '&gt;'), $string);
 	}
 
 	function protectXSS($value){
-		return htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
+		return htmlspecialchars((string) $value, ENT_NOQUOTES, 'UTF-8');
 	}
 
 	function randomAlphaNumericString($len, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'){
@@ -39,6 +41,8 @@ class LibString{
 	}
 
 	function isValidEmail($email){
+		$email = (string) $email;
+
 		if($email != ''){
 			if(preg_match('/^([a-zA-Z0-9\.\_\-]+)@([a-zA-Z0-9\.\-]+\.[A-Za-z][A-Za-z]+)$/', $email)){
 				return true;
@@ -49,6 +53,8 @@ class LibString{
 	}
 
 	function isValidURL($string){
+		$string = (string) $string;
+
 		$urlRegEx =
 			"/^" .
 			"http:\/\/" .           // http-protocol
@@ -91,6 +97,8 @@ class LibString{
 	}
 
 	function normalizeStreet($street){
+		$street = (string) $street;
+
 		$street = str_replace('str.', 'str', $street);
 	 	$street = str_replace('straße', 'str', $street);
 		$street = str_replace('Straße', 'str', $street);

@@ -42,7 +42,7 @@ $stmt->execute();
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	if(isset($row['semester_reception']) && isset($tArray[$row['semester_reception']]) && is_array($tArray[$row['semester_reception']])){
-		$firstNameArray = explode(" ", $row['vorname']);
+		$firstNameArray = explode(" ", (string) $row['vorname']);
 		$firstName = $firstNameArray[0];
 
 		$stmt2 = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person, base_semester WHERE id = :id AND (base_semester.senior = base_person.id OR base_semester.consenior = base_person.id OR base_semester.fuchsmajor = base_person.id OR base_semester.fuchsmajor2 = base_person.id OR base_semester.scriptor = base_person.id OR base_semester.quaestor = base_person.id OR base_semester.jubelsenior = base_person.id OR base_semester.vop = base_person.id OR base_semester.vvop = base_person.id OR base_semester.vopxx = base_person.id OR base_semester.vopxxx = base_person.id OR base_semester.vopxxxx = base_person.id)");
@@ -163,7 +163,7 @@ foreach($tArray as $key1 => $value1){
 
 		echo '<td style="';
 
-		if(strstr(strtolower($value2['status']), 'ex loco')){
+		if(strstr(strtolower((string) $value2['status']), 'ex loco')){
 			echo 'background-color: #F5A9A9">';
  		} elseif($value2['gruppe'] == 'F'){
 			echo 'background-color: #66FF66">';
@@ -175,10 +175,10 @@ foreach($tArray as $key1 => $value1){
 		echo $value2['vorname'];
 
 		if($value2['praefix'] != ''){
-			echo ' ' .substr($value2['praefix'], 0, 1). '.';
+			echo ' ' .substr((string) $value2['praefix'], 0, 1). '.';
 		}
 
-		echo ' ' .substr($value2['name'], 0, 1). '.';
+		echo ' ' .substr((string) $value2['name'], 0, 1). '.';
 		echo '</a>';
 
 		if(isset($value2['alter']) && is_numeric($value2['alter'])){

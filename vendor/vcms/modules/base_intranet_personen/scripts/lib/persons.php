@@ -40,10 +40,10 @@ function printPersons($stmt){
 			echo '<br />';
 
 			if($row['datum_geburtstag'] != '0000-00-00'){
-				echo substr($row['datum_geburtstag'], 0, 4);
+				echo substr((string) $row['datum_geburtstag'], 0, 4);
 			}
 
-			echo ' - ' .substr($row['tod_datum'], 0, 4);
+			echo ' - ' .substr((string) $row['tod_datum'], 0, 4);
 		} elseif($row['ort1'] != ''){
 			echo '<br />' .$row['ort1'];
 		}

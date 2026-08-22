@@ -120,7 +120,7 @@ class Folder extends FolderElement{
 	}
 
 	function addFolder($folderName){
-		$folderName = trim(preg_replace("/[^a-zA-Z0-9äöüÄÖÜß]/", ' ', $folderName));
+		$folderName = trim(preg_replace("/[^a-zA-Z0-9äöüÄÖÜß]/", ' ', (string) $folderName));
 
 		if($folderName != ''){
 			@mkdir($this->getFileSystemPath() . '/' . $folderName);
@@ -129,7 +129,7 @@ class Folder extends FolderElement{
 	}
 
 	function addFile($tmpFileSystemName, $name, $groupArray){
-		$name = trim(preg_replace("/[^a-zA-Z0-9\s\.äöüÄÖÜß]/", ' ', $name));
+		$name = trim(preg_replace("/[^a-zA-Z0-9\s\.äöüÄÖÜß]/", ' ', (string) $name));
 		$name = preg_replace("/[\s]+/", ' ', $name);
 
 		if(strlen($name) > 0){
@@ -185,7 +185,13 @@ class Folder extends FolderElement{
 	*/
 
 	function scanFileSystem(){
-		$files = array_diff(scandir($this->getFileSystemPath()), array('.', '..'));
+		$files = @scandir($this->getFileSystemPath());
+
+		if(!is_array($files)){
+			return;
+		}
+
+		$files = array_diff($files, array('.', '..'));
 
 		$fileArray = array();
 

@@ -585,7 +585,7 @@ class Archive_Tar extends PEAR
         }
 
         // ----- Get the arguments
-        $v_att_list = &func_get_args();
+        $v_att_list = func_get_args();
 
         // ----- Read the attributes
         $i=0;
@@ -657,14 +657,14 @@ class Archive_Tar extends PEAR
     // {{{ _error()
     function _error($p_message)
     {
-        $this->error_object = &$this->raiseError($p_message);
+        $this->error_object = $this->raiseError($p_message);
     }
     // }}}
 
     // {{{ _warning()
     function _warning($p_message)
     {
-        $this->error_object = &$this->raiseError($p_message);
+        $this->error_object = $this->raiseError($p_message);
     }
     // }}}
 

@@ -23,6 +23,9 @@ class LibCalendar{
 	var $eventSet;
 
 	function __construct($startDate, $endDate){
+		$startDate = (string) $startDate;
+		$endDate = (string) $endDate;
+
 		$this->eventSet = new LibCalendarEventSet();
 		$startYear = intval(substr($startDate, 0, 4));
 		$endYear = intval(substr($endDate, 0, 4));

@@ -111,9 +111,11 @@ $lastSetMonth = '';
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	//month name
-	if($lastSetMonth != substr($row['eingabedatum'], 0, 7)){
-		echo '<h2>' .$libTime->getMonth($libTime->formatMonthString($row['eingabedatum'])). ' ' .substr($row['eingabedatum'], 0, 4). '</h2>';
-		$lastSetMonth = substr($row['eingabedatum'], 0, 7);
+	$inputDate = (string) $row['eingabedatum'];
+
+	if($lastSetMonth != substr($inputDate, 0, 7)){
+		echo '<h2>' .$libTime->getMonth($libTime->formatMonthString($inputDate)). ' ' .substr($inputDate, 0, 4). '</h2>';
+		$lastSetMonth = substr($inputDate, 0, 7);
 	}
 
 	echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
@@ -140,7 +142,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 	echo '<div class="row">';
 
 	echo '<div class="col-xs-12 col-sm-9 col-md-10">';
-	echo nl2br($row['text']);
+	echo nl2br((string) $row['text']);
 	echo '</div>';
 
 	if(($row['autor'] != '' && $row['autor'] > 0) || ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0)){

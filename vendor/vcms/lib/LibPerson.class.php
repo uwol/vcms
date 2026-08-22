@@ -30,12 +30,24 @@ class LibPerson{
 		$stmt->execute();
 		$memberRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
+		if(!is_array($memberRow)){
+			return '';
+		}
+
 		$memberString = $this->formatNameString($memberRow['anrede'], $memberRow['titel'], $memberRow['rang'], $memberRow['vorname'], $memberRow['praefix'], $memberRow['name'], $memberRow['suffix'], $mode);
 
 		return $memberString;
 	}
 
 	function formatNameString($salutation, $title, $rank, $firstName, $prefix, $name, $suffix, $mode = 0){
+		$salutation = (string) $salutation;
+		$title = (string) $title;
+		$rank = (string) $rank;
+		$firstName = (string) $firstName;
+		$prefix = (string) $prefix;
+		$name = (string) $name;
+		$suffix = (string) $suffix;
+
 		$string = '';
 
 		if ($suffix != ''){

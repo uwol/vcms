@@ -109,7 +109,7 @@ class LibCalendarEvent{
 	}
 
 	function getDateOfDateTime($dateTime){
-		return substr($dateTime, 0, 10);
+		return substr((string) $dateTime, 0, 10);
 	}
 
 	function toString($forDate = ''){

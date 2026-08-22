@@ -120,7 +120,7 @@ class LibGallery{
 	}
 
 	function parseAccessString($file){
-		$filename = pathinfo($file, PATHINFO_FILENAME);
+		$filename = pathinfo((string) $file, PATHINFO_FILENAME);
 		$accessSuffix = substr($filename, -2);
 
 		foreach($this->validAccessStrings as $validAccessString){
@@ -155,6 +155,7 @@ class LibGallery{
 	}
 
 	function getPublicityFilename($file, $accessString){
+		$file = (string) $file;
 		$filename = pathinfo($file, PATHINFO_FILENAME);
 		$extension = pathinfo($file, PATHINFO_EXTENSION);
 		$hasPublicityLevel = $this->hasPublicityLevel($file);
@@ -189,6 +190,11 @@ class LibGallery{
 		}
 
 		$pictures = $this->getPictures($eventId, 2);
+
+		if(!isset($pictures[$pictureId])){
+			return;
+		}
+
 		$filename = $pictures[$pictureId];
 		$currentAccessString = $this->parseAccessString($filename);
 

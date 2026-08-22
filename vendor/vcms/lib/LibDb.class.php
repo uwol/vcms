@@ -20,6 +20,7 @@ namespace vcms;
 
 use PDO;
 use PDOException;
+use Pdo\Mysql;
 
 class LibDb{
 	var $connection;
@@ -43,7 +44,7 @@ class LibDb{
 			$mysqlPort,
 			$libConfig->mysqlDb);
 
-		$options = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
+		$options = array(Mysql::ATTR_INIT_COMMAND => "SET NAMES utf8");
 
 		try {
 			$this->connection = new PDO($dsn, $libConfig->mysqlUser, $libConfig->mysqlPass, $options);

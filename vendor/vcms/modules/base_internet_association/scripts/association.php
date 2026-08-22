@@ -175,7 +175,7 @@ if(isset($_GET['id'])){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($associationRow['farbenstrophe']);
+		echo nl2br((string) $associationRow['farbenstrophe']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
@@ -187,7 +187,7 @@ if(isset($_GET['id'])){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($associationRow['farbenstrophe_inoffiziell']);
+		echo nl2br((string) $associationRow['farbenstrophe_inoffiziell']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
@@ -199,7 +199,7 @@ if(isset($_GET['id'])){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($associationRow['fuchsenstrophe']);
+		echo nl2br((string) $associationRow['fuchsenstrophe']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
@@ -211,7 +211,7 @@ if(isset($_GET['id'])){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($associationRow['bundeslied']);
+		echo nl2br((string) $associationRow['bundeslied']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
@@ -221,7 +221,7 @@ if(isset($_GET['id'])){
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
 		echo '<p class="mb-4">';
-		echo nl2br($associationRow['beschreibung']);
+		echo nl2br((string) $associationRow['beschreibung']);
 		echo '</p>';
 		echo '</div>';
 		echo '</div>';
