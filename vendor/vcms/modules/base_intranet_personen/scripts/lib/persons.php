@@ -17,6 +17,11 @@ You should have received a copy of the GNU General Public License
 along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 */
 
+if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
+    exit();
+}
+
+
 function printPersons($stmt)
 {
     global $libDb, $libPerson, $libString;
