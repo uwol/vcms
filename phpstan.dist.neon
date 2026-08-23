@@ -1,0 +1,34 @@
+#
+# Static analysis configuration for PHPStan (https://phpstan.org).
+#
+# Run `bin/analyse` to check the code.
+#
+# Only VCMS' own code is analysed. The third-party libraries in /vendor
+# (httpful, pear, phpass, phpmailer etc.) are merely scanned so that their
+# classes are known, but they are not reported on.
+#
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 0
+
+    paths:
+        - custom
+        - modules
+        - vendor/vcms
+        - api.php
+        - index.php
+
+    # Not analysed, only used to resolve classes referenced from VCMS code.
+    scanDirectories:
+        - vendor/httpful/src
+        - vendor/pear
+        - vendor/phpass
+        - vendor/phpmailer
+
+    # installer.txt is PHP code that is renamed to installer.php on installation.
+    # It is covered by bin/lint (php -l and PHP-CS-Fixer) but not by PHPStan,
+    # which selects files by extension.
+    fileExtensions:
+        - php

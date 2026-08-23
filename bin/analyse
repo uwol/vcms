@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# Runs static analysis on VCMS' own PHP code with PHPStan (phpstan.dist.neon).
+# Catches semantic errors that `bin/lint` cannot see, such as undefined variables,
+# calls to unknown methods and wrong argument counts.
+#
+# Known findings are listed in phpstan-baseline.neon and are not reported.
+# To refresh that list after fixing some of them:
+#
+#     bin/analyse --generate-baseline=phpstan-baseline.neon
+#
+# Requires: brew install phpstan
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+if ! command -v phpstan > /dev/null 2>&1; then
+    echo 'Error: phpstan not found. Install it with: brew install phpstan' >&2
+    exit 1
+fi
+
+# The default 128M is enough for the current level, this leaves some headroom.
+phpstan analyse \
+    --configuration=phpstan.dist.neon \
+    --memory-limit=512M \
+    --no-progress \
+    "$@"

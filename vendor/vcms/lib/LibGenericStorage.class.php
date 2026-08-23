@@ -177,7 +177,7 @@ class LibGenericStorage
 
     public function loadArraysOfModuleInCurrentModule()
     {
-        return loadArraysOfModule($this->getCurrentModuleId());
+        return $this->loadArraysOfModule($this->getCurrentModuleId());
     }
 
     //save
