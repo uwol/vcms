@@ -100,7 +100,7 @@ if (isset($_GET['id'])) {
         echo '</p>';
     }
 
-    echo '<p class="mb-4">';
+    echo '<p class="mb-0">';
 
     if ($associationRow['datum_gruendung']) {
         echo 'Gründung ';
@@ -178,7 +178,7 @@ if (isset($_GET['id'])) {
 
         echo '<div class="card">';
         echo '<div class="card-body">';
-        echo '<p class="mb-4">';
+        echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['farbenstrophe']));
         echo '</p>';
         echo '</div>';
@@ -190,7 +190,7 @@ if (isset($_GET['id'])) {
 
         echo '<div class="card">';
         echo '<div class="card-body">';
-        echo '<p class="mb-4">';
+        echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['farbenstrophe_inoffiziell']));
         echo '</p>';
         echo '</div>';
@@ -202,7 +202,7 @@ if (isset($_GET['id'])) {
 
         echo '<div class="card">';
         echo '<div class="card-body">';
-        echo '<p class="mb-4">';
+        echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['fuchsenstrophe']));
         echo '</p>';
         echo '</div>';
@@ -214,7 +214,7 @@ if (isset($_GET['id'])) {
 
         echo '<div class="card">';
         echo '<div class="card-body">';
-        echo '<p class="mb-4">';
+        echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['bundeslied']));
         echo '</p>';
         echo '</div>';
@@ -224,7 +224,7 @@ if (isset($_GET['id'])) {
     if ($associationRow['beschreibung']) {
         echo '<div class="card">';
         echo '<div class="card-body">';
-        echo '<p class="mb-4">';
+        echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['beschreibung']));
         echo '</p>';
         echo '</div>';
@@ -237,28 +237,44 @@ if (isset($_GET['id'])) {
     echo '<div class="card">';
     echo '<div class="card-body">';
 
+    /*
+    * All three images are optional, so which one ends up last in the card body is only
+    * known at runtime. They are collected first and the last one that is actually
+    * rendered drops its bottom margin, because a margin on the last element of the card
+    * body would stretch the card below the image.
+    */
+    $imagePaths = [];
+
     $filePathZirkelSvg = 'custom/vereine/zirkel/' .$associationRow['id']. '.svg';
     $filePathZirkelGif = 'custom/vereine/zirkel/' .$associationRow['id']. '.gif';
 
     if (is_file($filePathZirkelSvg)) {
-        echo '<p class="mb-4"><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-fluid d-block mx-auto" /></p>';
+        $imagePaths['Zirkel'] = $filePathZirkelSvg;
     } elseif (is_file($filePathZirkelGif)) {
-        echo '<p class="mb-4"><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-fluid d-block mx-auto" /></p>';
+        $imagePaths['Zirkel'] = $filePathZirkelGif;
     }
 
     $filePathWappenSvg = 'custom/vereine/wappen/' .$associationRow['id']. '.svg';
     $filePathWappenJpg = 'custom/vereine/wappen/' .$associationRow['id']. '.jpg';
 
     if (is_file($filePathWappenSvg)) {
-        echo '<p class="mb-4"><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-fluid d-block mx-auto" /></p>';
+        $imagePaths['Wappen'] = $filePathWappenSvg;
     } elseif (is_file($filePathWappenJpg)) {
-        echo '<p class="mb-4"><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-fluid d-block mx-auto" /></p>';
+        $imagePaths['Wappen'] = $filePathWappenJpg;
     }
 
     $filePathHausJpg = 'custom/vereine/haus/' .$associationRow['id']. '.jpg';
 
     if (is_file($filePathHausJpg)) {
-        echo '<p class="mb-4"><img src="' .$filePathHausJpg. '" alt="Haus" class="img-fluid d-block mx-auto" /></p>';
+        $imagePaths['Haus'] = $filePathHausJpg;
+    }
+
+    $lastImageAlt = array_key_last($imagePaths);
+
+    foreach ($imagePaths as $imageAlt => $imagePath) {
+        $marginClass = ($imageAlt === $lastImageAlt) ? 'mb-0' : 'mb-4';
+
+        echo '<p class="' .$marginClass. '"><img src="' .$imagePath. '" alt="' .$imageAlt. '" class="img-fluid d-block mx-auto" /></p>';
     }
 
     echo '</div>';

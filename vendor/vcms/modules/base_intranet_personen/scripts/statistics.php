@@ -216,7 +216,7 @@ echo '<div class="card">';
 echo '<div class="card-body">';
 
 if (empty($ageClassesAhAh)) {
-    echo '<p class="mb-4">Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
+    echo '<p class="mb-0">Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
 } else {
     echo '<canvas id="age_structure" style="width:100%;height:300px"></canvas>' . PHP_EOL;
     echo '<script>' . PHP_EOL;

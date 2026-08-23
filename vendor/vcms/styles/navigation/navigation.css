@@ -20,6 +20,24 @@
 	}
 }
 
+/*
+* Below the expand breakpoint the navbar is fixed and grows downwards with the opened
+* menus, so a menu that is taller than the viewport used to be unreachable. Bootstrap 3
+* capped .navbar-collapse with max-height and overflow-y, Bootstrap 5 dropped that rule.
+* The cap is placed on the navbar and not on .navbar-collapse, because the intranet has
+* two collapse elements that are toggled together and would otherwise get one scroll area
+* each, together exceeding the viewport again. dvh keeps the cap in sync with the visible
+* viewport while mobile browsers show or hide their toolbars.
+*/
+@media(max-width: 767px){
+	.navbar {
+		max-height: 100vh;
+		max-height: 100dvh;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+}
+
 .navbar,
 .navbar a {
 	transition: all 0.35s;
@@ -139,6 +157,26 @@
 
 .navbar .dropdown-menu .dropdown-item {
 	color: inherit;
+}
+
+/*
+* Below the expand breakpoint Bootstrap positions the dropdown menus statically inside the
+* vertical menu flow. Bootstrap 3 stripped their panel styling in that state, Bootstrap 5
+* keeps background, border and corner radius, so an opened submenu is drawn as a white box
+* on top of the navbar background. The panel is reset through the dropdown's own custom
+* properties, and the entries are indented by one level instead: navbar-nav sets a
+* horizontal padding of 0 on the nav-link, so the item padding alone creates the indent.
+*/
+@media(max-width: 767px){
+	.navbar .dropdown-menu {
+		--bs-dropdown-bg: transparent;
+		--bs-dropdown-border-width: 0;
+		--bs-dropdown-border-radius: 0;
+		--bs-dropdown-padding-y: 0;
+		--bs-dropdown-item-padding-x: 1em;
+		--bs-dropdown-link-hover-bg: transparent;
+		--bs-dropdown-link-active-bg: transparent;
+	}
 }
 
 .navbar .navbar-internet .nav-link {

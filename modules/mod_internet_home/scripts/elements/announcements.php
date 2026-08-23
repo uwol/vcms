@@ -39,7 +39,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo '<img src="' .$image. '" class="img-fluid d-block mx-auto reveal" alt="" />';
     }
 
-    echo '<p class="card-body mb-3">';
+    echo '<p class="card-body mb-0">';
     echo nl2br($libString->protectXSS(trim((string) $row['text'])));
     echo '</p>';
 
