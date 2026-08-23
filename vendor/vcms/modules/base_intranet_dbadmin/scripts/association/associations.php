@@ -26,16 +26,15 @@ if ($libAuth->isLoggedin()) {
 
     if (isset($_POST['action']) && $_POST['action'] == 'delete') {
         if (isset($_POST['id']) && $_POST['id'] != '') {
-            // Verwendung der Veranstaltung in anderen Tabellen prüfen
-            // diese Einträge vorher löschen, da kein InnoDB und somit kein CASCADE ALL
-            // verwendet wird.
+            // Check for usage of the association in other tables.
+            // Delete those entries first, since InnoDB is not used and therefore no CASCADE ALL applies.
 
-            // Vereinsmitgliedschaften löschen
+            // Delete association memberships
             $stmt = $libDb->prepare('DELETE FROM base_verein_mitgliedschaft WHERE verein=:verein');
             $stmt->bindValue(':verein', $_POST['id'], PDO::PARAM_INT);
             $stmt->execute();
 
-            // falls der Verein ein Mutterverein oder Fusionsverein ist, die darauf verweisenden auf null setzen
+            // If the association is a parent or merger association, set the referencing entries to null
             $stmt = $libDb->prepare('UPDATE base_verein SET mutterverein = NULL WHERE mutterverein=:mutterverein');
             $stmt->bindValue(':mutterverein', $_POST['id'], PDO::PARAM_INT);
             $stmt->execute();
@@ -44,7 +43,7 @@ if ($libAuth->isLoggedin()) {
             $stmt->bindValue(':fusioniertin', $_POST['id'], PDO::PARAM_INT);
             $stmt->execute();
 
-            // Verein aus Datenbank löschen
+            // Delete the association from the database
             $stmt = $libDb->prepare('DELETE FROM base_verein WHERE id=:id');
             $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
             $stmt->execute();

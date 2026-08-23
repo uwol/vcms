@@ -72,6 +72,9 @@ in `.php-cs-fixer.dist.php`. When adding a new top-level PHP file, add it to bot
 ### Basic Quality Standards
 
 - Comments MUST be in English. German comments are not allowed; translate the ones you touch.
+- Comment style: the comment text starts with a capital letter, and `//` comments have a space
+  after the marker, e.g. `// Relax sql_mode so that ...` (never `//relax sql_mode ...`). 
+  The first word of `/* ... */` and `/** ... */` blocks is capitalized, too.
 - Identifiers (classes, methods, functions, variables, file names) MUST be in English.
 - Database tables and columns are German legacy (`base_person.gruppe`, `base_veranstaltung.titel`)
   and MUST NOT be renamed. Map them to English variable names in the PHP code.

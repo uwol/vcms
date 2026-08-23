@@ -37,17 +37,17 @@ if ($libAuth->isLoggedin()) {
     }
 
     $eventRow = [];
-    //Felder in der Tabelle angeben -> Metadaten
+    // Specify the fields of the table -> metadata
     $fields = ['titel', 'datum', 'datum_ende', 'spruch', 'beschreibung', 'status', 'ort', 'fb_eventid', 'intern'];
 
     /**
     *
-    * Verschiedene Aktionen auf der Datenbank durchführen, je nach Kontext
-    * der durch action definiert wird
+    * Perform different actions on the database, depending on the context
+    * defined by action
     *
     */
 
-    //neue Veranstaltung, leerer Datensatz
+    // New event, empty record
     if ($action == 'blank') {
         $eventRow['id'] = '';
         $eventRow['datum'] = @date('Y-m-d H:i:s');
@@ -60,7 +60,7 @@ if ($libAuth->isLoggedin()) {
         $eventRow['fb_eventid'] = '';
         $eventRow['intern'] = $libGenericStorage->loadValue('base_core', 'event_preselect_intern');
     }
-    //Daten wurden mit blank eingegeben, werden nun gespeichert
+    // Data was entered with blank, now being saved
     elseif ($action == 'insert') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
@@ -79,7 +79,7 @@ if ($libAuth->isLoggedin()) {
 
         $eventRow = $libDb->insertRow($fields, $valueArray, 'base_veranstaltung', ['id' => '']);
     }
-    //bestehende Daten werden modifiziert
+    // Existing data is being modified
     elseif ($action == 'update') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
@@ -110,7 +110,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Einleitender Text
+    * Introductory text
     *
     */
 
@@ -124,7 +124,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Löschoption
+    * Deletion option
     *
     */
     if ($eventRow['id'] != '') {
@@ -137,7 +137,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Ausgabe des Forms starten
+    * Start form output
     *
     */
 

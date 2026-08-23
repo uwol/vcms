@@ -40,7 +40,7 @@ if ($libAuth->isLoggedin()) {
             $stmt->bindColumn('number', $count);
             $stmt->fetch();
 
-            //wird diese Gruppe noch in base_person benutzt?
+            // Is this group still used in base_person?
             if ($count > 0) {
                 $libGlobal->errorTexts[] = 'Diese Gruppe wird von Mitgliedern verwendet.';
             } else {

@@ -34,17 +34,17 @@ if ($libAuth->isLoggedin()) {
     }
 
     $array = [];
-    //Felder in der Tabelle angeben -> Metadaten
+    // Specify the fields of the table -> metadata
     $fields = ['praefix', 'name', 'suffix', 'vorname', 'anrede', 'titel', 'rang', 'zusatz1', 'strasse1', 'plz1', 'ort1', 'land1', 'telefon1', 'status', 'grund', 'bemerkung'];
 
     /**
     *
-    * Verschiedene Aktionen auf der Datenbank durchführen, je nach Kontext
-    * der durch action definiert wird
+    * Perform different actions on the database, depending on the context
+    * defined by action
     *
     */
 
-    //neue, leerer Datensatz
+    // New record, empty dataset
     if ($action == 'blank') {
         foreach ($fields as $field) {
             $array[$field] = '';
@@ -54,7 +54,7 @@ if ($libAuth->isLoggedin()) {
         $array['name'] = 'Namen angeben!';
         $array['datum_adresse1_stand'] = '';
     }
-    //Daten wurden mit blank eingegeben, werden nun gespeichert
+    // Data was entered with blank, now being saved
     elseif ($action == 'insert') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
@@ -63,7 +63,7 @@ if ($libAuth->isLoggedin()) {
         $array = $libDb->insertRow($fields, $_REQUEST, 'base_vip', ['id' => '']);
         updateAddressAsOf('base_vip', 'datum_adresse1_stand', $array['id']);
     }
-    //bestehende Daten werden modifiziert
+    // Existing data is being modified
     elseif ($action == 'update') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
@@ -74,7 +74,7 @@ if ($libAuth->isLoggedin()) {
         $stmt->execute();
         $array = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        //Adressänderungen prüfen und vermerken im Stand
+        // Detect address changes and record them in the as-of field
         if ($_REQUEST['strasse1'] != $array['strasse1'] || $_REQUEST['ort1'] != $array['ort1'] || $_REQUEST['plz1'] != $array['plz1']) {
             updateAddressAsOf('base_vip', 'datum_adresse1_stand', $array['id']);
         }
@@ -90,7 +90,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Einleitender Text
+    * Introductory text
     *
     */
     echo '<h1>Vip</h1>';
@@ -100,7 +100,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Löschoption
+    * Deletion option
     *
     */
     if ($array['id'] != '') {
@@ -113,7 +113,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Ausgabe des Forms starten
+    * Start form output
     *
     */
     if ($action == 'blank') {

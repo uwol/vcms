@@ -81,7 +81,7 @@ if (isset($_POST['registrationName']) || isset($_POST['registrationPhone']) ||
 if ($formSent && !$formError) {
     $password_hash = $libAuth->encryptPassword($_POST['registrationPassword1']);
 
-    //die Mail ist Plaintext, daher kein HTML-Escaping
+    // The mail is plain text, therefore no HTML escaping
     $text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
     $text .= PHP_EOL;
     $text .= 'Name: ' .$_POST['registrationName'] . PHP_EOL;

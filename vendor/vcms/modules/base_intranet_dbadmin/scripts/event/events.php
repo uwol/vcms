@@ -26,15 +26,15 @@ if ($libAuth->isLoggedin()) {
 
     if (isset($_POST['action']) && $_POST['action'] == 'delete') {
         if (isset($_POST['id']) && $_POST['id'] != '') {
-            //Verwendung der Veranstaltung in anderen Tabellen prüfen
-            //diese Einträge vorher löschen
+            // Check for usage of the event in other tables
+            // Delete those entries first
 
-            //Veranstaltungsteilnahmen löschen
+            // Delete event registrations
             $stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung');
             $stmt->bindValue(':veranstaltung', $_POST['id'], PDO::PARAM_INT);
             $stmt->execute();
 
-            //Veranstaltung aus Datenbank löschen
+            // Delete the event from the database
             $stmt = $libDb->prepare('DELETE FROM base_veranstaltung WHERE id=:id');
             $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
             $stmt->execute();
@@ -58,7 +58,7 @@ if ($libAuth->isLoggedin()) {
     echo '</div>';
 
 
-    //Semesterauswahl
+    // Semester selection
     $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
     $stmt->execute();
 

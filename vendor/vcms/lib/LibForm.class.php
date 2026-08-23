@@ -90,9 +90,9 @@ class LibForm
     }
 
     /**
-    * HTML5-Datumsfeld. Der Wert wird auf YYYY-MM-DD normalisiert. Werte, die kein
-    * vollständiges Datum sind (z. B. Altbestände wie 1985-00-00), werden in einem
-    * Textfeld angezeigt, damit sie sichtbar bleiben und nicht still verloren gehen.
+    * HTML5 date field. The value is normalized to YYYY-MM-DD. Values that are not a
+    * complete date (e.g. legacy data like 1985-00-00) are shown in a text field, so
+    * that they remain visible and are not silently lost.
     */
     public function printDateInput($name, $label, $value, $disabled = false, $required = false, $classes = [], $min = '', $max = '')
     {
@@ -112,8 +112,8 @@ class LibForm
     }
 
     /**
-    * HTML5-Feld für Datum und Uhrzeit. Der Wert wird auf YYYY-MM-DDTHH:MM normalisiert,
-    * Fallback wie bei printDateInput.
+    * HTML5 field for date and time. The value is normalized to YYYY-MM-DDTHH:MM,
+    * fallback as in printDateInput.
     */
     public function printDateTimeInput($name, $label, $value, $disabled = false, $required = false, $classes = [], $min = '', $max = '')
     {

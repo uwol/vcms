@@ -31,7 +31,7 @@ if ($libAuth->isLoggedin()) {
 
     $semesterRow = [];
 
-    //Felder in der Tabelle angeben -> Metadaten
+    // Specify the fields of the table -> metadata
     $board = ['senior', 'sen_dech', 'consenior', 'con_dech', 'fuchsmajor', 'fm_dech', 'fuchsmajor2', 'fm2_dech', 'scriptor', 'scr_dech', 'quaestor', 'quaes_dech', 'jubelsenior', 'jubelsen_dech'];
     $ahv = ['ahv_senior', 'ahv_consenior', 'ahv_keilbeauftragter', 'ahv_scriptor', 'ahv_quaestor', 'ahv_beisitzer1', 'ahv_beisitzer2'];
     $hv = ['hv_vorsitzender', 'hv_kassierer', 'hv_beisitzer1', 'hv_beisitzer2'];
@@ -54,12 +54,12 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Verschiedene Aktionen auf der Datenbank durchführen, je nach Kontext
-    * der durch action definiert wird
+    * Perform different actions on the database, depending on the context
+    * defined by action
     *
     */
 
-    //neues Semester, leerer Datensatz
+    // New semester, empty record
     if ($action == 'blank') {
         $stmt = $libDb->prepare('SELECT * FROM base_semester ORDER BY SUBSTRING(semester,3) DESC LIMIT 0,1');
         $stmt->execute();
@@ -75,7 +75,7 @@ if ($libAuth->isLoggedin()) {
             $semesterRow[$office] = '';
         }
 
-        //Daten vom letzten Semester rüberkopieren
+        // Copy data over from the last semester
         foreach ($warte as $office) {
             $semesterRow[$office] = $lastSemester[$office];
         }
@@ -88,7 +88,7 @@ if ($libAuth->isLoggedin()) {
             $semesterRow[$office] = $lastSemester[$office];
         }
     }
-    //Daten wurden mit blank eingegeben, werden nun gespeichert: INSERT
+    // Data was entered with blank, now being saved: INSERT
     elseif ($action == 'insert') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
@@ -111,7 +111,7 @@ if ($libAuth->isLoggedin()) {
             $semesterRow = $libDb->insertRow($fields, $_REQUEST, 'base_semester', ['semester' => $_REQUEST['semester']]);
         }
     }
-    //bestehende Mitgliedsdaten werden modifiziert: UPDATE
+    // Existing member data is being modified: UPDATE
     elseif ($action == 'update') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
@@ -128,7 +128,7 @@ if ($libAuth->isLoggedin()) {
 
         $semesterRow = $libDb->updateRow($fields, $_REQUEST, 'base_semester', ['semester' => $_REQUEST['semester']]);
     }
-    //keine Aktion
+    // No action
     else {
         $stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester');
         $stmt->bindValue(':semester', $_REQUEST['semester']);
@@ -136,8 +136,8 @@ if ($libAuth->isLoggedin()) {
         $semesterRow = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    //Bildupload durchführen
-    //wurde eine Datei hochgeladen?
+    // Perform image upload
+    // Was a file uploaded?
     if (isset($_POST['formType']) && $_POST['formType'] == 'semesterCoverUpload') {
         if ($semesterRow['semester'] != '') {
             $libImage->saveSemesterCoverByFilesArray($semesterRow['semester'], 'semestercover');
@@ -151,7 +151,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Einleitender Text
+    * Introductory text
     *
     */
     echo '<h1>Semester</h1>';
@@ -164,7 +164,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Löschoption
+    * Deletion option
     *
     */
     if ($semesterRow['semester'] != '') {
@@ -181,7 +181,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Ausgabe des Forms starten
+    * Start form output
     *
     */
     if ($action == 'blank') {
@@ -205,7 +205,7 @@ if ($libAuth->isLoggedin()) {
 
     $libForm->printTextInput('semester', 'Semester', $semesterRow['semester'], 'text', $semesterDisabled);
 
-    //Vorstand
+    // Board
     echo '<h2>Vorstand</h2>';
     $libForm->printMembersDropDownBox('senior', 'Senior', $semesterRow['senior']);
     $libForm->printBoolSelectBox('sen_dech', 'Senior Decharge', $semesterRow['sen_dech']);
@@ -281,7 +281,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Fotoform einblenden
+    * Show photo form
     *
     */
     if ($action != 'blank' && $semesterRow['semester'] != '') {

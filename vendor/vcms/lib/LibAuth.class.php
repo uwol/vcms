@@ -320,7 +320,7 @@ class LibAuth
 
     public function isValidPassword($password)
     {
-        //min 1 Ziffer, min 1 Kleinbuchstabe, min 1 Großbuchstabe, kein Leerzeichen, min 10 Zeichen
+        // Min 1 digit, min 1 lowercase letter, min 1 uppercase letter, no space, min 10 characters
         return preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{10,}$/", trim((string) $password));
     }
 

@@ -28,7 +28,7 @@ $calendarId = $libGlobal->getSiteUrlAuthority(). '_semesterprogramm_';
 
 $calendar = new vcms\LibICalendar();
 
-//interne Veranstaltungen nur für angemeldete Mitglieder, analog zur Kalenderseite
+// Internal events only for logged-in members, analogous to the calendar page
 $intern = $libAuth->isLoggedin() ? 1 : 0;
 
 $stmt = $libDb->prepare('SELECT id, datum, datum_ende, titel, beschreibung, status, ort FROM base_veranstaltung WHERE intern <= :intern AND datum >= CURDATE() ORDER BY datum DESC');
@@ -48,9 +48,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 /*
 $e = new LibICalendarEvent();
-$e->summary = 'Der User-Agent ist: '.$_SERVER['HTTP_USER_AGENT'];
+$e->summary = 'The user agent is: '.$_SERVER['HTTP_USER_AGENT'];
 $e->setStartDateTime(date('Y-m-d'));
-$e->description = 'Der User-Agent ist: '.$_SERVER['HTTP_USER_AGENT'];
+$e->description = 'The user agent is: '.$_SERVER['HTTP_USER_AGENT'];
 $calendar->addEvent($e);
 */
 

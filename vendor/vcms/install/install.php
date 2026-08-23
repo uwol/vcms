@@ -329,7 +329,7 @@ $sql = "INSERT IGNORE INTO base_status (bezeichnung, beschreibung) VALUES ('A-Ph
 $libDb->query($sql);
 
 
-//Neuinstallationen speichern bereits unencodiert, die Migration in LibCronjobs entfällt
+// Fresh installations already store unencoded data; the migration in LibCronjobs is not needed
 $sql = "INSERT IGNORE INTO sys_genericstorage (moduleid, array_name, position, value) VALUES ('base_core', 'legacy_entities_decoded', 0, '1');";
 $libDb->query($sql);
 

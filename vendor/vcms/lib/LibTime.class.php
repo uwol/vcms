@@ -567,8 +567,8 @@ class LibTime
     }
 
     /**
-    * Überprüft einen Geburtstag auf Festlichkeit wie 50ten etc., und gibt Alter zu diesem Geburtstag zurück
-    * Es müssen das Geburtsjahr und das aktuelle Jahr in der Form ('1930','2000') übergeben werden.
+    * Checks a birthday for significance such as the 50th etc., and returns the age at this birthday.
+    * The birth year and the current year must be passed in the form ('1930','2000').
     */
     public function checkSignificantBirthdayYear($birthYear, $yearNow)
     {
@@ -799,8 +799,8 @@ class LibTime
     }
 
     /**
-    * Wert für ein HTML5-Feld <input type="date">, also YYYY-MM-DD.
-    * Leerer String, falls kein vollständiges Datum vorliegt.
+    * Value for an HTML5 field <input type="date">, i.e. YYYY-MM-DD.
+    * Empty string if no complete date is available.
     */
     public function formatHtmlDateString($date)
     {
@@ -818,8 +818,8 @@ class LibTime
     }
 
     /**
-    * Wert für ein HTML5-Feld <input type="datetime-local">, also YYYY-MM-DDTHH:MM.
-    * Leerer String, falls kein vollständiges Datum vorliegt.
+    * Value for an HTML5 field <input type="datetime-local">, i.e. YYYY-MM-DDTHH:MM.
+    * Empty string if no complete date is available.
     */
     public function formatHtmlDateTimeString($dateTime)
     {

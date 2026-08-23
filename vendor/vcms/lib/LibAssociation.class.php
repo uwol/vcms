@@ -184,10 +184,10 @@ class LibAssociation
     {
         global $libDb;
 
-        // ein valider Internetwart
-        // 1. muss als solcher mindestens einmal in einem Semester angegeben worden sein
-        // 2. muss eine E-Mail-Adresse und einen Passwort-Hash haben
-        // 3. darf nicht in der Gruppe T oder X (tot oder ausgetreten) sein
+        // A valid Internetwart
+        // 1. must have been listed as such in at least one semester
+        // 2. must have an email address and a password hash
+        // 3. must not be in group T or X (deceased or resigned)
 
         $internetwarte = [];
 

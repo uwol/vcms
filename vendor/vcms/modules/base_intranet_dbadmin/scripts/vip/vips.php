@@ -25,7 +25,7 @@ if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
 if ($libAuth->isLoggedin()) {
     if (isset($_POST['action']) && $_POST['action'] == 'delete') {
         if (isset($_POST['id']) && $_POST['id'] != '') {
-            // aus Datenbank löschen
+            // Delete from the database
             $stmt = $libDb->prepare('DELETE FROM base_vip WHERE id=:id');
             $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
             $stmt->execute();

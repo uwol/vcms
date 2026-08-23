@@ -39,7 +39,7 @@ $stmt->bindValue(':id', $id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-//interne Veranstaltungen nicht an anonyme Besucher ausliefern, analog zur Eventseite
+// Do not deliver internal events to anonymous visitors, analogous to the event page
 if (is_array($row) && $row['intern'] && !$libAuth->isLoggedin()) {
     http_response_code(403);
     exit;

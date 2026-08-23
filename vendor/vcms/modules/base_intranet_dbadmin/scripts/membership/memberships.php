@@ -26,7 +26,7 @@ if ($libAuth->isLoggedin()) {
 
     if (isset($_POST['action']) && $_POST['action'] == 'delete') {
         if (isset($_POST['verein']) && $_POST['verein'] != '' && isset($_POST['mitglied']) && $_POST['mitglied'] != '') {
-            // Veranstaltung aus Datenbank löschen
+            // Delete the membership from the database
             $stmt = $libDb->prepare('DELETE FROM base_verein_mitgliedschaft WHERE verein=:verein AND mitglied=:mitglied');
             $stmt->bindValue(':verein', $_POST['verein'], PDO::PARAM_INT);
             $stmt->bindValue(':mitglied', $_POST['mitglied'], PDO::PARAM_INT);

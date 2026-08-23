@@ -236,7 +236,7 @@ echo '</div>';
 
 
 /*
-* passwort change form
+* Password change form
 */
 if ($ownprofile) {
     echo '<h2>Passwort ändern</h2>';
@@ -362,7 +362,7 @@ if ($ownprofile) {
 
 
 /*
-* Leibbursche
+* Leib brother
 */
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS bs, base_person AS bv WHERE bs.id=:id AND bs.leibmitglied = bv.id");
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -380,7 +380,7 @@ if ($count > 0) {
 
 
 /*
-* Biersöhne
+* Beer sons
 */
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS bs WHERE bs.leibmitglied = :leibmitglied");
 $stmt->bindValue(':leibmitglied', $id, PDO::PARAM_INT);
@@ -398,7 +398,7 @@ if ($count > 0) {
 
 
 /*
-* Confuchsia
+* Co-fuchsia
 */
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person AS confuchs, base_person AS ich WHERE confuchs.semester_reception = ich.semester_reception AND ich.id=:id AND confuchs.id!=:id2");
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -418,7 +418,7 @@ if ($count > 0) {
 
 
 /*
-* Conchargen
+* Co-officers
 */
 $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_semester WHERE
 	base_semester.senior=:senior OR base_semester.consenior=:consenior OR base_semester.fuchsmajor=:fuchsmajor OR

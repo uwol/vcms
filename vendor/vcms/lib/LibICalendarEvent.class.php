@@ -61,7 +61,7 @@ class LibICalendarEvent
             $endSecond = (int) substr($endDateTime, 17, 2);
 
 
-            if ($startHour == 0 && $startMinute == 0 && $startSecond == 0) { //Startdatum ohne Zeit?
+            if ($startHour == 0 && $startMinute == 0 && $startSecond == 0) { // Start date without time?
                 $this->allDay = true;
 
                 //shortened start date
@@ -174,8 +174,8 @@ class LibICalendarEvent
 
     public function format($string)
     {
-        //kein html_entity_decode: seit der Umstellung auf Escaping bei der Ausgabe stehen
-        //die Werte unencodiert in der Datenbank. Entities wären wörtlicher Benutzertext.
+        // No html_entity_decode: since the switch to escaping on output, the values are
+        // stored unencoded in the database. Entities would be literal user text.
         $string = (string) $string;
 
         $string = str_replace('\\', '\\\\', $string); //RFC 5545 chapter 3.3.11

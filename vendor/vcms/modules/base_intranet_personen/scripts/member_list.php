@@ -110,7 +110,7 @@ else {
         printPersons($stmt);
     }
 
-    //Füchse
+    // Foxes
     $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'F'");
     $stmt->execute();
     $stmt->bindColumn('number', $count);
@@ -123,7 +123,7 @@ else {
         printPersons($stmt);
     }
 
-    //Burschen
+    // Brothers
     $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'B'");
     $stmt->execute();
     $stmt->bindColumn('number', $count);
@@ -132,7 +132,7 @@ else {
     if ($count > 0) {
         echo '<h2>Die Burschen (' .$count. ')</h2>';
 
-        //aktive Burschen
+        // Active brothers
         $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'B' AND (status IS NULL OR (status NOT LIKE '%ex loco%' AND status NOT LIKE '%Inaktiv%'))");
         $stmt->execute();
         $stmt->bindColumn('number', $countActive);
@@ -143,7 +143,7 @@ else {
             printPersons($stmt);
         }
 
-        //inaktive Burschen
+        // Inactive brothers
         $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%')");
         $stmt->execute();
         $stmt->bindColumn('number', $countInactiveExLoco);
@@ -155,7 +155,7 @@ else {
         }
     }
 
-    //Philister
+    // Alumni
     $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'P'");
     $stmt->execute();
     $stmt->bindColumn('number', $count);
@@ -169,7 +169,7 @@ else {
     }
 
     if ($libGenericStorage->loadValueInCurrentModule('show_group_y')) {
-        //Vereinsfreunde
+        // Association friends
         $stmt = $libDb->prepare("SELECT COUNT(*) AS number FROM base_person WHERE gruppe = 'Y'");
         $stmt->execute();
         $stmt->bindColumn('number', $count);

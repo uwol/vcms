@@ -42,16 +42,16 @@ class LibCronjobs
         'vendor/vcms/lib', 'vendor/vcms/modules'];
 
     /*
-    * Spalten, die früher beim Schreiben durch protectXSS() liefen und daher
-    * HTML-encodiert in der Datenbank stehen. Siehe migrateLegacyHtmlEntities().
+    * Columns that previously ran through protectXSS() on write and are therefore
+    * stored HTML-encoded in the database. See migrateLegacyHtmlEntities().
     *
-    * Bewusst nicht enthalten:
-    * - password_hash und validationkey (Geheimnisse, wurden nie encodiert)
-    * - ipadresse (wurde nie encodiert)
-    * - Spalten, die als Wert-Fremdschlüssel dienen (base_gruppe.bezeichnung,
-    *   base_status.bezeichnung, base_person.status, semester-Spalten). Sie enthalten
-    *   nur kurze, validierte Bezeichner ohne & < >, ein Dekodieren würde aber die
-    *   Verknüpfung zwischen den Tabellen aufbrechen.
+    * Deliberately not included:
+    * - password_hash and validationkey (secrets, they were never encoded)
+    * - ipadresse (was never encoded)
+    * - Columns that serve as value foreign keys (base_gruppe.bezeichnung,
+    *   base_status.bezeichnung, base_person.status, semester columns). They contain
+    *   only short, validated identifiers without & < >; decoding them would break
+    *   the linkage between the tables.
     */
     public $legacyEncodedColumns = [
         'base_status' => ['beschreibung'],
@@ -220,15 +220,14 @@ class LibCronjobs
     }
 
     /**
-    * Einmalige Datenmigration: Bis zur Umstellung auf Escaping bei der Ausgabe wurden alle
-    * Werte beim Schreiben durch protectXSS() geschickt und stehen daher HTML-encodiert in
-    * der Datenbank. Da jetzt zusätzlich bei der Ausgabe escaped wird, würden sie doppelt
-    * encodiert angezeigt ("Müller &amp;amp; Sohn"). Diese Methode macht die alte
-    * Encodierung genau einmal rückgängig.
+    * One-time data migration: Until the switch to escaping on output, all values were
+    * passed through protectXSS() on write and are therefore stored HTML-encoded in the
+    * database. Since output is now escaped as well, they would appear double-encoded
+    * ("Müller &amp;amp; Sohn"). This method undoes the old encoding exactly once.
     *
-    * Sie darf nicht mehrfach laufen, weil ein zweiter Durchgang einen vom Benutzer wörtlich
-    * eingegebenen Text wie "&amp;amp;" zu "&amp;" verkürzen würde. Deshalb der Schalter im
-    * Generic Storage.
+    * It must not run more than once, because a second pass would shorten text a user
+    * literally entered like "&amp;amp;" to "&amp;". Hence the switch in the Generic
+    * Storage.
     */
     public function migrateLegacyHtmlEntities()
     {
@@ -252,14 +251,13 @@ class LibCronjobs
     }
 
     /**
-    * Kehrt htmlspecialchars($value, ENT_NOQUOTES) für eine einzelne Spalte um. Die alte
-    * Encodierung hat ausschließlich & < > ersetzt, daher wird auch nur das zurückgedreht
-    * und nicht etwa html_entity_decode() verwendet: Entities wie &auml; hat nie das VCMS
-    * erzeugt, sie sind wörtlicher Benutzertext und müssen stehen bleiben.
+    * Reverts htmlspecialchars($value, ENT_NOQUOTES) for a single column. The old
+    * encoding only replaced & < >, so only that is reverted here and not e.g.
+    * html_entity_decode() used: VCMS never produced entities like &auml;; they are
+    * literal user text and must remain untouched.
     *
-    * Die Reihenfolge ist wichtig. &lt; und &gt; werden zuerst aufgelöst, &amp; zuletzt,
-    * damit ein wörtlich eingegebenes "&lt;" (gespeichert als "&amp;lt;") wieder zu "&lt;"
-    * und nicht zu "<" wird.
+    * The order matters. &lt; and &gt; are resolved first, &amp; last, so that a
+    * literally entered "&lt;" (stored as "&amp;lt;") becomes "&lt;" again and not "<".
     */
     public function decodeLegacyHtmlEntitiesInColumn($table, $column)
     {

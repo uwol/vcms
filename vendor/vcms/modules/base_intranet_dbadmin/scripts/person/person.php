@@ -36,7 +36,7 @@ if ($libAuth->isLoggedin()) {
 
     $personRow = [];
     $personRow['id'] = '';
-    //Felder in der Personentabelle angeben -> Metadaten
+    // Specify the fields of the person table -> metadata
     $fields = [
         'anrede', 'titel', 'rang', 'vorname', 'praefix', 'name', 'suffix', 'geburtsname',
         'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1',
@@ -48,20 +48,20 @@ if ($libAuth->isLoggedin()) {
         'anschreiben_zusenden', 'spendenquittung_zusenden',
         'bemerkung', 'vita'];
 
-    //Ist der Bearbeiter ein Internetwart?
+    // Is the editor an Internetwart?
     if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
-        //dann auch die sensiblen Felder bearbeiten
+        // Then also edit the sensitive fields
         $fields = array_merge($fields, ['gruppe', 'password_hash']);
     }
 
     /**
     *
-    * Verschiedene Aktionen auf der Datenbank durchführen, je nach Kontext
-    * der durch action definiert wird
+    * Perform different actions on the database, depending on the context
+    * defined by action
     *
     */
 
-    //neue Person, leerer Datensatz
+    // New person, empty record
     if ($action == 'blank') {
         foreach ($fields as $field) {
             $personRow[$field] = '';
@@ -78,13 +78,13 @@ if ($libAuth->isLoggedin()) {
         $personRow['datum_gruppe_stand'] = '';
         $personRow['password_hash'] = '';
     }
-    //Daten wurden mit blank eingegeben, werden nun gespeichert: INSERT
+    // Data was entered with blank, now being saved: INSERT
     elseif ($action == 'insert') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
         }
 
-        //Ist der Bearbeiter kein Internetwart?
+        // Is the editor not an Internetwart?
         if (!in_array('internetwart', $libAuth->getOffices()) && !in_array('datenpflegewart', $libAuth->getOffices())) {
             die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
         }
@@ -101,22 +101,22 @@ if ($libAuth->isLoggedin()) {
         updateAddressAsOf('base_person', 'datum_adresse2_stand', $personRow['id']);
         updateGroupAsOf($personRow['id']);
 
-        //wenn ein Ehepartner angegeben wird, muss bei diesem dieses Mitglied auch als Ehepartner eingetragen werden
+        // If a spouse is given, this member must also be set as spouse in that person's record
         updateCorrespondingSpouse($_REQUEST['heirat_partner'], $personRow['id']);
     }
-    //bestehende Mitgliedsdaten werden modifiziert: UPDATE
+    // Existing member data is being modified: UPDATE
     elseif ($action == 'update') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
         }
 
-        //aktuelle Daten holen
+        // Fetch current data
         $stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $personRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        //Adressänderungen prüfen und vermerken im Stand
+        // Detect address changes and record them in the as-of field
         if ($_REQUEST['strasse1'] != $personRow['strasse1'] || $_REQUEST['ort1'] != $personRow['ort1'] || $_REQUEST['plz1'] != $personRow['plz1'] || $_REQUEST['land1'] != $personRow['land1'] || $_REQUEST['telefon1'] != $personRow['telefon1']) {
             updateAddressAsOf('base_person', 'datum_adresse1_stand', $personRow['id']);
         }
@@ -129,7 +129,7 @@ if ($libAuth->isLoggedin()) {
             updateGroupAsOf($personRow['id']);
         }
 
-        //wenn ein Ehepartner angegeben wird, muss bei diesem dieses Mitglied auch als Ehepartner eingetragen werden
+        //if a spouse is given, this member must also be set as spouse in that person's record
         if ($_REQUEST['heirat_partner'] != $personRow['heirat_partner']) {
             updateCorrespondingSpouse($_REQUEST['heirat_partner'], $personRow['id']);
         }
@@ -148,10 +148,10 @@ if ($libAuth->isLoggedin()) {
         $personRow = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    //Bildupload durchführen
-    //wurde eine Datei hochgeladen?
+    // Perform image upload
+    // Was a file uploaded?
     if (isset($_POST['formType']) && $_POST['formType'] == 'photoUpload') {
-        //wurde eine Datei hochgeladen?
+        // Was a file uploaded?
         if ($_FILES['bilddatei']['tmp_name'] != '') {
             if ($personRow['id'] != '') {
                 $libImage->savePersonPhotoByFilesArray($personRow['id'], 'bilddatei');
@@ -166,7 +166,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Einleitender Text
+    * Introductory text
     *
     */
 
@@ -180,7 +180,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Löschoption
+    * Deletion option
     *
     */
     if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
@@ -199,7 +199,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Ausgabe des Forms starten
+    * Start form output
     *
     */
 
@@ -271,16 +271,16 @@ if ($libAuth->isLoggedin()) {
 
     $libForm->printMembersDropDownBox('leibmitglied', 'Leibmitglied', $personRow['leibmitglied']);
 
-    //Anschreiben zusenden
+    // Send letter
     $libForm->printBoolSelectBox('anschreiben_zusenden', 'Anschreiben zusenden', $personRow['anschreiben_zusenden']);
 
-    //Spendenquittung zusenden
+    // Send donation receipt
     $libForm->printBoolSelectBox('spendenquittung_zusenden', 'Spendenquittung zusenden', $personRow['spendenquittung_zusenden']);
 
     $libForm->printTextInput('bemerkung', 'Bemerkung', $personRow['bemerkung']);
     $libForm->printTextarea('vita', 'Vita', $personRow['vita']);
 
-    //nur Internetwart darf an sensible Daten
+    // Only the Internetwart may access sensitive data
     if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
         $libForm->printGroupDropDownBox('gruppe', 'Gruppe', $personRow['gruppe'], false);
         $libForm->printDateInput('datum_gruppe_stand', 'Stand', $personRow['datum_gruppe_stand'], true);

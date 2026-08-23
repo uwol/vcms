@@ -31,12 +31,12 @@ if ($libAuth->isLoggedin()) {
 
     if (isset($_POST['action']) && $_POST['action'] == 'delete') {
         if (isset($_POST['id']) && $_POST['id'] != '') {
-            //Ist der Bearbeiter kein Internetwart?
+            // Is the editor not an Internetwart?
             if (!in_array('internetwart', $libAuth->getOffices()) && !in_array('datenpflegewart', $libAuth->getOffices())) {
                 die('Diese Aktion darf nur von einem Internetwart ausgeführt werden.');
             }
 
-            //Problemfall Internetwart: Dieser darf nie gelöscht werden, um immer einen Admin im System zu haben
+            // Internetwart edge case: he may never be deleted so that there is always an admin in the system
             $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:internetwart');
             $stmt->bindValue(':internetwart', $_POST['id'], PDO::PARAM_INT);
             $stmt->execute();
@@ -46,44 +46,44 @@ if ($libAuth->isLoggedin()) {
             if ($count > 0) {
                 $libGlobal->errorTexts[] = 'Die Person kann nicht gelöscht werden, weil sie ein Internetwart in mindestens einem Semester ist. Internetwarte können nicht gelöscht werden, weil sie die Administratoren sind und im Extremfall somit kein Administrator im System existiert. Falls diese Person gelöscht werden soll, so muss sie erst manuell von einem Internetwart in allen Semestern aus den Internetwartsposten entfernt werden.';
             } else {
-                //Verwendung der Person in anderen Tabellen prüfen
-                //diese Einträge vorher löschen oder vom Mitglied befreien
+                // Check for usage of the person in other tables
+                // Delete those entries first or release them from the member
 
-                //Veranstaltungsteilnahmen löschen
+                // Delete event registrations
                 $stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE person=:id');
                 $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
                 $stmt->execute();
 
-                //Vereinsmitgliedschaften löschen
+                // Delete association memberships
                 $stmt = $libDb->prepare('DELETE FROM base_verein_mitgliedschaft WHERE mitglied=:id');
                 $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
                 $stmt->execute();
 
-                //Semesterämter löschen
+                // Delete semester offices
                 foreach ($libSecurityManager->getPossibleOffices() as $office) {
                     $stmt = $libDb->prepare('UPDATE base_semester SET '.$office.' = NULL WHERE '.$office.'=:id');
                     $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
                     $stmt->execute();
                 }
 
-                //Leibvaterangaben entfernen
+                // Remove leib father entries
                 $stmt = $libDb->prepare('UPDATE base_person SET leibmitglied = NULL WHERE leibmitglied=:id');
                 $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
                 $stmt->execute();
 
-                //Ehepartnerangaben entfernen
+                // Remove spouse entries
                 $stmt = $libDb->prepare('UPDATE base_person SET heirat_partner = NULL WHERE heirat_partner=:id');
                 $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
                 $stmt->execute();
 
-                //Mitglied aus Datenbank löschen
+                // Delete the member from the database
                 $stmt = $libDb->prepare('DELETE FROM base_person WHERE id=:id');
                 $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
                 $stmt->execute();
 
                 $libGlobal->notificationTexts[] = 'Datensatz gelöscht';
 
-                //Fotodatei löschen
+                // Delete the photo file
                 $libImage->deletePersonPhoto($_POST['id']);
             }
         }

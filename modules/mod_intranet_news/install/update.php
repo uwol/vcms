@@ -29,8 +29,8 @@ $libDb->query($sql);
 
 if (!function_exists('vcmsMakeDateColumnNullable')) {
     /**
-    * Macht eine date- oder datetime-Spalte nullable ohne Default und konvertiert
-    * bestehende Zero-Dates nach NULL. Kann beliebig oft ausgeführt werden.
+    * Makes a date or datetime column nullable without a default and converts
+    * existing zero dates to NULL. Can be run any number of times.
     */
     function vcmsMakeDateColumnNullable($table, $column, $type)
     {
@@ -42,7 +42,7 @@ if (!function_exists('vcmsMakeDateColumnNullable')) {
             return;
         }
 
-        //sql_mode entschärfen, damit bestehende Zero-Dates die Tabellenkopie überleben
+        // Relax sql_mode so that existing zero dates survive the table copy
         $previousSqlMode = null;
         $stmt = $libDb->query('SELECT @@SESSION.sql_mode AS sql_mode');
 
@@ -60,7 +60,7 @@ if (!function_exists('vcmsMakeDateColumnNullable')) {
             $libDb->query('ALTER TABLE ' .$table. ' MODIFY ' .$column. ' ' .$type. ' NULL DEFAULT NULL');
         }
 
-        //Zero-Dates nach NULL konvertieren; der Vergleich vermeidet das Zero-Literal
+        // Convert zero dates to NULL; the comparison avoids the zero literal
         $libDb->query('UPDATE ' .$table. ' SET ' .$column. ' = NULL WHERE ' .$column. " < '1000-01-01'");
 
         if ($previousSqlMode !== null) {
@@ -69,7 +69,7 @@ if (!function_exists('vcmsMakeDateColumnNullable')) {
             $stmt->execute();
         }
 
-        //Ergebnis prüfen, da PDO im ERRMODE_SILENT läuft und Fehler sonst unsichtbar bleiben
+        // Check the result, as PDO runs in ERRMODE_SILENT and errors would otherwise stay invisible
         $definition = vcmsGetColumnDefinition($table, $column);
 
         if ($definition !== null && $definition['Null'] != 'YES') {
@@ -78,8 +78,8 @@ if (!function_exists('vcmsMakeDateColumnNullable')) {
     }
 
     /**
-    * Liefert die Definition einer Spalte (Field, Type, Null, Key, Default, Extra)
-    * oder null, falls Tabelle oder Spalte nicht existieren.
+    * Returns the definition of a column (Field, Type, Null, Key, Default, Extra)
+    * or null if the table or the column does not exist.
     */
     function vcmsGetColumnDefinition($table, $column)
     {

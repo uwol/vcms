@@ -57,7 +57,7 @@ $description .= '</div>';
 $description .= '</div>';
 
 /**
-* vorstand
+* Board
 */
 $description .= '<div class="row mb-4">';
 $description .= '<div class="col-sm-1"></div>';
@@ -190,7 +190,7 @@ $description .= '<div class="col-sm-1"></div>';
 $description .= '</div>';
 
 /*
-* Ämter
+* Offices
 */
 
 $description .= '<div>';
@@ -206,7 +206,7 @@ $description .= '</p>';
 $description .= '<p class="mb-4">';
 
 /**
-* receptionen
+* Receptions
 */
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_reception=:semester");
 $stmt2->bindValue(':semester', $row['semester']);
@@ -215,7 +215,7 @@ $description .= getAssociationGroup($stmt2, 'Receptionen');
 
 
 /**
-* promotionen
+* Promotions
 */
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_promotion = :semester");
 $stmt2->bindValue(':semester', $row['semester']);
@@ -224,7 +224,7 @@ $description .= getAssociationGroup($stmt2, 'Promotionen');
 
 
 /**
-* philistrierungen
+* Philistriations
 */
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_philistrierung = :semester");
 $stmt2->bindValue(':semester', $row['semester']);
@@ -233,7 +233,7 @@ $description .= getAssociationGroup($stmt2, 'Philistrierungen');
 
 
 /**
-* aufnahmen
+* Admissions
 */
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_aufnahme = :semester");
 $stmt2->bindValue(':semester', $row['semester']);
@@ -242,7 +242,7 @@ $description .= getAssociationGroup($stmt2, 'Aufnahmen');
 
 
 /**
-* fusionen
+* Mergers
 */
 $stmt2 = $libDb->prepare("SELECT id FROM base_person WHERE semester_fusion = :semester");
 $stmt2->bindValue(':semester', $row['semester']);

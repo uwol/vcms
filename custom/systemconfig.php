@@ -46,29 +46,29 @@ class LibConfig
     public $chargenVOPxxxx = 'VOPxxxx';
 
     /**
-    * Zeitzone, normalerweise unverändert
-    * Valide Werte unter http://www.php.net/manual/de/timezones.php
+    * Timezone, normally unchanged
+    * Valid values at http://www.php.net/manual/de/timezones.php
     */
     public $timezone = 'Europe/Berlin';
 
     /**
-    * optionale Anpassungen
+    * Optional adjustments
     */
     public $defaultHome = 'home';
 
     /*
-    * Standardmäßig liegt das Wintersemester im System von Oktober bis März und das Sommersemester von April bis Oktober.
-    * Normalerweise sind Anpassungen nicht nötig, sodass die weitere Beschreibung nur für folgenden Spezialfälle gilt:
-    * NUR FALLS SEMESTER IN ANDEREN MONATEN LIEGEN SOLLEN ODER ANDERE SEMESTER ALS WS & SS GEWÜNSCHT SIND,
-    * kann durch Entfernen der folgenden // konfiguriert werden, welche Semester in welchen Monaten liegen:
+    * By default the winter semester runs from October to March and the summer semester from April to October.
+    * Normally no adjustments are needed; the further description only applies to the following special cases:
+    * ONLY IF SEMESTERS SHOULD LIE IN OTHER MONTHS OR SEMESTERS OTHER THAN WS & SS ARE WANTED,
+    * The following comment lines can be uncommented to configure which semesters lie in which months:
     *
-    * Im Beispiel liegt seit dem Jahr 0 das Sommersemester (SS) von Monat 4 (April) bis Monat 9 (September) und
-    * das Wintersemester (WS) von Monat 10 (Oktober) bis Monat 3 (März), sowie seit dem Jahr 2008 der first term (FT)
-    * von Monat 1 (Januar) bis Monat 6 (Juni) und der second term (ST) von Monat 7 (Juli) bis Monat 12 (Dezember).
+    * In the example, since year 0 the summer semester (SS) runs from month 4 (April) to month 9 (September) and
+    * the winter semester (WS) from month 10 (October) to month 3 (March), and since 2008 the first term (FT)
+    * from month 1 (January) to month 6 (June) and the second term (ST) from month 7 (July) to month 12 (December).
     *
-    * Das Beispiel kann abgeändert werden: Weitere Jahre können hinzugefügt werden;
-    * Semesterpräfixe (SS, WS, FT, ST, ...) können geändert werden, dürfen aber nur aus GENAU 2 Zeichen aus a-z und A-Z
-    * bestehen. Jedes Jahr muss zudem GENAU 12 Monate bzw. 12 Semesterpräfixe enthalten! Das Jahr 0 muss vorhanden sein.
+    * The example can be modified: further years can be added;
+    * Semester prefixes (SS, WS, FT, ST, ...) can be changed, but they may only consist of EXACTLY 2 characters from a-z and A-Z.
+    * Each year must also contain EXACTLY 12 months or 12 semester prefixes! Year 0 must be present.
     */
     //var $semestersConfig = array(
     //	0 		=> array('WS', 'WS', 'WS', 'SS', 'SS', 'SS', 'SS', 'SS', 'SS', 'WS', 'WS', 'WS'),

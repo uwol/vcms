@@ -152,7 +152,7 @@ $stmt->execute();
 $stmt->bindColumn('email', $email);
 $stmt->fetch();
 
-//printStaticText escaped selbst, daher hier die Zeichen im Klartext
+// printStaticText escapes itself, therefore the special characters are passed through unescaped
 $formattedSenderString = $formattedMemberNameString. ' <' .$email. '>';
 
 $libForm->printStaticText('Absender', $formattedSenderString);

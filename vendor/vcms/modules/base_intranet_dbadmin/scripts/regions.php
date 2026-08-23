@@ -39,7 +39,7 @@ if ($libAuth->isLoggedin()) {
             $stmt->bindColumn('number', $count);
             $stmt->fetch();
 
-            //wird diese Region noch in base_person benutzt?
+            // Is this region still used in base_person?
             if ($count > 0) {
                 $libGlobal->errorTexts[] = 'Diese Region ist bei Personen angegeben.';
             } else {

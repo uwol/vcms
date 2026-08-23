@@ -24,7 +24,7 @@ if (!is_object($libGlobal)) {
 
 
 /**
-* Tabelle mod_rundbrief_brief aktualisieren
+* Update table mod_rundbrief_brief
 */
 $tableExists = false;
 
@@ -46,7 +46,7 @@ if ($tableExists) {
 
 
 /**
-* Tabelle mod_rundbrief_empfaenger aktualisieren
+* Update table mod_rundbrief_empfaenger
 */
 $fieldExistsRecipient = false;
 $fieldExistsInterested = false;

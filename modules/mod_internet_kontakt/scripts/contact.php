@@ -87,7 +87,7 @@ if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
             $mail = $libMail->createPHPMailer();
 
             $mail->addAddress($libConfig->emailInfo);
-            //die Mail ist Plaintext, daher kein HTML-Escaping
+            // The mail is plain text, therefore no HTML escaping
             $mail->Subject = 'E-Mail von ' .$_POST['name']. ' über ' . $libGlobal->getSiteUrl();
             $mail->Body = $message;
             $mail->addReplyTo($_POST['emailaddress']);

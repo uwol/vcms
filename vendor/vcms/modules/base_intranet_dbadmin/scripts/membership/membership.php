@@ -39,23 +39,23 @@ if ($libAuth->isLoggedin()) {
     }
 
     $membershipRow = [];
-    //Felder in der Tabelle angeben -> Metadaten
+    // Specify the fields of the table -> metadata
     $fields = ['mitglied', 'verein', 'ehrenmitglied', 'semester_reception', 'semester_philistrierung'];
 
     /**
     *
-    * Verschiedene Aktionen auf der Datenbank durchführen, je nach Kontext
-    * der durch action definiert wird
+    * Perform different actions on the database, depending on the context
+    * defined by action
     *
     */
 
-    //neues Mitglied, leerer Datensatz
+    // New member, empty record
     if ($action == 'blank') {
         foreach ($fields as $field) {
             $membershipRow[$field] = '';
         }
     }
-    //Daten wurden mit blank eingegeben, werden nun gespeichert
+    // Data was entered with blank, now being saved
     elseif ($action == 'insert') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
@@ -79,7 +79,7 @@ if ($libAuth->isLoggedin()) {
             $membershipRow = $libDb->insertRow($fields, $_REQUEST, 'base_verein_mitgliedschaft', ['verein' => $association, 'mitglied' => $member]);
         }
     }
-    //bestehende Daten werden modifiziert
+    // Existing data is being modified
     elseif ($action == 'update') {
         if (!isset($_POST['form_complete']) || !$_POST['form_complete']) {
             die('Die Eingabemaske war noch nicht komplett dargestellt. Bitte Seite neu laden.');
@@ -112,7 +112,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Einleitender Text
+    * Introductory text
     *
     */
 
@@ -123,7 +123,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Löschoption
+    * Deletion option
     *
     */
     if ($membershipRow['mitglied'] != '' && $membershipRow['verein'] != '') {
@@ -137,7 +137,7 @@ if ($libAuth->isLoggedin()) {
 
     /**
     *
-    * Ausgabe des Forms starten
+    * Start form output
     *
     */
     if ($action == 'blank') {

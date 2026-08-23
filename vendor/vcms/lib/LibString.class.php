@@ -59,8 +59,8 @@ class LibString
     }
 
     /**
-    * Stellt sicher, dass eine gespeicherte URL ein http(s)-Schema hat. Damit kann aus einem
-    * Datenbankwert kein javascript:-Link werden, den das Escaping nicht abfangen würde.
+    * Ensures that a stored URL has an http(s) scheme. This way a database value
+    * cannot become a javascript: link that escaping would not catch.
     */
     public function assureHttpScheme($url)
     {

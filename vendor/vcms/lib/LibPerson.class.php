@@ -59,25 +59,25 @@ class LibPerson
             $suffix = '';
         }
 
-        if ($mode == 0) { //voller Name ohne Herr: Dr. Heinz van Husen LLM
+        if ($mode == 0) { // Full name without Mr: Dr. Heinz van Husen LLM
             $string .= $title. ' ' .$firstName. ' ' .$prefix. ' ' .$name.$suffix;
-        } elseif ($mode == 1) { //umgedreht: van Husen LLM, Dr. Heinz
+        } elseif ($mode == 1) { // Reversed: van Husen LLM, Dr. Heinz
             $string .= $prefix. ' ' .$name.$suffix. ', ' .$title. ' ' .$firstName;
-        } elseif ($mode == 2) { //volle Anrede: Herr Dr. Professor Heinz van Husen LLM
+        } elseif ($mode == 2) { // Full salutation: Herr Dr. Professor Heinz van Husen LLM
             $string .= $salutation. ' ' .$title. ' ' .$rank. ' ' .$firstName. ' ' .$prefix. ' ' .$name.$suffix;
-        } elseif ($mode == 3) { //Vorname: Heinz
+        } elseif ($mode == 3) { // First name: Heinz
             $string .= $firstName;
-        } elseif ($mode == 4) { //titulierter Name, aber nur mit dem ersten Vornamen
+        } elseif ($mode == 4) { // Titled name, but only with the first of the given first names
             $firstNames = explode(' ', $firstName);
             $firstFirstName = $firstNames[0];
             $string .= $title. ' ' .$firstFirstName. ' ' .$prefix. ' ' .$name.$suffix;
-        } elseif ($mode == 5) { //Name ohne Herr und Titel: Heinz van Husen LLM
+        } elseif ($mode == 5) { // Name without Mr and title: Heinz van Husen LLM
             $string .= $firstName. ' ' .$prefix. ' ' .$name.$suffix;
-        } elseif ($mode == 6) { //volle Anrede ohne Herr: Dr. Professor Heinz van Husen LLM
+        } elseif ($mode == 6) { // Full salutation without Mr: Dr. Professor Heinz van Husen LLM
             $string .= $title. ' ' .$rank. ' ' .$firstName. ' ' .$prefix. ' ' .$name.$suffix;
-        } elseif ($mode == 7) { //umgedreht ohne Titel: van Husen LLM, Heinz
+        } elseif ($mode == 7) { // Reversed without title: van Husen LLM, Heinz
             $string .= $prefix. ' ' .$name.$suffix. ', ' .$firstName;
-        } elseif ($mode == 8) { //abgekürzt: M. Meyer
+        } elseif ($mode == 8) { // Abbreviated: M. Meyer
             $string .= substr($firstName, 0, 1). '. ' .$name;
         }
 
@@ -237,7 +237,7 @@ class LibPerson
         global $libDb, $libTime, $libConfig;
 
         /*
-        * aktuelle Chargen, ist das Mitglied aktuell in einem Vorstand?
+        * current offices; is the member currently on a board?
         */
         $stmt = $libDb->prepare("
 			SELECT *
@@ -377,7 +377,7 @@ class LibPerson
         $currentChargenString = implode(', ', $newCurrentChargen);
 
         /*
-        * dechargierte Chargen
+        * offices no longer held
         */
         $stmt = $libDb->prepare("
 			SELECT *

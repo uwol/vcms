@@ -132,7 +132,7 @@ class LibImage
             return;
         }
 
-        //$libGlobal->notificationTexts[] = 'Modifiziere Foto mit GDLib.';
+        //$libGlobal->notificationTexts[] = 'Modifying photo with GDLib.';
 
         $imageInfoArray = getimagesize($imagePath);
 
@@ -161,7 +161,7 @@ class LibImage
             return;
         }
 
-        //$libGlobal->notificationTexts[] = 'Modifiziere Foto mit ImageMagick.';
+        //$libGlobal->notificationTexts[] = 'Modifying photo with ImageMagick.';
         system('convert -strip -geometry ' .escapeshellarg($newWidth). 'x' .escapeshellarg($newHeight). " -quality 75 '".escapeshellarg($imagePath)."' '".escapeshellarg($imagePath)."'");
     }
 
@@ -190,7 +190,7 @@ class LibImage
             return;
         }
 
-        //$libGlobal->notificationTexts[] = 'Rotiere Foto mit GDLib.';
+        //$libGlobal->notificationTexts[] = 'Rotating photo with GDLib.';
 
         $imageInfoArray = getimagesize($imagePath);
 
@@ -253,7 +253,7 @@ class LibImage
             return;
         }
 
-        //$libGlobal->notificationTexts[] = 'Rotiere Foto mit ImageMagick.';
+        //$libGlobal->notificationTexts[] = 'Rotating photo with ImageMagick.';
         system('convert -strip -rotate ' .escapeshellarg($degree). " '".escapeshellarg($imagePath)."' '".escapeshellarg($imagePath)."'");
     }
 
@@ -307,7 +307,7 @@ class LibImage
         $height = $imageInfoArray[1];
 
         //check image type
-        if ($imageType != 2) { //liegt kein JPG vor?
+        if ($imageType != 2) { // No JPEG present?
             $libGlobal->errorTexts[] = 'Das Bild ist kein Jpeg.';
             return;
         }
