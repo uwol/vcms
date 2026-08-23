@@ -1,15 +1,21 @@
-<div class="modal" id="gallery-modal" role="dialog">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" id="gallery-modal" role="dialog" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <div id="modal-carousel" class="carousel">
+        <div id="modal-carousel" class="carousel slide">
           <div class="carousel-inner"></div>
-          <a class="carousel-control left" href="#modal-carousel" data-slide="prev"></a>
-          <a class="carousel-control right" href="#modal-carousel" data-slide="next"></a>
+          <button class="carousel-control-prev" type="button" data-bs-target="#modal-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Vorheriges Bild</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#modal-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Nächstes Bild</span>
+          </button>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-default" data-dismiss="modal">Schließen</button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Schließen</button>
       </div>
     </div>
   </div>

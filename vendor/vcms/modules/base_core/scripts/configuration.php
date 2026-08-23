@@ -63,9 +63,9 @@ echo $libString->getNotificationBoxText();
 
 $storage = $libGenericStorage->listAllArrayValues();
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
-echo '<form action="index.php?pid=configuration" method="post" class="form-horizontal">';
+echo '<div class="card">';
+echo '<div class="card-body">';
+echo '<form action="index.php?pid=configuration" method="post">';
 echo '<fieldset>';
 
 //modules
@@ -76,19 +76,19 @@ foreach ($storage as $moduleid => $arrays) {
     foreach ($arrays as $array_name => $positionen) {
         //positions and values at that positions
         foreach ($positionen as $position => $value) {
-            echo '<div class="form-group">';
-            echo '<label class="col-sm-4 control-label">' .$libString->protectXSS($array_name). '</label>';
+            echo '<div class="row mb-3">';
+            echo '<label class="col-sm-4 col-form-label">' .$libString->protectXSS($array_name). '</label>';
 
             echo '<div class="col-sm-1">';
-            echo '<input type="text" name="' .$libString->protectXSS($moduleid) .'#'. $libString->protectXSS($array_name) .'#position' . '" value="' .$libString->protectXSS((string) $position). '" disabled="disabled" class="form-control input-sm" />';
+            echo '<input type="text" name="' .$libString->protectXSS($moduleid) .'#'. $libString->protectXSS($array_name) .'#position' . '" value="' .$libString->protectXSS((string) $position). '" disabled="disabled" class="form-control form-control-sm" />';
             echo '</div>';
 
             echo '<div class="col-sm-6">';
-            echo '<input type="text" name="'. $libString->protectXSS($moduleid) .'#'. $libString->protectXSS($array_name) .'#'. $libString->protectXSS((string) $position) .'#value" value="' .$libString->protectXSS((string) $value). '" class="form-control input-sm" />';
+            echo '<input type="text" name="'. $libString->protectXSS($moduleid) .'#'. $libString->protectXSS($array_name) .'#'. $libString->protectXSS((string) $position) .'#value" value="' .$libString->protectXSS((string) $value). '" class="form-control form-control-sm" />';
             echo '</div>';
 
             echo '<div class="col-sm-1">';
-            echo '<div class="form-control-static p-0">';
+            echo '<div class="form-control-plaintext p-0">';
             echo '<button type="submit" name="delete_target" value="' .$libString->protectXSS($moduleid).'#'.$libString->protectXSS($array_name).'#'.$libString->protectXSS((string) $position). '" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du den Eintrag wirklich löschen?\')"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>';
             echo '</div>';
             echo '</div>';

@@ -52,10 +52,10 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
+echo '<div class="card">';
+echo '<div class="card-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;action=blank" class="btn btn-default">Eine neue Chargierveranstaltung anlegen</a>';
+echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;action=blank" class="btn btn-outline-secondary">Eine neue Chargierveranstaltung anlegen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -72,10 +72,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
 
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
+echo '<div class="card">';
+echo '<div class="card-body">';
 
-echo '<table class="table table-condensed table-striped table-hover">';
+echo '<table class="table table-sm table-striped table-hover">';
 echo '<thead>';
 echo '<tr><th>Id</th><th>Verein</th><th>Beschreibung</th><th>Datum</th><th></th></tr>';
 echo '</thead>';

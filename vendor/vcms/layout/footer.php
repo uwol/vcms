@@ -34,9 +34,9 @@ $wikipediaUrl = $libString->assureHttpScheme($libGenericStorage->loadValue('mod_
 echo '    <footer class="pb-5 pt-5">' . PHP_EOL;
 echo '      <div class="container">' . PHP_EOL;
 echo '        <div class="row">' . PHP_EOL;
-echo '          <div class="col-xs-12">' . PHP_EOL;
-echo '            <div class="social-buttons text-right mb-0 mt-0">' . PHP_EOL;
-echo '              <small class="text-muted"><a href="index.php?pid=privacy">Datenschutz</a></small>' . PHP_EOL;
+echo '          <div class="col-12">' . PHP_EOL;
+echo '            <div class="social-buttons text-end mb-0 mt-0">' . PHP_EOL;
+echo '              <small class="text-body-secondary"><a href="index.php?pid=privacy">Datenschutz</a></small>' . PHP_EOL;
 
 if ($facebookUrl != '') {
     echo '              <a href="' .$libString->protectXSS((string) $facebookUrl). '" rel="nofollow"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;

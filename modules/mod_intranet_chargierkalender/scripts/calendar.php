@@ -276,18 +276,18 @@ class LibChargierCalendarEvent
         }
 
         if ($this->registrationButtonEnabled) {
-            $retstr .= '<form action="index.php?pid=intranet_chargierkalender" method="post" class="form-horizontal">';
+            $retstr .= '<form action="index.php?pid=intranet_chargierkalender" method="post">';
             $retstr .= '<input type="hidden" name="eventid" value="' .$this->id. '" />';
             $retstr .= '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
 
             if ($this->isRegistered) {
                 $retstr .= '<input type="hidden" name="changeRegistrationState" value="unregister" />';
-                $retstr .= '<button type="submit" class="btn btn-default btn-xs">';
+                $retstr .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
                 $retstr .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
                 $retstr .= '</button>';
             } else {
                 $retstr .= '<input type="hidden" name="changeRegistrationState" value="register" />';
-                $retstr .= '<button type="submit" class="btn btn-default btn-xs">';
+                $retstr .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
                 $retstr .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
                 $retstr .= '</button>';
             }

@@ -80,7 +80,7 @@ section.announcement-box:nth-of-type(even) {
 	background-color: #666;
 }
 
-.thumbnail {
+.card.card-img {
 	padding: 0;
 }
 

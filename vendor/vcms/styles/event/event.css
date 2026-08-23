@@ -3,6 +3,6 @@
 	background-position: center;
 }
 
-.event .thumbnail .img-frame {
+.event .card.card-img .img-frame {
 	height: 140px;
 }

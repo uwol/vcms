@@ -100,8 +100,8 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
 
     // date and time panel
     echo '<div class="col-sm-4 col-lg-3">';
-    echo '<div class="panel panel-default reveal">';
-    echo '<div class="panel-body">';
+    echo '<div class="card reveal">';
+    echo '<div class="card-body">';
 
     printEventDetailDateTime($row);
 
@@ -134,15 +134,15 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
     if ($hasPictures) {
         if ($descriptionText) {
             echo '<div class="col-sm-8 col-lg-9">';
-            echo '<div class="panel panel-default reveal">';
-            echo '<div class="panel-body">';
+            echo '<div class="card reveal">';
+            echo '<div class="card-body">';
             echo $descriptionText;
             echo '</div>';
             echo '</div>';
             echo '</div>';
         }
 
-        echo '<div class="col-sm-8 col-lg-9">';
+        echo '<div class="col-12">';
         printGallery($row['id'], $pictures);
         echo '</div>';
     } else {
@@ -159,8 +159,8 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
                 echo '<div class="col-sm-8 col-lg-9">';
             }
 
-            echo '<div class="panel panel-default reveal">';
-            echo '<div class="panel-body">';
+            echo '<div class="card reveal">';
+            echo '<div class="card-body">';
             echo $descriptionText;
             echo '</div>';
             echo '</div>';
@@ -233,7 +233,7 @@ function printRegistrationStatus($row)
         $stmt->fetch();
 
         if (date('Y-m-d H:i:s') < $row['datum']) {
-            echo '<form action="index.php?pid=event&amp;id=' .$row['id']. '" method="post" class="form-inline">';
+            echo '<form action="index.php?pid=event&amp;id=' .$row['id']. '" method="post" class="d-flex flex-wrap align-items-center gap-2">';
 
             if ($isRegistered) {
                 echo '<input type="hidden" name="changeRegistrationState" value="unregister" />';
@@ -316,8 +316,8 @@ function printGallery($id, $pictures)
     echo '<div class="row gallery">';
 
     foreach ($pictures as $key => $value) {
-        echo '<div class="col-sm-6 col-lg-4">';
-        echo '<div class="thumbnail reveal mb-2">';
+        echo '<div class="col-sm-6 col-md-4 col-lg-3">';
+        echo '<div class="card card-img reveal mb-2">';
         echo '<div class="img-frame">';
         echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
         echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" alt="" />';

@@ -29,7 +29,7 @@ echo $libString->getNotificationBoxText();
 
 
 echo '<div class="row">';
-echo '<div class="col-xs-12 col-sm-6">';
+echo '<div class="col-12 col-sm-6">';
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
@@ -44,11 +44,11 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGloba
 
 echo '</div>';
 
-echo '<div class="col-xs-12 col-sm-6">';
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
+echo '<div class="col-12 col-sm-6">';
+echo '<div class="card">';
+echo '<div class="card-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="webcal://' .$libString->protectXSS($libGlobal->getSiteUrlAuthority()). '/api.php?iid=semesterprogramm_icalendar" class="btn btn-default"><i class="fa fa-calendar" aria-hidden="true"></i> Semesterprogramm abonnieren</a>';
+echo '<a href="webcal://' .$libString->protectXSS($libGlobal->getSiteUrlAuthority()). '/api.php?iid=semesterprogramm_icalendar" class="btn btn-outline-secondary"><i class="fa fa-calendar" aria-hidden="true"></i> Semesterprogramm abonnieren</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';

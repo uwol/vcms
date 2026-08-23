@@ -26,6 +26,14 @@
 	background-color: white;
 }
 
+/* img-fluid has no display: block, unlike the img-responsive of Bootstrap 3 */
+.person-img-xs,
+.person-img-md,
+.person-img-lg,
+.person-img-dummy {
+	display: block;
+}
+
 .person-img-xs {
 	height: 40px;
 }

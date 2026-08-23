@@ -2,7 +2,7 @@
     "name": "vcms/vcms",
     "type": "project",
     "require": {
-        "bootstrap": "^3.3.6",
+        "bootstrap": "^5.3.3",
         "font-awesome": "^4.6.3",
         "jquery": "^2.2.3",
         "php": ">=8.4",

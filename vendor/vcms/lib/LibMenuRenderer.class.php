@@ -38,7 +38,13 @@ class LibMenuRenderer
 
         $navbarClass = $this->getNavbarClass();
 
-        echo '    <nav id="nav" class="navbar navbar-default navbar-fixed-top ' .$navbarClass. '">' . PHP_EOL;
+        /*
+        * Neither fixed-top nor bg-white are used here: both are Bootstrap utilities that
+        * set their property with !important and would override the affix-top state in
+        * navigation.css and navigation_transparent.css. Position and background colour of
+        * the navbar are therefore owned by navigation.css.
+        */
+        echo '    <nav id="nav" class="navbar navbar-expand-md ' .$navbarClass. '">' . PHP_EOL;
         echo '      <div class="container">' . PHP_EOL;
         echo '        <div id="logo"></div>' . PHP_EOL;
         echo $this->printNavbarCollapsed();
@@ -52,20 +58,14 @@ class LibMenuRenderer
     {
         global $libGenericStorage, $libString;
 
-        echo '        <div class="navbar-header">' . PHP_EOL;
-        echo '          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . PHP_EOL;
-        echo $this->defaultIndent . '<span class="sr-only">Navigation</span>' . PHP_EOL;
-        echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
-        echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
-        echo $this->defaultIndent . '<span class="icon-bar"></span>' . PHP_EOL;
-        echo '          </button>' . PHP_EOL;
-
         $brand = $libGenericStorage->loadValue('base_core', 'brand');
         $brandXs = $libGenericStorage->loadValue('base_core', 'brand_xs');
 
-        echo '          <a href="index.php" class="navbar-brand hidden-xs">' .$libString->protectXSS((string) $brand). '</a>' . PHP_EOL;
-        echo '          <a href="index.php" class="navbar-brand visible-xs">' .$libString->protectXSS((string) $brandXs). '</a>' . PHP_EOL;
-        echo '        </div>' . PHP_EOL;
+        echo '          <a href="index.php" class="navbar-brand d-none d-md-block">' .$libString->protectXSS((string) $brand). '</a>' . PHP_EOL;
+        echo '          <a href="index.php" class="navbar-brand d-md-none">' .$libString->protectXSS((string) $brandXs). '</a>' . PHP_EOL;
+        echo '          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-internet,#navbar-intranet" aria-controls="navbar-internet navbar-intranet" aria-expanded="false" aria-label="Navigation">' . PHP_EOL;
+        echo $this->defaultIndent . '<span class="navbar-toggler-icon"></span>' . PHP_EOL;
+        echo '          </button>' . PHP_EOL;
     }
 
     public function printNavbarInternet($menuInternet, $activePid)
@@ -76,11 +76,20 @@ class LibMenuRenderer
 
         if ($rootMenuFolderInternet->hasElements()) {
             echo '        <div id="navbar-internet" class="collapse navbar-collapse navbar-internet">' . PHP_EOL;
-            echo '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
+
+            /*
+            * The person image below is taller than the text links beside it. navbar-nav is a
+            * flex row from the expand breakpoint upwards and Bootstrap sets no align-items on
+            * it, so the default stretch makes the shorter nav-link boxes sit at the top of the
+            * row instead of on its centre line. The breakpoint variant of the utility is
+            * needed: below 768px navbar-nav is a flex column, where align-items would centre
+            * the entries horizontally.
+            */
+            echo '          <ul class="navbar-nav align-items-md-center">' . PHP_EOL;
             echo $this->printNavbarLevel($rootMenuFolderInternet, 0, $activePid);
 
             if ($libAuth->isLoggedin() && $libPerson->hasImageFile($libAuth->getId())) {
-                echo '            <li class="visible-lg">' .$libPerson->getImage($libAuth->getId(), 'xs'). '</li>' . PHP_EOL;
+                echo '            <li class="nav-item d-none d-lg-block">' .$libPerson->getImage($libAuth->getId(), 'xs'). '</li>' . PHP_EOL;
             }
 
             echo '          </ul>' . PHP_EOL;
@@ -95,7 +104,7 @@ class LibMenuRenderer
 
         if ($rootMenuFolderIntranet->hasElements()) {
             echo '        <div id="navbar-intranet" class="collapse navbar-collapse navbar-intranet">' . PHP_EOL;
-            echo '          <ul class="nav navbar-nav navbar-right nav-pills">' . PHP_EOL;
+            echo '          <ul class="navbar-nav">' . PHP_EOL;
             echo $this->printNavbarLevel($rootMenuFolderIntranet, 0, $activePid);
             echo $this->printNavbarLevel($rootMenuFolderAdministration, 0, $activePid);
             echo '          </ul>' . PHP_EOL;
@@ -111,16 +120,15 @@ class LibMenuRenderer
         foreach ($menuFolder->getElements() as $folderElement) {
             //internal link?
             if ($folderElement->getType() == 1) {
-                $this->printLiTag($folderElement, $depth, $pid);
+                $this->printLinkTag($folderElement, $depth, $pid, 'index.php?pid=' .$folderElement->getPid());
 
-                echo '<a href="index.php?pid=' . $folderElement->getPid() . '">';
                 echo $folderElement->getName();
                 echo '</a></li>' . PHP_EOL;
             }
             //folder?
             elseif ($folderElement->getType() == 2) {
-                echo $this->defaultIndent . $this->indent($depth) . '<li class="dropdown">' . PHP_EOL;
-                echo $this->defaultIndent . $this->indent($depth) . '  <a href="index.php?';
+                echo $this->defaultIndent . $this->indent($depth) . '<li class="nav-item dropdown">' . PHP_EOL;
+                echo $this->defaultIndent . $this->indent($depth) . '  <a class="nav-link dropdown-toggle" href="index.php?';
 
                 //does the folder have an associated page?
                 if ($folderElement->getPid() != '') {
@@ -131,9 +139,9 @@ class LibMenuRenderer
                     echo 'pid='.$pid;
                 }
 
-                echo '" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
+                echo '" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
                 echo $folderElement->getName();
-                echo '<span class="caret"></span></a>' . PHP_EOL;
+                echo '</a>' . PHP_EOL;
 
                 //menu folder with elements?
                 if ($folderElement->hasElements()) {
@@ -146,26 +154,25 @@ class LibMenuRenderer
             }
             //external link?
             elseif ($folderElement->getType() == 3) {
-                $this->printLiTag($folderElement, $depth, $pid);
+                $this->printLinkTag($folderElement, $depth, $pid, $folderElement->getPid());
 
-                echo '<a href="' .$folderElement->getPid(). '">';
                 echo '<i class="fa fa-external-link" aria-hidden="true"></i> ';
                 echo $folderElement->getName();
                 echo '</a></li>' . PHP_EOL;
             }
             //login / logout
             elseif ($folderElement->getType() == 4) {
-                $this->printLiTag($folderElement, $depth, $pid);
-
                 if (!$libAuth->isLoggedin()) {
-                    echo '<a href="index.php?pid=' . $folderElement->getPid() . '">';
+                    $this->printLinkTag($folderElement, $depth, $pid, 'index.php?pid=' .$folderElement->getPid());
+
                     echo $folderElement->getName();
-                    echo '</a>';
                 } else {
-                    echo '<a href="index.php?logout=1">' .$folderElement->getNameLogout(). '</a>';
+                    $this->printLinkTag($folderElement, $depth, $pid, 'index.php?logout=1');
+
+                    echo $folderElement->getNameLogout();
                 }
 
-                echo '</li>' . PHP_EOL;
+                echo '</a></li>' . PHP_EOL;
             }
         }
     }
@@ -177,13 +184,18 @@ class LibMenuRenderer
         }
     }
 
-    public function printLiTag($folderElement, $depth, $pid)
+    public function printLinkTag($folderElement, $depth, $pid, $url)
     {
+        $linkClass = ($depth == 0) ? 'nav-link' : 'dropdown-item';
+
         if ($folderElement->getPid() == $pid) {
-            echo $this->defaultIndent . $this->indent($depth) . '<li class="active">';
-        } else {
-            echo $this->defaultIndent . $this->indent($depth) . '<li>';
+            $linkClass .= ' active';
         }
+
+        $liClass = ($depth == 0) ? 'nav-item' : '';
+
+        echo $this->defaultIndent . $this->indent($depth) . '<li' .(($liClass != '') ? ' class="' .$liClass. '"' : ''). '>' . PHP_EOL;
+        echo $this->defaultIndent . $this->indent($depth) . '  <a href="' .$url. '" class="' .$linkClass. '">';
     }
 
     public function getNavbarClass()

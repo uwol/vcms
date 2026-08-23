@@ -171,9 +171,9 @@ if ($formSent && !$formError) {
         }
     }
 
-    echo '<div class="panel panel-default">';
-    echo '<div class="panel-body">';
-    echo '<form method="post" action="' .$libString->protectXSS($urlPrefix). 'index.php?pid=registration" class="form-horizontal">';
+    echo '<div class="card">';
+    echo '<div class="card-body">';
+    echo '<form method="post" action="' .$libString->protectXSS($urlPrefix). 'index.php?pid=registration">';
     echo '<fieldset>';
 
     $libForm->printTextInput('registrationName', 'Vorname und Nachname', $registrationName, 'text', false, true);

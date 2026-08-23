@@ -36,8 +36,8 @@ if (isset($_GET['id'])) {
     echo '<div class="row">';
     echo '<div class="col-sm-9">';
 
-    echo '<div class="panel panel-default">';
-    echo '<div class="panel-body">';
+    echo '<div class="card">';
+    echo '<div class="card-body">';
     echo '<address>';
 
     if ($associationRow['zusatz1']) {
@@ -71,8 +71,8 @@ if (isset($_GET['id'])) {
     echo '</div>';
 
 
-    echo '<div class="panel panel-default">';
-    echo '<div class="panel-body">';
+    echo '<div class="card">';
+    echo '<div class="card-body">';
 
     if ($associationRow['farbe1']) {
         echo '<div style="width:50px">';
@@ -176,8 +176,8 @@ if (isset($_GET['id'])) {
     if ($associationRow['farbenstrophe']) {
         echo '<h3>Farbenstrophe</h3>';
 
-        echo '<div class="panel panel-default">';
-        echo '<div class="panel-body">';
+        echo '<div class="card">';
+        echo '<div class="card-body">';
         echo '<p class="mb-4">';
         echo nl2br($libString->protectXSS((string) $associationRow['farbenstrophe']));
         echo '</p>';
@@ -188,8 +188,8 @@ if (isset($_GET['id'])) {
     if ($associationRow['farbenstrophe_inoffiziell']) {
         echo '<h3>Inoffizielle Farbenstrophe</h3>';
 
-        echo '<div class="panel panel-default">';
-        echo '<div class="panel-body">';
+        echo '<div class="card">';
+        echo '<div class="card-body">';
         echo '<p class="mb-4">';
         echo nl2br($libString->protectXSS((string) $associationRow['farbenstrophe_inoffiziell']));
         echo '</p>';
@@ -200,8 +200,8 @@ if (isset($_GET['id'])) {
     if ($associationRow['fuchsenstrophe']) {
         echo '<h3>Fuchsenstrophe</h3>';
 
-        echo '<div class="panel panel-default">';
-        echo '<div class="panel-body">';
+        echo '<div class="card">';
+        echo '<div class="card-body">';
         echo '<p class="mb-4">';
         echo nl2br($libString->protectXSS((string) $associationRow['fuchsenstrophe']));
         echo '</p>';
@@ -212,8 +212,8 @@ if (isset($_GET['id'])) {
     if ($associationRow['bundeslied']) {
         echo '<h3>Bundeslied</h3>';
 
-        echo '<div class="panel panel-default">';
-        echo '<div class="panel-body">';
+        echo '<div class="card">';
+        echo '<div class="card-body">';
         echo '<p class="mb-4">';
         echo nl2br($libString->protectXSS((string) $associationRow['bundeslied']));
         echo '</p>';
@@ -222,8 +222,8 @@ if (isset($_GET['id'])) {
     }
 
     if ($associationRow['beschreibung']) {
-        echo '<div class="panel panel-default">';
-        echo '<div class="panel-body">';
+        echo '<div class="card">';
+        echo '<div class="card-body">';
         echo '<p class="mb-4">';
         echo nl2br($libString->protectXSS((string) $associationRow['beschreibung']));
         echo '</p>';
@@ -234,31 +234,31 @@ if (isset($_GET['id'])) {
     echo '</div>';
 
     echo '<div class="col-sm-3">';
-    echo '<div class="panel panel-default">';
-    echo '<div class="panel-body">';
+    echo '<div class="card">';
+    echo '<div class="card-body">';
 
     $filePathZirkelSvg = 'custom/vereine/zirkel/' .$associationRow['id']. '.svg';
     $filePathZirkelGif = 'custom/vereine/zirkel/' .$associationRow['id']. '.gif';
 
     if (is_file($filePathZirkelSvg)) {
-        echo '<p class="mb-4"><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-responsive center-block" /></p>';
+        echo '<p class="mb-4"><img src="' .$filePathZirkelSvg. '" alt="Zirkel" class="img-fluid d-block mx-auto" /></p>';
     } elseif (is_file($filePathZirkelGif)) {
-        echo '<p class="mb-4"><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-responsive center-block" /></p>';
+        echo '<p class="mb-4"><img src="' .$filePathZirkelGif. '" alt="Zirkel" class="img-fluid d-block mx-auto" /></p>';
     }
 
     $filePathWappenSvg = 'custom/vereine/wappen/' .$associationRow['id']. '.svg';
     $filePathWappenJpg = 'custom/vereine/wappen/' .$associationRow['id']. '.jpg';
 
     if (is_file($filePathWappenSvg)) {
-        echo '<p class="mb-4"><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-responsive center-block" /></p>';
+        echo '<p class="mb-4"><img src="' .$filePathWappenSvg. '" alt="Wappen" class="img-fluid d-block mx-auto" /></p>';
     } elseif (is_file($filePathWappenJpg)) {
-        echo '<p class="mb-4"><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-responsive center-block" /></p>';
+        echo '<p class="mb-4"><img src="' .$filePathWappenJpg. '" alt="Wappen" class="img-fluid d-block mx-auto" /></p>';
     }
 
     $filePathHausJpg = 'custom/vereine/haus/' .$associationRow['id']. '.jpg';
 
     if (is_file($filePathHausJpg)) {
-        echo '<p class="mb-4"><img src="' .$filePathHausJpg. '" alt="Haus" class="img-responsive center-block" /></p>';
+        echo '<p class="mb-4"><img src="' .$filePathHausJpg. '" alt="Haus" class="img-fluid d-block mx-auto" /></p>';
     }
 
     echo '</div>';
@@ -277,8 +277,8 @@ if (isset($_GET['id'])) {
     if ($count > 0) {
         echo '<h2>Mitglieder</h2>';
 
-        echo '<div class="panel panel-default">';
-        echo '<div class="panel-body">';
+        echo '<div class="card">';
+        echo '<div class="card-body">';
         echo '<div class="persons-grid">';
 
         $stmt = $libDb->prepare('SELECT base_verein_mitgliedschaft.mitglied, base_verein_mitgliedschaft.ehrenmitglied, base_person.gruppe FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id ORDER BY base_verein_mitgliedschaft.ehrenmitglied DESC, base_person.name ASC');

@@ -31,13 +31,13 @@ echo '</script>';
 echo '<section class="contact-box">';
 echo '<div class="container">';
 echo '<div class="row">';
-echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
+echo '<div class="col-lg-8 offset-lg-2 text-center">';
 
 echo '<h1 class="section-heading">Kontakt</h1>';
 echo '<hr>';
 echo '<p class="mb-4">Interesse geweckt? Großartig! Melde Dich bei uns und wir antworten Dir schnellstmöglich.</p>';
 echo '</div>';
-echo '<div class="col-lg-4 col-lg-offset-2 text-center">';
+echo '<div class="col-lg-4 offset-lg-2 text-center">';
 echo '<i class="fa fa-phone fa-3x sr-contact reveal"></i>';
 echo '<p class="mb-4">' .$libConfig->verbindungTelefon. '</p>';
 echo '</div>';

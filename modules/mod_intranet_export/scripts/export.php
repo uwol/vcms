@@ -42,9 +42,9 @@ $semester101Back = $libTime->getPreviousSemesterNameOfSemester($semester100Back)
 <h1>Export</h1>
 <p class="mb-4">Das VCMS kann Datenbestände als CSV- und HTML-Tabellen exportieren. Die Dateien können in Word und LibreOffice/OpenOffice in der Serienbrieffunktion verwendet werden. Bitte behandle diese Dateien vertraulich, verschicke sie nicht per E-Mail und lösche sie nach der Verwendung.</p>
 
-<div class="panel panel-default">
-	<div class="panel-body">
-		<table class="table table-condensed">
+<div class="card">
+	<div class="card-body">
+		<table class="table table-sm">
 			<tr>
 				<th colspan="2">Adressdaten</th>
 			</tr>

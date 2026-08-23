@@ -211,8 +211,8 @@ printPersonSignature($row, $ownprofile);
 echo '</div>';
 
 echo '<div class="col-sm-9">';
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
+echo '<div class="card">';
+echo '<div class="card-body">';
 printPersonData($row);
 
 echo '<div class="row">';
@@ -225,8 +225,8 @@ printAssociationDetails($row);
 echo '</div>';
 echo '</div>';
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
+echo '<div class="card">';
+echo '<div class="card-body">';
 printVita($row);
 echo '</div>';
 
@@ -241,9 +241,9 @@ echo '</div>';
 if ($ownprofile) {
     echo '<h2>Passwort ändern</h2>';
 
-    echo '<div class="panel panel-default">';
-    echo '<div class="panel-body">';
-    echo '<form action="index.php?pid=intranet_person&amp;id=' .$id. '" method="post" class="form-horizontal">';
+    echo '<div class="card">';
+    echo '<div class="card-body">';
+    echo '<form action="index.php?pid=intranet_person&amp;id=' .$id. '" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="formType" value="personPassword" />';
 
@@ -251,7 +251,7 @@ if ($ownprofile) {
     $libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password', false, true);
     $libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password', false, true);
 
-    echo '<div class="form-group">';
+    echo '<div class="row mb-3">';
     echo '<div class="col-sm-3"></div>';
     echo '<div class="col-sm-9">' .$libAuth->getPasswordRequirements(). '</div>';
     echo '</div>';
@@ -265,9 +265,9 @@ if ($ownprofile) {
 
     echo '<h2>Stammdaten ändern</h2>';
 
-    echo '<div class="panel panel-default">';
-    echo '<div class="panel-body">';
-    echo '<form action="index.php?pid=intranet_person" method="post" class="form-horizontal">';
+    echo '<div class="card">';
+    echo '<div class="card-body">';
+    echo '<form action="index.php?pid=intranet_person" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="formType" value="personData" />';
 
@@ -480,7 +480,7 @@ function printPersonSignature($row, $ownprofile)
 {
     global $libPerson, $libForm;
 
-    echo '<div class="center-block person-signature-box mb-3">';
+    echo '<div class="d-block mx-auto person-signature-box mb-3">';
     echo '<div class="img-box">';
 
     if ($ownprofile) {
@@ -500,7 +500,7 @@ function printPersonSignature($row, $ownprofile)
 
     if ($ownprofile) {
         //image upload form
-        echo '<form action="index.php?pid=intranet_person" method="post" enctype="multipart/form-data" class="form-horizontal text-center">';
+        echo '<form action="index.php?pid=intranet_person" method="post" enctype="multipart/form-data" class="text-center">';
         echo '<input type="hidden" name="formType" value="photoDataUpload" />';
         $libForm->printFileUpload('bilddatei', 'Foto (4x3) hochladen', false, false, [], ['image/jpeg']);
         echo '</form>';
@@ -811,7 +811,7 @@ function printAssociationDetails($row)
 
         if ($chargierCount > 0) {
             echo '<p class="mb-4">';
-            echo '<span class="badge badge-default">' .$chargierCount. '</span>';
+            echo '<span class="badge text-bg-secondary">' .$chargierCount. '</span>';
             echo ' ';
             echo 'Chargierter bei ';
 

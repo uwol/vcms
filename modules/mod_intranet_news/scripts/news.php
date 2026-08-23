@@ -90,10 +90,10 @@ echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGloba
 echo '</div>';
 echo '<div class="col-md-6">';
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-body">';
+echo '<div class="card">';
+echo '<div class="card-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_news_write" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> Einen Beitrag hinzufügen</a>';
+echo '<a href="index.php?pid=intranet_news_write" class="btn btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Einen Beitrag hinzufügen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -120,9 +120,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $lastSetMonth = substr($inputDate, 0, 7);
     }
 
-    echo '<div id="' .$row['id']. '" class="panel panel-default' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
-    echo '<div class="panel-heading">';
-    echo '<h3 class="panel-title d-inline">';
+    echo '<div id="' .$row['id']. '" class="card' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
+    echo '<div class="card-header">';
+    echo '<h3 class="card-title mb-0 d-inline">';
     echo $libTime->formatDateString($row['eingabedatum']);
     echo ' ';
     echo $libString->protectXSS($row['bezeichnung']);
@@ -140,15 +140,15 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     echo '</div>';
 
-    echo '<div class="panel-body">';
+    echo '<div class="card-body">';
     echo '<div class="row">';
 
-    echo '<div class="col-xs-12 col-sm-9 col-md-10">';
+    echo '<div class="col-12 col-sm-9 col-md-10">';
     echo nl2br($libString->protectXSS((string) $row['text']));
     echo '</div>';
 
     if (($row['autor'] != '' && $row['autor'] > 0) || ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0)) {
-        echo '<div class="hidden-xs col-sm-3 col-md-2">';
+        echo '<div class="d-none d-sm-block col-sm-3 col-md-2">';
 
         if ($row['autor'] != '' && $row['autor'] > 0) {
             echo $libPerson->getSignature($row['autor']);

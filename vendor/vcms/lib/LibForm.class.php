@@ -61,8 +61,8 @@ class LibForm
 
         $value = $libString->protectXSS((string) $value);
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
         echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
 
@@ -138,8 +138,8 @@ class LibForm
 
         $value = $libString->protectXSS((string) $value);
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
         echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
 
@@ -162,8 +162,8 @@ class LibForm
 
         $value = $libString->protectXSS((string) $value);
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
         echo '<textarea id="' .$name. '" name="' .$name. '" rows="10"';
 
@@ -181,10 +181,10 @@ class LibForm
 
     public function printFileInput($name, $label, $disabled = false, $required = false, $classes = [], $accepts = [])
     {
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
-        echo '<label class="btn btn-default btn-file';
+        echo '<label class="btn btn-outline-secondary btn-file';
 
         $this->printClassesString($classes);
 
@@ -203,8 +203,8 @@ class LibForm
 
     public function printFileUpload($name, $label, $disabled = false, $required = false, $classes = [], $accepts = [])
     {
-        echo '<div class="form-group">';
-        echo '<label class="btn btn-default btn-file';
+        echo '<div class="row mb-3">';
+        echo '<label class="btn btn-outline-secondary btn-file';
 
         $this->printClassesString($classes);
 
@@ -224,10 +224,10 @@ class LibForm
     {
         global $libString;
 
-        echo '<div class="form-group">';
-        echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
-        echo '<p class="form-control-static mb-3';
+        echo '<p class="form-control-plaintext mb-3';
 
         $this->printClassesString($classes);
 
@@ -240,9 +240,9 @@ class LibForm
 
     public function printSubmitButton($label, $classes = [])
     {
-        echo '<div class="form-group">';
-        echo '<div class="col-sm-offset-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
-        echo '<button type="submit" class="btn btn-default';
+        echo '<div class="row mb-3">';
+        echo '<div class="offset-sm-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
+        echo '<button type="submit" class="btn btn-outline-secondary';
 
         $this->printClassesString($classes);
 
@@ -253,7 +253,7 @@ class LibForm
 
     public function printSubmitButtonInline($label, $classes = [])
     {
-        echo '<button type="submit" class="btn btn-default';
+        echo '<button type="submit" class="btn btn-outline-secondary';
 
         $this->printClassesString($classes);
 
@@ -264,13 +264,13 @@ class LibForm
     {
         global $libDb, $libPerson, $libString;
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
         $this->printDisabledString($disabled);
 
-        echo ' class="form-control">';
+        echo ' class="form-select">';
 
         if ($allowNull) {
             echo '<option value=""></option>';
@@ -297,13 +297,13 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
         $this->printDisabledString($disabled);
 
-        echo ' class="form-control">';
+        echo ' class="form-select">';
 
         if ($allowNull) {
             echo '<option value=""></option>';
@@ -330,13 +330,13 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
         $this->printDisabledString($disabled);
 
-        echo ' class="form-control">';
+        echo ' class="form-select">';
 
         if ($allowNull) {
             echo '<option value=""></option>';
@@ -363,13 +363,13 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
         $this->printDisabledString($disabled);
 
-        echo ' class="form-control">';
+        echo ' class="form-select">';
 
         if ($allowNull) {
             echo '<option value=""></option>';
@@ -396,13 +396,13 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
         $this->printDisabledString($disabled);
 
-        echo ' class="form-control">';
+        echo ' class="form-select">';
 
         if ($allowNull) {
             echo '<option value=""></option>';
@@ -429,13 +429,13 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
         $this->printDisabledString($disabled);
 
-        echo ' class="form-control">';
+        echo ' class="form-select">';
 
         if ($allowNull) {
             echo '<option value=""></option>';
@@ -469,13 +469,13 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '"><select id="' .$name. '" name="' .$name. '"';
 
         $this->printDisabledString($disabled);
 
-        echo ' class="form-control">';
+        echo ' class="form-select">';
 
         if ($allowNull) {
             echo '<option value=""></option>';
@@ -500,9 +500,9 @@ class LibForm
 
     public function printBoolSelectBox($name, $label, $selectedValue = 0)
     {
-        echo '<div class="form-group">';
-        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
-        echo '<div class="col-sm-' .$this->colInput. '"><select name="' .$name. '" class="form-control">';
+        echo '<div class="row mb-3">';
+        echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' col-form-label">' .$label. '</label>';
+        echo '<div class="col-sm-' .$this->colInput. '"><select name="' .$name. '" class="form-select">';
         echo '<option value="1"';
 
         if ($selectedValue > 0) {

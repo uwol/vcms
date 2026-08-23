@@ -629,7 +629,7 @@ class LibTime
         $file = $this->determineSemesterCover($semesterString);
 
         if ($file != '') {
-            return '<img src="custom/semestercover/' .$file. '" class="img-responsive center-block" alt="Semestercover" />';
+            return '<img src="custom/semestercover/' .$file. '" class="img-fluid d-block mx-auto" alt="Semestercover" />';
         }
     }
 
@@ -683,13 +683,13 @@ class LibTime
         $retstr = '';
 
         if (count($semesters) > 1 || (count($semesters) == 1 && (reset($semesters) != $globalSemester))) {
-            $retstr .= '<div class="panel panel-default">';
-            $retstr .= '<div class="panel-body">';
-            $retstr .= '<form action="index.php" class="form-inline">';
-            $retstr .= '<fieldset>';
+            $retstr .= '<div class="card">';
+            $retstr .= '<div class="card-body">';
+            $retstr .= '<form action="index.php">';
+            $retstr .= '<fieldset class="d-flex flex-wrap align-items-center gap-2">';
             $retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';
-            $retstr .= '<label for="semester" class="sr-only">Semester</label>';
-            $retstr .= '<select id="semester" name="semester" class="form-control" onchange=\'this.form.submit()\'>';
+            $retstr .= '<label for="semester" class="visually-hidden">Semester</label>';
+            $retstr .= '<select id="semester" name="semester" class="form-select w-auto" onchange=\'this.form.submit()\'>';
 
             foreach ($semesters as $semester) {
                 if ($semester != '' && $this->isValidSemesterString($semester)) {
@@ -706,7 +706,7 @@ class LibTime
             }
 
             $retstr .= '</select> ';
-            $retstr .= '<button type="submit" class="hidden-xs btn btn-default"><i class="fa fa-calendar-o" aria-hidden="true"></i> Semester wählen</button>';
+            $retstr .= '<button type="submit" class="d-none d-sm-inline-block btn btn-outline-secondary"><i class="fa fa-calendar-o" aria-hidden="true"></i> Semester wählen</button>';
             $retstr .= '</fieldset>';
             $retstr .= '</form>';
             $retstr .= '</div>';

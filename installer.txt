@@ -160,23 +160,23 @@ if (isset($_REQUEST['aktion'])) {
 					<div>
 						<input type="hidden" name="aktion" value="createInternetWart"/>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<input type="text" name="vorname" size="20" class="form-control" placeholder="Vorname"/>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<input type="text" name="name" size="20" class="form-control" placeholder="Nachname"/>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<input type="text" name="email" size="20" class="form-control" placeholder="E-Mail-Adresse"/>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<input type="password" name="pwd1" size="20" class="form-control" placeholder="Passwort"/>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<input type="password" name="pwd2" size="20" class="form-control" placeholder="Passwort-Wiederholung"/>
 					</div>
-					<div class="form-group">
-						<input type="submit" value="Internetwart anlegen" class="btn btn-default"/>
+					<div class="mb-3">
+						<input type="submit" value="Internetwart anlegen" class="btn btn-secondary"/>
 					</div>
 				</form>
 

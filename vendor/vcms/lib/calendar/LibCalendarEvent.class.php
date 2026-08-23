@@ -167,7 +167,7 @@ class LibCalendarEvent
 
         //image
         if ($this->imageUrl != '') {
-            $retstr .= '<div class="thumbnail mb-0">';
+            $retstr .= '<div class="card card-img mb-0">';
             $retstr .= '<div class="img-frame">';
             $retstr .= '<img src="' .$this->imageUrl. '" alt="Foto" />';
             $retstr .= '</div>';

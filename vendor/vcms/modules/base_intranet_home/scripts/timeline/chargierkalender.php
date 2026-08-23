@@ -93,18 +93,18 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     }
 
     if (date('Y-m-d H:i:s') < $row['datum']) {
-        $form .= '<form action="index.php?pid=intranet_home" method="post" class="form-horizontal">';
+        $form .= '<form action="index.php?pid=intranet_home" method="post">';
         $form .= '<input type="hidden" name="chargierveranstaltungid" value="' .$row['id']. '" />';
         $form .= '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
 
         if ($isRegistered) {
             $form .= '<input type="hidden" name="chargierCalendarChangeRegistrationState" value="unregister" />';
-            $form .= '<button type="submit" class="btn btn-default btn-sm">';
+            $form .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
             $form .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
             $form .= '</button>';
         } else {
             $form .= '<input type="hidden" name="chargierCalendarChangeRegistrationState" value="register" />';
-            $form .= '<button type="submit" class="btn btn-default btn-sm">';
+            $form .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
             $form .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
             $form .= '</button>';
         }

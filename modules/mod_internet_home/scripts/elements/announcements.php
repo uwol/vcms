@@ -29,17 +29,17 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<section class="announcement-box">';
     echo '<div class="container">';
     echo '<div class="row">';
-    echo '<div class="col-lg-8 col-lg-offset-2">';
-    echo '<div class="thumbnail">';
+    echo '<div class="col-lg-8 offset-lg-2">';
+    echo '<div class="card card-img">';
 
     $image = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
     $imageExists = is_file($image);
 
     if ($imageExists) {
-        echo '<img src="' .$image. '" class="img-responsive center-block reveal" alt="" />';
+        echo '<img src="' .$image. '" class="img-fluid d-block mx-auto reveal" alt="" />';
     }
 
-    echo '<p class="caption mb-3">';
+    echo '<p class="card-body mb-3">';
     echo nl2br($libString->protectXSS(trim((string) $row['text'])));
     echo '</p>';
 

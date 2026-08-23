@@ -39,7 +39,7 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
     echo '<div class="container">';
 
     echo '<div class="row">';
-    echo '<div class="col-lg-8 col-lg-offset-2 text-center">';
+    echo '<div class="col-lg-8 offset-lg-2 text-center">';
     echo '<h1 class="section-heading">Nächste Veranstaltungen</h1>';
     echo '</div>';
     echo '</div>';
@@ -58,11 +58,11 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo '<div class="col-sm-4">';
-            echo '<div class="panel panel-default reveal">';
-            echo '<div class="panel-body">';
-            echo '<div class="thumbnail">';
+            echo '<div class="card reveal">';
+            echo '<div class="card-body">';
+            echo '<div class="card card-img">';
 
-            echo '<div class="caption">';
+            echo '<div class="card-body">';
             echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 
             printEventTitle($row);
@@ -96,17 +96,17 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
 
     if ($semesterCoverAvailable) {
         echo '<div class="col-sm-4">';
-        echo '<div class="panel panel-default reveal">';
-        echo '<div class="panel-body">';
-        echo '<div class="thumbnail">';
+        echo '<div class="card reveal">';
+        echo '<div class="card-body">';
+        echo '<div class="card card-img">';
 
-        echo '<div class="semestercover-box center-block">';
+        echo '<div class="semestercover-box d-block mx-auto">';
         echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">';
         echo $semesterCoverString;
         echo '</a>';
         echo '</div>';
 
-        echo '<div class="caption">';
+        echo '<div class="card-body">';
         echo '<h3><i class="fa fa-calendar" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
         echo '<p class="mb-4">Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
         echo '</div>';

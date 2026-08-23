@@ -35,16 +35,27 @@ function adjustFacebookPagePluginsSrc(){
 }
 
 function configureNavigation(){
-	var navbarHeight = $(".navbar-fixed-top").height();
+	var navbarHeight = $(".navbar").height();
 	var paddingTop = navbarHeight;
 
-    $('nav').affix({
-        offset: {
-            top: 75
-        }
-    });
-
     $("#content").css("padding-top", paddingTop);
+}
+
+function toggleNavbarState(){
+	var navbar = document.querySelector("nav.navbar");
+
+	if (navbar) {
+		var scrolled = window.scrollY > 75;
+		var wasScrolled = navbar.classList.contains("affix");
+
+		navbar.classList.toggle("affix", scrolled);
+		navbar.classList.toggle("affix-top", !scrolled);
+
+		// back at the top the navbar is taller again, so the content offset is recalculated
+		if (wasScrolled && !scrolled) {
+			configureNavigation();
+		}
+	}
 }
 
 function reveal(){
@@ -79,11 +90,6 @@ $(document).ready(function() {
 		}, 20);
 	});
 
-	$('.navbar').on('affixed-top.bs.affix', function(event) {
-		configureNavigation();
-	});
-});
-
-$(document).load(function() {
-	adjustElementDimensions();
+	window.addEventListener('scroll', toggleNavbarState, {passive: true});
+	toggleNavbarState();
 });

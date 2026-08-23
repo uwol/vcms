@@ -190,9 +190,9 @@ if ($libAuth->isLoggedin()) {
         $extraActionParam = "&amp;action=update";
     }
 
-    echo '<div class="panel panel-default">';
-    echo '<div class="panel-body">';
-    echo '<form action="index.php?pid=intranet_admin_semester' .$extraActionParam. '" method="post" class="form-horizontal">';
+    echo '<div class="card">';
+    echo '<div class="card-body">';
+    echo '<form action="index.php?pid=intranet_admin_semester' .$extraActionParam. '" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="formType" value="semesterData" />';
     echo '<input type="hidden" name="semester" value="' .$semesterRow['semester']. '" />';
@@ -285,7 +285,7 @@ if ($libAuth->isLoggedin()) {
     *
     */
     if ($action != 'blank' && $semesterRow['semester'] != '') {
-        echo '<div class="center-block">';
+        echo '<div class="d-block mx-auto">';
         echo '<div class="img-box">';
 
         $hasSemesterCover = $libTime->hasSemesterCover($semesterRow['semester']);
@@ -305,7 +305,7 @@ if ($libAuth->isLoggedin()) {
         echo '</div>';
 
         //image upload form
-        echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_semester&amp;semester='. $semesterRow['semester'] .'" class="form-horizontal text-center">';
+        echo '<form method="post" enctype="multipart/form-data" action="index.php?pid=intranet_admin_semester&amp;semester='. $semesterRow['semester'] .'" class="text-center">';
         echo '<input type="hidden" name="formType" value="semesterCoverUpload" />';
         $libForm->printFileUpload('semestercover', 'Semestercover hochladen', false, false, [], ['image/jpeg']);
         echo '</form>';

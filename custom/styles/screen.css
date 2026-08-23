@@ -10,13 +10,13 @@
 	color: #961419;
 }
 
-#nav li > a:hover,
-#nav li > a:focus:hover {
+#nav .nav-link:hover,
+#nav .nav-link:focus:hover {
 	color: #961419;
 }
 
-#nav li.active > a,
-#nav li.active > a:focus {
+#nav .nav-link.active,
+#nav .nav-link.active:focus {
 	color: #961419;
 }
 
