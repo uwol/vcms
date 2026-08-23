@@ -228,7 +228,7 @@ if (!empty($libAuth->getOffices())) {
 */
 function listFolderContentRec(&$rootFolderObject, $firstLevel)
 {
-    global $libAuth, $libModuleHandler;
+    global $libAuth, $libModuleHandler, $libString;
 
     echo '<div style="margin-left:1.5em">';
 
