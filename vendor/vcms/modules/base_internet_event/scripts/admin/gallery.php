@@ -115,7 +115,7 @@ echo '<h1>Galerie - ' .$libString->protectXSS((string) $libEvent->getTitle($id))
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div id="progress" class="progress">';
+echo '<div id="progress" class="progress mb-3">';
 echo '<div class="progress-bar bg-success"></div>';
 echo '</div>';
 
