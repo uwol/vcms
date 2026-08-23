@@ -44,6 +44,11 @@ class LibMail
             $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
         }
 
+        if ($libGenericStorage->loadValue('base_core', 'smtp_debug') == '1') {
+            $mail->SMTPDebug = 2;
+            $mail->Debugoutput = 'html';
+        }
+
         return $mail;
     }
 }
