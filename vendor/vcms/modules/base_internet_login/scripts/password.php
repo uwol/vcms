@@ -36,14 +36,14 @@ if (isset($_POST['email']) && $_POST['email'] != '' &&
         if (!is_array($row) || $row['id'] == '' || !is_numeric($row['id'])) {
             //burn CPU-cycles
             $libAuth->encryptPassword('dummyPassword');
-        } elseif ($row['datum_geburtstag'] != '' && $row['datum_geburtstag'] != '0000-00-00' &&
-                $row['datum_geburtstag'] != $libTime->assureMysqlDate($_POST['geburtsdatum'])) {
+        } elseif ($row['datum_geburtstag'] == '' || $row['datum_geburtstag'] == '0000-00-00') {
+            //no birthday stored, password reset is not allowed
             //burn CPU-cycles
             $libAuth->encryptPassword('dummyPassword');
-        } elseif ($row['id'] != '' && is_numeric($row['id']) &&
-                ($row['datum_geburtstag'] == '' || $row['datum_geburtstag'] == '0000-00-00' ||
-                $row['datum_geburtstag'] == $libTime->assureMysqlDate($_POST['geburtsdatum']))) {
-
+        } elseif ($row['datum_geburtstag'] != $libTime->assureMysqlDate($_POST['geburtsdatum'])) {
+            //burn CPU-cycles
+            $libAuth->encryptPassword('dummyPassword');
+        } else {
             //generate new password
             $newPassword = $libString->randomAlphaNumericString(20);
 
@@ -71,7 +71,7 @@ if (isset($_POST['email']) && $_POST['email'] != '' &&
             }
         }
 
-        $libGlobal->notificationTexts[] =  'Das neue Passwort wurde an Deine E-Mail-Adresse verschickt, falls die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist und das Geburtsdatum korrekt ist.';
+        $libGlobal->notificationTexts[] =  'Das neue Passwort wurde an Deine E-Mail-Adresse verschickt, falls die E-Mail-Adresse in Deinem Nutzerkonto eingetragen ist und das dort hinterlegte Geburtsdatum korrekt angegeben wurde.';
     }
 }
 
