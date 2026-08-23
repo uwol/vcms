@@ -26,22 +26,22 @@ if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
 * actions
 */
 
-if (isset($_REQUEST['eventsChangeRegistrationState']) && $_REQUEST['eventsChangeRegistrationState'] != '' && isset($_REQUEST['eventid']) && $_REQUEST['eventid'] != '') {
+if (isset($_POST['eventsChangeRegistrationState']) && $_POST['eventsChangeRegistrationState'] != '' && isset($_POST['eventid']) && $_POST['eventid'] != '') {
     $stmt = $libDb->prepare('SELECT * FROM base_veranstaltung WHERE id=:id');
-    $stmt->bindValue(':id', $_REQUEST['eventid'], PDO::PARAM_INT);
+    $stmt->bindValue(':id', $_POST['eventid'], PDO::PARAM_INT);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     //event in future?
     if (date('Y-m-d H:i:s') < $row['datum']) {
-        if ($_REQUEST['eventsChangeRegistrationState'] == 'register') {
+        if ($_POST['eventsChangeRegistrationState'] == 'register') {
             $stmt = $libDb->prepare('INSERT IGNORE INTO base_veranstaltung_teilnahme (veranstaltung, person) VALUES (:veranstaltung, :person)');
-            $stmt->bindValue(':veranstaltung', $_REQUEST['eventid'], PDO::PARAM_INT);
+            $stmt->bindValue(':veranstaltung', $_POST['eventid'], PDO::PARAM_INT);
             $stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
             $stmt->execute();
         } else {
             $stmt = $libDb->prepare('DELETE FROM base_veranstaltung_teilnahme WHERE veranstaltung=:veranstaltung AND person=:person');
-            $stmt->bindValue(':veranstaltung', $_REQUEST['eventid'], PDO::PARAM_INT);
+            $stmt->bindValue(':veranstaltung', $_POST['eventid'], PDO::PARAM_INT);
             $stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
             $stmt->execute();
         }

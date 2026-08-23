@@ -26,22 +26,22 @@ if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
 * actions
 */
 
-if (isset($_REQUEST["chargierCalendarChangeRegistrationState"]) && $_REQUEST["chargierCalendarChangeRegistrationState"] != "" && isset($_REQUEST['chargierveranstaltungid']) && $_REQUEST['chargierveranstaltungid'] != "") {
+if (isset($_POST["chargierCalendarChangeRegistrationState"]) && $_POST["chargierCalendarChangeRegistrationState"] != "" && isset($_POST['chargierveranstaltungid']) && $_POST['chargierveranstaltungid'] != "") {
     $stmt = $libDb->prepare("SELECT * FROM mod_chargierkalender_veranstaltung WHERE id=:id");
-    $stmt->bindValue(':id', $_REQUEST['chargierveranstaltungid'], PDO::PARAM_INT);
+    $stmt->bindValue(':id', $_POST['chargierveranstaltungid'], PDO::PARAM_INT);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // event in future?
     if (@date("Y-m-d H:i:s") <= $row["datum"]) {
-        if ($_REQUEST["chargierCalendarChangeRegistrationState"] == "register") {
+        if ($_POST["chargierCalendarChangeRegistrationState"] == "register") {
             $stmt = $libDb->prepare("INSERT IGNORE INTO mod_chargierkalender_teilnahme (chargierveranstaltung, mitglied) VALUES (:chargierveranstaltung, :mitglied)");
-            $stmt->bindValue(':chargierveranstaltung', $_REQUEST['chargierveranstaltungid'], PDO::PARAM_INT);
+            $stmt->bindValue(':chargierveranstaltung', $_POST['chargierveranstaltungid'], PDO::PARAM_INT);
             $stmt->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
             $stmt->execute();
         } else {
             $stmt = $libDb->prepare("DELETE FROM mod_chargierkalender_teilnahme WHERE chargierveranstaltung=:chargierveranstaltung AND mitglied=:mitglied");
-            $stmt->bindValue(':chargierveranstaltung', $_REQUEST['chargierveranstaltungid'], PDO::PARAM_INT);
+            $stmt->bindValue(':chargierveranstaltung', $_POST['chargierveranstaltungid'], PDO::PARAM_INT);
             $stmt->bindValue(':mitglied', $libAuth->getId(), PDO::PARAM_INT);
             $stmt->execute();
         }
