@@ -38,7 +38,7 @@ if (isset($_GET['id'])) {
 
     echo '<div class="card">';
     echo '<div class="card-body">';
-    echo '<address>';
+    echo '<address class="mb-0">';
 
     if ($associationRow['zusatz1']) {
         echo $libString->protectXSS($associationRow['zusatz1']). '<br />';

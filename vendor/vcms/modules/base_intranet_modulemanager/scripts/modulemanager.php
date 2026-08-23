@@ -96,10 +96,10 @@ if (isset($_POST['action'])) {
                 $url = $gitHubRepoUrl;
             }
 
-            echo '<a href="' .$url. '">';
+            echo '<a href="' .$libString->protectXSS($url). '">';
         }
 
-        echo $key;
+        echo $libString->protectXSS((string) $key);
 
         if ($value) {
             echo '</a>';
@@ -128,7 +128,7 @@ if (isset($_POST['action'])) {
         if ($key != 'engine') {
             if ($libModuleHandler->moduleIsAvailable($key)) {
                 $module = $libModuleHandler->getModuleByModuleid($key);
-                echo $module->getVersion();
+                echo $libString->protectXSS((string) $module->getVersion());
             }
         } else {
             echo $libGlobal->version;
@@ -140,7 +140,7 @@ if (isset($_POST['action'])) {
         echo '<td>';
 
         if ($value != '') {
-            echo $value;
+            echo $libString->protectXSS((string) $value);
         } else {
             echo 'nicht im Repository';
         }
@@ -154,7 +154,7 @@ if (isset($_POST['action'])) {
             if (!$engineIsOld && !$libModuleHandler->moduleIsAvailable($key)) {
                 echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
                 echo '<input type="hidden" name="action" value="installModule" />';
-                echo '<input type="hidden" name="module" value="' .$key. '" />';
+                echo '<input type="hidden" name="module" value="' .$libString->protectXSS((string) $key). '" />';
                 echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
                 echo '</form>';
             }
@@ -179,7 +179,7 @@ if (isset($_POST['action'])) {
                 if (!$engineIsOld && $newVersion > $actualVersion) {
                     echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
                     echo '<input type="hidden" name="action" value="installModule" />';
-                    echo '<input type="hidden" name="module" value="' .$key. '" />';
+                    echo '<input type="hidden" name="module" value="' .$libString->protectXSS((string) $key). '" />';
                     echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-cloud-download" aria-hidden="true"></i></button>';
                     echo '</form>';
                 }
@@ -200,7 +200,7 @@ if (isset($_POST['action'])) {
 
                 echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
                 echo '<input type="hidden" name="action" value="uninstallModule" />';
-                echo '<input type="hidden" name="module" value="' .$key. '" />';
+                echo '<input type="hidden" name="module" value="' .$libString->protectXSS((string) $key). '" />';
                 echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                 echo '</form>';
             }

@@ -95,7 +95,7 @@ if ($libAuth->isLoggedin()) {
         }
 
         if (!$libTime->isValidSemesterString($_REQUEST['semester'])) {
-            die('Das Format des Semesters '.$_REQUEST['semester'].' ist nicht korrekt. Erlaubt sind z. B. SS2015 oder WS20152016.');
+            die('Das Format des Semesters '.$libString->protectXSS($_REQUEST['semester']).' ist nicht korrekt. Erlaubt sind z. B. SS2015 oder WS20152016.');
         }
 
         $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE semester=:semester');
@@ -118,7 +118,7 @@ if ($libAuth->isLoggedin()) {
         }
 
         if (!$libTime->isValidSemesterString($_REQUEST['semester'])) {
-            die('Das Format des Semesters '.$_REQUEST['semester'].' ist nicht korrekt. Erlaubt sind z. B. SS2015 oder WS20152016.');
+            die('Das Format des Semesters '.$libString->protectXSS($_REQUEST['semester']).' ist nicht korrekt. Erlaubt sind z. B. SS2015 oder WS20152016.');
         }
 
         $stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester');
