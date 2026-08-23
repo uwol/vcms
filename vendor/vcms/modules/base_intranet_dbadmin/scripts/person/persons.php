@@ -125,7 +125,6 @@ if ($libAuth->isLoggedin()) {
     echo '<div class="card-body">';
     echo '<form action="index.php?pid=intranet_admin_persons" method="post">';
     echo '<fieldset class="d-flex flex-wrap align-items-center gap-2">';
-    echo '<div>';
 
     echo '<label class="visually-hidden" for="orderby">Sortierung</label>';
     echo '<select id="orderby" name="orderby" class="form-select w-auto" onchange="this.form.submit()">';
@@ -157,11 +156,10 @@ if ($libAuth->isLoggedin()) {
     }
 
     echo '>Id</option>';
-    echo '</select> ';
+    echo '</select>';
 
     $libForm->printSubmitButtonInline('Sortieren');
 
-    echo '</div>';
     echo '</fieldset>';
     echo '</form>';
     echo '</div>';
