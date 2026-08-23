@@ -89,7 +89,7 @@ class LibMenuRenderer
             echo $this->printNavbarLevel($rootMenuFolderInternet, 0, $activePid);
 
             if ($libAuth->isLoggedin() && $libPerson->hasImageFile($libAuth->getId())) {
-                echo '            <li class="nav-item d-none d-lg-block">' .$libPerson->getImage($libAuth->getId(), 'xs'). '</li>' . PHP_EOL;
+                echo '            <li class="nav-item d-none d-lg-block ms-1">' .$libPerson->getImage($libAuth->getId(), 'xs'). '</li>' . PHP_EOL;
             }
 
             echo '          </ul>' . PHP_EOL;
