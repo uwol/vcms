@@ -57,7 +57,7 @@ Installation
 
 Die Installationsanleitung ist in der Datei INSTALL.md gespeichert. Die technischen Anforderungen sind:
 
-* PHP ab Version 8.5
+* PHP ab Version 8.4
 * MySQL ab Version 5
 * ImageMagick oder GDlib für Fotogalerien
 
