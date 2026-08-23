@@ -87,7 +87,7 @@ echo '<fieldset>';
 
 $libForm->printTextInput('email', 'E-Mail-Adresse', '', 'email', false, true);
 $libForm->printDateInput('geburtsdatum', 'Geburtsdatum', '', false, true, [], '', date('Y-m-d'));
-$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Neues Passwort anfordern', ['btn-danger']);
+$libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Neues Passwort anfordern');
 
 echo '</fieldset>';
 echo '</form>';
