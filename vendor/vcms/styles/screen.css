@@ -73,6 +73,29 @@ a .fa {
 	display: none;
 }
 
+/*
+* The freshly inserted record slides down once. screen.js reveals the element and
+* measures its height into --slide-down-height, so that the keyframes know the
+* target height without a hard coded cap.
+*/
+.last-insert-id.slide-down {
+	display: block;
+	overflow: hidden;
+	animation: slide-down 1s ease-out;
+}
+
+@keyframes slide-down {
+	from {
+		max-height: 0;
+		opacity: 0;
+	}
+
+	to {
+		max-height: var(--slide-down-height, 100vh);
+		opacity: 1;
+	}
+}
+
 .reveal {
 	visibility: hidden;
 }

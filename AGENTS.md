@@ -28,8 +28,8 @@ and a download area.
     - `layout/` -- `header.php` and `footer.php`, wrapped around every page by `index.php`
     - `styles/` -- Engine CSS and JS, including `bootstrap-override.css`
     - `install/` -- Engine install and update scripts
-  - all other directories (`bootstrap`, `jquery`, `phpmailer`, `phpass`, `pear`, `httpful`,
-    `blueimp-file-upload`, `chart`, `fonts`, `hover`, `scrollreveal`) -- third-party code.
+  - all other directories (`bootstrap`, `phpmailer`, `phpass`, `pear`, `httpful`,
+    `chart`, `fonts`, `hover`, `scrollreveal`) -- third-party code.
     Keep the upstream formatting, do not edit, replace whole releases instead.
 - `index.php` -- Front controller for pages, selected by the request parameter `pid`
 - `api.php` -- Front controller for includes, selected by the request parameter `iid`
@@ -224,8 +224,9 @@ A typical module is structured as follows:
 
 ### Frontend
 
-- Bootstrap 3 markup (`panel`, `form-horizontal`, `col-sm-*`, `thumbnail`), jQuery 2,
-  Font Awesome 4.
+- Bootstrap 5 markup (`card`, `col-sm-*`, `mb-*`), Font Awesome 4.
+- JavaScript is plain vanilla JS, there is no jQuery. The only JS libraries are the Bootstrap
+  bundle, ScrollReveal and Chart.js.
 - Bootstrap 4/5 spacing utilities (`mb-*`, `mt-*`, `pb-*`, `pt-*`, `d-inline`) are backported in
   `vendor/vcms/styles/bootstrap-override.css` and may be used.
 - Use as few own CSS rules as possible and as many Bootstrap classes as possible. Engine styles

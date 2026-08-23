@@ -125,44 +125,96 @@ echo '<div id="files-danger" role="alert" class="alert alert-danger" style="disp
 echo '<div class="mb-3">';
 echo '<label class="btn btn-outline-secondary btn-file">';
 echo '<i aria-hidden="true" class="fa fa-upload"></i> Fotos hochladen';
-echo '<input id="fileupload" type="file" style="display:none" name="files[]" multiple>';
+echo '<input id="fileupload" type="file" style="display:none" name="files[]" accept="image/jpeg,.jpg,.jpeg" multiple>';
 echo '</label>';
 echo '</div>';
 
-echo '<script src="vendor/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>';
-echo '<script src="vendor/blueimp-file-upload/js/jquery.iframe-transport.js"></script>';
-echo '<script src="vendor/blueimp-file-upload/js/jquery.fileupload.js"></script>';
 echo '<script>
-	$(document).ready(function() {
-		\'use strict\';
+	document.addEventListener("DOMContentLoaded", function() {
+		"use strict";
 
-		var url = \'api.php?iid=event_admin_galerie_upload&veranstaltungId=' .$id. '\';
+		var url = "api.php?iid=event_admin_galerie_upload&veranstaltungId=' .$id. '";
+		var input = document.getElementById("fileupload");
+		var progressBar = document.querySelector("#progress .progress-bar");
 
-		$(\'#fileupload\').fileupload({
-			url: url,
-			dataType: \'json\',
-			progressall: function (e, data) {
-				var progress = parseInt(data.loaded / data.total * 100, 10);
+		if (!input) {
+			return;
+		}
 
-				$(\'#progress .progress-bar\').css(
-					\'width\',
-					progress + \'%\'
-				);
-			},
-			done: function (e, data) {
-				$.each(data.result.files, function (index, file) {
-					var id = \'#files-success\';
-					var responseText = file.name;
+		input.addEventListener("change", function() {
+			var files = Array.prototype.slice.call(input.files || []);
 
-					if(typeof file.error !== "undefined"){
-						id = \'#files-danger\';
-						responseText += \': \' + file.error;
+			if (files.length === 0) {
+				return;
+			}
+
+			var totalBytes = 0;
+			var completedBytes = 0;
+
+			files.forEach(function(file) {
+				totalBytes += file.size;
+			});
+
+			// One request per file keeps a large selection below post_max_size, while the
+			// progress bar still reports the progress of the whole selection.
+			function showProgress(currentBytes) {
+				if (progressBar && totalBytes > 0) {
+					progressBar.style.width = Math.round((completedBytes + currentBytes) / totalBytes * 100) + "%";
+				}
+			}
+
+			function reportFile(file) {
+				var failed = typeof file.error !== "undefined";
+				var box = document.getElementById(failed ? "files-danger" : "files-success");
+
+				if (!box) {
+					return;
+				}
+
+				var paragraph = document.createElement("p");
+				paragraph.textContent = failed ? file.name + ": " + file.error : file.name;
+
+				box.appendChild(paragraph);
+				box.removeAttribute("style");
+			}
+
+			function uploadFile(index) {
+				if (index >= files.length) {
+					input.value = "";
+					return;
+				}
+
+				var formData = new FormData();
+				formData.append("files[]", files[index]);
+
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", url);
+				xhr.responseType = "json";
+
+				xhr.upload.addEventListener("progress", function(event) {
+					if (event.lengthComputable) {
+						showProgress(event.loaded);
+					}
+				});
+
+				xhr.addEventListener("loadend", function() {
+					var response = xhr.response;
+
+					if (response && Array.isArray(response.files) && response.files.length > 0) {
+						response.files.forEach(reportFile);
+					} else {
+						reportFile({name: files[index].name, error: "Der Upload ist fehlgeschlagen."});
 					}
 
-					var response = $(\'<p/>\').text(responseText).appendTo(id);
-					$(id).removeAttr(\'style\');
+					completedBytes += files[index].size;
+					showProgress(0);
+					uploadFile(index + 1);
 				});
+
+				xhr.send(formData);
 			}
+
+			uploadFile(0);
 		});
 	});
 	</script>';

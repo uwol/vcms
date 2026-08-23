@@ -1,44 +1,71 @@
 function animateLasteInsertId(){
-	$(".last-insert-id").slideDown(1000);
+	document.querySelectorAll(".last-insert-id").forEach(function(element) {
+		// The element is hidden by CSS, so it is revealed first and its target height is
+		// measured afterwards, which parameterizes the slide down animation.
+		element.classList.add("slide-down");
+		element.style.setProperty("--slide-down-height", element.scrollHeight + "px");
+	});
 }
 
 function configureScrolling(){
-	$('a[href^="#"]').on('click', function(event){
-	  event.preventDefault();
-	  $('html,body').animate({scrollTop:$(this.hash).offset().top}, 'slow', 'swing');
+	document.addEventListener("click", function(event) {
+		var element = event.target instanceof Element ? event.target : null;
+		var anchor = element ? element.closest('a[href^="#"]') : null;
+
+		if (!anchor || !anchor.hash) {
+			return;
+		}
+
+		// getElementById is used instead of querySelector, because ids such as the numeric
+		// record ids of the intranet are no valid CSS selectors.
+		var target = document.getElementById(decodeURIComponent(anchor.hash.substring(1)));
+
+		if (!target) {
+			return;
+		}
+
+		event.preventDefault();
+		target.scrollIntoView({behavior: "smooth"});
 	});
 }
 
 function loadFacebookEventPlugins(){
-	$(".facebookEventPlugin").each(function() {
-		var div = $(this);
-		var eventid = div.attr('data-eventid');
+	document.querySelectorAll(".facebookEventPlugin").forEach(function(div) {
+		var eventId = div.dataset.eventid;
 
-		$.ajax({
-			url: "api.php?iid=fb_event&eventid=" + eventid,
-			context: document.body
-		}).done(function(html) {
-			div.replaceWith(html);
+		fetch("api.php?iid=fb_event&eventid=" + encodeURIComponent(eventId)).then(function(response) {
+			return response.text();
+		}).then(function(html) {
+			// A template parses the response without executing it and without the parser
+			// dropping nodes that are invalid in the current position.
+			var template = document.createElement("template");
+			template.innerHTML = html;
+
+			div.replaceWith(template.content);
 		});
 	});
 }
 
 function adjustFacebookPagePluginsSrc(){
-	$("iframe.facebookPagePlugin").each(function() {
-		var iframe = $(this);
-		var width = iframe.width();
-		var src = iframe.attr('src');
-		var newSrc = src.replace(/width=[0-9]+/, 'width=' + width);
+	document.querySelectorAll("iframe.facebookPagePlugin").forEach(function(iframe) {
+		var width = Math.round(iframe.getBoundingClientRect().width);
+		var src = iframe.getAttribute("src");
 
-		iframe.attr('src', newSrc);
+		if (!src) {
+			return;
+		}
+
+		iframe.setAttribute("src", src.replace(/width=[0-9]+/, "width=" + width));
 	});
 }
 
 function configureNavigation(){
-	var navbarHeight = $(".navbar").height();
-	var paddingTop = navbarHeight;
+	var navbar = document.querySelector(".navbar");
+	var content = document.getElementById("content");
 
-    $("#content").css("padding-top", paddingTop);
+	if (navbar && content) {
+		content.style.paddingTop = navbar.offsetHeight + "px";
+	}
 }
 
 function toggleNavbarState(){
@@ -73,7 +100,7 @@ function adjustElementDimensions(){
 // --------------------
 
 
-$(document).ready(function() {
+function initializeScreen(){
 	animateLasteInsertId();
 	configureScrolling();
 	reveal();
@@ -83,13 +110,21 @@ $(document).ready(function() {
 
 	var resizeDebounce;
 
-	$(window).on('orientationchange resize', function(event) {
+	function scheduleAdjustElementDimensions() {
 		clearTimeout(resizeDebounce);
-		resizeDebounce = setTimeout(function(){
-			adjustElementDimensions();
-		}, 20);
-	});
+		resizeDebounce = setTimeout(adjustElementDimensions, 20);
+	}
 
-	window.addEventListener('scroll', toggleNavbarState, {passive: true});
+	window.addEventListener("orientationchange", scheduleAdjustElementDimensions);
+	window.addEventListener("resize", scheduleAdjustElementDimensions);
+
+	window.addEventListener("scroll", toggleNavbarState, {passive: true});
 	toggleNavbarState();
-});
+}
+
+
+if (document.readyState === "loading") {
+	document.addEventListener("DOMContentLoaded", initializeScreen);
+} else {
+	initializeScreen();
+}
