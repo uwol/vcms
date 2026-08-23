@@ -217,7 +217,7 @@ if (!isset($_POST['message']) || $_POST['message'] == '' || !isset($_POST['subje
         echo '<p class="mb-4">';
 
         foreach ($subRecipientsArray as $recipient) {
-            echo $recipient[1]. ' &lt;' .$recipient[0]. '&gt;<br />';
+            echo $libString->protectXSS($recipient[1]). ' &lt;' .$libString->protectXSS($recipient[0]). '&gt;<br />';
         }
 
         echo '</p>';

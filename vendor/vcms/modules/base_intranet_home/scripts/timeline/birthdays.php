@@ -75,12 +75,12 @@ function addBirthdayTimelineEvents($year, $period)
 
 function addBirthdayTimelineEvent($row, $date, $age)
 {
-    global $libGlobal, $libPerson, $libGenericStorage, $timelineEventSet;
+    global $libGlobal, $libPerson, $libGenericStorage, $libString, $timelineEventSet;
 
     $title = $age. '. Geburtstag von ' .$libPerson->getNameString($row['id'], 0);
 
     $description = '<i class="fa fa-calendar" aria-hidden="true"></i> ';
-    $description .= '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=intranet_kalender_geburtstageaktivitas&amp;user=' .$libGenericStorage->loadValueInCurrentModule('icalendar_username'). '&amp;pass='. $libGenericStorage->loadValueInCurrentModule('icalendar_password'). '">';
+    $description .= '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=intranet_kalender_geburtstageaktivitas&amp;user=' .$libString->protectXSS((string) $libGenericStorage->loadValueInCurrentModule('icalendar_username')). '&amp;pass='. $libString->protectXSS((string) $libGenericStorage->loadValueInCurrentModule('icalendar_password')). '">';
     $description .= 'Geburtstage abonnieren';
     $description .= '</a>';
 

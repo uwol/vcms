@@ -6,7 +6,7 @@ echo '  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# business: h
 echo '    <meta charset="utf-8" />' . PHP_EOL;
 echo '    <meta http-equiv="X-UA-Compatible" content="IE=edge" />' . PHP_EOL;
 echo '    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>' . PHP_EOL;
-echo '    <title>' .$libGlobal->getPageTitle(). '</title>' . PHP_EOL;
+echo '    <title>' .$libString->protectXSS($libGlobal->getPageTitle()). '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
@@ -22,7 +22,7 @@ echo '    <link rel="stylesheet" href="vendor/vcms/styles/navigation/navigation.
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/person/person.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/timeline/timeline.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="custom/styles/screen.css" />' . PHP_EOL;
-echo '    <link rel="canonical" href="' .$libGlobal->getPageCanonicalUrl(). '"/>' . PHP_EOL;
+echo '    <link rel="canonical" href="' .$libString->protectXSS($libGlobal->getPageCanonicalUrl()). '"/>' . PHP_EOL;
 echo '    <script src="vendor/jquery/jquery.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>' . PHP_EOL;
 echo '    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>' . PHP_EOL;
@@ -48,17 +48,17 @@ if ($libGlobal->page->hasAccessRestriction()) {
 * Opengraph / Facebook meta data
 */
 if ($libGenericStorage->loadValue('base_core', 'facebook_appid')) {
-    echo '    <meta property="fb:app_id" content="' .$libGenericStorage->loadValue('base_core', 'facebook_appid'). '"/>' . PHP_EOL;
+    echo '    <meta property="fb:app_id" content="' .$libString->protectXSS((string) $libGenericStorage->loadValue('base_core', 'facebook_appid')). '"/>' . PHP_EOL;
 }
 
 echo '    <meta property="og:type" content="business.business"/>' . PHP_EOL;
-echo '    <meta property="og:url" content="' .$libGlobal->getPageOgUrl(). '"/>' . PHP_EOL;
-echo '    <meta property="og:title" content="' .$libGlobal->getPageTitle(). '"/>' . PHP_EOL;
-echo '    <meta property="og:image" content="' .$libGlobal->getPageOgImageUrl(). '"/>' . PHP_EOL;
+echo '    <meta property="og:url" content="' .$libString->protectXSS($libGlobal->getPageOgUrl()). '"/>' . PHP_EOL;
+echo '    <meta property="og:title" content="' .$libString->protectXSS($libGlobal->getPageTitle()). '"/>' . PHP_EOL;
+echo '    <meta property="og:image" content="' .$libString->protectXSS($libGlobal->getPageOgImageUrl()). '"/>' . PHP_EOL;
 echo '    <meta property="og:image:type" content="image/jpeg" />' . PHP_EOL;
 echo '    <meta property="og:image:height" content="265"/>' . PHP_EOL;
 echo '    <meta property="og:image:width" content="265"/>' . PHP_EOL;
-echo '    <meta property="og:site_name" content="' .$libGlobal->getSiteUrlAuthority(). '"/>' . PHP_EOL;
+echo '    <meta property="og:site_name" content="' .$libString->protectXSS($libGlobal->getSiteUrlAuthority()). '"/>' . PHP_EOL;
 echo '    <meta property="og:description" content="' .$libConfig->seiteBeschreibung. '"/>' . PHP_EOL;
 echo '    <meta property="business:contact_data:street_address" content="' .$libConfig->verbindungStrasse. '"/>' . PHP_EOL;
 echo '    <meta property="business:contact_data:locality" content="' .$libConfig->verbindungOrt. '"/>' . PHP_EOL;

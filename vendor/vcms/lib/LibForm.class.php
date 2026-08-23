@@ -57,6 +57,10 @@ class LibForm
 
     public function printTextInput($name, $label, $value, $type = 'text', $disabled = false, $required = false, $classes = [])
     {
+        global $libString;
+
+        $value = $libString->protectXSS((string) $value);
+
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
@@ -130,6 +134,10 @@ class LibForm
 
     public function printDateTimeInputInternal($name, $label, $value, $type, $disabled, $required, $classes, $min, $max)
     {
+        global $libString;
+
+        $value = $libString->protectXSS((string) $value);
+
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
@@ -150,6 +158,10 @@ class LibForm
 
     public function printTextarea($name, $label, $value, $disabled = false, $required = false, $classes = [])
     {
+        global $libString;
+
+        $value = $libString->protectXSS((string) $value);
+
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
@@ -210,6 +222,8 @@ class LibForm
 
     public function printStaticText($label, $value, $disabled = false, $required = false, $classes = [])
     {
+        global $libString;
+
         echo '<div class="form-group">';
         echo '<label class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
         echo '<div class="col-sm-' .$this->colInput. '">';
@@ -218,7 +232,7 @@ class LibForm
         $this->printClassesString($classes);
 
         echo '">';
-        echo $value;
+        echo $libString->protectXSS((string) $value);
         echo '</p>';
         echo '</div>';
         echo '</div>';
@@ -248,7 +262,7 @@ class LibForm
 
     public function printMembersDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false)
     {
-        global $libDb, $libPerson;
+        global $libDb, $libPerson, $libString;
 
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -272,7 +286,7 @@ class LibForm
                 echo ' selected="selected"';
             }
 
-            echo '>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 7). ' [' .$row['gruppe']. ']</option>';
+            echo '>' .$libString->protectXSS($libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 7)). ' [' .$libString->protectXSS((string) $row['gruppe']). ']</option>';
         }
 
         echo '</select></div>';
@@ -281,7 +295,7 @@ class LibForm
 
     public function printAssociationsDropDownBox($name, $label, $activeElementId = '', $allowNull = true, $disabled = false)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -305,7 +319,7 @@ class LibForm
                 echo ' selected="selected"';
             }
 
-            echo '>' .$row['name']. ', ' .$row['titel']. '</option>';
+            echo '>' .$libString->protectXSS($row['name']). ', ' .$libString->protectXSS((string) $row['titel']). '</option>';
         }
 
         echo '</select></div>';
@@ -314,7 +328,7 @@ class LibForm
 
     public function printSemesterDropDownBox($name, $label, $selectedSemester = '', $allowNull = true, $disabled = false)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -332,13 +346,13 @@ class LibForm
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo '<option value="' .$row['semester']. '"';
+            echo '<option value="' .$libString->protectXSS($row['semester']). '"';
 
             if ($selectedSemester == $row['semester']) {
                 echo ' selected="selected"';
             }
 
-            echo '>' .$row['semester']. '</option>';
+            echo '>' .$libString->protectXSS($row['semester']). '</option>';
         }
 
         echo '</select></div>';
@@ -347,7 +361,7 @@ class LibForm
 
     public function printStatusDropDownBox($name, $label, $selectedStatus = '', $allowNull = true, $disabled = false)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -365,13 +379,13 @@ class LibForm
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo '<option value="' .$row['bezeichnung']. '"';
+            echo '<option value="' .$libString->protectXSS($row['bezeichnung']). '"';
 
             if ($selectedStatus == $row['bezeichnung']) {
                 echo ' selected="selected"';
             }
 
-            echo '>' .$row['bezeichnung']. ' - ' .$row['beschreibung']. '</option>';
+            echo '>' .$libString->protectXSS($row['bezeichnung']). ' - ' .$libString->protectXSS((string) $row['beschreibung']). '</option>';
         }
 
         echo '</select></div>';
@@ -380,7 +394,7 @@ class LibForm
 
     public function printGroupDropDownBox($name, $label, $selectedGroup = '', $allowNull = true, $disabled = false)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -398,13 +412,13 @@ class LibForm
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo '<option value="' .$row['bezeichnung']. '"';
+            echo '<option value="' .$libString->protectXSS($row['bezeichnung']). '"';
 
             if ($selectedGroup == $row['bezeichnung']) {
                 echo ' selected="selected"';
             }
 
-            echo '>' .$row['bezeichnung']. ' - ' .$row['beschreibung']. '</option>';
+            echo '>' .$libString->protectXSS($row['bezeichnung']). ' - ' .$libString->protectXSS((string) $row['beschreibung']). '</option>';
         }
 
         echo '</select></div>';
@@ -413,7 +427,7 @@ class LibForm
 
     public function printRegionDropDownBox($name, $label, $selectedRegion = '', $allowNull = true, $disabled = false)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -444,7 +458,7 @@ class LibForm
                 echo ' selected="selected"';
             }
 
-            echo '>' .$row['bezeichnung']. ' [' .$count. ' Personen]</option>';
+            echo '>' .$libString->protectXSS($row['bezeichnung']). ' [' .(int) $count. ' Personen]</option>';
         }
 
         echo '</select></div>';
@@ -453,7 +467,7 @@ class LibForm
 
     public function printEventDropDownBox($name, $label, $selectedEvent = '', $allowNull = true, $disabled = false)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         echo '<div class="form-group">';
         echo '<label for="' .$name. '" class="col-sm-' .$this->colLabel. ' control-label">' .$label. '</label>';
@@ -477,7 +491,7 @@ class LibForm
                 echo ' selected="selected"';
             }
 
-            echo '>' .substr((string) $row['titel'], 0, 25). ' [' .$row['datum']. ']</option>';
+            echo '>' .$libString->protectXSS(substr((string) $row['titel'], 0, 25)). ' [' .$libString->protectXSS($row['datum']). ']</option>';
         }
 
         echo '</select></div>';

@@ -26,7 +26,7 @@ if ($libAuth->isLoggedin()) {
     if (isset($_POST['action']) && $_POST['action'] == 'create') {
         if ($_POST['bezeichnung'] != '') {
             $stmt = $libDb->prepare('INSERT INTO base_region (bezeichnung) VALUES (:bezeichnung)');
-            $stmt->bindValue(':bezeichnung', $libString->protectXss($_POST['bezeichnung']));
+            $stmt->bindValue(':bezeichnung', $_POST['bezeichnung']);
             $stmt->execute();
         } else {
             $libGlobal->errorTexts[] = 'Keine Bezeichnung angegeben.';
@@ -78,7 +78,7 @@ if ($libAuth->isLoggedin()) {
         $stmt2->fetch();
 
         echo '<tr>';
-        echo '<td>' .$row['bezeichnung']. '</td>';
+        echo '<td>' .$libString->protectXSS($row['bezeichnung']). '</td>';
         echo '<td>' .$count. ' Personen</td>';
         echo '<td class="tool-column">';
         echo '<form method="post" action="index.php?pid=intranet_admin_regions" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';

@@ -34,7 +34,7 @@ if ($email == '') {
 
 <h1>Datenschutzerklärung</h1>
 
-<p class="mb-4">Wir freuen uns über Ihr Interesse an unserer Homepage. Der Schutz Ihrer Privatsphäre ist für uns sehr wichtig. Die Nutzung unserer Webseite (<?php echo $libGlobal->getSiteUrl(); ?>) ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unserer Seite personenbezogene Daten (beispielsweise Name, Anschrift, E-Mail-Adressen, im Rahmen einer Kontaktaufnahme oder Registrierung) doch erhoben werden sollte, erfolgt dies, soweit es uns möglich ist, nur auf freiwilliger Basis (vgl. § 13 TMG). Persönliche Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. Der Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien durch die Benutzung der Kontaktdaten, die im Rahmen der Erfüllung der Impressumspflicht gem. § 5 TMG preisgegeben werden, wird hiermit ausdrücklich widersprochen. Wir behalten uns ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails (insbesondere Newsletter), vor.</p>
+<p class="mb-4">Wir freuen uns über Ihr Interesse an unserer Homepage. Der Schutz Ihrer Privatsphäre ist für uns sehr wichtig. Die Nutzung unserer Webseite (<?php echo $libString->protectXSS($libGlobal->getSiteUrl()); ?>) ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unserer Seite personenbezogene Daten (beispielsweise Name, Anschrift, E-Mail-Adressen, im Rahmen einer Kontaktaufnahme oder Registrierung) doch erhoben werden sollte, erfolgt dies, soweit es uns möglich ist, nur auf freiwilliger Basis (vgl. § 13 TMG). Persönliche Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. Der Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien durch die Benutzung der Kontaktdaten, die im Rahmen der Erfüllung der Impressumspflicht gem. § 5 TMG preisgegeben werden, wird hiermit ausdrücklich widersprochen. Wir behalten uns ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails (insbesondere Newsletter), vor.</p>
 
 <h2>Name und Kontaktdaten des für die Verarbeitung Verantwortlichen</h2>
 
@@ -53,17 +53,17 @@ if ($libConfig->verbindungLand) {
 <p class="mb-4">Datenschutzbeauftragter:
 <?php
 if ($datenschutzbeauftragter != '') {
-    echo $datenschutzbeauftragter .', ';
+    echo $libString->protectXSS((string) $datenschutzbeauftragter) .', ';
 }
 
-echo $email; ?>
+echo $libString->protectXSS((string) $email); ?>
 </p>
 
 <h2>Erhebung und Speicherung personenbezogener Daten sowie Art und Zweck von deren Verwendung</h2>
 
 <h3>a) Beim Besuch der Website</h3>
 
-<p class="mb-4">Beim Aufrufen unserer Website <?php echo $libGlobal->getSiteUrl(); ?> werden durch den auf Ihrem Endgerät zum Einsatz kommenden Browser automatisch Informationen an den Server unserer Website gesendet. Diese Informationen werden temporär in einem sog. Logfile gespeichert. Folgende Informationen werden dabei ohne Ihr Zutun erfasst und bis zur automatisierten Löschung gespeichert:</p>
+<p class="mb-4">Beim Aufrufen unserer Website <?php echo $libString->protectXSS($libGlobal->getSiteUrl()); ?> werden durch den auf Ihrem Endgerät zum Einsatz kommenden Browser automatisch Informationen an den Server unserer Website gesendet. Diese Informationen werden temporär in einem sog. Logfile gespeichert. Folgende Informationen werden dabei ohne Ihr Zutun erfasst und bis zur automatisierten Löschung gespeichert:</p>
 
 <ul>
 	<li>IP-Adresse des anfragenden Rechners,</li>
@@ -130,7 +130,7 @@ echo $email; ?>
 
 <h2>Widerspruchsrecht</h2>
 
-<p class="mb-4">Sofern Ihre personenbezogenen Daten auf Grundlage von berechtigten Interessen gemäß Art. 6 Abs. 1 S. 1 lit. f DSGVO verarbeitet werden, haben Sie das Recht, gemäß Art. 21 DSGVO Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten einzulegen, soweit dafür Gründe vorliegen, die sich aus Ihrer besonderen Situation ergeben oder sich der Widerspruch gegen Direktwerbung richtet. Im letzteren Fall haben Sie ein generelles Widerspruchsrecht, das ohne Angabe einer besonderen Situation von uns umgesetzt wird. Möchten Sie von Ihrem Widerrufs- oder Widerspruchsrecht Gebrauch machen, genügt eine E-Mail an <?php echo $email; ?>
+<p class="mb-4">Sofern Ihre personenbezogenen Daten auf Grundlage von berechtigten Interessen gemäß Art. 6 Abs. 1 S. 1 lit. f DSGVO verarbeitet werden, haben Sie das Recht, gemäß Art. 21 DSGVO Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten einzulegen, soweit dafür Gründe vorliegen, die sich aus Ihrer besonderen Situation ergeben oder sich der Widerspruch gegen Direktwerbung richtet. Im letzteren Fall haben Sie ein generelles Widerspruchsrecht, das ohne Angabe einer besonderen Situation von uns umgesetzt wird. Möchten Sie von Ihrem Widerrufs- oder Widerspruchsrecht Gebrauch machen, genügt eine E-Mail an <?php echo $libString->protectXSS((string) $email); ?>
 
 <h2>Datensicherheit</h2>
 
@@ -138,4 +138,4 @@ echo $email; ?>
 
 <h2>Aktualität und Änderung dieser Datenschutzerklärung</h2>
 
-<p class="mb-4">Diese Datenschutzerklärung ist aktuell gültig und hat den Stand Mai 2018. Durch die Weiterentwicklung unserer Website und Angebote darüber oder aufgrund geänderter gesetzlicher beziehungsweise behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit auf der Website unter <?php echo $libGlobal->getPageCanonicalUrl(); ?> von Ihnen abgerufen und ausgedruckt werden.</p>
+<p class="mb-4">Diese Datenschutzerklärung ist aktuell gültig und hat den Stand Mai 2018. Durch die Weiterentwicklung unserer Website und Angebote darüber oder aufgrund geänderter gesetzlicher beziehungsweise behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit auf der Website unter <?php echo $libString->protectXSS($libGlobal->getPageCanonicalUrl()); ?> von Ihnen abgerufen und ausgedruckt werden.</p>

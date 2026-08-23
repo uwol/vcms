@@ -39,7 +39,7 @@ $stmt = $libDb->prepare('SELECT * FROM mod_news_kategorie ORDER BY bezeichnung')
 $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    echo '<option value="' .$row['id']. '">' .$row['bezeichnung']. '</option>';
+    echo '<option value="' .$row['id']. '">' .$libString->protectXSS($row['bezeichnung']). '</option>';
 }
 
 echo '</select></div>';

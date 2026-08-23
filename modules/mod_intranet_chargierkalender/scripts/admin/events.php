@@ -91,8 +91,8 @@ $stmt->execute();
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<tr>';
     echo '<td>' .$row['id']. '</td>';
-    echo '<td>' .$libAssociation->getAssociationNameString($row['verein']). '</td>';
-    echo '<td>' .$row['beschreibung']. '</td>';
+    echo '<td>' .$libString->protectXSS($libAssociation->getAssociationNameString($row['verein'])). '</td>';
+    echo '<td>' .$libString->protectXSS((string) $row['beschreibung']). '</td>';
     echo '<td>' .$row['datum']. '</td>';
     echo '<td class="tool-column">';
     echo '<a href="index.php?pid=intranet_chargierkalender_adminveranstaltung&amp;id=' .$row['id']. '">';

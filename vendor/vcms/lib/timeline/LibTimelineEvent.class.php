@@ -94,7 +94,7 @@ class LibTimelineEvent
 
     public function toString()
     {
-        global $libPerson, $libTime;
+        global $libPerson, $libTime, $libString;
 
         $retstr = '<article class="timeline-event">';
 
@@ -123,7 +123,7 @@ class LibTimelineEvent
             $retstr .= '<a href="' .$this->url. '">';
         }
 
-        $retstr .= $this->title;
+        $retstr .= $libString->protectXSS((string) $this->title);
 
         if ($this->url != '') {
             $retstr .=  '</a>';

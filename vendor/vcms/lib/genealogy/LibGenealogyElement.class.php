@@ -87,6 +87,8 @@ class LibGenealogyElement
 
     public function getString($depth)
     {
+        global $libString;
+
         $retstr = '';
 
         for ($i = 0; $i < $depth - 1; $i++) {
@@ -119,10 +121,13 @@ class LibGenealogyElement
         $retstr .= '">';
 
         if ($this->title != '') {
-            $retstr .= $this->title. ' ';
+            $retstr .= $libString->protectXSS((string) $this->title). ' ';
         }
 
-        $retstr .= $this->firstName. ' ' .$this->prefix. ' ' .$this->lastName. ' ' .$this->suffix;
+        $retstr .= $libString->protectXSS((string) $this->firstName). ' '
+            .$libString->protectXSS((string) $this->prefix). ' '
+            .$libString->protectXSS((string) $this->lastName). ' '
+            .$libString->protectXSS((string) $this->suffix);
 
         $retstr .= '</span>';
         $retstr .= '</a>';

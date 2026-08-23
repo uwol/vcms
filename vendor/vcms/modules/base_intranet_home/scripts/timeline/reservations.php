@@ -50,7 +50,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     $timelineEvent->setTitle($title);
     $timelineEvent->setDatetime($row['datum']);
-    $timelineEvent->setDescription($row['beschreibung']);
+    $timelineEvent->setDescription($libString->protectXSS((string) $row['beschreibung']));
     $timelineEvent->setAuthorId($row['person']);
     $timelineEvent->setUrl($url);
 

@@ -74,7 +74,7 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
             echo '<address>';
 
             if ($row['ort'] != '') {
-                echo '<span>' .$row['ort']. '</span>';
+                echo '<span>' .$libString->protectXSS($row['ort']). '</span>';
             }
 
             echo '</address>';

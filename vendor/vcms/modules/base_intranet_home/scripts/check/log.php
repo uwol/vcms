@@ -40,7 +40,7 @@ if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewar
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $logText .= '<span class="badge">' .$row['numberOfLoginErrors']. '</span>';
             $logText .= ' ';
-            $logText .= '<a href="index.php?pid=intranet_person&id=' .$row['mitglied']. '">' .$libPerson->getNameString($row['mitglied'], 4). '</a>';
+            $logText .= '<a href="index.php?pid=intranet_person&id=' .$row['mitglied']. '">' .$libString->protectXSS($libPerson->getNameString($row['mitglied'], 4)). '</a>';
             $logText .= ' ';
         }
 

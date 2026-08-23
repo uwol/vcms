@@ -110,7 +110,7 @@ if ($libGallery->hasFotowartPrivilege($libAuth->getOffices())) {
 
 //-------------------------------------------------------------------------------------------------
 
-echo '<h1>Galerie - ' .$libEvent->getTitle($id). '</h1>';
+echo '<h1>Galerie - ' .$libString->protectXSS((string) $libEvent->getTitle($id)). '</h1>';
 
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();

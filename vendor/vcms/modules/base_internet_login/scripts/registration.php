@@ -81,21 +81,22 @@ if (isset($_POST['registrationName']) || isset($_POST['registrationPhone']) ||
 if ($formSent && !$formError) {
     $password_hash = $libAuth->encryptPassword($_POST['registrationPassword1']);
 
+    //die Mail ist Plaintext, daher kein HTML-Escaping
     $text = 'Auf ' .$libGlobal->getSiteUrl(). ' wurde folgende Registrierungsanfrage für das Intranet gestellt: ' . PHP_EOL;
     $text .= PHP_EOL;
-    $text .= 'Name: ' .$libString->protectXSS($_POST['registrationName']) . PHP_EOL;
-    $text .= 'E-Mail-Adresse: ' .$libString->protectXSS(strtolower($_POST['registrationEmail'])) . PHP_EOL;
-    $text .= 'Telefonnummer: ' .$libString->protectXSS($_POST['registrationPhone']) . PHP_EOL;
-    $text .= 'Geburtsdatum: ' .$libString->protectXSS($_POST['registrationBirthdate']) . PHP_EOL;
+    $text .= 'Name: ' .$_POST['registrationName'] . PHP_EOL;
+    $text .= 'E-Mail-Adresse: ' .strtolower($_POST['registrationEmail']) . PHP_EOL;
+    $text .= 'Telefonnummer: ' .$_POST['registrationPhone'] . PHP_EOL;
+    $text .= 'Geburtsdatum: ' .$_POST['registrationBirthdate'] . PHP_EOL;
     $text .= 'Passwort-Hash: ' .$password_hash. PHP_EOL;
     $text .= PHP_EOL;
     $text .= 'Die Freischaltung für das Intranet erfolgt, indem der Internetwart die Daten nach einer Plausibilitätsprüfung im Personenprofil speichert.' . PHP_EOL;
     $text .= 'Im Fall einer Freischaltung lautet die Antwortmail:' . PHP_EOL;
     $text .= PHP_EOL;
     $text .= PHP_EOL;
-    $text .= 'Lieber Bb ' .$libString->protectXSS($_POST['registrationName']). ',' . PHP_EOL;
+    $text .= 'Lieber Bb ' .$_POST['registrationName']. ',' . PHP_EOL;
     $text .= PHP_EOL;
-    $text .= 'Du wurdest mit der E-Mail-Adresse ' .$libString->protectXSS($_POST['registrationEmail']). ' für das Intranet freigeschaltet.' . PHP_EOL;
+    $text .= 'Du wurdest mit der E-Mail-Adresse ' .$_POST['registrationEmail']. ' für das Intranet freigeschaltet.' . PHP_EOL;
     $text .= PHP_EOL;
     $text .= 'MBuH,';
 
@@ -172,13 +173,13 @@ if ($formSent && !$formError) {
 
     echo '<div class="panel panel-default">';
     echo '<div class="panel-body">';
-    echo '<form method="post" action="' .$urlPrefix. 'index.php?pid=registration" class="form-horizontal">';
+    echo '<form method="post" action="' .$libString->protectXSS($urlPrefix). 'index.php?pid=registration" class="form-horizontal">';
     echo '<fieldset>';
 
-    $libForm->printTextInput('registrationName', 'Vorname und Nachname', $libString->protectXSS($registrationName), 'text', false, true);
-    $libForm->printTextInput('registrationPhone', 'Telefonnummer', $libString->protectXSS($registrationPhone), 'tel', false, true);
-    $libForm->printTextInput('registrationEmail', 'E-Mail-Adresse', $libString->protectXSS($registrationEmail), 'email', false, true);
-    $libForm->printDateInput('registrationBirthdate', 'Geburtsdatum', $libString->protectXSS($registrationBirthdate), false, true, [], '', date('Y-m-d'));
+    $libForm->printTextInput('registrationName', 'Vorname und Nachname', $registrationName, 'text', false, true);
+    $libForm->printTextInput('registrationPhone', 'Telefonnummer', $registrationPhone, 'tel', false, true);
+    $libForm->printTextInput('registrationEmail', 'E-Mail-Adresse', $registrationEmail, 'email', false, true);
+    $libForm->printDateInput('registrationBirthdate', 'Geburtsdatum', $registrationBirthdate, false, true, [], '', date('Y-m-d'));
     $libForm->printTextInput('registrationPassword1', 'Passwort', '', 'password', false, true);
     $libForm->printTextInput('registrationPassword2', 'Passwort-Wiederholung', '', 'password', false, true);
     $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Abschicken');

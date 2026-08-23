@@ -28,7 +28,7 @@ if (isset($_GET['id'])) {
     $stmt->execute();
     $associationRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    echo '<h1>' .$libAssociation->getAssociationNameString($associationRow['id']). '</h1>';
+    echo '<h1>' .$libString->protectXSS($libAssociation->getAssociationNameString($associationRow['id'])). '</h1>';
 
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
@@ -41,27 +41,29 @@ if (isset($_GET['id'])) {
     echo '<address>';
 
     if ($associationRow['zusatz1']) {
-        echo $associationRow['zusatz1']. '<br />';
+        echo $libString->protectXSS($associationRow['zusatz1']). '<br />';
     }
 
     if ($associationRow['strasse1']) {
-        echo $associationRow['strasse1']. '<br />';
+        echo $libString->protectXSS($associationRow['strasse1']). '<br />';
     }
 
     if ($associationRow['ort1']) {
-        echo $associationRow['plz1']. ' ' .$associationRow['ort1']. '<br />';
+        echo $libString->protectXSS($associationRow['plz1']). ' ' .$libString->protectXSS($associationRow['ort1']). '<br />';
     }
 
     if ($associationRow['land1']) {
-        echo $associationRow['land1']. '<br />';
+        echo $libString->protectXSS($associationRow['land1']). '<br />';
     }
 
     if ($associationRow['telefon1']) {
-        echo $associationRow['telefon1']. '<br />';
+        echo $libString->protectXSS($associationRow['telefon1']). '<br />';
     }
 
     if ($associationRow['webseite']) {
-        echo '<a href="' .$associationRow['webseite']. '">' .$associationRow['webseite']. '</a><br />';
+        $website = $libString->assureHttpScheme($associationRow['webseite']);
+
+        echo '<a href="' .$libString->protectXSS($website). '">' .$libString->protectXSS($website). '</a><br />';
     }
 
     echo '</address>';
@@ -94,7 +96,7 @@ if (isset($_GET['id'])) {
         echo '</div>';
 
         echo '<p class="mb-4">';
-        echo $associationRow['farbe1']. ' ' .$associationRow['farbe2']. ' ' .$associationRow['farbe3']. '<br />';
+        echo $libString->protectXSS($associationRow['farbe1']). ' ' .$libString->protectXSS($associationRow['farbe2']). ' ' .$libString->protectXSS($associationRow['farbe3']). '<br />';
         echo '</p>';
     }
 
@@ -107,11 +109,11 @@ if (isset($_GET['id'])) {
     }
 
     if ($associationRow['dachverband']) {
-        echo 'Dachverband: ' .$associationRow['dachverband']. '<br />';
+        echo 'Dachverband: ' .$libString->protectXSS($associationRow['dachverband']). '<br />';
     }
 
     if ($associationRow['dachverbandnr']) {
-        echo 'Nr.: ' .$associationRow['dachverbandnr']. '<br />';
+        echo 'Nr.: ' .$libString->protectXSS($associationRow['dachverbandnr']). '<br />';
     }
 
     $activeString = '';
@@ -121,7 +123,7 @@ if (isset($_GET['id'])) {
     }
 
     if ($associationRow['kuerzel']) {
-        echo 'Kürzel: ' .$associationRow['kuerzel'] . $activeString. '<br />';
+        echo 'Kürzel: ' .$libString->protectXSS($associationRow['kuerzel']) . $activeString. '<br />';
     }
 
     if ($associationRow['aktivitas'] == 1) {
@@ -139,14 +141,14 @@ if (isset($_GET['id'])) {
     if ($associationRow['mutterverein']) {
         echo 'Mutter: ';
         echo '<a href="index.php?pid=verein&amp;id=' .$associationRow['mutterverein']. '">';
-        echo $libAssociation->getAssociationNameString($associationRow['mutterverein']). '</a>';
+        echo $libString->protectXSS($libAssociation->getAssociationNameString($associationRow['mutterverein'])). '</a>';
         echo '<br />';
     }
 
     if ($associationRow['fusioniertin']) {
         echo 'Fusioniert in: ';
         echo '<a href="index.php?pid=verein&amp;id=' .$associationRow['fusioniertin']. '">';
-        echo $libAssociation->getAssociationNameString($associationRow['fusioniertin']). '</a>';
+        echo $libString->protectXSS($libAssociation->getAssociationNameString($associationRow['fusioniertin'])). '</a>';
         echo '<br />';
     }
 
@@ -163,7 +165,7 @@ if (isset($_GET['id'])) {
     }
 
     if ($associationRow['wahlspruch']) {
-        echo 'Wahlspruch: ' .$associationRow['wahlspruch']. '<br />';
+        echo 'Wahlspruch: ' .$libString->protectXSS($associationRow['wahlspruch']). '<br />';
     }
 
     echo '</p>';
@@ -177,7 +179,7 @@ if (isset($_GET['id'])) {
         echo '<div class="panel panel-default">';
         echo '<div class="panel-body">';
         echo '<p class="mb-4">';
-        echo nl2br((string) $associationRow['farbenstrophe']);
+        echo nl2br($libString->protectXSS((string) $associationRow['farbenstrophe']));
         echo '</p>';
         echo '</div>';
         echo '</div>';
@@ -189,7 +191,7 @@ if (isset($_GET['id'])) {
         echo '<div class="panel panel-default">';
         echo '<div class="panel-body">';
         echo '<p class="mb-4">';
-        echo nl2br((string) $associationRow['farbenstrophe_inoffiziell']);
+        echo nl2br($libString->protectXSS((string) $associationRow['farbenstrophe_inoffiziell']));
         echo '</p>';
         echo '</div>';
         echo '</div>';
@@ -201,7 +203,7 @@ if (isset($_GET['id'])) {
         echo '<div class="panel panel-default">';
         echo '<div class="panel-body">';
         echo '<p class="mb-4">';
-        echo nl2br((string) $associationRow['fuchsenstrophe']);
+        echo nl2br($libString->protectXSS((string) $associationRow['fuchsenstrophe']));
         echo '</p>';
         echo '</div>';
         echo '</div>';
@@ -213,7 +215,7 @@ if (isset($_GET['id'])) {
         echo '<div class="panel panel-default">';
         echo '<div class="panel-body">';
         echo '<p class="mb-4">';
-        echo nl2br((string) $associationRow['bundeslied']);
+        echo nl2br($libString->protectXSS((string) $associationRow['bundeslied']));
         echo '</p>';
         echo '</div>';
         echo '</div>';
@@ -223,7 +225,7 @@ if (isset($_GET['id'])) {
         echo '<div class="panel panel-default">';
         echo '<div class="panel-body">';
         echo '<p class="mb-4">';
-        echo nl2br((string) $associationRow['beschreibung']);
+        echo nl2br($libString->protectXSS((string) $associationRow['beschreibung']));
         echo '</p>';
         echo '</div>';
         echo '</div>';
@@ -291,7 +293,7 @@ if (isset($_GET['id'])) {
             echo '</div>';
 
             echo '<div class="persons-grid-description">';
-            echo $libPerson->getNameString($row['mitglied'], 0);
+            echo $libString->protectXSS($libPerson->getNameString($row['mitglied'], 0));
 
             if ($row['ehrenmitglied'] == 1) {
                 echo '<p class="mb-4">Ehrenmitglied</p>';

@@ -239,7 +239,7 @@ class LibChargierCalendarEvent
         //summary
         if ($this->summary != '') {
             $retstr .= '<div>';
-            $retstr .= $this->summary;
+            $retstr .= $libString->protectXSS((string) $this->summary);
             $retstr .= '</div>';
         }
 
@@ -250,7 +250,7 @@ class LibChargierCalendarEvent
         //description
         if ($this->description != '') {
             $retstr .= '<div>';
-            $retstr .= $this->description;
+            $retstr .= $libString->protectXSS((string) $this->description);
             $retstr .= '</div>';
         }
 
@@ -258,7 +258,7 @@ class LibChargierCalendarEvent
         $retstr .= '<address>';
 
         if ($this->location != '') {
-            $retstr .= '<span>' .$this->location. '</span>';
+            $retstr .= '<span>' .$libString->protectXSS((string) $this->location). '</span>';
         }
 
         $retstr .= '</address>';
@@ -267,7 +267,7 @@ class LibChargierCalendarEvent
             $memberLinks = [];
 
             foreach ($this->registeredMembers as $key => $value) {
-                $memberLinks[] = '<a href="index.php?pid=intranet_person&amp;id=' .$key. '">' .$value. '</a>';
+                $memberLinks[] = '<a href="index.php?pid=intranet_person&amp;id=' .(int) $key. '">' .$libString->protectXSS((string) $value). '</a>';
             }
 
             $retstr .= '<div>';

@@ -63,10 +63,10 @@ if ($libAuth->isLoggedin()) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo '<tr>';
         echo '<td>' .$row['id']. '</td>';
-        echo '<td>' .$row['praefix']. '</td>';
-        echo '<td>' .$row['name']. '</td>';
-        echo '<td>' .$row['suffix']. '</td>';
-        echo '<td>' .$row['vorname']. '</td>';
+        echo '<td>' .$libString->protectXSS($row['praefix']). '</td>';
+        echo '<td>' .$libString->protectXSS($row['name']). '</td>';
+        echo '<td>' .$libString->protectXSS($row['suffix']). '</td>';
+        echo '<td>' .$libString->protectXSS($row['vorname']). '</td>';
         echo '<td class="tool-column">';
         echo '<a href="index.php?pid=intranet_admin_vip&amp;id=' .$row['id']. '">';
         echo '<i class="fa fa-cog" aria-hidden="true"></i>';

@@ -75,8 +75,6 @@ class LibDb
 
     public function updateRow($fieldsArray, $valueArray, $table, $idArray)
     {
-        global $libString;
-
         $setString = '';
 
         // build string of values to set
@@ -107,7 +105,7 @@ class LibDb
             if (!isset($valueArray[$field]) || $valueArray[$field] == '') {
                 $value = null;
             } else {
-                $value = $libString->protectXSS($valueArray[$field]);
+                $value = $valueArray[$field];
             }
 
             $stmt->bindValue(':'.$field, $value, $this->determinePdoType($value));
@@ -135,8 +133,6 @@ class LibDb
 
     public function insertRow($fieldsArray, $valueArray, $table, $idArray)
     {
-        global $libString;
-
         $fieldsString = implode(',', $fieldsArray);
 
         $valuesString = '';
@@ -158,7 +154,7 @@ class LibDb
             if (!isset($valueArray[$field]) || $valueArray[$field] == '') {
                 $value = null;
             } else {
-                $value = $libString->protectXSS($valueArray[$field]);
+                $value = $valueArray[$field];
             }
 
             $stmt->bindValue(':'.$field, $value, $this->determinePdoType($value));

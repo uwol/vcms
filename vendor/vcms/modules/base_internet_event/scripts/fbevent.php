@@ -39,6 +39,12 @@ $stmt->bindValue(':id', $id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//interne Veranstaltungen nicht an anonyme Besucher ausliefern, analog zur Eventseite
+if (is_array($row) && $row['intern'] && !$libAuth->isLoggedin()) {
+    http_response_code(403);
+    exit;
+}
+
 if ($libEvent->isFacebookEvent($row)) {
     $facebookAppid = $libGenericStorage->loadValue('base_core', 'facebook_appid');
     $facebookSecretKey = $libGenericStorage->loadValue('base_core', 'facebook_secret_key');
@@ -90,7 +96,7 @@ if ($libEvent->isFacebookEvent($row)) {
         echo '<div class="media-body">';
 
         echo '<h3 class="mb-0 mt-0" style="font-weight:bold;font-size:14px">';
-        echo '<a href="' .$libString->protectXss($eventUrl). '" style="color:black">' .$row['titel']. '</a>';
+        echo '<a href="' .$libString->protectXss($eventUrl). '" style="color:black">' .$libString->protectXss($row['titel']). '</a>';
         echo '</h3>';
 
         echo '<p class="mb-0 mt-0" style="color:#90949c;font-size:12px">';

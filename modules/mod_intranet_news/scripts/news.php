@@ -33,7 +33,7 @@ if (isset($_POST['category']) && isset($_POST['betroffenesmitglied']) && isset($
 
     $stmt = $libDb->prepare('INSERT INTO mod_news_news (kategorieid, eingabedatum, text, betroffenesmitglied, autor) VALUES (:kategorieid, NOW(), :text, :betroffenesmitglied, :autor)');
     $stmt->bindValue(':kategorieid', $_POST['category'], PDO::PARAM_INT);
-    $stmt->bindValue(':text', $libString->protectXss(trim($_POST['text'])));
+    $stmt->bindValue(':text', trim($_POST['text']));
     $stmt->bindValue(':betroffenesmitglied', $affectedMember, PDO::PARAM_INT);
     $stmt->bindValue(':autor', $libAuth->getId(), PDO::PARAM_INT);
     $stmt->execute();
@@ -125,7 +125,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<h3 class="panel-title d-inline">';
     echo $libTime->formatDateString($row['eingabedatum']);
     echo ' ';
-    echo $row['bezeichnung'];
+    echo $libString->protectXSS($row['bezeichnung']);
     echo '</h3>';
 
     if ((in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices()))
@@ -144,7 +144,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<div class="row">';
 
     echo '<div class="col-xs-12 col-sm-9 col-md-10">';
-    echo nl2br((string) $row['text']);
+    echo nl2br($libString->protectXSS((string) $row['text']));
     echo '</div>';
 
     if (($row['autor'] != '' && $row['autor'] > 0) || ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0)) {

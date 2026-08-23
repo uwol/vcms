@@ -162,7 +162,7 @@ class LibCalendarEvent
 
         //summary
         $retstr .= '<div>';
-        $retstr .= $this->summary;
+        $retstr .= $libString->protectXSS((string) $this->summary);
         $retstr .= '</div>';
 
         //image
@@ -181,7 +181,7 @@ class LibCalendarEvent
         //description
         if ($this->description != '') {
             $retstr .= '<div>';
-            $retstr .= $this->description;
+            $retstr .= $libString->protectXSS((string) $this->description);
             $retstr .= '</div>';
         }
 
@@ -189,7 +189,7 @@ class LibCalendarEvent
         $retstr .= '<address>';
 
         if ($this->location != '') {
-            $retstr .= '<span>' .$this->location. '</span>';
+            $retstr .= '<span>' .$libString->protectXSS((string) $this->location). '</span>';
         }
 
         $retstr .= '</address>';
@@ -202,7 +202,7 @@ class LibCalendarEvent
         //status
         if ($this->status != '') {
             $retstr .= '<span class="status">';
-            $retstr .= $this->status;
+            $retstr .= $libString->protectXSS((string) $this->status);
             $retstr .= '</span>';
         }
 

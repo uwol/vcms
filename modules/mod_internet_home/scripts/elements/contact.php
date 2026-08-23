@@ -25,7 +25,7 @@ if (!is_object($libGlobal)) {
 $associationSchema = $libAssociation->getAssociationSchema();
 
 echo '<script type="application/ld+json">';
-echo json_encode($associationSchema);
+echo str_replace(['<', '>', '&'], ['\u003c', '\u003e', '\u0026'], json_encode($associationSchema));
 echo '</script>';
 
 echo '<section class="contact-box">';

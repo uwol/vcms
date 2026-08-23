@@ -29,7 +29,7 @@ if (isset($_POST["datum"]) && $_POST["datum"] < @date("Y-m-d")) {
 } elseif (isset($_POST["datum"]) && isset($_POST["beschreibung"])) {
     $stmt = $libDb->prepare("INSERT INTO mod_reservierung_reservierung (datum, beschreibung, person) VALUES (:datum, :beschreibung, :person)");
     $stmt->bindValue(':datum', $libTime->assureMysqlDate($_POST["datum"]));
-    $stmt->bindValue(':beschreibung', $libString->protectXss($_POST["beschreibung"]));
+    $stmt->bindValue(':beschreibung', $_POST["beschreibung"]);
     $stmt->bindValue(':person', $libAuth->getId(), PDO::PARAM_INT);
     $stmt->execute();
 
@@ -76,7 +76,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo $libTime->formatDateString($row['datum']);
     echo ' ';
     echo '<a href="index.php?pid=intranet_person&amp;id=' .$row['person']. '">';
-    echo $libPerson->getNameString($row['person'], 0);
+    echo $libString->protectXSS($libPerson->getNameString($row['person'], 0));
     echo '</a>';
     echo '</h3>';
 
@@ -94,7 +94,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<div class="panel-body">';
     echo '<div class="row">';
     echo '<div class="col-xs-12 col-sm-9 col-md-10">';
-    echo nl2br((string) $row['beschreibung']);
+    echo nl2br($libString->protectXSS((string) $row['beschreibung']));
     echo '</div>';
 
     echo '<div class="hidden-xs col-sm-3 col-md-2">';

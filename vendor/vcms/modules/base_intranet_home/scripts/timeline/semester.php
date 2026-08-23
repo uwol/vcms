@@ -77,7 +77,7 @@ if ($row['senior']) {
     $description .= '<p class="mb-4">';
     $description .= 'Senior<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['senior']. '">';
-    $description .= $libPerson->getNameString($row['senior'], 0);
+    $description .= $libString->protectXSS($libPerson->getNameString($row['senior'], 0));
     $description .= '</a>';
     $description .= '</p>';
 
@@ -102,7 +102,7 @@ if ($row['consenior']) {
     $description .= '<p class="mb-4">';
     $description .= 'Consenior<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['consenior']. '">';
-    $description .= $libPerson->getNameString($row['consenior'], 0);
+    $description .= $libString->protectXSS($libPerson->getNameString($row['consenior'], 0));
     $description .= '</a>';
     $description .= '</p>';
 
@@ -127,7 +127,7 @@ if ($row['fuchsmajor']) {
     $description .= '<p class="mb-4">';
     $description .= 'Fuchsmajor<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['fuchsmajor']. '">';
-    $description .= $libPerson->getNameString($row['fuchsmajor'], 0);
+    $description .= $libString->protectXSS($libPerson->getNameString($row['fuchsmajor'], 0));
     $description .= '</a>';
     $description .= '</p>';
 
@@ -152,7 +152,7 @@ if ($row['scriptor']) {
     $description .= '<p class="mb-4">';
     $description .= 'Scriptor<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['scriptor']. '">';
-    $description .= $libPerson->getNameString($row['scriptor'], 0);
+    $description .= $libString->protectXSS($libPerson->getNameString($row['scriptor'], 0));
     $description .= '</a>';
     $description .= '</p>';
 
@@ -177,7 +177,7 @@ if ($row['quaestor']) {
     $description .= '<p class="mb-4">';
     $description .= 'Quaestor<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['quaestor']. '">';
-    $description .= $libPerson->getNameString($row['quaestor'], 0);
+    $description .= $libString->protectXSS($libPerson->getNameString($row['quaestor'], 0));
     $description .= '</a>';
     $description .= '</p>';
 
@@ -326,14 +326,14 @@ $timelineEventSet->addEvent($timelineEvent);
 
 function getAssociationGroup($stmt, $title)
 {
-    global $libPerson;
+    global $libPerson, $libString;
 
     $nameStrings = [];
 
     $stmt->execute();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $nameStrings[] = '<a href="index.php?pid=intranet_person&amp;id=' .$row['id']. '">' .$libPerson->getNameString($row['id'], 0). '</a>';
+        $nameStrings[] = '<a href="index.php?pid=intranet_person&amp;id=' .$row['id']. '">' .$libString->protectXSS($libPerson->getNameString($row['id'], 0)). '</a>';
     }
 
     $retstr = '';
@@ -350,14 +350,14 @@ function getAssociationGroup($stmt, $title)
 
 function getOffice($officeName, $id)
 {
-    global $libPerson;
+    global $libPerson, $libString;
 
     $retstr = '';
 
     if ($id != '') {
         $retstr .= '<p class="mb-4">';
         $retstr .= $officeName. '<br/>';
-        $retstr .= '<a href="index.php?pid=intranet_person&amp;id=' .$id. '">' .$libPerson->getNameString($id, 0). '</a>';
+        $retstr .= '<a href="index.php?pid=intranet_person&amp;id=' .(int) $id. '">' .$libString->protectXSS($libPerson->getNameString($id, 0)). '</a>';
         $retstr .= '</p>';
     }
 

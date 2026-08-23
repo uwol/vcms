@@ -28,7 +28,11 @@ $calendarId = $libGlobal->getSiteUrlAuthority(). '_semesterprogramm_';
 
 $calendar = new vcms\LibICalendar();
 
-$stmt = $libDb->prepare('SELECT id, datum, datum_ende, titel, beschreibung, status, ort FROM base_veranstaltung WHERE datum >= CURDATE() ORDER BY datum DESC');
+//interne Veranstaltungen nur für angemeldete Mitglieder, analog zur Kalenderseite
+$intern = $libAuth->isLoggedin() ? 1 : 0;
+
+$stmt = $libDb->prepare('SELECT id, datum, datum_ende, titel, beschreibung, status, ort FROM base_veranstaltung WHERE intern <= :intern AND datum >= CURDATE() ORDER BY datum DESC');
+$stmt->bindValue(':intern', $intern, PDO::PARAM_INT);
 $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

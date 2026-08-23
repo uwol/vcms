@@ -30,7 +30,7 @@ class LibString
 
     public function protectXSS($value)
     {
-        return htmlspecialchars((string) $value, ENT_NOQUOTES, 'UTF-8');
+        return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 
     public function randomAlphaNumericString($len, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
@@ -56,6 +56,25 @@ class LibString
         } else {
             return false;
         }
+    }
+
+    /**
+    * Stellt sicher, dass eine gespeicherte URL ein http(s)-Schema hat. Damit kann aus einem
+    * Datenbankwert kein javascript:-Link werden, den das Escaping nicht abfangen würde.
+    */
+    public function assureHttpScheme($url)
+    {
+        $url = trim((string) $url);
+
+        if ($url == '') {
+            return '';
+        }
+
+        if (substr($url, 0, 7) != 'http://' && substr($url, 0, 8) != 'https://') {
+            $url = 'http://' .$url;
+        }
+
+        return $url;
     }
 
     public function isValidURL($string)

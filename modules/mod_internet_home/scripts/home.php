@@ -45,7 +45,9 @@ if (!$libGenericStorage->attributeExistsInCurrentModule('show_facebook_plugin'))
 
 function printEventTitle($row)
 {
-    echo $row['titel'];
+    global $libString;
+
+    echo $libString->protectXSS($row['titel']);
 }
 
 function printEventDateTime($row)

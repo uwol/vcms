@@ -136,7 +136,7 @@ if (!empty($libAuth->getOffices())) {
 
     foreach ($rootFolderObject->getNestedFoldersRec() as $folderElement) {
         if (in_array($folderElement->owningOffice, $libAuth->getOffices())) {
-            echo '<option value="' .$folderElement->getHash(). '">' .$folderElement->name. '</option>';
+            echo '<option value="' .$folderElement->getHash(). '">' .$libString->protectXSS((string) $folderElement->name). '</option>';
         }
     }
 
@@ -153,14 +153,14 @@ if (!empty($libAuth->getOffices())) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         if ($row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "V") {
-            echo '<div class="checkbox"><label><input type="checkbox" name="gruppen[]" value="' .$row['bezeichnung']. '"';
+            echo '<div class="checkbox"><label><input type="checkbox" name="gruppen[]" value="' .$libString->protectXSS($row['bezeichnung']). '"';
 
             if ($libGenericStorage->loadValueInCurrentModule('preselect_rights') == 1) {
                 echo ' checked="checked"';
             }
 
             echo '/>';
-            echo $row['bezeichnung']. ' - ' .$row['beschreibung'];
+            echo $libString->protectXSS($row['bezeichnung']). ' - ' .$libString->protectXSS((string) $row['beschreibung']);
             echo '</label></div>';
         }
     }
@@ -203,7 +203,7 @@ if (!empty($libAuth->getOffices())) {
 
     foreach ($rootFolderObject->getNestedFoldersRec() as $folderElement) {
         if (in_array($folderElement->owningOffice, $libAuth->getOffices())) {
-            echo '<option value="' .$folderElement->getHash(). '">' .$folderElement->name. '</option>';
+            echo '<option value="' .$folderElement->getHash(). '">' .$libString->protectXSS((string) $folderElement->name). '</option>';
         }
     }
 
@@ -250,7 +250,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
                     echo '<a href="index.php?pid=intranet_directories&amp;action=open&amp;hash=' .$folderElement->getHash(). '">';
                 }
 
-                echo $folderElement->name;
+                echo $libString->protectXSS((string) $folderElement->name);
                 echo '</a>';
 
                 $size = $folderElement->getSize();
@@ -331,8 +331,8 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
 
             $fileName = $folderElement->getFilename();
 
-            echo ' <a href="api.php?iid=intranet_download&amp;hash=' .$folderElement->getHash(). '">' .$fileName. '</a>';
-            echo ' <span class="text-muted"><small>' .implode('', $folderElement->readGroups). '</small></span>';
+            echo ' <a href="api.php?iid=intranet_download&amp;hash=' .$folderElement->getHash(). '">' .$libString->protectXSS((string) $fileName). '</a>';
+            echo ' <span class="text-muted"><small>' .implode('', array_map([$libString, 'protectXSS'], (array) $folderElement->readGroups)). '</small></span>';
             echo ' <span class="text-muted"><small>' .getSizeString($folderElement->getSize()). '</small></span>';
 
             if (in_array($folderElement->owningOffice, $libAuth->getOffices())) {

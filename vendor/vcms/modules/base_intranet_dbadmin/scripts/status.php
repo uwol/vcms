@@ -26,8 +26,8 @@ if ($libAuth->isLoggedin()) {
     if (isset($_POST['action']) && $_POST['action'] == 'create') {
         if ($_POST['bezeichnung'] != '') {
             $stmt = $libDb->prepare('INSERT INTO base_status (bezeichnung, beschreibung) VALUES (:bezeichnung, :beschreibung)');
-            $stmt->bindValue(':bezeichnung', $libString->protectXss($_POST['bezeichnung']));
-            $stmt->bindValue(':beschreibung', $libString->protectXss($_POST['beschreibung']));
+            $stmt->bindValue(':bezeichnung', $_POST['bezeichnung']);
+            $stmt->bindValue(':beschreibung', $_POST['beschreibung']);
             $stmt->execute();
         } else {
             $libGlobal->errorTexts[] = 'Keine Bezeichnung angegeben.';
@@ -73,14 +73,14 @@ if ($libAuth->isLoggedin()) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo '<tr>';
-        echo '<td>' .$row['bezeichnung']. '</td>';
-        echo '<td>' .$row['beschreibung']. '</td>';
+        echo '<td>' .$libString->protectXSS($row['bezeichnung']). '</td>';
+        echo '<td>' .$libString->protectXSS((string) $row['beschreibung']). '</td>';
         echo '<td class="tool-column">';
 
         if ($row['bezeichnung'] != 'A-Phil' && $row['bezeichnung'] != 'B-Phil' && $row['bezeichnung'] != 'Ehrenmitglied' && $row['bezeichnung'] != 'ex loco' && $row['bezeichnung'] != 'HV-M' && $row['bezeichnung'] != 'Inaktiv ex loco' && $row['bezeichnung'] != 'Inaktiv' && $row['bezeichnung'] != 'VG') {
             echo '<form method="post" action="index.php?pid=intranet_admin_status" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
             echo '<input type="hidden" name="action" value="delete" />';
-            echo '<input type="hidden" name="bezeichnung" value="' .$row['bezeichnung']. '" />';
+            echo '<input type="hidden" name="bezeichnung" value="' .$libString->protectXSS($row['bezeichnung']). '" />';
             echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
             echo '</form>';
         }

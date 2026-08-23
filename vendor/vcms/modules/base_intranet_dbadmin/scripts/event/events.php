@@ -91,8 +91,8 @@ if ($libAuth->isLoggedin()) {
         echo '<tr>';
         echo '<td>' .$row['id']. '</td>';
         echo '<td>' .$row['datum']. '</td>';
-        echo '<td>' .$row['titel']. '</td>';
-        echo '<td>' .$row['status']. '</td>';
+        echo '<td>' .$libString->protectXSS($row['titel']). '</td>';
+        echo '<td>' .$libString->protectXSS((string) $row['status']). '</td>';
         echo '<td class="tool-column">';
 
         if ($row['intern']) {

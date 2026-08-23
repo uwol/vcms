@@ -19,7 +19,7 @@ along with VCMS. If not, see <http://www.gnu.org/licenses/>.
 
 function printPersons($stmt)
 {
-    global $libDb, $libPerson;
+    global $libDb, $libPerson, $libString;
 
     $stmt->execute();
 
@@ -35,8 +35,8 @@ function printPersons($stmt)
         echo '</div>';
 
         echo '<div class="persons-grid-description">';
-        echo '<b>' .$libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0) . '</b><br />';
-        echo $libPerson->getChargenString($row['id']). ' ' .$libPerson->getAssociationsString($row['id']);
+        echo '<b>' .$libString->protectXSS($libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0)). '</b><br />';
+        echo $libString->protectXSS((string) $libPerson->getChargenString($row['id'])). ' ' .$libPerson->getAssociationsString($row['id']);
 
         if ($row['tod_datum'] != '' && $row['tod_datum'] != '0000-00-00') {
             echo '<br />';
@@ -47,7 +47,7 @@ function printPersons($stmt)
 
             echo ' - ' .substr((string) $row['tod_datum'], 0, 4);
         } elseif ($row['ort1'] != '') {
-            echo '<br />' .$row['ort1'];
+            echo '<br />' .$libString->protectXSS($row['ort1']);
         }
 
         echo '</div>';

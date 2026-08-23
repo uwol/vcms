@@ -68,31 +68,31 @@ if ($ownprofile) {
             $stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
 				telefon1=:telefon1, zusatz2=:zusatz2, strasse2=:strasse2, ort2=:ort2, plz2=:plz2, land2=:land2,telefon2=:telefon2, mobiltelefon=:mobiltelefon,
 				email=:email, skype=:skype, webseite=:webseite, spitzname=:spitzname, beruf=:beruf, leibmitglied=:leibmitglied, region1=:region1, region2=:region2, vita=:vita WHERE id=:id');
-            $stmt->bindValue(':anrede', $libString->protectXss(trim($_POST['anrede'] ?? '')));
-            $stmt->bindValue(':titel', $libString->protectXss(trim($_POST['titel'] ?? '')));
-            $stmt->bindValue(':rang', $libString->protectXss(trim($_POST['rang'] ?? '')));
-            $stmt->bindValue(':zusatz1', $libString->protectXss(trim($_POST['zusatz1'] ?? '')));
-            $stmt->bindValue(':strasse1', $libString->protectXss(trim($_POST['strasse1'] ?? '')));
-            $stmt->bindValue(':ort1', $libString->protectXss(trim($_POST['ort1'] ?? '')));
-            $stmt->bindValue(':plz1', $libString->protectXss(trim($_POST['plz1'] ?? '')));
-            $stmt->bindValue(':land1', $libString->protectXss(trim($_POST['land1'] ?? '')));
-            $stmt->bindValue(':telefon1', $libString->protectXss(trim($_POST['telefon1'] ?? '')));
-            $stmt->bindValue(':zusatz2', $libString->protectXss(trim($_POST['zusatz2'] ?? '')));
-            $stmt->bindValue(':strasse2', $libString->protectXss(trim($_POST['strasse2'] ?? '')));
-            $stmt->bindValue(':ort2', $libString->protectXss(trim($_POST['ort2'] ?? '')));
-            $stmt->bindValue(':plz2', $libString->protectXss(trim($_POST['plz2'] ?? '')));
-            $stmt->bindValue(':land2', $libString->protectXss(trim($_POST['land2'] ?? '')));
-            $stmt->bindValue(':telefon2', $libString->protectXss(trim($_POST['telefon2'] ?? '')));
-            $stmt->bindValue(':mobiltelefon', $libString->protectXss(trim($_POST['mobiltelefon'] ?? '')));
-            $stmt->bindValue(':email', $libString->protectXss(strtolower(trim($_POST['email'] ?? ''))));
-            $stmt->bindValue(':skype', $libString->protectXss(trim($_POST['skype'] ?? '')));
-            $stmt->bindValue(':webseite', $libString->protectXss(trim($_POST['webseite'] ?? '')));
-            $stmt->bindValue(':spitzname', $libString->protectXss(trim($_POST['spitzname'] ?? '')));
-            $stmt->bindValue(':beruf', $libString->protectXss(trim($_POST['beruf'] ?? '')));
+            $stmt->bindValue(':anrede', trim($_POST['anrede'] ?? ''));
+            $stmt->bindValue(':titel', trim($_POST['titel'] ?? ''));
+            $stmt->bindValue(':rang', trim($_POST['rang'] ?? ''));
+            $stmt->bindValue(':zusatz1', trim($_POST['zusatz1'] ?? ''));
+            $stmt->bindValue(':strasse1', trim($_POST['strasse1'] ?? ''));
+            $stmt->bindValue(':ort1', trim($_POST['ort1'] ?? ''));
+            $stmt->bindValue(':plz1', trim($_POST['plz1'] ?? ''));
+            $stmt->bindValue(':land1', trim($_POST['land1'] ?? ''));
+            $stmt->bindValue(':telefon1', trim($_POST['telefon1'] ?? ''));
+            $stmt->bindValue(':zusatz2', trim($_POST['zusatz2'] ?? ''));
+            $stmt->bindValue(':strasse2', trim($_POST['strasse2'] ?? ''));
+            $stmt->bindValue(':ort2', trim($_POST['ort2'] ?? ''));
+            $stmt->bindValue(':plz2', trim($_POST['plz2'] ?? ''));
+            $stmt->bindValue(':land2', trim($_POST['land2'] ?? ''));
+            $stmt->bindValue(':telefon2', trim($_POST['telefon2'] ?? ''));
+            $stmt->bindValue(':mobiltelefon', trim($_POST['mobiltelefon'] ?? ''));
+            $stmt->bindValue(':email', strtolower(trim($_POST['email'] ?? '')));
+            $stmt->bindValue(':skype', trim($_POST['skype'] ?? ''));
+            $stmt->bindValue(':webseite', trim($_POST['webseite'] ?? ''));
+            $stmt->bindValue(':spitzname', trim($_POST['spitzname'] ?? ''));
+            $stmt->bindValue(':beruf', trim($_POST['beruf'] ?? ''));
             $stmt->bindValue(':leibmitglied', $leibMember, PDO::PARAM_INT);
             $stmt->bindValue(':region1', $_POST['region1'] ?? '', PDO::PARAM_INT);
             $stmt->bindValue(':region2', $_POST['region2'] ?? '', PDO::PARAM_INT);
-            $stmt->bindValue(':vita', $libString->protectXss(trim($_POST['vita'] ?? '')));
+            $stmt->bindValue(':vita', trim($_POST['vita'] ?? ''));
             $stmt->bindValue(':id', $libAuth->getId(), PDO::PARAM_INT);
             $stmt->execute();
         }
@@ -191,14 +191,14 @@ if (!is_array($row)) {
 $personSchema = $libPerson->getPersonSchema($row);
 
 echo '<script type="application/ld+json">';
-echo json_encode($personSchema);
+echo str_replace(['<', '>', '&'], ['\u003c', '\u003e', '\u0026'], json_encode($personSchema));
 echo '</script>';
 
 
 echo '<h1>';
-echo $libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0);
+echo $libString->protectXSS($libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 0));
 echo ' ';
-echo $libPerson->getChargenString($id);
+echo $libString->protectXSS((string) $libPerson->getChargenString($id));
 echo '</h1>';
 
 echo $libString->getErrorBoxText();
@@ -509,49 +509,49 @@ function printPersonSignature($row, $ownprofile)
 
 function printPersonData($row)
 {
-    global $libDb, $libPerson, $libTime;
+    global $libDb, $libPerson, $libTime, $libString;
 
     echo '<div>';
     echo '<div>';
 
     if ($row['anrede'] != '') {
-        echo $row['anrede']. ' ';
+        echo $libString->protectXSS($row['anrede']). ' ';
     }
 
     if ($row['titel'] != '') {
-        echo $row['titel']. ' ';
+        echo $libString->protectXSS($row['titel']). ' ';
     }
 
-    echo $row['vorname']. ' ';
+    echo $libString->protectXSS($row['vorname']). ' ';
 
     if ($row['praefix'] != '') {
-        echo $row['praefix']. ' ';
+        echo $libString->protectXSS($row['praefix']). ' ';
     }
 
-    echo $row['name'];
+    echo $libString->protectXSS($row['name']);
 
     if ($row['suffix'] != '') {
-        echo ' ' .$row['suffix'];
+        echo ' ' .$libString->protectXSS($row['suffix']);
     }
 
     if ($row['geburtsname'] != '') {
         echo ', geb. ';
-        echo $row['geburtsname'];
+        echo $libString->protectXSS($row['geburtsname']);
         echo ' ';
     }
 
     echo '</div>';
 
     if ($row['rang'] != '') {
-        echo '<div>' .$row['rang']. '</div>';
+        echo '<div>' .$libString->protectXSS($row['rang']). '</div>';
     }
 
     if ($row['spitzname'] != '') {
-        echo '<div>Spitzname ' .$row['spitzname']. '</div>';
+        echo '<div>Spitzname ' .$libString->protectXSS($row['spitzname']). '</div>';
     }
 
     if ($row['beruf'] != '') {
-        echo '<div>' .$row['beruf']. '</div>';
+        echo '<div>' .$libString->protectXSS($row['beruf']). '</div>';
     }
 
     if ($row['gruppe'] != '') {
@@ -563,10 +563,10 @@ function printPersonData($row)
         $stmt->bindColumn('beschreibung', $description);
         $stmt->fetch();
 
-        echo $description;
+        echo $libString->protectXSS((string) $description);
 
         if ($row['status'] != '') {
-            echo ', ' .$row['status'];
+            echo ', ' .$libString->protectXSS($row['status']);
         }
 
         echo '</div>';
@@ -574,7 +574,7 @@ function printPersonData($row)
 
     if ($row['heirat_partner'] != '' && $row['heirat_partner'] != 0) {
         echo '<div>';
-        echo 'Ehepartner <a href="index.php?pid=intranet_person&amp;id=' .$row['heirat_partner']. '" />' .$libPerson->getNameString($row['heirat_partner'], 5). '</a>';
+        echo 'Ehepartner <a href="index.php?pid=intranet_person&amp;id=' .(int) $row['heirat_partner']. '">' .$libString->protectXSS($libPerson->getNameString($row['heirat_partner'], 5)). '</a>';
         echo '</div>';
     }
 
@@ -595,7 +595,7 @@ function printPersonData($row)
 
 function printPrimaryAddress($row)
 {
-    global $libTime;
+    global $libTime, $libString;
 
     /*
     * primary address
@@ -606,23 +606,23 @@ function printPrimaryAddress($row)
         echo '<address>';
 
         if ($row['zusatz1'] != '') {
-            echo '<div>' .$row['zusatz1']. '</div>';
+            echo '<div>' .$libString->protectXSS($row['zusatz1']). '</div>';
         }
 
         if ($row['strasse1'] != '') {
-            echo '<div>' .$row['strasse1']. '</div>';
+            echo '<div>' .$libString->protectXSS($row['strasse1']). '</div>';
         }
 
         if ($row['plz1'] != '' || $row['ort1'] != '') {
-            echo '<div>' .$row['plz1']. ' ' .$row['ort1']. '</div>';
+            echo '<div>' .$libString->protectXSS($row['plz1']). ' ' .$libString->protectXSS($row['ort1']). '</div>';
         }
 
         if ($row['land1'] != '') {
-            echo '<div>' .$row['land1']. '</div>';
+            echo '<div>' .$libString->protectXSS($row['land1']). '</div>';
         }
 
         if ($row['telefon1'] != '') {
-            echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> ' .$row['telefon1']. '</div>';
+            echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> ' .$libString->protectXSS($row['telefon1']). '</div>';
         }
 
         if ($row['datum_adresse1_stand'] != '') {
@@ -636,7 +636,7 @@ function printPrimaryAddress($row)
 
 function printSecondaryAddress($row)
 {
-    global $libTime;
+    global $libTime, $libString;
 
     /*
     * secondary address
@@ -647,23 +647,23 @@ function printSecondaryAddress($row)
         echo '<address>';
 
         if ($row['zusatz2'] != '') {
-            echo '<div>' .$row['zusatz2']. '</div>';
+            echo '<div>' .$libString->protectXSS($row['zusatz2']). '</div>';
         }
 
         if ($row['strasse2'] != '') {
-            echo '<div>' .$row['strasse2']. '</div>';
+            echo '<div>' .$libString->protectXSS($row['strasse2']). '</div>';
         }
 
         if ($row['plz2'] != '' || $row['ort2'] != '') {
-            echo '<div>' .$row['plz2']. ' ' .$row['ort2']. '</div>';
+            echo '<div>' .$libString->protectXSS($row['plz2']). ' ' .$libString->protectXSS($row['ort2']). '</div>';
         }
 
         if ($row['land2'] != '') {
-            echo '<div>' .$row['land2']. '</div>';
+            echo '<div>' .$libString->protectXSS($row['land2']). '</div>';
         }
 
         if ($row['telefon2'] != '') {
-            echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> ' .$row['telefon2']. '</div>';
+            echo '<div><i class="fa fa-phone fa-fw" aria-hidden="true"></i> ' .$libString->protectXSS($row['telefon2']). '</div>';
         }
 
         if ($row['datum_adresse2_stand'] != '') {
@@ -677,6 +677,8 @@ function printSecondaryAddress($row)
 
 function printCommunication($row)
 {
+    global $libString;
+
     /*
     * communication
     */
@@ -685,19 +687,15 @@ function printCommunication($row)
         echo '<div>';
 
         if ($row['email'] != '') {
-            echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <a href="mailto:' .$row['email']. '">' .$row['email']. '</a></div>';
+            echo '<div><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <a href="mailto:' .$libString->protectXSS($row['email']). '">' .$libString->protectXSS($row['email']). '</a></div>';
         }
 
         if ($row['mobiltelefon'] != '') {
-            echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> ' .$row['mobiltelefon']. '</div>';
+            echo '<div><i class="fa fa-mobile fa-fw" aria-hidden="true"></i> ' .$libString->protectXSS($row['mobiltelefon']). '</div>';
         }
 
         if ($row['webseite'] != '') {
-            $website = $row['webseite'];
-
-            if (substr($website, 0, 7) != 'http://' && substr($website, 0, 8) != 'https://') {
-                $website = 'http://' .$website;
-            }
+            $website = $libString->assureHttpScheme($row['webseite']);
 
             $icon = '';
 
@@ -720,13 +718,13 @@ function printCommunication($row)
             }
 
             echo '<div>';
-            echo $icon. ' <a href="' .$website. '">' .$website. '</a>';
+            echo $icon. ' <a href="' .$libString->protectXSS($website). '">' .$libString->protectXSS($website). '</a>';
             echo '</div>';
         }
 
         if ($row['skype'] != '') {
             echo '<div>';
-            echo '<i class="fa fa-skype fa-fw" aria-hidden="true"></i> <a href="skype:' .$row['skype']. '">' .$row['skype']. '</a>';
+            echo '<i class="fa fa-skype fa-fw" aria-hidden="true"></i> <a href="skype:' .$libString->protectXSS($row['skype']). '">' .$libString->protectXSS($row['skype']). '</a>';
             echo '</div>';
         }
 
@@ -736,7 +734,7 @@ function printCommunication($row)
 
 function printAssociationDetails($row)
 {
-    global $libAssociation, $libDb, $libTime, $libModuleHandler;
+    global $libAssociation, $libDb, $libTime, $libModuleHandler, $libString;
 
     /*
     * others
@@ -785,7 +783,7 @@ function printAssociationDetails($row)
 
     while ($associationRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $associationString = '<a href="index.php?pid=verein&amp;id=' .$associationRow['id']. '">';
-        $associationString .= $associationRow['titel']. ' ' .$associationRow['name'];
+        $associationString .= $libString->protectXSS($associationRow['titel']). ' ' .$libString->protectXSS($associationRow['name']);
         $associationString .= '</a>';
 
         $associations[] = $associationString;
@@ -828,10 +826,10 @@ function printAssociationDetails($row)
 
                 if (isset($rowEvent['verein']) && is_numeric($rowEvent['verein'])) {
                     $chargierEventStr .= '<a href="index.php?pid=verein&amp;id=' .$rowEvent['verein']. '">';
-                    $chargierEventStr .= $libAssociation->getAssociationNameString($rowEvent['verein']);
+                    $chargierEventStr .= $libString->protectXSS($libAssociation->getAssociationNameString($rowEvent['verein']));
                     $chargierEventStr .= '</a>';
                 } else {
-                    $chargierEventStr .= $rowEvent['beschreibung'];
+                    $chargierEventStr .= $libString->protectXSS($rowEvent['beschreibung']);
                 }
 
                 $chargierEventStr .= ' (<time datetime="' .$libTime->formatUtcString($rowEvent['datum']). '">' .$libTime->formatYearString($rowEvent['datum']). '</time>)';
@@ -847,12 +845,14 @@ function printAssociationDetails($row)
 
 function printVita($row)
 {
+    global $libString;
+
     echo '<article>';
 
     $vita = trim((string) $row['vita']);
 
     if ($vita != '') {
-        echo nl2br($vita);
+        echo nl2br($libString->protectXSS($vita));
     } else {
         echo 'Keine Vita erfasst.';
     }

@@ -25,10 +25,10 @@ if ($libGlobal->page->isContainerEnabled()) {
 }
 
 
-$facebookUrl = $libGenericStorage->loadValue('mod_internet_home', 'facebook_url');
-$instagramUrl = $libGenericStorage->loadValue('mod_internet_home', 'instagram_url');
-$twitterUrl = $libGenericStorage->loadValue('mod_internet_home', 'twitter_url');
-$wikipediaUrl = $libGenericStorage->loadValue('mod_internet_home', 'wikipedia_url');
+$facebookUrl = $libString->assureHttpScheme($libGenericStorage->loadValue('mod_internet_home', 'facebook_url'));
+$instagramUrl = $libString->assureHttpScheme($libGenericStorage->loadValue('mod_internet_home', 'instagram_url'));
+$twitterUrl = $libString->assureHttpScheme($libGenericStorage->loadValue('mod_internet_home', 'twitter_url'));
+$wikipediaUrl = $libString->assureHttpScheme($libGenericStorage->loadValue('mod_internet_home', 'wikipedia_url'));
 
 
 echo '    <footer class="pb-5 pt-5">' . PHP_EOL;
@@ -39,17 +39,17 @@ echo '            <div class="social-buttons text-right mb-0 mt-0">' . PHP_EOL;
 echo '              <small class="text-muted"><a href="index.php?pid=privacy">Datenschutz</a></small>' . PHP_EOL;
 
 if ($facebookUrl != '') {
-    echo '              <a href="' .$facebookUrl. '" rel="nofollow"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+    echo '              <a href="' .$libString->protectXSS((string) $facebookUrl). '" rel="nofollow"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
     echo '              <a href="http://www.facebook.com/sharer/sharer.php?u=' .rawurlencode($libGlobal->getSiteUrl()). '"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if ($instagramUrl != '') {
-    echo '              <a href="' .$instagramUrl. '" rel="nofollow"><i class="fa fa-instagram fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+    echo '              <a href="' .$libString->protectXSS((string) $instagramUrl). '" rel="nofollow"><i class="fa fa-instagram fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if ($twitterUrl != '') {
-    echo '              <a href="' .$twitterUrl. '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+    echo '              <a href="' .$libString->protectXSS((string) $twitterUrl). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 } else {
     echo '              <a href="http://twitter.com/share?url=' .rawurlencode($libGlobal->getSiteUrl()). '&amp;text=' .rawurlencode($libConfig->verbindungName). '" rel="nofollow"><i class="fa fa-twitter-square fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
@@ -57,7 +57,7 @@ if ($twitterUrl != '') {
 echo '              <a href="whatsapp://send?text=' .rawurlencode($libConfig->verbindungName. ' ' .$libGlobal->getSiteUrl()). '"><i class="fa fa-whatsapp fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 
 if ($wikipediaUrl != '') {
-    echo '              <a href="' .$wikipediaUrl. '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
+    echo '              <a href="' .$libString->protectXSS((string) $wikipediaUrl). '" rel="nofollow"><i class="fa fa-wikipedia-w fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;
 }
 
 if ($libGenericStorage->loadValue('base_core', 'auto_update')) {

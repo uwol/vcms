@@ -174,7 +174,9 @@ class LibICalendarEvent
 
     public function format($string)
     {
-        $string = html_entity_decode((string) $string, ENT_COMPAT, 'UTF-8');
+        //kein html_entity_decode: seit der Umstellung auf Escaping bei der Ausgabe stehen
+        //die Werte unencodiert in der Datenbank. Entities wären wörtlicher Benutzertext.
+        $string = (string) $string;
 
         $string = str_replace('\\', '\\\\', $string); //RFC 5545 chapter 3.3.11
         $string = str_replace(',', '\,', $string); //RFC 5545 chapter 3.3.11

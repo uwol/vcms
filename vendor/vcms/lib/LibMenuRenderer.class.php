@@ -50,7 +50,7 @@ class LibMenuRenderer
 
     public function printNavbarCollapsed()
     {
-        global $libGenericStorage;
+        global $libGenericStorage, $libString;
 
         echo '        <div class="navbar-header">' . PHP_EOL;
         echo '          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-internet,#navbar-intranet" aria-expanded="false">' . PHP_EOL;
@@ -63,8 +63,8 @@ class LibMenuRenderer
         $brand = $libGenericStorage->loadValue('base_core', 'brand');
         $brandXs = $libGenericStorage->loadValue('base_core', 'brand_xs');
 
-        echo '          <a href="index.php" class="navbar-brand hidden-xs">' .$brand. '</a>' . PHP_EOL;
-        echo '          <a href="index.php" class="navbar-brand visible-xs">' .$brandXs. '</a>' . PHP_EOL;
+        echo '          <a href="index.php" class="navbar-brand hidden-xs">' .$libString->protectXSS((string) $brand). '</a>' . PHP_EOL;
+        echo '          <a href="index.php" class="navbar-brand visible-xs">' .$libString->protectXSS((string) $brandXs). '</a>' . PHP_EOL;
         echo '        </div>' . PHP_EOL;
     }
 

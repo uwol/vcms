@@ -127,7 +127,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     while ($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
         $attendee = '<a href="index.php?pid=intranet_person&amp;id=' .$row3['mitglied']. '">';
-        $attendee .= $libPerson->getNameString($row3['mitglied'], 8);
+        $attendee .= $libString->protectXSS($libPerson->getNameString($row3['mitglied'], 8));
         $attendee .= '</a>';
 
         $attendees[] = $attendee;

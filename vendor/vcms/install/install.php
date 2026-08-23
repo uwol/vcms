@@ -329,6 +329,11 @@ $sql = "INSERT IGNORE INTO base_status (bezeichnung, beschreibung) VALUES ('A-Ph
 $libDb->query($sql);
 
 
+//Neuinstallationen speichern bereits unencodiert, die Migration in LibCronjobs entfällt
+$sql = "INSERT IGNORE INTO sys_genericstorage (moduleid, array_name, position, value) VALUES ('base_core', 'legacy_entities_decoded', 0, '1');";
+$libDb->query($sql);
+
+
 echo 'Speichere Demo-Datensätze<br />';
 
 $loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';

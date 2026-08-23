@@ -174,13 +174,13 @@ foreach ($tArray as $key1 => $value1) {
         }
 
         echo '<a href="index.php?pid=intranet_person&amp;id=' .$key2. '">';
-        echo $value2['vorname'];
+        echo $libString->protectXSS($value2['vorname']);
 
         if ($value2['praefix'] != '') {
-            echo ' ' .substr((string) $value2['praefix'], 0, 1). '.';
+            echo ' ' .$libString->protectXSS(substr((string) $value2['praefix'], 0, 1)). '.';
         }
 
-        echo ' ' .substr((string) $value2['name'], 0, 1). '.';
+        echo ' ' .$libString->protectXSS(substr((string) $value2['name'], 0, 1)). '.';
         echo '</a>';
 
         if (isset($value2['alter']) && is_numeric($value2['alter'])) {

@@ -87,8 +87,9 @@ if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
             $mail = $libMail->createPHPMailer();
 
             $mail->addAddress($libConfig->emailInfo);
-            $mail->Subject = 'E-Mail von ' .$libString->protectXSS($_POST['name']). ' über ' . $libGlobal->getSiteUrl();
-            $mail->Body = $libString->protectXSS($message);
+            //die Mail ist Plaintext, daher kein HTML-Escaping
+            $mail->Subject = 'E-Mail von ' .$_POST['name']. ' über ' . $libGlobal->getSiteUrl();
+            $mail->Body = $message;
             $mail->addReplyTo($_POST['emailaddress']);
 
             if ($mail->send()) {
@@ -107,7 +108,7 @@ if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
 $associationSchema = $libAssociation->getAssociationSchema();
 
 echo '<script type="application/ld+json">';
-echo json_encode($associationSchema);
+echo str_replace(['<', '>', '&'], ['\u003c', '\u003e', '\u0026'], json_encode($associationSchema));
 echo '</script>';
 
 
@@ -139,31 +140,31 @@ echo '<p class="contact-vorstand mb-4">';
 $board = $libAssociation->getContactableActiveBoardIds();
 
 if ($libGenericStorage->loadValueInCurrentModule('show_senior') && $board['senior']) {
-    echo 'Senior: ' .$libPerson->getNameString($board['senior'], 0). '<br />';
+    echo 'Senior: ' .$libString->protectXSS($libPerson->getNameString($board['senior'], 0)). '<br />';
 }
 
 if ($libGenericStorage->loadValueInCurrentModule('show_jubelsenior') && $board['jubelsenior']) {
-    echo 'Jubelsenior: ' .$libPerson->getNameString($board['jubelsenior'], 0). '<br />';
+    echo 'Jubelsenior: ' .$libString->protectXSS($libPerson->getNameString($board['jubelsenior'], 0)). '<br />';
 }
 
 if ($libGenericStorage->loadValueInCurrentModule('show_consenior') && $board['consenior']) {
-    echo 'Consenior: ' .$libPerson->getNameString($board['consenior'], 0). '<br />';
+    echo 'Consenior: ' .$libString->protectXSS($libPerson->getNameString($board['consenior'], 0)). '<br />';
 }
 
 if ($libGenericStorage->loadValueInCurrentModule('show_fuchsmajor') && $board['fuchsmajor']) {
-    echo 'Fuchsmajor: ' .$libPerson->getNameString($board['fuchsmajor'], 0). '<br />';
+    echo 'Fuchsmajor: ' .$libString->protectXSS($libPerson->getNameString($board['fuchsmajor'], 0)). '<br />';
 }
 
 if ($libGenericStorage->loadValueInCurrentModule('show_fuchsmajor2') && $board['fuchsmajor2']) {
-    echo 'Fuchsmajor 2: ' .$libPerson->getNameString($board['fuchsmajor2'], 0). '<br />';
+    echo 'Fuchsmajor 2: ' .$libString->protectXSS($libPerson->getNameString($board['fuchsmajor2'], 0)). '<br />';
 }
 
 if ($libGenericStorage->loadValueInCurrentModule('show_scriptor') && $board['scriptor']) {
-    echo 'Scriptor: ' .$libPerson->getNameString($board['scriptor'], 0). '<br />';
+    echo 'Scriptor: ' .$libString->protectXSS($libPerson->getNameString($board['scriptor'], 0)). '<br />';
 }
 
 if ($libGenericStorage->loadValueInCurrentModule('show_quaestor') && $board['quaestor']) {
-    echo 'Quaestor: ' .$libPerson->getNameString($board['quaestor'], 0). '<br />';
+    echo 'Quaestor: ' .$libString->protectXSS($libPerson->getNameString($board['quaestor'], 0)). '<br />';
 }
 
 echo '</p>';
@@ -219,10 +220,10 @@ if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
         echo '<form action="index.php?pid=kontakt" method="post" class="form-horizontal">';
         echo '<fieldset>';
 
-        $libForm->printTextInput('name', 'Name', $libString->protectXSS($name), 'text', false, true);
-        $libForm->printTextInput('emailaddress', 'E-Mail-Adresse', $libString->protectXSS($email), 'email', false, true);
-        $libForm->printTextInput('phone', 'Telefonnummer', $libString->protectXSS($phone), 'tel', false, true);
-        $libForm->printTextarea('message', 'Nachricht', $libString->protectXSS($message), false, true);
+        $libForm->printTextInput('name', 'Name', $name, 'text', false, true);
+        $libForm->printTextInput('emailaddress', 'E-Mail-Adresse', $email, 'email', false, true);
+        $libForm->printTextInput('phone', 'Telefonnummer', $phone, 'tel', false, true);
+        $libForm->printTextarea('message', 'Nachricht', $message, false, true);
         $libForm->printSubmitButton('<i class="fa fa-envelope-o" aria-hidden="true"></i> Abschicken');
 
         echo '</fieldset>';

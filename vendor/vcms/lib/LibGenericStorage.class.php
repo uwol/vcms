@@ -183,7 +183,7 @@ class LibGenericStorage
     //save
     public function saveArrayValue($moduleId, $arrayName, $position, $value)
     {
-        global $libDb, $libString;
+        global $libDb;
 
         $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM sys_genericstorage WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
         $stmt->bindValue(':moduleid', $moduleId);
@@ -195,17 +195,17 @@ class LibGenericStorage
 
         if ($count > 0) {
             $stmt = $libDb->prepare('UPDATE sys_genericstorage SET value = :value WHERE moduleid=:moduleid AND array_name=:array_name AND position=:position');
-            $stmt->bindValue(':value', $libString->protectXss($value));
+            $stmt->bindValue(':value', $value);
             $stmt->bindValue(':moduleid', $moduleId);
             $stmt->bindValue(':array_name', $arrayName);
             $stmt->bindValue(':position', $position, PDO::PARAM_INT);
             $stmt->execute();
         } else {
             $stmt = $libDb->prepare('INSERT INTO sys_genericstorage (moduleid, array_name, position, value) VALUES (:moduleid, :array_name, :position, :value)');
-            $stmt->bindValue(':value', $libString->protectXss($value));
-            $stmt->bindValue(':moduleid', $libString->protectXss($moduleId));
-            $stmt->bindValue(':array_name', $libString->protectXss($arrayName));
-            $stmt->bindValue(':position', $libString->protectXss($position), PDO::PARAM_INT);
+            $stmt->bindValue(':value', $value);
+            $stmt->bindValue(':moduleid', $moduleId);
+            $stmt->bindValue(':array_name', $arrayName);
+            $stmt->bindValue(':position', $position, PDO::PARAM_INT);
             $stmt->execute();
         }
     }

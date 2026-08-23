@@ -573,7 +573,7 @@ class LibPerson
 
     public function getAssociationsString($id)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         $stmt = $libDb->prepare("SELECT base_verein.id, base_verein.kuerzel, base_verein_mitgliedschaft.ehrenmitglied
 			FROM base_verein, base_verein_mitgliedschaft
@@ -595,7 +595,7 @@ class LibPerson
                 $honoraryString = 'E.d. ';
             }
 
-            $associationsString .= '<a href="index.php?pid=verein&amp;id=' .$row['id']. '">' .$honoraryString.$row['kuerzel']. '</a>';
+            $associationsString .= '<a href="index.php?pid=verein&amp;id=' .(int) $row['id']. '">' .$honoraryString.$libString->protectXSS($row['kuerzel']). '</a>';
             unset($honoraryString);
         }
 

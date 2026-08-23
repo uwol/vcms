@@ -152,7 +152,8 @@ $stmt->execute();
 $stmt->bindColumn('email', $email);
 $stmt->fetch();
 
-$formattedSenderString = $formattedMemberNameString. ' &lt;' .$email. '&gt;';
+//printStaticText escaped selbst, daher hier die Zeichen im Klartext
+$formattedSenderString = $formattedMemberNameString. ' <' .$email. '>';
 
 $libForm->printStaticText('Absender', $formattedSenderString);
 $libForm->printTextInput('subject', 'Betreff', '');

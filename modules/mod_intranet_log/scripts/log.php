@@ -62,8 +62,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     }
 
     echo '</td>';
-    echo '<td>' .$libPerson->getNameString($row['mitglied'], $mode = 4). '</td>';
-    echo '<td>' .$row['ipadresse']. '</td>';
+    echo '<td>' .$libString->protectXSS($libPerson->getNameString($row['mitglied'], $mode = 4)). '</td>';
+    echo '<td>' .$libString->protectXSS((string) $row['ipadresse']). '</td>';
     echo '</tr>';
 }
 

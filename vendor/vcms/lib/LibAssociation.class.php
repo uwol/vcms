@@ -105,7 +105,7 @@ class LibAssociation
 
     public function getDaughtersString($associationId, $pid)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         $stmt = $libDb->prepare("SELECT tochter.id, tochter.titel, tochter.name FROM base_verein AS mutter, base_verein AS tochter WHERE mutter.id = tochter.mutterverein AND mutter.id = :id");
         $stmt->bindValue(':id', $associationId, PDO::PARAM_INT);
@@ -122,7 +122,7 @@ class LibAssociation
                 $retstr .= '<a href="index.php?pid=verein&amp;id=' .$row['id']. '">';
             }
 
-            $retstr .= $row['titel']. ' ' .$row['name'];
+            $retstr .= $libString->protectXSS($row['titel']). ' ' .$libString->protectXSS($row['name']);
 
             if ($pid != '') {
                 $retstr .= '</a>';
@@ -134,7 +134,7 @@ class LibAssociation
 
     public function getMergedString($associationId, $pid)
     {
-        global $libDb;
+        global $libDb, $libString;
 
         $stmt = $libDb->prepare("SELECT fusionierend.id, fusionierend.titel, fusionierend.name FROM base_verein AS fusionierend, base_verein AS fusioniert WHERE fusioniert.id = fusionierend.fusioniertin AND fusioniert.id = :id");
         $stmt->bindValue(':id', $associationId, PDO::PARAM_INT);
@@ -151,7 +151,7 @@ class LibAssociation
                 $retstr .= '<a href="index.php?pid=verein&amp;id=' .$row['id']. '">';
             }
 
-            $retstr .= $row['titel']. ' ' .$row['name'];
+            $retstr .= $libString->protectXSS($row['titel']). ' ' .$libString->protectXSS($row['name']);
 
             if ($pid != '') {
                 $retstr .= '</a>';
@@ -241,7 +241,7 @@ class LibAssociation
 
     public function importAssociation($association)
     {
-        global $libDb, $libString;
+        global $libDb;
 
         $stmt = $libDb->prepare("SELECT COUNT(*) as number FROM base_verein WHERE name = :name AND dachverbandnr = :dachverbandnr");
         $stmt->bindValue(':name', $association['name']);
@@ -253,28 +253,28 @@ class LibAssociation
         if ($number > 0) {
             $stmt = $libDb->prepare('UPDATE base_verein SET kuerzel=:kuerzel, aktivitas=:aktivitas, ahahschaft=:ahahschaft, titel=:titel, rang=:rang, dachverband=:dachverband, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1, telefon1=:telefon1, datum_gruendung=:datum_gruendung, webseite=:webseite, wahlspruch=:wahlspruch, farbenstrophe=:farbenstrophe, fuchsenstrophe=:fuchsenstrophe, bundeslied=:bundeslied, farbe1=:farbe1, farbe2=:farbe2, farbe3=:farbe3, farbe4=:farbe4 WHERE name=:name AND dachverbandnr=:dachverbandnr');
 
-            $stmt->bindValue(':kuerzel', $libString->protectXss($association['kuerzel']));
-            $stmt->bindValue(':aktivitas', $libString->protectXss($association['aktivitas']), PDO::PARAM_INT);
-            $stmt->bindValue(':ahahschaft', $libString->protectXss($association['ahahschaft']), PDO::PARAM_INT);
-            $stmt->bindValue(':titel', $libString->protectXss($association['titel']));
-            $stmt->bindValue(':rang', $libString->protectXss($association['rang']));
-            $stmt->bindValue(':dachverband', $libString->protectXss($association['dachverband']));
-            $stmt->bindValue(':zusatz1', $libString->protectXss($association['zusatz1']));
-            $stmt->bindValue(':strasse1', $libString->protectXss($association['strasse1']));
-            $stmt->bindValue(':ort1', $libString->protectXss($association['ort1']));
-            $stmt->bindValue(':plz1', $libString->protectXss($association['plz1']));
-            $stmt->bindValue(':land1', $libString->protectXss($association['land1']));
-            $stmt->bindValue(':telefon1', $libString->protectXss($association['telefon1']));
-            $stmt->bindValue(':datum_gruendung', $libString->protectXss($association['datum_gruendung']));
-            $stmt->bindValue(':webseite', $libString->protectXss($association['webseite']));
-            $stmt->bindValue(':wahlspruch', $libString->protectXss($association['wahlspruch']));
-            $stmt->bindValue(':farbenstrophe', $libString->protectXss($association['farbenstrophe']));
-            $stmt->bindValue(':fuchsenstrophe', $libString->protectXss($association['fuchsenstrophe']));
-            $stmt->bindValue(':bundeslied', $libString->protectXss($association['bundeslied']));
-            $stmt->bindValue(':farbe1', $libString->protectXss($association['farbe1']));
-            $stmt->bindValue(':farbe2', $libString->protectXss($association['farbe2']));
-            $stmt->bindValue(':farbe3', $libString->protectXss($association['farbe3']));
-            $stmt->bindValue(':farbe4', $libString->protectXss($association['farbe4']));
+            $stmt->bindValue(':kuerzel', $association['kuerzel']);
+            $stmt->bindValue(':aktivitas', $association['aktivitas'], PDO::PARAM_INT);
+            $stmt->bindValue(':ahahschaft', $association['ahahschaft'], PDO::PARAM_INT);
+            $stmt->bindValue(':titel', $association['titel']);
+            $stmt->bindValue(':rang', $association['rang']);
+            $stmt->bindValue(':dachverband', $association['dachverband']);
+            $stmt->bindValue(':zusatz1', $association['zusatz1']);
+            $stmt->bindValue(':strasse1', $association['strasse1']);
+            $stmt->bindValue(':ort1', $association['ort1']);
+            $stmt->bindValue(':plz1', $association['plz1']);
+            $stmt->bindValue(':land1', $association['land1']);
+            $stmt->bindValue(':telefon1', $association['telefon1']);
+            $stmt->bindValue(':datum_gruendung', $association['datum_gruendung']);
+            $stmt->bindValue(':webseite', $association['webseite']);
+            $stmt->bindValue(':wahlspruch', $association['wahlspruch']);
+            $stmt->bindValue(':farbenstrophe', $association['farbenstrophe']);
+            $stmt->bindValue(':fuchsenstrophe', $association['fuchsenstrophe']);
+            $stmt->bindValue(':bundeslied', $association['bundeslied']);
+            $stmt->bindValue(':farbe1', $association['farbe1']);
+            $stmt->bindValue(':farbe2', $association['farbe2']);
+            $stmt->bindValue(':farbe3', $association['farbe3']);
+            $stmt->bindValue(':farbe4', $association['farbe4']);
 
             $stmt->bindValue(':name', $association['name']);
             $stmt->bindValue(':dachverbandnr', $association['dachverbandnr'], PDO::PARAM_INT);
@@ -282,30 +282,30 @@ class LibAssociation
         } else {
             $stmt = $libDb->prepare('INSERT INTO base_verein (name, kuerzel, aktivitas, ahahschaft, titel, rang, dachverband, dachverbandnr, zusatz1, strasse1, ort1, plz1, land1, telefon1, datum_gruendung, webseite, wahlspruch, farbenstrophe, fuchsenstrophe, bundeslied, farbe1, farbe2, farbe3, farbe4) VALUES (:name, :kuerzel, :aktivitas, :ahahschaft, :titel, :rang, :dachverband, :dachverbandnr, :zusatz1, :strasse1, :ort1, :plz1, :land1, :telefon1, :datum_gruendung, :webseite, :wahlspruch, :farbenstrophe, :fuchsenstrophe, :bundeslied, :farbe1, :farbe2, :farbe3, :farbe4)');
 
-            $stmt->bindValue(':name', $libString->protectXss($association['name']));
-            $stmt->bindValue(':kuerzel', $libString->protectXss($association['kuerzel']));
-            $stmt->bindValue(':aktivitas', $libString->protectXss($association['aktivitas']), PDO::PARAM_INT);
-            $stmt->bindValue(':ahahschaft', $libString->protectXss($association['ahahschaft']), PDO::PARAM_INT);
-            $stmt->bindValue(':titel', $libString->protectXss($association['titel']));
-            $stmt->bindValue(':rang', $libString->protectXss($association['rang']));
-            $stmt->bindValue(':dachverband', $libString->protectXss($association['dachverband']));
-            $stmt->bindValue(':dachverbandnr', $libString->protectXss($association['dachverbandnr']), PDO::PARAM_INT);
-            $stmt->bindValue(':zusatz1', $libString->protectXss($association['zusatz1']));
-            $stmt->bindValue(':strasse1', $libString->protectXss($association['strasse1']));
-            $stmt->bindValue(':ort1', $libString->protectXss($association['ort1']));
-            $stmt->bindValue(':plz1', $libString->protectXss($association['plz1']));
-            $stmt->bindValue(':land1', $libString->protectXss($association['land1']));
-            $stmt->bindValue(':telefon1', $libString->protectXss($association['telefon1']));
-            $stmt->bindValue(':datum_gruendung', $libString->protectXss($association['datum_gruendung']));
-            $stmt->bindValue(':webseite', $libString->protectXss($association['webseite']));
-            $stmt->bindValue(':wahlspruch', $libString->protectXss($association['wahlspruch']));
-            $stmt->bindValue(':farbenstrophe', $libString->protectXss($association['farbenstrophe']));
-            $stmt->bindValue(':fuchsenstrophe', $libString->protectXss($association['fuchsenstrophe']));
-            $stmt->bindValue(':bundeslied', $libString->protectXss($association['bundeslied']));
-            $stmt->bindValue(':farbe1', $libString->protectXss($association['farbe1']));
-            $stmt->bindValue(':farbe2', $libString->protectXss($association['farbe2']));
-            $stmt->bindValue(':farbe3', $libString->protectXss($association['farbe3']));
-            $stmt->bindValue(':farbe4', $libString->protectXss($association['farbe4']));
+            $stmt->bindValue(':name', $association['name']);
+            $stmt->bindValue(':kuerzel', $association['kuerzel']);
+            $stmt->bindValue(':aktivitas', $association['aktivitas'], PDO::PARAM_INT);
+            $stmt->bindValue(':ahahschaft', $association['ahahschaft'], PDO::PARAM_INT);
+            $stmt->bindValue(':titel', $association['titel']);
+            $stmt->bindValue(':rang', $association['rang']);
+            $stmt->bindValue(':dachverband', $association['dachverband']);
+            $stmt->bindValue(':dachverbandnr', $association['dachverbandnr'], PDO::PARAM_INT);
+            $stmt->bindValue(':zusatz1', $association['zusatz1']);
+            $stmt->bindValue(':strasse1', $association['strasse1']);
+            $stmt->bindValue(':ort1', $association['ort1']);
+            $stmt->bindValue(':plz1', $association['plz1']);
+            $stmt->bindValue(':land1', $association['land1']);
+            $stmt->bindValue(':telefon1', $association['telefon1']);
+            $stmt->bindValue(':datum_gruendung', $association['datum_gruendung']);
+            $stmt->bindValue(':webseite', $association['webseite']);
+            $stmt->bindValue(':wahlspruch', $association['wahlspruch']);
+            $stmt->bindValue(':farbenstrophe', $association['farbenstrophe']);
+            $stmt->bindValue(':fuchsenstrophe', $association['fuchsenstrophe']);
+            $stmt->bindValue(':bundeslied', $association['bundeslied']);
+            $stmt->bindValue(':farbe1', $association['farbe1']);
+            $stmt->bindValue(':farbe2', $association['farbe2']);
+            $stmt->bindValue(':farbe3', $association['farbe3']);
+            $stmt->bindValue(':farbe4', $association['farbe4']);
 
             $stmt->execute();
         }

@@ -75,10 +75,10 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
     $eventSchema = $libEvent->getEventSchema($row);
 
     echo '<script type="application/ld+json">';
-    echo json_encode($eventSchema);
+    echo str_replace(['<', '>', '&'], ['\u003c', '\u003e', '\u0026'], json_encode($eventSchema));
     echo '</script>';
 
-    echo '<h1>' .$row['titel']. '</h1>';
+    echo '<h1>' .$libString->protectXSS($row['titel']). '</h1>';
 
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
@@ -109,14 +109,14 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
 
     if ($row['ort'] != '') {
         echo '<address>';
-        echo '<i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> ' .$row['ort'];
+        echo '<i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> ' .$libString->protectXSS($row['ort']);
         echo '</address>';
     }
 
     $status = $libEvent->getStatusString($row['status']);
 
     if ($status) {
-        echo '<div><i class="fa fa-fw fa-info" aria-hidden="true"></i> ' .$status. '</div>';
+        echo '<div><i class="fa fa-fw fa-info" aria-hidden="true"></i> ' .$libString->protectXSS($status). '</div>';
     }
 
     printRegistrationStatus($row);
@@ -261,25 +261,29 @@ function printFacebookEvent($row)
 
 function printDescription($row)
 {
+    global $libString;
+
     $description = (string) $row['beschreibung'];
 
     if (trim($description)) {
-        return '<p>' .nl2br($description). '</p>';
+        return '<p>' .nl2br($libString->protectXSS($description)). '</p>';
     }
 }
 
 function printMotto($row)
 {
+    global $libString;
+
     $motto = (string) $row['spruch'];
 
     if (trim($motto)) {
-        return '<p>' .nl2br($motto). '</p>';
+        return '<p>' .nl2br($libString->protectXSS($motto)). '</p>';
     }
 }
 
 function printRegistrations($row)
 {
-    global $libAuth, $libDb, $libGallery, $libPerson;
+    global $libAuth, $libDb, $libGallery, $libPerson, $libString;
 
     $retstr = '';
 
@@ -297,7 +301,7 @@ function printRegistrations($row)
                 $retstr .= ', ';
             }
 
-            $retstr .= '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libPerson->getNameString($eventrow['person'], 0). '</a></span>';
+            $retstr .= '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libString->protectXSS($libPerson->getNameString($eventrow['person'], 0)). '</a></span>';
             $registrationWritten = true;
         }
 

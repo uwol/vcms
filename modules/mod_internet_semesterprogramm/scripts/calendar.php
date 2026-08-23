@@ -48,7 +48,7 @@ echo '<div class="col-xs-12 col-sm-6">';
 echo '<div class="panel panel-default">';
 echo '<div class="panel-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=semesterprogramm_icalendar" class="btn btn-default"><i class="fa fa-calendar" aria-hidden="true"></i> Semesterprogramm abonnieren</a>';
+echo '<a href="webcal://' .$libString->protectXSS($libGlobal->getSiteUrlAuthority()). '/api.php?iid=semesterprogramm_icalendar" class="btn btn-default"><i class="fa fa-calendar" aria-hidden="true"></i> Semesterprogramm abonnieren</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
