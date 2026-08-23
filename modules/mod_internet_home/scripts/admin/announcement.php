@@ -22,6 +22,18 @@ if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
 }
 
 
+// The id only ever selects an integer row id. Blank anything else out up front,
+// in both superglobals read below, so that no non-numeric value can reach an SQL
+// binding, a file path or the HTML output.
+if (isset($_REQUEST['id']) && !preg_match('/^[0-9]+$/', (string) $_REQUEST['id'])) {
+    $_REQUEST['id'] = '';
+}
+
+if (isset($_POST['id']) && !preg_match('/^[0-9]+$/', (string) $_POST['id'])) {
+    $_POST['id'] = '';
+}
+
+
 $action = '';
 
 if (isset($_REQUEST['action'])) {
@@ -37,11 +49,9 @@ $fields = ['startdatum', 'verfallsdatum', 'text'];
 * actions
 */
 
-//new event
+//new event, so there is no record to load; the fallback below fills the form
 if ($action == 'blank') {
-    $array['startdatum'] = date('Y-m-d H:i:s');
-    $array['verfallsdatum'] = '';
-    $array['text'] = '';
+    $array = [];
 }
 //blank data to be saved
 elseif ($action == 'insert') {
@@ -74,24 +84,41 @@ elseif ($action == 'update') {
     }
 
     $valueArray['verfallsdatum'] = $libTime->assureMysqlDateTime($valueArray['verfallsdatum'] ?? '');
-    $array = $libDb->updateRow($fields, $valueArray, 'mod_internethome_nachricht', ['id' => $_REQUEST['id']]);
-    $libGlobal->notificationTexts[] = 'Die Ankündigung wurde gespeichert.';
+    $array = $libDb->updateRow($fields, $valueArray, 'mod_internethome_nachricht', ['id' => $_REQUEST['id'] ?? '']);
+
+    // updateRow returns the reread row, or false if the id matched no row at all.
+    if (is_array($array)) {
+        $libGlobal->notificationTexts[] = 'Die Ankündigung wurde gespeichert.';
+    } else {
+        $libGlobal->errorTexts[] = 'Die Ankündigung wurde nicht gespeichert, da die angegebene Id unbekannt ist.';
+    }
 }
 // select
 else {
     $stmt = $libDb->prepare('SELECT * FROM mod_internethome_nachricht WHERE id=:id');
-    $stmt->bindValue(':id', $_REQUEST['id'], PDO::PARAM_INT);
+    $stmt->bindValue(':id', $_REQUEST['id'] ?? '', PDO::PARAM_INT);
     $stmt->execute();
     $array = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+// A select without a match and a failed update both leave no row behind. Fall
+// back to an empty record so that the form below always finds all its fields.
+if (!is_array($array)) {
+    $array = [];
+}
+
+$array['id'] = $array['id'] ?? '';
+$array['startdatum'] = $array['startdatum'] ?? date('Y-m-d H:i:s');
+$array['verfallsdatum'] = $array['verfallsdatum'] ?? '';
+$array['text'] = $array['text'] ?? '';
+
 //images
 if (isset($_POST['formType']) && $_POST['formType'] == 'imageUpload') {
     if ($_FILES['bilddatei']['tmp_name'] != '') {
-        $libImage->saveHomeImageByFilesArray($_REQUEST['id'], 'bilddatei');
+        $libImage->saveHomeImageByFilesArray($_REQUEST['id'] ?? '', 'bilddatei');
     }
 } elseif (isset($_POST['action']) && $_POST['action'] == 'imageDelete') {
-    $libImage->deleteHomeImage($_POST['id']);
+    $libImage->deleteHomeImage($_POST['id'] ?? '');
 }
 
 

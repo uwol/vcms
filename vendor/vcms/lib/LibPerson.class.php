@@ -169,6 +169,8 @@ class LibPerson
 
     public function getImage($id, $size = 'md')
     {
+        $id = (int) $id;
+
         $retstr = '<a href="index.php?pid=intranet_person&amp;id=' .$id. '" class="person-profile-link">';
         $sizeClass = '';
 

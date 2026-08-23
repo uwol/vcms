@@ -101,13 +101,13 @@ if (in_array('internetwart', $libAuth->getOffices())) {
 
         if (is_array($unsecuredFolders) && count($unsecuredFolders) > 0) {
             $unsecuredFoldersText = 'Folgende Ordner sind nicht durch eine htaccess-Datei geschützt: ';
-            $unsecuredFoldersText .= $libString->protectXSS(implode(', ', $unsecuredFolders));
+            $unsecuredFoldersText .= implode(', ', $unsecuredFolders);
             $libGlobal->errorTexts[] = $unsecuredFoldersText;
         }
 
         if (is_array($notReadableFiles) && count($notReadableFiles) > 0) {
             $notReadableFilesText = 'PHP besitzt für die folgenden Dateien bzw. Ordner keine Zugriffsrechte: ';
-            $notReadableFilesText .= $libString->protectXSS(implode(', ', $notReadableFiles));
+            $notReadableFilesText .= implode(', ', $notReadableFiles);
             $libGlobal->errorTexts[] = $notReadableFilesText;
         }
     }

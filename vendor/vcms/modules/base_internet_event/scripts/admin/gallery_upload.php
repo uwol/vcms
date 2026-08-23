@@ -24,6 +24,8 @@ if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
 
 $libDb->connect();
 
+header('Content-Type: application/json; charset=utf-8');
+
 if ($libAuth->isLoggedin() &&
         isset($_REQUEST['veranstaltungId']) && is_numeric($_REQUEST['veranstaltungId']) &&
         preg_match("/^[0-9]+$/", $_REQUEST['veranstaltungId']) && isset($_FILES['files']['name'])) {
@@ -40,7 +42,15 @@ if ($libAuth->isLoggedin() &&
     $result = [];
     $result['files'] = $filesResult;
 
-    echo json_encode($result);
+    echo json_encode($result, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+} else {
+    // The uploader parses every response as JSON, so an unusable request has to
+    // be answered with a document as well instead of with an empty body.
+    $result = [];
+    $result['files'] = [];
+    $result['error'] = 'Die Anfrage enthält keine gültige Veranstaltung oder keine Dateien.';
+
+    echo json_encode($result, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 }
 
 

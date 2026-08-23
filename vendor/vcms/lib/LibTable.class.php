@@ -82,7 +82,9 @@ class LibTable
 
         //header
         if (is_array($this->header) && count($this->header) > 0) {
-            echo '<tr>'.$br.'<td>' .implode('</td>'.$br.'<td>', $this->header). '</td>'.$br.'</tr>'.$br;
+            $headerCells = array_map([$libString, 'xmlentities'], $this->header);
+
+            echo '<tr>'.$br.'<td>' .implode('</td>'.$br.'<td>', $headerCells). '</td>'.$br.'</tr>'.$br;
         }
 
         //rows

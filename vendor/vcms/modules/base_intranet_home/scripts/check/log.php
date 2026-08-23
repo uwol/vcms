@@ -26,7 +26,9 @@ $numberOfLoginErrorsThreshold = 14;
 $numberOfLoginErrorDaysThreshold = 14;
 
 if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
-    $stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold);
+    $stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < :days GROUP BY mitglied HAVING numberOfLoginErrors >= :errors');
+    $stmt->bindValue(':days', $numberOfLoginErrorDaysThreshold, PDO::PARAM_INT);
+    $stmt->bindValue(':errors', $numberOfLoginErrorsThreshold, PDO::PARAM_INT);
     $stmt->execute();
     $stmt->bindColumn('numberOfLoginErrors', $count);
     $stmt->fetch();
@@ -34,16 +36,25 @@ if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewar
     if ($count > 0) {
         $logText = 'Personen mit erfolglosen Intranet-Anmeldungen in den letzten ' .$numberOfLoginErrorDaysThreshold. ' Tagen: ';
 
-        $stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors, mitglied FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < ' .$numberOfLoginErrorDaysThreshold. ' GROUP BY mitglied HAVING numberOfLoginErrors >= ' .$numberOfLoginErrorsThreshold. ' ORDER BY numberOfLoginErrors DESC');
+        $stmt = $libDb->prepare('SELECT COUNT(mitglied) AS numberOfLoginErrors, mitglied FROM sys_log_intranet WHERE aktion = 2 AND DATEDIFF(NOW(), datum) < :days GROUP BY mitglied HAVING numberOfLoginErrors >= :errors ORDER BY numberOfLoginErrors DESC');
+        $stmt->bindValue(':days', $numberOfLoginErrorDaysThreshold, PDO::PARAM_INT);
+        $stmt->bindValue(':errors', $numberOfLoginErrorsThreshold, PDO::PARAM_INT);
         $stmt->execute();
 
+        $affectedMembers = [];
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $logText .= '<span class="badge">' .$row['numberOfLoginErrors']. '</span>';
-            $logText .= ' ';
-            $logText .= '<a href="index.php?pid=intranet_person&id=' .$row['mitglied']. '">' .$libString->protectXSS($libPerson->getNameString($row['mitglied'], 4)). '</a>';
-            $logText .= ' ';
+            $memberId = (int) $row['mitglied'];
+
+            $affectedMembers[] =
+                '<span class="badge">' .((int) $row['numberOfLoginErrors']). '</span> ' .
+                '<a href="index.php?pid=intranet_person&amp;id=' .$memberId. '">' .
+                $libString->protectXSS($libPerson->getNameString($memberId, 4)). '</a>';
         }
 
-        $libGlobal->errorTexts[] = $logText;
+        // The member links make this message markup, so it cannot go through
+        // errorTexts, which escapes its entries. Every dynamic part above is
+        // escaped or cast to an integer instead.
+        echo $libString->getErrorBoxHtml($libString->protectXSS($logText). implode(', ', $affectedMembers));
     }
 }

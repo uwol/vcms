@@ -114,7 +114,7 @@ class LibMenuRenderer
 
     public function printNavbarLevel($menuFolder, $depth, $pid)
     {
-        global $libAuth;
+        global $libAuth, $libString;
 
         //for all menu elements
         foreach ($menuFolder->getElements() as $folderElement) {
@@ -122,7 +122,7 @@ class LibMenuRenderer
             if ($folderElement->getType() == 1) {
                 $this->printLinkTag($folderElement, $depth, $pid, 'index.php?pid=' .$folderElement->getPid());
 
-                echo $folderElement->getName();
+                echo $libString->protectXSS($folderElement->getName());
                 echo '</a></li>' . PHP_EOL;
             }
             //folder?
@@ -132,15 +132,15 @@ class LibMenuRenderer
 
                 //does the folder have an associated page?
                 if ($folderElement->getPid() != '') {
-                    echo 'pid='.$folderElement->getPid();
+                    echo 'pid='.$libString->protectXSS($folderElement->getPid());
                 }
                 //else show current page
                 else {
-                    echo 'pid='.$pid;
+                    echo 'pid='.$libString->protectXSS($pid);
                 }
 
                 echo '" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
-                echo $folderElement->getName();
+                echo $libString->protectXSS($folderElement->getName());
                 echo '</a>' . PHP_EOL;
 
                 //menu folder with elements?
@@ -154,10 +154,15 @@ class LibMenuRenderer
             }
             //external link?
             elseif ($folderElement->getType() == 3) {
-                $this->printLinkTag($folderElement, $depth, $pid, $folderElement->getPid());
+                // A stored value without an http(s) prefix gets one prepended, so
+                // that it can never be rendered as a javascript: link: such a value
+                // ends up as the harmless http://javascript:... instead.
+                $externalUrl = $libString->assureHttpScheme((string) $folderElement->getPid());
+
+                $this->printLinkTag($folderElement, $depth, $pid, $externalUrl);
 
                 echo '<i class="fa fa-external-link" aria-hidden="true"></i> ';
-                echo $folderElement->getName();
+                echo $libString->protectXSS($folderElement->getName());
                 echo '</a></li>' . PHP_EOL;
             }
             //login / logout
@@ -165,11 +170,11 @@ class LibMenuRenderer
                 if (!$libAuth->isLoggedin()) {
                     $this->printLinkTag($folderElement, $depth, $pid, 'index.php?pid=' .$folderElement->getPid());
 
-                    echo $folderElement->getName();
+                    echo $libString->protectXSS($folderElement->getName());
                 } else {
                     $this->printLinkTag($folderElement, $depth, $pid, 'index.php?logout=1');
 
-                    echo $folderElement->getNameLogout();
+                    echo $libString->protectXSS($folderElement->getNameLogout());
                 }
 
                 echo '</a></li>' . PHP_EOL;
@@ -186,6 +191,8 @@ class LibMenuRenderer
 
     public function printLinkTag($folderElement, $depth, $pid, $url)
     {
+        global $libString;
+
         $linkClass = ($depth == 0) ? 'nav-link' : 'dropdown-item';
 
         if ($folderElement->getPid() == $pid) {
@@ -195,7 +202,7 @@ class LibMenuRenderer
         $liClass = ($depth == 0) ? 'nav-item' : '';
 
         echo $this->defaultIndent . $this->indent($depth) . '<li' .(($liClass != '') ? ' class="' .$liClass. '"' : ''). '>' . PHP_EOL;
-        echo $this->defaultIndent . $this->indent($depth) . '  <a href="' .$url. '" class="' .$linkClass. '">';
+        echo $this->defaultIndent . $this->indent($depth) . '  <a href="' .$libString->protectXSS((string) $url). '" class="' .$linkClass. '">';
     }
 
     public function getNavbarClass()
