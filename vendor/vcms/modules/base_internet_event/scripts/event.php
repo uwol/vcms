@@ -132,18 +132,18 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
     $descriptionText .= printRegistrations($row);
 
     if ($hasPictures) {
+        echo '<div class="col-sm-8 col-lg-9">';
+
         if ($descriptionText) {
-            echo '<div class="col-sm-8 col-lg-9">';
             echo '<div class="card reveal">';
             echo '<div class="card-body">';
             echo $descriptionText;
             echo '</div>';
             echo '</div>';
-            echo '</div>';
         }
 
-        echo '<div class="col-12">';
         printGallery($row['id'], $pictures);
+
         echo '</div>';
     } else {
         if ($libEvent->isFacebookEvent($row)) {
