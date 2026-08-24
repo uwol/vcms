@@ -59,7 +59,7 @@ echo $libString->getNotificationBoxText();
 echo '<div class="card">';
 echo '<div class="card-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_reservation_book" class="btn btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Eine Reservierung hinzufügen</a>';
+echo '<a href="index.php?pid=intranet_reservation_book" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Eine Reservierung hinzufügen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';

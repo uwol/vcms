@@ -51,7 +51,7 @@ echo $libString->getNotificationBoxText();
 echo '<div class="card">';
 echo '<div class="card-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_admin_announcement&amp;action=blank" class="btn btn-outline-secondary">Eine neue Ankündigung anlegen</a>';
+echo '<a href="index.php?pid=intranet_admin_announcement&amp;action=blank" class="btn btn-primary">Eine neue Ankündigung anlegen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';

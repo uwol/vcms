@@ -43,7 +43,7 @@ if ($libAuth->isLoggedin()) {
     echo '<div class="card">';
     echo '<div class="card-body">';
     echo '<div class="btn-toolbar">';
-    echo '<a href="index.php?pid=intranet_admin_vip&amp;action=blank" class="btn btn-outline-secondary">Einen neuen Vip anlegen</a>';
+    echo '<a href="index.php?pid=intranet_admin_vip&amp;action=blank" class="btn btn-primary">Einen neuen Vip anlegen</a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
