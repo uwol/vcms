@@ -242,7 +242,7 @@ class LibForm
     {
         echo '<div class="row mb-3">';
         echo '<div class="offset-sm-' .$this->colLabel. ' col-sm-' .$this->colInput. '">';
-        echo '<button type="submit" class="btn btn-primary';
+        echo '<button type="submit" class="btn btn-outline-secondary';
 
         $this->printClassesString($classes);
 

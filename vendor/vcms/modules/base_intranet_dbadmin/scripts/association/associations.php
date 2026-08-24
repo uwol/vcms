@@ -67,7 +67,7 @@ if ($libAuth->isLoggedin()) {
     echo '<input type="hidden" name="action" value="import" />';
     echo '<button type="submit" class="btn btn-outline-secondary"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</button>';
     echo '</form>';
-    echo '<a href="index.php?pid=intranet_admin_association&amp;action=blank" class="btn btn-primary">Einen neuen Verein anlegen</a>';
+    echo '<a href="index.php?pid=intranet_admin_association&amp;action=blank" class="btn btn-outline-secondary">Einen neuen Verein anlegen</a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';

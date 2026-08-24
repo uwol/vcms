@@ -93,7 +93,7 @@ echo '<div class="col-md-6">';
 echo '<div class="card">';
 echo '<div class="card-body">';
 echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_news_write" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Einen Beitrag hinzufügen</a>';
+echo '<a href="index.php?pid=intranet_news_write" class="btn btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Einen Beitrag hinzufügen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';

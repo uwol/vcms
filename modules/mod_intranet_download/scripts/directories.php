@@ -212,7 +212,7 @@ if (!empty($libAuth->getOffices())) {
 
     echo '<div class="row mb-3">';
     echo '<div class="offset-sm-3 col-sm-3">';
-    echo '<button type="submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
+    echo '<button type="submit" class="btn btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
     echo '</div>';
     echo '</div>';
 

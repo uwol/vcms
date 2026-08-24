@@ -60,7 +60,7 @@ if ($libAuth->isLoggedin()) {
     echo '<div class="card">';
     echo '<div class="card-body">';
     echo '<div class="btn-toolbar">';
-    echo '<a href="index.php?pid=intranet_admin_semester&amp;action=blank" class="btn btn-primary">Ein neues Semester anlegen</a>';
+    echo '<a href="index.php?pid=intranet_admin_semester&amp;action=blank" class="btn btn-outline-secondary">Ein neues Semester anlegen</a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
