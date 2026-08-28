@@ -29,7 +29,7 @@ and a download area.
     - `styles/` -- Engine CSS and JS, including `bootstrap-override.css`
     - `install/` -- Engine install and update scripts
   - all other directories (`bootstrap`, `phpmailer`, `phpass`, `pear`, `httpful`,
-    `chart`, `fonts`, `scrollreveal`) -- third-party code.
+    `chart`, `fonts`) -- third-party code.
     Keep the upstream formatting, do not edit, replace whole releases instead.
 - `index.php` -- Front controller for pages, selected by the request parameter `pid`
 - `api.php` -- Front controller for includes, selected by the request parameter `iid`

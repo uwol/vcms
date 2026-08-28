@@ -97,7 +97,15 @@ a .fa {
 }
 
 .reveal {
-	visibility: hidden;
+	opacity: 0;
+	transform: translateY(30px);
+	transition: all 0.8s;
+}
+
+.reveal.inview {
+	opacity: 1;
+	transform: none;
+	transition-delay: 0.1s;
 }
 
 tiny {
