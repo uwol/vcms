@@ -77,6 +77,17 @@ class LibString
         return $url;
     }
 
+    /**
+    * Appends the engine version to a local asset URL, so that the browser
+    * invalidates its cache whenever the engine is updated.
+    */
+    public function addCacheVersion($src)
+    {
+        global $libGlobal;
+
+        return $src . '?v=' . $libGlobal->version;
+    }
+
     public function isValidURL($string)
     {
         $string = (string) $string;
