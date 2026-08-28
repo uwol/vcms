@@ -99,13 +99,12 @@ a .fa {
 .reveal {
 	opacity: 0;
 	transform: translateY(30px);
-	transition: all 0.8s;
+	transition: all 0.5s cubic-bezier(0.6, 0.2, 0.1, 1);
 }
 
 .reveal.inview {
 	opacity: 1;
 	transform: none;
-	transition-delay: 0.1s;
 }
 
 tiny {

@@ -86,18 +86,13 @@ function toggleNavbarState(){
 }
 
 function reveal(){
-	var count = 0;
 	var io = null;
 
 	var ioCallback = function(entries) {
 		entries.forEach(function(entry) {
 			if (entry.isIntersecting) {
-				setTimeout(function() {
-					entry.target.classList.add("inview");
-				}, Math.log10(count) * 100);
-
+				entry.target.classList.add("inview");
 				io.unobserve(entry.target);
-				count++;
 			}
 		});
 	};
