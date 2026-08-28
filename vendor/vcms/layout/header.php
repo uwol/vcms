@@ -12,7 +12,6 @@ echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . 
 echo '    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/fonts/font-awesome/css/font-awesome.min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/fonts/libre-franklin/css/libre-franklin.css" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="vendor/hover/hover-min.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/screen.css" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="vendor/vcms/styles/calendar/calendar.css" />' . PHP_EOL;

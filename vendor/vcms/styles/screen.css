@@ -118,3 +118,69 @@ footer .auto-update-img {
 	width: 1px;
 	height: 1px;
 }
+
+/*
+Hover effects, formerly provided by Hover.css 2.2.0 (dependency removed).
+The three classes below keep the exact visual behavior of the original library.
+*/
+
+.hvr-pop,
+.hvr-wobble-vertical {
+	display: inline-block;
+	vertical-align: middle;
+	transform: perspective(1px) translateZ(0);
+}
+
+.hvr-pop:hover,
+.hvr-pop:focus,
+.hvr-pop:active {
+	animation: hvr-pop 0.3s linear 1;
+}
+
+@keyframes hvr-pop {
+	50% {
+		transform: scale(1.2);
+	}
+}
+
+.hvr-glow {
+	display: inline-block;
+	vertical-align: middle;
+	transform: perspective(1px) translateZ(0);
+	box-shadow: 0 0 1px transparent;
+	transition-duration: 0.3s;
+	transition-property: box-shadow;
+}
+
+.hvr-glow:hover,
+.hvr-glow:focus,
+.hvr-glow:active {
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.hvr-wobble-vertical:hover,
+.hvr-wobble-vertical:focus,
+.hvr-wobble-vertical:active {
+	animation: hvr-wobble-vertical 1s ease-in-out 1;
+}
+
+@keyframes hvr-wobble-vertical {
+	16.65% {
+		transform: translateY(8px);
+	}
+	33.3% {
+		transform: translateY(-6px);
+	}
+	49.95% {
+		transform: translateY(4px);
+	}
+	66.6% {
+		transform: translateY(-2px);
+	}
+	83.25% {
+		transform: translateY(1px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
