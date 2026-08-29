@@ -648,7 +648,7 @@ class LibTime
         $wsRegexp = '/WS[0-9]{8}/';
 
         $yearSeparator  = '/';
-        $space = '&nbsp;';
+        $space = "\xc2\xa0";
 
         $matches = [];
 
