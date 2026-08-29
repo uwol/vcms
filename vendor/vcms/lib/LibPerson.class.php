@@ -384,28 +384,30 @@ class LibPerson
         $stmt = $libDb->prepare("
 			SELECT *
 			FROM base_semester
-			WHERE (base_semester.senior = :senior AND sen_dech = 1)
-			OR (base_semester.jubelsenior = :jubelsenior AND jubelsen_dech = 1)
-			OR (base_semester.consenior = :consenior AND con_dech = 1)
-			OR (base_semester.fuchsmajor = :fuchsmajor AND fm_dech = 1)
-			OR (base_semester.fuchsmajor2 = :fuchsmajor2 AND fm2_dech = 1)
-			OR (base_semester.scriptor = :scriptor AND scr_dech = 1)
-			OR (base_semester.quaestor = :quaestor AND quaes_dech = 1)
-			OR base_semester.ahv_senior = :ahv_senior
-			OR base_semester.ahv_consenior = :ahv_consenior
-			OR base_semester.ahv_keilbeauftragter = :ahv_keilbeauftragter
-			OR base_semester.ahv_scriptor = :ahv_scriptor
-			OR base_semester.ahv_quaestor = :ahv_quaestor
-			OR base_semester.hv_vorsitzender = :hv_vorsitzender
-			OR base_semester.hv_kassierer = :hv_kassierer
-			OR base_semester.archivar = :archivar
-			OR base_semester.redaktionswart = :redaktionswart
-			OR base_semester.vop = :vop
-			OR base_semester.vvop = :vvop
-			OR base_semester.vopxx = :vopxx
-			OR base_semester.vopxxx = :vopxxx
-			OR base_semester.vopxxxx = :vopxxxx
-			AND semester != :semester
+			WHERE semester != :semester
+			AND (
+				(base_semester.senior = :senior AND sen_dech = 1)
+				OR (base_semester.jubelsenior = :jubelsenior AND jubelsen_dech = 1)
+				OR (base_semester.consenior = :consenior AND con_dech = 1)
+				OR (base_semester.fuchsmajor = :fuchsmajor AND fm_dech = 1)
+				OR (base_semester.fuchsmajor2 = :fuchsmajor2 AND fm2_dech = 1)
+				OR (base_semester.scriptor = :scriptor AND scr_dech = 1)
+				OR (base_semester.quaestor = :quaestor AND quaes_dech = 1)
+				OR base_semester.ahv_senior = :ahv_senior
+				OR base_semester.ahv_consenior = :ahv_consenior
+				OR base_semester.ahv_keilbeauftragter = :ahv_keilbeauftragter
+				OR base_semester.ahv_scriptor = :ahv_scriptor
+				OR base_semester.ahv_quaestor = :ahv_quaestor
+				OR base_semester.hv_vorsitzender = :hv_vorsitzender
+				OR base_semester.hv_kassierer = :hv_kassierer
+				OR base_semester.archivar = :archivar
+				OR base_semester.redaktionswart = :redaktionswart
+				OR base_semester.vop = :vop
+				OR base_semester.vvop = :vvop
+				OR base_semester.vopxx = :vopxx
+				OR base_semester.vopxxx = :vopxxx
+				OR base_semester.vopxxxx = :vopxxxx
+			)
 			ORDER BY SUBSTRING(semester,3)");
         $stmt->bindValue(':senior', $id, PDO::PARAM_INT);
         $stmt->bindValue(':jubelsenior', $id, PDO::PARAM_INT);

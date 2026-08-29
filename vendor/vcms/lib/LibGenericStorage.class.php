@@ -137,11 +137,10 @@ class LibGenericStorage
         $stmt->bindValue(':moduleid', $moduleId);
         $stmt->bindValue(':array_name', $arrayName);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $array = [];
 
-        foreach ($result as $row) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $array[$row['position']] = $row['value'];
         }
 
@@ -162,11 +161,10 @@ class LibGenericStorage
         $stmt = $libDb->prepare('SELECT array_name, position, value FROM sys_genericstorage WHERE moduleid=:moduleid');
         $stmt->bindValue(':moduleid', $moduleId);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $moduleArrays = [];
 
-        foreach ($result as $row) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $moduleArrays[$row['array_name']][$row['position']] = $row['value'];
         }
 
