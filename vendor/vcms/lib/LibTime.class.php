@@ -633,7 +633,7 @@ class LibTime
         }
     }
 
-    public function getSemesterString($semesterString, $enableAbbr = true)
+    public function getSemesterString($semesterString)
     {
         $semester = $this->getSemesterFromSemesterString($semesterString);
 
@@ -643,14 +643,6 @@ class LibTime
 
         $ssAbbr = 'SS';
         $wsAbbr = 'WS';
-
-        if ($enableAbbr) {
-            $ssAbbr = "<abbr title=\"Sommersemester\">SS</abbr>"; // \xc2\xa0 is non-breaking space
-        }
-
-        if ($enableAbbr) {
-            $wsAbbr = "<abbr title=\"Wintersemester\">WS</abbr>"; // \xc2\xa0 is non-breaking space
-        }
 
         $ssRegexp = '/SS[0-9]{4}/';
         $wsRegexp = '/WS[0-9]{8}/';
@@ -700,7 +692,7 @@ class LibTime
                     }
 
                     $retstr .= '>';
-                    $retstr .=  $this->getSemesterString($semester, false);
+                    $retstr .=  $this->getSemesterString($semester);
                     $retstr .= '</option>';
                 }
             }
