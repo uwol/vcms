@@ -12,5 +12,9 @@
         "pear/archive_tar": "^1.6.0",
         "mpdf/mpdf": "^8.2.7"
     },
-    "license": "GPL-3.0+"
+    "license": "GPL-3.0+",
+    "require-dev": {
+        "phpstan/phpstan": "^2.2",
+        "squizlabs/php_codesniffer": "^4.0"
+    }
 }
