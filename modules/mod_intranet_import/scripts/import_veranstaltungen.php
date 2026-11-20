@@ -51,13 +51,14 @@ if($libAuth->isLoggedin()){
 
 		if ($felder !== $csvHeader)
 		{
-			echo "CSV headers do not conform to the specification!";
+			echo "<p>CSV headers do not conform to the specification!</p>";
 			echo "<pre>CSV Header:";
 			print_r($csvHeader);
 			echo "</pre>";
 			echo "<pre>Expected CSV Header:";
 			print_r($felder);
 			echo "</pre>";
+			echo "<p><b>Please ensure the CSV entries are separated by a single comma and not by any other character. Also, the files must not contain a BOM (Byte-Order-Mark).</b></p>";
 			// Close opened CSV file
 			fclose($csvFile);
 		}
@@ -102,7 +103,7 @@ if($libAuth->isLoggedin()){
 					$libGlobal->errorTexts[] = 'Das Enddatum liegt vor dem Startdatum für die Veranstaltung: ' .  $titel;
 				}
 
-				// If user already exists in the database with the same name
+				// If an event already exists in the database with the same date and time
 				$query = "SELECT id FROM base_veranstaltung WHERE datum = '" . $valueArray['datum'] .  "'";
 				$stmt = $libDb->prepare($query);
 				$stmt->execute();
@@ -111,22 +112,22 @@ if($libAuth->isLoggedin()){
 				if ($row && count($row) > 0)
 				{
 					$valueArray['id'] = $row[0];
-					echo "" . $datum . ": " . $titel . " - updating...";
+					echo "<p>" . $datum . ": " . $titel . " - updating...</p>";
 					echo "<script>console.log('{$datum}: {$titel} - updating...');</script>";
 
 					$mgarray = $libDb->updateRow($felder, $valueArray, 'base_veranstaltung', array('id' => $row[0]));
 
-					echo "" . $datum . ": " . $titel . " - updated";
+					echo "<p>" . $datum . ": " . $titel . " - updated</p>";
 					echo "<script>console.log('{$datum}: {$titel} - updated');</script>";
 				}
 				else
 				{
-					echo "" . $datum . " " . $titel . ": adding...";
+					echo "<p>" . $datum . " " . $titel . ": adding...</p>";
 					echo "<script>console.log('{$datum} {$titel}: adding...');</script>";
 
 					$mgarray = $libDb->insertRow($felder, $valueArray, 'base_veranstaltung', array('id' => ''));
 
-					echo "" . $datum . " " . $titel . ": added";
+					echo "<p>" . $datum . " " . $titel . ": added</p>";
 					echo "<script>console.log('{$datum} {$titel}: added');</script>";
 				}
 			}

@@ -62,13 +62,14 @@ if($libAuth->isLoggedin()){
 
 		if ($felder !== $csvHeader)
 		{
-			echo "CSV headers do not conform to the specification!";
+			echo "<p>CSV headers do not conform to the specification!</p>";
 			echo "<pre>CSV Header:";
 			print_r($csvHeader);
 			echo "</pre>";
 			echo "<pre>Expected CSV Header:";
 			print_r($felder);
 			echo "</pre>";
+			echo "<p><b>Please ensure the CSV entries are separated by a single comma and not by any other character. Also, the files must not contain a BOM (Byte-Order-Mark).</b></p>";
 			// Close opened CSV file
 			fclose($csvFile);
 		}
@@ -211,7 +212,7 @@ if($libAuth->isLoggedin()){
 				if ($row && count($row) > 0)
 				{
 					$valueArray['id'] = $row[0];
-					echo "" . $vorname . " " . $name . ": updating...";
+					echo "<p>" . $vorname . " " . $name . ": updating...</p>";
 					echo "<script>console.log('{$vorname} {$name}: updating...');</script>";
 
 					$mgarray = $libDb->updateRow($felder, $valueArray, 'base_person', array('id' => $row[0]));
@@ -220,13 +221,13 @@ if($libAuth->isLoggedin()){
 					updateAdresseStand('base_person', 'datum_adresse2_stand', $mgarray['id']);
 					updateGruppeStand($mgarray['id']);
 
-					echo "" . $vorname . " " . $name . ": updated";
+					echo "<p>" . $vorname . " " . $name . ": updated</p>";
 					echo "<script>console.log('{$vorname} {$name}: updated');</script>";
 				}
 				else if ($row2 && count($row2) > 0)
 				{
 					$valueArray['id'] = $row2[0];
-					echo "" . $vorname . " " . $name . ": updating...";
+					echo "<p>" . $vorname . " " . $name . ": updating...</p>";
 					echo "<script>console.log('{$vorname} {$name}: updating...');</script>";
 
 					$mgarray = $libDb->updateRow($felder, $valueArray, 'base_person', array('id' => $row2[0]));
@@ -235,12 +236,12 @@ if($libAuth->isLoggedin()){
 					updateAdresseStand('base_person', 'datum_adresse2_stand', $mgarray['id']);
 					updateGruppeStand($mgarray['id']);
 
-					echo "" . $vorname . " " . $name . ": updated";
+					echo "<p>" . $vorname . " " . $name . ": updated</p>";
 					echo "<script>console.log('{$vorname} {$name}: updated');</script>";
 				}
 				else
 				{
-					echo "" . $vorname . " " . $name . ": adding...";
+					echo "<p>" . $vorname . " " . $name . ": adding...</p>";
 					echo "<script>console.log('{$vorname} {$name}: adding...');</script>";
 
 					$mgarray = $libDb->insertRow($felder, $valueArray, 'base_person', array('id' => ''));
@@ -249,7 +250,7 @@ if($libAuth->isLoggedin()){
 					updateAdresseStand('base_person', 'datum_adresse2_stand', $mgarray['id']);
 					updateGruppeStand($mgarray['id']);
 
-					echo "" . $vorname . " " . $name . ": added";
+					echo "<p>" . $vorname . " " . $name . ": added</p>";
 					echo "<script>console.log('{$vorname} {$name}: added');</script>";
 				}
 			}
