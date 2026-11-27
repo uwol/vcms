@@ -45,8 +45,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 if (count($eventIds) > 0) {
     echo '<section id="pastevents" class="pastevents-box">';
-    echo '<div class="container-fluid">';
-    echo '<div class="row no-gutter">';
+    echo '<div class="ui-container-fluid">';
+    echo '<div class="grid grid-cols-12 -mx-3">';
 
     foreach ($eventIds as $eventId) {
         $stmt = $libDb->prepare('SELECT id, titel, datum, ort, intern FROM base_veranstaltung WHERE id = :id');
@@ -56,9 +56,9 @@ if (count($eventIds) > 0) {
 
         $pictureId = $libGallery->getMainPictureId($eventId);
 
-        echo '<div class="col-lg-4 col-sm-6">';
+        echo '<div class="col-span-12 lg:col-span-4 sm:col-span-6">';
 
-        echo '<div class="card card-img">';
+        echo '<div class="ui-card ui-card-img">';
         echo '<div class="img-frame">';
         echo '<a href="index.php?pid=event&amp;id=' .$eventId. '" class="event-box">';
         echo '<img src="api.php?iid=event_picture&amp;eventid=' .$eventId. '&amp;id=' .$pictureId . '" alt="" />';

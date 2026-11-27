@@ -46,8 +46,8 @@ if ($libGlobal->getSiteUrlAuthority() != '') {
     }
 }
 
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 echo '<form action="' .$libString->protectXSS($urlPrefix). 'index.php?pid=intranet_home" method="post">';
 echo '<fieldset>';
 
@@ -61,7 +61,7 @@ echo '</div>';
 echo '</div>';
 
 echo '<h2>Registrierung</h2>';
-echo '<p class="mb-4">Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=registration">Registrierungsseite</a> angefordert werden kann.</p>';
+echo '<p class="mb-6">Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=registration">Registrierungsseite</a> angefordert werden kann.</p>';
 
 echo '<h2>Passwort vergessen?</h2>';
-echo '<p class="mb-4">Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=password">ein neues Passwort</a> per Email zuschicken lassen.</p>';
+echo '<p class="mb-6">Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=password">ein neues Passwort</a> per Email zuschicken lassen.</p>';

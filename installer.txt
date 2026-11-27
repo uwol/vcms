@@ -26,45 +26,43 @@ $libDb->connect();
 	<head>
 		<meta charset="utf-8"/>
 		<title>VCMS-Installer</title>
-		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css"/>
-		<link rel="stylesheet" href="vendor/vcms/styles/bootstrap-override.css"/>
-		<link rel="stylesheet" href="vendor/vcms/styles/screen.css"/>
+		<link rel="stylesheet" href="vendor/vcms/styles/vcms.css"/>
 		<meta name="robots" content="noindex, nofollow, noarchive"/>
 	</head>
 	<body>
 		<main id="content">
-			<div id="container" class="container">
+			<div id="container" class="ui-container">
 <?php
 
 /*
 * check configuration
 */
 if ($libConfig->mysqlServer == '') {
-    echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-Server angegeben.</p>';
+    echo '<p class="ui-alert ui-alert-danger mb-4">Warnung: In der Konfiguration ist kein MySQL-Server angegeben.</p>';
 } else {
-    echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-Server angegeben: ' .$libConfig->mysqlServer. '</p>';
+    echo '<p class="ui-alert ui-alert-success mb-4">OK: In der Konfiguration ist ein MySQL-Server angegeben: ' .$libConfig->mysqlServer. '</p>';
 }
 
 if ($libConfig->mysqlPort != '') {
-    echo '<p class="mb-3" style="color:green">OK: In der Konfiguration ist ein MySQL-Port angegeben: ' .$libConfig->mysqlPort. '</p>';
+    echo '<p class="mb-4" style="color:green">OK: In der Konfiguration ist ein MySQL-Port angegeben: ' .$libConfig->mysqlPort. '</p>';
 }
 
 if ($libConfig->mysqlDb == '') {
-    echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist keine MySQL-Datenbank angegeben.</p>';
+    echo '<p class="ui-alert ui-alert-danger mb-4">Warnung: In der Konfiguration ist keine MySQL-Datenbank angegeben.</p>';
 } else {
-    echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist eine MySQL-Datenbank angegeben: ' .$libConfig->mysqlDb. '</p>';
+    echo '<p class="ui-alert ui-alert-success mb-4">OK: In der Konfiguration ist eine MySQL-Datenbank angegeben: ' .$libConfig->mysqlDb. '</p>';
 }
 
 if ($libConfig->mysqlUser == '') {
-    echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-User angegeben.</p>';
+    echo '<p class="ui-alert ui-alert-danger mb-4">Warnung: In der Konfiguration ist kein MySQL-User angegeben.</p>';
 } else {
-    echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-User angegeben: ' .$libConfig->mysqlUser. '</p>';
+    echo '<p class="ui-alert ui-alert-success mb-4">OK: In der Konfiguration ist ein MySQL-User angegeben: ' .$libConfig->mysqlUser. '</p>';
 }
 
 if ($libConfig->mysqlPass == '') {
-    echo '<p class="alert alert-danger mb-3">Warnung: In der Konfiguration ist kein MySQL-Passwort angegeben.</p>';
+    echo '<p class="ui-alert ui-alert-danger mb-4">Warnung: In der Konfiguration ist kein MySQL-Passwort angegeben.</p>';
 } else {
-    echo '<p class="alert alert-success mb-3">OK: In der Konfiguration ist ein MySQL-Passwort angegeben.</p>';
+    echo '<p class="ui-alert ui-alert-success mb-4">OK: In der Konfiguration ist ein MySQL-Passwort angegeben.</p>';
 }
 
 
@@ -78,17 +76,17 @@ if (isset($_REQUEST['aktion'])) {
     * install all modules
     */
     if ($_REQUEST['aktion'] == 'installAllModules') {
-        echo '<p class="alert alert-info mb-3">Der Installer für die Engine wird gestartet.</p>';
+        echo '<p class="ui-alert ui-alert-info mb-4">Der Installer für die Engine wird gestartet.</p>';
         include('vendor/vcms/install/install.php');
 
         foreach ($libModuleHandler->getModules() as $module) {
             if ($module->getInstallScript() != '') {
-                echo '<p class="alert alert-info mb-3">Der Installer ' .$module->getPath().'/'.$module->getInstallScript(). ' wird gestartet.</p>';
+                echo '<p class="ui-alert ui-alert-info mb-4">Der Installer ' .$module->getPath().'/'.$module->getInstallScript(). ' wird gestartet.</p>';
                 include($module->getPath().'/'.$module->getInstallScript());
             }
         }
 
-        echo '<p class="alert alert-info mb-3">Falls keine Fehlermeldung erschienen ist, sollte die Installation durchgeführt worden sein.</p>';
+        echo '<p class="ui-alert ui-alert-info mb-4">Falls keine Fehlermeldung erschienen ist, sollte die Installation durchgeführt worden sein.</p>';
     }
     /*
     * generate an internetwart
@@ -96,7 +94,7 @@ if (isset($_REQUEST['aktion'])) {
         if (isset($_REQUEST['email']) && trim($_REQUEST['email']) != '' && isset($_REQUEST['pwd1']) && trim($_REQUEST['pwd1']) != '') {
             if ($_REQUEST['pwd1'] == ($_REQUEST['pwd2'] ?? '')) {
                 if ($libAuth->isValidPassword($_REQUEST['pwd1'])) {
-                    echo '<p class="alert alert-info mb-3">Datensatz für neuen Benutzer wird angelegt</p>';
+                    echo '<p class="ui-alert ui-alert-info mb-4">Datensatz für neuen Benutzer wird angelegt</p>';
 
                     $stmt = $libDb->prepare('INSERT INTO base_person (name, vorname, email, gruppe) VALUES (:name, :vorname, :email, :gruppe)');
                     $stmt->bindValue(':name', trim($_REQUEST['name'] ?? ''));
@@ -120,28 +118,28 @@ if (isset($_REQUEST['aktion'])) {
                     $stmt->fetch();
 
                     if ($number == 0) {
-                        echo '<p class="alert alert-info mb-3">Datensatz für das aktuelle Semester wird angelegt. Das neue Mitglied wird als Internetwart angegeben.</p>';
+                        echo '<p class="ui-alert ui-alert-info mb-4">Datensatz für das aktuelle Semester wird angelegt. Das neue Mitglied wird als Internetwart angegeben.</p>';
                         $stmt = $libDb->prepare('INSERT INTO base_semester (semester, internetwart) VALUES (:semester, :internetwart)');
                         $stmt->bindValue(':semester', $libTime->getSemesterName());
                         $stmt->bindValue(':internetwart', $id);
                         $stmt->execute();
                     } else {
-                        echo '<p class="alert alert-info mb-3">Neuer Benutzer wird als Internetwart in das aktuelle Semester eingefügt. Falls bisher ein Internetwart in diesem Semester eingetragen war, wird dieser damit aus dem Semester entfernt.</p>';
+                        echo '<p class="ui-alert ui-alert-info mb-4">Neuer Benutzer wird als Internetwart in das aktuelle Semester eingefügt. Falls bisher ein Internetwart in diesem Semester eingetragen war, wird dieser damit aus dem Semester entfernt.</p>';
                         $stmt = $libDb->prepare('UPDATE base_semester SET internetwart=:internetwart WHERE semester=:semester');
                         $stmt->bindValue(':semester', $libTime->getSemesterName());
                         $stmt->bindValue(':internetwart', $id);
                         $stmt->execute();
                     }
 
-                    echo '<p class="alert alert-info mb-3">Fertig. Falls keine Fehlermeldung angezeigt wurde, sollte nun der Login unter dem neuen Benutzer mit Internetwart-Rechten möglich sein.</p>';
+                    echo '<p class="ui-alert ui-alert-info mb-4">Fertig. Falls keine Fehlermeldung angezeigt wurde, sollte nun der Login unter dem neuen Benutzer mit Internetwart-Rechten möglich sein.</p>';
                 } else {
-                    echo '<p class="alert alert-danger mb-3">Das Passwort ist nicht komplex genug.</p>';
+                    echo '<p class="ui-alert ui-alert-danger mb-4">Das Passwort ist nicht komplex genug.</p>';
                 }
             } else {
-                echo '<p class="alert alert-danger mb-3">Die Passwörter stimmen nicht überein.</p>';
+                echo '<p class="ui-alert ui-alert-danger mb-4">Die Passwörter stimmen nicht überein.</p>';
             }
         } else {
-            echo '<p class="alert alert-danger mb-3">E-Mail-Adresse oder Passwort wurden nicht angegeben.</p>';
+            echo '<p class="ui-alert ui-alert-danger mb-4">E-Mail-Adresse oder Passwort wurden nicht angegeben.</p>';
         }
     }
 }
@@ -151,36 +149,36 @@ if (isset($_REQUEST['aktion'])) {
 */
 ?>
 				<h2>Schritt 1: Installation des Gesamtsystems</h2>
-				<p class="mb-4">Mit dem Aufruf der <a href="installer.php?aktion=installAllModules">Gesamtinstallation</a> wird die Installation für das Basissystem und alle Module gestartet. Dies ist einmalig bei der Erstinstallation des VCMS notwendig.</p>
+				<p class="mb-6">Mit dem Aufruf der <a href="installer.php?aktion=installAllModules">Gesamtinstallation</a> wird die Installation für das Basissystem und alle Module gestartet. Dies ist einmalig bei der Erstinstallation des VCMS notwendig.</p>
 
 				<h2>Schritt 2: Einfügen eines Internetwarts</h2>
-				<p class="mb-4">Nach der Gesamtinstallation muss ein Internetwart angelegt werden, um sich initial im Intranet anmelden zu können.</p>
+				<p class="mb-6">Nach der Gesamtinstallation muss ein Internetwart angelegt werden, um sich initial im Intranet anmelden zu können.</p>
 
 				<form action="installer.php" method="post">
 					<div>
 						<input type="hidden" name="aktion" value="createInternetWart"/>
 					</div>
-					<div class="mb-3">
-						<input type="text" name="vorname" size="20" class="form-control" placeholder="Vorname"/>
+					<div class="mb-4">
+						<input type="text" name="vorname" size="20" class="ui-form-control" placeholder="Vorname"/>
 					</div>
-					<div class="mb-3">
-						<input type="text" name="name" size="20" class="form-control" placeholder="Nachname"/>
+					<div class="mb-4">
+						<input type="text" name="name" size="20" class="ui-form-control" placeholder="Nachname"/>
 					</div>
-					<div class="mb-3">
-						<input type="text" name="email" size="20" class="form-control" placeholder="E-Mail-Adresse"/>
+					<div class="mb-4">
+						<input type="text" name="email" size="20" class="ui-form-control" placeholder="E-Mail-Adresse"/>
 					</div>
-					<div class="mb-3">
-						<input type="password" name="pwd1" size="20" class="form-control" placeholder="Passwort"/>
+					<div class="mb-4">
+						<input type="password" name="pwd1" size="20" class="ui-form-control" placeholder="Passwort"/>
 					</div>
-					<div class="mb-3">
-						<input type="password" name="pwd2" size="20" class="form-control" placeholder="Passwort-Wiederholung"/>
+					<div class="mb-4">
+						<input type="password" name="pwd2" size="20" class="ui-form-control" placeholder="Passwort-Wiederholung"/>
 					</div>
-					<div class="mb-3">
-						<input type="submit" value="Internetwart anlegen" class="btn btn-secondary"/>
+					<div class="mb-4">
+						<input type="submit" value="Internetwart anlegen" class="ui-btn ui-btn-secondary"/>
 					</div>
 				</form>
 
-				<p class="mb-4"><?php echo $libAuth->getPasswordRequirements(); ?></p>
+				<p class="mb-6"><?php echo $libAuth->getPasswordRequirements(); ?></p>
 			</div>
 		</main>
 	</body>

@@ -56,10 +56,10 @@ echo '<h1>Reservierungen</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="card">';
-echo '<div class="card-body">';
-echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_reservation_book" class="btn btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Eine Reservierung hinzufügen</a>';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
+echo '<div class="flex flex-wrap justify-start">';
+echo '<a href="index.php?pid=intranet_reservation_book" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Eine Reservierung hinzufügen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -70,9 +70,9 @@ $stmt->bindValue(':datum', date('Y-m-d'));
 $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    echo '<div id="' .$row['id']. '" class="card' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
-    echo '<div class="card-header">';
-    echo '<h3 class="card-title mb-0 d-inline">';
+    echo '<div id="' .$row['id']. '" class="ui-card' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
+    echo '<div class="ui-card-header">';
+    echo '<h3 class="ui-card-title mb-0 inline">';
     echo $libTime->formatDateString($row['datum']);
     echo ' ';
     echo '<a href="index.php?pid=intranet_person&amp;id=' .$row['person']. '">';
@@ -82,7 +82,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     if ($libAuth->getId() == $row['person']) {
         echo ' ';
-        echo '<form method="post" action="index.php?pid=intranet_reservations" class="d-inline" onsubmit="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
+        echo '<form method="post" action="index.php?pid=intranet_reservations" class="inline" onsubmit="return confirm(\'Willst Du die Reservierung wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="delete" />';
         echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
         echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>';
@@ -91,13 +91,13 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     echo '</div>';
 
-    echo '<div class="card-body">';
-    echo '<div class="row">';
-    echo '<div class="col-12 col-sm-9 col-md-10">';
+    echo '<div class="ui-card-body">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="col-span-12 sm:col-span-9 md:col-span-10">';
     echo nl2br($libString->protectXSS((string) $row['beschreibung']));
     echo '</div>';
 
-    echo '<div class="d-none d-sm-block col-sm-3 col-md-2">';
+    echo '<div class="hidden sm:block col-span-12 sm:col-span-3 md:col-span-2">';
     echo $libPerson->getSignature($row['person']);
     echo '</div>';
 

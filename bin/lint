@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 #
-# Checks VCMS' own PHP code: syntax check via `php -l`, code style via PHP-CS-Fixer.
-# Exits non-zero if any file has a syntax error or deviates from the code style.
+# Checks VCMS' own PHP code: syntax check via `php -l`, code style via PHP-CS-Fixer. Also checks
+# that the compiled stylesheet vendor/vcms/styles/vcms.css is up to date.
+# Exits non-zero if any file has a syntax error, deviates from the code style or vcms.css is
+# outdated.
 #
-# Requires: brew install php-cs-fixer
+# Requires: brew install php-cs-fixer tailwindcss
 
 set -euo pipefail
 
@@ -42,3 +44,8 @@ php-cs-fixer check \
     --config=.php-cs-fixer.dist.php \
     --diff \
     --show-progress=none
+
+echo
+echo '==> tailwindcss'
+
+bin/build-css --check

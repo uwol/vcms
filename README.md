@@ -65,14 +65,15 @@ Die Installationsanleitung ist in der Datei INSTALL.md gespeichert. Die technisc
 Entwicklung
 -----------
 
-Der PHP-Code folgt PSR-12 und wird mit [PHP-CS-Fixer](https://cs.symfony.com) formatiert:
+Der PHP-Code folgt PSR-12 und wird mit [PHP-CS-Fixer](https://cs.symfony.com) formatiert. Das Stylesheet basiert auf [Tailwind CSS](https://tailwindcss.com) und wird mit der Tailwind-CLI kompiliert:
 
 ```
-brew install php-cs-fixer
+brew install php-cs-fixer tailwindcss
 ```
 
 * `bin/format` formatiert den eigenen Code (Root-Dateien, `custom`, `modules`, `vendor/vcms`).
-* `bin/lint` prüft Syntax (`php -l`) und Code-Style, ohne Dateien zu ändern.
+* `bin/build-css` kompiliert `vendor/vcms/styles/src/tailwind.css` in das eingecheckte `vendor/vcms/styles/vcms.css`.
+* `bin/lint` prüft Syntax (`php -l`), Code-Style und ob `vcms.css` aktuell ist, ohne Dateien zu ändern.
 
 Der Code-Style ist in `.php-cs-fixer.dist.php` konfiguriert. Die Fremd-Bibliotheken in `vendor` sind bewusst ausgenommen. Damit der einmalige Formatierungs-Commit `git blame` nicht verfälscht:
 

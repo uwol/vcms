@@ -130,7 +130,7 @@ echo '<h1>Dateien</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="row">';
+echo '<div class="grid grid-cols-12 gap-x-6">';
 
 listFolderContentRec($rootFolderObject, true);
 
@@ -143,15 +143,15 @@ if (!empty($libAuth->getOffices())) {
     */
     echo '<h2>Datei hochladen</h2>';
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_directories" method="post" enctype="multipart/form-data">';
     echo '<fieldset>';
     echo '<input type="hidden" name="action" value="upload" />';
 
-    echo '<div class="row mb-3">';
-    echo '<label for="hash" class="col-sm-3 col-form-label">in den Ordner</label>';
-    echo '<div class="col-sm-3"><select name="hash" class="form-select">';
+    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<label for="hash" class="ui-col-form-label col-span-12 sm:col-span-3">in den Ordner</label>';
+    echo '<div class="col-span-12 sm:col-span-3"><select name="hash" class="ui-form-select">';
 
     foreach ($rootFolderObject->getNestedFoldersRec() as $folderElement) {
         if (in_array($folderElement->owningOffice, $libAuth->getOffices())) {
@@ -163,22 +163,22 @@ if (!empty($libAuth->getOffices())) {
     echo '</div>';
 
 
-    echo '<div class="row mb-3">';
-    echo '<label class="col-sm-3 col-form-label">mit Leserecht für</label>';
-    echo '<div class="col-sm-9">';
+    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<label class="ui-col-form-label col-span-12 sm:col-span-3">mit Leserecht für</label>';
+    echo '<div class="col-span-12 sm:col-span-9">';
 
     $stmt = $libDb->prepare("SELECT * FROM base_gruppe ORDER BY bezeichnung");
     $stmt->execute();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         if ($row['bezeichnung'] != "X" && $row['bezeichnung'] != "T" && $row['bezeichnung'] != "V") {
-            echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="gruppen[]" value="' .$libString->protectXSS($row['bezeichnung']). '"';
+            echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="gruppen[]" value="' .$libString->protectXSS($row['bezeichnung']). '"';
 
             if ($libGenericStorage->loadValueInCurrentModule('preselect_rights') == 1) {
                 echo ' checked="checked"';
             }
 
-            echo '/><label class="form-check-label">';
+            echo '/><label class="ui-form-check-label">';
             echo $libString->protectXSS($row['bezeichnung']). ' - ' .$libString->protectXSS((string) $row['beschreibung']);
             echo '</label></div>';
         }
@@ -186,9 +186,9 @@ if (!empty($libAuth->getOffices())) {
 
     echo '</div></div>';
 
-    echo '<div class="row mb-3">';
-    echo '<div class="offset-sm-3 col-sm-3">';
-    echo '<label class="btn btn-outline-secondary btn-file"><i class="fa fa-upload" aria-hidden="true"></i> Datei hochladen';
+    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="col-span-12 sm:col-start-4 sm:col-span-3">';
+    echo '<label class="ui-btn ui-btn-outline-secondary"><i class="fa fa-upload" aria-hidden="true"></i> Datei hochladen';
     echo '<input type="file" name="file" onchange="this.form.submit()" style="display:none">';
     echo '</label>';
     echo '</div>';
@@ -205,20 +205,20 @@ if (!empty($libAuth->getOffices())) {
     */
     echo '<h2>Ordner anlegen</h2>';
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_directories" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="action" value="newFolder" />';
 
-    echo '<div class="row mb-3">';
-    echo '<label for="foldername" class="col-sm-3 col-form-label">Neuen Ordner</label>';
-    echo '<div class="col-sm-3"><input type="text" id="foldername" name="foldername" class="form-control" /></div>';
+    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<label for="foldername" class="ui-col-form-label col-span-12 sm:col-span-3">Neuen Ordner</label>';
+    echo '<div class="col-span-12 sm:col-span-3"><input type="text" id="foldername" name="foldername" class="ui-form-control" /></div>';
     echo '</div>';
 
-    echo '<div class="row mb-3">';
-    echo '<label for="hash" class="col-sm-3 col-form-label">in Ordner</label>';
-    echo '<div class="col-sm-3"><select name="hash" class="form-select">';
+    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<label for="hash" class="ui-col-form-label col-span-12 sm:col-span-3">in Ordner</label>';
+    echo '<div class="col-span-12 sm:col-span-3"><select name="hash" class="ui-form-select">';
 
     foreach ($rootFolderObject->getNestedFoldersRec() as $folderElement) {
         if (in_array($folderElement->owningOffice, $libAuth->getOffices())) {
@@ -229,9 +229,9 @@ if (!empty($libAuth->getOffices())) {
     echo '</select></div>';
     echo '</div>';
 
-    echo '<div class="row mb-3">';
-    echo '<div class="offset-sm-3 col-sm-3">';
-    echo '<button type="submit" class="btn btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
+    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="col-span-12 sm:col-start-4 sm:col-span-3">';
+    echo '<button type="submit" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
     echo '</div>';
     echo '</div>';
 
@@ -250,10 +250,10 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
     global $libAuth, $libModuleHandler, $libString;
 
     // Nested levels are indented by one step. The top level is not, so that its cards
-    // stay direct children of the grid row. ms-4 is 1.5rem, the value the inline
+    // stay direct children of the grid row. ms-6 is 1.5rem, the value the inline
     // margin-left of the Bootstrap 3 layout used.
     if (!$firstLevel) {
-        echo '<div class="ms-4">';
+        echo '<div class="ms-6">';
     }
 
     foreach ($rootFolderObject->nestedFolderElements as $folderElement) {
@@ -261,9 +261,9 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
         if ($folderElement->type == 1) {
             if (!$folderElement->isOfficeRootFolder() || $folderElement->hasNestedFolderElements()) {
                 if ($firstLevel) {
-                    echo '<div class="col-md-6">';
-                    echo '<div class="card">';
-                    echo '<div class="card-body">';
+                    echo '<div class="col-span-12 md:col-span-6">';
+                    echo '<div class="ui-card">';
+                    echo '<div class="ui-card-body">';
                 }
 
                 if ($folderElement->isOpen) {
@@ -280,11 +280,11 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
                 $size = $folderElement->getSize();
 
                 if ($size > 0) {
-                    echo ' <span class="text-body-secondary"><small>' .getSizeString($folderElement->getSize()). '</small></span>';
+                    echo ' <span class="text-muted"><small>' .getSizeString($folderElement->getSize()). '</small></span>';
                 }
 
                 if ($folderElement->isDeleteable() && in_array($folderElement->owningOffice, $libAuth->getOffices())) {
-                    echo ' <form method="post" action="index.php?pid=intranet_directories" class="d-inline" onsubmit="return confirm(\'Willst Du den Ordner wirklich löschen?\')">';
+                    echo ' <form method="post" action="index.php?pid=intranet_directories" class="inline" onsubmit="return confirm(\'Willst Du den Ordner wirklich löschen?\')">';
                     echo '<input type="hidden" name="action" value="delete" />';
                     echo '<input type="hidden" name="hash" value="' .$folderElement->getHash(). '" />';
                     echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
@@ -356,11 +356,11 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
             $fileName = $folderElement->getFilename();
 
             echo ' <a href="api.php?iid=intranet_download&amp;hash=' .$folderElement->getHash(). '">' .$libString->protectXSS((string) $fileName). '</a>';
-            echo ' <span class="text-body-secondary"><small>' .implode('', array_map([$libString, 'protectXSS'], (array) $folderElement->readGroups)). '</small></span>';
-            echo ' <span class="text-body-secondary"><small>' .getSizeString($folderElement->getSize()). '</small></span>';
+            echo ' <span class="text-muted"><small>' .implode('', array_map([$libString, 'protectXSS'], (array) $folderElement->readGroups)). '</small></span>';
+            echo ' <span class="text-muted"><small>' .getSizeString($folderElement->getSize()). '</small></span>';
 
             if (in_array($folderElement->owningOffice, $libAuth->getOffices())) {
-                echo ' <form method="post" action="index.php?pid=intranet_directories" class="d-inline" onsubmit="return confirm(\'Willst Du die Datei wirklich löschen?\')">';
+                echo ' <form method="post" action="index.php?pid=intranet_directories" class="inline" onsubmit="return confirm(\'Willst Du die Datei wirklich löschen?\')">';
                 echo '<input type="hidden" name="action" value="delete" />';
                 echo '<input type="hidden" name="hash" value="' .$folderElement->getHash(). '" />';
                 echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';

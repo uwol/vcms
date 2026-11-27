@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# Compiles the VCMS stylesheet vendor/vcms/styles/src/tailwind.css with the Tailwind CLI into
+# vendor/vcms/styles/vcms.css. The compiled file is committed, because installations have
+# no build step. Run it after changing markup classes or any CSS below vendor/vcms/styles.
+#
+# With --check the stylesheet is compiled into a temporary file and compared with the
+# committed one; the script exits non-zero if vcms.css is outdated.
+#
+# Requires: brew install tailwindcss
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+if ! command -v tailwindcss > /dev/null 2>&1; then
+    echo 'Error: tailwindcss not found. Install it with: brew install tailwindcss' >&2
+    exit 1
+fi
+
+input='vendor/vcms/styles/src/tailwind.css'
+output='vendor/vcms/styles/vcms.css'
+
+if [ "${1:-}" = '--check' ]; then
+    tmp="$(mktemp)"
+    trap 'rm -f "$tmp"' EXIT
+
+    tailwindcss --input "$input" --output "$tmp" --minify 2> /dev/null
+
+    if ! cmp -s "$tmp" "$output"; then
+        echo "Error: $output is outdated. Run bin/build-css." >&2
+        exit 1
+    fi
+
+    echo "$output is up to date."
+else
+    tailwindcss --input "$input" --output "$output" --minify
+fi

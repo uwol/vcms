@@ -1,0 +1,96 @@
+/*
+* Entry point of the VCMS stylesheet. bin/build-css compiles it with the Tailwind CLI into
+* vendor/vcms/styles/vcms.css, which is committed, because installations have no build step.
+*
+* Layer order: utilities win over components, as the former Bootstrap utilities did with
+* !important. header.php imports custom/styles/screen.css into the layer components after
+* this file, so that installation styles override the components by order and specificity
+* as before, but not the utilities.
+*/
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+@import "./base.css" layer(base);
+@import "./components.css" layer(components);
+@import "./elements.css" layer(components);
+@import "../screen.css" layer(components);
+@import "../navigation/navigation.css" layer(components);
+@import "../calendar/calendar.css" layer(components);
+@import "../event/event.css" layer(components);
+@import "../image/image.css" layer(components);
+@import "../person/person.css" layer(components);
+@import "../timeline/timeline.css" layer(components);
+
+/*
+* Files scanned for utility classes. Third-party code below /vendor is excluded.
+*/
+@source "../../../../index.php";
+@source "../../../../api.php";
+@source "../../../../installer.txt";
+@source "../../../../custom";
+@source "../../../../modules";
+@source "../../layout";
+@source "../../lib";
+@source "../../modules";
+@source "../../styles/*.js";
+@source "../../styles/*/*.{js,html}";
+
+/*
+* Utilities that are always available, also when no file of this repository uses them.
+* Installation-specific markup in the custom/ directories of the modules and modules of
+* third parties are not scanned, so the common layout utilities are emitted in any case.
+*/
+@source inline("{sm:,md:,lg:,xl:,2xl:,}{m,mx,my,mt,mb,ms,me,p,px,py,pt,pb,ps,pe}-{0,1,2,4,6,12}");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}{m,mx,my,mt,mb,ms,me}-auto");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}gap-{0,1,2,4,6,12}");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}gap-x-{0,6}");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}{block,inline,inline-block,flex,inline-flex,grid,hidden}");
+@source inline("grid-cols-12");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}col-span-{1,2,3,4,5,6,7,8,9,10,11,12}");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}col-start-{1,2,3,4,5,6,7,8,9,10,11,12}");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}text-{start,center,end}");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}{flex-row,flex-col,flex-wrap,flex-nowrap,grow,shrink-0}");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}items-{start,center,end,baseline,stretch}");
+@source inline("{sm:,md:,lg:,xl:,2xl:,}justify-{start,center,end,between,around}");
+@source inline("{w,h}-{auto,full} max-w-full float-{left,right,none} min-w-0 sr-only");
+@source inline("font-{light,normal,medium,semibold,bold} uppercase lowercase whitespace-nowrap");
+@source inline("text-{body,muted,dark,white,secondary,success,danger} bg-{white,transparent,secondary,success,danger}");
+@source inline("border border-0 rounded rounded-full shadow-sm overflow-hidden relative absolute");
+
+@theme static {
+	/* Bootstrap breakpoints, not the Tailwind defaults */
+	--breakpoint-sm: 576px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 992px;
+	--breakpoint-xl: 1200px;
+	--breakpoint-2xl: 1400px;
+
+	--font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+	--color-white: #fff;
+	--color-body: #212529;
+	--color-muted: rgba(33, 37, 41, 0.75);
+	--color-border: #dee2e6;
+	--color-primary: #0d6efd;
+	--color-secondary: #6c757d;
+	--color-success: #198754;
+	--color-danger: #dc3545;
+	--color-dark: #333;
+
+	--color-gray-100: #f8f9fa;
+	--color-gray-200: #e9ecef;
+	--color-gray-300: #dee2e6;
+	--color-gray-400: #ced4da;
+	--color-gray-500: #adb5bd;
+	--color-gray-600: #6c757d;
+	--color-gray-700: #495057;
+	--color-gray-800: #343a40;
+	--color-gray-900: #212529;
+
+	--radius-sm: 0.25rem;
+	--radius-md: 0.375rem;
+	--radius-lg: 0.5rem;
+}

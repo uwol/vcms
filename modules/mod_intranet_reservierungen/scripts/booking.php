@@ -27,8 +27,8 @@ echo '<h1>Reservierung durchführen</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=intranet_reservations" method="post">';
 echo '<fieldset>';
 

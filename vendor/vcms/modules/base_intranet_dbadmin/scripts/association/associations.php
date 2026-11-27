@@ -60,23 +60,23 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getNotificationBoxText();
 
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
-    echo '<div class="btn-toolbar">';
-    echo '<form method="post" action="index.php?pid=intranet_admin_associations" class="float-start ms-1" onsubmit="return confirm(\'Willst den Import wirklich durchführen?\')">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
+    echo '<div class="flex flex-wrap justify-start">';
+    echo '<form method="post" action="index.php?pid=intranet_admin_associations" class="float-left ms-1" onsubmit="return confirm(\'Willst den Import wirklich durchführen?\')">';
     echo '<input type="hidden" name="action" value="import" />';
-    echo '<button type="submit" class="btn btn-outline-secondary"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</button>';
+    echo '<button type="submit" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-cloud-download" aria-hidden="true"></i> KV-Vereine von ' .$libGlobal->mkHostname. ' importieren</button>';
     echo '</form>';
-    echo '<a href="index.php?pid=intranet_admin_association&amp;action=blank" class="btn btn-outline-secondary">Einen neuen Verein anlegen</a>';
+    echo '<a href="index.php?pid=intranet_admin_association&amp;action=blank" class="ui-btn ui-btn-outline-secondary">Einen neuen Verein anlegen</a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
 
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
-    echo '<table class="table table-sm table-striped table-hover">';
+    echo '<table class="ui-table ui-table-sm ui-table-striped ui-table-hover">';
     echo '<thead>';
     echo '<tr><th>Id</th><th>Name</th><th>Dachverband</th><th>Ort</th><th></th></tr>';
     echo '</thead>';

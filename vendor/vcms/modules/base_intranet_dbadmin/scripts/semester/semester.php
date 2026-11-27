@@ -159,7 +159,7 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<p class="mb-4">Hier können sämtliche Daten eines Semesters bearbeitet werden. Diese Seite ist nur für den Internetwart zugänglich, weil über die Vergabe von Vorstands- und Wartsposten im Semester die Zugangsberechtigungen geregelt werden.</p>';
+    echo '<p class="mb-6">Hier können sämtliche Daten eines Semesters bearbeitet werden. Diese Seite ist nur für den Internetwart zugänglich, weil über die Vergabe von Vorstands- und Wartsposten im Semester die Zugangsberechtigungen geregelt werden.</p>';
     echo '<hr />';
 
     /**
@@ -168,15 +168,15 @@ if ($libAuth->isLoggedin()) {
     *
     */
     if ($semesterRow['semester'] != '') {
-        echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_semesters" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+        echo '<form class="mb-6" method="post" action="index.php?pid=intranet_admin_semesters" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="delete" />';
         echo '<input type="hidden" name="semester" value="' .$semesterRow['semester']. '" />';
         echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
         echo '</form>';
     }
 
-    echo '<div class="row">';
-    echo '<div class="col-sm-9">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="col-span-12 sm:col-span-9">';
 
 
     /**
@@ -190,8 +190,8 @@ if ($libAuth->isLoggedin()) {
         $extraActionParam = "&amp;action=update";
     }
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_semester' .$extraActionParam. '" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="formType" value="semesterData" />';
@@ -277,7 +277,7 @@ if ($libAuth->isLoggedin()) {
     echo '</div>';
 
     echo '</div>';
-    echo '<div class="col-sm-3">';
+    echo '<div class="col-span-12 sm:col-span-3">';
 
     /**
     *
@@ -285,14 +285,14 @@ if ($libAuth->isLoggedin()) {
     *
     */
     if ($action != 'blank' && $semesterRow['semester'] != '') {
-        echo '<div class="d-block mx-auto">';
+        echo '<div class="block mx-auto">';
         echo '<div class="img-box">';
 
         $hasSemesterCover = $libTime->hasSemesterCover($semesterRow['semester']);
 
         if ($hasSemesterCover) {
             echo '<span class="delete-icon-box">';
-            echo '<form method="post" action="index.php?pid=intranet_admin_semester" class="d-inline" onsubmit="return confirm(\'Willst Du das Semestercover wirklich löschen?\')">';
+            echo '<form method="post" action="index.php?pid=intranet_admin_semester" class="inline" onsubmit="return confirm(\'Willst Du das Semestercover wirklich löschen?\')">';
             echo '<input type="hidden" name="action" value="semesterCoverDelete" />';
             echo '<input type="hidden" name="semester" value="' .$semesterRow['semester']. '" />';
             echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';

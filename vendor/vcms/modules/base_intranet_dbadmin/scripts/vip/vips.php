@@ -40,19 +40,19 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getNotificationBoxText();
 
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
-    echo '<div class="btn-toolbar">';
-    echo '<a href="index.php?pid=intranet_admin_vip&amp;action=blank" class="btn btn-outline-secondary">Einen neuen Vip anlegen</a>';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
+    echo '<div class="flex flex-wrap justify-start">';
+    echo '<a href="index.php?pid=intranet_admin_vip&amp;action=blank" class="ui-btn ui-btn-outline-secondary">Einen neuen Vip anlegen</a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
 
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
-    echo '<table class="table table-sm table-striped table-hover">';
+    echo '<table class="ui-table ui-table-sm ui-table-striped ui-table-hover">';
     echo '<thead>';
     echo '<tr><th>Id</th><th>Praefix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th></th></tr>';
     echo '</thead>';

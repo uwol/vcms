@@ -23,7 +23,7 @@ use PDO;
 
 class LibGlobal
 {
-    public $version = '14.18';
+    public $version = '15.00';
 
     public $semester;
     public $module;
