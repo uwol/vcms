@@ -186,10 +186,14 @@ class LibPerson
                 break;
         }
 
+        /*
+        * No h-auto here: utilities win over the components, so it would override the fixed
+        * height of person-img-xs. Images keep their aspect ratio without it anyway.
+        */
         if ($this->hasImageFile($id)) {
-            $retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="max-w-full h-auto hvr-glow ' .$sizeClass. '" alt=""/>';
+            $retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="max-w-full hvr-glow ' .$sizeClass. '" alt=""/>';
         } else {
-            $retstr .= '<div class="max-w-full h-auto hvr-glow person-img-dummy ' .$sizeClass. '"></div>';
+            $retstr .= '<div class="max-w-full hvr-glow person-img-dummy ' .$sizeClass. '"></div>';
         }
 
         $retstr .= '</a>';
