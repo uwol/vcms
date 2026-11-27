@@ -31,12 +31,12 @@ $twitterUrl = $libString->assureHttpScheme($libGenericStorage->loadValue('mod_in
 $wikipediaUrl = $libString->assureHttpScheme($libGenericStorage->loadValue('mod_internet_home', 'wikipedia_url'));
 
 
-echo '    <footer class="pb-5 pt-5">' . PHP_EOL;
-echo '      <div class="container">' . PHP_EOL;
-echo '        <div class="row">' . PHP_EOL;
-echo '          <div class="col-12">' . PHP_EOL;
+echo '    <footer class="pb-12 pt-12">' . PHP_EOL;
+echo '      <div class="ui-container">' . PHP_EOL;
+echo '        <div class="grid grid-cols-12 gap-x-6">' . PHP_EOL;
+echo '          <div class="col-span-12">' . PHP_EOL;
 echo '            <div class="social-buttons text-end mb-0 mt-0">' . PHP_EOL;
-echo '              <small class="text-body-secondary"><a href="index.php?pid=privacy">Datenschutz</a></small>' . PHP_EOL;
+echo '              <small class="text-muted"><a href="index.php?pid=privacy">Datenschutz</a></small>' . PHP_EOL;
 
 if ($facebookUrl != '') {
     echo '              <a href="' .$libString->protectXSS((string) $facebookUrl). '" rel="nofollow"><i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i></a>' . PHP_EOL;

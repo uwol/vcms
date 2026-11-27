@@ -73,8 +73,8 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-echo '<div class="row">';
-echo '<div class="col-md-6">';
+echo '<div class="grid grid-cols-12 gap-x-6">';
+echo '<div class="col-span-12 md:col-span-6">';
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(eingabedatum,'%Y-%m-01') AS eingabedatum FROM mod_news_news WHERE eingabedatum IS NOT NULL GROUP BY eingabedatum ORDER BY eingabedatum DESC");
 $stmt->execute();
@@ -88,12 +88,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 echo $libTime->getSemesterMenu($libTime->getSemestersFromDates($data), $libGlobal->semester);
 
 echo '</div>';
-echo '<div class="col-md-6">';
+echo '<div class="col-span-12 md:col-span-6">';
 
-echo '<div class="card">';
-echo '<div class="card-body">';
-echo '<div class="btn-toolbar">';
-echo '<a href="index.php?pid=intranet_news_write" class="btn btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Einen Beitrag hinzufügen</a>';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
+echo '<div class="flex flex-wrap justify-start">';
+echo '<a href="index.php?pid=intranet_news_write" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Einen Beitrag hinzufügen</a>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -120,9 +120,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $lastSetMonth = substr($inputDate, 0, 7);
     }
 
-    echo '<div id="' .$row['id']. '" class="card' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
-    echo '<div class="card-header">';
-    echo '<h3 class="card-title mb-0 d-inline">';
+    echo '<div id="' .$row['id']. '" class="ui-card' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
+    echo '<div class="ui-card-header">';
+    echo '<h3 class="ui-card-title mb-0 inline">';
     echo $libTime->formatDateString($row['eingabedatum']);
     echo ' ';
     echo $libString->protectXSS($row['bezeichnung']);
@@ -130,7 +130,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     if ((in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices()))
             || ($row['autor'] == $libAuth->getId() && $row['datediff'] < 7)) {
-        echo ' <form method="post" action="index.php?pid=intranet_news" class="d-inline" onsubmit="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
+        echo ' <form method="post" action="index.php?pid=intranet_news" class="inline" onsubmit="return confirm(\'Willst Du den Beitrag wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="delete" />';
         echo '<input type="hidden" name="semester" value="' .$libGlobal->semester. '" />';
         echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
@@ -140,15 +140,15 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     echo '</div>';
 
-    echo '<div class="card-body">';
-    echo '<div class="row">';
+    echo '<div class="ui-card-body">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
 
-    echo '<div class="col-12 col-sm-9 col-md-10">';
+    echo '<div class="col-span-12 sm:col-span-9 md:col-span-10">';
     echo nl2br($libString->protectXSS((string) $row['text']));
     echo '</div>';
 
     if (($row['autor'] != '' && $row['autor'] > 0) || ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0)) {
-        echo '<div class="d-none d-sm-block col-sm-3 col-md-2">';
+        echo '<div class="hidden sm:block col-span-12 sm:col-span-3 md:col-span-2">';
 
         if ($row['autor'] != '' && $row['autor'] > 0) {
             echo $libPerson->getSignature($row['autor']);

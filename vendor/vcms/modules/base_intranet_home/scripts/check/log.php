@@ -47,7 +47,7 @@ if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewar
             $memberId = (int) $row['mitglied'];
 
             $affectedMembers[] =
-                '<span class="badge">' .((int) $row['numberOfLoginErrors']). '</span> ' .
+                '<span class="ui-badge">' .((int) $row['numberOfLoginErrors']). '</span> ' .
                 '<a href="index.php?pid=intranet_person&amp;id=' .$memberId. '">' .
                 $libString->protectXSS($libPerson->getNameString($memberId, 4)). '</a>';
         }

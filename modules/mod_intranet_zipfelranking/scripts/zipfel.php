@@ -31,20 +31,20 @@ $stmt = $libDb->prepare('SELECT * FROM base_person, mod_zipfelranking_anzahl WHE
 $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
-    echo '<div class="row">';
-    echo '<div class="col-6 col-sm-2">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="col-span-6 sm:col-span-2">';
     echo $libPerson->getSignature($row['id']);
     echo '</div>';
 
-    echo '<div class="col-6 col-sm-2">';
+    echo '<div class="col-span-6 sm:col-span-2">';
     echo '<b>' .$libString->protectXSS($libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 5)). '</b>';
-    echo '<p class="mb-4">' .$row['anzahlzipfel']. ' Zipfel</p>';
+    echo '<p class="mb-6">' .$row['anzahlzipfel']. ' Zipfel</p>';
     echo '</div>';
 
-    echo '<div class="d-none d-sm-block col-sm-8">';
+    echo '<div class="hidden sm:block col-span-12 sm:col-span-8">';
 
     for ($j = 0; $j < $row['anzahlzipfel'] && $j < 50; $j++) {
         echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/zipfel.png" class="zipfel" style="height:80px" />';

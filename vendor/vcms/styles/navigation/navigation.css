@@ -1,9 +1,164 @@
 /*
-* Position and background colour are set here and not via the Bootstrap classes
-* fixed-top / bg-white, because those set their property with !important and would
-* win over the affix-top state below and over navigation_transparent.css.
+* Navbar. The base rules reproduce the former Bootstrap 5.3 navbar with the expand
+* breakpoint md (https://getbootstrap.com, MIT license), the VCMS layout follows below.
 */
-.navbar {
+.ui-navbar {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 0;
+}
+
+.ui-navbar > .ui-container {
+	display: flex;
+	flex-wrap: inherit;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.ui-navbar-brand {
+	padding-top: 0.3125rem;
+	padding-bottom: 0.3125rem;
+	margin-right: 1rem;
+	font-size: 1.25rem;
+	color: #000;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.ui-navbar-brand:focus,
+.ui-navbar-brand:hover {
+	color: #000;
+}
+
+.ui-navbar-nav {
+	display: flex;
+	flex-direction: column;
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+}
+
+.ui-nav-link {
+	display: block;
+	padding: 0.5rem 0;
+	color: rgba(0, 0, 0, 0.65);
+	text-decoration: none;
+	background: 0 0;
+	border: 0;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.ui-nav-link:focus,
+.ui-nav-link:hover {
+	color: rgba(0, 0, 0, 0.8);
+}
+
+.ui-nav-link:focus-visible {
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.ui-navbar-nav .ui-nav-link.active,
+.ui-navbar-nav .ui-nav-link.show {
+	color: #000;
+}
+
+.ui-navbar-nav .ui-dropdown-menu {
+	position: static;
+	top: 100%;
+	left: 0;
+	margin-top: 0.125rem;
+}
+
+.ui-navbar-collapse {
+	flex-basis: 100%;
+	flex-grow: 1;
+	align-items: center;
+}
+
+.ui-navbar-toggler {
+	padding: 0.25rem 0.75rem;
+	font-size: 1.25rem;
+	line-height: 1;
+	color: rgba(0, 0, 0, 0.65);
+	background-color: transparent;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: var(--radius-md);
+	transition: box-shadow 0.15s ease-in-out;
+}
+
+.ui-navbar-toggler:hover {
+	text-decoration: none;
+}
+
+.ui-navbar-toggler:focus {
+	text-decoration: none;
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem;
+}
+
+.ui-navbar-toggler-icon {
+	display: inline-block;
+	width: 1.5em;
+	height: 1.5em;
+	vertical-align: middle;
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ui-nav-link,
+	.ui-navbar-toggler {
+		transition: none;
+	}
+}
+
+@media (min-width: 768px) {
+	.ui-navbar {
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+	}
+
+	.ui-navbar .ui-navbar-nav {
+		flex-direction: row;
+	}
+
+	.ui-navbar .ui-navbar-nav .ui-dropdown-menu {
+		position: absolute;
+	}
+
+	.ui-navbar .ui-navbar-nav .ui-nav-link {
+		padding-right: 0.5rem;
+		padding-left: 0.5rem;
+	}
+
+	.ui-navbar .ui-navbar-collapse {
+		display: flex !important;
+		flex-basis: auto;
+	}
+
+	.ui-navbar .ui-navbar-toggler {
+		display: none;
+	}
+}
+
+.ui-navbar .ui-navbar-nav .ui-dropdown-toggle.show,
+.ui-navbar .ui-navbar-nav .ui-dropdown-toggle.show:focus,
+.ui-navbar .ui-navbar-nav .ui-dropdown-toggle.show:hover {
+	background-color: inherit;
+}
+
+
+/*
+* VCMS layout. Position and background colour are set on the navbar itself, so that the
+* affix-top state below and navigation_transparent.css can override them.
+*/
+.ui-navbar {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -15,22 +170,21 @@
 }
 
 @media(min-width: 768px){
-	.navbar.affix-top {
+	.ui-navbar.affix-top {
 		position: absolute;
 	}
 }
 
 /*
 * Below the expand breakpoint the navbar is fixed and grows downwards with the opened
-* menus, so a menu that is taller than the viewport used to be unreachable. Bootstrap 3
-* capped .navbar-collapse with max-height and overflow-y, Bootstrap 5 dropped that rule.
-* The cap is placed on the navbar and not on .navbar-collapse, because the intranet has
-* two collapse elements that are toggled together and would otherwise get one scroll area
-* each, together exceeding the viewport again. dvh keeps the cap in sync with the visible
+* menus, so a menu that is taller than the viewport would be unreachable. The cap is placed
+* on the navbar and not on .ui-navbar-collapse, because the intranet has two collapse
+* elements that are toggled together and would otherwise get one scroll area each,
+* together exceeding the viewport again. dvh keeps the cap in sync with the visible
 * viewport while mobile browsers show or hide their toolbars.
 */
 @media(max-width: 767px){
-	.navbar {
+	.ui-navbar {
 		max-height: 100vh;
 		max-height: 100dvh;
 		overflow-y: auto;
@@ -38,57 +192,55 @@
 	}
 }
 
-.navbar,
-.navbar a {
+.ui-navbar,
+.ui-navbar a {
 	transition: all 0.35s;
 }
 
 /*
 * The navbar container is a wrapping flex row. The logo occupies a full row of its
 * own, the brand and the internet menu share the next row, the intranet menu gets
-* the third row. Flex bases replace the floats of the Bootstrap 3 layout, because
-* float has no effect on flex items.
+* the third row.
 *
-* flex-wrap has to be set explicitly: navbar-expand-md sets flex-wrap: nowrap on the
-* navbar from 768px upwards and the container inherits that, which would force all
-* rows onto a single line.
+* flex-wrap has to be set explicitly: the navbar sets flex-wrap: nowrap from 768px
+* upwards and the container inherits that, which would force all rows onto a single line.
 */
-.navbar .container {
+.ui-navbar .ui-container {
 	flex-wrap: wrap;
 	justify-content: flex-start;
 }
 
-.navbar #logo {
+.ui-navbar #logo {
 	flex: 0 0 100%;
 	height: 75px;
 }
 
 @media(max-width: 767px){
-	.navbar #logo {
+	.ui-navbar #logo {
 		flex: 0 0 50px;
 		height: 50px;
 	}
 }
 
-.navbar.affix #logo {
+.ui-navbar.affix #logo {
 	flex: 0 0 50px;
 	height: 50px;
 }
 
 @media(min-width: 768px){
-	.navbar .navbar-internet {
+	.ui-navbar .navbar-internet {
 		flex: 1 1 auto;
 		justify-content: flex-end;
 		margin-left: auto;
 	}
 
-	.navbar .navbar-intranet {
+	.ui-navbar .navbar-intranet {
 		flex: 0 0 100%;
 		justify-content: flex-end;
 	}
 }
 
-.navbar .navbar-brand {
+.ui-navbar .ui-navbar-brand {
 	color: inherit;
 	font-weight: 500;
 	text-transform: uppercase;
@@ -96,24 +248,24 @@
 	padding-bottom: 0;
 }
 
-.navbar .navbar-brand:hover,
-.navbar .navbar-brand:focus {
+.ui-navbar .ui-navbar-brand:hover,
+.ui-navbar .ui-navbar-brand:focus {
 	color: #111;
 }
 
 @media(max-width: 767px){
-	.navbar .navbar-brand {
+	.ui-navbar .ui-navbar-brand {
 		padding-left: 5px;
 	}
 }
 
 @media(min-width: 768px) {
-	.navbar.affix .navbar-brand {
+	.ui-navbar.affix .ui-navbar-brand {
 		font-size: 1.1em;
 	}
 }
 
-.navbar .navbar-toggler {
+.ui-navbar .ui-navbar-toggler {
 	font-weight: 500;
 	color: inherit;
 	text-transform: uppercase;
@@ -121,79 +273,78 @@
 	margin-left: auto;
 }
 
-.navbar .navbar-toggler:focus,
-.navbar .navbar-toggler:hover {
+.ui-navbar .ui-navbar-toggler:focus,
+.ui-navbar .ui-navbar-toggler:hover {
 	background-color: inherit;
 }
 
-.navbar .nav-link,
-.navbar .nav-link:focus {
+.ui-navbar .ui-nav-link,
+.ui-navbar .ui-nav-link:focus {
 	font-weight: 500;
 	color: inherit;
 }
 
-.navbar .nav-link:hover,
-.navbar .nav-link:focus:hover {
+.ui-navbar .ui-nav-link:hover,
+.ui-navbar .ui-nav-link:focus:hover {
 	color: #111;
 }
 
-.navbar .nav-link.active,
-.navbar .nav-link.active:focus {
+.ui-navbar .ui-nav-link.active,
+.ui-navbar .ui-nav-link.active:focus {
 	color: #111;
 	background-color: transparent;
 }
 
-.navbar .nav-link.active:hover,
-.navbar .nav-link.active:focus:hover {
+.ui-navbar .ui-nav-link.active:hover,
+.ui-navbar .ui-nav-link.active:focus:hover {
 	background-color: transparent;
 }
 
-.navbar .dropdown-menu .dropdown-item.active,
-.navbar .dropdown-menu .dropdown-item.active:focus,
-.navbar .dropdown-menu .dropdown-item.active:hover {
+.ui-navbar .ui-dropdown-menu .ui-dropdown-item.active,
+.ui-navbar .ui-dropdown-menu .ui-dropdown-item.active:focus,
+.ui-navbar .ui-dropdown-menu .ui-dropdown-item.active:hover {
 	background-color: transparent;
 	color: #111;
 }
 
-.navbar .dropdown-menu .dropdown-item {
+.ui-navbar .ui-dropdown-menu .ui-dropdown-item {
 	color: inherit;
 }
 
 /*
-* Below the expand breakpoint Bootstrap positions the dropdown menus statically inside the
-* vertical menu flow. Bootstrap 3 stripped their panel styling in that state, Bootstrap 5
-* keeps background, border and corner radius, so an opened submenu is drawn as a white box
-* on top of the navbar background. The panel is reset through the dropdown's own custom
-* properties, and the entries are indented by one level instead: navbar-nav sets a
-* horizontal padding of 0 on the nav-link, so the item padding alone creates the indent.
+* Below the expand breakpoint the dropdown menus are positioned statically inside the
+* vertical menu flow. Their panel styling is reset there, so that an opened submenu is not
+* drawn as a white box on top of the navbar background, and the entries are indented by
+* one level instead: the nav-link has a horizontal padding of 0, so the item padding alone
+* creates the indent.
 */
 @media(max-width: 767px){
-	.navbar .dropdown-menu {
-		--bs-dropdown-bg: transparent;
-		--bs-dropdown-border-width: 0;
-		--bs-dropdown-border-radius: 0;
-		--bs-dropdown-padding-y: 0;
-		--bs-dropdown-item-padding-x: 1em;
-		--bs-dropdown-link-hover-bg: transparent;
-		--bs-dropdown-link-active-bg: transparent;
+	.ui-navbar .ui-dropdown-menu {
+		--ui-dropdown-bg: transparent;
+		--ui-dropdown-border-width: 0;
+		--ui-dropdown-border-radius: 0;
+		--ui-dropdown-padding-y: 0;
+		--ui-dropdown-item-padding-x: 1em;
+		--ui-dropdown-link-hover-bg: transparent;
+		--ui-dropdown-link-active-bg: transparent;
 	}
 }
 
-.navbar .navbar-internet .nav-link {
+.ui-navbar .navbar-internet .ui-nav-link {
 	text-transform: uppercase;
 }
 
-.navbar .navbar-internet .person-profile-link {
+.ui-navbar .navbar-internet .person-profile-link {
 	display: block;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-.navbar .navbar-intranet .navbar-nav {
+.ui-navbar .navbar-intranet .ui-navbar-nav {
 	font-size: 0.9em;
 }
 
-.navbar .navbar-intranet .nav-link {
+.ui-navbar .navbar-intranet .ui-nav-link {
 	font-weight: 500;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;

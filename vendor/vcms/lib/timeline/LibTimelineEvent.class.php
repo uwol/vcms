@@ -105,13 +105,13 @@ class LibTimelineEvent
         }
 
         $panelTypeClass = $this->isFullWidth() ? 'full-width' : 'with-badge';
-        $retstr .= '<div class="timeline-panel ' .$panelTypeClass. ' card mb-2">';
+        $retstr .= '<div class="timeline-panel ' .$panelTypeClass. ' ui-card mb-2">';
 
         /*
         * heading
         */
-        $retstr .= '<div class="card-header">';
-        $retstr .= '<h3 class="card-title mb-0">';
+        $retstr .= '<div class="ui-card-header">';
+        $retstr .= '<h3 class="ui-card-title mb-0">';
 
         if ($this->datetime != '') {
             $retstr .= '<time datetime="' .$libTime->formatUtcString($this->datetime). '">';
@@ -135,22 +135,22 @@ class LibTimelineEvent
         /*
         * body
         */
-        $retstr .= '<div class="card-body">';
+        $retstr .= '<div class="ui-card-body">';
 
         // description
-        $retstr .= '<div class="row">';
+        $retstr .= '<div class="grid grid-cols-12 gap-x-6">';
 
         $hasPersonColumn = ($this->authorId != '' && !$this->hideAuthorSignature)
                 || ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature);
 
         if ($this->description != '') {
-            $retstr .= $hasPersonColumn ? '<div class="col-12 col-sm-9">' : '<div class="col-12">';
+            $retstr .= $hasPersonColumn ? '<div class="col-span-12 sm:col-span-9">' : '<div class="col-span-12">';
             $retstr .= trim((string) $this->description);
             $retstr .= '</div>';
         }
 
         if ($hasPersonColumn) {
-            $retstr .= '<div class="d-none d-sm-block col-sm-3">';
+            $retstr .= '<div class="hidden sm:block col-span-12 sm:col-span-3">';
 
             if ($this->authorId != '' && !$this->hideAuthorSignature) {
                 $retstr .= $libPerson->getSignature($this->authorId);

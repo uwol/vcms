@@ -80,8 +80,8 @@ echo '<h1>Neues Passwort anfordern</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=password" method="post">';
 echo '<fieldset>';
 

@@ -115,7 +115,7 @@ class LibString
             if (count($libGlobal->notificationTexts) > 0) {
                 $notificationTexts = array_map([$this, 'protectXSS'], $libGlobal->notificationTexts);
 
-                return '<div class="alert alert-success" role="alert">'. implode('<br />', $notificationTexts). '</div>';
+                return '<div class="ui-alert ui-alert-success" role="alert">'. implode('<br />', $notificationTexts). '</div>';
             }
         }
     }
@@ -128,7 +128,7 @@ class LibString
             if (count($libGlobal->errorTexts) > 0) {
                 $errorTexts = array_map([$this, 'protectXSS'], $libGlobal->errorTexts);
 
-                return '<div class="alert alert-danger" role="alert">' . implode('<br />', $errorTexts) . '</div>';
+                return '<div class="ui-alert ui-alert-danger" role="alert">' . implode('<br />', $errorTexts) . '</div>';
             }
         }
     }

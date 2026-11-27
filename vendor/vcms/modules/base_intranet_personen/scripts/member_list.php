@@ -34,15 +34,15 @@ echo '<h1>' .$libConfig->verbindungName. ' - Die Mitglieder</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=intranet_mitglied_listelebende" method="post">';
-echo '<fieldset class="d-flex flex-wrap align-items-center gap-2">';
+echo '<fieldset class="flex flex-wrap items-center gap-2">';
 echo '<div>';
-echo '<label for="searchterm" class="visually-hidden">Suchbegriff</label>';
-echo '<input type="text" id="searchterm" name="searchterm" class="form-control w-auto" placeholder="Suchbegriff" />';
+echo '<label for="searchterm" class="sr-only">Suchbegriff</label>';
+echo '<input type="text" id="searchterm" name="searchterm" class="ui-form-control w-auto" placeholder="Suchbegriff" />';
 echo '</div> ';
-echo '<button type="submit" class="btn btn-outline-secondary"><i class="fa fa-search" aria-hidden="true"></i> Suchen</button>';
+echo '<button type="submit" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-search" aria-hidden="true"></i> Suchen</button>';
 echo '</fieldset>';
 echo '</form>';
 echo '</div>';
@@ -104,7 +104,7 @@ else {
 
     if ($count > 0) {
         echo '<h2>Mitglieder ohne Zuordnung</h2>';
-        echo '<p class="mb-4">Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
+        echo '<p class="mb-6">Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
 
         $stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "" OR gruppe IS NULL ORDER BY name');
         printPersons($stmt);

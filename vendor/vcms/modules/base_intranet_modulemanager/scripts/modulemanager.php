@@ -43,10 +43,10 @@ if (isset($_POST['action'])) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<p class="mb-4"><a href="index.php?pid=modules" class="btn btn-outline-secondary" role="button">Module zeigen</a></p>';
+    echo '<p class="mb-6"><a href="index.php?pid=modules" class="ui-btn ui-btn-outline-secondary" role="button">Module zeigen</a></p>';
 } else {
-    echo '<p class="mb-4">Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen.</p>';
-    echo '<p class="mb-4">Auto-Update: <a href="index.php?pid=configuration">';
+    echo '<p class="mb-6">Das VCMS besteht aus einer Engine und mehreren Modulen, die auf dieser Seite aktualisiert werden können. Die folgende Liste zeigt die im System installierten sowie die im Repository verfügbaren Versionen.</p>';
+    echo '<p class="mb-6">Auto-Update: <a href="index.php?pid=configuration">';
 
     if ($libGenericStorage->loadValue('base_core', 'auto_update')) {
         echo 'aktiviert';
@@ -56,10 +56,10 @@ if (isset($_POST['action'])) {
 
     echo '</a></p>';
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
-    echo '<table class="table table-sm table-striped table-hover">';
+    echo '<table class="ui-table ui-table-sm ui-table-striped ui-table-hover">';
     echo '<thead>';
     echo '<tr>';
     echo '<th>Modulname</th><th>Status</th>';
@@ -152,7 +152,7 @@ if (isset($_POST['action'])) {
 
         if ($key != 'engine') {
             if (!$engineIsOld && !$libModuleHandler->moduleIsAvailable($key)) {
-                echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
+                echo '<form method="post" action="index.php?pid=modules" class="inline" onsubmit="return confirm(\'Willst Du das Modul wirklich installieren?\')">';
                 echo '<input type="hidden" name="action" value="installModule" />';
                 echo '<input type="hidden" name="module" value="' .$libString->protectXSS((string) $key). '" />';
                 echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
@@ -166,7 +166,7 @@ if (isset($_POST['action'])) {
         echo '<td class="tool-column">';
 
         if ($engineIsOld && $key == 'engine') {
-            echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
+            echo '<form method="post" action="index.php?pid=modules" class="inline" onsubmit="return confirm(\'Willst Du die Engine wirklich aktualisieren?\')">';
             echo '<input type="hidden" name="action" value="updateEngine" />';
             echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-cloud-download" aria-hidden="true"></i></button>';
             echo '</form>';
@@ -177,7 +177,7 @@ if (isset($_POST['action'])) {
                 $newVersion = (float) $value;
 
                 if (!$engineIsOld && $newVersion > $actualVersion) {
-                    echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
+                    echo '<form method="post" action="index.php?pid=modules" class="inline" onsubmit="return confirm(\'Willst Du das Modul wirklich aktualisieren?\')">';
                     echo '<input type="hidden" name="action" value="installModule" />';
                     echo '<input type="hidden" name="module" value="' .$libString->protectXSS((string) $key). '" />';
                     echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-cloud-download" aria-hidden="true"></i></button>';
@@ -198,7 +198,7 @@ if (isset($_POST['action'])) {
                 $actualVersion = (float) $module->getVersion();
                 $newVersion = (float) $value;
 
-                echo '<form method="post" action="index.php?pid=modules" class="d-inline" onsubmit="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
+                echo '<form method="post" action="index.php?pid=modules" class="inline" onsubmit="return confirm(\'Willst Du das Modul wirklich deinstallieren?\')">';
                 echo '<input type="hidden" name="action" value="uninstallModule" />';
                 echo '<input type="hidden" name="module" value="' .$libString->protectXSS((string) $key). '" />';
                 echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';

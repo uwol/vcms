@@ -127,7 +127,7 @@ if ($libAuth->isLoggedin()) {
     *
     */
     if ($membershipRow['mitglied'] != '' && $membershipRow['verein'] != '') {
-        echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_memberships" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+        echo '<form class="mb-6" method="post" action="index.php?pid=intranet_admin_memberships" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="delete" />';
         echo '<input type="hidden" name="mitglied" value="' .$membershipRow['mitglied']. '" />';
         echo '<input type="hidden" name="verein" value="' .$membershipRow['verein']. '" />';
@@ -146,8 +146,8 @@ if ($libAuth->isLoggedin()) {
         $extraActionParam = '&amp;action=update';
     }
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_membership' .$extraActionParam. '" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="verein" value="' .$membershipRow['verein']. '" />';

@@ -70,9 +70,9 @@ if ($libEvent->isFacebookEvent($row)) {
         $eventAttendingCount = isset($eventObject['attending_count']) ? $eventObject['attending_count'] : 0;
         $eventInterestedCount = isset($eventObject['interested_count']) ? $eventObject['interested_count'] : 0;
 
-        echo '<div class="card">';
+        echo '<div class="ui-card">';
         // no card-body here!
-        echo '<div class="card card-img">';
+        echo '<div class="ui-card ui-card-img">';
 
         echo '<div class="img-frame">';
         echo '<a href="' .$libString->protectXss($eventUrl). '">';
@@ -80,10 +80,10 @@ if ($libEvent->isFacebookEvent($row)) {
         echo '</a>';
         echo '</div>';
 
-        echo '<div class="card-body">';
-        echo '<div class="d-flex align-items-start">';
+        echo '<div class="ui-card-body">';
+        echo '<div class="flex items-start">';
 
-        echo '<div class="flex-shrink-0" style="text-align:center">';
+        echo '<div class="shrink-0" style="text-align:center">';
         echo '<span style="font-size:32px;line-height:32px">' .$libTime->formatDayString($row['datum']). '</span><br />';
 
         $monatName = $libTime->getMonth($libTime->formatMonthString($row['datum']));
@@ -93,7 +93,7 @@ if ($libEvent->isFacebookEvent($row)) {
         echo '<span style="font-size:12px;line-height:12px;color:#e34e60">' .$monatNameUpper. '</span>';
         echo '</div>';
 
-        echo '<div class="flex-grow-1 ms-3">';
+        echo '<div class="grow ms-4">';
 
         echo '<h3 class="mb-0 mt-0" style="font-weight:bold;font-size:14px">';
         echo '<a href="' .$libString->protectXss($eventUrl). '" style="color:black">' .$libString->protectXss($row['titel']). '</a>';

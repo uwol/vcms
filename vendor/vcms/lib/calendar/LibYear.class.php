@@ -69,7 +69,7 @@ class LibYear
 
         foreach ($this->months as $month) {
             $hasEvents = $month->hasEvents($eventSet);
-            $hiddenClass = $hasEvents ? '' : ' d-none d-sm-block';
+            $hiddenClass = $hasEvents ? '' : ' hidden sm:block';
 
             $retstr .= '<div class="calendar-month-name reveal' .$hiddenClass. '">';
             $retstr .= '<h2>' . $monthNames[$month->getNumber() - 1]. ' ' .$this->number. '</h2>';

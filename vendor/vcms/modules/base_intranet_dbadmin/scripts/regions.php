@@ -59,10 +59,10 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
-    echo '<table class="table table-sm table-striped table-hover">';
+    echo '<table class="ui-table ui-table-sm ui-table-striped ui-table-hover">';
     echo '<thead>';
     echo '<tr><th>Region</th><th>Anzahl Personen</th><th></th></tr>';
     echo '</thead>';
@@ -81,7 +81,7 @@ if ($libAuth->isLoggedin()) {
         echo '<td>' .$libString->protectXSS($row['bezeichnung']). '</td>';
         echo '<td>' .$count. ' Personen</td>';
         echo '<td class="tool-column">';
-        echo '<form method="post" action="index.php?pid=intranet_admin_regions" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+        echo '<form method="post" action="index.php?pid=intranet_admin_regions" class="inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="delete" />';
         echo '<input type="hidden" name="id" value="' .$row['id']. '" />';
         echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
@@ -98,8 +98,8 @@ if ($libAuth->isLoggedin()) {
 
     echo '<h2>Neue Region anlegen</h2>';
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_regions" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="action" value="create" />';

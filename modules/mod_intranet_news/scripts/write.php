@@ -24,16 +24,16 @@ if (!is_object($libGlobal) || !$libAuth->isLoggedin()) {
 
 echo '<h1>Neuer Nachrichtenbeitrag</h1>';
 
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=intranet_news" method="post">';
 echo '<fieldset>';
 
 $libForm->printTextarea('text', 'Nachricht', '');
 
-echo '<div class="row mb-3">';
-echo '<label for="category" class="col-sm-3 col-form-label">Kategorie</label>';
-echo '<div class="col-sm-9"><select id="category" name="category" class="form-select">';
+echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+echo '<label for="category" class="ui-col-form-label col-span-12 sm:col-span-3">Kategorie</label>';
+echo '<div class="col-span-12 sm:col-span-9"><select id="category" name="category" class="ui-form-select">';
 
 $stmt = $libDb->prepare('SELECT * FROM mod_news_kategorie ORDER BY bezeichnung');
 $stmt->execute();

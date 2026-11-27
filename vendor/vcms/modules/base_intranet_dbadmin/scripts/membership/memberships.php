@@ -42,19 +42,19 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getNotificationBoxText();
 
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
-    echo '<div class="btn-toolbar">';
-    echo '<a href="index.php?pid=intranet_admin_membership&amp;action=blank" class="btn btn-outline-secondary">Eine neue Vereinsmitgliedschaft anlegen</a>';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
+    echo '<div class="flex flex-wrap justify-start">';
+    echo '<a href="index.php?pid=intranet_admin_membership&amp;action=blank" class="ui-btn ui-btn-outline-secondary">Eine neue Vereinsmitgliedschaft anlegen</a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
 
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
-    echo '<table class="table table-sm table-striped table-hover">';
+    echo '<table class="ui-table ui-table-sm ui-table-striped ui-table-hover">';
     echo '<thead>';
     echo '<tr><th>Verein</th><th>Mitglied</th><th></th></tr>';
     echo '</thead>';

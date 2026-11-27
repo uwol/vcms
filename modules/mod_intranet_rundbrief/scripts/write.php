@@ -88,20 +88,20 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" enctype="multipart/form-data" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');">';
 echo '<fieldset>';
 
-echo '<div class="row mb-3">';
-echo '<label class="col-sm-3 col-form-label">Adressaten</label>';
-echo '<div class="col-sm-4">';
+echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+echo '<label class="ui-col-form-label col-span-12 sm:col-span-3">Adressaten</label>';
+echo '<div class="col-span-12 sm:col-span-4">';
 
-echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="fuchsia" checked="checked"><label class="form-check-label">';
+echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="fuchsia" checked="checked"><label class="ui-form-check-label">';
 echo $countFuechse. ' Füchse &amp; Fuchsmajor';
 echo '</label></div>';
 
-echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="burschen" checked="checked"><label class="form-check-label">';
+echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="burschen" checked="checked"><label class="ui-form-check-label">';
 echo $countBurschen. ' Burschen';
 echo '</label></div>';
 
@@ -111,30 +111,30 @@ if ($libGenericStorage->loadValueInCurrentModule('preselect_int_ahah') == 1) {
     $ahahInterestedChecked = 'checked="checked"';
 }
 
-echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="ahah_interested" ' .$ahahInterestedChecked. '><label class="form-check-label">';
+echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="ahah_interested" ' .$ahahInterestedChecked. '><label class="ui-form-check-label">';
 echo $countParticularlyInterestedAhah. ' besonders interessierte alte Herren';
 echo '</label></div>';
 
-echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="ahah"><label class="form-check-label">';
+echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="ahah"><label class="ui-form-check-label">';
 echo $countAhah. ' alte Herren';
 echo '</label></div>';
 
 echo '</div>';
-echo '<div class="col-sm-4">';
+echo '<div class="col-span-12 sm:col-span-4">';
 
-echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="residents"><label class="form-check-label">';
+echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="residents"><label class="ui-form-check-label">';
 echo $countResidents. ' Hausbewohner';
 echo '</label></div>';
 
-echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="couleurdamen"><label class="form-check-label">';
+echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="couleurdamen"><label class="ui-form-check-label">';
 echo $countCouleurdamen. ' Couleurdamen';
 echo '</label></div>';
 
-echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="gattinnen_interested"><label class="form-check-label">';
+echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="gattinnen_interested"><label class="ui-form-check-label">';
 echo $countParticularlyInterestedGattinnen. ' besonders interessierte Gattinnen';
 echo '</label></div>';
 
-echo '<div class="form-check"><input class="form-check-input" type="checkbox" name="gattinnen"><label class="form-check-label">';
+echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="gattinnen"><label class="ui-form-check-label">';
 echo $countGattinnen. ' Gattinnen';
 echo '</label></div>';
 

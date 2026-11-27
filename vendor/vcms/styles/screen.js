@@ -60,7 +60,7 @@ function adjustFacebookPagePluginsSrc(){
 }
 
 function configureNavigation(){
-	var navbar = document.querySelector(".navbar");
+	var navbar = document.querySelector(".ui-navbar");
 	var content = document.getElementById("content");
 
 	if (navbar && content) {
@@ -69,7 +69,7 @@ function configureNavigation(){
 }
 
 function toggleNavbarState(){
-	var navbar = document.querySelector("nav.navbar");
+	var navbar = document.querySelector("nav.ui-navbar");
 
 	if (navbar) {
 		var scrolled = window.scrollY > 75;
@@ -107,6 +107,123 @@ function reveal(){
 }
 
 
+/*
+* Collapse: a button with data-ui-toggle="collapse" shows and hides the elements selected by
+* its data-ui-target. The height is animated from 0 to the content height and back.
+*/
+function toggleCollapse(button){
+	var targets = document.querySelectorAll(button.getAttribute("data-ui-target"));
+	var expand = button.getAttribute("aria-expanded") !== "true";
+
+	button.setAttribute("aria-expanded", expand ? "true" : "false");
+
+	targets.forEach(function(target) {
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			target.classList.toggle("show", expand);
+			return;
+		}
+
+		var startHeight = expand ? 0 : target.getBoundingClientRect().height;
+
+		target.classList.add("show");
+		var endHeight = expand ? target.scrollHeight : 0;
+
+		target.classList.add("ui-collapsing");
+		target.style.height = startHeight + "px";
+		// Reading the height applies the start height before the transition starts.
+		target.getBoundingClientRect();
+		target.style.height = endHeight + "px";
+
+		var finished = false;
+
+		var finish = function() {
+			if (finished) {
+				return;
+			}
+
+			finished = true;
+			target.classList.remove("ui-collapsing");
+			target.classList.toggle("show", expand);
+			target.style.height = "";
+		};
+
+		target.addEventListener("transitionend", function onEnd(event) {
+			if (event.target === target) {
+				target.removeEventListener("transitionend", onEnd);
+				finish();
+			}
+		});
+
+		// Fallback, in case no transitionend is fired, e.g. for an element without transition.
+		setTimeout(finish, 400);
+	});
+}
+
+/*
+* Dropdown: a link with data-ui-toggle="dropdown" opens the next .ui-dropdown-menu. A click
+* outside or Escape closes it again.
+*/
+function closeDropdowns(except){
+	document.querySelectorAll('[data-ui-toggle="dropdown"].show').forEach(function(toggle) {
+		if (toggle === except) {
+			return;
+		}
+
+		toggle.classList.remove("show");
+		toggle.setAttribute("aria-expanded", "false");
+
+		var menu = toggle.parentElement.querySelector(".ui-dropdown-menu");
+
+		if (menu) {
+			menu.classList.remove("show");
+		}
+	});
+}
+
+function toggleDropdown(toggle){
+	var menu = toggle.parentElement.querySelector(".ui-dropdown-menu");
+	var open = !toggle.classList.contains("show");
+
+	closeDropdowns(toggle);
+
+	toggle.classList.toggle("show", open);
+	toggle.setAttribute("aria-expanded", open ? "true" : "false");
+
+	if (menu) {
+		menu.classList.toggle("show", open);
+	}
+}
+
+function configureToggles(){
+	document.addEventListener("click", function(event) {
+		var element = event.target instanceof Element ? event.target : null;
+		var toggle = element ? element.closest("[data-ui-toggle]") : null;
+
+		if (toggle && toggle.getAttribute("data-ui-toggle") === "collapse") {
+			event.preventDefault();
+			toggleCollapse(toggle);
+		} else if (toggle && toggle.getAttribute("data-ui-toggle") === "dropdown") {
+			event.preventDefault();
+			toggleDropdown(toggle);
+		} else {
+			closeDropdowns(null);
+		}
+	});
+
+	document.addEventListener("keydown", function(event) {
+		if (event.key === "Escape") {
+			var open = document.querySelector('[data-ui-toggle="dropdown"].show');
+
+			closeDropdowns(null);
+
+			if (open) {
+				open.focus();
+			}
+		}
+	});
+}
+
+
 function adjustElementDimensions(){
 	adjustFacebookPagePluginsSrc();
 	configureNavigation();
@@ -118,6 +235,7 @@ function adjustElementDimensions(){
 
 function initializeScreen(){
 	animateLasteInsertId();
+	configureToggles();
 	configureScrolling();
 	reveal();
 

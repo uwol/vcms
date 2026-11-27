@@ -9,20 +9,20 @@ echo '    <meta name="viewport" content="width=device-width,initial-scale=1,shri
 echo '    <title>' .$libString->protectXSS($libGlobal->getPageTitle()). '</title>' . PHP_EOL;
 echo '    <meta name="description" content="' .$libConfig->seiteBeschreibung. '" />' . PHP_EOL;
 echo '    <meta name="keywords" content="' .$libConfig->seiteKeywords. '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/bootstrap/css/bootstrap.min.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/fonts/font-awesome/css/font-awesome.min.css'). '" />' . PHP_EOL;
 echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/fonts/libre-franklin/css/libre-franklin.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/bootstrap-override.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/screen.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/calendar/calendar.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/event/event.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/image/image.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/navigation/navigation.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/person/person.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/timeline/timeline.css'). '" />' . PHP_EOL;
-echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('custom/styles/screen.css'). '" />' . PHP_EOL;
+echo '    <link rel="stylesheet" href="' .$libString->addCacheVersion('vendor/vcms/styles/vcms.css'). '" />' . PHP_EOL;
+
+/*
+* Unlayered styles would win over all layers of vcms.css. Font Awesome is therefore imported
+* into the layer base, so that the components can adjust the icons, and the installation
+* styles into the layer components, so that they override the components but not the
+* utilities.
+*/
+echo '    <style>' . PHP_EOL;
+echo '      @import url("' .$libString->addCacheVersion('vendor/fonts/font-awesome/css/font-awesome.min.css'). '") layer(base);' . PHP_EOL;
+echo '      @import url("' .$libString->addCacheVersion('custom/styles/screen.css'). '") layer(components);' . PHP_EOL;
+echo '    </style>' . PHP_EOL;
 echo '    <link rel="canonical" href="' .$libString->protectXSS($libGlobal->getPageCanonicalUrl()). '"/>' . PHP_EOL;
-echo '    <script src="' .$libString->addCacheVersion('vendor/bootstrap/js/bootstrap.bundle.min.js'). '"></script>' . PHP_EOL;
 echo '    <script src="' .$libString->addCacheVersion('vendor/vcms/styles/gallery/modal.js'). '"></script>' . PHP_EOL;
 echo '    <script src="' .$libString->addCacheVersion('vendor/vcms/styles/screen.js'). '"></script>' . PHP_EOL;
 
@@ -69,5 +69,5 @@ $libMenuRenderer->printNavbar($libMenuInternet, $libMenuIntranet, $libMenuAdmini
 
 if ($libGlobal->page->isContainerEnabled()) {
     echo '    <main id="content">' . PHP_EOL;
-    echo '      <div id="container" class="container">' . PHP_EOL;
+    echo '      <div id="container" class="ui-container">' . PHP_EOL;
 }

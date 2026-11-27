@@ -1,3 +1,9 @@
-.navbar.affix-top {
-	background-color: rgba(255, 255, 255, 0.7);
+/*
+* Optional transparent navbar on top of a header image. The rules are placed in the layer
+* components of vcms.css, so that they override the navigation.
+*/
+@layer components {
+	.ui-navbar.affix-top {
+		background-color: rgba(255, 255, 255, 0.7);
+	}
 }
