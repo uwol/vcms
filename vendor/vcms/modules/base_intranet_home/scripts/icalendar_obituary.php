@@ -35,7 +35,8 @@ if (isset($_GET['user']) &&
 
     $calendar = new vcms\LibICalendar();
 
-    $stmt = $libDb->prepare("SELECT id, tod_datum FROM base_person WHERE gruppe = 'T' AND tod_datum != '' AND tod_datum != '0000-00-00' AND tod_datum IS NOT NULL");
+    // Compare with 1000-01-01, which excludes NULL and legacy zero dates; an empty string or a zero date literal fails in strict sql_mode
+    $stmt = $libDb->prepare("SELECT id, tod_datum FROM base_person WHERE gruppe = 'T' AND tod_datum >= '1000-01-01'");
     $stmt->execute();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

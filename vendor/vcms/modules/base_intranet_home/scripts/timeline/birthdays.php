@@ -54,7 +54,8 @@ function addBirthdayTimelineEvents($year, $period)
 {
     global $libDb, $libTime;
 
-    $stmt = $libDb->prepare("SELECT id, datum_geburtstag FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND datum_geburtstag != '' AND datum_geburtstag != '0000-00-00'");
+    // Compare with 1000-01-01, which excludes NULL and legacy zero dates; an empty string or a zero date literal fails in strict sql_mode
+    $stmt = $libDb->prepare("SELECT id, datum_geburtstag FROM base_person WHERE (gruppe='P' OR gruppe='B' OR gruppe='F') AND datum_geburtstag >= '1000-01-01'");
     $stmt->execute();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
