@@ -243,6 +243,11 @@ A typical module is structured as follows:
   `2xl` 1400px. The spacing scale is Tailwind's: `mb-4` is 1rem, `mb-6` 1.5rem, `mb-12` 3rem.
 - A grid row is `grid grid-cols-12 gap-x-6`; every direct child carries a column span, e.g.
   `col-span-12 sm:col-span-3`, and optionally a start column, e.g. `sm:col-start-4`.
+- The eleven gaps of a grid row take 264px whether or not all columns are used, unlike the
+  Bootstrap gutters, which existed per column. A grid row in a narrow container (timeline panel,
+  card, narrow column) overflows. Start it at the breakpoint where its columns appear
+  (`sm:grid sm:grid-cols-12 sm:gap-x-6`), stack nested rows with `sm:block`, or do without a
+  grid row for a single full-width element.
 - Tailwind only emits classes that occur literally in the scanned files (`@source` in
   `src/tailwind.css`). Never build class names by concatenation (`'sm:col-span-' . $n`); use a
   lookup of complete class names as `LibForm` does. Markup outside the repository (the `custom/`

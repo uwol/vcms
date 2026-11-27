@@ -137,8 +137,11 @@ class LibTimelineEvent
         */
         $retstr .= '<div class="ui-card-body">';
 
-        // description
-        $retstr .= '<div class="grid grid-cols-12 gap-x-6">';
+        /*
+        * Description. The grid starts at sm, where the person column appears: on phones the
+        * panel is narrower than the eleven gaps of a twelve-column grid (264px) and would overflow.
+        */
+        $retstr .= '<div class="sm:grid sm:grid-cols-12 sm:gap-x-6">';
 
         $hasPersonColumn = ($this->authorId != '' && !$this->hideAuthorSignature)
                 || ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature);

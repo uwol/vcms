@@ -64,7 +64,7 @@ $description .= '<div class="col-span-12 sm:col-span-1"></div>';
 $description .= '<div class="col-span-12 sm:col-span-2">';
 
 if ($row['senior']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['senior']. '">';
@@ -89,7 +89,7 @@ $description .= '</div>';
 $description .= '<div class="col-span-12 sm:col-span-2">';
 
 if ($row['consenior']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['consenior']. '">';
@@ -114,7 +114,7 @@ $description .= '</div>';
 $description .= '<div class="col-span-12 sm:col-span-2">';
 
 if ($row['fuchsmajor']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['fuchsmajor']. '">';
@@ -139,7 +139,7 @@ $description .= '</div>';
 $description .= '<div class="col-span-12 sm:col-span-2">';
 
 if ($row['scriptor']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['scriptor']. '">';
@@ -164,7 +164,7 @@ $description .= '</div>';
 $description .= '<div class="col-span-12 sm:col-span-2">';
 
 if ($row['quaestor']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['quaestor']. '">';
