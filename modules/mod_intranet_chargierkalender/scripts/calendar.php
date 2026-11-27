@@ -282,12 +282,12 @@ class LibChargierCalendarEvent
 
             if ($this->isRegistered) {
                 $retstr .= '<input type="hidden" name="changeRegistrationState" value="unregister" />';
-                $retstr .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
+                $retstr .= '<button type="submit" class="ui-btn ui-btn-outline-secondary ui-btn-sm">';
                 $retstr .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
                 $retstr .= '</button>';
             } else {
                 $retstr .= '<input type="hidden" name="changeRegistrationState" value="register" />';
-                $retstr .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
+                $retstr .= '<button type="submit" class="ui-btn ui-btn-outline-secondary ui-btn-sm">';
                 $retstr .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
                 $retstr .= '</button>';
             }

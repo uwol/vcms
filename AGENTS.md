@@ -26,9 +26,10 @@ and a download area.
       `calendar`, `filesystem`, `genealogy`, `menu`, `module`, `timeline`
     - `modules/base_*` -- Base modules shipped with the engine; they cannot be uninstalled
     - `layout/` -- `header.php` and `footer.php`, wrapped around every page by `index.php`
-    - `styles/` -- Engine CSS and JS, including `bootstrap-override.css`
+    - `styles/` -- Engine CSS and JS. `src/tailwind.css` is the Tailwind entry point, compiled by
+      `bin/build-css` into the committed `vcms.css`
     - `install/` -- Engine install and update scripts
-  - all other directories (`bootstrap`, `phpmailer`, `phpass`, `pear`, `httpful`,
+  - all other directories (`phpmailer`, `phpass`, `pear`, `httpful`,
     `chart`, `fonts`) -- third-party code.
     Keep the upstream formatting, do not edit, replace whole releases instead.
 - `index.php` -- Front controller for pages, selected by the request parameter `pid`
@@ -44,9 +45,11 @@ and a download area.
 - **PHP**: 8.4+
 - **MySQL**: 5+
 - **ImageMagick or GDlib**: required for photo galleries
-- **Tooling**: `brew install php php-cs-fixer phpstan`
+- **Tooling**: `brew install php php-cs-fixer phpstan tailwindcss`
 
-There is no build step, no dependency installation and no automated test suite. Verification is
+Installations have no build step. The only build artifact is the stylesheet
+`vendor/vcms/styles/vcms.css`, which `bin/build-css` compiles with the Tailwind CLI and which is
+committed. There is no dependency installation and no automated test suite. Verification is
 `bin/lint`, `bin/analyse` and manual testing in the browser against a local installation.
 
 
@@ -54,14 +57,18 @@ There is no build step, no dependency installation and no automated test suite. 
 
 ```
 bin/format
+bin/build-css
 bin/lint
 bin/analyse
 ```
 
 1. `bin/format` formats VCMS' own code according to `.php-cs-fixer.dist.php` (PSR-12).
-2. `bin/lint` checks syntax (`php -l`) and code style without changing files.
-3. `bin/analyse` checks semantics with PHPStan (`phpstan.dist.neon`).
-4. Bump the affected versions (see *Versioning*).
+2. `bin/build-css` compiles `vendor/vcms/styles/vcms.css`. Run it after changing classes in the
+   markup or any CSS below `vendor/vcms/styles/`.
+3. `bin/lint` checks syntax (`php -l`), code style and that `vcms.css` is up to date, without
+   changing files.
+4. `bin/analyse` checks semantics with PHPStan (`phpstan.dist.neon`).
+5. Bump the affected versions (see *Versioning*).
 
 `bin/php-files` prints all PHP files belonging to VCMS itself and is kept in sync with the finder
 in `.php-cs-fixer.dist.php`. When adding a new top-level PHP file, add it to both.
@@ -224,13 +231,32 @@ A typical module is structured as follows:
 
 ### Frontend
 
-- Bootstrap 5 markup (`card`, `col-sm-*`, `mb-*`), Font Awesome 4.
-- JavaScript is plain vanilla JS, there is no jQuery. The only JS libraries are the Bootstrap
-  bundle, ScrollReveal and Chart.js.
-- Bootstrap 4/5 spacing utilities (`mb-*`, `mt-*`, `pb-*`, `pt-*`, `d-inline`) are backported in
-  `vendor/vcms/styles/bootstrap-override.css` and may be used.
-- Use as few own CSS rules as possible and as many Bootstrap classes as possible. Engine styles
-  belong in `vendor/vcms/styles/`, installation styles in `custom/styles/screen.css`.
+- Tailwind CSS 4 utilities for layout, spacing and typography, Font Awesome 4 for icons.
+- Components that consist of several states or child elements are `ui-*` classes in
+  `vendor/vcms/styles/src/components.css`: `ui-container`, `ui-btn` (`ui-btn-outline-secondary`,
+  `ui-btn-secondary`, `ui-btn-sm`), `ui-card` (`ui-card-body`, `ui-card-header`, `ui-card-title`,
+  `ui-card-img`), `ui-alert-*`, `ui-badge`, `ui-table-*`, `ui-form-control`, `ui-form-select`,
+  `ui-form-check-*`, `ui-col-form-label`, `ui-progress`, `ui-dropdown-*`, `ui-collapse`,
+  `ui-modal-*`, `ui-carousel-*`. The navbar classes `ui-navbar*` and `ui-nav-link` live in
+  `navigation/navigation.css`. Do not add a `ui-*` class for something utilities express.
+- The breakpoints are the former Bootstrap ones: `sm` 576px, `md` 768px, `lg` 992px, `xl` 1200px,
+  `2xl` 1400px. The spacing scale is Tailwind's: `mb-4` is 1rem, `mb-6` 1.5rem, `mb-12` 3rem.
+- A grid row is `grid grid-cols-12 gap-x-6`; every direct child carries a column span, e.g.
+  `col-span-12 sm:col-span-3`, and optionally a start column, e.g. `sm:col-start-4`.
+- Tailwind only emits classes that occur literally in the scanned files (`@source` in
+  `src/tailwind.css`). Never build class names by concatenation (`'sm:col-span-' . $n`); use a
+  lookup of complete class names as `LibForm` does. Markup outside the repository (the `custom/`
+  directories of modules, third-party modules) can only rely on the utilities of the
+  `@source inline()` safelist.
+- Layers: `base` (element defaults replacing the Bootstrap reboot), `components` (`ui-*`, the
+  engine styles, then `custom/styles/screen.css` and module stylesheets, which wrap their rules in
+  `@layer components`), `utilities`. Utilities win over all component styles, as the former
+  Bootstrap utilities did with `!important`.
+- JavaScript is plain vanilla JS, there is no jQuery. The only JS library is Chart.js. Collapse
+  and dropdown are toggled by `data-ui-toggle` in `screen.js`, the gallery uses a native
+  `<dialog>`.
+- Use as few own CSS rules as possible and as many utilities as possible. Engine styles belong in
+  `vendor/vcms/styles/`, installation styles in `custom/styles/screen.css`.
 - Forms MUST be built with the `LibForm::print*` helpers (`printTextInput`, `printTextarea`,
   `printDateInput`, `printMembersDropDownBox`, `printSubmitButton`, ...) so that markup and
   escaping stay consistent.

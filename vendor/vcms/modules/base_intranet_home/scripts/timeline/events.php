@@ -90,7 +90,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     * card card-img
     */
     if ($libGallery->hasPictures($row['id'], 1)) {
-        $description .= '<div class="card card-img mb-2">';
+        $description .= '<div class="ui-card ui-card-img mb-2">';
         $description .= '<div class="img-frame">';
         $description .= '<a href="index.php?pid=event&amp;id=' .$row['id']. '">';
         $description .= '<img src="api.php?iid=event_picture&amp;eventid=' .$row['id']. '&amp;id=' .$libGallery->getFirstVisiblePictureId($row['id'], 1). '" alt="" />';
@@ -109,12 +109,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
         if ($isRegistered) {
             $form .= '<input type="hidden" name="eventsChangeRegistrationState" value="unregister" />';
-            $form .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
+            $form .= '<button type="submit" class="ui-btn ui-btn-outline-secondary ui-btn-sm">';
             $form .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
             $form .= '</button>';
         } else {
             $form .= '<input type="hidden" name="eventsChangeRegistrationState" value="register" />';
-            $form .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
+            $form .= '<button type="submit" class="ui-btn ui-btn-outline-secondary ui-btn-sm">';
             $form .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
             $form .= '</button>';
         }

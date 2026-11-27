@@ -1,0 +1,861 @@
+/*
+* Component classes. Layout, spacing and typography are expressed with Tailwind utilities
+* in the markup; the ui-* classes below cover the components that consist of several
+* states or child elements and are repeated all over the engine and the modules. Their
+* metrics reproduce the former Bootstrap 5.3 components (https://getbootstrap.com, MIT
+* license) including the VCMS adjustments, so that the pages look as before.
+*/
+
+
+/*
+* Container
+*/
+.ui-container,
+.ui-container-fluid {
+	width: 100%;
+	padding-right: 0.75rem;
+	padding-left: 0.75rem;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@media (min-width: 576px) {
+	.ui-container {
+		max-width: 540px;
+	}
+}
+
+@media (min-width: 768px) {
+	.ui-container {
+		max-width: 720px;
+	}
+}
+
+@media (min-width: 992px) {
+	.ui-container {
+		max-width: 960px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.ui-container {
+		max-width: 1140px;
+	}
+}
+
+@media (min-width: 1400px) {
+	.ui-container {
+		max-width: 1320px;
+	}
+}
+
+
+/*
+* Button
+*/
+.ui-btn {
+	--ui-btn-padding-x: 0.75rem;
+	--ui-btn-padding-y: 0.375rem;
+	--ui-btn-font-size: 1rem;
+	--ui-btn-color: var(--color-body);
+	--ui-btn-bg: transparent;
+	--ui-btn-border-color: transparent;
+	--ui-btn-border-radius: var(--radius-md);
+	--ui-btn-hover-border-color: transparent;
+	display: inline-block;
+	padding: var(--ui-btn-padding-y) var(--ui-btn-padding-x);
+	font-size: var(--ui-btn-font-size);
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--ui-btn-color);
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	cursor: pointer;
+	user-select: none;
+	border: 1px solid var(--ui-btn-border-color);
+	border-radius: var(--ui-btn-border-radius);
+	background-color: var(--ui-btn-bg);
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ui-btn:hover {
+	color: var(--ui-btn-hover-color);
+	background-color: var(--ui-btn-hover-bg);
+	border-color: var(--ui-btn-hover-border-color);
+}
+
+.ui-btn:focus-visible {
+	color: var(--ui-btn-hover-color);
+	background-color: var(--ui-btn-hover-bg);
+	border-color: var(--ui-btn-hover-border-color);
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(var(--ui-btn-focus-shadow-rgb), 0.5);
+}
+
+.ui-btn.active,
+.ui-btn:first-child:active,
+:not(.ui-btn-check) + .ui-btn:active {
+	color: var(--ui-btn-active-color);
+	background-color: var(--ui-btn-active-bg);
+	border-color: var(--ui-btn-active-border-color);
+}
+
+.ui-btn:disabled,
+.ui-btn.disabled,
+fieldset:disabled .ui-btn {
+	color: var(--ui-btn-disabled-color);
+	pointer-events: none;
+	background-color: var(--ui-btn-disabled-bg);
+	border-color: var(--ui-btn-disabled-border-color);
+	opacity: 0.65;
+}
+
+.ui-btn-secondary {
+	--ui-btn-color: #fff;
+	--ui-btn-bg: var(--color-secondary);
+	--ui-btn-border-color: var(--color-secondary);
+	--ui-btn-hover-color: #fff;
+	--ui-btn-hover-bg: #5c636a;
+	--ui-btn-hover-border-color: #565e64;
+	--ui-btn-focus-shadow-rgb: 130, 138, 145;
+	--ui-btn-active-color: #fff;
+	--ui-btn-active-bg: #565e64;
+	--ui-btn-active-border-color: #51585e;
+	--ui-btn-disabled-color: #fff;
+	--ui-btn-disabled-bg: var(--color-secondary);
+	--ui-btn-disabled-border-color: var(--color-secondary);
+}
+
+.ui-btn-outline-secondary {
+	--ui-btn-color: var(--color-secondary);
+	--ui-btn-border-color: var(--color-secondary);
+	--ui-btn-hover-color: #fff;
+	--ui-btn-hover-bg: var(--color-secondary);
+	--ui-btn-hover-border-color: var(--color-secondary);
+	--ui-btn-focus-shadow-rgb: 108, 117, 125;
+	--ui-btn-active-color: #fff;
+	--ui-btn-active-bg: var(--color-secondary);
+	--ui-btn-active-border-color: var(--color-secondary);
+	--ui-btn-disabled-color: var(--color-secondary);
+	--ui-btn-disabled-bg: transparent;
+	--ui-btn-disabled-border-color: var(--color-secondary);
+}
+
+.ui-btn-sm {
+	--ui-btn-padding-y: 0.25rem;
+	--ui-btn-padding-x: 0.5rem;
+	--ui-btn-font-size: 0.875rem;
+	--ui-btn-border-radius: var(--radius-sm);
+}
+
+
+/*
+* Card
+*/
+.ui-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	margin-bottom: 1.5em;
+	overflow: hidden;
+	color: var(--color-body);
+	overflow-wrap: break-word;
+	background-color: var(--color-white);
+	background-clip: border-box;
+	border: 1px solid rgba(0, 0, 0, 0.175);
+	border-radius: var(--radius-md);
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12);
+}
+
+.ui-card > hr {
+	margin-right: 0;
+	margin-left: 0;
+}
+
+.ui-card-header {
+	padding: 1em;
+	margin-bottom: 0;
+	background-color: inherit;
+	border-bottom: 0;
+}
+
+.ui-card-header:first-child {
+	border-radius: calc(var(--radius-md) - 1px) calc(var(--radius-md) - 1px) 0 0;
+}
+
+.ui-card-body {
+	flex: 1 1 auto;
+	padding: 1em;
+	background-color: inherit;
+}
+
+.ui-card-title {
+	margin-bottom: 0.5rem;
+}
+
+.ui-card-header .ui-card-title {
+	font-weight: normal;
+	margin-top: 0;
+}
+
+/*
+* A card without frame around an image, used for photos and galleries. Images without
+* max-w-full are constrained to the card as well.
+*/
+.ui-card-img {
+	width: 100%;
+	padding: 0;
+	border-radius: calc(var(--radius-md) - 1px);
+	border: 0;
+	margin-bottom: 0;
+	box-shadow: none;
+}
+
+.ui-card-img > img,
+.ui-card-img > a > img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ui-card-img .ui-card-body h3 {
+	margin-top: 0;
+	font-weight: normal;
+}
+
+
+/*
+* Alert
+*/
+.ui-alert {
+	position: relative;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	color: inherit;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: var(--radius-md);
+}
+
+.ui-alert-success {
+	color: #0a3622;
+	background-color: #d1e7dd;
+	border-color: #a3cfbb;
+}
+
+.ui-alert-info {
+	color: #055160;
+	background-color: #cff4fc;
+	border-color: #9eeaf9;
+}
+
+.ui-alert-danger {
+	color: #58151c;
+	background-color: #f8d7da;
+	border-color: #f1aeb5;
+}
+
+
+/*
+* Badge
+*/
+.ui-badge {
+	display: inline-block;
+	padding: 0.35em 0.65em;
+	font-size: 0.75em;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: var(--radius-md);
+}
+
+.ui-badge:empty {
+	display: none;
+}
+
+.ui-btn .ui-badge {
+	position: relative;
+	top: -1px;
+}
+
+
+/*
+* Table
+*/
+.ui-table {
+	--ui-table-color-type: initial;
+	--ui-table-bg-type: initial;
+	--ui-table-color-state: initial;
+	--ui-table-bg-state: initial;
+	--ui-table-color: #000;
+	--ui-table-bg: var(--color-white);
+	--ui-table-accent-bg: transparent;
+	width: 100%;
+	margin-bottom: 1rem;
+	vertical-align: top;
+	border-color: var(--color-border);
+}
+
+.ui-table > :not(caption) > * > * {
+	padding: 0.5rem 0.5rem;
+	color: var(--ui-table-color-state, var(--ui-table-color-type, var(--ui-table-color)));
+	background-color: var(--ui-table-bg);
+	border-bottom-width: 1px;
+	box-shadow: inset 0 0 0 9999px var(--ui-table-bg-state, var(--ui-table-bg-type, var(--ui-table-accent-bg)));
+}
+
+.ui-table > tbody {
+	vertical-align: inherit;
+}
+
+.ui-table > thead {
+	vertical-align: bottom;
+}
+
+.ui-table-sm > :not(caption) > * > * {
+	padding: 0.25rem 0.25rem;
+}
+
+.ui-table-bordered > :not(caption) > * {
+	border-width: 1px 0;
+}
+
+.ui-table-bordered > :not(caption) > * > * {
+	border-width: 0 1px;
+}
+
+.ui-table-striped > tbody > tr:nth-of-type(odd) > * {
+	--ui-table-color-type: #000;
+	--ui-table-bg-type: rgba(0, 0, 0, 0.05);
+}
+
+.ui-table-hover > tbody > tr:hover > * {
+	--ui-table-color-state: #000;
+	--ui-table-bg-state: rgba(0, 0, 0, 0.075);
+}
+
+
+/*
+* Form controls
+*/
+.ui-col-form-label {
+	padding-top: calc(0.375rem + 1px);
+	padding-bottom: calc(0.375rem + 1px);
+	margin-bottom: 0;
+	font-size: inherit;
+	line-height: 1.5;
+}
+
+.ui-form-control {
+	display: block;
+	width: 100%;
+	padding: 0.375rem 0.75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--color-body);
+	appearance: none;
+	background-color: var(--color-white);
+	background-clip: padding-box;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ui-form-control[type="file"] {
+	overflow: hidden;
+}
+
+.ui-form-control[type="file"]:not(:disabled):not([readonly]) {
+	cursor: pointer;
+}
+
+.ui-form-control:focus {
+	color: var(--color-body);
+	background-color: var(--color-white);
+	border-color: #86b7fe;
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.ui-form-control::-webkit-date-and-time-value {
+	min-width: 85px;
+	height: 1.5em;
+	margin: 0;
+}
+
+.ui-form-control::-webkit-datetime-edit {
+	display: block;
+	padding: 0;
+}
+
+.ui-form-control::placeholder {
+	color: var(--color-muted);
+	opacity: 1;
+}
+
+.ui-form-control:disabled {
+	background-color: var(--color-gray-200);
+	opacity: 1;
+}
+
+.ui-form-control::file-selector-button {
+	padding: 0.375rem 0.75rem;
+	margin: -0.375rem -0.75rem;
+	margin-inline-end: 0.75rem;
+	color: var(--color-body);
+	background-color: var(--color-gray-100);
+	pointer-events: none;
+	border-color: inherit;
+	border-style: solid;
+	border-width: 0;
+	border-inline-end-width: 1px;
+	border-radius: 0;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ui-form-control:hover:not(:disabled):not([readonly])::file-selector-button {
+	background-color: var(--color-gray-200);
+}
+
+textarea.ui-form-control {
+	min-height: calc(1.5em + 0.75rem + 2px);
+}
+
+.ui-form-control-sm {
+	min-height: calc(1.5em + 0.5rem + 2px);
+	padding: 0.25rem 0.5rem;
+	font-size: 0.875rem;
+	border-radius: var(--radius-sm);
+}
+
+textarea.ui-form-control-sm {
+	min-height: calc(1.5em + 0.5rem + 2px);
+}
+
+.ui-form-control-plaintext {
+	display: block;
+	width: 100%;
+	padding: 0.375rem 0;
+	margin-bottom: 0;
+	line-height: 1.5;
+	color: var(--color-body);
+	background-color: transparent;
+	border: solid transparent;
+	border-width: 1px 0;
+}
+
+.ui-form-control-plaintext:focus {
+	outline: 0;
+}
+
+/* WebKit misaligns the value of native date fields otherwise */
+input[type="date"].ui-form-control,
+input[type="datetime-local"].ui-form-control {
+	line-height: normal;
+	min-height: 34px;
+}
+
+input[type="date"].ui-form-control::-webkit-calendar-picker-indicator,
+input[type="datetime-local"].ui-form-control::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+	opacity: 0.5;
+}
+
+input[type="date"].ui-form-control:hover::-webkit-calendar-picker-indicator,
+input[type="datetime-local"].ui-form-control:hover::-webkit-calendar-picker-indicator {
+	opacity: 1;
+}
+
+.ui-form-select {
+	display: block;
+	width: 100%;
+	padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--color-body);
+	appearance: none;
+	background-color: var(--color-white);
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-position: right 0.75rem center;
+	background-size: 16px 12px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ui-form-select:focus {
+	border-color: #86b7fe;
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.ui-form-select:disabled {
+	background-color: var(--color-gray-200);
+}
+
+.ui-form-select:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 var(--color-body);
+}
+
+.ui-form-check {
+	display: block;
+	min-height: 1.5rem;
+	padding-left: 1.5em;
+	margin-bottom: 0.125rem;
+}
+
+.ui-form-check .ui-form-check-input {
+	float: left;
+	margin-left: -1.5em;
+}
+
+.ui-form-check-input {
+	flex-shrink: 0;
+	width: 1em;
+	height: 1em;
+	margin-top: 0.25em;
+	vertical-align: top;
+	appearance: none;
+	background-color: var(--color-white);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	border: 1px solid var(--color-border);
+	border-radius: 0.25em;
+	print-color-adjust: exact;
+}
+
+.ui-form-check-input:active {
+	filter: brightness(90%);
+}
+
+.ui-form-check-input:focus {
+	border-color: #86b7fe;
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.ui-form-check-input:checked {
+	background-color: var(--color-primary);
+	border-color: var(--color-primary);
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
+.ui-form-check-input:disabled {
+	pointer-events: none;
+	filter: none;
+	opacity: 0.5;
+}
+
+.ui-form-check-input:disabled ~ .ui-form-check-label,
+.ui-form-check-input[disabled] ~ .ui-form-check-label {
+	cursor: default;
+	opacity: 0.5;
+}
+
+
+/*
+* Progress
+*/
+.ui-progress {
+	display: flex;
+	height: 1rem;
+	overflow: hidden;
+	font-size: 0.75rem;
+	background-color: var(--color-gray-200);
+	border-radius: var(--radius-md);
+}
+
+.ui-progress-bar {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: hidden;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	background-color: var(--color-primary);
+	transition: width 0.6s ease;
+}
+
+
+/*
+* Collapse, toggled by screen.js through the data-ui-toggle="collapse" attribute
+*/
+.ui-collapse:not(.show) {
+	display: none;
+}
+
+.ui-collapsing {
+	height: 0;
+	overflow: hidden;
+	transition: height 0.35s ease;
+}
+
+
+/*
+* Dropdown, toggled by screen.js through the data-ui-toggle="dropdown" attribute
+*/
+.ui-dropdown {
+	position: relative;
+}
+
+.ui-dropdown-toggle {
+	white-space: nowrap;
+}
+
+.ui-dropdown-toggle::after {
+	display: inline-block;
+	margin-left: 0.255em;
+	vertical-align: 0.255em;
+	content: "";
+	border-top: 0.3em solid;
+	border-right: 0.3em solid transparent;
+	border-bottom: 0;
+	border-left: 0.3em solid transparent;
+}
+
+.ui-dropdown-menu {
+	--ui-dropdown-bg: var(--color-white);
+	--ui-dropdown-border-width: 1px;
+	--ui-dropdown-border-radius: var(--radius-md);
+	--ui-dropdown-padding-y: 0.5rem;
+	--ui-dropdown-item-padding-x: 1rem;
+	--ui-dropdown-link-hover-bg: var(--color-gray-100);
+	--ui-dropdown-link-active-bg: var(--color-primary);
+	position: absolute;
+	z-index: 1000;
+	display: none;
+	min-width: 10rem;
+	padding: var(--ui-dropdown-padding-y) 0;
+	margin: 0;
+	font-size: 1rem;
+	color: var(--color-body);
+	text-align: left;
+	list-style: none;
+	background-color: var(--ui-dropdown-bg);
+	background-clip: padding-box;
+	border: var(--ui-dropdown-border-width) solid rgba(0, 0, 0, 0.175);
+	border-radius: var(--ui-dropdown-border-radius);
+}
+
+.ui-dropdown-menu.show {
+	display: block;
+}
+
+.ui-dropdown-item {
+	display: block;
+	width: 100%;
+	padding: 0.25rem var(--ui-dropdown-item-padding-x);
+	clear: both;
+	font-weight: 400;
+	color: var(--color-body);
+	text-align: inherit;
+	text-decoration: none;
+	white-space: nowrap;
+	background-color: transparent;
+	border: 0;
+	border-radius: 0;
+}
+
+.ui-dropdown-item:focus,
+.ui-dropdown-item:hover {
+	color: var(--color-body);
+	background-color: var(--ui-dropdown-link-hover-bg);
+}
+
+.ui-dropdown-item.active,
+.ui-dropdown-item:active {
+	color: #fff;
+	text-decoration: none;
+	background-color: var(--ui-dropdown-link-active-bg);
+}
+
+
+/*
+* Modal dialog on the native dialog element, opened by gallery/modal.js. The dialog is fixed
+* in the top layer, so it scrolls itself when it is taller than the viewport, as the
+* Bootstrap modal wrapper did; otherwise its footer could end up out of reach.
+*/
+.ui-modal {
+	--ui-modal-margin: 0.5rem;
+	--ui-modal-width: 500px;
+	width: auto;
+	max-width: none;
+	max-height: calc(100% - 2 * var(--ui-modal-margin));
+	padding: 0;
+	margin: var(--ui-modal-margin);
+	overflow-y: auto;
+	color: inherit;
+	background: transparent;
+	border: 0;
+}
+
+.ui-modal::backdrop {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 576px) {
+	.ui-modal {
+		--ui-modal-margin: 1.75rem;
+		width: var(--ui-modal-width);
+		margin-right: auto;
+		margin-left: auto;
+	}
+}
+
+@media (min-width: 992px) {
+	.ui-modal-lg {
+		--ui-modal-width: 800px;
+	}
+}
+
+.ui-modal-content {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	background-color: var(--color-white);
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, 0.175);
+	border-radius: var(--radius-lg);
+	outline: 0;
+}
+
+.ui-modal-body {
+	position: relative;
+	flex: 1 1 auto;
+	padding: 1rem;
+}
+
+.ui-modal-footer {
+	display: flex;
+	flex-shrink: 0;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 0.75rem;
+	border-top: 1px solid var(--color-border);
+	border-bottom-right-radius: calc(var(--radius-lg) - 1px);
+	border-bottom-left-radius: calc(var(--radius-lg) - 1px);
+}
+
+.ui-modal-footer > * {
+	margin: 0.25rem;
+}
+
+
+/*
+* Carousel, switched by gallery/modal.js. The images change without sliding.
+*/
+.ui-carousel {
+	position: relative;
+}
+
+.ui-carousel-inner {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.ui-carousel-inner::after {
+	display: block;
+	clear: both;
+	content: "";
+}
+
+.ui-carousel-item {
+	position: relative;
+	display: none;
+	float: left;
+	width: 100%;
+	margin-right: -100%;
+	backface-visibility: hidden;
+}
+
+.ui-carousel-item.active {
+	display: block;
+}
+
+.ui-carousel-item img {
+	max-height: 80vh;
+}
+
+.ui-carousel-control-prev,
+.ui-carousel-control-next {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 15%;
+	padding: 0;
+	color: #fff;
+	text-align: center;
+	background: 0 0;
+	border: 0;
+	opacity: 0.5;
+	transition: opacity 0.15s ease;
+}
+
+.ui-carousel-control-prev:focus,
+.ui-carousel-control-prev:hover,
+.ui-carousel-control-next:focus,
+.ui-carousel-control-next:hover {
+	color: #fff;
+	text-decoration: none;
+	outline: 0;
+	opacity: 0.9;
+}
+
+.ui-carousel-control-prev {
+	left: 0;
+}
+
+.ui-carousel-control-next {
+	right: 0;
+}
+
+.ui-carousel-control-prev-icon,
+.ui-carousel-control-next-icon {
+	display: inline-block;
+	width: 2rem;
+	height: 2rem;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-size: 100% 100%;
+}
+
+.ui-carousel-control-prev-icon {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.ui-carousel-control-next-icon {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ui-btn,
+	.ui-form-control,
+	.ui-form-control::file-selector-button,
+	.ui-form-select,
+	.ui-progress-bar,
+	.ui-collapsing,
+	.ui-carousel-control-prev,
+	.ui-carousel-control-next {
+		transition: none;
+	}
+}

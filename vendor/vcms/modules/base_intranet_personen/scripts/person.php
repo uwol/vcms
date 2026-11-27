@@ -180,7 +180,7 @@ if (!is_array($row)) {
     echo '<h1>Mitglied</h1>';
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
-    echo '<p class="mb-4">Das Mitglied existiert nicht.</p>';
+    echo '<p class="mb-6">Das Mitglied existiert nicht.</p>';
     return;
 }
 
@@ -204,18 +204,18 @@ echo '</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="row">';
+echo '<div class="grid grid-cols-12 gap-x-6">';
 
-echo '<div class="col-sm-3">';
+echo '<div class="col-span-12 sm:col-span-3">';
 printPersonSignature($row, $ownprofile);
 echo '</div>';
 
-echo '<div class="col-sm-9">';
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="col-span-12 sm:col-span-9">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 printPersonData($row);
 
-echo '<div class="row">';
+echo '<div class="grid grid-cols-12 gap-x-6">';
 printPrimaryAddress($row);
 printSecondaryAddress($row);
 echo '</div>';
@@ -225,8 +225,8 @@ printAssociationDetails($row);
 echo '</div>';
 echo '</div>';
 
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 printVita($row);
 echo '</div>';
 
@@ -241,8 +241,8 @@ echo '</div>';
 if ($ownprofile) {
     echo '<h2>Passwort ändern</h2>';
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_person&amp;id=' .$id. '" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="formType" value="personPassword" />';
@@ -251,9 +251,9 @@ if ($ownprofile) {
     $libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password', false, true);
     $libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password', false, true);
 
-    echo '<div class="row mb-3">';
-    echo '<div class="col-sm-3"></div>';
-    echo '<div class="col-sm-9">' .$libAuth->getPasswordRequirements(). '</div>';
+    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="col-span-12 sm:col-span-3"></div>';
+    echo '<div class="col-span-12 sm:col-span-9">' .$libAuth->getPasswordRequirements(). '</div>';
     echo '</div>';
 
     $libForm->printSubmitButton('<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Passwort speichern');
@@ -265,8 +265,8 @@ if ($ownprofile) {
 
     echo '<h2>Stammdaten ändern</h2>';
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_person" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="formType" value="personData" />';
@@ -480,12 +480,12 @@ function printPersonSignature($row, $ownprofile)
 {
     global $libPerson, $libForm;
 
-    echo '<div class="d-block mx-auto person-signature-box mb-3">';
+    echo '<div class="block mx-auto person-signature-box mb-4">';
     echo '<div class="img-box">';
 
     if ($ownprofile) {
         echo '<span class="delete-icon-box">';
-        echo '<form method="post" action="index.php?pid=intranet_person" class="d-inline" onsubmit="return confirm(\'Willst Du Dein Foto wirklich löschen?\')">';
+        echo '<form method="post" action="index.php?pid=intranet_person" class="inline" onsubmit="return confirm(\'Willst Du Dein Foto wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="photoDelete" />';
         echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
         echo '</form>';
@@ -601,7 +601,7 @@ function printPrimaryAddress($row)
     * primary address
     */
     if ($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != '') {
-        echo '<div class="col-sm-6">';
+        echo '<div class="col-span-12 sm:col-span-6">';
         echo '<hr />';
         echo '<address>';
 
@@ -642,7 +642,7 @@ function printSecondaryAddress($row)
     * secondary address
     */
     if ($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != '') {
-        echo '<div class="col-sm-6">';
+        echo '<div class="col-span-12 sm:col-span-6">';
         echo '<hr />';
         echo '<address>';
 
@@ -792,8 +792,8 @@ function printAssociationDetails($row)
     $associationsCount = count($associations);
 
     if ($associationsCount > 0) {
-        echo '<p class="mb-4">';
-        echo '<span class="badge">' .$associationsCount. '</span>';
+        echo '<p class="mb-6">';
+        echo '<span class="ui-badge">' .$associationsCount. '</span>';
         echo ' ';
         echo 'Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $associations);
         echo '</p>';
@@ -810,8 +810,8 @@ function printAssociationDetails($row)
         $stmt->fetch();
 
         if ($chargierCount > 0) {
-            echo '<p class="mb-4">';
-            echo '<span class="badge text-bg-secondary">' .$chargierCount. '</span>';
+            echo '<p class="mb-6">';
+            echo '<span class="ui-badge bg-secondary text-white">' .$chargierCount. '</span>';
             echo ' ';
             echo 'Chargierter bei ';
 

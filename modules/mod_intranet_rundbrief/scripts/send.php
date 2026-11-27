@@ -95,8 +95,8 @@ if (!isset($_POST['message']) || $_POST['message'] == '' || !isset($_POST['subje
     /*
     * start output
     */
-    echo '<p class="mb-4">' .$libString->protectXss($subject). '</p>';
-    echo '<p class="mb-4">' .nl2br($libString->protectXss($_POST['message'])). '</p>';
+    echo '<p class="mb-6">' .$libString->protectXss($subject). '</p>';
+    echo '<p class="mb-6">' .nl2br($libString->protectXss($_POST['message'])). '</p>';
 
     /*
     * build and send mail
@@ -207,14 +207,14 @@ if (!isset($_POST['message']) || $_POST['message'] == '' || !isset($_POST['subje
         $subRecipientsArray = array_slice($recipientsArray, $j * $recipientsPerMail, $recipientsPerMail);
 
         echo '<hr />';
-        echo '<p class="mb-4">Sende E-Mail ' .$mailNumber;
+        echo '<p class="mb-6">Sende E-Mail ' .$mailNumber;
 
         if (is_file($attachementFile)) {
             echo ' mit Anhang';
         }
 
         echo ' an:</p>';
-        echo '<p class="mb-4">';
+        echo '<p class="mb-6">';
 
         foreach ($subRecipientsArray as $recipient) {
             echo $libString->protectXSS($recipient[1]). ' &lt;' .$libString->protectXSS($recipient[0]). '&gt;<br />';
@@ -263,7 +263,7 @@ function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, 
     }
 
     if (!$mail->send()) {
-        echo '<p class="mb-4">Fehler beim Versand: ' .$mail->ErrorInfo. '</p>';
+        echo '<p class="mb-6">Fehler beim Versand: ' .$mail->ErrorInfo. '</p>';
     }
 }
 

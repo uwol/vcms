@@ -10,13 +10,13 @@
 	color: #961419;
 }
 
-#nav .nav-link:hover,
-#nav .nav-link:focus:hover {
+#nav .ui-nav-link:hover,
+#nav .ui-nav-link:focus:hover {
 	color: #961419;
 }
 
-#nav .nav-link.active,
-#nav .nav-link.active:focus {
+#nav .ui-nav-link.active,
+#nav .ui-nav-link.active:focus {
 	color: #961419;
 }
 

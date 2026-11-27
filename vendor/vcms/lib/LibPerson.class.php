@@ -144,7 +144,7 @@ class LibPerson
                 $retstr .= '<span class="person-activity-bar person-activity-bar-inactive" style="width:' .$barWidthInactivity. '%"></span>';
             }
         } else {
-            // required for correct height of cell in bootstrap row
+            // Required for the correct height of the cell in a grid row
             $retstr .= '<span class="person-activity-bar"></span>';
         }
 
@@ -155,7 +155,7 @@ class LibPerson
 
     public function getSignature($id)
     {
-        $retstr = '<div class="person-signature-box d-block mx-auto mb-3">';
+        $retstr = '<div class="person-signature-box block mx-auto mb-4">';
 
         $retstr .= '<div class="img-box">';
         $retstr .= $this->getImage($id);
@@ -186,10 +186,14 @@ class LibPerson
                 break;
         }
 
+        /*
+        * No h-auto here: utilities win over the components, so it would override the fixed
+        * height of person-img-xs. Images keep their aspect ratio without it anyway.
+        */
         if ($this->hasImageFile($id)) {
-            $retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="img-fluid hvr-glow ' .$sizeClass. '" alt=""/>';
+            $retstr .= '<img src="api.php?iid=base_intranet_personenbild&amp;id=' . $id . '" class="max-w-full hvr-glow ' .$sizeClass. '" alt=""/>';
         } else {
-            $retstr .= '<div class="img-fluid hvr-glow person-img-dummy ' .$sizeClass. '"></div>';
+            $retstr .= '<div class="max-w-full hvr-glow person-img-dummy ' .$sizeClass. '"></div>';
         }
 
         $retstr .= '</a>';

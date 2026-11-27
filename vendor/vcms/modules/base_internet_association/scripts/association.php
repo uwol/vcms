@@ -33,11 +33,11 @@ if (isset($_GET['id'])) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<div class="row">';
-    echo '<div class="col-sm-9">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="col-span-12 sm:col-span-9">';
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<address class="mb-0">';
 
     if ($associationRow['zusatz1']) {
@@ -71,8 +71,8 @@ if (isset($_GET['id'])) {
     echo '</div>';
 
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
     if ($associationRow['farbe1']) {
         echo '<div style="width:50px">';
@@ -95,7 +95,7 @@ if (isset($_GET['id'])) {
 
         echo '</div>';
 
-        echo '<p class="mb-4">';
+        echo '<p class="mb-6">';
         echo $libString->protectXSS($associationRow['farbe1']). ' ' .$libString->protectXSS($associationRow['farbe2']). ' ' .$libString->protectXSS($associationRow['farbe3']). '<br />';
         echo '</p>';
     }
@@ -176,8 +176,8 @@ if (isset($_GET['id'])) {
     if ($associationRow['farbenstrophe']) {
         echo '<h3>Farbenstrophe</h3>';
 
-        echo '<div class="card">';
-        echo '<div class="card-body">';
+        echo '<div class="ui-card">';
+        echo '<div class="ui-card-body">';
         echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['farbenstrophe']));
         echo '</p>';
@@ -188,8 +188,8 @@ if (isset($_GET['id'])) {
     if ($associationRow['farbenstrophe_inoffiziell']) {
         echo '<h3>Inoffizielle Farbenstrophe</h3>';
 
-        echo '<div class="card">';
-        echo '<div class="card-body">';
+        echo '<div class="ui-card">';
+        echo '<div class="ui-card-body">';
         echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['farbenstrophe_inoffiziell']));
         echo '</p>';
@@ -200,8 +200,8 @@ if (isset($_GET['id'])) {
     if ($associationRow['fuchsenstrophe']) {
         echo '<h3>Fuchsenstrophe</h3>';
 
-        echo '<div class="card">';
-        echo '<div class="card-body">';
+        echo '<div class="ui-card">';
+        echo '<div class="ui-card-body">';
         echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['fuchsenstrophe']));
         echo '</p>';
@@ -212,8 +212,8 @@ if (isset($_GET['id'])) {
     if ($associationRow['bundeslied']) {
         echo '<h3>Bundeslied</h3>';
 
-        echo '<div class="card">';
-        echo '<div class="card-body">';
+        echo '<div class="ui-card">';
+        echo '<div class="ui-card-body">';
         echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['bundeslied']));
         echo '</p>';
@@ -222,8 +222,8 @@ if (isset($_GET['id'])) {
     }
 
     if ($associationRow['beschreibung']) {
-        echo '<div class="card">';
-        echo '<div class="card-body">';
+        echo '<div class="ui-card">';
+        echo '<div class="ui-card-body">';
         echo '<p class="mb-0">';
         echo nl2br($libString->protectXSS((string) $associationRow['beschreibung']));
         echo '</p>';
@@ -233,9 +233,9 @@ if (isset($_GET['id'])) {
 
     echo '</div>';
 
-    echo '<div class="col-sm-3">';
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="col-span-12 sm:col-span-3">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
     /*
     * All three images are optional, so which one ends up last in the card body is only
@@ -272,9 +272,9 @@ if (isset($_GET['id'])) {
     $lastImageAlt = array_key_last($imagePaths);
 
     foreach ($imagePaths as $imageAlt => $imagePath) {
-        $marginClass = ($imageAlt === $lastImageAlt) ? 'mb-0' : 'mb-4';
+        $marginClass = ($imageAlt === $lastImageAlt) ? 'mb-0' : 'mb-6';
 
-        echo '<p class="' .$marginClass. '"><img src="' .$imagePath. '" alt="' .$imageAlt. '" class="img-fluid d-block mx-auto" /></p>';
+        echo '<p class="' .$marginClass. '"><img src="' .$imagePath. '" alt="' .$imageAlt. '" class="max-w-full h-auto block mx-auto" /></p>';
     }
 
     echo '</div>';
@@ -293,8 +293,8 @@ if (isset($_GET['id'])) {
     if ($count > 0) {
         echo '<h2>Mitglieder</h2>';
 
-        echo '<div class="card">';
-        echo '<div class="card-body">';
+        echo '<div class="ui-card">';
+        echo '<div class="ui-card-body">';
         echo '<div class="persons-grid">';
 
         $stmt = $libDb->prepare('SELECT base_verein_mitgliedschaft.mitglied, base_verein_mitgliedschaft.ehrenmitglied, base_person.gruppe FROM base_verein_mitgliedschaft, base_person WHERE base_verein_mitgliedschaft.verein = :verein AND base_verein_mitgliedschaft.mitglied = base_person.id ORDER BY base_verein_mitgliedschaft.ehrenmitglied DESC, base_person.name ASC');
@@ -312,7 +312,7 @@ if (isset($_GET['id'])) {
             echo $libString->protectXSS($libPerson->getNameString($row['mitglied'], 0));
 
             if ($row['ehrenmitglied'] == 1) {
-                echo '<p class="mb-4">Ehrenmitglied</p>';
+                echo '<p class="mb-6">Ehrenmitglied</p>';
             }
 
             echo '</div>';

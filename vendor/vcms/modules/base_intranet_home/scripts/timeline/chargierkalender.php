@@ -99,12 +99,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
         if ($isRegistered) {
             $form .= '<input type="hidden" name="chargierCalendarChangeRegistrationState" value="unregister" />';
-            $form .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
+            $form .= '<button type="submit" class="ui-btn ui-btn-outline-secondary ui-btn-sm">';
             $form .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> Abmelden';
             $form .= '</button>';
         } else {
             $form .= '<input type="hidden" name="chargierCalendarChangeRegistrationState" value="register" />';
-            $form .= '<button type="submit" class="btn btn-outline-secondary btn-sm">';
+            $form .= '<button type="submit" class="ui-btn ui-btn-outline-secondary ui-btn-sm">';
             $form .= '<i class="fa fa-square-o" aria-hidden="true"></i> Anmelden';
             $form .= '</button>';
         }
@@ -133,7 +133,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $attendees[] = $attendee;
     }
 
-    $description .= '<p class="mb-4">' .implode(', ', $attendees). '</p>';
+    $description .= '<p class="mb-6">' .implode(', ', $attendees). '</p>';
 
     $timelineEvent = new LibChargiereventTimelineEvent();
     $timelineEvent->setTitle($title);

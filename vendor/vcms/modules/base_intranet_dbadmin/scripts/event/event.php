@@ -119,7 +119,7 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<p class="mb-4">Hier können sämtliche Daten einer Veranstaltung bearbeitet werden.</p>';
+    echo '<p class="mb-6">Hier können sämtliche Daten einer Veranstaltung bearbeitet werden.</p>';
     echo '<hr />';
 
     /**
@@ -128,7 +128,7 @@ if ($libAuth->isLoggedin()) {
     *
     */
     if ($eventRow['id'] != '') {
-        echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_events" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+        echo '<form class="mb-6" method="post" action="index.php?pid=intranet_admin_events" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="delete" />';
         echo '<input type="hidden" name="id" value="' .$eventRow['id']. '" />';
         echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
@@ -147,8 +147,8 @@ if ($libAuth->isLoggedin()) {
         $extraActionParam = '&amp;action=update';
     }
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_event' .$extraActionParam. '" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="formType" value="eventData" />';

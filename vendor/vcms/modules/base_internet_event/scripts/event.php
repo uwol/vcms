@@ -44,7 +44,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 if ($row['intern'] && !$libAuth->isLoggedIn()) {
-    echo '<p class="mb-4">Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
+    echo '<p class="mb-6">Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 } else {
     if ($libAuth->isLoggedIn()) {
         if (isset($_POST['changeRegistrationState']) && $_POST['changeRegistrationState'] != '') {
@@ -90,18 +90,18 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
         $semesterCover = $libTime->determineSemesterCover($semester);
 
         if ($semesterCover) {
-            $class = 'event-semestercover-box pb-3 pt-3';
+            $class = 'event-semestercover-box pb-4 pt-4';
             $style = "background-image: url('custom/semestercover/" .$semesterCover. "')";
         }
     }
 
     echo '<div class="event">';
-    echo '<div class="row ' .$class. '" style="' .$style. '">';
+    echo '<div class="grid grid-cols-12 gap-x-6 ' .$class. '" style="' .$style. '">';
 
     // date and time panel
-    echo '<div class="col-sm-4 col-lg-3">';
-    echo '<div class="card reveal">';
-    echo '<div class="card-body">';
+    echo '<div class="col-span-12 sm:col-span-4 lg:col-span-3">';
+    echo '<div class="ui-card reveal">';
+    echo '<div class="ui-card-body">';
 
     printEventDetailDateTime($row);
 
@@ -132,11 +132,11 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
     $descriptionText .= printRegistrations($row);
 
     if ($hasPictures) {
-        echo '<div class="col-sm-8 col-lg-9">';
+        echo '<div class="col-span-12 sm:col-span-8 lg:col-span-9">';
 
         if ($descriptionText) {
-            echo '<div class="card reveal">';
-            echo '<div class="card-body">';
+            echo '<div class="ui-card reveal">';
+            echo '<div class="ui-card-body">';
             echo $descriptionText;
             echo '</div>';
             echo '</div>';
@@ -147,20 +147,20 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
         echo '</div>';
     } else {
         if ($libEvent->isFacebookEvent($row)) {
-            echo '<div class="col-sm-4 col-lg-3">';
+            echo '<div class="col-span-12 sm:col-span-4 lg:col-span-3">';
             printFacebookEvent($row);
             echo '</div>';
         }
 
         if ($descriptionText) {
             if ($libEvent->isFacebookEvent($row)) {
-                echo '<div class="col-sm-4 col-lg-6">';
+                echo '<div class="col-span-12 sm:col-span-4 lg:col-span-6">';
             } else {
-                echo '<div class="col-sm-8 col-lg-9">';
+                echo '<div class="col-span-12 sm:col-span-8 lg:col-span-9">';
             }
 
-            echo '<div class="card reveal">';
-            echo '<div class="card-body">';
+            echo '<div class="ui-card reveal">';
+            echo '<div class="ui-card-body">';
             echo $descriptionText;
             echo '</div>';
             echo '</div>';
@@ -233,14 +233,14 @@ function printRegistrationStatus($row)
         $stmt->fetch();
 
         if (date('Y-m-d H:i:s') < $row['datum']) {
-            echo '<form action="index.php?pid=event&amp;id=' .$row['id']. '" method="post" class="d-flex flex-wrap align-items-center gap-2">';
+            echo '<form action="index.php?pid=event&amp;id=' .$row['id']. '" method="post" class="flex flex-wrap items-center gap-2">';
 
             if ($isRegistered) {
                 echo '<input type="hidden" name="changeRegistrationState" value="unregister" />';
-                $libForm->printSubmitButtonInline('<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> Abmelden', ['btn-sm']);
+                $libForm->printSubmitButtonInline('<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> Abmelden', ['ui-btn-sm']);
             } else {
                 echo '<input type="hidden" name="changeRegistrationState" value="register" />';
-                $libForm->printSubmitButtonInline('<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> Anmelden', ['btn-sm']);
+                $libForm->printSubmitButtonInline('<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> Anmelden', ['ui-btn-sm']);
             }
 
             echo '</form>';
@@ -313,11 +313,11 @@ function printRegistrations($row)
 
 function printGallery($id, $pictures)
 {
-    echo '<div class="row gallery">';
+    echo '<div class="grid grid-cols-12 gap-x-6 gallery">';
 
     foreach ($pictures as $key => $value) {
-        echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-        echo '<div class="card card-img reveal mb-2">';
+        echo '<div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">';
+        echo '<div class="ui-card ui-card-img reveal mb-2">';
         echo '<div class="img-frame">';
         echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
         echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" alt="" />';

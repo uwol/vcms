@@ -36,15 +36,15 @@ if ($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')) {
 
 if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
     echo '<section class="nextevents-box">';
-    echo '<div class="container">';
+    echo '<div class="ui-container">';
 
-    echo '<div class="row">';
-    echo '<div class="col-lg-8 offset-lg-2 text-center">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="text-center col-span-12 lg:col-span-8 lg:col-start-3">';
     echo '<h1 class="section-heading">Nächste Veranstaltungen</h1>';
     echo '</div>';
     echo '</div>';
 
-    echo '<div class="row">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
 
     if ($numberOfNextEvents > 0) {
         if ($semesterCoverAvailable) {
@@ -57,12 +57,12 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo '<div class="col-sm-4">';
-            echo '<div class="card reveal">';
-            echo '<div class="card-body">';
-            echo '<div class="card card-img">';
+            echo '<div class="col-span-12 sm:col-span-4">';
+            echo '<div class="ui-card reveal">';
+            echo '<div class="ui-card-body">';
+            echo '<div class="ui-card ui-card-img">';
 
-            echo '<div class="card-body">';
+            echo '<div class="ui-card-body">';
             echo '<h3><a href="index.php?pid=event&amp;id=' .$row['id']. '">';
 
             printEventTitle($row);
@@ -95,18 +95,18 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
     }
 
     if ($semesterCoverAvailable) {
-        echo '<div class="col-sm-4">';
-        echo '<div class="card reveal">';
-        echo '<div class="card-body">';
-        echo '<div class="card card-img">';
+        echo '<div class="col-span-12 sm:col-span-4">';
+        echo '<div class="ui-card reveal">';
+        echo '<div class="ui-card-body">';
+        echo '<div class="ui-card ui-card-img">';
 
-        echo '<div class="semestercover-box d-block mx-auto">';
+        echo '<div class="semestercover-box block mx-auto">';
         echo '<a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">';
         echo $semesterCoverString;
         echo '</a>';
         echo '</div>';
 
-        echo '<div class="card-body">';
+        echo '<div class="ui-card-body">';
         echo '<h3><i class="fa fa-calendar" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
         echo '<p class="mb-0">Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
         echo '</div>';

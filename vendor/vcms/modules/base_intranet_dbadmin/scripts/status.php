@@ -60,10 +60,10 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
-    echo '<table class="table table-sm table-striped table-hover">';
+    echo '<table class="ui-table ui-table-sm ui-table-striped ui-table-hover">';
     echo '<thead>';
     echo '<tr><th>Bezeichnung</th><th>Beschreibung</th><th></th></tr>';
     echo '</thead>';
@@ -78,7 +78,7 @@ if ($libAuth->isLoggedin()) {
         echo '<td class="tool-column">';
 
         if ($row['bezeichnung'] != 'A-Phil' && $row['bezeichnung'] != 'B-Phil' && $row['bezeichnung'] != 'Ehrenmitglied' && $row['bezeichnung'] != 'ex loco' && $row['bezeichnung'] != 'HV-M' && $row['bezeichnung'] != 'Inaktiv ex loco' && $row['bezeichnung'] != 'Inaktiv' && $row['bezeichnung'] != 'VG') {
-            echo '<form method="post" action="index.php?pid=intranet_admin_status" class="d-inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+            echo '<form method="post" action="index.php?pid=intranet_admin_status" class="inline" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
             echo '<input type="hidden" name="action" value="delete" />';
             echo '<input type="hidden" name="bezeichnung" value="' .$libString->protectXSS($row['bezeichnung']). '" />';
             echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
@@ -97,8 +97,8 @@ if ($libAuth->isLoggedin()) {
 
     echo '<h2>Neuen Status anlegen</h2>';
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_status" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="action" value="create" />';

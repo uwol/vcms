@@ -146,12 +146,12 @@
 	float: left;
 }
 
-.timeline > .timeline-body > .timeline-event > .timeline-panel .card-header {
+.timeline > .timeline-body > .timeline-event > .timeline-panel .ui-card-header {
 	background-color: transparent;
 	border-color: transparent;
 }
 
-.timeline > .timeline-body > .timeline-event > .timeline-panel .card-body {
+.timeline > .timeline-body > .timeline-event > .timeline-panel .ui-card-body {
 	padding: 0 1em 1em 1em;
 }
 

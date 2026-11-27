@@ -112,22 +112,22 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getNotificationBoxText();
 
     if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
-        echo '<div class="card">';
-        echo '<div class="card-body">';
-        echo '<div class="btn-toolbar">';
-        echo '<a href="index.php?pid=intranet_admin_person&amp;action=blank" class="btn btn-outline-secondary">Eine neue Person anlegen</a>';
+        echo '<div class="ui-card">';
+        echo '<div class="ui-card-body">';
+        echo '<div class="flex flex-wrap justify-start">';
+        echo '<a href="index.php?pid=intranet_admin_person&amp;action=blank" class="ui-btn ui-btn-outline-secondary">Eine neue Person anlegen</a>';
         echo '</div>';
         echo '</div>';
         echo '</div>';
     }
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_persons" method="post">';
-    echo '<fieldset class="d-flex flex-wrap align-items-center gap-2">';
+    echo '<fieldset class="flex flex-wrap items-center gap-2">';
 
-    echo '<label class="visually-hidden" for="orderby">Sortierung</label>';
-    echo '<select id="orderby" name="orderby" class="form-select w-auto" onchange="this.form.submit()">';
+    echo '<label class="sr-only" for="orderby">Sortierung</label>';
+    echo '<select id="orderby" name="orderby" class="ui-form-select w-auto" onchange="this.form.submit()">';
     echo '<option value="0" ';
 
     if (isset($_POST['orderby']) && $_POST['orderby'] == 0) {
@@ -166,10 +166,10 @@ if ($libAuth->isLoggedin()) {
     echo '</div>';
 
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
 
-    echo '<table class="table table-sm table-striped table-hover">';
+    echo '<table class="ui-table ui-table-sm ui-table-striped ui-table-hover">';
     echo '<thead>';
     echo '<tr><th>Id</th><th>Präfix</th><th>Name</th><th>Suffix</th><th>Vorname</th><th>Gruppe</th><th>Status</th><th>Reception</th><th></th></tr>';
     echo '</thead>';

@@ -121,14 +121,14 @@ if ($formSent && !$formError) {
         echo $libString->getErrorBoxText();
         echo $libString->getNotificationBoxText();
 
-        echo '<p class="mb-4">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
+        echo '<p class="mb-6">Die Daten wurden weitergeleitet. Der Internetwart wird die Registrierung bearbeiten und über den Status der Aktivierung per E-Mail informieren. Bitte achten Sie auch in Ihrem Spam-Ordner auf Nachrichten vom Internetwart.</p>';
     } else {
         echo '<h1>Fehler</h1>';
 
         echo $libString->getErrorBoxText();
         echo $libString->getNotificationBoxText();
 
-        echo '<p class="mb-4">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
+        echo '<p class="mb-6">Die Nachricht konnte nicht verschickt werden. Bitte schreiben Sie direkt an die E-Mail-Adresse ' .$libConfig->emailWebmaster. '</p>';
     }
 } else {
     echo '<h1>Registrierung</h1>';
@@ -136,9 +136,9 @@ if ($formSent && !$formError) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<div class="mb-4">';
-    echo '<p class="mb-4">Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Internetwart weitergeleitet wird.</p>';
-    echo '<p class="mb-4">' .$libAuth->getPasswordRequirements(). '</p>';
+    echo '<div class="mb-6">';
+    echo '<p class="mb-6">Mit diesem Formular kann man sich für das Intranet registrieren. Nachdem der Intranetwart den Zugang freigeschaltet hat, wird an die E-Mail-Adresse eine Benachrichtigung geschickt. Das Passwort wird automatisch verschlüsselt, bevor es an den Internetwart weitergeleitet wird.</p>';
+    echo '<p class="mb-6">' .$libAuth->getPasswordRequirements(). '</p>';
     echo '</div>';
 
     $registrationName = '';
@@ -171,8 +171,8 @@ if ($formSent && !$formError) {
         }
     }
 
-    echo '<div class="card">';
-    echo '<div class="card-body">';
+    echo '<div class="ui-card">';
+    echo '<div class="ui-card-body">';
     echo '<form method="post" action="' .$libString->protectXSS($urlPrefix). 'index.php?pid=registration">';
     echo '<fieldset>';
 

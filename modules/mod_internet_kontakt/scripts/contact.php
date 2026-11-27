@@ -117,12 +117,12 @@ echo '<h1>Kontakt und Impressum</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="row">';
-echo '<div class="col-sm-6">';
-echo '<section class="address-box mb-5">';
+echo '<div class="grid grid-cols-12 gap-x-6">';
+echo '<div class="col-span-12 sm:col-span-6">';
+echo '<section class="address-box mb-12">';
 
-echo '<p class="mb-4">' .$libConfig->verbindungName. '</p>';
-echo '<address class="contact-address mb-4">';
+echo '<p class="mb-6">' .$libConfig->verbindungName. '</p>';
+echo '<address class="contact-address mb-6">';
 
 if ($libConfig->verbindungZusatz != '') {
     echo '<span>' .$libConfig->verbindungZusatz. '</span><br />';
@@ -135,7 +135,7 @@ echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span>' .$libConfig->
 echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span>' .$libConfig->emailInfo. '</span><br />';
 echo '</address>';
 
-echo '<p class="contact-vorstand mb-4">';
+echo '<p class="contact-vorstand mb-6">';
 
 $board = $libAssociation->getContactableActiveBoardIds();
 
@@ -171,10 +171,10 @@ echo '</p>';
 echo '</section>';
 echo '</div>';
 
-echo '<aside class="col-sm-6">';
-echo '<div class="card reveal mb-5">';
-echo '<div class="card card-img">';
-echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="img-fluid d-block mx-auto reveal" />';
+echo '<aside class="col-span-12 sm:col-span-6">';
+echo '<div class="ui-card reveal mb-12">';
+echo '<div class="ui-card ui-card-img">';
+echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="max-w-full h-auto block mx-auto reveal" />';
 echo '</div>';
 echo '</div>';
 echo '</aside>';
@@ -184,12 +184,12 @@ echo '</div>';
 if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
     echo '<h2>Kontakt aufnehmen</h2>';
 
-    echo '<div class="row">';
-    echo '<div class="col-sm-12">';
-    echo '<section class="contact-form-box mb-5">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="col-span-12 sm:col-span-12">';
+    echo '<section class="contact-form-box mb-12">';
 
     if ($mailsent) {
-        echo '<p class="mb-4">Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
+        echo '<p class="mb-6">Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
     } else {
         $name = '';
 
@@ -215,8 +215,8 @@ if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
             $message = $_POST['message'];
         }
 
-        echo '<div class="card">';
-        echo '<div class="card-body">';
+        echo '<div class="ui-card">';
+        echo '<div class="ui-card-body">';
         echo '<form action="index.php?pid=kontakt" method="post">';
         echo '<fieldset>';
 
@@ -240,10 +240,10 @@ if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
 if ($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis')) {
     echo '<h2>Haftungshinweis</h2>';
 
-    echo '<div class="row">';
-    echo '<div class="col-md-12">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="col-span-12 md:col-span-12">';
     echo '<section class="disclaimer-box">';
-    echo '<p class="mb-4">Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
+    echo '<p class="mb-6">Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
     echo '</section>';
     echo '</div>';
     echo '</div>';
@@ -251,5 +251,5 @@ if ($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis')) {
 
 echo '<h2>VCMS</h2>';
 echo '<section class="cms-box">';
-echo '<p class="mb-4">Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)</p>';
+echo '<p class="mb-6">Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)</p>';
 echo '</section>';

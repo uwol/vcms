@@ -115,15 +115,15 @@ echo '<h1>Galerie - ' .$libString->protectXSS((string) $libEvent->getTitle($id))
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div id="progress" class="progress mb-3">';
-echo '<div class="progress-bar bg-success"></div>';
+echo '<div id="progress" class="ui-progress mb-4">';
+echo '<div class="ui-progress-bar bg-success"></div>';
 echo '</div>';
 
-echo '<div id="files-success" role="alert" class="alert alert-success" style="display:none"></div>';
-echo '<div id="files-danger" role="alert" class="alert alert-danger" style="display:none"></div>';
+echo '<div id="files-success" role="alert" class="ui-alert ui-alert-success" style="display:none"></div>';
+echo '<div id="files-danger" role="alert" class="ui-alert ui-alert-danger" style="display:none"></div>';
 
-echo '<div class="mb-3">';
-echo '<label class="btn btn-outline-secondary btn-file">';
+echo '<div class="mb-4">';
+echo '<label class="ui-btn ui-btn-outline-secondary">';
 echo '<i aria-hidden="true" class="fa fa-upload"></i> Fotos hochladen';
 echo '<input id="fileupload" type="file" style="display:none" name="files[]" accept="image/jpeg,.jpg,.jpeg" multiple>';
 echo '</label>';
@@ -135,7 +135,7 @@ echo '<script>
 
 		var url = "api.php?iid=event_admin_galerie_upload&veranstaltungId=' .$id. '";
 		var input = document.getElementById("fileupload");
-		var progressBar = document.querySelector("#progress .progress-bar");
+		var progressBar = document.querySelector("#progress .ui-progress-bar");
 
 		if (!input) {
 			return;
@@ -220,7 +220,7 @@ echo '<script>
 	</script>';
 
 
-echo '<p class="mb-4">Hochgeladene Fotos sind nach einer <a href="index.php?pid=event_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
+echo '<p class="mb-6">Hochgeladene Fotos sind nach einer <a href="index.php?pid=event_admin_galerie&amp;id=' .$id. '">Aktualisierung</a> dieser Seite sichtbar.</p>';
 
 
 if (is_dir('custom/veranstaltungsfotos/' .$id)) {
@@ -233,7 +233,7 @@ if (is_dir('custom/veranstaltungsfotos/' .$id)) {
         echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Komplette Galerie löschen</button>';
         echo '</form>';
 
-        echo '<form method="post" action="index.php?pid=event_admin_galerie" class="mb-4">';
+        echo '<form method="post" action="index.php?pid=event_admin_galerie" class="mb-6">';
         echo '<input type="hidden" name="id" value="' .$id. '" />';
         echo '<button type="submit" name="action" value="publicAll" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du die Galerie wirklich komplett veröffentlichen?\')"><i class="fa fa-users public" aria-hidden="true"></i> Sämtliche Bilder veröffentlichen</button><br />';
         echo '<button type="submit" name="action" value="intranetAll" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer" onclick="return confirm(\'Willst Du die Galerie wirklich komplett nur intern zugänglich machen?\')"><i class="fa fa-users internal" aria-hidden="true"></i> Bei sämtlichen Bildern Zugriff auf das Intranet beschränken</button><br />';
@@ -247,9 +247,9 @@ if (is_dir('custom/veranstaltungsfotos/' .$id)) {
     $mainPictureId = $libGallery->getMainPictureId($id);
 
     if ($mainPictureId != -1) {
-        echo '<div class="row gallery">';
-        echo '<div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">';
-        echo '<div class="card card-img reveal">';
+        echo '<div class="grid grid-cols-12 gap-x-6 gallery">';
+        echo '<div class="col-span-12 sm:col-span-8 sm:col-start-3 md:col-span-6 md:col-start-4 lg:col-span-4 lg:col-start-5">';
+        echo '<div class="ui-card ui-card-img reveal">';
         echo '<div class="img-frame">';
         echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
         echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$mainPictureId. '">';
@@ -262,11 +262,11 @@ if (is_dir('custom/veranstaltungsfotos/' .$id)) {
         echo '<hr />';
     }
 
-    echo '<div class="row gallery">';
+    echo '<div class="grid grid-cols-12 gap-x-6 gallery">';
 
     foreach ($pictures as $key => $picture) {
-        echo '<div class="col-sm-6 col-md-4 col-lg-3">';
-        echo '<div class="card card-img reveal mb-2">';
+        echo '<div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">';
+        echo '<div class="ui-card ui-card-img reveal mb-2">';
 
         $visibility = $libGallery->getPublicityLevel($picture);
         $visibilityClass = '';
@@ -288,7 +288,7 @@ if (is_dir('custom/veranstaltungsfotos/' .$id)) {
         echo '</div>';
 
         if ($libGallery->hasFotowartPrivilege($libAuth->getOffices())) {
-            echo '<div class="controls mb-3">';
+            echo '<div class="controls mb-4">';
 
             echo '<form method="post" action="index.php?pid=event_admin_galerie">';
             echo '<input type="hidden" name="id" value="' .$id. '" />';
@@ -313,5 +313,5 @@ if (is_dir('custom/veranstaltungsfotos/' .$id)) {
     echo '</div>';
 } else {
     echo '<hr />';
-    echo '<p class="mb-4">Die Fotos sind auf eine qualitativ hochwertige Auswahl zu beschränken. Es geht nicht um Vollständigkeit. Hochwertige Fotos bilden Personengruppen in einer ansprechenden Umgebung ab und sind gut belichtet.</p>';
+    echo '<p class="mb-6">Die Fotos sind auf eine qualitativ hochwertige Auswahl zu beschränken. Es geht nicht um Vollständigkeit. Hochwertige Fotos bilden Personengruppen in einer ansprechenden Umgebung ab und sind gut belichtet.</p>';
 }

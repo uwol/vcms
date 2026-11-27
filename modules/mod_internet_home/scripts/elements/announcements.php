@@ -27,19 +27,19 @@ $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<section class="announcement-box">';
-    echo '<div class="container">';
-    echo '<div class="row">';
-    echo '<div class="col-lg-8 offset-lg-2">';
-    echo '<div class="card card-img">';
+    echo '<div class="ui-container">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="col-span-12 lg:col-span-8 lg:col-start-3">';
+    echo '<div class="ui-card ui-card-img">';
 
     $image = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$row['id']. '.jpg';
     $imageExists = is_file($image);
 
     if ($imageExists) {
-        echo '<img src="' .$image. '" class="img-fluid d-block mx-auto reveal" alt="" />';
+        echo '<img src="' .$image. '" class="max-w-full h-auto block mx-auto reveal" alt="" />';
     }
 
-    echo '<p class="card-body mb-0">';
+    echo '<p class="ui-card-body mb-0">';
     echo nl2br($libString->protectXSS(trim((string) $row['text'])));
     echo '</p>';
 

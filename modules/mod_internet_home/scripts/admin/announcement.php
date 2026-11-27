@@ -132,14 +132,14 @@ echo '<h1>Ankündigung</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p class="mb-4">Hier können die Daten einer Ankündigung für die Startseite bearbeitet werden. Start- und Verfallsdatum müssen so gewählt werden, dass sich der Zeitraum ergibt, in dem die Ankündigung angezeigt werden soll.</p>';
+echo '<p class="mb-6">Hier können die Daten einer Ankündigung für die Startseite bearbeitet werden. Start- und Verfallsdatum müssen so gewählt werden, dass sich der Zeitraum ergibt, in dem die Ankündigung angezeigt werden soll.</p>';
 
 
 /*
 * deletion
 */
 if ($array['id'] != '') {
-    echo '<form class="mb-4" method="post" action="index.php?pid=intranet_admin_announcements" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+    echo '<form class="mb-6" method="post" action="index.php?pid=intranet_admin_announcements" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
     echo '<input type="hidden" name="action" value="delete" />';
     echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
     echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
@@ -147,8 +147,8 @@ if ($array['id'] != '') {
 }
 
 
-echo '<div class="row">';
-echo '<div class="col-sm-9">';
+echo '<div class="grid grid-cols-12 gap-x-6">';
+echo '<div class="col-span-12 sm:col-span-9">';
 
 
 /*
@@ -160,8 +160,8 @@ if ($action == 'blank') {
     $extraActionParam = '&amp;action=update';
 }
 
-echo '<div class="card">';
-echo '<div class="card-body">';
+echo '<div class="ui-card">';
+echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=intranet_admin_announcement' .$extraActionParam. '" method="post">';
 echo '<fieldset>';
 
@@ -183,7 +183,7 @@ echo '</div>';
 echo '</div>';
 
 echo '</div>';
-echo '<div class="col-sm-3">';
+echo '<div class="col-span-12 sm:col-span-3">';
 
 if ((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != '') {
     if (isset($_REQUEST['id']) && $_REQUEST['id'] != '') {
@@ -193,18 +193,18 @@ if ((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != '') {
     $posssibleImage = $libModuleHandler->getModuleDirectory(). '/custom/img/' .$array['id']. '.jpg';
 
     if (is_file($posssibleImage)) {
-        echo '<div class="d-block mx-auto">';
+        echo '<div class="block mx-auto">';
         echo '<div class="img-box">';
 
         echo '<span class="delete-icon-box">';
-        echo '<form method="post" action="index.php?pid=intranet_admin_announcement" class="d-inline">';
+        echo '<form method="post" action="index.php?pid=intranet_admin_announcement" class="inline">';
         echo '<input type="hidden" name="action" value="imageDelete" />';
         echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
         echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>';
         echo '</form>';
         echo '</span>';
 
-        echo '<img src="' .$posssibleImage. '" class="img-fluid d-block mx-auto" alt="Veranstaltungsbild" />';
+        echo '<img src="' .$posssibleImage. '" class="max-w-full h-auto block mx-auto" alt="Veranstaltungsbild" />';
         echo '</div>';
         echo '</div>';
     }
