@@ -111,13 +111,18 @@ Konstruierte Klassennamen (`'col-sm-' .$colLabel` in `LibForm`) sind durch Looku
 3. Installations-CSS und Modul-CSS liegen in der Layer `components` und verlieren damit gegen Utilities; vorher
    gewannen sie gegen Utilities nur dort, wo keine Bootstrap-Utility mit `!important` gesetzt war.
 
+## Kompatibilität bestehender Installationen
+
+1. Installationsspezifisches Markup in den `custom/`-Verzeichnissen der Module (z. B.
+   `mod_internet_verein/custom/*.html`, wird bei Updates nicht überschrieben), eigene Module und eigenes
+   `custom/styles/screen.css` mit Bootstrap-Klassen (`.nav-link`, `row`, `col-md-6`, `card`) verlieren nach dem
+   Engine-Update ihre Gestaltung.
+2. Entschieden: kein Kompatibilitäts-Stylesheet. Der Release-Hinweis nennt den Bruch und verweist auf die
+   Mapping-Tabelle oben; Installationen passen ihr Markup selbst an.
+3. Module vor der Engine aktualisiert ergeben fehlende Klassen; es gibt keinen Abhängigkeitsmechanismus. Der
+   Release-Hinweis fordert: Engine zuerst.
+
 ## Offen
 
-1. **Kompatibilität bestehender Installationen**: Installationsspezifisches Markup in den `custom/`-Verzeichnissen der
-   Module (z. B. `mod_internet_verein/custom/*.html`, wird bei Updates nicht überschrieben), eigene Module und eigenes
-   `custom/styles/screen.css` mit Bootstrap-Klassen (`.nav-link`, `row`, `col-md-6`, `card`) verlieren nach dem
-   Engine-Update ihre Gestaltung. Optionen: Kompatibilitäts-Stylesheet für die häufigsten Bootstrap-Klassen, oder
-   Hinweis im Release mit Mapping-Tabelle.
-2. Module vor der Engine aktualisiert ergeben fehlende Klassen; es gibt keinen Abhängigkeitsmechanismus. Engine zuerst.
-3. Vorbestehend, nicht Teil des Umbaus: `timeline/birthdays.php` scheitert unter striktem `sql_mode` (MySQL 8+) an
+1. Vorbestehend, nicht Teil des Umbaus: `timeline/birthdays.php` scheitert unter striktem `sql_mode` (MySQL 8+) an
    `datum_geburtstag != ''`; Formulare ohne `id` erzeugen PHP-Warnungen „array offset on false“.
