@@ -144,23 +144,39 @@ class Folder extends FolderElement
     {
         $name = trim(preg_replace("/[^a-zA-Z0-9\s\.äöüÄÖÜß]/", ' ', (string) $name));
         $name = preg_replace("/[\s]+/", ' ', $name);
+        // Trailing dots and spaces would hide the real extension, e.g. x.php.
+        $name = rtrim($name, '. ');
 
         if (strlen($name) > 0) {
-            //block critical file types (e.g. executable web content) from being uploaded
-            $extension = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+            // Block critical file types (e.g. executable web content) from being uploaded.
+            // Every dot-separated segment is checked, because web servers may execute
+            // multi-extension files such as x.php.jpg.
             $blockedExtensions = [
-                'php', 'php3', 'php4', 'php5', 'php7', 'phtml', 'pht', 'phar',
+                'php', 'php3', 'php4', 'php5', 'php6', 'php7', 'php8', 'phps', 'phtml', 'pht', 'phar',
                 'htaccess', 'cgi', 'pl', 'py', 'sh', 'asp', 'aspx', 'jsp',
-                'exe', 'com', 'bat', 'cmd', 'js', 'html', 'htm', 'svg'
+                'exe', 'com', 'bat', 'cmd', 'js', 'mjs', 'html', 'htm', 'xhtml', 'xht',
+                'shtml', 'shtm', 'stm', 'svg', 'svgz', 'xml', 'xsl', 'xslt'
             ];
 
-            if (in_array($extension, $blockedExtensions)) {
-                return false;
+            $segments = explode('.', strtolower($name));
+            array_shift($segments);
+
+            foreach ($segments as $segment) {
+                if (in_array(trim($segment), $blockedExtensions)) {
+                    return false;
+                }
             }
 
             $metaFileSystemName = $this->getMetaFileSystemName($name, $groupArray);
-            //copy($tmpFileSystemName, $this->getFileSystemPath() . '/' .$metaFileSystemName);
-            return move_uploaded_file($tmpFileSystemName, $this->getFileSystemPath(). '/' .$metaFileSystemName);
+            $folderPath = $this->getFileSystemPath();
+            $targetPath = $folderPath . '/' . $metaFileSystemName;
+
+            // The target must stay inside this folder
+            if (basename($targetPath) !== $metaFileSystemName || realpath(dirname($targetPath)) !== realpath($folderPath)) {
+                return false;
+            }
+
+            return move_uploaded_file($tmpFileSystemName, $targetPath);
         }
 
         return false;

@@ -41,17 +41,20 @@ if ($libAuth->isLoggedin()) {
         'anrede', 'titel', 'rang', 'vorname', 'praefix', 'name', 'suffix', 'geburtsname',
         'zusatz1', 'strasse1', 'ort1', 'plz1', 'land1',
         'zusatz2', 'strasse2', 'ort2', 'plz2', 'land2',
-        'region1', 'region2', 'telefon1', 'telefon2', 'mobiltelefon', 'email', 'skype', 'webseite',
-        'datum_geburtstag', 'beruf', 'heirat_datum', 'heirat_partner', 'tod_datum', 'tod_ort', 'status',
+        'region1', 'region2', 'telefon1', 'telefon2', 'mobiltelefon', 'skype', 'webseite',
+        'beruf', 'heirat_datum', 'heirat_partner', 'tod_datum', 'tod_ort', 'status',
         'semester_reception', 'semester_promotion', 'semester_philistrierung', 'semester_aufnahme', 'semester_fusion',
         'austritt_datum', 'spitzname', 'leibmitglied',
         'anschreiben_zusenden', 'spendenquittung_zusenden',
         'bemerkung', 'vita'];
 
     // Is the editor an Internetwart?
-    if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
-        // Then also edit the sensitive fields
-        $fields = array_merge($fields, ['gruppe', 'password_hash']);
+    $isAdmin = in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices());
+
+    if ($isAdmin) {
+        // Then also edit the sensitive fields. Email and birthday identify the account
+        // in login and password reset, so they are as sensitive as the password hash.
+        $fields = array_merge($fields, ['email', 'datum_geburtstag', 'gruppe', 'password_hash']);
     }
 
     /**
@@ -175,7 +178,7 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<p class="mb-4">Hier können sämtliche Daten einer Person bearbeitet werden. Die Gruppe (Fuchs, Bursch etc.) kann nur von einem Internetwart ausgewählt werden, da sie als Zugangskontrolle für Seiten im VCMS dient.</p>';
+    echo '<p class="mb-4">Hier können sämtliche Daten einer Person bearbeitet werden. Die Gruppe (Fuchs, Bursch etc.), die E-Mail-Adresse und das Geburtsdatum können nur von einem Internetwart geändert werden, da sie der Zugangskontrolle und der Anmeldung im VCMS dienen.</p>';
     echo '<hr />';
 
     /**
@@ -246,10 +249,10 @@ if ($libAuth->isLoggedin()) {
     $libForm->printRegionDropDownBox('region2', 'Region 2', $personRow['region2']);
 
     $libForm->printTextInput('mobiltelefon', 'Mobiltelefon', $personRow['mobiltelefon'], 'tel');
-    $libForm->printTextInput('email', 'E-Mail-Adresse', $personRow['email'], 'email');
+    $libForm->printTextInput('email', 'E-Mail-Adresse', $personRow['email'], 'email', !$isAdmin);
     $libForm->printTextInput('skype', 'Skype', $personRow['skype']);
     $libForm->printTextInput('webseite', 'Webseite', $personRow['webseite']);
-    $libForm->printDateInput('datum_geburtstag', 'Geburtsdatum', $personRow['datum_geburtstag']);
+    $libForm->printDateInput('datum_geburtstag', 'Geburtsdatum', $personRow['datum_geburtstag'], !$isAdmin);
     $libForm->printTextInput('beruf', 'Beruf', $personRow['beruf']);
     $libForm->printDateInput('heirat_datum', 'Heiratsdatum', $personRow['heirat_datum']);
 

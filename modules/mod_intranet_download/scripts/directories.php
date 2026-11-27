@@ -73,9 +73,28 @@ elseif (isset($_POST['action']) && $_POST['action'] == 'upload' && isset($_POST[
     $folder = $hashes[$_POST['hash']];
 
     if (in_array($folder->owningOffice, $libAuth->getOffices())) {
-        if (isset($_POST['gruppen']) && count($_POST['gruppen']) > 0) {
+        // Only accept groups that exist and may be selected in the upload form
+        $validGroups = [];
+        $stmt = $libDb->prepare("SELECT bezeichnung FROM base_gruppe WHERE bezeichnung NOT IN ('X', 'T', 'V')");
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $validGroups[] = (string) $row['bezeichnung'];
+        }
+
+        $requestedGroups = [];
+
+        if (isset($_POST['gruppen']) && is_array($_POST['gruppen'])) {
+            foreach ($_POST['gruppen'] as $requestedGroup) {
+                if (is_string($requestedGroup) && in_array($requestedGroup, $validGroups, true)) {
+                    $requestedGroups[] = $requestedGroup;
+                }
+            }
+        }
+
+        if (count($requestedGroups) > 0) {
             if (isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name'] != '') {
-                $groupArray = array_merge($_POST['gruppen'], [$libAuth->getGroup()]);
+                $groupArray = array_merge($requestedGroups, [$libAuth->getGroup()]);
                 if ($folder->addFile($_FILES['file']['tmp_name'], $_FILES['file']['name'], $groupArray)) {
                     $libGlobal->notificationTexts[] = 'Die Datei wurde hochgeladen.';
                     $rootFolderObject->scanFileSystem();
