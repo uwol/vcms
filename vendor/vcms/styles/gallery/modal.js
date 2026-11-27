@@ -5,7 +5,10 @@ function loadGalleryModal(){
 		return;
 	}
 
-	fetch("vendor/vcms/styles/gallery/modal.html").then(function(response) {
+	// Unlike the stylesheets and scripts, the markup carries no cache version in its URL, so it
+	// is revalidated on every load. Otherwise a browser could keep the markup of an older engine
+	// after an update, which the current stylesheet no longer hides.
+	fetch("vendor/vcms/styles/gallery/modal.html", {cache: "no-cache"}).then(function(response) {
 		return response.text();
 	}).then(function(html) {
 		content.insertAdjacentHTML("beforeend", html);
