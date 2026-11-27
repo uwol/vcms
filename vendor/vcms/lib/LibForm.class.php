@@ -239,8 +239,12 @@ class LibForm
 
     public function printFileUpload($name, $label, $disabled = false, $required = false, $classes = [], $accepts = [])
     {
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
-        echo '<label class="col-span-12 ui-btn ui-btn-outline-secondary';
+        /*
+        * No grid row here: the button is the only element, and the eleven gaps of a twelve-column
+        * grid would overflow narrow columns such as the photo column of the person admin.
+        */
+        echo '<div class="mb-4">';
+        echo '<label class="block ui-btn ui-btn-outline-secondary';
 
         $this->printClassesString($classes);
 
