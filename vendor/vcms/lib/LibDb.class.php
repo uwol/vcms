@@ -31,6 +31,11 @@ class LibDb
     {
         global $libConfig;
 
+        // Connect only once per request; initialize.php may already have connected
+        if ($this->connection instanceof PDO) {
+            return;
+        }
+
         $mysqlPort = 3306;
 
         if ($libConfig->mysqlPort != "") {

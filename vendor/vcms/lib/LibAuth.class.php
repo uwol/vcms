@@ -23,6 +23,12 @@ use PDO;
 
 class LibAuth
 {
+    // Absolute lifetime of a login session, regardless of activity
+    public const MAX_SESSION_LIFETIME = 7 * 24 * 60 * 60;
+
+    // Interval in seconds after which group and offices are reloaded from the database
+    public const REFRESH_INTERVAL = 60;
+
     public $id;
     public $salutation;
     public $title;
@@ -36,6 +42,10 @@ class LibAuth
     public $possibleGroups = [];
 
     public $isLoggedIn = false;
+
+    public $loginTimestamp;
+    public $lastRefreshTimestamp;
+    public $passwordHashFingerprint = '';
 
     /*
     * tries to login with email and password
@@ -62,15 +72,11 @@ class LibAuth
 
         $this->isLoggedIn = false;
 
-        //collect potential valid groups
-        $stmt = $libDb->prepare('SELECT bezeichnung FROM base_gruppe');
-        $stmt->execute();
+        $this->loginTimestamp = null;
+        $this->lastRefreshTimestamp = null;
+        $this->passwordHashFingerprint = '';
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if ($row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'V') {
-                $this->possibleGroups[] = $row['bezeichnung'];
-            }
-        }
+        $this->possibleGroups = $this->loadPossibleGroups();
 
         /*
         * check for problem cases
@@ -145,64 +151,14 @@ class LibAuth
         if ($this->checkPassword($password, $row['password_hash'])) {
             //a. login successful
             $this->isLoggedIn = true;
+            $this->loginTimestamp = time();
+            $this->lastRefreshTimestamp = time();
+            $this->passwordHashFingerprint = $this->getPasswordHashFingerprint($row['password_hash']);
 
-            $this->id = $row['id'];
-            $this->salutation = $row['anrede'];
-            $this->title = $row['titel'];
-            $this->prefix = $row['praefix'];
-            $this->firstName = $row['vorname'];
-            $this->suffix = $row['suffix'];
-            $this->lastName = $row['name'];
-            $this->group = $row['gruppe'];
+            $this->applyPersonRow($row);
 
             //b. determine functions
-            $stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester OR semester=:semester_next');
-            $stmt->bindValue(':semester', $libTime->getSemesterName());
-            $stmt->bindValue(':semester_next', $libTime->getFollowingSemesterName());
-            $stmt->execute();
-
-            //for all semesters
-            while ($semesterRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $possibleOffices = $libSecurityManager->getPossibleOffices();
-
-                //for all functions
-                foreach ($possibleOffices as $office) {
-                    //does the member have the function in the semester?
-                    if ($semesterRow[$office] == $row['id']) {
-                        //save this function
-                        $this->offices[] = $office;
-                    }
-                }
-            }
-
-            //for the last 20 semesters
-            $semesterIterator = $libTime->getSemesterName();
-
-            for ($i = 0; $i < 20; $i++) {
-                $semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
-
-                //select the internetwart in that semester
-                $stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester');
-                $stmt->bindValue(':semester', $semesterIterator);
-                $stmt->execute();
-                $stmt->bindColumn('internetwart', $internetwart);
-                $stmt->fetch();
-
-                //if there is an internetwart given
-                if ($internetwart) {
-                    //if the authenticating user is this internetwart
-                    if ($internetwart == $row['id']) {
-                        //save this function
-                        $this->offices[] = 'internetwart';
-                    }
-
-                    //we only want to do this for the most recent internetwart -> break
-                    break;
-                }
-            }
-
-            //remove redundant functions from multiple semesters
-            $this->offices = array_unique($this->offices);
+            $this->offices = $this->loadOffices($row['id']);
 
             //c. log successful login attempt
             $stmt = $libDb->prepare('INSERT INTO sys_log_intranet (mitglied, aktion, datum, punkte, ipadresse) VALUES (:mitglied, :aktion, NOW(), :punkte, :ipadresse)');
@@ -228,6 +184,139 @@ class LibAuth
         //error message has to be imprecise
         $libGlobal->errorTexts[] = 'E-Mail-Adresse oder Passwort falsch.';
         return false;
+    }
+
+    /*
+    * Revalidates a login session against the database. Returns false if the session
+    * must be terminated, e.g. because the person was deleted, moved to an invalid
+    * group, changed the password or the session exceeded its absolute lifetime.
+    * Group and offices are reloaded, so revoked rights take effect.
+    */
+    public function refresh()
+    {
+        global $libDb;
+
+        if (!$this->isLoggedin()) {
+            return false;
+        }
+
+        $now = time();
+
+        if (!is_numeric($this->loginTimestamp) || $now - $this->loginTimestamp > self::MAX_SESSION_LIFETIME) {
+            return false;
+        }
+
+        if (is_numeric($this->lastRefreshTimestamp) && $now - $this->lastRefreshTimestamp < self::REFRESH_INTERVAL) {
+            return true;
+        }
+
+        $stmt = $libDb->prepare('SELECT id, anrede, titel, praefix, vorname, suffix, gruppe, name, password_hash FROM base_person WHERE id=:id');
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!is_array($row)) {
+            return false;
+        }
+
+        // The password was changed since login, e.g. by an administrator
+        if (!hash_equals((string) $this->passwordHashFingerprint, $this->getPasswordHashFingerprint($row['password_hash']))) {
+            return false;
+        }
+
+        $this->possibleGroups = $this->loadPossibleGroups();
+
+        if (!in_array($row['gruppe'], $this->possibleGroups)) {
+            return false;
+        }
+
+        $this->applyPersonRow($row);
+        $this->offices = $this->loadOffices($row['id']);
+        $this->lastRefreshTimestamp = $now;
+
+        return true;
+    }
+
+    private function loadPossibleGroups()
+    {
+        global $libDb;
+
+        $possibleGroups = [];
+
+        $stmt = $libDb->prepare('SELECT bezeichnung FROM base_gruppe');
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['bezeichnung'] != 'T' && $row['bezeichnung'] != 'X' && $row['bezeichnung'] != 'V') {
+                $possibleGroups[] = $row['bezeichnung'];
+            }
+        }
+
+        return $possibleGroups;
+    }
+
+    private function applyPersonRow($row)
+    {
+        $this->id = $row['id'];
+        $this->salutation = $row['anrede'];
+        $this->title = $row['titel'];
+        $this->prefix = $row['praefix'];
+        $this->firstName = $row['vorname'];
+        $this->suffix = $row['suffix'];
+        $this->lastName = $row['name'];
+        $this->group = $row['gruppe'];
+    }
+
+    private function loadOffices($personId)
+    {
+        global $libDb, $libTime, $libSecurityManager;
+
+        $offices = [];
+
+        // Offices in the current and the following semester
+        $stmt = $libDb->prepare('SELECT * FROM base_semester WHERE semester=:semester OR semester=:semester_next');
+        $stmt->bindValue(':semester', $libTime->getSemesterName());
+        $stmt->bindValue(':semester_next', $libTime->getFollowingSemesterName());
+        $stmt->execute();
+
+        $possibleOffices = $libSecurityManager->getPossibleOffices();
+
+        while ($semesterRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            foreach ($possibleOffices as $office) {
+                if ($semesterRow[$office] == $personId) {
+                    $offices[] = $office;
+                }
+            }
+        }
+
+        // The most recent Internetwart of the last 20 semesters keeps the office
+        $semesterIterator = $libTime->getSemesterName();
+
+        for ($i = 0; $i < 20; $i++) {
+            $semesterIterator = $libTime->getPreviousSemesterNameOfSemester($semesterIterator);
+
+            $stmt = $libDb->prepare('SELECT internetwart FROM base_semester WHERE semester=:semester');
+            $stmt->bindValue(':semester', $semesterIterator);
+            $stmt->execute();
+            $stmt->bindColumn('internetwart', $internetwart);
+            $stmt->fetch();
+
+            if ($internetwart) {
+                if ($internetwart == $personId) {
+                    $offices[] = 'internetwart';
+                }
+
+                break;
+            }
+        }
+
+        // Remove redundant offices from multiple semesters
+        return array_values(array_unique($offices));
+    }
+
+    private function getPasswordHashFingerprint($passwordHash)
+    {
+        return hash('sha256', trim((string) $passwordHash));
     }
 
     public function encryptPassword($password)
@@ -276,6 +365,11 @@ class LibAuth
         $stmt->bindValue(':password_hash', $passwdHash);
         $stmt->bindValue(':id', $personId, PDO::PARAM_INT);
         $stmt->execute();
+
+        // Keep the own session valid when the logged-in person changes the own password
+        if ($this->isLoggedIn && $personId == $this->id) {
+            $this->passwordHashFingerprint = $this->getPasswordHashFingerprint($passwdHash);
+        }
 
         if (!$quiet) {
             $libGlobal->notificationTexts[] = 'Das Passwort wurde gespeichert.';

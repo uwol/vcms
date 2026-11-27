@@ -116,6 +116,16 @@ if (isset($_REQUEST['semester']) && $libTime->isValidSemesterString($_REQUEST['s
 */
 if (isset($_SESSION) && isset($_SESSION['libAuth'])) {
     $libAuth = $_SESSION['libAuth'];
+
+    // Revalidate the session, so that revoked groups, offices and passwords take effect
+    $libDb->connect();
+
+    if (!($libAuth instanceof \vcms\LibAuth) || !$libAuth->refresh()) {
+        $_SESSION = [];
+        session_destroy();
+        setcookie(session_name(), '', time() - 86400);
+        $libAuth = new \vcms\LibAuth();
+    }
 } else {
     $libAuth = new \vcms\LibAuth();
 }
