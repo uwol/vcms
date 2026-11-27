@@ -88,7 +88,12 @@ class FolderElement
 
     public function getMetaFileSystemName($name, $groupArray)
     {
-        $securityPrefix = implode('', array_unique($groupArray));
+        // Group codes are single letters; anything else could inject path segments
+        $validGroups = array_filter(array_map('strval', $groupArray), function ($group) {
+            return preg_match('/^[A-Z]$/', $group) === 1;
+        });
+
+        $securityPrefix = implode('', array_unique($validGroups));
 
         $stringArray = [];
         $stringArray[] = $securityPrefix;
