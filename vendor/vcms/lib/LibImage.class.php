@@ -162,7 +162,7 @@ class LibImage
         }
 
         //$libGlobal->notificationTexts[] = 'Modifying photo with ImageMagick.';
-        system('convert -strip -geometry ' .escapeshellarg($newWidth). 'x' .escapeshellarg($newHeight). " -quality 75 '".escapeshellarg($imagePath)."' '".escapeshellarg($imagePath)."'");
+        system('convert -strip -geometry ' .escapeshellarg($newWidth. 'x' .$newHeight). ' -quality 75 ' .escapeshellarg($imagePath). ' ' .escapeshellarg($imagePath));
     }
 
 
@@ -254,7 +254,7 @@ class LibImage
         }
 
         //$libGlobal->notificationTexts[] = 'Rotating photo with ImageMagick.';
-        system('convert -strip -rotate ' .escapeshellarg($degree). " '".escapeshellarg($imagePath)."' '".escapeshellarg($imagePath)."'");
+        system('convert -strip -rotate ' .escapeshellarg($degree). ' ' .escapeshellarg($imagePath). ' ' .escapeshellarg($imagePath));
     }
 
     //Image Upload------------------------------------------------------------------
