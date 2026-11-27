@@ -135,7 +135,7 @@ echo '<script>
 
 		var url = "api.php?iid=event_admin_galerie_upload&veranstaltungId=' .$id. '";
 		var input = document.getElementById("fileupload");
-		var progressBar = document.querySelector("#progress .progress-bar");
+		var progressBar = document.querySelector("#progress .ui-progress-bar");
 
 		if (!input) {
 			return;

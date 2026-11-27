@@ -684,17 +684,19 @@ input[type="datetime-local"].ui-form-control:hover::-webkit-calendar-picker-indi
 
 
 /*
-* Modal dialog on the native dialog element, opened by gallery/modal.js
+* Modal dialog on the native dialog element, opened by gallery/modal.js. The dialog is fixed
+* in the top layer, so it scrolls itself when it is taller than the viewport, as the
+* Bootstrap modal wrapper did; otherwise its footer could end up out of reach.
 */
 .ui-modal {
 	--ui-modal-margin: 0.5rem;
 	--ui-modal-width: 500px;
 	width: auto;
 	max-width: none;
-	max-height: none;
+	max-height: calc(100% - 2 * var(--ui-modal-margin));
 	padding: 0;
 	margin: var(--ui-modal-margin);
-	overflow: visible;
+	overflow-y: auto;
 	color: inherit;
 	background: transparent;
 	border: 0;
