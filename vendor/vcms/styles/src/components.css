@@ -67,8 +67,8 @@ fieldset:disabled .ui-btn {
 	@apply pt-0;
 }
 
-.ui-card-title {
-	@apply font-semibold tracking-tight;
+.ui-card-header .ui-card-title {
+	@apply font-normal;
 }
 
 /*
@@ -82,6 +82,10 @@ fieldset:disabled .ui-btn {
 .ui-card-img > img,
 .ui-card-img > a > img {
 	@apply mx-auto block h-auto max-w-full;
+}
+
+.ui-card-img .ui-card-body h3 {
+	@apply font-normal;
 }
 
 
