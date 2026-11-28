@@ -823,7 +823,7 @@ function printAssociationDetails($row)
 
         if ($chargierCount > 0) {
             echo '<p>';
-            echo '<span class="ui-badge bg-secondary text-white">' .$chargierCount. '</span>';
+            echo '<span class="ui-badge">' .$chargierCount. '</span>';
             echo ' ';
             echo 'Chargierter bei ';
 

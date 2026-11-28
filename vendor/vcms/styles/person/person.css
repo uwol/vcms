@@ -26,7 +26,7 @@
 	background-color: white;
 }
 
-/* img-fluid has no display: block, unlike the img-responsive of Bootstrap 3 */
+/* Block images leave no line-height gap below them */
 .person-img-xs,
 .person-img-md,
 .person-img-lg,
@@ -56,19 +56,19 @@
 	row-gap: 1rem;
 }
 
-@media (min-width: 576px) {
+@variant sm {
 	.persons-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
-@media (min-width: 768px) {
+@variant md {
 	.persons-grid {
 		grid-template-columns: repeat(3, 1fr);
 	}
 }
 
-@media (min-width: 992px) {
+@variant lg {
 	.persons-grid {
 		grid-template-columns: repeat(4, 1fr);
 	}

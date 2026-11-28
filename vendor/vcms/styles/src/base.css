@@ -1,14 +1,15 @@
 /*
-* Element defaults, derived from the Bootstrap 5.3 reboot (https://getbootstrap.com, MIT
-* license) with the values resolved. Unlike the reboot, block elements have no vertical
-* margins: the space between siblings comes from the gap of their flex or grid parent
-* (the page container, ui-card-body, fieldset and the containers in the markup).
+* Element defaults on top of the Tailwind preflight. Block elements have no vertical margins:
+* the space between siblings comes from the gap of their flex or grid parent (the page
+* container, ui-card-body, fieldset and the containers in the markup).
 */
 
 *,
 ::after,
-::before {
-	box-sizing: border-box;
+::before,
+::backdrop,
+::file-selector-button {
+	border-color: var(--color-border);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -18,24 +19,8 @@
 }
 
 body {
-	margin: 0;
-	font-family: var(--font-sans);
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1.5;
 	color: var(--color-body);
 	background-color: var(--color-white);
-	-webkit-text-size-adjust: 100%;
-	-webkit-tap-highlight-color: transparent;
-}
-
-hr {
-	width: 100%;
-	margin: 0;
-	color: inherit;
-	border: 0;
-	border-top: 1px solid;
-	opacity: 0.25;
 }
 
 h1,
@@ -44,280 +29,94 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 0;
 	font-weight: 500;
 	line-height: 1.2;
 }
 
 h1 {
-	font-size: calc(1.375rem + 1.5vw);
+	font-size: 2em;
+	text-align: center;
 }
 
 h2 {
-	font-size: calc(1.325rem + 0.9vw);
+	font-size: 1.5em;
+	text-align: center;
 }
 
 h3 {
-	font-size: calc(1.3rem + 0.6vw);
+	font-size: 1.25em;
 }
 
-h4 {
-	font-size: calc(1.275rem + 0.3vw);
-}
-
-@media (min-width: 1200px) {
-	h1 {
-		font-size: 2.5rem;
-	}
-
-	h2 {
-		font-size: 2rem;
-	}
-
-	h3 {
-		font-size: 1.75rem;
-	}
-
-	h4 {
-		font-size: 1.5rem;
-	}
-}
-
+h4,
 h5 {
-	font-size: 1.25rem;
+	font-size: 1.125em;
 }
 
-h6 {
-	font-size: 1rem;
+hr {
+	width: 100%;
 }
 
-p {
-	margin: 0;
+/*
+* Links are rendered without an underline and get one on hover. Links that are styled as
+* buttons are excluded from the hover rule.
+*/
+a {
+	color: var(--color-primary);
 }
 
-abbr[title] {
-	text-decoration: underline dotted;
-	cursor: help;
-	text-decoration-skip-ink: none;
+a:not(.ui-btn):hover,
+a:not(.ui-btn):focus {
+	text-decoration: underline;
 }
 
-address {
-	margin: 0;
-	font-style: normal;
-	line-height: inherit;
-}
-
-ol,
-ul {
+/* Content lists get markers; lists with a class are components and style themselves */
+ul:not([class]),
+ol:not([class]) {
 	padding-left: 2rem;
 }
 
-dl,
-ol,
-ul {
-	margin: 0;
+ul:not([class]) {
+	list-style: disc;
+}
+
+ol:not([class]) {
+	list-style: decimal;
 }
 
 dt {
 	font-weight: 700;
 }
 
-dd {
-	margin: 0;
-}
-
-blockquote {
-	margin: 0;
-}
-
-b,
-strong {
-	font-weight: bolder;
-}
-
-small {
-	font-size: 0.875em;
-}
-
 mark {
 	padding: 0.1875em;
-	color: var(--color-body);
-	background-color: #fff3cd;
-}
-
-sub,
-sup {
-	position: relative;
-	font-size: 0.75em;
-	line-height: 0;
-	vertical-align: baseline;
-}
-
-sub {
-	bottom: -0.25em;
-}
-
-sup {
-	top: -0.5em;
-}
-
-a {
-	color: var(--color-primary);
-	text-decoration: underline;
-}
-
-a:hover {
-	color: #0a58ca;
-}
-
-a:not([href]):not([class]),
-a:not([href]):not([class]):hover {
-	color: inherit;
-	text-decoration: none;
-}
-
-code,
-kbd,
-pre,
-samp {
-	font-family: var(--font-mono);
-	font-size: 1em;
-}
-
-pre {
-	display: block;
-	margin: 0;
-	overflow: auto;
-	font-size: 0.875em;
-}
-
-pre code {
-	font-size: inherit;
-	color: inherit;
-	word-break: normal;
+	background-color: var(--color-yellow-100);
 }
 
 code {
 	font-size: 0.875em;
-	color: #d63384;
-	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
-a > code {
-	color: inherit;
-}
-
-kbd {
-	padding: 0.1875rem 0.375rem;
-	font-size: 0.875em;
-	color: var(--color-white);
-	background-color: var(--color-body);
-	border-radius: 0.25rem;
-}
-
-kbd kbd {
-	padding: 0;
-	font-size: 1em;
-}
-
-figure {
-	margin: 0;
-}
-
+/* Inline images such as icons in a line of text stay inline, unlike in the preflight */
 img,
 svg {
+	display: inline;
 	vertical-align: middle;
 }
 
-table {
-	caption-side: bottom;
-	border-collapse: collapse;
-}
-
 caption {
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
+	padding-block: 0.5rem;
 	color: var(--color-muted);
 	text-align: left;
 }
 
 th {
 	text-align: inherit;
-	text-align: -webkit-match-parent;
 }
 
-tbody,
-td,
-tfoot,
-th,
-thead,
-tr {
-	border-color: inherit;
-	border-style: solid;
-	border-width: 0;
-}
-
-label {
-	display: inline-block;
-}
-
-button {
-	border-radius: 0;
-}
-
-button:focus:not(:focus-visible) {
-	outline: 0;
-}
-
-button,
-input,
-optgroup,
-select,
-textarea {
-	margin: 0;
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit;
-}
-
-button,
-select {
-	text-transform: none;
-}
-
-[role="button"] {
+button:not(:disabled),
+[role="button"]:not(:disabled) {
 	cursor: pointer;
-}
-
-select {
-	word-wrap: normal;
-}
-
-select:disabled {
-	opacity: 1;
-}
-
-[list]:not([type="date"]):not([type="datetime-local"]):not([type="month"]):not([type="week"]):not([type="time"])::-webkit-calendar-picker-indicator {
-	display: none !important;
-}
-
-[type="button"],
-[type="reset"],
-[type="submit"],
-button {
-	-webkit-appearance: button;
-}
-
-[type="button"]:not(:disabled),
-[type="reset"]:not(:disabled),
-[type="submit"]:not(:disabled),
-button:not(:disabled) {
-	cursor: pointer;
-}
-
-::-moz-focus-inner {
-	padding: 0;
-	border-style: none;
 }
 
 textarea {
@@ -333,68 +132,17 @@ fieldset {
 	flex-direction: column;
 	gap: 1rem;
 	min-width: 0;
-	padding: 0;
-	margin: 0;
-	border: 0;
 }
 
+/*
+* A floating legend is not rendered into the border of the fieldset but becomes a flex item,
+* so that the gap of the fieldset separates it from the first row.
+*/
 legend {
 	float: left;
 	width: 100%;
-	padding: 0;
-	font-size: calc(1.275rem + 0.3vw);
-	line-height: inherit;
-}
-
-@media (min-width: 1200px) {
-	legend {
-		font-size: 1.5rem;
-	}
-}
-
-legend + * {
-	clear: left;
-}
-
-::-webkit-datetime-edit-day-field,
-::-webkit-datetime-edit-fields-wrapper,
-::-webkit-datetime-edit-hour-field,
-::-webkit-datetime-edit-minute,
-::-webkit-datetime-edit-month-field,
-::-webkit-datetime-edit-text,
-::-webkit-datetime-edit-year-field {
-	padding: 0;
-}
-
-::-webkit-inner-spin-button {
-	height: auto;
-}
-
-[type="search"] {
-	-webkit-appearance: textfield;
-	outline-offset: -2px;
-}
-
-::-webkit-search-decoration {
-	-webkit-appearance: none;
-}
-
-::-webkit-color-swatch-wrapper {
-	padding: 0;
-}
-
-::-webkit-file-upload-button {
-	font: inherit;
-	-webkit-appearance: button;
-}
-
-::file-selector-button {
-	font: inherit;
-	-webkit-appearance: button;
-}
-
-output {
-	display: inline-block;
+	font-size: 1.25em;
+	font-weight: 500;
 }
 
 iframe {
@@ -402,15 +150,5 @@ iframe {
 }
 
 summary {
-	display: list-item;
 	cursor: pointer;
 }
-
-progress {
-	vertical-align: baseline;
-}
-
-[hidden] {
-	display: none !important;
-}
-

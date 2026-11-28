@@ -20,8 +20,8 @@
 	color: #961419;
 }
 
-a:link,
-a:visited {
+a:not(.ui-btn):link,
+a:not(.ui-btn):visited {
 	color: #961419;
 }
 
