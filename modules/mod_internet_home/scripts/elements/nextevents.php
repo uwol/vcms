@@ -36,7 +36,7 @@ if ($libModuleHandler->moduleIsAvailable('mod_internet_semesterprogramm')) {
 
 if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
     echo '<section class="nextevents-box">';
-    echo '<div class="ui-container">';
+    echo '<div class="ui-container flex flex-col gap-12">';
 
     echo '<div class="grid grid-cols-12 gap-x-6">';
     echo '<div class="text-center col-span-12 lg:col-span-8 lg:col-start-3">';
@@ -44,7 +44,7 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
     echo '</div>';
     echo '</div>';
 
-    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="grid grid-cols-12 gap-6">';
 
     if ($numberOfNextEvents > 0) {
         if ($semesterCoverAvailable) {
@@ -69,16 +69,16 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
 
             echo '</a></h3>';
 
+            echo '<p>';
             printEventDateTime($row);
+            echo '</p>';
 
-            echo '<address>';
-
+            // No empty address, it would add a gap
             if ($row['ort'] != '') {
-                echo '<span>' .$libString->protectXSS($row['ort']). '</span>';
+                echo '<address>' .$libString->protectXSS($row['ort']). '</address>';
             }
 
-            echo '</address>';
-            echo '<p class="social-buttons mb-0 mt-0">';
+            echo '<p class="social-buttons">';
 
             $libEvent->printFacebookShareButton($row['id']);
             $libEvent->printTwitterShareButton($row['id']);
@@ -108,7 +108,7 @@ if ($semesterCoverAvailable || $numberOfNextEvents > 0) {
 
         echo '<div class="ui-card-body">';
         echo '<h3><i class="fa fa-calendar" aria-hidden="true"></i> <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm</a></h3>';
-        echo '<p class="mb-0">Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
+        echo '<p>Weitere Veranstaltungen im <a href="index.php?pid=semesterprogramm&amp;semester=' .$libGlobal->semester. '">Semesterprogramm ' .$libTime->getSemesterString($libGlobal->semester). '</a></p>';
         echo '</div>';
 
         echo '</div>';

@@ -41,7 +41,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     echo '<div class="col-span-6 sm:col-span-2">';
     echo '<b>' .$libString->protectXSS($libPerson->formatNameString($row['anrede'], $row['titel'], $row['rang'], $row['vorname'], $row['praefix'], $row['name'], $row['suffix'], 5)). '</b>';
-    echo '<p class="mb-6">' .$row['anzahlzipfel']. ' Zipfel</p>';
+    echo '<p>' .$row['anzahlzipfel']. ' Zipfel</p>';
     echo '</div>';
 
     echo '<div class="hidden sm:block col-span-12 sm:col-span-8">';

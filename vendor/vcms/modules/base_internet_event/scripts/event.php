@@ -44,7 +44,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 if ($row['intern'] && !$libAuth->isLoggedIn()) {
-    echo '<p class="mb-6">Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
+    echo '<p>Für diese Veranstaltung ist eine <a href="index.php?pid=login">Anmeldung im Intranet</a> nötig.</p>';
 } else {
     if ($libAuth->isLoggedIn()) {
         if (isset($_POST['changeRegistrationState']) && $_POST['changeRegistrationState'] != '') {
@@ -96,7 +96,7 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
     }
 
     echo '<div class="event">';
-    echo '<div class="grid grid-cols-12 gap-x-6 ' .$class. '" style="' .$style. '">';
+    echo '<div class="grid grid-cols-12 gap-6 ' .$class. '" style="' .$style. '">';
 
     // date and time panel
     echo '<div class="col-span-12 sm:col-span-4 lg:col-span-3">';
@@ -106,6 +106,9 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
     printEventDetailDateTime($row);
 
     echo '<hr />';
+
+    // Location, status and registration form one block of details
+    echo '<div class="flex flex-col gap-1 empty:hidden">';
 
     if ($row['ort'] != '') {
         echo '<address>';
@@ -120,6 +123,9 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
     }
 
     printRegistrationStatus($row);
+
+    echo '</div>';
+
     printSocialButtons($row);
 
     echo '</div>';
@@ -132,7 +138,7 @@ if ($row['intern'] && !$libAuth->isLoggedIn()) {
     $descriptionText .= printRegistrations($row);
 
     if ($hasPictures) {
-        echo '<div class="col-span-12 sm:col-span-8 lg:col-span-9">';
+        echo '<div class="col-span-12 sm:col-span-8 lg:col-span-9 flex flex-col gap-6">';
 
         if ($descriptionText) {
             echo '<div class="ui-card reveal">';
@@ -208,7 +214,7 @@ function printSocialButtons($row)
     global $libEvent;
 
     echo '<hr />';
-    echo '<p class="social-buttons mb-0 mt-0">';
+    echo '<p class="social-buttons">';
 
     if (!$libEvent->isFacebookEvent($row)) {
         $libEvent->printFacebookShareButton($row['id']);
@@ -246,9 +252,9 @@ function printRegistrationStatus($row)
             echo '</form>';
         } else {
             if ($isRegistered) {
-                echo '<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> angemeldet';
+                echo '<p><i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> angemeldet</p>';
             } else {
-                echo '<i class="fa fa-fw fa-square-o" aria-hidden="true"></i> nicht angemeldet';
+                echo '<p><i class="fa fa-fw fa-square-o" aria-hidden="true"></i> nicht angemeldet</p>';
             }
         }
     }
@@ -292,20 +298,16 @@ function printRegistrations($row)
         $stmt->bindValue(':veranstaltung', $row['id'], PDO::PARAM_INT);
         $stmt->execute();
 
-        $registrationWritten = false;
-
-        $retstr .= '<p>';
+        $registrations = [];
 
         while ($eventrow = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if ($registrationWritten) {
-                $retstr .= ', ';
-            }
-
-            $retstr .= '<span><a href="index.php?pid=intranet_person&id=' .$eventrow['person']. '">' .$libString->protectXSS($libPerson->getNameString($eventrow['person'], 0)). '</a></span>';
-            $registrationWritten = true;
+            $registrations[] = '<span><a href="index.php?pid=intranet_person&amp;id=' .$eventrow['person']. '">' .$libString->protectXSS($libPerson->getNameString($eventrow['person'], 0)). '</a></span>';
         }
 
-        $retstr .= '</p>';
+        // No empty paragraph without registrations, it would add a margin below the description
+        if (count($registrations) > 0) {
+            $retstr .= '<p>' .implode(', ', $registrations). '</p>';
+        }
     }
 
     return $retstr;
@@ -313,11 +315,11 @@ function printRegistrations($row)
 
 function printGallery($id, $pictures)
 {
-    echo '<div class="grid grid-cols-12 gap-x-6 gallery">';
+    echo '<div class="grid grid-cols-12 gap-x-6 gap-y-2 gallery">';
 
     foreach ($pictures as $key => $value) {
         echo '<div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">';
-        echo '<div class="ui-card ui-card-img reveal mb-2">';
+        echo '<div class="ui-card ui-card-img reveal">';
         echo '<div class="img-frame">';
         echo '<a href="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '">';
         echo '<img src="api.php?iid=event_picture&amp;eventid=' .$id. '&amp;id=' .$key. '" alt="" />';

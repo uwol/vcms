@@ -117,12 +117,12 @@ echo '<h1>Kontakt und Impressum</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="grid grid-cols-12 gap-x-6">';
+echo '<div class="grid grid-cols-12 gap-6">';
 echo '<div class="col-span-12 sm:col-span-6">';
-echo '<section class="address-box mb-12">';
+echo '<section class="address-box flex flex-col gap-6">';
 
-echo '<p class="mb-6">' .$libConfig->verbindungName. '</p>';
-echo '<address class="contact-address mb-6">';
+echo '<p>' .$libConfig->verbindungName. '</p>';
+echo '<address class="contact-address">';
 
 if ($libConfig->verbindungZusatz != '') {
     echo '<span>' .$libConfig->verbindungZusatz. '</span><br />';
@@ -135,7 +135,7 @@ echo '<i class="fa fa-phone fa-fw" aria-hidden="true"></i> <span>' .$libConfig->
 echo '<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <span>' .$libConfig->emailInfo. '</span><br />';
 echo '</address>';
 
-echo '<p class="contact-vorstand mb-6">';
+echo '<p class="contact-vorstand">';
 
 $board = $libAssociation->getContactableActiveBoardIds();
 
@@ -172,7 +172,7 @@ echo '</section>';
 echo '</div>';
 
 echo '<aside class="col-span-12 sm:col-span-6">';
-echo '<div class="ui-card reveal mb-12">';
+echo '<div class="ui-card reveal">';
 echo '<div class="ui-card ui-card-img">';
 echo '<img src="' .$libModuleHandler->getModuleDirectory(). '/custom/img/haus.jpg" alt="" class="max-w-full h-auto block mx-auto reveal" />';
 echo '</div>';
@@ -182,14 +182,11 @@ echo '</aside>';
 echo '</div>';
 
 if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
+    echo '<section class="contact-form-box flex flex-col gap-4">';
     echo '<h2>Kontakt aufnehmen</h2>';
 
-    echo '<div class="grid grid-cols-12 gap-x-6">';
-    echo '<div class="col-span-12 sm:col-span-12">';
-    echo '<section class="contact-form-box mb-12">';
-
     if ($mailsent) {
-        echo '<p class="mb-6">Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
+        echo '<p>Vielen Dank, Ihre Nachricht wurde weitergeleitet.</p>';
     } else {
         $name = '';
 
@@ -233,23 +230,16 @@ if ($libGenericStorage->loadValueInCurrentModule('show_form')) {
     }
 
     echo '</section>';
-    echo '</div>';
-    echo '</div>';
 }
 
 if ($libGenericStorage->loadValueInCurrentModule('show_haftungshinweis')) {
+    echo '<section class="disclaimer-box flex flex-col gap-4">';
     echo '<h2>Haftungshinweis</h2>';
-
-    echo '<div class="grid grid-cols-12 gap-x-6">';
-    echo '<div class="col-span-12 md:col-span-12">';
-    echo '<section class="disclaimer-box">';
-    echo '<p class="mb-6">Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
+    echo '<p>Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>';
     echo '</section>';
-    echo '</div>';
-    echo '</div>';
 }
 
+echo '<section class="cms-box flex flex-col gap-4">';
 echo '<h2>VCMS</h2>';
-echo '<section class="cms-box">';
-echo '<p class="mb-6">Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)</p>';
+echo '<p>Content Management System: <a href="http://www.' .$libGlobal->vcmsHostname. '">VCMS</a> (GNU General Public License)</p>';
 echo '</section>';

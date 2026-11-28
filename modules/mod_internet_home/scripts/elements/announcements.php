@@ -39,9 +39,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo '<img src="' .$image. '" class="max-w-full h-auto block mx-auto reveal" alt="" />';
     }
 
-    echo '<p class="ui-card-body mb-0">';
-    echo nl2br($libString->protectXSS(trim((string) $row['text'])));
-    echo '</p>';
+    echo '<div class="ui-card-body">';
+    echo '<p>' .nl2br($libString->protectXSS(trim((string) $row['text']))). '</p>';
+    echo '</div>';
 
     echo '</div>';
     echo '</div>';

@@ -97,7 +97,7 @@ class LibForm
 
         $value = $libString->protectXSS((string) $value);
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '">';
         echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
@@ -174,7 +174,7 @@ class LibForm
 
         $value = $libString->protectXSS((string) $value);
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '">';
         echo '<input type="' .$type. '" id="' .$name. '" name="' .$name. '" value="' .$value. '"';
@@ -198,7 +198,7 @@ class LibForm
 
         $value = $libString->protectXSS((string) $value);
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '">';
         echo '<textarea id="' .$name. '" name="' .$name. '" rows="10"';
@@ -217,7 +217,7 @@ class LibForm
 
     public function printFileInput($name, $label, $disabled = false, $required = false, $classes = [], $accepts = [])
     {
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '">';
         echo '<label class="ui-btn ui-btn-outline-secondary';
@@ -243,7 +243,7 @@ class LibForm
         * No grid row here: the button is the only element, and the eleven gaps of a twelve-column
         * grid would overflow narrow columns such as the photo column of the person admin.
         */
-        echo '<div class="mb-4">';
+        echo '<div>';
         echo '<label class="block ui-btn ui-btn-outline-secondary';
 
         $this->printClassesString($classes);
@@ -264,10 +264,10 @@ class LibForm
     {
         global $libString;
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '">';
-        echo '<p class="ui-form-control-plaintext mb-4';
+        echo '<p class="ui-form-control-plaintext';
 
         $this->printClassesString($classes);
 
@@ -280,7 +280,7 @@ class LibForm
 
     public function printSubmitButton($label, $classes = [])
     {
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<div class="' .$this->getInputColumnClasses(true). '">';
         echo '<button type="submit" class="ui-btn ui-btn-outline-secondary';
 
@@ -304,7 +304,7 @@ class LibForm
     {
         global $libDb, $libPerson, $libString;
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '"><select id="' .$name. '" name="' .$name. '"';
 
@@ -337,7 +337,7 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '"><select id="' .$name. '" name="' .$name. '"';
 
@@ -370,7 +370,7 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '"><select id="' .$name. '" name="' .$name. '"';
 
@@ -403,7 +403,7 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '"><select id="' .$name. '" name="' .$name. '"';
 
@@ -436,7 +436,7 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '"><select id="' .$name. '" name="' .$name. '"';
 
@@ -469,7 +469,7 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '"><select id="' .$name. '" name="' .$name. '"';
 
@@ -509,7 +509,7 @@ class LibForm
     {
         global $libDb, $libString;
 
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '"><select id="' .$name. '" name="' .$name. '"';
 
@@ -540,7 +540,7 @@ class LibForm
 
     public function printBoolSelectBox($name, $label, $selectedValue = 0)
     {
-        echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+        echo '<div class="grid grid-cols-12 gap-x-6">';
         echo '<label for="' .$name. '" class="' .$this->getLabelColumnClasses(). ' ui-col-form-label">' .$label. '</label>';
         echo '<div class="' .$this->getInputColumnClasses(). '"><select name="' .$name. '" class="ui-form-select">';
         echo '<option value="1"';

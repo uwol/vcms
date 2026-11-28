@@ -127,7 +127,7 @@ if ($libAuth->isLoggedin()) {
     *
     */
     if ($membershipRow['mitglied'] != '' && $membershipRow['verein'] != '') {
-        echo '<form class="mb-6" method="post" action="index.php?pid=intranet_admin_memberships" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+        echo '<form method="post" action="index.php?pid=intranet_admin_memberships" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="delete" />';
         echo '<input type="hidden" name="mitglied" value="' .$membershipRow['mitglied']. '" />';
         echo '<input type="hidden" name="verein" value="' .$membershipRow['verein']. '" />';

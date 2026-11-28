@@ -81,7 +81,7 @@ if ($libEvent->isFacebookEvent($row)) {
         echo '</div>';
 
         echo '<div class="ui-card-body">';
-        echo '<div class="flex items-start">';
+        echo '<div class="flex items-start gap-4">';
 
         echo '<div class="shrink-0" style="text-align:center">';
         echo '<span style="font-size:32px;line-height:32px">' .$libTime->formatDayString($row['datum']). '</span><br />';
@@ -93,13 +93,13 @@ if ($libEvent->isFacebookEvent($row)) {
         echo '<span style="font-size:12px;line-height:12px;color:#e34e60">' .$monatNameUpper. '</span>';
         echo '</div>';
 
-        echo '<div class="grow ms-4">';
+        echo '<div class="grow">';
 
-        echo '<h3 class="mb-0 mt-0" style="font-weight:bold;font-size:14px">';
+        echo '<h3 style="font-weight:bold;font-size:14px">';
         echo '<a href="' .$libString->protectXss($eventUrl). '" style="color:black">' .$libString->protectXss($row['titel']). '</a>';
         echo '</h3>';
 
-        echo '<p class="mb-0 mt-0" style="color:#90949c;font-size:12px">';
+        echo '<p style="color:#90949c;font-size:12px">';
         echo $libString->protectXss($eventInterestedCount). ' Personen sind interessiert';
         echo ' · ';
         echo $libString->protectXss($eventAttendingCount). ' Personen nehmen teil';
@@ -110,7 +110,7 @@ if ($libEvent->isFacebookEvent($row)) {
 
         echo '<hr />';
 
-        echo '<p class="social-buttons mb-0 mt-0">';
+        echo '<p class="social-buttons">';
         echo '<a href="' .$libString->protectXss($eventUrl). '">';
         echo '<i class="fa fa-facebook-official fa-lg hvr-pop" aria-hidden="true"></i>';
         echo '</a>';

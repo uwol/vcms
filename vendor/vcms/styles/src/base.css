@@ -1,9 +1,8 @@
 /*
-* Element defaults. VCMS does not use the Tailwind preflight, because the layout relies on
-* the element defaults of Bootstrap (margins of headings, paragraphs and lists, inline
-* images, table borders). The rules below reproduce the Bootstrap 5.3 reboot
-* (https://getbootstrap.com, MIT license) with the values resolved, followed by the
-* element rules that VCMS sets on top of it.
+* Element defaults, derived from the Bootstrap 5.3 reboot (https://getbootstrap.com, MIT
+* license) with the values resolved. Unlike the reboot, block elements have no vertical
+* margins: the space between siblings comes from the gap of their flex or grid parent
+* (the page container, ui-card-body, fieldset and the containers in the markup).
 */
 
 *,
@@ -31,7 +30,8 @@ body {
 }
 
 hr {
-	margin: 1rem 0;
+	width: 100%;
+	margin: 0;
 	color: inherit;
 	border: 0;
 	border-top: 1px solid;
@@ -44,8 +44,7 @@ h3,
 h4,
 h5,
 h6 {
-	margin-top: 0;
-	margin-bottom: 0.5rem;
+	margin: 0;
 	font-weight: 500;
 	line-height: 1.2;
 }
@@ -93,8 +92,7 @@ h6 {
 }
 
 p {
-	margin-top: 0;
-	margin-bottom: 1rem;
+	margin: 0;
 }
 
 abbr[title] {
@@ -104,7 +102,7 @@ abbr[title] {
 }
 
 address {
-	margin-bottom: 1rem;
+	margin: 0;
 	font-style: normal;
 	line-height: inherit;
 }
@@ -117,15 +115,7 @@ ul {
 dl,
 ol,
 ul {
-	margin-top: 0;
-	margin-bottom: 1rem;
-}
-
-ol ol,
-ol ul,
-ul ol,
-ul ul {
-	margin-bottom: 0;
+	margin: 0;
 }
 
 dt {
@@ -133,12 +123,11 @@ dt {
 }
 
 dd {
-	margin-bottom: 0.5rem;
-	margin-left: 0;
+	margin: 0;
 }
 
 blockquote {
-	margin: 0 0 1rem;
+	margin: 0;
 }
 
 b,
@@ -197,8 +186,7 @@ samp {
 
 pre {
 	display: block;
-	margin-top: 0;
-	margin-bottom: 1rem;
+	margin: 0;
 	overflow: auto;
 	font-size: 0.875em;
 }
@@ -233,7 +221,7 @@ kbd kbd {
 }
 
 figure {
-	margin: 0 0 1rem;
+	margin: 0;
 }
 
 img,
@@ -336,7 +324,14 @@ textarea {
 	resize: vertical;
 }
 
+/*
+* The rows of a form are stacked with a gap. Fieldsets of inline forms override it with
+* utilities, e.g. flex flex-row flex-wrap items-center gap-2.
+*/
 fieldset {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 	min-width: 0;
 	padding: 0;
 	margin: 0;
@@ -347,7 +342,6 @@ legend {
 	float: left;
 	width: 100%;
 	padding: 0;
-	margin-bottom: 0.5rem;
 	font-size: calc(1.275rem + 0.3vw);
 	line-height: inherit;
 }

@@ -44,7 +44,7 @@ if ($libAuth->isLoggedin()) {
 
     echo '<div class="ui-card">';
     echo '<div class="ui-card-body">';
-    echo '<div class="flex flex-wrap justify-start">';
+    echo '<div class="flex flex-wrap justify-start gap-2">';
     echo '<a href="index.php?pid=intranet_admin_membership&amp;action=blank" class="ui-btn ui-btn-outline-secondary">Eine neue Vereinsmitgliedschaft anlegen</a>';
     echo '</div>';
     echo '</div>';

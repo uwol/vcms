@@ -73,8 +73,8 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-echo '<div class="grid grid-cols-12 gap-x-6">';
-echo '<div class="col-span-12 md:col-span-6">';
+echo '<div class="grid grid-cols-12 gap-6">';
+echo '<div class="col-span-12 md:col-span-6 max-md:empty:hidden">';
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(eingabedatum,'%Y-%m-01') AS eingabedatum FROM mod_news_news WHERE eingabedatum IS NOT NULL GROUP BY eingabedatum ORDER BY eingabedatum DESC");
 $stmt->execute();
@@ -92,7 +92,7 @@ echo '<div class="col-span-12 md:col-span-6">';
 
 echo '<div class="ui-card">';
 echo '<div class="ui-card-body">';
-echo '<div class="flex flex-wrap justify-start">';
+echo '<div class="flex flex-wrap justify-start gap-2">';
 echo '<a href="index.php?pid=intranet_news_write" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Einen Beitrag hinzufügen</a>';
 echo '</div>';
 echo '</div>';
@@ -115,14 +115,20 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     //month name
     $inputDate = (string) $row['eingabedatum'];
 
+    // Each month is a section of its own
     if ($lastSetMonth != substr($inputDate, 0, 7)) {
+        if ($lastSetMonth != '') {
+            echo '</section>';
+        }
+
+        echo '<section class="flex flex-col gap-4">';
         echo '<h2>' .$libTime->getMonth($libTime->formatMonthString($inputDate)). ' ' .substr($inputDate, 0, 4). '</h2>';
         $lastSetMonth = substr($inputDate, 0, 7);
     }
 
     echo '<div id="' .$row['id']. '" class="ui-card' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
     echo '<div class="ui-card-header">';
-    echo '<h3 class="ui-card-title mb-0 inline">';
+    echo '<h3 class="ui-card-title inline">';
     echo $libTime->formatDateString($row['eingabedatum']);
     echo ' ';
     echo $libString->protectXSS($row['bezeichnung']);
@@ -148,7 +154,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '</div>';
 
     if (($row['autor'] != '' && $row['autor'] > 0) || ($row['betroffenesmitglied'] != '' && $row['betroffenesmitglied'] > 0)) {
-        echo '<div class="hidden sm:block col-span-12 sm:col-span-3 md:col-span-2">';
+        echo '<div class="hidden sm:flex sm:flex-col gap-4 col-span-12 sm:col-span-3 md:col-span-2">';
 
         if ($row['autor'] != '' && $row['autor'] > 0) {
             echo $libPerson->getSignature($row['autor']);
@@ -164,4 +170,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '</div>';
     echo '</div>';
     echo '</div>';
+}
+
+if ($lastSetMonth != '') {
+    echo '</section>';
 }

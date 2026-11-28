@@ -46,7 +46,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $title = 'Todesfall ' .$libPerson->getNameString($row['id'], 0);
 
     $age = false;
-    $description = '';
+    $description = '<p>';
 
     if ($row['datum_geburtstag'] != '' && $row['datum_geburtstag'] != '0000-00-00') {
         $dateObjectBirthday = new DateTime($row['datum_geburtstag']);
@@ -56,12 +56,13 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     }
 
     if ($age) {
-        $description = 'Verstorben mit ' .$age. ' Jahren ';
+        $description .= 'Verstorben mit ' .$age. ' Jahren ';
     }
 
     $description .= '<a href="webcal://' .$libGlobal->getSiteUrlAuthority(). '/api.php?iid=intranet_kalender_todestage&amp;user=' .$libString->protectXSS((string) $libGenericStorage->loadValueInCurrentModule('icalendar_username')). '&amp;pass=' .$libString->protectXSS((string) $libGenericStorage->loadValueInCurrentModule('icalendar_password')). '">';
     $description .= '<i class="fa fa-calendar" aria-hidden="true"></i>';
     $description .= '</a>';
+    $description .= '</p>';
 
     $url = 'index.php?pid=intranet_person&amp;id=' .$row['id'];
 

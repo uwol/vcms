@@ -43,7 +43,6 @@
 	header .header-content .header-content-inner .btn-circle {
 		width: 70px;
 		height: 70px;
-		margin-top: 15px;
 		padding: 3px;
 		border: 2px solid white;
 		border-radius: 100% !important;
@@ -75,10 +74,6 @@
 		header .header-content .header-content-inner h1 {
 			font-size: 3.5em;
 		}
-	}
-
-	.section-heading {
-		margin-top: 0;
 	}
 
 	section.announcement-box:nth-of-type(even) {

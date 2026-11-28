@@ -45,7 +45,8 @@ $stmt->execute();
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $title = 'Trauung von ' .$libPerson->getNameString($row['id'], 0);
 
-    $description = $libString->protectXSS($libPerson->getNameString($row['id'], 0));
+    $description = '<p>';
+    $description .= $libString->protectXSS($libPerson->getNameString($row['id'], 0));
     $description .= ' ';
     $description .= '<i class="fa fa-circle-o" aria-hidden="true" style="margin-right:-0.2em"></i>';
     $description .= '<i class="fa fa-circle-o" aria-hidden="true" style="margin-left:-0.2em"></i>';
@@ -58,6 +59,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $description .= $libString->protectXSS($libPerson->getNameString($row['heirat_partner'], 0));
         $description .= '</a>';
     }
+
+    $description .= '</p>';
 
     $url = 'index.php?pid=intranet_person&amp;id=' .$row['id'];
 

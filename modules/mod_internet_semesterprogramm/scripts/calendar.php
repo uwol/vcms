@@ -28,8 +28,8 @@ echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
 
-echo '<div class="grid grid-cols-12 gap-x-6">';
-echo '<div class="col-span-12 sm:col-span-6">';
+echo '<div class="grid grid-cols-12 gap-6">';
+echo '<div class="col-span-12 sm:col-span-6 max-sm:empty:hidden">';
 
 $stmt = $libDb->prepare("SELECT DATE_FORMAT(datum,'%Y-%m-01') AS datum FROM base_veranstaltung WHERE datum IS NOT NULL GROUP BY datum ORDER BY datum DESC");
 $stmt->execute();
@@ -47,7 +47,7 @@ echo '</div>';
 echo '<div class="col-span-12 sm:col-span-6">';
 echo '<div class="ui-card">';
 echo '<div class="ui-card-body">';
-echo '<div class="flex flex-wrap justify-start">';
+echo '<div class="flex flex-wrap justify-start gap-2">';
 echo '<a href="webcal://' .$libString->protectXSS($libGlobal->getSiteUrlAuthority()). '/api.php?iid=semesterprogramm_icalendar" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-calendar" aria-hidden="true"></i> Semesterprogramm abonnieren</a>';
 echo '</div>';
 echo '</div>';

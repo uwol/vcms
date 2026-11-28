@@ -95,8 +95,8 @@ if ($libAuth->isLoggedin()) {
     echo '</div>';
 
 
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Neuen Status anlegen</h2>';
-
     echo '<div class="ui-card">';
     echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_status" method="post">';
@@ -111,4 +111,5 @@ if ($libAuth->isLoggedin()) {
     echo '</form>';
     echo '</div>';
     echo '</div>';
+    echo '</section>';
 }

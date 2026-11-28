@@ -93,9 +93,9 @@ echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=intranet_rundbrief_senden" method="post" enctype="multipart/form-data" onsubmit="return confirm(\'Willst Du die Nachricht wirklich verschicken?\');">';
 echo '<fieldset>';
 
-echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+echo '<div class="grid grid-cols-12 gap-x-6">';
 echo '<label class="ui-col-form-label col-span-12 sm:col-span-3">Adressaten</label>';
-echo '<div class="col-span-12 sm:col-span-4">';
+echo '<div class="col-span-12 sm:col-span-4 flex flex-col gap-0.5">';
 
 echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="fuchsia" checked="checked"><label class="ui-form-check-label">';
 echo $countFuechse. ' Füchse &amp; Fuchsmajor';
@@ -120,7 +120,7 @@ echo $countAhah. ' alte Herren';
 echo '</label></div>';
 
 echo '</div>';
-echo '<div class="col-span-12 sm:col-span-4">';
+echo '<div class="col-span-12 sm:col-span-4 flex flex-col gap-0.5">';
 
 echo '<div class="ui-form-check"><input class="ui-form-check-input" type="checkbox" name="residents"><label class="ui-form-check-label">';
 echo $countResidents. ' Hausbewohner';

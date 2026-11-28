@@ -12,21 +12,15 @@ body {
 h1 {
 	font-size: 2em;
 	text-align: center;
-	margin-top: 2em;
-	margin-bottom: 2em;
 }
 
 h2 {
 	font-size: 1.5em;
 	text-align: center;
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
 }
 
 h3 {
 	font-size: 1.25em;
-	margin-top: 1em;
-	margin-bottom: 1em;
 }
 
 label {
