@@ -83,8 +83,11 @@ if ($libModuleHandler->moduleIsAvailable('mod_intranet_news')) {
     require_once('timeline/news.php');
 }
 
+// The timeline also registers for chargier events, so it requires access to the chargier calendar itself
 if ($libModuleHandler->moduleIsAvailable('mod_intranet_chargierkalender')
-        && $libGenericStorage->loadValueInCurrentModule('show_chargierevents')) {
+        && $libGenericStorage->loadValueInCurrentModule('show_chargierevents')
+        && $libModuleHandler->pageExists('intranet_chargierkalender')
+        && $libSecurityManager->hasAccess($libModuleHandler->getPage('intranet_chargierkalender'), $libAuth)) {
     require_once('timeline/chargierkalender.php');
 }
 
