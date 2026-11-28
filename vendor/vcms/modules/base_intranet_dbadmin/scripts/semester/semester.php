@@ -52,6 +52,11 @@ if ($libAuth->isLoggedin()) {
     $vorort = ['vop', 'vvop', 'vopxx', 'vopxxx', 'vopxxxx'];
     $fields = array_merge(['semester'], $board, $ahv, $hv, $warte, $vorort);
 
+    // The administrative offices grant access to all accounts, so only an Internetwart may assign them
+    $adminOffices = ['internetwart', 'datenpflegewart'];
+    $isInternetwart = in_array('internetwart', $libAuth->getOffices());
+    $editableFields = $isInternetwart ? $fields : array_values(array_diff($fields, $adminOffices));
+
     /**
     *
     * Perform different actions on the database, depending on the context
@@ -108,7 +113,20 @@ if ($libAuth->isLoggedin()) {
             $libGlobal->errorTexts[] = 'Das Semester ist bereits vorhanden.';
             $semesterRow = $_REQUEST;
         } else {
-            $semesterRow = $libDb->insertRow($fields, $_REQUEST, 'base_semester', ['semester' => $_REQUEST['semester']]);
+            $valueArray = $_REQUEST;
+
+            // Without the Internetwart office, the administrative offices are copied from the last semester
+            if (!$isInternetwart) {
+                $stmt = $libDb->prepare('SELECT * FROM base_semester ORDER BY SUBSTRING(semester,3) DESC LIMIT 0,1');
+                $stmt->execute();
+                $lastSemester = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                foreach ($adminOffices as $office) {
+                    $valueArray[$office] = is_array($lastSemester) ? $lastSemester[$office] : '';
+                }
+            }
+
+            $semesterRow = $libDb->insertRow($fields, $valueArray, 'base_semester', ['semester' => $_REQUEST['semester']]);
         }
     }
     // Existing member data is being modified: UPDATE
@@ -126,7 +144,7 @@ if ($libAuth->isLoggedin()) {
         $stmt->execute();
         $semesterRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $semesterRow = $libDb->updateRow($fields, $_REQUEST, 'base_semester', ['semester' => $_REQUEST['semester']]);
+        $semesterRow = $libDb->updateRow($editableFields, $_REQUEST, 'base_semester', ['semester' => $_REQUEST['semester']]);
     }
     // No action
     else {
@@ -159,7 +177,7 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<p>Hier können sämtliche Daten eines Semesters bearbeitet werden. Diese Seite ist nur für den Internetwart zugänglich, weil über die Vergabe von Vorstands- und Wartsposten im Semester die Zugangsberechtigungen geregelt werden.</p>';
+    echo '<p>Hier können sämtliche Daten eines Semesters bearbeitet werden. Diese Seite ist nur für den Internetwart und den Datenpflegewart zugänglich, weil über die Vergabe von Vorstands- und Wartsposten im Semester die Zugangsberechtigungen geregelt werden. Die Ämter Internetwart und Datenpflegewart kann nur ein Internetwart vergeben.</p>';
     echo '<hr />';
 
     /**
@@ -244,13 +262,13 @@ if ($libAuth->isLoggedin()) {
     $libForm->printMembersDropDownBox('bootshauswart', 'Bootshauswart', $semesterRow['bootshauswart']);
     $libForm->printMembersDropDownBox('couleurartikelwart', 'Couleurartikelwart', $semesterRow['couleurartikelwart']);
     $libForm->printMembersDropDownBox('dachverbandsberichterstatter', 'Dachverbandsberichterstatter', $semesterRow['dachverbandsberichterstatter']);
-    $libForm->printMembersDropDownBox('datenpflegewart', 'Datenpflegewart', $semesterRow['datenpflegewart']);
+    $libForm->printMembersDropDownBox('datenpflegewart', 'Datenpflegewart', $semesterRow['datenpflegewart'], true, !$isInternetwart);
     $libForm->printMembersDropDownBox('fechtwart', 'Fechtwart', $semesterRow['fechtwart']);
     $libForm->printMembersDropDownBox('ferienordner', 'Ferienordner', $semesterRow['ferienordner']);
     $libForm->printMembersDropDownBox('fotowart', 'Fotowart', $semesterRow['fotowart']);
     $libForm->printMembersDropDownBox('hauswart', 'Hauswart', $semesterRow['hauswart']);
     $libForm->printMembersDropDownBox('huettenwart', 'Hüttenwart', $semesterRow['huettenwart']);
-    $libForm->printMembersDropDownBox('internetwart', 'Internetwart', $semesterRow['internetwart']);
+    $libForm->printMembersDropDownBox('internetwart', 'Internetwart', $semesterRow['internetwart'], true, !$isInternetwart);
     $libForm->printMembersDropDownBox('kuehlschrankwart', 'Kühlschrankwart', $semesterRow['kuehlschrankwart']);
     $libForm->printMembersDropDownBox('musikwart', 'Musikwart', $semesterRow['musikwart']);
     $libForm->printMembersDropDownBox('redaktionswart', 'Redaktionswart', $semesterRow['redaktionswart']);
