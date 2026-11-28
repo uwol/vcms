@@ -27,7 +27,13 @@ if (!is_object($libGlobal) || !is_object($libAuth)) {
     $level = 0;
 
     if ($libAuth->isLoggedin()) {
-        $level = 2;
+        $level = 1;
+
+        // Unpublished pictures (level 2) are restricted to users with access to the gallery administration
+        if ($libModuleHandler->pageExists('event_admin_galerie')
+                && $libSecurityManager->hasAccess($libModuleHandler->getPage('event_admin_galerie'), $libAuth)) {
+            $level = 2;
+        }
     }
 
     if (!$libGallery->hasPictures($_GET['eventid'], $level)) {
