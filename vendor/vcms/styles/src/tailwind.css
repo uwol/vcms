@@ -2,19 +2,18 @@
 * Entry point of the VCMS stylesheet. bin/build-css compiles it with the Tailwind CLI into
 * vendor/vcms/styles/vcms.css, which is committed, because installations have no build step.
 *
-* Layer order: utilities win over components, as the former Bootstrap utilities did with
-* !important. header.php imports custom/styles/screen.css into the layer components after
-* this file, so that installation styles override the components by order and specificity
-* as before, but not the utilities.
+* Layer order: utilities win over components. header.php imports custom/styles/screen.css
+* into the layer components after this file, so that installation styles override the
+* components by order and specificity, but not the utilities.
 */
 @layer theme, base, components, utilities;
 
 @import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 
 @import "./base.css" layer(base);
 @import "./components.css" layer(components);
-@import "./elements.css" layer(components);
 @import "../screen.css" layer(components);
 @import "../navigation/navigation.css" layer(components);
 @import "../calendar/calendar.css" layer(components);
@@ -62,37 +61,16 @@
 @source inline("border border-0 rounded rounded-full shadow-sm overflow-hidden relative absolute");
 
 @theme static {
-	/* Bootstrap breakpoints, not the Tailwind defaults */
-	--breakpoint-sm: 576px;
-	--breakpoint-md: 768px;
-	--breakpoint-lg: 992px;
-	--breakpoint-xl: 1200px;
-	--breakpoint-2xl: 1400px;
-
-	--font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-
-	--color-white: #fff;
-	--color-body: #212529;
-	--color-muted: rgba(33, 37, 41, 0.75);
-	--color-border: #dee2e6;
-	--color-primary: #0d6efd;
-	--color-secondary: #6c757d;
-	--color-success: #198754;
-	--color-danger: #dc3545;
-	--color-dark: #333;
-
-	--color-gray-100: #f8f9fa;
-	--color-gray-200: #e9ecef;
-	--color-gray-300: #dee2e6;
-	--color-gray-400: #ced4da;
-	--color-gray-500: #adb5bd;
-	--color-gray-600: #6c757d;
-	--color-gray-700: #495057;
-	--color-gray-800: #343a40;
-	--color-gray-900: #212529;
-
-	--radius-sm: 0.25rem;
-	--radius-md: 0.375rem;
-	--radius-lg: 0.5rem;
+	/*
+	* The breakpoints, radii and fonts are the Tailwind defaults. The semantic colours are
+	* aliases of the Tailwind palette, so that the markup can say text-muted or bg-secondary.
+	*/
+	--color-body: var(--color-zinc-900);
+	--color-muted: var(--color-zinc-500);
+	--color-border: var(--color-zinc-200);
+	--color-primary: var(--color-blue-600);
+	--color-secondary: var(--color-zinc-600);
+	--color-success: var(--color-green-600);
+	--color-danger: var(--color-red-600);
+	--color-dark: var(--color-zinc-800);
 }

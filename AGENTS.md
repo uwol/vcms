@@ -239,8 +239,14 @@ A typical module is structured as follows:
   `ui-form-check-*`, `ui-col-form-label`, `ui-progress`, `ui-dropdown-*`, `ui-collapse`,
   `ui-modal-*`, `ui-carousel-*`. The navbar classes `ui-navbar*` and `ui-nav-link` live in
   `navigation/navigation.css`. Do not add a `ui-*` class for something utilities express.
-- The breakpoints are the former Bootstrap ones: `sm` 576px, `md` 768px, `lg` 992px, `xl` 1200px,
-  `2xl` 1400px. The spacing scale is Tailwind's: `gap-4` is 1rem, `gap-6` 1.5rem, `gap-12` 3rem.
+- Component and engine styles are written with `@apply` and Tailwind tokens; media queries use
+  `@variant md { ... }` (or `max-md`), never hard-coded pixel widths. No CSS custom property
+  cascades per component and no reproductions of Bootstrap classes. The look follows shadcn/ui:
+  neutral `zinc` palette, `rounded-md`/`rounded-xl`, light borders, `shadow-xs`/`shadow-sm`.
+- The semantic colours `body`, `muted`, `border`, `primary`, `secondary`, `success`, `danger`
+  and `dark` are aliases of the Tailwind palette in the `@theme` of `src/tailwind.css`.
+- Breakpoints and spacing are the Tailwind defaults: `sm` 640px, `md` 768px, `lg` 1024px,
+  `xl` 1280px, `2xl` 1536px; `gap-4` is 1rem, `gap-6` 1.5rem, `gap-12` 3rem.
 - Vertical space between siblings comes from the `gap` of their parent, never from margins.
   Block elements have no vertical margins (`base.css`), and margin utilities (`mb-*`, `mt-*`,
   `my-*`) are not used for spacing. The stacking containers are the page container (`gap-8`),
@@ -259,8 +265,7 @@ A typical module is structured as follows:
   bottom margin of an event sets the zigzag offset, which a gap cannot express.
 - A grid row is `grid grid-cols-12 gap-x-6`; every direct child carries a column span, e.g.
   `col-span-12 sm:col-span-3`, and optionally a start column, e.g. `sm:col-start-4`.
-- The eleven gaps of a grid row take 264px whether or not all columns are used, unlike the
-  Bootstrap gutters, which existed per column. A grid row in a narrow container (timeline panel,
+- The eleven gaps of a grid row take 264px whether or not all columns are used. A grid row in a narrow container (timeline panel,
   card, narrow column) overflows. Start it at the breakpoint where its columns appear
   (`sm:grid sm:grid-cols-12 sm:gap-x-6`), stack nested rows with `sm:flex sm:flex-col`, or do without a
   grid row for a single full-width element.
@@ -269,10 +274,9 @@ A typical module is structured as follows:
   lookup of complete class names as `LibForm` does. Markup outside the repository (the `custom/`
   directories of modules, third-party modules) can only rely on the utilities of the
   `@source inline()` safelist.
-- Layers: `base` (element defaults replacing the Bootstrap reboot), `components` (`ui-*`, the
-  engine styles, then `custom/styles/screen.css` and module stylesheets, which wrap their rules in
-  `@layer components`), `utilities`. Utilities win over all component styles, as the former
-  Bootstrap utilities did with `!important`.
+- Layers: `base` (Tailwind preflight plus the element defaults of `base.css`), `components`
+  (`ui-*`, the engine styles, then `custom/styles/screen.css` and module stylesheets, which wrap
+  their rules in `@layer components`), `utilities`. Utilities win over all component styles.
 - JavaScript is plain vanilla JS, there is no jQuery. The only JS library is Chart.js. Collapse
   and dropdown are toggled by `data-ui-toggle` in `screen.js`, the gallery uses a native
   `<dialog>`.

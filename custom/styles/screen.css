@@ -20,8 +20,8 @@
 	color: #961419;
 }
 
-a:link,
-a:visited {
+a:not(:where(.ui-btn)):link,
+a:not(:where(.ui-btn)):visited {
 	color: #961419;
 }
 

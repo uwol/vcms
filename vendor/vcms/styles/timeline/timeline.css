@@ -155,7 +155,7 @@
 	padding: 0 1em 1em 1em;
 }
 
-@media (max-width: 991px) {
+@variant max-lg {
   .timeline > .timeline-divider:before {
     left: 40px;
   }
