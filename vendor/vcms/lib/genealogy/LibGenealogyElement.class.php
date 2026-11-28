@@ -60,12 +60,16 @@ class LibGenealogyElement
 
     public function searchFirstLeibvater()
     {
-        if ($this->leibvater != '') {
-            $leibvaterElement = new LibGenealogyElement($this->leibvater, '');
-            return $leibvaterElement->searchFirstLeibvater();
-        } else {
-            return $this->id;
+        // Track visited ids, because the leibmitglied references may form a cycle
+        $visitedIds = [$this->id];
+        $element = $this;
+
+        while ($element->leibvater != '' && !in_array($element->leibvater, $visitedIds)) {
+            $visitedIds[] = $element->leibvater;
+            $element = new LibGenealogyElement($element->leibvater, '');
         }
+
+        return $element->id;
     }
 
     public function searchLeibSoehne()

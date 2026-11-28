@@ -143,6 +143,13 @@ if ($libAuth->isLoggedin()) {
         $valueArray['heirat_datum'] = $libTime->assureMysqlDate($valueArray['heirat_datum'] ?? '');
         $valueArray['tod_datum'] = $libTime->assureMysqlDate($valueArray['tod_datum'] ?? '');
         $valueArray['austritt_datum'] = $libTime->assureMysqlDate($valueArray['austritt_datum'] ?? '');
+
+        // A leibmitglied that descends from the person would close a cycle, so keep the previous value
+        if ($libPerson->createsLeibCycle($id, $valueArray['leibmitglied'] ?? '')) {
+            $libGlobal->errorTexts[] = 'Das Leibmitglied darf nicht von der Person abstammen.';
+            $valueArray['leibmitglied'] = $personRow['leibmitglied'];
+        }
+
         $personRow = $libDb->updateRow($fields, $valueArray, 'base_person', ['id' => $id]);
     } else {
         $stmt = $libDb->prepare('SELECT * FROM base_person WHERE id=:id');

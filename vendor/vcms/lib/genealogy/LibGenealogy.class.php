@@ -23,15 +23,22 @@ class LibGenealogy
 {
     public $retstr;
 
-    public function __construct($root, $depth, $memberId)
+    public function __construct($root, $depth, $memberId, $ancestorIds = [])
     {
         $retstr = '';
         $genealogyRoot = new LibGenealogyElement($root, $memberId);
         $retstr .= $genealogyRoot->getString($depth);
         $leibsoehne = $genealogyRoot->searchLeibSoehne();
 
+        // Do not descend into an ancestor again, because the leibmitglied references may form a cycle
+        $ancestorIds[] = $root;
+
         for ($i = 0; $i < count($leibsoehne); $i++) {
-            $genealogy = new LibGenealogy($leibsoehne[$i], $depth + 1, $memberId);
+            if (in_array($leibsoehne[$i], $ancestorIds)) {
+                continue;
+            }
+
+            $genealogy = new LibGenealogy($leibsoehne[$i], $depth + 1, $memberId, $ancestorIds);
             $retstr .= $genealogy->getString();
         }
 

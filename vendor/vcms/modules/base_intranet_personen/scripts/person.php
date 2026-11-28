@@ -64,6 +64,8 @@ if ($ownprofile) {
 
         if ($leibMember == $id) {
             $libGlobal->errorTexts[] = 'Das Mitglied darf nicht von sich selbst der Leibbursch sein.';
+        } elseif ($libPerson->createsLeibCycle($id, $leibMember)) {
+            $libGlobal->errorTexts[] = 'Der Leibbursch darf nicht von Dir abstammen.';
         } else {
             $stmt = $libDb->prepare('UPDATE base_person SET anrede=:anrede, titel=:titel, rang=:rang, zusatz1=:zusatz1, strasse1=:strasse1, ort1=:ort1, plz1=:plz1, land1=:land1,
 				telefon1=:telefon1, zusatz2=:zusatz2, strasse2=:strasse2, ort2=:ort2, plz2=:plz2, land2=:land2,telefon2=:telefon2, mobiltelefon=:mobiltelefon,
