@@ -207,7 +207,8 @@ input[type="datetime-local"].ui-form-control {
 }
 
 .ui-form-select {
-	@apply bg-[url("data:image/svg+xml,%3csvg_xmlns='http://www.w3.org/2000/svg'_viewBox='0_0_16_16'%3e%3cpath_fill='none'_stroke='%2371717a'_stroke-linecap='round'_stroke-linejoin='round'_stroke-width='2'_d='m2_5_6_6_6-6'/%3e%3c/svg%3e")] bg-size-[16px_12px] bg-position-[right_0.75rem_center] bg-no-repeat pr-9;
+	@apply bg-size-[16px_12px] bg-position-[right_0.75rem_center] bg-no-repeat pr-9;
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2371717a' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
 
 .ui-form-check {

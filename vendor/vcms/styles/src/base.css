@@ -47,13 +47,18 @@ h3 {
 	font-size: 1.25em;
 }
 
-h4,
+h4 {
+	font-size: 1.5rem;
+}
+
 h5 {
-	font-size: 1.125em;
+	font-size: 1.25rem;
 }
 
 hr {
 	width: 100%;
+	border-color: currentColor;
+	opacity: 0.25;
 }
 
 /*
@@ -85,6 +90,10 @@ ol:not([class]) {
 
 dt {
 	font-weight: 700;
+}
+
+address {
+	font-style: normal;
 }
 
 mark {
@@ -141,7 +150,7 @@ fieldset {
 legend {
 	float: left;
 	width: 100%;
-	font-size: 1.25em;
+	font-size: 1.5rem;
 	font-weight: 500;
 }
 

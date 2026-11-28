@@ -5,6 +5,9 @@
 *
 * The navbar container is a wrapping flex row. The logo occupies a full row of its own, the
 * brand and the internet menu share the next row, the intranet menu gets the third row.
+*
+* Brand and links are scoped to .ui-navbar, so that they keep their colour against the link
+* colour of the installation styles (a:link).
 */
 .ui-navbar {
 	@apply fixed inset-x-0 top-0 z-1030 flex items-center bg-white py-2 shadow-md transition-all duration-300;
@@ -46,7 +49,7 @@
 	@apply h-[50px] flex-[0_0_50px];
 }
 
-.ui-navbar-brand {
+.ui-navbar .ui-navbar-brand {
 	@apply mr-4 py-0 text-xl font-medium whitespace-nowrap text-inherit uppercase no-underline hover:text-zinc-950 focus:text-zinc-950;
 
 	@variant max-md {
@@ -106,7 +109,7 @@
 	font-size: 0.9em;
 }
 
-.ui-nav-link {
+.ui-navbar .ui-nav-link {
 	@apply block py-2 font-medium text-inherit no-underline transition-colors hover:text-zinc-950 focus:text-zinc-950;
 	@apply focus-visible:ring-3 focus-visible:ring-zinc-400/50 focus-visible:outline-none;
 
@@ -115,7 +118,7 @@
 	}
 }
 
-.ui-nav-link.active {
+.ui-navbar .ui-nav-link.active {
 	@apply text-zinc-950;
 }
 
