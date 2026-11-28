@@ -48,8 +48,15 @@ if ($libAuth->isLoggedin()) {
         'anschreiben_zusenden', 'spendenquittung_zusenden',
         'bemerkung', 'vita'];
 
-    // Is the editor an Internetwart?
-    $isAdmin = in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices());
+    // Is the editor an Internetwart or Datenpflegewart?
+    $isInternetwart = in_array('internetwart', $libAuth->getOffices());
+    $isAdmin = $isInternetwart || in_array('datenpflegewart', $libAuth->getOffices());
+
+    // The account data of an Internetwart may only be changed by an Internetwart,
+    // otherwise a Datenpflegewart could take over the Internetwart account
+    if ($isAdmin && !$isInternetwart && $id != '' && isInternetwartPerson($id)) {
+        $isAdmin = false;
+    }
 
     if ($isAdmin) {
         // Then also edit the sensitive fields. Email and birthday identify the account
@@ -128,7 +135,7 @@ if ($libAuth->isLoggedin()) {
             updateAddressAsOf('base_person', 'datum_adresse2_stand', $personRow['id']);
         }
 
-        if (isset($_REQUEST['gruppe']) && $_REQUEST['gruppe'] != $personRow['gruppe']) {
+        if (in_array('gruppe', $fields) && isset($_REQUEST['gruppe']) && $_REQUEST['gruppe'] != $personRow['gruppe']) {
             updateGroupAsOf($personRow['id']);
         }
 
@@ -283,8 +290,8 @@ if ($libAuth->isLoggedin()) {
     $libForm->printTextInput('bemerkung', 'Bemerkung', $personRow['bemerkung']);
     $libForm->printTextarea('vita', 'Vita', $personRow['vita']);
 
-    // Only the Internetwart may access sensitive data
-    if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
+    // Only the Internetwart and the Datenpflegewart may access sensitive data
+    if ($isAdmin) {
         $libForm->printGroupDropDownBox('gruppe', 'Gruppe', $personRow['gruppe'], false);
         $libForm->printDateInput('datum_gruppe_stand', 'Stand', $personRow['datum_gruppe_stand'], true);
         $libForm->printTextInput('password_hash', 'Passwort-Hash', $personRow['password_hash']);
@@ -327,6 +334,18 @@ if ($libAuth->isLoggedin()) {
 
     echo '</div>';
     echo '</div>';
+}
+
+function isInternetwartPerson($id)
+{
+    global $libDb;
+
+    // LibAuth also grants the office to the last Internetwart of previous semesters, so every semester counts
+    $stmt = $libDb->prepare('SELECT COUNT(*) AS number FROM base_semester WHERE internetwart=:id');
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchColumn() > 0;
 }
 
 function updateGroupAsOf($id)
