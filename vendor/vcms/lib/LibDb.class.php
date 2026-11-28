@@ -31,6 +31,11 @@ class LibDb
     {
         global $libConfig;
 
+        // The connection may already be open, e.g. to restore the authentication context
+        if ($this->connection !== null) {
+            return;
+        }
+
         $mysqlPort = 3306;
 
         if ($libConfig->mysqlPort != "") {

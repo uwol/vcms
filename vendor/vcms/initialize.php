@@ -114,8 +114,21 @@ if (isset($_REQUEST['semester']) && $libTime->isValidSemesterString($_REQUEST['s
 /*
 * instantiate authentication context
 */
+$libAuth = new \vcms\LibAuth();
+
+// Sessions of engine versions before 15.12 hold the whole LibAuth object
 if (isset($_SESSION) && isset($_SESSION['libAuth'])) {
-    $libAuth = $_SESSION['libAuth'];
-} else {
-    $libAuth = new \vcms\LibAuth();
+    if ($_SESSION['libAuth'] instanceof \vcms\LibAuth) {
+        $_SESSION['authPersonId'] = $_SESSION['libAuth']->getId();
+    }
+
+    unset($_SESSION['libAuth']);
+}
+
+if (isset($_SESSION) && isset($_SESSION['authPersonId'])) {
+    $libDb->connect();
+
+    if (!$libAuth->restore($_SESSION['authPersonId'])) {
+        unset($_SESSION['authPersonId']);
+    }
 }
