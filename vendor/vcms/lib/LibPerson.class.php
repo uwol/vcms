@@ -614,6 +614,34 @@ class LibPerson
         }
     }
 
+    // Returns true if setting $leibId as leibmitglied of $personId would close a cycle
+    public function createsLeibCycle($personId, $leibId)
+    {
+        global $libDb;
+
+        if ($leibId == '' || $personId == '') {
+            return false;
+        }
+
+        $visitedIds = [];
+        $currentId = $leibId;
+
+        while ($currentId != '' && !in_array($currentId, $visitedIds)) {
+            if ($currentId == $personId) {
+                return true;
+            }
+
+            $visitedIds[] = $currentId;
+
+            $stmt = $libDb->prepare('SELECT leibmitglied FROM base_person WHERE id=:id');
+            $stmt->bindValue(':id', $currentId, PDO::PARAM_INT);
+            $stmt->execute();
+            $currentId = (string) $stmt->fetchColumn();
+        }
+
+        return false;
+    }
+
     public function getPersonSchema($row)
     {
         global $libTime;
