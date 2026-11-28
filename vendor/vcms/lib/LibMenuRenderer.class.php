@@ -164,19 +164,24 @@ class LibMenuRenderer
                 echo $libString->protectXSS($folderElement->getName());
                 echo '</a></li>' . PHP_EOL;
             }
-            //login / logout
+            // Login / logout
             elseif ($folderElement->getType() == 4) {
                 if (!$libAuth->isLoggedin()) {
                     $this->printLinkTag($folderElement, $depth, $pid, 'index.php?pid=' .$folderElement->getPid());
 
                     echo $libString->protectXSS($folderElement->getName());
+                    echo '</a></li>' . PHP_EOL;
                 } else {
-                    $this->printLinkTag($folderElement, $depth, $pid, 'index.php?logout=1');
+                    // Logout changes state and is therefore sent by POST, styled like a menu link
+                    $linkClass = ($depth == 0) ? 'ui-nav-link' : 'ui-dropdown-item';
 
+                    echo $this->defaultIndent . $this->indent($depth) . '<li>' . PHP_EOL;
+                    echo $this->defaultIndent . $this->indent($depth) . '  <form method="post" action="index.php">';
+                    echo '<input type="hidden" name="logout" value="1" />';
+                    echo '<button type="submit" class="' .$linkClass. ' text-left">';
                     echo $libString->protectXSS($folderElement->getNameLogout());
+                    echo '</button></form></li>' . PHP_EOL;
                 }
-
-                echo '</a></li>' . PHP_EOL;
             }
         }
     }

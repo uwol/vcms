@@ -19,12 +19,6 @@ parameters:
 			path: vendor/vcms/lib/LibAssociation.class.php
 
 		-
-			message: '#^Undefined variable\: \$internetwart$#'
-			identifier: variable.undefined
-			count: 3
-			path: vendor/vcms/lib/LibAuth.class.php
-
-		-
 			message: '#^Undefined variable\: \$lastMistakenLoginToday$#'
 			identifier: variable.undefined
 			count: 2

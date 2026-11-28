@@ -46,7 +46,7 @@ if (isset($_COOKIE[session_name()])) {
     session_start();
 }
 
-if ((isset($_REQUEST['logout']) && $_REQUEST['logout'] == 1) ||
+if ((isset($_POST['logout']) && $_POST['logout'] == 1) ||
         (isset($_SESSION) && isset($_SESSION['session_timeout_timestamp']) &&
         ($_SESSION['session_timeout_timestamp'] == '' || $_SESSION['session_timeout_timestamp'] < time()))) {
     $_SESSION = [];
@@ -114,8 +114,12 @@ if (isset($_REQUEST['semester']) && $libTime->isValidSemesterString($_REQUEST['s
 /*
 * instantiate authentication context
 */
-if (isset($_SESSION) && isset($_SESSION['libAuth'])) {
-    $libAuth = $_SESSION['libAuth'];
-} else {
-    $libAuth = new \vcms\LibAuth();
+$libAuth = new \vcms\LibAuth();
+
+if (isset($_SESSION) && isset($_SESSION['authPersonId'])) {
+    $libDb->connect();
+
+    if (!$libAuth->restore($_SESSION['authPersonId'])) {
+        unset($_SESSION['authPersonId']);
+    }
 }

@@ -36,7 +36,7 @@ if (isset($_POST['intranet_login_email']) && isset($_POST['intranet_login_passwo
     if ($isLoggedIn) {
         session_start();
         session_regenerate_id(true);
-        $_SESSION['libAuth'] = $libAuth;
+        $_SESSION['authPersonId'] = $libAuth->getId();
     }
 }
 
