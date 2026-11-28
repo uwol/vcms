@@ -178,7 +178,7 @@ if ($libAuth->isLoggedin()) {
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
 
-    echo '<p class="mb-6">Hier können sämtliche Daten einer Person bearbeitet werden. Die Gruppe (Fuchs, Bursch etc.), die E-Mail-Adresse und das Geburtsdatum können nur von einem Internetwart geändert werden, da sie der Zugangskontrolle und der Anmeldung im VCMS dienen.</p>';
+    echo '<p>Hier können sämtliche Daten einer Person bearbeitet werden. Die Gruppe (Fuchs, Bursch etc.), die E-Mail-Adresse und das Geburtsdatum können nur von einem Internetwart geändert werden, da sie der Zugangskontrolle und der Anmeldung im VCMS dienen.</p>';
     echo '<hr />';
 
     /**
@@ -188,7 +188,7 @@ if ($libAuth->isLoggedin()) {
     */
     if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
         if ($personRow['id'] != '') {
-            echo '<form class="mb-6" method="post" action="index.php?pid=intranet_admin_persons" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+            echo '<form method="post" action="index.php?pid=intranet_admin_persons" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
             echo '<input type="hidden" name="action" value="delete" />';
             echo '<input type="hidden" name="id" value="' .$personRow['id']. '" />';
             echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
@@ -196,7 +196,7 @@ if ($libAuth->isLoggedin()) {
         }
     }
 
-    echo '<div class="grid grid-cols-12 gap-x-6">';
+    echo '<div class="grid grid-cols-12 gap-6">';
     echo '<div class="col-span-12 sm:col-span-9">';
 
 
@@ -300,10 +300,10 @@ if ($libAuth->isLoggedin()) {
     echo '</div>';
 
     echo '</div>';
-    echo '<div class="col-span-12 sm:col-span-3">';
+    echo '<div class="col-span-12 sm:col-span-3 flex flex-col gap-4 empty:hidden">';
 
     if ($personRow['id'] != '') {
-        echo '<div class="block mx-auto person-signature-box mb-4">';
+        echo '<div class="block mx-auto person-signature-box">';
         echo '<div class="img-box">';
 
         echo '<span class="delete-icon-box">';

@@ -112,7 +112,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $form .= '</form>';
     } else {
         if ($isRegistered) {
-            $description .= '<i class="fa fa-check-square-o" aria-hidden="true"></i> angemeldet';
+            $description .= '<p><i class="fa fa-check-square-o" aria-hidden="true"></i> angemeldet</p>';
         }
     }
 
@@ -133,7 +133,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $attendees[] = $attendee;
     }
 
-    $description .= '<p class="mb-6">' .implode(', ', $attendees). '</p>';
+    if (count($attendees) > 0) {
+        $description .= '<p>' .implode(', ', $attendees). '</p>';
+    }
 
     $timelineEvent = new LibChargiereventTimelineEvent();
     $timelineEvent->setTitle($title);

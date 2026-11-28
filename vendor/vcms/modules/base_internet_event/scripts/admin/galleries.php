@@ -45,8 +45,8 @@ echo '<h1>Foto-Verwaltung</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
+echo '<section class="flex flex-col gap-4">';
 echo '<h2>Galerie anlegen</h2>';
-
 echo '<div class="ui-card">';
 echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=event_admin_galerie" method="post">';
@@ -59,8 +59,10 @@ echo '</fieldset>';
 echo '</form>';
 echo '</div>';
 echo '</div>';
+echo '</section>';
 
 
+echo '<section class="flex flex-col gap-4">';
 echo '<h2>Bestehende Galerien</h2>';
 
 $eventPhotosDir = 'custom/veranstaltungsfotos';
@@ -143,3 +145,4 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 
 echo '</table>';
+echo '</section>';

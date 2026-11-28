@@ -1,10 +1,12 @@
 .calendar {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
 	width: 100%;
 }
 
 .calendar .calendar-month-name {
 	width: 100%;
-	margin-top: 1px;
 	background-color: rgba(0, 0, 0, 0.65);
 	color: white;
 }
@@ -16,14 +18,14 @@
 }
 
 .calendar .calendar-cell-container {
-  display: flex;
+	display: flex;
 	flex-wrap: wrap;
 	flex: none;
+	row-gap: 1px;
 	justify-content: space-around;
 }
 
 .calendar .calendar-cell {
-	margin-top: 1px;
 	padding: 0.5em;
 }
 
@@ -45,13 +47,15 @@
 }
 
 .calendar .calendar-day {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
 	border: thin solid #ddd;
 	text-align: left;
 }
 
 .calendar .calendar-day .calendar-event {
 	text-align: center;
-	margin-top: 1em;
 }
 
 .calendar .calendar-day .calendar-event time {

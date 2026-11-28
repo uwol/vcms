@@ -89,11 +89,12 @@ for ($i = 0; $i < 10; $i++) {
 * output age structure of Aktivitas
 */
 
+echo '<section class="flex flex-col gap-4">';
 echo '<h2>Struktur der Aktivitas</h2>';
-echo '<p class="mb-6">Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
+echo '<p>Füchse sind <span style="background-color: #66FF66">hellgrün</span> markiert, Burschen <span style="background-color: #33DD33">dunkelgrün</span>, ex loco <span style="background-color: #F5A9A9">rot</span>. Die Zahlen hinter den Namen geben das Alter und die Anzahl geleisteter Chargen an.</p>';
 
 
-echo '<div class="grid grid-cols-12 gap-x-6 mb-6">';
+echo '<div class="grid grid-cols-12 gap-x-6 gap-y-4">';
 
 $stmt = $libDb->prepare("SELECT COUNT(id) AS number FROM base_person WHERE gruppe='F' OR gruppe='B'");
 $stmt->execute();
@@ -101,7 +102,7 @@ $stmt->bindColumn('number', $aktive);
 $stmt->fetch();
 
 echo '<div class="col-span-12 sm:col-span-4">';
-echo '<p class="mb-6">';
+echo '<p>';
 echo '<span class="ui-badge bg-secondary text-white">' .$aktive. '</span> Aktive';
 echo '</p>';
 echo '</div>';
@@ -113,7 +114,7 @@ $stmt->bindColumn('number', $inLoco);
 $stmt->fetch();
 
 echo '<div class="col-span-12 sm:col-span-4">';
-echo '<p class="mb-6">';
+echo '<p>';
 echo '<span class="ui-badge bg-secondary text-white">' .$inLoco. '</span> in loco';
 echo '</p>';
 echo '</div>';
@@ -125,7 +126,7 @@ $stmt->bindColumn('number', $inaktive);
 $stmt->fetch();
 
 echo '<div class="col-span-12 sm:col-span-4">';
-echo '<p class="mb-6">';
+echo '<p>';
 echo '<span class="ui-badge bg-secondary text-white">' .$inaktive. '</span> ex loco oder inaktiv';
 echo '</p>';
 echo '</div>';
@@ -199,12 +200,14 @@ foreach ($tArray as $key1 => $value1) {
 echo '</table>';
 echo '</div>';
 echo '</div>';
+echo '</section>';
 
 
 /*
 * age structure of AHAH
 */
 
+echo '<section class="flex flex-col gap-4">';
 echo '<h2>Altersstruktur der Altherrenschaft</h2>';
 
 $classWidth = 5;
@@ -216,7 +219,7 @@ echo '<div class="ui-card">';
 echo '<div class="ui-card-body">';
 
 if (empty($ageClassesAhAh)) {
-    echo '<p class="mb-0">Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
+    echo '<p>Bei den alten Herren sind keine Geburtstage hinterlegt.</p>';
 } else {
     echo '<canvas id="age_structure" style="width:100%;height:300px"></canvas>' . PHP_EOL;
     echo '<script>' . PHP_EOL;
@@ -240,6 +243,7 @@ if (empty($ageClassesAhAh)) {
 
 echo '</div>';
 echo '</div>';
+echo '</section>';
 
 
 function fetchAges($group)

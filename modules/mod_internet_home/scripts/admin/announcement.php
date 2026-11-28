@@ -132,14 +132,14 @@ echo '<h1>Ankündigung</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<p class="mb-6">Hier können die Daten einer Ankündigung für die Startseite bearbeitet werden. Start- und Verfallsdatum müssen so gewählt werden, dass sich der Zeitraum ergibt, in dem die Ankündigung angezeigt werden soll.</p>';
+echo '<p>Hier können die Daten einer Ankündigung für die Startseite bearbeitet werden. Start- und Verfallsdatum müssen so gewählt werden, dass sich der Zeitraum ergibt, in dem die Ankündigung angezeigt werden soll.</p>';
 
 
 /*
 * deletion
 */
 if ($array['id'] != '') {
-    echo '<form class="mb-6" method="post" action="index.php?pid=intranet_admin_announcements" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
+    echo '<form method="post" action="index.php?pid=intranet_admin_announcements" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
     echo '<input type="hidden" name="action" value="delete" />';
     echo '<input type="hidden" name="id" value="' .$array['id']. '" />';
     echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
@@ -147,7 +147,7 @@ if ($array['id'] != '') {
 }
 
 
-echo '<div class="grid grid-cols-12 gap-x-6">';
+echo '<div class="grid grid-cols-12 gap-6">';
 echo '<div class="col-span-12 sm:col-span-9">';
 
 
@@ -183,7 +183,7 @@ echo '</div>';
 echo '</div>';
 
 echo '</div>';
-echo '<div class="col-span-12 sm:col-span-3">';
+echo '<div class="col-span-12 sm:col-span-3 flex flex-col gap-4 empty:hidden">';
 
 if ((isset($_REQUEST['id']) && $_REQUEST['id'] != '') || $array['id'] != '') {
     if (isset($_REQUEST['id']) && $_REQUEST['id'] != '') {

@@ -37,7 +37,7 @@ echo $libString->getNotificationBoxText();
 echo '<div class="ui-card">';
 echo '<div class="ui-card-body">';
 echo '<form action="index.php?pid=intranet_mitglied_listelebende" method="post">';
-echo '<fieldset class="flex flex-wrap items-center gap-2">';
+echo '<fieldset class="flex flex-row flex-wrap items-center gap-2">';
 echo '<div>';
 echo '<label for="searchterm" class="sr-only">Suchbegriff</label>';
 echo '<input type="text" id="searchterm" name="searchterm" class="ui-form-control w-auto" placeholder="Suchbegriff" />';
@@ -51,6 +51,7 @@ echo '</div>';
 
 // search term given?
 if (isset($_POST['searchterm']) && $_POST['searchterm'] != '') {
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Gefundene Personen</h2>';
 
     $stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe != "X" AND gruppe != "T" AND gruppe != "C" AND (
@@ -93,6 +94,7 @@ if (isset($_POST['searchterm']) && $_POST['searchterm'] != '') {
     $stmt->bindValue(':spitzname', '%'.$_POST['searchterm'].'%');
 
     printPersons($stmt);
+    echo '</section>';
 }
 //no search term
 else {
@@ -103,11 +105,13 @@ else {
     $stmt->fetch();
 
     if ($count > 0) {
+        echo '<section class="flex flex-col gap-4">';
         echo '<h2>Mitglieder ohne Zuordnung</h2>';
-        echo '<p class="mb-6">Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
+        echo '<p>Die folgenden Mitglieder sind keiner Gruppe zugeordnet. Die Zuordnung kann von einem Internetwart vorgenommen werden.</p>';
 
         $stmt = $libDb->prepare('SELECT * FROM base_person WHERE gruppe = "" OR gruppe IS NULL ORDER BY name');
         printPersons($stmt);
+        echo '</section>';
     }
 
     // Foxes
@@ -117,10 +121,12 @@ else {
     $stmt->fetch();
 
     if ($count > 0) {
+        echo '<section class="flex flex-col gap-4">';
         echo '<h2>Die Fuchsia (' .$count. ')</h2>';
 
         $stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'F' ORDER BY name");
         printPersons($stmt);
+        echo '</section>';
     }
 
     // Brothers
@@ -130,6 +136,7 @@ else {
     $stmt->fetch();
 
     if ($count > 0) {
+        echo '<section class="flex flex-col gap-4">';
         echo '<h2>Die Burschen (' .$count. ')</h2>';
 
         // Active brothers
@@ -153,6 +160,7 @@ else {
             $stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'B' AND (status LIKE '%ex loco%' OR status LIKE '%Inaktiv%') ORDER BY name");
             printPersons($stmt);
         }
+        echo '</section>';
     }
 
     // Alumni
@@ -162,10 +170,12 @@ else {
     $stmt->fetch();
 
     if ($count > 0) {
+        echo '<section class="flex flex-col gap-4">';
         echo '<h2>Die alten Herren (' .$count. ')</h2>';
 
         $stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'P' ORDER BY name");
         printPersons($stmt);
+        echo '</section>';
     }
 
     if ($libGenericStorage->loadValueInCurrentModule('show_group_y')) {
@@ -176,10 +186,12 @@ else {
         $stmt->fetch();
 
         if ($count > 0) {
+            echo '<section class="flex flex-col gap-4">';
             echo '<h2>Vereinsfreunde (' .$count. ')</h2>';
 
             $stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'Y' ORDER BY name");
             printPersons($stmt);
+            echo '</section>';
         }
     }
 }

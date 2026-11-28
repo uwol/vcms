@@ -105,7 +105,7 @@ class LibDay
         //header
         $retstr = '';
         $retstr .= '<div class="calendar-cell calendar-day reveal' .$todayClass.$hiddenClass. '">';
-        $retstr .= $this->number;
+        $retstr .= '<div>' .$this->number. '</div>';
 
         if ($hasEvents) {
             foreach ($events as $event) {

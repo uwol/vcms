@@ -111,7 +111,7 @@ class LibTimelineEvent
         * heading
         */
         $retstr .= '<div class="ui-card-header">';
-        $retstr .= '<h3 class="ui-card-title mb-0">';
+        $retstr .= '<h3 class="ui-card-title">';
 
         if ($this->datetime != '') {
             $retstr .= '<time datetime="' .$libTime->formatUtcString($this->datetime). '">';
@@ -141,19 +141,24 @@ class LibTimelineEvent
         * Description. The grid starts at sm, where the person column appears: on phones the
         * panel is narrower than the eleven gaps of a twelve-column grid (264px) and would overflow.
         */
-        $retstr .= '<div class="sm:grid sm:grid-cols-12 sm:gap-x-6">';
-
         $hasPersonColumn = ($this->authorId != '' && !$this->hideAuthorSignature)
                 || ($this->referencedPersonId != '' && !$this->hideReferencedPersonSignature);
 
+        // Without content the row is omitted, it would add a gap above the form
+        $hasDescriptionRow = $this->description != '' || $hasPersonColumn;
+
+        if ($hasDescriptionRow) {
+            $retstr .= '<div class="sm:grid sm:grid-cols-12 sm:gap-x-6">';
+        }
+
         if ($this->description != '') {
-            $retstr .= $hasPersonColumn ? '<div class="col-span-12 sm:col-span-9">' : '<div class="col-span-12">';
+            $retstr .= $hasPersonColumn ? '<div class="col-span-12 sm:col-span-9 flex flex-col gap-4">' : '<div class="col-span-12 flex flex-col gap-4">';
             $retstr .= trim((string) $this->description);
             $retstr .= '</div>';
         }
 
         if ($hasPersonColumn) {
-            $retstr .= '<div class="hidden sm:block col-span-12 sm:col-span-3">';
+            $retstr .= '<div class="hidden sm:flex sm:flex-col gap-4 col-span-12 sm:col-span-3">';
 
             if ($this->authorId != '' && !$this->hideAuthorSignature) {
                 $retstr .= $libPerson->getSignature($this->authorId);
@@ -166,7 +171,9 @@ class LibTimelineEvent
             $retstr .= '</div>';
         }
 
-        $retstr .= '</div>';
+        if ($hasDescriptionRow) {
+            $retstr .= '</div>';
+        }
 
         // form
         if ($this->form != '') {

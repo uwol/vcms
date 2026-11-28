@@ -58,7 +58,7 @@ echo $libString->getNotificationBoxText();
 
 echo '<div class="ui-card">';
 echo '<div class="ui-card-body">';
-echo '<div class="flex flex-wrap justify-start">';
+echo '<div class="flex flex-wrap justify-start gap-2">';
 echo '<a href="index.php?pid=intranet_reservation_book" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> Eine Reservierung hinzufügen</a>';
 echo '</div>';
 echo '</div>';
@@ -72,7 +72,7 @@ $stmt->execute();
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<div id="' .$row['id']. '" class="ui-card' .$libString->getLastInsertId($lastInsertId, $row['id']). '">';
     echo '<div class="ui-card-header">';
-    echo '<h3 class="ui-card-title mb-0 inline">';
+    echo '<h3 class="ui-card-title inline">';
     echo $libTime->formatDateString($row['datum']);
     echo ' ';
     echo '<a href="index.php?pid=intranet_person&amp;id=' .$row['person']. '">';

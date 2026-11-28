@@ -130,7 +130,7 @@ echo '<h1>Dateien</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="grid grid-cols-12 gap-x-6">';
+echo '<div class="grid grid-cols-12 gap-6 empty:hidden">';
 
 listFolderContentRec($rootFolderObject, true);
 
@@ -141,15 +141,15 @@ if (!empty($libAuth->getOffices())) {
     /*
     * upload form
     */
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Datei hochladen</h2>';
-
     echo '<div class="ui-card">';
     echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_directories" method="post" enctype="multipart/form-data">';
     echo '<fieldset>';
     echo '<input type="hidden" name="action" value="upload" />';
 
-    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
     echo '<label for="hash" class="ui-col-form-label col-span-12 sm:col-span-3">in den Ordner</label>';
     echo '<div class="col-span-12 sm:col-span-3"><select name="hash" class="ui-form-select">';
 
@@ -163,9 +163,9 @@ if (!empty($libAuth->getOffices())) {
     echo '</div>';
 
 
-    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
     echo '<label class="ui-col-form-label col-span-12 sm:col-span-3">mit Leserecht für</label>';
-    echo '<div class="col-span-12 sm:col-span-9">';
+    echo '<div class="col-span-12 sm:col-span-9 flex flex-col gap-0.5">';
 
     $stmt = $libDb->prepare("SELECT * FROM base_gruppe ORDER BY bezeichnung");
     $stmt->execute();
@@ -186,7 +186,7 @@ if (!empty($libAuth->getOffices())) {
 
     echo '</div></div>';
 
-    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
     echo '<div class="col-span-12 sm:col-start-4 sm:col-span-3">';
     echo '<label class="ui-btn ui-btn-outline-secondary"><i class="fa fa-upload" aria-hidden="true"></i> Datei hochladen';
     echo '<input type="file" name="file" onchange="this.form.submit()" style="display:none">';
@@ -198,25 +198,26 @@ if (!empty($libAuth->getOffices())) {
     echo '</form>';
     echo '</div>';
     echo '</div>';
+    echo '</section>';
 
 
     /*
     * new folder form
     */
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Ordner anlegen</h2>';
-
     echo '<div class="ui-card">';
     echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_directories" method="post">';
     echo '<fieldset>';
     echo '<input type="hidden" name="action" value="newFolder" />';
 
-    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
     echo '<label for="foldername" class="ui-col-form-label col-span-12 sm:col-span-3">Neuen Ordner</label>';
     echo '<div class="col-span-12 sm:col-span-3"><input type="text" id="foldername" name="foldername" class="ui-form-control" /></div>';
     echo '</div>';
 
-    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
     echo '<label for="hash" class="ui-col-form-label col-span-12 sm:col-span-3">in Ordner</label>';
     echo '<div class="col-span-12 sm:col-span-3"><select name="hash" class="ui-form-select">';
 
@@ -229,15 +230,17 @@ if (!empty($libAuth->getOffices())) {
     echo '</select></div>';
     echo '</div>';
 
-    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
     echo '<div class="col-span-12 sm:col-start-4 sm:col-span-3">';
     echo '<button type="submit" class="ui-btn ui-btn-outline-secondary"><i class="fa fa-plus" aria-hidden="true"></i> anlegen</button>';
     echo '</div>';
     echo '</div>';
 
+    echo '</fieldset>';
     echo '</form>';
     echo '</div>';
     echo '</div>';
+    echo '</section>';
 }
 
 
@@ -250,10 +253,9 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
     global $libAuth, $libModuleHandler, $libString;
 
     // Nested levels are indented by one step. The top level is not, so that its cards
-    // stay direct children of the grid row. ms-6 is 1.5rem, the value the inline
-    // margin-left of the Bootstrap 3 layout used.
+    // stay direct children of the grid row.
     if (!$firstLevel) {
-        echo '<div class="ms-6">';
+        echo '<div class="ps-6">';
     }
 
     foreach ($rootFolderObject->nestedFolderElements as $folderElement) {
@@ -264,6 +266,8 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
                     echo '<div class="col-span-12 md:col-span-6">';
                     echo '<div class="ui-card">';
                     echo '<div class="ui-card-body">';
+                    // The tree is inline content with line breaks, a flex item of its own
+                    echo '<div>';
                 }
 
                 if ($folderElement->isOpen) {
@@ -298,6 +302,7 @@ function listFolderContentRec(&$rootFolderObject, $firstLevel)
                 }
 
                 if ($firstLevel) {
+                    echo '</div>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';

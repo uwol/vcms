@@ -60,8 +60,12 @@ echo '</form>';
 echo '</div>';
 echo '</div>';
 
+echo '<section class="flex flex-col gap-4">';
 echo '<h2>Registrierung</h2>';
-echo '<p class="mb-6">Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=registration">Registrierungsseite</a> angefordert werden kann.</p>';
+echo '<p>Um in das Intranet zu gelangen, wird ein Zugang benötigt, der von Mitgliedern auf der <a href="index.php?pid=registration">Registrierungsseite</a> angefordert werden kann.</p>';
+echo '</section>';
 
+echo '<section class="flex flex-col gap-4">';
 echo '<h2>Passwort vergessen?</h2>';
-echo '<p class="mb-6">Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=password">ein neues Passwort</a> per Email zuschicken lassen.</p>';
+echo '<p>Falls Du bereits einen Intranetzugang hast, aber das Passwort vergessen hast, kannst Du Dir <a href="index.php?pid=password">ein neues Passwort</a> per E-Mail zuschicken lassen.</p>';
+echo '</section>';

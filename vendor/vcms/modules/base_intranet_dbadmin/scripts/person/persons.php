@@ -114,7 +114,7 @@ if ($libAuth->isLoggedin()) {
     if (in_array('internetwart', $libAuth->getOffices()) || in_array('datenpflegewart', $libAuth->getOffices())) {
         echo '<div class="ui-card">';
         echo '<div class="ui-card-body">';
-        echo '<div class="flex flex-wrap justify-start">';
+        echo '<div class="flex flex-wrap justify-start gap-2">';
         echo '<a href="index.php?pid=intranet_admin_person&amp;action=blank" class="ui-btn ui-btn-outline-secondary">Eine neue Person anlegen</a>';
         echo '</div>';
         echo '</div>';
@@ -124,7 +124,7 @@ if ($libAuth->isLoggedin()) {
     echo '<div class="ui-card">';
     echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_persons" method="post">';
-    echo '<fieldset class="flex flex-wrap items-center gap-2">';
+    echo '<fieldset class="flex flex-row flex-wrap items-center gap-2">';
 
     echo '<label class="sr-only" for="orderby">Sortierung</label>';
     echo '<select id="orderby" name="orderby" class="ui-form-select w-auto" onchange="this.form.submit()">';

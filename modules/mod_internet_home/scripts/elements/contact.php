@@ -30,20 +30,20 @@ echo '</script>';
 
 echo '<section class="contact-box">';
 echo '<div class="ui-container">';
-echo '<div class="grid grid-cols-12 gap-x-6">';
-echo '<div class="text-center col-span-12 lg:col-span-8 lg:col-start-3">';
+echo '<div class="grid grid-cols-12 gap-6">';
+echo '<div class="text-center col-span-12 lg:col-span-8 lg:col-start-3 flex flex-col gap-4">';
 
 echo '<h1 class="section-heading">Kontakt</h1>';
 echo '<hr>';
-echo '<p class="mb-6">Interesse geweckt? Großartig! Melde Dich bei uns und wir antworten Dir schnellstmöglich.</p>';
+echo '<p>Interesse geweckt? Großartig! Melde Dich bei uns und wir antworten Dir schnellstmöglich.</p>';
 echo '</div>';
 echo '<div class="text-center col-span-12 lg:col-span-4 lg:col-start-3">';
 echo '<i class="fa fa-phone fa-3x sr-contact reveal"></i>';
-echo '<p class="mb-6">' .$libConfig->verbindungTelefon. '</p>';
+echo '<p>' .$libConfig->verbindungTelefon. '</p>';
 echo '</div>';
 echo '<div class="text-center col-span-12 lg:col-span-4">';
 echo '<i class="fa fa-envelope-o fa-3x sr-contact reveal"></i>';
-echo '<p class="mb-6">' .$libConfig->emailInfo. '</p>';
+echo '<p>' .$libConfig->emailInfo. '</p>';
 
 echo '</div>';
 echo '</div>';

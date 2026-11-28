@@ -35,10 +35,12 @@ $stmt->bindColumn('number', $count);
 $stmt->fetch();
 
 if ($count > 0) {
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Die Couleurdamen (' .$count. ')</h2>';
 
     $stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'C' ORDER BY name");
     printPersons($stmt);
+    echo '</section>';
 }
 
 
@@ -48,8 +50,10 @@ $stmt->bindColumn('number', $count);
 $stmt->fetch();
 
 if ($count > 0) {
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Die Gattinnen (' .$count. ')</h2>';
 
     $stmt = $libDb->prepare("SELECT * FROM base_person WHERE gruppe = 'G' OR gruppe = 'W' ORDER BY name");
     printPersons($stmt);
+    echo '</section>';
 }

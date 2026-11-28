@@ -50,21 +50,26 @@ $description = '';
 /**
 * semester cover
 */
-$description .= '<div class="grid grid-cols-12 gap-x-6 mb-6">';
-$description .= '<div class="col-span-12 sm:col-start-3 md:col-start-4 sm:col-span-8 md:col-span-6">';
-$description .= $libTime->getSemesterCoverString($row['semester']);
-$description .= '</div>';
-$description .= '</div>';
+$semesterCover = $libTime->getSemesterCoverString($row['semester']);
+
+if ($semesterCover != '') {
+    $description .= '<div class="grid grid-cols-12 gap-x-6">';
+    $description .= '<div class="col-span-12 sm:col-start-3 md:col-start-4 sm:col-span-8 md:col-span-6">';
+    $description .= $semesterCover;
+    $description .= '</div>';
+    $description .= '</div>';
+}
 
 /**
-* Board
+* Board. Below sm the cells are stacked, so that empty cells and the spacer columns are hidden
+* there, otherwise each of them would add a gap.
 */
-$description .= '<div class="grid grid-cols-12 gap-x-6 mb-6">';
-$description .= '<div class="col-span-12 sm:col-span-1"></div>';
-$description .= '<div class="col-span-12 sm:col-span-2">';
+$description .= '<div class="grid grid-cols-12 gap-6">';
+$description .= '<div class="hidden sm:block col-span-12 sm:col-span-1"></div>';
+$description .= '<div class="col-span-12 sm:col-span-2 max-sm:empty:hidden">';
 
 if ($row['senior']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 gap-y-4 sm:flex sm:flex-col">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['senior']. '">';
@@ -74,7 +79,7 @@ if ($row['senior']) {
     $description .= '</div>';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
-    $description .= '<p class="mb-6">';
+    $description .= '<p>';
     $description .= 'Senior<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['senior']. '">';
     $description .= $libString->protectXSS($libPerson->getNameString($row['senior'], 0));
@@ -86,10 +91,10 @@ if ($row['senior']) {
 }
 
 $description .= '</div>';
-$description .= '<div class="col-span-12 sm:col-span-2">';
+$description .= '<div class="col-span-12 sm:col-span-2 max-sm:empty:hidden">';
 
 if ($row['consenior']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 gap-y-4 sm:flex sm:flex-col">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['consenior']. '">';
@@ -99,7 +104,7 @@ if ($row['consenior']) {
     $description .= '</div>';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
-    $description .= '<p class="mb-6">';
+    $description .= '<p>';
     $description .= 'Consenior<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['consenior']. '">';
     $description .= $libString->protectXSS($libPerson->getNameString($row['consenior'], 0));
@@ -111,10 +116,10 @@ if ($row['consenior']) {
 }
 
 $description .= '</div>';
-$description .= '<div class="col-span-12 sm:col-span-2">';
+$description .= '<div class="col-span-12 sm:col-span-2 max-sm:empty:hidden">';
 
 if ($row['fuchsmajor']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 gap-y-4 sm:flex sm:flex-col">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['fuchsmajor']. '">';
@@ -124,7 +129,7 @@ if ($row['fuchsmajor']) {
     $description .= '</div>';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
-    $description .= '<p class="mb-6">';
+    $description .= '<p>';
     $description .= 'Fuchsmajor<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['fuchsmajor']. '">';
     $description .= $libString->protectXSS($libPerson->getNameString($row['fuchsmajor'], 0));
@@ -136,10 +141,10 @@ if ($row['fuchsmajor']) {
 }
 
 $description .= '</div>';
-$description .= '<div class="col-span-12 sm:col-span-2">';
+$description .= '<div class="col-span-12 sm:col-span-2 max-sm:empty:hidden">';
 
 if ($row['scriptor']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 gap-y-4 sm:flex sm:flex-col">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['scriptor']. '">';
@@ -149,7 +154,7 @@ if ($row['scriptor']) {
     $description .= '</div>';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
-    $description .= '<p class="mb-6">';
+    $description .= '<p>';
     $description .= 'Scriptor<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['scriptor']. '">';
     $description .= $libString->protectXSS($libPerson->getNameString($row['scriptor'], 0));
@@ -161,10 +166,10 @@ if ($row['scriptor']) {
 }
 
 $description .= '</div>';
-$description .= '<div class="col-span-12 sm:col-span-2">';
+$description .= '<div class="col-span-12 sm:col-span-2 max-sm:empty:hidden">';
 
 if ($row['quaestor']) {
-    $description .= '<div class="grid grid-cols-12 gap-x-6 sm:block">';
+    $description .= '<div class="grid grid-cols-12 gap-x-6 gap-y-4 sm:flex sm:flex-col">';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['quaestor']. '">';
@@ -174,7 +179,7 @@ if ($row['quaestor']) {
     $description .= '</div>';
     $description .= '<div class="col-span-6 sm:col-span-12">';
 
-    $description .= '<p class="mb-6">';
+    $description .= '<p>';
     $description .= 'Quaestor<br/>';
     $description .= '<a href="index.php?pid=intranet_person&amp;id=' .$row['quaestor']. '">';
     $description .= $libString->protectXSS($libPerson->getNameString($row['quaestor'], 0));
@@ -186,24 +191,18 @@ if ($row['quaestor']) {
 }
 
 $description .= '</div>';
-$description .= '<div class="col-span-12 sm:col-span-1"></div>';
+$description .= '<div class="hidden sm:block col-span-12 sm:col-span-1"></div>';
 $description .= '</div>';
 
 /*
 * Offices
 */
 
-$description .= '<div>';
+$description .= '<div class="grid grid-cols-12 gap-6">';
+$description .= '<div class="col-span-12 md:col-span-6 flex flex-col gap-6">';
 
-$description .= '<div class="grid grid-cols-12 gap-x-6">';
-$description .= '<div class="col-span-12 md:col-span-6">';
-
-$description .= '<p class="mb-6">';
 $description .= getOffice('Jubelsenior', $row['jubelsenior']);
 $description .= getOffice('Fuchsmajor 2', $row['fuchsmajor2']);
-$description .= '</p>';
-
-$description .= '<p class="mb-6">';
 
 /**
 * Receptions
@@ -249,21 +248,16 @@ $stmt2->bindValue(':semester', $row['semester']);
 
 $description .= getAssociationGroup($stmt2, 'Fusionierte');
 
-$description .= '</p>';
-
 
 /**
 * other functions
 */
-$description .= '<p class="mb-6">';
 $description .= getOffice('VOP', $row['vop']);
 $description .= getOffice('VVOP', $row['vvop']);
 $description .= getOffice('VOPxx', $row['vopxx']);
 $description .= getOffice('VOPxxx', $row['vopxxx']);
 $description .= getOffice('VOPxxxx', $row['vopxxxx']);
-$description .= '</p>';
 
-$description .= '<p class="mb-6">';
 $description .= getOffice('Senior Altherrenvorstand', $row['ahv_senior']);
 $description .= getOffice('Consenior Altherrenvorstand', $row['ahv_consenior']);
 $description .= getOffice('Keilbeauftragter', $row['ahv_keilbeauftragter']);
@@ -271,19 +265,15 @@ $description .= getOffice('Scriptor Altherrenvorstand', $row['ahv_scriptor']);
 $description .= getOffice('Quaestor Altherrenvorstand', $row['ahv_quaestor']);
 $description .= getOffice('Beisitzer 1 Altherrenvorstand', $row['ahv_beisitzer1']);
 $description .= getOffice('Beisitzer 2 Altherrenvorstand', $row['ahv_beisitzer2']);
-$description .= '</p>';
 
-$description .= '<p class="mb-6">';
 $description .= getOffice('Vorsitzender Hausverein', $row['hv_vorsitzender']);
 $description .= getOffice('Kassierer Hausverein', $row['hv_kassierer']);
 $description .= getOffice('Beisitzender 1 Hausverein', $row['hv_beisitzer1']);
 $description .= getOffice('Beisitzender 2 Hausverein', $row['hv_beisitzer2']);
-$description .= '</p>';
 
 $description .= '</div>';
-$description .= '<div class="col-span-12 md:col-span-6">';
+$description .= '<div class="col-span-12 md:col-span-6 flex flex-col gap-6">';
 
-$description .= '<p class="mb-6">';
 $description .= getOffice('Ausflugswart', $row['ausflugswart']);
 $description .= getOffice('Bierwart', $row['bierwart']);
 $description .= getOffice('Bootshauswart', $row['bootshauswart']);
@@ -307,9 +297,7 @@ $description .= getOffice('Wirtschaftskassenwart', $row['wirtschaftskassenwart']
 $description .= getOffice('Archivar', $row['archivar']);
 $description .= getOffice('Dachverbandsberichterstatter', $row['dachverbandsberichterstatter']);
 $description .= getOffice('Ferienordner', $row['ferienordner']);
-$description .= '</p>';
 
-$description .= '</div>';
 $description .= '</div>';
 $description .= '</div>';
 
@@ -339,7 +327,7 @@ function getAssociationGroup($stmt, $title)
     $retstr = '';
 
     if (count($nameStrings) > 0) {
-        $retstr .= '<p class="mb-6">';
+        $retstr .= '<p>';
         $retstr .= $title. '<br/>';
         $retstr .= implode(', ', $nameStrings);
         $retstr .= '</p>';
@@ -355,7 +343,7 @@ function getOffice($officeName, $id)
     $retstr = '';
 
     if ($id != '') {
-        $retstr .= '<p class="mb-6">';
+        $retstr .= '<p>';
         $retstr .= $officeName. '<br/>';
         $retstr .= '<a href="index.php?pid=intranet_person&amp;id=' .(int) $id. '">' .$libString->protectXSS($libPerson->getNameString($id, 0)). '</a>';
         $retstr .= '</p>';

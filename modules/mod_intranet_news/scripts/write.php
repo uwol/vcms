@@ -31,7 +31,7 @@ echo '<fieldset>';
 
 $libForm->printTextarea('text', 'Nachricht', '');
 
-echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+echo '<div class="grid grid-cols-12 gap-x-6">';
 echo '<label for="category" class="ui-col-form-label col-span-12 sm:col-span-3">Kategorie</label>';
 echo '<div class="col-span-12 sm:col-span-9"><select id="category" name="category" class="ui-form-select">';
 

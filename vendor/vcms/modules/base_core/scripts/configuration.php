@@ -76,7 +76,7 @@ foreach ($storage as $moduleid => $arrays) {
     foreach ($arrays as $array_name => $positionen) {
         //positions and values at that positions
         foreach ($positionen as $position => $value) {
-            echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+            echo '<div class="grid grid-cols-12 gap-x-6">';
             echo '<label class="ui-col-form-label col-span-12 sm:col-span-4">' .$libString->protectXSS($array_name). '</label>';
 
             echo '<div class="col-span-12 sm:col-span-1">';

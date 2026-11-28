@@ -53,6 +53,7 @@
 .persons-grid {
 	display: grid;
 	grid-template-columns: repeat(1, 1fr);
+	row-gap: 1rem;
 }
 
 @media (min-width: 576px) {

@@ -240,13 +240,29 @@ A typical module is structured as follows:
   `ui-modal-*`, `ui-carousel-*`. The navbar classes `ui-navbar*` and `ui-nav-link` live in
   `navigation/navigation.css`. Do not add a `ui-*` class for something utilities express.
 - The breakpoints are the former Bootstrap ones: `sm` 576px, `md` 768px, `lg` 992px, `xl` 1200px,
-  `2xl` 1400px. The spacing scale is Tailwind's: `mb-4` is 1rem, `mb-6` 1.5rem, `mb-12` 3rem.
+  `2xl` 1400px. The spacing scale is Tailwind's: `gap-4` is 1rem, `gap-6` 1.5rem, `gap-12` 3rem.
+- Vertical space between siblings comes from the `gap` of their parent, never from margins.
+  Block elements have no vertical margins (`base.css`), and margin utilities (`mb-*`, `mt-*`,
+  `my-*`) are not used for spacing. The stacking containers are the page container (`gap-8`),
+  `ui-card-body` (`gap-4`) and `fieldset` (`gap-4`, rows of `LibForm`); everything else that
+  stacks several blocks gets `flex flex-col gap-*`. A heading with its content forms a
+  `<section class="flex flex-col gap-4">`, so that sections stand apart from each other.
+  Horizontal margins remain for centering (`mx-auto`) and positioning.
+- A grid row whose columns stack below a breakpoint needs a row gap as well: `gap-6` instead of
+  `gap-x-6`. Form rows keep `gap-x-6`, label and input stack without gap.
+- In a flex or grid container every text run and every inline element becomes an item of its
+  own. Inline content (text with links, icons, `<br />`) is wrapped in a `<p>` or `<div>` before
+  it goes into a stacking container. Inline forms set `flex-row` on their fieldset.
+- An element that may render empty adds a gap anyway; omit it in PHP or use `empty:hidden`
+  (`max-sm:empty:hidden` for placeholder columns that keep a position from `sm` upwards).
+- The timeline (`timeline.css`) is the exception: its panels float left and right, and the
+  bottom margin of an event sets the zigzag offset, which a gap cannot express.
 - A grid row is `grid grid-cols-12 gap-x-6`; every direct child carries a column span, e.g.
   `col-span-12 sm:col-span-3`, and optionally a start column, e.g. `sm:col-start-4`.
 - The eleven gaps of a grid row take 264px whether or not all columns are used, unlike the
   Bootstrap gutters, which existed per column. A grid row in a narrow container (timeline panel,
   card, narrow column) overflows. Start it at the breakpoint where its columns appear
-  (`sm:grid sm:grid-cols-12 sm:gap-x-6`), stack nested rows with `sm:block`, or do without a
+  (`sm:grid sm:grid-cols-12 sm:gap-x-6`), stack nested rows with `sm:flex sm:flex-col`, or do without a
   grid row for a single full-width element.
 - Tailwind only emits classes that occur literally in the scanned files (`@source` in
   `src/tailwind.css`). Never build class names by concatenation (`'sm:col-span-' . $n`); use a

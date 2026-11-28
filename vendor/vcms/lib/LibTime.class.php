@@ -678,7 +678,7 @@ class LibTime
             $retstr .= '<div class="ui-card">';
             $retstr .= '<div class="ui-card-body">';
             $retstr .= '<form action="index.php">';
-            $retstr .= '<fieldset class="flex flex-wrap items-center gap-2">';
+            $retstr .= '<fieldset class="flex flex-row flex-wrap items-center gap-2">';
             $retstr .= '<input type="hidden" name="pid" value="' . $libGlobal->pid . '"/>';
             $retstr .= '<label for="semester" class="sr-only">Semester</label>';
             $retstr .= '<select id="semester" name="semester" class="ui-form-select w-auto" onchange=\'this.form.submit()\'>';

@@ -69,5 +69,5 @@ $libMenuRenderer->printNavbar($libMenuInternet, $libMenuIntranet, $libMenuAdmini
 
 if ($libGlobal->page->isContainerEnabled()) {
     echo '    <main id="content">' . PHP_EOL;
-    echo '      <div id="container" class="ui-container">' . PHP_EOL;
+    echo '      <div id="container" class="ui-container flex flex-col gap-8 pt-8">' . PHP_EOL;
 }

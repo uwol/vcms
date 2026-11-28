@@ -180,7 +180,7 @@ if (!is_array($row)) {
     echo '<h1>Mitglied</h1>';
     echo $libString->getErrorBoxText();
     echo $libString->getNotificationBoxText();
-    echo '<p class="mb-6">Das Mitglied existiert nicht.</p>';
+    echo '<p>Das Mitglied existiert nicht.</p>';
     return;
 }
 
@@ -204,18 +204,18 @@ echo '</h1>';
 echo $libString->getErrorBoxText();
 echo $libString->getNotificationBoxText();
 
-echo '<div class="grid grid-cols-12 gap-x-6">';
+echo '<div class="grid grid-cols-12 gap-6">';
 
-echo '<div class="col-span-12 sm:col-span-3">';
+echo '<div class="col-span-12 sm:col-span-3 flex flex-col gap-4">';
 printPersonSignature($row, $ownprofile);
 echo '</div>';
 
-echo '<div class="col-span-12 sm:col-span-9">';
+echo '<div class="col-span-12 sm:col-span-9 flex flex-col gap-6">';
 echo '<div class="ui-card">';
 echo '<div class="ui-card-body">';
 printPersonData($row);
 
-echo '<div class="grid grid-cols-12 gap-x-6">';
+echo '<div class="grid grid-cols-12 gap-x-6 gap-y-4 empty:hidden">';
 printPrimaryAddress($row);
 printSecondaryAddress($row);
 echo '</div>';
@@ -239,8 +239,8 @@ echo '</div>';
 * Password change form
 */
 if ($ownprofile) {
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Passwort ändern</h2>';
-
     echo '<div class="ui-card">';
     echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_person&amp;id=' .$id. '" method="post">';
@@ -251,7 +251,7 @@ if ($ownprofile) {
     $libForm->printTextInput('newpwd1', 'Neues Passwort', '', 'password', false, true);
     $libForm->printTextInput('newpwd2', 'Neues Passwort (Wiederholung)', '', 'password', false, true);
 
-    echo '<div class="grid grid-cols-12 gap-x-6 mb-4">';
+    echo '<div class="grid grid-cols-12 gap-x-6">';
     echo '<div class="col-span-12 sm:col-span-3"></div>';
     echo '<div class="col-span-12 sm:col-span-9">' .$libAuth->getPasswordRequirements(). '</div>';
     echo '</div>';
@@ -262,9 +262,10 @@ if ($ownprofile) {
     echo '</form>';
     echo '</div>';
     echo '</div>';
+    echo '</section>';
 
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Stammdaten ändern</h2>';
-
     echo '<div class="ui-card">';
     echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_person" method="post">';
@@ -357,6 +358,7 @@ if ($ownprofile) {
     echo '</form>';
     echo '</div>';
     echo '</div>';
+    echo '</section>';
 }
 
 
@@ -371,11 +373,13 @@ $stmt->bindColumn('number', $count);
 $stmt->fetch();
 
 if ($count > 0) {
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Leibbursche</h2>';
 
     $stmt = $libDb->prepare("SELECT bv.id, bv.anrede, bv.titel, bv.rang, bv.vorname, bv.praefix, bv.name, bv.suffix, bv.status, bv.beruf, bv.ort1, bv.tod_datum, bv.datum_geburtstag, bv.gruppe, bv.leibmitglied FROM base_person AS bs, base_person AS bv WHERE bs.id=:id AND bs.leibmitglied=bv.id");
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     printPersons($stmt, 0);
+    echo '</section>';
 }
 
 
@@ -389,11 +393,13 @@ $stmt->bindColumn('number', $count);
 $stmt->fetch();
 
 if ($count > 0) {
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Leibverhältnisse</h2>';
 
     $stmt = $libDb->prepare("SELECT bs.id, bs.anrede, bs.titel, bs.rang, bs.vorname, bs.praefix, bs.name, bs.suffix, bs.status, bs.beruf, bs.ort1, bs.tod_datum, bs.datum_geburtstag, bs.gruppe, bs.leibmitglied FROM base_person AS bs WHERE bs.leibmitglied=:leibmitglied");
     $stmt->bindValue(':leibmitglied', $id, PDO::PARAM_INT);
     printPersons($stmt, 0);
+    echo '</section>';
 }
 
 
@@ -408,12 +414,14 @@ $stmt->bindColumn('number', $count);
 $stmt->fetch();
 
 if ($count > 0) {
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Confuchsen</h2>';
 
     $stmt = $libDb->prepare("SELECT confuchs.id, confuchs.anrede, confuchs.titel, confuchs.rang, confuchs.vorname, confuchs.praefix, confuchs.name, confuchs.suffix, confuchs.status, confuchs.beruf, confuchs.ort1, confuchs.tod_datum, confuchs.datum_geburtstag, confuchs.gruppe, confuchs.leibmitglied FROM base_person AS confuchs, base_person AS ich WHERE confuchs.semester_reception = ich.semester_reception AND ich.id=:id1 AND confuchs.id!=:id2");
     $stmt->bindValue(':id1', $id, PDO::PARAM_INT);
     $stmt->bindValue(':id2', $id, PDO::PARAM_INT);
     printPersons($stmt, 0);
+    echo '</section>';
 }
 
 
@@ -443,6 +451,7 @@ $stmt->fetch();
 
 
 if ($count > 0) {
+    echo '<section class="flex flex-col gap-4">';
     echo '<h2>Conchargen</h2>';
 
     $stmt = $libDb->prepare("
@@ -473,6 +482,7 @@ SELECT vopxxxx.id, vopxxxx.anrede, vopxxxx.titel, vopxxxx.rang, vopxxxx.vorname,
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
     printPersons($stmt, 0);
+    echo '</section>';
 }
 
 
@@ -480,7 +490,7 @@ function printPersonSignature($row, $ownprofile)
 {
     global $libPerson, $libForm;
 
-    echo '<div class="block mx-auto person-signature-box mb-4">';
+    echo '<div class="block mx-auto person-signature-box">';
     echo '<div class="img-box">';
 
     if ($ownprofile) {
@@ -601,7 +611,7 @@ function printPrimaryAddress($row)
     * primary address
     */
     if ($row['zusatz1'] != '' || $row['strasse1'] != '' || $row['ort1'] != '' || $row['plz1'] != '' || $row['land1'] != '' || $row['telefon1'] != '') {
-        echo '<div class="col-span-12 sm:col-span-6">';
+        echo '<div class="col-span-12 sm:col-span-6 flex flex-col gap-4">';
         echo '<hr />';
         echo '<address>';
 
@@ -642,7 +652,7 @@ function printSecondaryAddress($row)
     * secondary address
     */
     if ($row['zusatz2'] != '' || $row['strasse2'] != '' || $row['ort2'] != '' || $row['plz2'] != '' || $row['land2'] != '' || $row['telefon2'] != '') {
-        echo '<div class="col-span-12 sm:col-span-6">';
+        echo '<div class="col-span-12 sm:col-span-6 flex flex-col gap-4">';
         echo '<hr />';
         echo '<address>';
 
@@ -768,7 +778,7 @@ function printAssociationDetails($row)
 
     if ($row['gruppe'] == 'F' || $row['gruppe'] == 'B' || $row['gruppe'] == 'P' || $row['gruppe'] == 'T') {
         if ($row['leibmitglied'] > 0) {
-            echo '<div>Stammbaum <a href="index.php?pid=intranet_person_stammbaum&mitgliedid=' .$row['id']. '">öffnen</a></div>';
+            echo '<div>Stammbaum <a href="index.php?pid=intranet_person_stammbaum&amp;mitgliedid=' .$row['id']. '">öffnen</a></div>';
         }
     }
 
@@ -792,7 +802,7 @@ function printAssociationDetails($row)
     $associationsCount = count($associations);
 
     if ($associationsCount > 0) {
-        echo '<p class="mb-6">';
+        echo '<p>';
         echo '<span class="ui-badge">' .$associationsCount. '</span>';
         echo ' ';
         echo 'Mitgliedschaften in weiteren Verbindungen: ' .implode(', ', $associations);
@@ -810,7 +820,7 @@ function printAssociationDetails($row)
         $stmt->fetch();
 
         if ($chargierCount > 0) {
-            echo '<p class="mb-6">';
+            echo '<p>';
             echo '<span class="ui-badge bg-secondary text-white">' .$chargierCount. '</span>';
             echo ' ';
             echo 'Chargierter bei ';
