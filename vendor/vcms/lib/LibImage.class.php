@@ -465,6 +465,10 @@ class LibImage
 
         $photoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', (string) $_FILES[$tmpFileVarName]['name']);
 
+        if (!$this->hasEventPhotoExtension($photoFileName)) {
+            return;
+        }
+
         $this->saveImageByFilesArray($tmpFileVarName, 'custom/veranstaltungsfotos/' .$eventId, $photoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
     }
 
@@ -479,9 +483,20 @@ class LibImage
 
         $photoFileName = preg_replace('/[^A-Za-z0-9\._]/', '', (string) $targetFilename);
 
+        if (!$this->hasEventPhotoExtension($photoFileName)) {
+            return;
+        }
+
         $this->saveImage($tmpFilename, 'custom/veranstaltungsfotos/' .$eventId, $photoFileName, $this->galleryImageWidth, $this->galleryImageHeight, true);
     }
 
+
+    // Event photos are served from a web directory, so only JPEG extensions are accepted
+    private function hasEventPhotoExtension($photoFileName)
+    {
+        $extension = strtolower(pathinfo($photoFileName, PATHINFO_EXTENSION));
+        return in_array($extension, ['jpg', 'jpeg'], true);
+    }
 
     public function deleteEventPhoto($eventId, $photoFileName)
     {

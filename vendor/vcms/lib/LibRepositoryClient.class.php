@@ -91,6 +91,11 @@ class LibRepositoryClient
         // globals required for install/update scripts
         global $libGlobal, $libDb;
 
+        if (!$this->isValidModuleName($module)) {
+            $libGlobal->errorTexts[] = 'Ungültiger Modulname.';
+            return;
+        }
+
         $tarRelativeFilePath = $this->tempRelativeDirectoryPath. '/' .$module. '.tar';
         $tarAbsoluteFilePath = $libFilesystem->getAbsolutePath($tarRelativeFilePath);
 
@@ -186,6 +191,11 @@ class LibRepositoryClient
         // globals required for install/update scripts
         global $libGlobal, $libDb;
 
+        if (!$this->isValidModuleName($module)) {
+            $libGlobal->errorTexts[] = 'Ungültiger Modulname.';
+            return;
+        }
+
         $moduleRelativeDirectoryPath = $this->modulesRelativeDirectoryPath. '/' .$module;
         $moduleObject = $libModuleHandler->getModuleByModuleid($module);
 
@@ -200,6 +210,12 @@ class LibRepositoryClient
         $libFilesystem->deleteDirectory($moduleRelativeDirectoryPath);
 
         $this->refreshModuleHandler();
+    }
+
+    // Module names become directory and file names, so they must not contain path separators or dots
+    private function isValidModuleName($module)
+    {
+        return is_string($module) && preg_match('/^[a-z0-9_]+$/', $module) === 1;
     }
 
     public function updateEngine()

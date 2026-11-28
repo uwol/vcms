@@ -129,8 +129,8 @@ if ($libAuth->isLoggedin()) {
     if ($membershipRow['mitglied'] != '' && $membershipRow['verein'] != '') {
         echo '<form method="post" action="index.php?pid=intranet_admin_memberships" onsubmit="return confirm(\'Willst Du den Datensatz wirklich löschen?\')">';
         echo '<input type="hidden" name="action" value="delete" />';
-        echo '<input type="hidden" name="mitglied" value="' .$membershipRow['mitglied']. '" />';
-        echo '<input type="hidden" name="verein" value="' .$membershipRow['verein']. '" />';
+        echo '<input type="hidden" name="mitglied" value="' .$libString->protectXSS($membershipRow['mitglied']). '" />';
+        echo '<input type="hidden" name="verein" value="' .$libString->protectXSS($membershipRow['verein']). '" />';
         echo '<button type="submit" class="p-0 border-0 bg-transparent align-baseline text-dark cursor-pointer"><i class="fa fa-trash" aria-hidden="true"></i> Datensatz löschen</button>';
         echo '</form>';
     }
@@ -150,8 +150,8 @@ if ($libAuth->isLoggedin()) {
     echo '<div class="ui-card-body">';
     echo '<form action="index.php?pid=intranet_admin_membership' .$extraActionParam. '" method="post">';
     echo '<fieldset>';
-    echo '<input type="hidden" name="verein" value="' .$membershipRow['verein']. '" />';
-    echo '<input type="hidden" name="mitglied" value="' .$membershipRow['mitglied']. '" />';
+    echo '<input type="hidden" name="verein" value="' .$libString->protectXSS($membershipRow['verein']). '" />';
+    echo '<input type="hidden" name="mitglied" value="' .$libString->protectXSS($membershipRow['mitglied']). '" />';
 
     if ($action == 'blank') {
         $libForm->printMembersDropDownBox('mitglied', 'Mitglied', $membershipRow['mitglied'], false, false);
