@@ -240,7 +240,7 @@ echo $libString->getNotificationBoxText();
 
 function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, $attachementFile, $attachementName)
 {
-    global $libAuth, $libMail;
+    global $libAuth, $libMail, $libString;
 
     $mail = $libMail->createPHPMailer($fromName);
 
@@ -263,7 +263,7 @@ function sendMail($fromName, $subject, $replyEmail, $message, $recipientsArray, 
     }
 
     if (!$mail->send()) {
-        echo '<p>Fehler beim Versand: ' .$mail->ErrorInfo. '</p>';
+        echo '<p>Fehler beim Versand: ' .$libString->protectXSS($mail->ErrorInfo). '</p>';
     }
 }
 
